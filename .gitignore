@@ -1,0 +1,16 @@
+*.swp
+*.tmp
+*.bak
+.svn/
+
+# Mac files
+.DS_Store
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# general output files
+bin/
+gen/
+out/
+
