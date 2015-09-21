@@ -12,6 +12,8 @@
     <string name="main_activity_edittext_hint">Try typing here now...</string>
     <string name="keyboard_theme_dark" translatable="false">Dark</string>
     <string name="keyboard_theme_grey" translatable="false">Grey</string>
+    <string name="keyboard_theme_classic" translatable="false">Classic</string>
+    <string name="keyboard_theme_pop" translatable="false">Pop</string>
     <string name="settings_button_sound">Sounds</string>
     <string name="settings_button_auto_correction">Auto-correction</string>
     <string name="settings_button_auto_capitalization">Auto-capitalization</string>
