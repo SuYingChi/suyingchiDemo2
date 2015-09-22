@@ -41,7 +41,6 @@ public class HSFontSelectViewAdapter extends BaseAdapter {
         mFadeinAnimatorResId = context.getResources().getIdentifier(ANIMATOR_FADEIN_RES_NAME, "anim", context.getPackageName());
         mItemDefaultBackground = mParentView.getItemDefaultBackground();
         mItemSelectedBackground = mParentView.getItemSelectedBackground();
-        
         // Set data
         mFonts = HSFontManager.getInstance().getFontList();
     }
@@ -82,7 +81,9 @@ public class HSFontSelectViewAdapter extends BaseAdapter {
             holder.fontPickIconLeft.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.KEY_FONT_SELECTED_TICK));
             holder.fontPickIconRight = (ImageView) convertView.findViewById(R.id.iv_font_pick_right);
             holder.fontPickIconRight.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.KEY_FONT_SELECTED_TICK));
-
+            holder.fontNameLeft.setTextColor(mParentView.getItemTextColor());
+            holder.fontNameRight.setTextColor(mParentView.getItemTextColor());
+            convertView.setBackgroundColor(mParentView.getItemDividerColor());
             convertView.setTag(holder);          
          } else {
             holder = (ViewHolder)convertView.getTag();                

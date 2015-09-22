@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.smartkeyboard.rainbow.view.HSFontSelectView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/font_select_listview"
+    style="?attr/fontSelectPanelStyle"
     android:layout_width="match_parent"
     android:layout_height="@dimen/config_default_keyboard_height"
-    android:background="@color/font_selection_listview_background"
-    android:divider="@color/font_divider_color"
-    android:dividerHeight="1px"
     android:listSelector="@android:color/transparent"
     android:visibility="gone" />
-

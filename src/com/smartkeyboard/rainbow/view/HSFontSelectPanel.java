@@ -2,6 +2,7 @@ package com.smartkeyboard.rainbow.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -68,7 +69,8 @@ public class HSFontSelectPanel {
     
 
     private void initFontSelectView() {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        Context mThemeContext = new ContextThemeWrapper(mContext, HSKeyboardThemeManager.getCurrentTheme().mStyleId);
+        LayoutInflater inflater = LayoutInflater.from(mThemeContext);
         mFontSelectView = (HSFontSelectView)inflater.inflate(R.layout.font_select_layout, null);
         mAdapter = new HSFontSelectViewAdapter(mContext, mFontSelectView);
         mFontSelectView.setAdapter(mAdapter);

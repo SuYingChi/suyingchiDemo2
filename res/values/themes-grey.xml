@@ -35,7 +35,10 @@
         <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.GREY</item>
         <item name="suggestionStripViewStyle">@style/SuggestionStripView.GREY</item>
         <item name="suggestionWordStyle">@style/SuggestionWord.GREY</item>
-        <item name="moreSuggestionStyle">@style/HSMoreSuggestionsScrollView.GREY</item>
+        <item name="moreSuggestionPanelStyle">@style/MoreSuggestionPannel.GREY</item>
+        <item name="settingsPanelStyle">@style/SettingsPannel.GREY</item>
+        <item name="fontSelectPanelStyle">@style/FontSelectPannel.GREY</item>
+
         <!-- reserved area ends here -->
     </style>
 
@@ -111,8 +114,19 @@
         <item name="colorSuggested">#ff68747a</item>
     </style>
 
-    <style name="HSMoreSuggestionsScrollView.GREY" parent="KeyboardView.GREY">
-        <item name="moreSuggestionBgColor">#ffeceff1</item>
+    <style name="MoreSuggestionPannel.GREY" parent="KeyboardView.GREY">
+        <item name="android:background">#ffeceff1</item>
+    </style>
+
+    <style name="SettingsPannel.GREY" parent="KeyboardView.GREY">
+        <item name="android:background">#ffeceff1</item>
+        <item name="settingsTextColor">#ff181818</item>
+    </style>
+
+    <style name="FontSelectPannel.GREY" parent="KeyboardView.GREY">
+        <item name="android:background">#ffeceff1</item>
+        <item name="fontDividerColor">#ff181818</item>
+        <item name="fontTextColor">#ff181818</item>
     </style>
 
     <style name="SuggestionWord.GREY" parent="SuggestionWord">

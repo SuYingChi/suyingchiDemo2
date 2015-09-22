@@ -2,12 +2,15 @@ package com.smartkeyboard.rainbow.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihs.app.push.HSPushMgr;
@@ -28,8 +31,7 @@ public class HSSettingsPanel {
     }
 
     private Context mContext;
-
-    private View mSettingsView;
+    private HSSettingsPanelView mSettingsView;
     private Toast toast;
 
     private ImageButton btnSounds;
@@ -38,6 +40,13 @@ public class HSSettingsPanel {
     private ImageButton btnPredictive;
     private ImageButton btnSwipe;
     private ImageButton btnMore;
+
+    private TextView btnSoundsText;
+    private TextView btnCorrectionText;
+    private TextView btnCapitalizationText;
+    private TextView btnPredictiveText;
+    private TextView btnSwipeText;
+    private TextView btnMoreText;
 
     private IHSKeyboardPanelListener listener = new IHSKeyboardPanelListener() {
 
@@ -69,13 +78,18 @@ public class HSSettingsPanel {
     }
 
     private void initSettingsView() {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mSettingsView = (View) inflater.inflate(R.layout.keyboard_settings_layout, null);
+        Context mThemeContext = new ContextThemeWrapper(mContext, HSKeyboardThemeManager.getCurrentTheme().mStyleId);
+        LayoutInflater inflater = LayoutInflater.from(mThemeContext);
+        mSettingsView = (HSSettingsPanelView) inflater.inflate(R.layout.keyboard_settings_layout, null);
         final int width = ResourceUtils.getDefaultKeyboardWidth(mContext.getResources());
         final int height = ResourceUtils.getDefaultKeyboardHeight(mContext.getResources());
         mSettingsView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
 
+        int textColor = mSettingsView.getSettingsItemTextColor();
+
         btnSounds = (ImageButton) mSettingsView.findViewById(R.id.bt_sound);
+        btnSoundsText = (TextView) mSettingsView.findViewById(R.id.bt_sound_label);
+        btnSoundsText.setTextColor(textColor);
         btnSounds.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +112,8 @@ public class HSSettingsPanel {
         updateSoundSettings();
 
         btnCorrection = (ImageButton) mSettingsView.findViewById(R.id.bt_correction);
+        btnCorrectionText = (TextView) mSettingsView.findViewById(R.id.bt_correction_label);
+        btnCorrectionText.setTextColor(textColor);
         btnCorrection.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +136,8 @@ public class HSSettingsPanel {
         updateCorrectionSettings();
 
         btnCapitalization = (ImageButton) mSettingsView.findViewById(R.id.bt_capitalization);
+        btnCapitalizationText = (TextView) mSettingsView.findViewById(R.id.bt_capitalization_label);
+        btnCapitalizationText.setTextColor(textColor);
         btnCapitalization.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +160,8 @@ public class HSSettingsPanel {
         updateCapitalizationSettings();
 
         btnPredictive = (ImageButton) mSettingsView.findViewById(R.id.bt_predictive);
+        btnPredictiveText = (TextView) mSettingsView.findViewById(R.id.bt_predictive_label);
+        btnPredictiveText.setTextColor(textColor);
         btnPredictive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +184,8 @@ public class HSSettingsPanel {
         updatePredictiveSettings();
 
         btnSwipe = (ImageButton) mSettingsView.findViewById(R.id.bt_swipe);
+        btnSwipeText = (TextView) mSettingsView.findViewById(R.id.bt_swipe_label);
+        btnSwipeText.setTextColor(textColor);
         btnSwipe.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,6 +208,8 @@ public class HSSettingsPanel {
         updateSwipeSettings();
 
         btnMore = (ImageButton) mSettingsView.findViewById(R.id.bt_more);
+        btnMoreText = (TextView) mSettingsView.findViewById(R.id.bt_more_label);
+        btnMoreText.setTextColor(textColor);
         btnMore.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,7 +219,13 @@ public class HSSettingsPanel {
                 HSGoogleAnalyticsUtils.sendEvent(HSGoogleAnalyticsEvent.GA_EVENT_SETTING_MORE_CLICKED, HSGoogleAnalyticsEvent.GA_PARAM_LABEL_NONE);
             }
         });
-        btnMore.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_MORE_OFF));
+
+        StateListDrawable btnStatesDrawable = new StateListDrawable();
+        btnStatesDrawable.addState(new int[] { android.R.attr.state_pressed },
+                HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_off), HSKeyboardThemeManager.SETTINGS_KEY_MORE_OFF));
+        btnStatesDrawable.addState(new int[] {},
+                HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_on), HSKeyboardThemeManager.SETTINGS_KEY_MORE_ON));
+        btnMore.setBackgroundDrawable(btnStatesDrawable);
     }
 
     private void showToast(String text) {
@@ -208,42 +238,53 @@ public class HSSettingsPanel {
     }
 
     private void updateSoundSettings() {
+
         if (HSKeyboardSettings.getKeySoundEnabled()) {
-            btnSounds.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_SOUND_ON));
+            btnSounds.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_sound_on),
+                    HSKeyboardThemeManager.SETTINGS_KEY_SOUND_ON));
         } else {
-            btnSounds.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_SOUND_OFF));
+            btnSounds.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_sound_off),
+                    HSKeyboardThemeManager.SETTINGS_KEY_SOUND_OFF));
         }
     }
 
     private void updateCorrectionSettings() {
         if (HSKeyboardSettings.getAutoCorrectionEnabled()) {
-            btnCorrection.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_CORRECTION_ON));
+            btnCorrection.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_correction_on),
+                    HSKeyboardThemeManager.SETTINGS_KEY_CORRECTION_ON));
         } else {
-            btnCorrection.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_CORRECTION_OFF));
+            btnCorrection.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_correction_off),
+                    HSKeyboardThemeManager.SETTINGS_KEY_CORRECTION_OFF));
         }
     }
 
     private void updateCapitalizationSettings() {
         if (HSKeyboardSettings.getAutoCapitalizationEnabled()) {
-            btnCapitalization.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_CAP_ON));
+            btnCapitalization.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_capitalization_on),
+                    HSKeyboardThemeManager.SETTINGS_KEY_CAP_ON));
         } else {
-            btnCapitalization.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_CAP_OFF));
+            btnCapitalization.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_capitalization_off),
+                    HSKeyboardThemeManager.SETTINGS_KEY_CAP_OFF));
         }
     }
 
     private void updatePredictiveSettings() {
         if (HSKeyboardSettings.getWordPredictionEnabled()) {
-            btnPredictive.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_PREDICT_ON));
+            btnPredictive.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_predictive_on),
+                    HSKeyboardThemeManager.SETTINGS_KEY_PREDICT_ON));
         } else {
-            btnPredictive.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_PREDICT_OFF));
+            btnPredictive.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_predictive_off),
+                    HSKeyboardThemeManager.SETTINGS_KEY_PREDICT_OFF));
         }
     }
 
     private void updateSwipeSettings() {
         if (HSKeyboardSettings.getGestureTypingEnabled()) {
-            btnSwipe.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_SWIPE_ON));
+            btnSwipe.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_swipe_on),
+                    HSKeyboardThemeManager.SETTINGS_KEY_SWIPE_ON));
         } else {
-            btnSwipe.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, HSKeyboardThemeManager.SETTINGS_KEY_SWIPE_OFF));
+            btnSwipe.setBackgroundDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_swipe_off),
+                    HSKeyboardThemeManager.SETTINGS_KEY_SWIPE_OFF));
         }
     }
 

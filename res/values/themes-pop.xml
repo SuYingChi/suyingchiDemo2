@@ -35,7 +35,10 @@
         <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.POP</item>
         <item name="suggestionStripViewStyle">@style/SuggestionStripView.POP</item>
         <item name="suggestionWordStyle">@style/SuggestionWord.POP</item>
-        <item name="moreSuggestionStyle">@style/HSMoreSuggestionsScrollView.POP</item>
+        <item name="moreSuggestionPanelStyle">@style/MoreSuggestionPannel.POP</item>
+        <item name="settingsPanelStyle">@style/SettingsPannel.POP</item>
+        <item name="fontSelectPanelStyle">@style/FontSelectPannel.POP</item>
+
         <!-- reserved area ends here -->
     </style>
 
@@ -108,8 +111,19 @@
         <item name="colorSuggested">#FFFFFFFF</item>
     </style>
 
-    <style name="HSMoreSuggestionsScrollView.POP" parent="KeyboardView.POP">
-        <item name="moreSuggestionBgColor">#ff181818</item>
+    <style name="MoreSuggestionPannel.POP" parent="KeyboardView.POP">
+        <item name="android:background">#ff181818</item>
+    </style>
+
+    <style name="SettingsPannel.POP" parent="KeyboardView.POP">
+        <item name="android:background">#ff181818</item>
+        <item name="settingsTextColor">#ff181818</item>
+    </style>
+
+    <style name="FontSelectPannel.POP" parent="KeyboardView.POP">
+        <item name="android:background">#ff181818</item>
+        <item name="fontDividerColor">#ff181818</item>
+        <item name="fontTextColor">#ff181818</item>
     </style>
 
     <style name="SuggestionWord.POP" parent="SuggestionWord">
