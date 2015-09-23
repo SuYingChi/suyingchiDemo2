@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <FrameLayout
+        android:id="@+id/rl_theme_left"
+        android:layout_width="fill_parent"
+        android:layout_height="110dp"
+        android:layout_marginRight="1px"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:soundEffectsEnabled="false" >
+
+        <ImageView
+            android:id="@+id/iv_theme_preview_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:id="@+id/iv_theme_preview_left_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/preview_keyboard_chosed"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/rl_theme_right"
+        android:layout_width="fill_parent"
+        android:layout_height="110dp"
+        android:layout_marginLeft="1px"
+        android:layout_weight="1"
+        android:soundEffectsEnabled="false" >
+
+        <ImageView
+            android:id="@+id/iv_theme_preview_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_theme_preview_right_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/preview_keyboard_chosed"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

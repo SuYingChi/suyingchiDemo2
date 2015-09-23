@@ -15,12 +15,14 @@ import com.smartkeyboard.rainbow.R;
 import com.smartkeyboard.rainbow.utils.HSFeatureUtils;
 import com.smartkeyboard.rainbow.view.HSFontSelectPanel;
 import com.smartkeyboard.rainbow.view.HSSettingsPanel;
+import com.smartkeyboard.rainbow.view.HSThemeSelectPanel;
 
 public class HSKeyboardApplication extends HSApplication {
 
     private Context mContext;
     private HSFontSelectPanel mFontSelectPanel;
     private HSSettingsPanel mSettingsPanel;
+    private HSThemeSelectPanel mThemeSelectPanel;
 
     private INotificationObserver loadPanelsObserver = new INotificationObserver() {
         @Override
@@ -29,7 +31,7 @@ public class HSKeyboardApplication extends HSApplication {
 
                 HSKeyboard.getInstance().clearPanelViews();
                 enableFeatures();
-                
+                mThemeSelectPanel.init();
                 mFontSelectPanel.init();
                 mSettingsPanel.init();
             }
@@ -57,6 +59,7 @@ public class HSKeyboardApplication extends HSApplication {
         mContext = getApplicationContext();
         mFontSelectPanel = new HSFontSelectPanel(mContext);
         mSettingsPanel = new HSSettingsPanel(mContext);
+        mThemeSelectPanel = new HSThemeSelectPanel(mContext);
         HSGlobalNotificationCenter.addObserver(HSKeyboard.HS_NOTIFICATION_LOAD_APP_PANELS, loadPanelsObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         HSGoogleAnalyticsUtils.init(mContext);
