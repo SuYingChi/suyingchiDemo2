@@ -15,6 +15,7 @@
     <string name="keyboard_theme_classic" translatable="false">Classic</string>
     <string name="keyboard_theme_freshair" translatable="false">Freshair</string>
     <string name="keyboard_theme_pop" translatable="false">Pop</string>
+    <string name="keyboard_theme_electric" translatable="false">Electric</string>
     <string name="settings_button_sound">Sounds</string>
     <string name="settings_button_auto_correction">Auto-correction</string>
     <string name="settings_button_auto_capitalization">Auto-capitalization</string>
