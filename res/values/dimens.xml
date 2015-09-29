@@ -8,5 +8,8 @@
     <dimen name="font_item_ticker_height">20dp</dimen>
     <dimen name="font_item_ticker_margin_left">5dp</dimen>
     <dimen name="font_item_text_size">18sp</dimen>
+    <dimen name="theme_item_view_height">110dp</dimen>
+    <dimen name="theme_item_imageview_height">90dp</dimen>
+    <dimen name="theme_item_imageview_picked_height">99dp</dimen>
 
 </resources>

@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="theme_item_view_height">160dp</dimen>
+    <dimen name="theme_item_imageview_height">140dp</dimen>
+    <dimen name="theme_item_imageview_picked_height">150dp</dimen>
+
+</resources>

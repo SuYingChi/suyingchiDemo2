@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -81,6 +83,23 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
                 onClickTheme(fontLeftIndex, holder.themePreviewLeftPick);
             }
         });
+        
+        holder.themeRegionLeft.setOnTouchListener(new OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        holder.themePreviewLeftPick.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+                        holder.themePreviewLeftPick.setVisibility(View.GONE);
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
 
         // right font
         final int fontRightIndex = fontLeftIndex + 1;
@@ -97,6 +116,23 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
             holder.themePreviewRightPick.setVisibility(View.GONE);
             holder.themeRegionRight.setOnClickListener(null);
         }
+
+        holder.themeRegionRight.setOnTouchListener(new OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        holder.themePreviewRightPick.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+                        holder.themePreviewRightPick.setVisibility(View.GONE);
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
 
         updateViews(fontLeftIndex, holder.themePreviewLeftPick);
         updateViews(fontRightIndex, holder.themePreviewRightPick);
