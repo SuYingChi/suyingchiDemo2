@@ -21,6 +21,7 @@
 
     <style name="KeyboardTheme.CLASSIC">
 
+        <!-- 这个部分不用改 -->
         <!-- If you are a PM, you don't need to touch the following part of this file. Consult a developer if you have to modify any of the item below -->
         <!-- following are references of styles defined within the rest of this file -->
         <item name="keyboardStyle">@style/Keyboard.CLASSIC</item>
@@ -45,41 +46,96 @@
     <style name="Keyboard.CLASSIC" parent="Keyboard"></style>
 
     <style name="KeyboardView.CLASSIC" parent="KeyboardView">
+
+        <!-- 有多个字母按键的文字大小，可以是dimension，也可以是比例，如果是比例，则表示相对于键高的比例 -->
         <item name="keyLabelSize">@fraction/config_key_label_ratio_pink</item>
+
+        <!-- 单字母hint的文字大小，用相对于键高的比例表示 -->
         <item name="keyHintLetterRatio">@fraction/config_key_hint_letter_ratio_pink</item>
+
+        <!-- 单字母9宫格按键的字体尺寸，用相对于键高的比例表示 -->
         <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_pink</item>
+
+        <!-- 9宫格按键上，label相对于按键中心在横轴上的偏移量, 0对应的位置为居中，数值表示偏移量相对于Label字母宽度的比例 -->
         <item name="keyLabelOffCenterRatio">-55%</item>
+
+        <!-- 多字母hint的文字大小，用相对于键高的比例表示 -->
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
+
+        <!-- 9宫格按键，的hint label相对于按键左端在横轴上的偏移量，0对应的位置为居左，数值表示相对于hint字母宽度的比例 -->
         <item name="keyHintLabelOffCenterRatio">275%</item>
+
+        <!-- preview 按键的文字大小，比例为相对于普通按键高的比例 -->
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
+
+        <!-- 普通按键文字颜色 -->
         <item name="keyTextColor">#FFFFFFFF</item>
+
+        <!-- function按键文字颜色, 包括enter和shift, abc, #+=按键 -->
         <item name="functionalTextColor">#FFFFFFFF</item>
+
+        <!-- 按键hint文字的字体颜色 -->
         <item name="keyHintLetterColor">#FF222222</item>
+        <!-- 按键多字母hint文字的字体颜色 -->
         <item name="keyHintLabelColor">#FF222222</item>
+
+        <!-- preview的文字颜色 -->
         <item name="keyPreviewTextColor">#FFFFFFFF</item>
     </style>
 
     <style name="MainKeyboardView.CLASSIC" parent="KeyboardView.CLASSIC">
+
+        <!-- 普通按键的字体 -->
         <item name="keyTypeface">normal</item>
+        <!-- hint的字体 -->
         <item name="hintTypeface">bold</item>
+        <!-- 单字母普通按键的字体大小 -->
         <item name="keyLetterSize">@fraction/config_key_letter_ratio_pink</item>
+
+        <!-- preview的高度 -->
         <item name="keyPreviewHeight">@dimen/config_key_preview_height</item>
+
+        <!-- preview的下边儿相对于按键上边儿的位移，负值表示向上 -->
         <item name="keyPreviewOffset">-5dp</item>
+
+        <!-- preview的下边padding -->
         <item name="keyPreviewPaddingBottom">0dp</item>
+
+        <!-- preview效果动画 -->
         <item name="keyPreviewAnimatorType">flash</item>
+
+        <!-- 划屏输入时的预览条上的文字颜色 -->
         <item name="gestureFloatingPreviewTextColor">#1ea0cd</item>
+
+        <!-- 划屏输入时的预览条上的背景颜色 -->
         <item name="gestureFloatingPreviewColor">#EA000000</item>
+
+        <!-- 划屏轨迹的颜色 -->
         <item name="gestureTrailColor">#1ea0cd</item>
+
+        <!-- 空格键上表示语言的文字的颜色 -->
         <item name="languageOnSpacebarTextColor">#FF222222</item>
+
+        <!-- 空格键上表示语言的文字的阴影模糊半径 -->
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
+
+        <!-- 空格键上表示语言的文字的阴影颜色 -->
         <item name="languageOnSpacebarTextShadowColor">#FF222222</item>
+
+        <!-- 普通按键文字的阴影模糊半径 -->
         <item name="keyTextShadowRadius">0.0</item>
+        <!-- 普通按键文字的阴影偏移量 -->
         <item name="keyTextShadowDx">-5.0</item>
         <item name="keyTextShadowDy">-5.0</item>
+        <!-- 普通按键文字的阴影颜色 -->
         <item name="keyTextShadowColor">#80000000</item>
+
+        <!-- 功能按键文字的阴影模糊半径 -->
         <item name="keyFuncTextShadowRadius">0</item>
+        <!-- 功能按键文字的阴影偏移量 -->
         <item name="keyFuncTextShadowDx">2.0</item>
         <item name="keyFuncTextShadowDy">6.0</item>
+        <!-- 功能按键文字的阴影颜色 -->
         <item name="keyFuncTextShadowColor">#80000000</item>
     </style>
     <!--
@@ -87,43 +143,73 @@
          for instance delete button, need themed {@link KeyboardView} attributes.
     -->
     <style name="EmojiPalettesView.CLASSIC" parent="MainKeyboardView.CLASSIC">
+
+        <!-- emoji键盘的背景色 -->
         <item name="android:background">#ff181818</item>
+        <!-- emoji键盘的emoji category indicator条的颜色 -->
         <item name="categoryPageIndicatorColor">#BBFFFFFF</item>
+        <!-- emoji键盘的emoji category indicator条的底色 -->
         <item name="categoryPageIndicatorBackground">#33FFFFFF</item>
     </style>
 
     <style name="MoreKeysKeyboardView.CLASSIC" parent="KeyboardView.CLASSIC">
+
+        <!-- more keys 按键上的字体颜色 -->
         <item name="keyTextColor">#FFFFFFFF</item>
+        <!-- more keys 按键被按下时的字体颜色 -->
         <item name="keyTextPressedColor">#FFFFFFFF</item>
+        <!-- more keys的字体大小 -->
         <item name="keyLetterSize">@fraction/config_morekeys_key_letter_ratio</item>
+        <!-- more keys的字体 -->
         <item name="keyTypeface">normal</item>
+        <!-- more keys的字体阴影半径 -->
         <item name="keyTextShadowRadius">0.0</item>
+        <!-- more keys的字体阴影偏移量 -->
         <item name="keyTextShadowDx">-5.0</item>
         <item name="keyTextShadowDy">-5.0</item>
+        <!-- more keys的字体阴影颜色 -->
         <item name="keyTextShadowColor">#80000000</item>
     </style>
 
     <style name="SuggestionStripView.CLASSIC" parent="KeyboardView.CLASSIC">
+
+        <!-- suggestion bar输入的联想词的字体颜色，当输入的词为一个valid词时，第一个联想词位置的颜色 -->
         <item name="colorValidTypedWord">#ff1ea0cd</item>
+        <!-- 当前输入的词不为valid词时的字体颜色 -->
         <item name="colorTypedWord">#FFFFFFFF</item>
+        <!-- 当前输入的词的自动修正的字体颜色 -->
         <item name="colorAutoCorrect">#ff1ea0cd</item>
+        <!-- 普通联想词的颜色 -->
         <item name="colorSuggested">#FFFFFFFF</item>
     </style>
 
     <style name="MoreSuggestionPannel.CLASSIC" parent="KeyboardView.CLASSIC">
+
+        <!-- suggustion bar 下拉panel的背景颜色 -->
         <item name="android:background">#ff181818</item>
     </style>
 
     <style name="SettingsPannel.CLASSIC" parent="KeyboardView.CLASSIC">
+
+        <!-- settings panel的背景颜色 -->
         <item name="android:background">#ff181818</item>
+        <!-- settings panel的文字颜色 -->
         <item name="settingsTextColor">#ff181818</item>
     </style>
 
     <style name="FontSelectPannel.CLASSIC" parent="KeyboardView.CLASSIC">
+
+        <!-- font select panel的背景颜色 -->
         <item name="android:background">#ff181818</item>
+
+        <!-- font select panel的divider颜色 -->
         <item name="fontDividerColor">#ffff0000</item>
+
+        <!-- font select panel的文字颜色 -->
         <item name="fontTextColor">#ffff0000</item>
     </style>
+
+    <!-- 下面的模块儿暂时不用配置 -->
 
     <style name="SuggestionWord.CLASSIC" parent="SuggestionWord">
         <item name="android:textColor">#FFFFFFFF</item>
