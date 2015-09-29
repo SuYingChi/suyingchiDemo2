@@ -1,12 +1,13 @@
 package com.smartkeyboard.rainbow.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -23,6 +24,8 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
     private String[] mThemes;
     private HSThemeSelectView mParentView;
     private Drawable mItemDefaultBackground;
+    private int mCurrentThemeId;
+    private Animator mAnimator;
 
     public HSThemeSelectViewAdapter(final Context context, final View parentView) {
         mInflater = LayoutInflater.from(context);
@@ -30,6 +33,7 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
         // Set data
         mThemes = HSKeyboardThemeManager.getThemeNames();
         mItemDefaultBackground = mParentView.getItemDefaultBackground();
+        mCurrentThemeId = HSKeyboardThemeManager.getCurrentTheme().mThemeId;
     }
 
     @Override
@@ -83,23 +87,7 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
                 onClickTheme(fontLeftIndex, holder.themePreviewLeftPick);
             }
         });
-        
-        holder.themeRegionLeft.setOnTouchListener(new OnTouchListener() {
 
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        holder.themePreviewLeftPick.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                    case MotionEvent.ACTION_CANCEL: {
-                        holder.themePreviewLeftPick.setVisibility(View.GONE);
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
 
         // right font
         final int fontRightIndex = fontLeftIndex + 1;
@@ -117,36 +105,47 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
             holder.themeRegionRight.setOnClickListener(null);
         }
 
-        holder.themeRegionRight.setOnTouchListener(new OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        holder.themePreviewRightPick.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                    case MotionEvent.ACTION_CANCEL: {
-                        holder.themePreviewRightPick.setVisibility(View.GONE);
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
 
         updateViews(fontLeftIndex, holder.themePreviewLeftPick);
         updateViews(fontRightIndex, holder.themePreviewRightPick);
-
         return convertView;
     }
 
     private void onClickTheme(final int index, final View view) {
+        if (mAnimator != null) {
+            return;
+        }
+        mCurrentThemeId = index;
+        view.setVisibility(View.VISIBLE);
+        mAnimator = createAnimator(view);
+        mAnimator.start();
         KeyboardTheme.saveKeyboardThemeId(String.valueOf(index), PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()));
         notifyDataSetChanged();
-        HSKeyboard.getInstance().updateKeyboardTheme();
     }
 
+    private Animator createAnimator(final View view) {
+        final Animator animator;
 
+        animator = createDelayedAnimator();
+
+        animator.setTarget(view);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(final Animator animator) {
+                HSKeyboard.getInstance().updateKeyboardTheme();
+                view.clearAnimation();
+                mAnimator = null;
+            }
+        });
+
+        return animator;
+    }
+
+    private Animator createDelayedAnimator() {
+        ValueAnimator localValueAnimator = ValueAnimator.ofFloat(1.0f, 1.0f);
+        localValueAnimator.setDuration(10L);
+        return localValueAnimator;
+    }
 
     private void updateViews(final int index, final View selectedBg) {
         if (index >= mThemes.length) {
@@ -168,5 +167,13 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
         public FrameLayout themeRegionRight;
         public ImageView themePreviewRight;
         public ImageView themePreviewRightPick;
+    }
+
+    public void cancelAnimation() {
+        if (mAnimator != null) {
+            mAnimator.removeAllListeners();
+            mAnimator.cancel();
+            mAnimator = null;
+        }
     }
 }
