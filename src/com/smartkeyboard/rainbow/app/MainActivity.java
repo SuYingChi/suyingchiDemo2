@@ -11,8 +11,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,14 +20,10 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +37,10 @@ import com.smartkeyboard.rainbow.utils.InputMethodManagerUtils;
 
 public class MainActivity extends HSActivity {
 
+    private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
+    private final static float BUTTON_BACKGROUND_OPACITY_ENABLED = 1f;
+    private final static float BUTTON_BACKGROUND_OPACITY_INVISIBLE = 0f;
+
     public enum CurrentUIStyle {
         UISTYLE_STEP_ONE,
         UISTYLE_STEP_TWO,
@@ -55,11 +53,10 @@ public class MainActivity extends HSActivity {
 
     View rootView;
 
-    private ImageView img_title;
     private View bt_step_one;
     private View bt_step_two;
-    private View bt_step_one_content_view;
-    private View bt_step_two_content_view;
+    //    private View bt_step_one_content_view;
+    //    private View bt_step_two_content_view;
     private TextView text_one;
     private TextView text_two;
     private Button bt_settings;
@@ -96,11 +93,13 @@ public class MainActivity extends HSActivity {
         setContentView(R.layout.activity_main);
 
         rootView = (View) this.findViewById(R.id.view_root);
-        img_title = (ImageView) this.findViewById(R.id.view_img_title);
+
+        getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bg));
+
         bt_step_one = (View) this.findViewById(R.id.bt_step_one);
         bt_step_two = (View) this.findViewById(R.id.bt_step_two);
-        bt_step_one_content_view = (View) this.findViewById(R.id.bt_step_one_content_view);
-        bt_step_two_content_view = (View) this.findViewById(R.id.bt_step_two_content_view);
+        //        bt_step_one_content_view = (View) this.findViewById(R.id.bt_step_one_content_view);
+        //        bt_step_two_content_view = (View) this.findViewById(R.id.bt_step_two_content_view);
         text_one = (TextView) this.findViewById(R.id.text_one);
         text_two = (TextView) this.findViewById(R.id.text_two);
 
@@ -118,109 +117,92 @@ public class MainActivity extends HSActivity {
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeRecevier, filter);
 
-        if (getResources().getBoolean(R.bool.isTablet)) {
-            Display display = getWindowManager().getDefaultDisplay();
-            int width = display.getWidth();
-            int button_width = (int) (width * 0.5);
-
-            float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicWidth());
-
-            RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
-            relativeParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            bt_settings.setLayoutParams(relativeParams);
-
-            RelativeLayout.LayoutParams relativeParams2 = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
-            relativeParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            relativeParams2.addRule(RelativeLayout.BELOW, R.id.bt_settings);
-
-            relativeParams2.topMargin = (int) (button_width * 0.07);
-            bt_languages.setLayoutParams(relativeParams2);
-
-            int step_button_width = (int) (button_width * 1.1);
-
-            float ratio_button_guide_one = ((float) getResources().getDrawable(R.drawable.app_button_guide_one_bg).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_one_bg).getIntrinsicWidth());
-            float ratio_button_guide_two = ((float) getResources().getDrawable(R.drawable.app_button_guide_two_bg).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_two_bg).getIntrinsicWidth());
-            float ratio_img_enter = ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicWidth());
-            float ratio_img_choose = ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicWidth());
-
-            LinearLayout.LayoutParams step_one_linearParams = new LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
-            step_one_linearParams.gravity = Gravity.CENTER;
-            bt_step_one.setLayoutParams(step_one_linearParams);
-
-            LinearLayout.LayoutParams step_one_linearParams2 = new LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_two));
-            step_one_linearParams2.gravity = Gravity.CENTER;
-            step_one_linearParams2.topMargin = (int) (step_button_width * 0.07);
-            bt_step_two.setLayoutParams(step_one_linearParams2);
-
-            RelativeLayout.LayoutParams step_one_relativeParams = new RelativeLayout.LayoutParams(-1, -2);
-            step_one_relativeParams.topMargin = (int) (step_button_width * 0.070);
-            bt_step_one_content_view.setLayoutParams(step_one_relativeParams);
-
-            RelativeLayout.LayoutParams step_one_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
-            step_one_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            step_one_relativeParams2.leftMargin = (int) (step_button_width * 0.17);
-            text_one.setLayoutParams(step_one_relativeParams2);
-
-            RelativeLayout.LayoutParams step_one_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
-                    (int) (step_button_width * 0.035 * ratio_img_enter));
-            step_one_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
-            img_enter_one.setLayoutParams(step_one_relativeParams3);
-
-            RelativeLayout.LayoutParams step_one_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
-                    (int) (step_button_width * 0.094 * ratio_img_choose));
-            step_one_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
-            img_choose_one.setLayoutParams(step_one_relativeParams4);
-
-            RelativeLayout.LayoutParams step_two_relativeParams = new RelativeLayout.LayoutParams(-1, -2);
-            step_two_relativeParams.topMargin = (int) (step_button_width * 0.070);
-            bt_step_two_content_view.setLayoutParams(step_two_relativeParams);
-
-            RelativeLayout.LayoutParams step_two_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
-            step_two_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            step_two_relativeParams2.leftMargin = (int) (step_button_width * 0.17);
-            text_two.setLayoutParams(step_two_relativeParams2);
-
-            RelativeLayout.LayoutParams step_two_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
-                    (int) (step_button_width * 0.035 * ratio_img_enter));
-            step_two_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
-            img_enter_two.setLayoutParams(step_two_relativeParams3);
-
-            RelativeLayout.LayoutParams step_two_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
-                    (int) (step_button_width * 0.094 * ratio_img_choose));
-            step_two_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
-            img_choose_two.setLayoutParams(step_two_relativeParams4);
-        }
+        //        if (getResources().getBoolean(R.bool.isTablet)) {
+        //            Display display = getWindowManager().getDefaultDisplay();
+        //            int width = display.getWidth();
+        //            int button_width = (int) (width * 0.5);
+        //
+        //            float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicHeight())
+        //                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicWidth());
+        //
+        //            RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
+        //            relativeParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        //            bt_settings.setLayoutParams(relativeParams);
+        //
+        //            RelativeLayout.LayoutParams relativeParams2 = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
+        //            relativeParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        //            relativeParams2.addRule(RelativeLayout.BELOW, R.id.bt_settings);
+        //
+        //            relativeParams2.topMargin = (int) (button_width * 0.07);
+        //            bt_languages.setLayoutParams(relativeParams2);
+        //
+        //            int step_button_width = (int) (button_width * 1.1);
+        //
+        //            float ratio_button_guide_one = ((float) getResources().getDrawable(R.drawable.app_button_guide_bg).getIntrinsicHeight())
+        //                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_bg).getIntrinsicWidth());
+        //            float ratio_img_enter = ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicHeight())
+        //                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicWidth());
+        //            float ratio_img_choose = ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicHeight())
+        //                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicWidth());
+        //
+        //            LinearLayout.LayoutParams step_one_linearParams = new LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
+        //            step_one_linearParams.gravity = Gravity.CENTER;
+        //            bt_step_one.setLayoutParams(step_one_linearParams);
+        //
+        //            LinearLayout.LayoutParams step_one_linearParams2 = new LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
+        //            step_one_linearParams2.gravity = Gravity.CENTER;
+        //            step_one_linearParams2.topMargin = (int) (step_button_width * 0.07);
+        //            bt_step_two.setLayoutParams(step_one_linearParams2);
+        //
+//            RelativeLayout.LayoutParams step_one_relativeParams = new RelativeLayout.LayoutParams(-1, -2);
+//            step_one_relativeParams.topMargin = (int) (step_button_width * 0.070);
+//            bt_step_one_content_view.setLayoutParams(step_one_relativeParams);
+        //
+        //            RelativeLayout.LayoutParams step_one_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
+        //            step_one_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        //            step_one_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+        //            step_one_relativeParams2.leftMargin = (int) (step_button_width * 0.17);
+        //            text_one.setLayoutParams(step_one_relativeParams2);
+        //
+        //            RelativeLayout.LayoutParams step_one_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
+        //                    (int) (step_button_width * 0.035 * ratio_img_enter));
+        //            step_one_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        //            step_one_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
+        //            img_enter_one.setLayoutParams(step_one_relativeParams3);
+        //
+        //            RelativeLayout.LayoutParams step_one_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
+        //                    (int) (step_button_width * 0.094 * ratio_img_choose));
+        //            step_one_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        //            step_one_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
+        //            img_choose_one.setLayoutParams(step_one_relativeParams4);
+        //
+        //            RelativeLayout.LayoutParams step_two_relativeParams = new RelativeLayout.LayoutParams(-1, -2);
+        //            step_two_relativeParams.topMargin = (int) (step_button_width * 0.070);
+        //            bt_step_two_content_view.setLayoutParams(step_two_relativeParams);
+        //
+        //            RelativeLayout.LayoutParams step_two_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
+        //            step_two_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        //            step_two_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+        //            step_two_relativeParams2.leftMargin = (int) (step_button_width * 0.17);
+        //            text_two.setLayoutParams(step_two_relativeParams2);
+        //
+        //            RelativeLayout.LayoutParams step_two_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
+        //                    (int) (step_button_width * 0.035 * ratio_img_enter));
+        //            step_two_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        //            step_two_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
+        //            img_enter_two.setLayoutParams(step_two_relativeParams3);
+        //
+        //            RelativeLayout.LayoutParams step_two_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
+        //                    (int) (step_button_width * 0.094 * ratio_img_choose));
+        //            step_two_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        //            step_two_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
+        //            img_choose_two.setLayoutParams(step_two_relativeParams4);
+        //        }
 
         bt_step_one.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 showKeyboardEnableDialog();
-
-                //                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                //                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                //
-                //                    @Override
-                //                    public void onClick(DialogInterface dialog, int which) {
-                //                        startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
-                //                        isInStepOne = true;
-                //                        Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
-                //                        toast.show();
-                //                    }
-                //                });
-                //                builder.setMessage(R.string.alert_attention_messenger);
-                //                builder.show();
-
                 HSGoogleAnalyticsUtils.sendEvent(HSGoogleAnalyticsEvent.GA_EVENT_APP_STEP_ONE_CLICKED, HSGoogleAnalyticsEvent.GA_PARAM_LABEL_NONE);
             }
         });
@@ -392,34 +374,11 @@ public class MainActivity extends HSActivity {
         }
     }
 
-    private void scaleTitleImage() {
-        Display display = getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
-        LinearLayout.LayoutParams linearParams = new LayoutParams((int) (width * ratio), (int) (width * ratio));
-        linearParams.gravity = Gravity.CENTER;
-        linearParams.topMargin = -(int) (width * move);
-        img_title.setLayoutParams(linearParams);
-    }
-
-    private void restoreTitleImage() {
-
-        Display display = getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
-        if (getResources().getBoolean(R.bool.isTablet)) {
-            width = (int) (width * 0.85);
-        }
-        LinearLayout.LayoutParams linearParams = new LayoutParams(width, width);
-        linearParams.gravity = Gravity.CENTER;
-        img_title.setLayoutParams(linearParams);
-    }
-
     private void refreshUIState() {
         if (!InputMethodManagerUtils.isCurrentIMEEnabled(this)) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
-
-            restoreTitleImage();
-
+            rootView.setBackgroundColor(Color.TRANSPARENT);
             edit_text_test.setAlpha(0);
             edit_text_test.setFocusable(false);
             edit_text_test.setFocusableInTouchMode(false);
@@ -429,9 +388,11 @@ public class MainActivity extends HSActivity {
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
             bt_step_one.setClickable(true);
-            bt_step_one.setAlpha(1.0f);
+            bt_step_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.guide_button_selector));
+            bt_step_one.setAlpha(255);
             bt_step_two.setClickable(false);
-            bt_step_two.setAlpha(0.4f);
+            bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
+            bt_step_two.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
             bt_settings.setAlpha(0);
             bt_languages.setAlpha(0);
 
@@ -440,14 +401,12 @@ public class MainActivity extends HSActivity {
             img_choose_one.setAlpha(0);
             img_choose_two.setAlpha(0);
 
-            rootView.setBackgroundColor(Color.parseColor("#2a9de8"));
-
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
         } else if (!InputMethodManagerUtils.isCurrentIMESelected(this)) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
-
-            restoreTitleImage();
+            rootView.setBackgroundColor(Color.TRANSPARENT);
+            //  restoreTitleImage();
 
             edit_text_test.setAlpha(0);
             edit_text_test.setFocusable(false);
@@ -461,11 +420,15 @@ public class MainActivity extends HSActivity {
             if (isInStepOne) {
                 bt_step_one.setAlpha(1.0f);
                 bt_step_two.setClickable(false);
-                bt_step_two.setAlpha(0.4f);
+                bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
+                bt_step_two.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
             } else {
-                bt_step_one.setAlpha(0.4f);
+                bt_step_one.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
+                bt_step_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
+
                 bt_step_two.setClickable(true);
                 bt_step_two.setAlpha(1.0f);
+                bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.guide_button_selector));
             }
             bt_settings.setAlpha(0);
             bt_languages.setAlpha(0);
@@ -475,60 +438,27 @@ public class MainActivity extends HSActivity {
             img_choose_one.setAlpha(255);
             img_choose_two.setAlpha(0);
 
-            rootView.setBackgroundColor(Color.parseColor("#2a9de8"));
-
             style = CurrentUIStyle.UISTYLE_STEP_TWO;
 
         } else {
-            HSLog.d("edit_text_test test");
             edit_text_test.setAlpha(1);
             edit_text_test.setFocusable(true);
             edit_text_test.setFocusableInTouchMode(true);
             edit_text_test.requestFocus();
             //             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(edit_text_test, InputMethodManager.SHOW_IMPLICIT);
-
+            rootView.setBackgroundColor(getResources().getColor(R.color.translucent_black));
             if (style == CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL || style == CurrentUIStyle.UISTYLE_STEP_THREE_TEST)
                 return;
-            scaleTitleImage();
+            //scaleTitleImage();
             bt_step_one.setVisibility(View.GONE);
             bt_step_two.setVisibility(View.GONE);
             bt_settings.setVisibility(View.VISIBLE);
             bt_languages.setVisibility(View.VISIBLE);
-            rootView.setBackgroundColor(Color.parseColor("#57bbfc"));
             bt_settings.setAlpha(1);
             bt_languages.setAlpha(1);
-
             style = CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL;
         }
-    }
-
-    private void doScaleAnimation() {
-        scaleTitleImage();
-
-        AnimationSet animationSet = new AnimationSet(true);
-        TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, move,
-                Animation.RELATIVE_TO_SELF, 0.0f);
-        animationSet.addAnimation(translateAnimation);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0.85f / ratio, 1.0f, 0.85f / ratio, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.0f);
-        animationSet.addAnimation(scaleAnimation);
-
-        animationSet.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                MainActivity.this.doAppearAnimation();
-            }
-        });
-        animationSet.setDuration(500);
-        this.img_title.startAnimation(animationSet);
     }
 
     private void doHideAnimation() {
@@ -546,8 +476,8 @@ public class MainActivity extends HSActivity {
             public void onAnimationEnd(Animation animation) {
                 bt_step_one.setVisibility(View.GONE);
                 bt_step_two.setVisibility(View.GONE);
-                MainActivity.this.doScaleAnimation();
-                rootView.setBackgroundColor(Color.parseColor("#57bbfc"));
+                MainActivity.this.doAppearAnimation();
+                // MainActivity.this.doScaleAnimation();
             }
         });
         alphaAnimation.setDuration(500);
@@ -555,7 +485,14 @@ public class MainActivity extends HSActivity {
         this.bt_step_two.startAnimation(alphaAnimation);
     }
 
+    //    private Drawable getDimmedDrawable(Drawable drawable) {
+    //        Resources resources = HSApplication.getContext().getResources();
+    //        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[] { drawable, new ColorDrawable(resources.getColor(R.color.translucent_black)) });
+    //        return layerDrawable;
+    //    }
+
     private void doAppearAnimation() {
+        rootView.setBackgroundColor(getResources().getColor(R.color.translucent_black));
         bt_settings.setAlpha(1);
         bt_languages.setAlpha(1);
         bt_settings.setVisibility(View.VISIBLE);
@@ -586,24 +523,17 @@ public class MainActivity extends HSActivity {
     }
 
     private void doSetpOneFinishAnimation() {
-        bt_step_one.setClickable(false);
-        //        bt_step_two.setClickable(true);
-        //        bt_step_two.setAlpha(1);
-        //        bt_step_one.setAlpha(0.4f);
 
-        img_enter_one.setAlpha(0);
-        img_choose_one.setAlpha(255);
         AnimationSet animationSet = new AnimationSet(true);
-        //        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        //        alphaAnimation.setDuration(500);
-        //        animationSet.addAnimation(alphaAnimation);
-
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1.5f, 0.5f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 2.0f, 1f, 2.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(500);
         animationSet.addAnimation(scaleAnimation);
         animationSet.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                bt_step_one.setClickable(false);
+                img_enter_one.setAlpha(0);
+                img_choose_one.setVisibility(255);
             }
 
             @Override
@@ -619,8 +549,9 @@ public class MainActivity extends HSActivity {
     }
 
     private void doSetpOneFinishAnimation2() {
-        ScaleAnimation scaleAnimation = new ScaleAnimation(1.5f, 1.0f, 1.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(2.0f, 1.0f, 2.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(500);
+        scaleAnimation.setFillAfter(true);
         scaleAnimation.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -640,12 +571,13 @@ public class MainActivity extends HSActivity {
 
     private void doSetpOneFinishAnimation3() {
 
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.4f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, BUTTON_BACKGROUND_OPACITY_DISABLED);
         alphaAnimation.setDuration(500);
         alphaAnimation.setFillAfter(true);
         alphaAnimation.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                bt_step_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
             }
 
             @Override
@@ -662,8 +594,8 @@ public class MainActivity extends HSActivity {
 
     private void doSetpOneFinishAnimation4() {
         bt_step_two.setAlpha(1.0f);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0.4f, 1.0f);
-        alphaAnimation.setDuration(500);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(BUTTON_BACKGROUND_OPACITY_DISABLED, 1.0f);
+        alphaAnimation.setDuration(0);
         alphaAnimation.setFillAfter(true);
         alphaAnimation.setAnimationListener(new AnimationListener() {
             @Override
@@ -676,6 +608,7 @@ public class MainActivity extends HSActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.guide_button_selector));
                 bt_step_two.setClickable(true);
             }
         });
@@ -685,7 +618,7 @@ public class MainActivity extends HSActivity {
     private void doSetpTwoFinishAnimation() {
         bt_step_one.setClickable(false);
         bt_step_two.setClickable(false);
-        bt_step_one.setAlpha(0.4f);
+        bt_step_one.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
 
         this.runOnUiThread(new Runnable() {
 

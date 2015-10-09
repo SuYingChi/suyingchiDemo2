@@ -7,8 +7,8 @@
     <string name="title_activity_idle">RainbowKey</string>
     <string name="alert_attention_title">Attention !</string>
     <string name="alert_attention_messenger">When you enable RainbowKey, you will receive a warning that says the keyboard may collect your personal data. This is a standard Android warning for any third party keyboard. We PROMISE Emoji Keyboard  will NEVER collect any of your private data! </string>
-    <string name="toast_enable_keyboard">Enable Emoji Keyboard</string>
-    <string name="toast_select_keyboard">Select Emoji Keyboard</string>
+    <string name="toast_enable_keyboard">Enable RainbowKey</string>
+    <string name="toast_select_keyboard">Select RainbowKey</string>
     <string name="main_activity_edittext_hint">Try typing here now...</string>
     <string name="keyboard_theme_dark" translatable="false">Dark</string>
     <string name="keyboard_theme_grey" translatable="false">Grey</string>
