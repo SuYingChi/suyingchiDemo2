@@ -36,7 +36,6 @@
         <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.CLASSIC</item>
         <item name="suggestionStripViewStyle">@style/SuggestionStripView.CLASSIC</item>
         <item name="suggestionWordStyle">@style/SuggestionWord.CLASSIC</item>
-        <item name="moreSuggestionPanelStyle">@style/MoreSuggestionPannel.CLASSIC</item>
         <item name="settingsPanelStyle">@style/SettingsPannel.CLASSIC</item>
         <item name="fontSelectPanelStyle">@style/FontSelectPannel.CLASSIC</item>
 
@@ -81,12 +80,15 @@
 
         <!-- preview的文字颜色 -->
         <item name="keyPreviewTextColor">#FFFFFFFF</item>
+
+        <!-- keyboard所有panel的主背景色，包括settings panel, emoji, font selection panel, theme selection panel, more suggestion panel等 -->
+        <item name="keyboardDominantColor">#ff1855ee</item>
     </style>
 
     <style name="MainKeyboardView.CLASSIC" parent="KeyboardView.CLASSIC">
 
         <!-- 普通按键的字体 -->
-        <item name="keyTypeface">normal</item>
+        <item name="fontName">normal</item>
         <!-- hint的字体 -->
         <item name="hintTypeface">bold</item>
         <!-- 单字母普通按键的字体大小 -->
@@ -161,7 +163,7 @@
         <!-- more keys的字体大小 -->
         <item name="keyLetterSize">@fraction/config_morekeys_key_letter_ratio</item>
         <!-- more keys的字体 -->
-        <item name="keyTypeface">normal</item>
+        <item name="fontName">normal</item>
         <!-- more keys的字体阴影半径 -->
         <item name="keyTextShadowRadius">0.0</item>
         <!-- more keys的字体阴影偏移量 -->
@@ -183,24 +185,13 @@
         <item name="colorSuggested">#FFFFFFFF</item>
     </style>
 
-    <style name="MoreSuggestionPannel.CLASSIC" parent="KeyboardView.CLASSIC">
-
-        <!-- suggustion bar 下拉panel的背景颜色 -->
-        <item name="android:background">#ff181818</item>
-    </style>
-
     <style name="SettingsPannel.CLASSIC" parent="KeyboardView.CLASSIC">
 
-        <!-- settings panel的背景颜色 -->
-        <item name="android:background">#ff181818</item>
         <!-- settings panel的文字颜色 -->
         <item name="settingsTextColor">#ff181818</item>
     </style>
 
     <style name="FontSelectPannel.CLASSIC" parent="KeyboardView.CLASSIC">
-
-        <!-- font select panel的背景颜色 -->
-        <item name="android:background">#ff181818</item>
 
         <!-- font select panel的divider颜色 -->
         <item name="fontDividerColor">#ffff0000</item>

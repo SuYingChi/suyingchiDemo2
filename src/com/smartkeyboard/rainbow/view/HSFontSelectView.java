@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
+import com.ihs.inputmethod.extended.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.latin.R;
 import com.ihs.inputmethod.latin.utils.ResourceUtils;
 
@@ -27,6 +28,7 @@ public class HSFontSelectView extends ListView {
         final TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs, R.styleable.FontSelectPannel, defStyle, R.style.KeyboardView);
         fontItemTextColor = keyboardViewAttr.getColor(R.styleable.FontSelectPannel_fontTextColor, 0);
         fontItemDividerColor = keyboardViewAttr.getColor(R.styleable.FontSelectPannel_fontDividerColor, 0);
+        this.setBackgroundColor(HSKeyboardThemeManager.getDominantColor());
         mBackground = getBackground();
         mItemSelectedBackground = mBackground.getConstantState().newDrawable();
         mItemSelectedBackground.mutate().setAlpha(204);

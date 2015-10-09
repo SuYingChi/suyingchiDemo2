@@ -35,7 +35,6 @@
         <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.GREY</item>
         <item name="suggestionStripViewStyle">@style/SuggestionStripView.GREY</item>
         <item name="suggestionWordStyle">@style/SuggestionWord.GREY</item>
-        <item name="moreSuggestionPanelStyle">@style/MoreSuggestionPannel.GREY</item>
         <item name="settingsPanelStyle">@style/SettingsPannel.GREY</item>
         <item name="fontSelectPanelStyle">@style/FontSelectPannel.GREY</item>
 
@@ -61,10 +60,11 @@
         <item name="keyHintLetterColor">#FF68747a</item>
         <item name="keyHintLabelColor">#FF68747a</item>
         <item name="keyPreviewTextColor">#FFFFFFFF</item>
+        <item name="keyboardDominantColor">#ffeceff1</item>
     </style>
 
     <style name="MainKeyboardView.GREY" parent="KeyboardView.GREY">
-        <item name="keyTypeface">normal</item>
+        <item name="fontName">normal</item>
         <item name="hintTypeface">normal</item>
         <item name="keyLetterSize">@fraction/config_key_letter_ratio_pink</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height</item>
@@ -91,7 +91,6 @@
          for instance delete button, need themed {@link KeyboardView} attributes.
     -->
     <style name="EmojiPalettesView.GREY" parent="MainKeyboardView.GREY">
-        <item name="android:background">#ffeceff1</item>
         <item name="categoryPageIndicatorColor">#ff1ea0cd</item>
         <item name="categoryPageIndicatorBackground">#ffd1d6d9</item>
     </style>
@@ -100,7 +99,7 @@
         <item name="keyTextColor">#FFFFFFFF</item>
         <item name="keyTextPressedColor">#FFFFFFFF</item>
         <item name="keyLetterSize">@fraction/config_morekeys_key_letter_ratio</item>
-        <item name="keyTypeface">normal</item>
+        <item name="fontName">normal</item>
         <item name="keyTextShadowRadius">0.0</item>
         <item name="keyTextShadowDx">-5.0</item>
         <item name="keyTextShadowDy">-5.0</item>
@@ -114,17 +113,11 @@
         <item name="colorSuggested">#ff68747a</item>
     </style>
 
-    <style name="MoreSuggestionPannel.GREY" parent="KeyboardView.GREY">
-        <item name="android:background">#ffeceff1</item>
-    </style>
-
     <style name="SettingsPannel.GREY" parent="KeyboardView.GREY">
-        <item name="android:background">#ffeceff1</item>
         <item name="settingsTextColor">#ff181818</item>
     </style>
 
     <style name="FontSelectPannel.GREY" parent="KeyboardView.GREY">
-        <item name="android:background">#ffeceff1</item>
         <item name="fontDividerColor">#ff181818</item>
         <item name="fontTextColor">#ff181818</item>
     </style>

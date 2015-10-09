@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
 
+import com.ihs.inputmethod.extended.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.latin.R;
 import com.ihs.inputmethod.latin.utils.ResourceUtils;
 
@@ -21,6 +22,7 @@ public class HSSettingsPanelView extends ScrollView {
         super(context, attrs, defStyle);
         final TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs, R.styleable.SettingsPannel, defStyle, R.style.KeyboardView);
         itemTextColor = keyboardViewAttr.getColor(R.styleable.SettingsPannel_settingsTextColor, 0);
+        this.setBackgroundColor(HSKeyboardThemeManager.getDominantColor());
     }
 
     public int getSettingsItemTextColor() {
