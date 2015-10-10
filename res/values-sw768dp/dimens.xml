@@ -7,12 +7,12 @@
 
     <!-- main activity dimensions -->
     <dimen name="main_logo_margin_top">60dp</dimen>
-    <dimen name="main_logo_title_textsize">36sp</dimen>
-    <dimen name="main_logo_subtitle_textsize">24sp</dimen>
-    <dimen name="main_logo_subtitle_paddingleft">26dp</dimen>
+    <dimen name="main_logo_title_textsize">41sp</dimen>
+    <dimen name="main_logo_subtitle_textsize">28sp</dimen>
+    <dimen name="main_logo_subtitle_paddingleft">31dp</dimen>
     <dimen name="main_logo_img_marginbottom">1dp</dimen>
     <dimen name="main_logo_img_margintop">7dp</dimen>
-    <dimen name="button_settings_textsize">22sp</dimen>
-    <dimen name="button_guide_textsize">20sp</dimen>
+    <dimen name="button_settings_textsize">24sp</dimen>
+    <dimen name="button_guide_textsize">22sp</dimen>
 
 </resources>

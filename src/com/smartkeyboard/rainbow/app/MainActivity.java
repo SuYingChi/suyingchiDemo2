@@ -7,14 +7,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -24,6 +28,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +38,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.extended.api.HSKeyboardSettings;
 import com.ihs.inputmethod.extended.eventrecorder.HSGoogleAnalyticsEvent;
 import com.ihs.inputmethod.extended.eventrecorder.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.extended.theme.HSKeyboardThemeManager;
 import com.smartkeyboard.rainbow.R;
 import com.smartkeyboard.rainbow.utils.InputMethodManagerUtils;
 
@@ -48,10 +55,10 @@ public class MainActivity extends HSActivity {
         UISTYLE_STEP_THREE_TEST,
     }
 
-    static float ratio = 0.7f;
-    static float move = 0.15f;
+    private static float ratio = 0.7f;
+    private static float move = 0.15f;
 
-    View rootView;
+    private View rootView;
 
     private View bt_step_one;
     private View bt_step_two;
@@ -61,6 +68,7 @@ public class MainActivity extends HSActivity {
     private TextView text_two;
     private Button bt_settings;
     private Button bt_languages;
+    private ImageView img_rainbow;
     private ImageView img_enter_one;
     private ImageView img_enter_two;
     private ImageView img_choose_one;
@@ -68,10 +76,9 @@ public class MainActivity extends HSActivity {
     private EditText edit_text_test;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());;
 
-    boolean isInStepOne;
-    boolean isTitleImageScaled;
+    private boolean isInStepOne;
 
-    CurrentUIStyle style;
+    private CurrentUIStyle style;
 
     private BroadcastReceiver imeChangeRecevier = new BroadcastReceiver() {
 
@@ -93,8 +100,16 @@ public class MainActivity extends HSActivity {
         setContentView(R.layout.activity_main);
 
         rootView = (View) this.findViewById(R.id.view_root);
+        
+        WindowManager wm = this.getWindowManager();
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int screenWidth = size.x;
+        int screenHeight = size.y;
 
-        getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bg));
+        getWindow().setBackgroundDrawable(HSKeyboardThemeManager.getScaledBackgroundImage(getResources().getDrawable(R.drawable.app_bg), screenWidth, screenHeight));
+
 
         bt_step_one = (View) this.findViewById(R.id.bt_step_one);
         bt_step_two = (View) this.findViewById(R.id.bt_step_two);
@@ -102,7 +117,7 @@ public class MainActivity extends HSActivity {
         //        bt_step_two_content_view = (View) this.findViewById(R.id.bt_step_two_content_view);
         text_one = (TextView) this.findViewById(R.id.text_one);
         text_two = (TextView) this.findViewById(R.id.text_two);
-
+        img_rainbow = (ImageView) this.findViewById(R.id.view_logo_img);
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
         img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
@@ -117,87 +132,103 @@ public class MainActivity extends HSActivity {
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeRecevier, filter);
 
-        //        if (getResources().getBoolean(R.bool.isTablet)) {
-        //            Display display = getWindowManager().getDefaultDisplay();
-        //            int width = display.getWidth();
-        //            int button_width = (int) (width * 0.5);
-        //
-        //            float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicHeight())
-        //                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicWidth());
-        //
-        //            RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
-        //            relativeParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-        //            bt_settings.setLayoutParams(relativeParams);
-        //
-        //            RelativeLayout.LayoutParams relativeParams2 = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
-        //            relativeParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-        //            relativeParams2.addRule(RelativeLayout.BELOW, R.id.bt_settings);
-        //
-        //            relativeParams2.topMargin = (int) (button_width * 0.07);
-        //            bt_languages.setLayoutParams(relativeParams2);
-        //
-        //            int step_button_width = (int) (button_width * 1.1);
-        //
-        //            float ratio_button_guide_one = ((float) getResources().getDrawable(R.drawable.app_button_guide_bg).getIntrinsicHeight())
-        //                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_bg).getIntrinsicWidth());
-        //            float ratio_img_enter = ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicHeight())
-        //                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicWidth());
-        //            float ratio_img_choose = ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicHeight())
-        //                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicWidth());
-        //
-        //            LinearLayout.LayoutParams step_one_linearParams = new LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
-        //            step_one_linearParams.gravity = Gravity.CENTER;
-        //            bt_step_one.setLayoutParams(step_one_linearParams);
-        //
-        //            LinearLayout.LayoutParams step_one_linearParams2 = new LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
-        //            step_one_linearParams2.gravity = Gravity.CENTER;
-        //            step_one_linearParams2.topMargin = (int) (step_button_width * 0.07);
-        //            bt_step_two.setLayoutParams(step_one_linearParams2);
-        //
-//            RelativeLayout.LayoutParams step_one_relativeParams = new RelativeLayout.LayoutParams(-1, -2);
-//            step_one_relativeParams.topMargin = (int) (step_button_width * 0.070);
-//            bt_step_one_content_view.setLayoutParams(step_one_relativeParams);
-        //
-        //            RelativeLayout.LayoutParams step_one_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
-        //            step_one_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        //            step_one_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-        //            step_one_relativeParams2.leftMargin = (int) (step_button_width * 0.17);
-        //            text_one.setLayoutParams(step_one_relativeParams2);
-        //
-        //            RelativeLayout.LayoutParams step_one_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
-        //                    (int) (step_button_width * 0.035 * ratio_img_enter));
-        //            step_one_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        //            step_one_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
-        //            img_enter_one.setLayoutParams(step_one_relativeParams3);
-        //
-        //            RelativeLayout.LayoutParams step_one_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
-        //                    (int) (step_button_width * 0.094 * ratio_img_choose));
-        //            step_one_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        //            step_one_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
-        //            img_choose_one.setLayoutParams(step_one_relativeParams4);
-        //
-        //            RelativeLayout.LayoutParams step_two_relativeParams = new RelativeLayout.LayoutParams(-1, -2);
-        //            step_two_relativeParams.topMargin = (int) (step_button_width * 0.070);
-        //            bt_step_two_content_view.setLayoutParams(step_two_relativeParams);
-        //
-        //            RelativeLayout.LayoutParams step_two_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
-        //            step_two_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        //            step_two_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-        //            step_two_relativeParams2.leftMargin = (int) (step_button_width * 0.17);
-        //            text_two.setLayoutParams(step_two_relativeParams2);
-        //
-        //            RelativeLayout.LayoutParams step_two_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
-        //                    (int) (step_button_width * 0.035 * ratio_img_enter));
-        //            step_two_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        //            step_two_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
-        //            img_enter_two.setLayoutParams(step_two_relativeParams3);
-        //
-        //            RelativeLayout.LayoutParams step_two_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
-        //                    (int) (step_button_width * 0.094 * ratio_img_choose));
-        //            step_two_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        //            step_two_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
-        //            img_choose_two.setLayoutParams(step_two_relativeParams4);
-        //        }
+
+
+        if (getResources().getBoolean(R.bool.isTablet)) {
+
+            int button_width = (int) (screenWidth * 0.5);
+            float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicHeight())
+                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicWidth());
+
+            RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
+            relativeParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+            relativeParams.topMargin = (int) (screenHeight * 0.25);
+            bt_settings.setLayoutParams(relativeParams);
+
+            RelativeLayout.LayoutParams relativeParams2 = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
+            relativeParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+            relativeParams2.addRule(RelativeLayout.BELOW, R.id.bt_settings);
+
+            LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams((int) (button_width * ratio_button_guide_settings * 0.5), (int) (button_width
+                    * ratio_button_guide_settings * 0.5));
+            linearParams.gravity = Gravity.CENTER;
+            linearParams.topMargin = 5;
+            img_rainbow.setLayoutParams(linearParams);
+            relativeParams2.topMargin = (int) (button_width * 0.07);
+            bt_languages.setLayoutParams(relativeParams2);
+
+            int step_button_width = (int) (button_width * 1.1);
+
+            float ratio_button_guide_one = ((float) getResources().getDrawable(R.drawable.app_button_guide_bg).getIntrinsicHeight())
+                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_bg).getIntrinsicWidth());
+            float ratio_img_enter = ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicHeight())
+                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicWidth());
+            float ratio_img_choose = ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicHeight())
+                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicWidth());
+
+            RelativeLayout.LayoutParams step_one_linearParams = new RelativeLayout.LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
+            step_one_linearParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+            step_one_linearParams.topMargin = (int) (screenHeight * 0.7);
+            bt_step_one.setLayoutParams(step_one_linearParams);
+
+            RelativeLayout.LayoutParams step_one_linearParams2 = new RelativeLayout.LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
+            step_one_linearParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+            step_one_linearParams2.addRule(RelativeLayout.BELOW, R.id.bt_step_one);
+            step_one_linearParams2.topMargin = (int) (step_button_width * 0.07);
+            bt_step_two.setLayoutParams(step_one_linearParams2);
+
+
+            RelativeLayout.LayoutParams step_one_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
+            step_one_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            step_one_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+            step_one_relativeParams2.leftMargin = (int) (step_button_width * 0.22);
+            text_one.setLayoutParams(step_one_relativeParams2);
+
+            RelativeLayout.LayoutParams step_one_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
+                    (int) (step_button_width * 0.035 * ratio_img_enter));
+            step_one_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            step_one_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
+            img_enter_one.setLayoutParams(step_one_relativeParams3);
+
+            RelativeLayout.LayoutParams step_one_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
+                    (int) (step_button_width * 0.094 * ratio_img_choose));
+            step_one_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            step_one_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
+            img_choose_one.setLayoutParams(step_one_relativeParams4);
+
+            RelativeLayout.LayoutParams step_two_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
+            step_two_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            step_two_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+            step_two_relativeParams2.leftMargin = (int) (step_button_width * 0.22);
+            text_two.setLayoutParams(step_two_relativeParams2);
+
+            RelativeLayout.LayoutParams step_two_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
+                    (int) (step_button_width * 0.035 * ratio_img_enter));
+            step_two_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            step_two_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
+            img_enter_two.setLayoutParams(step_two_relativeParams3);
+
+            RelativeLayout.LayoutParams step_two_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
+                    (int) (step_button_width * 0.094 * ratio_img_choose));
+            step_two_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            step_two_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
+            img_choose_two.setLayoutParams(step_two_relativeParams4);
+        } else {
+            int button_width = (int) (screenWidth * 0.7);
+            float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicHeight())
+                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicWidth());
+
+            RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
+            relativeParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+            relativeParams.topMargin = (int) (screenHeight * 0.2);
+            bt_settings.setLayoutParams(relativeParams);
+
+            RelativeLayout.LayoutParams relativeParams2 = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
+            relativeParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+            relativeParams2.addRule(RelativeLayout.BELOW, R.id.bt_settings);
+            relativeParams2.topMargin = (int) (button_width * 0.07);
+            bt_languages.setLayoutParams(relativeParams2);
+        }
 
         bt_step_one.setOnClickListener(new OnClickListener() {
             @Override
@@ -484,12 +515,6 @@ public class MainActivity extends HSActivity {
         this.bt_step_one.startAnimation(alphaAnimation);
         this.bt_step_two.startAnimation(alphaAnimation);
     }
-
-    //    private Drawable getDimmedDrawable(Drawable drawable) {
-    //        Resources resources = HSApplication.getContext().getResources();
-    //        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[] { drawable, new ColorDrawable(resources.getColor(R.color.translucent_black)) });
-    //        return layerDrawable;
-    //    }
 
     private void doAppearAnimation() {
         rootView.setBackgroundColor(getResources().getColor(R.color.translucent_black));
