@@ -82,7 +82,7 @@
         <item name="keyPreviewTextColor">#FFFFFFFF</item>
 
         <!-- keyboard所有panel的主背景色，包括settings panel, emoji, font selection panel, theme selection panel, more suggestion panel等 -->
-        <item name="keyboardDominantColor">#ff1855ee</item>
+        <item name="keyboardDominantColor">#2f4aa3</item>
     </style>
 
     <style name="MainKeyboardView.CLASSIC" parent="KeyboardView.CLASSIC">
@@ -107,13 +107,13 @@
         <item name="keyPreviewAnimatorType">flash</item>
 
         <!-- 划屏输入时的预览条上的文字颜色 -->
-        <item name="gestureFloatingPreviewTextColor">#1ea0cd</item>
+        <item name="gestureFloatingPreviewTextColor">#b9b4ff</item>
 
         <!-- 划屏输入时的预览条上的背景颜色 -->
         <item name="gestureFloatingPreviewColor">#EA000000</item>
 
         <!-- 划屏轨迹的颜色 -->
-        <item name="gestureTrailColor">#1ea0cd</item>
+        <item name="gestureTrailColor">#b9b4ff</item>
 
         <!-- 空格键上表示语言的文字的颜色 -->
         <item name="languageOnSpacebarTextColor">#FF222222</item>
@@ -147,7 +147,7 @@
     <style name="EmojiPalettesView.CLASSIC" parent="MainKeyboardView.CLASSIC">
 
         <!-- emoji键盘的背景色 -->
-        <item name="android:background">#ff181818</item>
+        <item name="android:background">#2f4aa3</item>
         <!-- emoji键盘的emoji category indicator条的颜色 -->
         <item name="categoryPageIndicatorColor">#BBFFFFFF</item>
         <!-- emoji键盘的emoji category indicator条的底色 -->
