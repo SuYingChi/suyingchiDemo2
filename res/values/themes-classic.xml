@@ -75,7 +75,7 @@
 
         <!-- 按键hint文字的字体颜色 -->
         <item name="keyHintLetterColor">#FF222222</item>
-        <!-- 按键多字母hint文字的字体颜色 -->
+        <!-- 按键多字母hint文字的字体颜色, 以及space键上的语言角标的颜色 -->
         <item name="keyHintLabelColor">#FF222222</item>
 
         <!-- preview的文字颜色 -->
@@ -115,14 +115,17 @@
         <!-- 划屏轨迹的颜色 -->
         <item name="gestureTrailColor">#b9b4ff</item>
 
+        <!-- 空格键上表示语言的文字的大小，相对于键高的比例 -->
+        <item name="languageOnSpacebarTextRatio">@fraction/config_key_hint_label_ratio_pink</item>
+
         <!-- 空格键上表示语言的文字的颜色 -->
-        <item name="languageOnSpacebarTextColor">#FF222222</item>
+        <item name="languageOnSpacebarTextColor">#ffffff</item>
 
         <!-- 空格键上表示语言的文字的阴影模糊半径 -->
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
 
         <!-- 空格键上表示语言的文字的阴影颜色 -->
-        <item name="languageOnSpacebarTextShadowColor">#FF222222</item>
+        <item name="languageOnSpacebarTextShadowColor">#ffffff</item>
 
         <!-- 普通按键文字的阴影模糊半径 -->
         <item name="keyTextShadowRadius">0.0</item>
@@ -146,8 +149,6 @@
     -->
     <style name="EmojiPalettesView.CLASSIC" parent="MainKeyboardView.CLASSIC">
 
-        <!-- emoji键盘的背景色 -->
-        <item name="android:background">#2f4aa3</item>
         <!-- emoji键盘的emoji category indicator条的颜色 -->
         <item name="categoryPageIndicatorColor">#BBFFFFFF</item>
         <!-- emoji键盘的emoji category indicator条的底色 -->
@@ -188,16 +189,16 @@
     <style name="SettingsPannel.CLASSIC" parent="KeyboardView.CLASSIC">
 
         <!-- settings panel的文字颜色 -->
-        <item name="settingsTextColor">#ff181818</item>
+        <item name="settingsTextColor">#bfffffff</item>
     </style>
 
     <style name="FontSelectPannel.CLASSIC" parent="KeyboardView.CLASSIC">
 
         <!-- font select panel的divider颜色 -->
-        <item name="fontDividerColor">#ffff0000</item>
-
+        <item name="fontDividerColor">#bfffffff</item>
+        <item name="fontItemSelectedColor">#26ffffff</item>
         <!-- font select panel的文字颜色 -->
-        <item name="fontTextColor">#ffff0000</item>
+        <item name="fontTextColor">#bfffffff</item>
     </style>
 
     <!-- 下面的模块儿暂时不用配置 -->
