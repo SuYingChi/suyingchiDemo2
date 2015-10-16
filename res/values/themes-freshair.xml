@@ -53,10 +53,10 @@
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
         <item name="keyTextColor">#FFFFFFFF</item>
         <item name="functionalTextColor">#FFFFFFFF</item>
-        <item name="keyHintLetterColor">#FF222222</item>
-        <item name="keyHintLabelColor">#FF222222</item>
-        <item name="keyPreviewTextColor">#FFFFFFFF</item>
-        <item name="keyboardDominantColor">#ff1855ee</item>
+        <item name="keyHintLetterColor">#7fffffff</item>
+        <item name="keyHintLabelColor">#7fffffff</item>
+        <item name="keyPreviewTextColor">#272727</item>
+        <item name="keyboardDominantColor">#159b6c</item>
     </style>
 
     <style name="MainKeyboardView.FRESHAIR" parent="KeyboardView.FRESHAIR">
@@ -67,12 +67,12 @@
         <item name="keyPreviewOffset">-5dp</item>
         <item name="keyPreviewPaddingBottom">0dp</item>
         <item name="keyPreviewAnimatorType">flash</item>
-        <item name="gestureFloatingPreviewTextColor">#1ea0cd</item>
-        <item name="gestureFloatingPreviewColor">#EA000000</item>
-        <item name="gestureTrailColor">#1ea0cd</item>
-        <item name="languageOnSpacebarTextColor">#FF222222</item>
+        <item name="gestureFloatingPreviewTextColor">#272727</item>
+        <item name="gestureFloatingPreviewColor">#dddddd</item>
+        <item name="gestureTrailColor">#8cffaf</item>
+        <item name="languageOnSpacebarTextColor">#7fffffff</item>
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
-        <item name="languageOnSpacebarTextShadowColor">#FF222222</item>
+        <item name="languageOnSpacebarTextShadowColor">#7fffffff</item>
         <item name="keyTextShadowRadius">0.0</item>
         <item name="keyTextShadowDx">-5.0</item>
         <item name="keyTextShadowDy">-5.0</item>
@@ -93,8 +93,8 @@
     </style>
 
     <style name="MoreKeysKeyboardView.FRESHAIR" parent="KeyboardView.FRESHAIR">
-        <item name="keyTextColor">#FFFFFFFF</item>
-        <item name="keyTextPressedColor">#FFFFFFFF</item>
+        <item name="keyTextColor">#272727</item>
+        <item name="keyTextPressedColor">#272727</item>
         <item name="keyLetterSize">@fraction/config_morekeys_key_letter_ratio</item>
         <item name="fontName">normal</item>
         <item name="keyTextShadowRadius">0.0</item>
@@ -104,19 +104,20 @@
     </style>
 
     <style name="SuggestionStripView.FRESHAIR" parent="KeyboardView.FRESHAIR">
-        <item name="colorValidTypedWord">#ff1ea0cd</item>
-        <item name="colorTypedWord">#FFFFFFFF</item>
-        <item name="colorAutoCorrect">#ff1ea0cd</item>
-        <item name="colorSuggested">#FFFFFFFF</item>
+        <item name="colorValidTypedWord">#ffffff</item>
+        <item name="colorTypedWord">#b8d5d1</item>
+        <item name="colorAutoCorrect">#ffffff</item>
+        <item name="colorSuggested">#b8d5d1</item>
     </style>
 
     <style name="SettingsPannel.FRESHAIR" parent="KeyboardView.FRESHAIR">
-        <item name="settingsTextColor">#ff181818</item>
+        <item name="settingsTextColor">#bfffffff</item>
     </style>
 
     <style name="FontSelectPannel.FRESHAIR" parent="KeyboardView.FRESHAIR">
-        <item name="fontDividerColor">#ffff0000</item>
-        <item name="fontTextColor">#ffff0000</item>
+        <item name="fontDividerColor">#bfffffff</item>
+        <item name="fontItemSelectedColor">#26ffffff</item>
+        <item name="fontTextColor">#bfffffff</item>
     </style>
 
     <style name="SuggestionWord.FRESHAIR" parent="SuggestionWord">

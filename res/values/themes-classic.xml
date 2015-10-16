@@ -74,12 +74,12 @@
         <item name="functionalTextColor">#FFFFFFFF</item>
 
         <!-- 按键hint文字的字体颜色 -->
-        <item name="keyHintLetterColor">#FF222222</item>
-        <!-- 按键多字母hint文字的字体颜色, 以及space键上的语言角标的颜色 -->
-        <item name="keyHintLabelColor">#FF222222</item>
+        <item name="keyHintLetterColor">#7fffffff</item>
+        <!-- 按键多字母hint文字的字体颜色 -->
+        <item name="keyHintLabelColor">#7fffffff</item>
 
         <!-- preview的文字颜色 -->
-        <item name="keyPreviewTextColor">#FFFFFFFF</item>
+        <item name="keyPreviewTextColor">#272727</item>
 
         <!-- keyboard所有panel的主背景色，包括settings panel, emoji, font selection panel, theme selection panel, more suggestion panel等 -->
         <item name="keyboardDominantColor">#2f4aa3</item>
@@ -107,10 +107,10 @@
         <item name="keyPreviewAnimatorType">flash</item>
 
         <!-- 划屏输入时的预览条上的文字颜色 -->
-        <item name="gestureFloatingPreviewTextColor">#b9b4ff</item>
+        <item name="gestureFloatingPreviewTextColor">#272727</item>
 
         <!-- 划屏输入时的预览条上的背景颜色 -->
-        <item name="gestureFloatingPreviewColor">#EA000000</item>
+        <item name="gestureFloatingPreviewColor">#dddddd</item>
 
         <!-- 划屏轨迹的颜色 -->
         <item name="gestureTrailColor">#b9b4ff</item>
@@ -119,13 +119,13 @@
         <item name="languageOnSpacebarTextRatio">@fraction/config_key_hint_label_ratio_pink</item>
 
         <!-- 空格键上表示语言的文字的颜色 -->
-        <item name="languageOnSpacebarTextColor">#ffffff</item>
+        <item name="languageOnSpacebarTextColor">#7fffffff</item>
 
         <!-- 空格键上表示语言的文字的阴影模糊半径 -->
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
 
         <!-- 空格键上表示语言的文字的阴影颜色 -->
-        <item name="languageOnSpacebarTextShadowColor">#ffffff</item>
+        <item name="languageOnSpacebarTextShadowColor">#7fffffff</item>
 
         <!-- 普通按键文字的阴影模糊半径 -->
         <item name="keyTextShadowRadius">0.0</item>
@@ -158,9 +158,9 @@
     <style name="MoreKeysKeyboardView.CLASSIC" parent="KeyboardView.CLASSIC">
 
         <!-- more keys 按键上的字体颜色 -->
-        <item name="keyTextColor">#FFFFFFFF</item>
+        <item name="keyTextColor">#272727</item>
         <!-- more keys 按键被按下时的字体颜色 -->
-        <item name="keyTextPressedColor">#FFFFFFFF</item>
+        <item name="keyTextPressedColor">#272727</item>
         <!-- more keys的字体大小 -->
         <item name="keyLetterSize">@fraction/config_morekeys_key_letter_ratio</item>
         <!-- more keys的字体 -->
@@ -177,13 +177,13 @@
     <style name="SuggestionStripView.CLASSIC" parent="KeyboardView.CLASSIC">
 
         <!-- suggestion bar输入的联想词的字体颜色，当输入的词为一个valid词时，第一个联想词位置的颜色 -->
-        <item name="colorValidTypedWord">#ff1ea0cd</item>
+        <item name="colorValidTypedWord">#ffffff</item>
         <!-- 当前输入的词不为valid词时的字体颜色 -->
-        <item name="colorTypedWord">#FFFFFFFF</item>
+        <item name="colorTypedWord">#bbc0d5</item>
         <!-- 当前输入的词的自动修正的字体颜色 -->
-        <item name="colorAutoCorrect">#ff1ea0cd</item>
+        <item name="colorAutoCorrect">#ffffff</item>
         <!-- 普通联想词的颜色 -->
-        <item name="colorSuggested">#FFFFFFFF</item>
+        <item name="colorSuggested">#bbc0d5</item>
     </style>
 
     <style name="SettingsPannel.CLASSIC" parent="KeyboardView.CLASSIC">
@@ -196,7 +196,9 @@
 
         <!-- font select panel的divider颜色 -->
         <item name="fontDividerColor">#bfffffff</item>
+        
         <item name="fontItemSelectedColor">#26ffffff</item>
+
         <!-- font select panel的文字颜色 -->
         <item name="fontTextColor">#bfffffff</item>
     </style>
