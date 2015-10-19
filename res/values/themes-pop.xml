@@ -47,11 +47,11 @@
         <item name="keyLabelSize">@fraction/config_key_label_ratio_pink</item>
         <item name="keyHintLetterPaddingRight">@dimen/config_key_hint_letter_padding_right_pop</item>
         <item name="keyHintLetterRatio">@fraction/config_key_hint_letter_ratio_pink</item>
-        <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_pink</item>
+        <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_pop</item>
         <item name="keyLabelOffCenterRatio">-55%</item>
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
-        <item name="keyHintLabelOffCenterRatio">275%</item>
-        <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
+        <item name="keyHintLabelOffCenterRatio">225%</item>
+        <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pop</item>
         <item name="keyTextColor">#010101</item>
         <item name="functionalTextColor">#010101</item>
         <item name="keyHintLetterColor">#EA000000</item>
@@ -63,7 +63,7 @@
     <style name="MainKeyboardView.POP" parent="KeyboardView.POP">
         <item name="fontName">bd_cartoon_shout</item>
         <item name="hintTypeface">bold</item>
-        <item name="keyLetterSize">@fraction/config_key_letter_ratio_pink</item>
+        <item name="keyLetterSize">@fraction/config_key_letter_ratio_pop</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height</item>
         <item name="keyPreviewOffset">-5dp</item>
         <item name="keyPreviewPaddingBottom">0dp</item>
@@ -96,11 +96,11 @@
         <item name="keyTextColor">#EA000000</item>
         <item name="keyTextPressedColor">#EA000000</item>
         <item name="keyLetterSize">@fraction/config_morekeys_key_letter_ratio</item>
-        <item name="fontName">normal</item>
+        <item name="fontName">bold</item>
         <item name="keyTextShadowRadius">0.0</item>
-        <item name="keyTextShadowDx">-5.0</item>
-        <item name="keyTextShadowDy">-5.0</item>
-        <item name="keyTextShadowColor">#80000000</item>
+        <item name="keyTextShadowDx">0.0</item>
+        <item name="keyTextShadowDy">0.0</item>
+        <item name="keyTextShadowColor">#EA000000</item>
     </style>
 
     <style name="SuggestionStripView.POP" parent="KeyboardView.POP">

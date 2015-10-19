@@ -46,10 +46,10 @@
     <style name="KeyboardView.ELECTRIC" parent="KeyboardView">
         <item name="keyLabelSize">@fraction/config_key_label_ratio_pink</item>
         <item name="keyHintLetterRatio">@fraction/config_key_hint_letter_ratio_pink</item>
-        <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_pink</item>
+        <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_electric</item>
         <item name="keyLabelOffCenterRatio">-55%</item>
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
-        <item name="keyHintLabelOffCenterRatio">275%</item>
+        <item name="keyHintLabelOffCenterRatio">230%</item>
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
         <item name="keyTextColor">#cccccc</item>
         <item name="functionalTextColor">#cccccc</item>
@@ -60,9 +60,9 @@
     </style>
 
     <style name="MainKeyboardView.ELECTRIC" parent="KeyboardView.ELECTRIC">
-        <item name="fontName">normal</item>
+        <item name="fontName">zekton_bold</item>
         <item name="hintTypeface">bold</item>
-        <item name="keyLetterSize">@fraction/config_key_letter_ratio_pink</item>
+        <item name="keyLetterSize">@fraction/config_key_letter_ratio_electric</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height</item>
         <item name="keyPreviewOffset">-5dp</item>
         <item name="keyPreviewPaddingBottom">0dp</item>
@@ -73,14 +73,14 @@
         <item name="languageOnSpacebarTextColor">#cccccc</item>
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
         <item name="languageOnSpacebarTextShadowColor">#cccccc</item>
-        <item name="keyTextShadowRadius">0.0</item>
-        <item name="keyTextShadowDx">-5.0</item>
-        <item name="keyTextShadowDy">-5.0</item>
-        <item name="keyTextShadowColor">#80000000</item>
-        <item name="keyFuncTextShadowRadius">0</item>
-        <item name="keyFuncTextShadowDx">2.0</item>
-        <item name="keyFuncTextShadowDy">6.0</item>
-        <item name="keyFuncTextShadowColor">#80000000</item>
+        <item name="keyTextShadowRadius">4.0</item>
+        <item name="keyTextShadowDx">3.0</item>
+        <item name="keyTextShadowDy">-3.0</item>
+        <item name="keyTextShadowColor">#FF000000</item>
+        <item name="keyFuncTextShadowRadius">4.0</item>
+        <item name="keyFuncTextShadowDx">3.0</item>
+        <item name="keyFuncTextShadowDy">-3.0</item>
+        <item name="keyFuncTextShadowColor">#FF000000</item>
     </style>
     <!--
          Though {@link EmojiPalettesView} doesn't extend {@link KeyboardView}, some views inside it,
