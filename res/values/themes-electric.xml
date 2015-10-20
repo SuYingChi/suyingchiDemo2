@@ -64,12 +64,16 @@
         <item name="hintTypeface">bold</item>
         <item name="keyLetterSize">@fraction/config_key_letter_ratio_electric</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height</item>
-        <item name="keyPreviewOffset">-5dp</item>
+        <item name="keyPreviewOffset">@dimen/config_key_preview_offset_electric</item>
         <item name="keyPreviewPaddingBottom">0dp</item>
         <item name="keyPreviewAnimatorType">flash</item>
         <item name="gestureFloatingPreviewTextColor">#ffffff</item>
         <item name="gestureFloatingPreviewColor">#cccccc</item>
         <item name="gestureTrailColor">#32a0ff</item>
+        <item name="keyPopupHintLetterPaddingRight">@dimen/config_key_popup_hint_letter_padding_right_electric</item>
+        <item name="keyPopupHintLetterPaddingTop">@dimen/config_key_popup_hint_letter_padding_top_electric</item>
+        <item name="keyLanguageOnSpacePaddingRight">@dimen/config_key_language_on_space_padding_right_electric</item>
+        <item name="keyLanguageOnSpacePaddingTop">@dimen/config_key_language_on_space_padding_top_electric</item>
         <item name="languageOnSpacebarTextColor">#cccccc</item>
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
         <item name="languageOnSpacebarTextShadowColor">#cccccc</item>
