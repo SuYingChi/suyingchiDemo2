@@ -478,7 +478,7 @@ public class MainActivity extends HSActivity {
             edit_text_test.requestFocus();
             //             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(edit_text_test, InputMethodManager.SHOW_IMPLICIT);
-            rootView.setBackgroundColor(getResources().getColor(R.color.translucent_black));
+            rootView.setBackgroundColor(getResources().getColor(R.color.bg_translucent_black));
             if (style == CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL || style == CurrentUIStyle.UISTYLE_STEP_THREE_TEST)
                 return;
             //scaleTitleImage();
@@ -517,7 +517,7 @@ public class MainActivity extends HSActivity {
     }
 
     private void doAppearAnimation() {
-        rootView.setBackgroundColor(getResources().getColor(R.color.translucent_black));
+        rootView.setBackgroundColor(getResources().getColor(R.color.bg_translucent_black));
         bt_settings.setAlpha(1);
         bt_languages.setAlpha(1);
         bt_settings.setVisibility(View.VISIBLE);

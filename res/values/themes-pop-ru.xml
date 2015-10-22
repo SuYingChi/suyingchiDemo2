@@ -52,7 +52,7 @@
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
         <item name="keyHintLabelOffCenterRatio">225%</item>
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pop</item>
-        <item name="keyTextColor">#ff0000</item>
+        <item name="keyTextColor">#010101</item>
         <item name="functionalTextColor">#010101</item>
         <item name="keyHintLetterColor">#EA000000</item>
         <item name="keyHintLabelColor">#EA000000</item>
@@ -62,7 +62,7 @@
     </style>
 
     <style name="MainKeyboardView.POP.RU" parent="KeyboardView.POP.RU">
-        <item name="fontName">zekton_bold</item>
+        <item name="fontName">markerfeltwide</item>
         <item name="hintTypeface">bold</item>
         <item name="keyLetterSize">@fraction/config_key_letter_ratio_pop</item>
         <item name="keyPreviewHeight">@dimen/config_key_preview_height</item>

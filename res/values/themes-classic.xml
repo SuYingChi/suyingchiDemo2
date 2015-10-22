@@ -62,7 +62,7 @@
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
 
         <!-- 9宫格按键，的hint label相对于按键左端在横轴上的偏移量，0对应的位置为居左，数值表示相对于hint字母宽度的比例 -->
-        <item name="keyHintLabelOffCenterRatio">275%</item>
+        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio</item>
 
         <!-- preview 按键的文字大小，比例为相对于普通按键高的比例 -->
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
@@ -196,7 +196,6 @@
 
         <!-- font select panel的divider颜色 -->
         <item name="fontDividerColor">#bfffffff</item>
-        
         <item name="fontItemSelectedColor">#26ffffff</item>
 
         <!-- font select panel的文字颜色 -->

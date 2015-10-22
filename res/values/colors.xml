@@ -6,5 +6,6 @@
     <color name="font_item_text_color">#ffffffff</color>
     <color name="settings_item_text_color">#ffffffff</color>
     <color name="font_divider_color">#33ffffff</color>
+    <color name="bg_translucent_black">#B2000000</color>
 
 </resources>
