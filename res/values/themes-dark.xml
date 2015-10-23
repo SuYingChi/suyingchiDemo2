@@ -115,6 +115,7 @@
 
     <style name="FontSelectPannel.DARK" parent="KeyboardView.DARK">
         <item name="fontDividerColor">#33ffffff</item>
+        <item name="fontItemSelectedColor">#26ffffff</item>
         <item name="fontTextColor">#ffffffff</item>
     </style>
 

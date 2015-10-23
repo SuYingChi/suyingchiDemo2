@@ -118,8 +118,9 @@
     </style>
 
     <style name="FontSelectPannel.GREY" parent="KeyboardView.GREY">
-        <item name="fontDividerColor">#ff181818</item>
-        <item name="fontTextColor">#ff181818</item>
+        <item name="fontDividerColor">#ffffff</item>
+        <item name="fontItemSelectedColor">#26ffffff</item>
+        <item name="fontTextColor">#181818</item>
     </style>
 
     <style name="SuggestionWord.GREY" parent="SuggestionWord">
