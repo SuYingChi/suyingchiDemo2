@@ -23,8 +23,8 @@ public class HSKeyboardApplication extends HSApplication {
     private HSFontSelectPanel mFontSelectPanel;
     private HSSettingsPanel mSettingsPanel;
     private HSThemeSelectPanel mThemeSelectPanel;
-    private static final String GA_DEBUG_TRACKER_ID = "UA-69196780-1";
-    private static final String GA_RELEASE_TRACKER_ID = "UA-66468004-1";
+    private static final String GA_DEBUG_TRACKER_ID = "UA-6919678000-1";
+    private static final String GA_RELEASE_TRACKER_ID = "UA-64233211-2";
 
 
     private INotificationObserver loadPanelsObserver = new INotificationObserver() {
