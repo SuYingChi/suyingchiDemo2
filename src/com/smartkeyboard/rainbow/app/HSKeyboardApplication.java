@@ -23,6 +23,9 @@ public class HSKeyboardApplication extends HSApplication {
     private HSFontSelectPanel mFontSelectPanel;
     private HSSettingsPanel mSettingsPanel;
     private HSThemeSelectPanel mThemeSelectPanel;
+    private static final String GA_DEBUG_TRACKER_ID = "UA-66465927-1";
+    private static final String GA_RELEASE_TRACKER_ID = "UA-66468004-1";
+    private static final boolean DEBUG = HSLog.isDebugging();
 
     private INotificationObserver loadPanelsObserver = new INotificationObserver() {
         @Override
@@ -62,9 +65,9 @@ public class HSKeyboardApplication extends HSApplication {
         mThemeSelectPanel = new HSThemeSelectPanel(mContext);
         HSGlobalNotificationCenter.addObserver(HSKeyboard.HS_NOTIFICATION_LOAD_APP_PANELS, loadPanelsObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
-        HSGoogleAnalyticsUtils.init(mContext);
+        HSGoogleAnalyticsUtils.init(mContext, getTrackingId());
     }
-    
+
     @Override
     public void onTerminate() {
         HSGlobalNotificationCenter.removeObserver(sessionEventObserver);
@@ -81,5 +84,12 @@ public class HSKeyboardApplication extends HSApplication {
         if (mContext.getResources().getBoolean(R.bool.config_sticker_enabled)) {
             featureUtils.enableFeature(HSFeatureUtils.FEATURE_STICKER);
         }
+    }
+
+    private static String getTrackingId() {
+        if (DEBUG) {
+            return GA_DEBUG_TRACKER_ID;
+        }
+        return GA_RELEASE_TRACKER_ID;
     }
 }

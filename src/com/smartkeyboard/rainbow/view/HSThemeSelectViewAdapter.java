@@ -15,6 +15,8 @@ import android.widget.ImageView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.extended.api.HSKeyboard;
+import com.ihs.inputmethod.extended.eventrecorder.HSGoogleAnalyticsEvent;
+import com.ihs.inputmethod.extended.eventrecorder.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.extended.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.keyboard.KeyboardTheme;
 import com.smartkeyboard.rainbow.R;
@@ -120,6 +122,7 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
         mAnimator = createAnimator(view);
         mAnimator.start();
         KeyboardTheme.saveKeyboardThemeId(String.valueOf(index), PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()));
+        HSGoogleAnalyticsUtils.sendEvent(HSGoogleAnalyticsEvent.GA_EVENT_THEME_CHOSED, KeyboardTheme.getKeyboardThemeName(index));
         notifyDataSetChanged();
     }
 
