@@ -23,10 +23,10 @@
     <string-array name="keyboard_theme_names" translatable="false">
         <item>@string/keyboard_theme_classic</item>
         <item>@string/keyboard_theme_electric</item>
-        <item>@string/keyboard_theme_pop</item>
+        <item>@string/keyboard_theme_grey</item>
         <item>@string/keyboard_theme_freshair</item>
         <item>@string/keyboard_theme_dark</item>
-        <item>@string/keyboard_theme_grey</item>
+        <item>@string/keyboard_theme_pop</item>
     </string-array>
 
 </resources>
