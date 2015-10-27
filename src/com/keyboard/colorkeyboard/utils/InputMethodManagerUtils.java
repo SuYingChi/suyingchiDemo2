@@ -1,4 +1,4 @@
-package com.smartkeyboard.rainbow.utils;
+package com.keyboard.colorkeyboard.utils;
 
 import android.content.Context;
 import android.provider.Settings;

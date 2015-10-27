@@ -1,4 +1,4 @@
-package com.smartkeyboard.rainbow.view;
+package com.keyboard.colorkeyboard.view;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import com.ihs.inputmethod.extended.api.HSKeyboard;
 import com.ihs.inputmethod.extended.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.latin.fonts.HSFontManager;
 import com.ihs.inputmethod.latin.fonts.LetterFont;
-import com.smartkeyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 //ListView adapter.
 public class HSFontSelectViewAdapter extends BaseAdapter {

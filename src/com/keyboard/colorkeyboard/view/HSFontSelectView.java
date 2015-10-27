@@ -1,4 +1,4 @@
-package com.smartkeyboard.rainbow.view;
+package com.keyboard.colorkeyboard.view;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.widget.ListView;
 
 import com.ihs.inputmethod.extended.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.latin.R;
+import com.keyboard.colorkeyboard.R;
 import com.ihs.inputmethod.latin.utils.ResourceUtils;
 
 public class HSFontSelectView extends ListView {

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.smartkeyboard.rainbow"
+    package="com.keyboard.colorkeyboard"
     android:versionCode="1"
     android:versionName="1.0.0" android:installLocation="internalOnly">
 
@@ -29,16 +29,16 @@
 
     <!-- required by libAppFramework -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.smartkeyboard.rainbow.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <permission
-        android:name="com.smartkeyboard.rainbow.permission.C2D_MESSAGE"
+        android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <application
-        android:name="com.smartkeyboard.rainbow.app.HSKeyboardApplication"
+        android:name="com.keyboard.colorkeyboard.app.HSKeyboardApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
@@ -57,7 +57,7 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.gcm.intent.RETRY" />
 
-                <category android:name="com.smartkeyboard.rainbow" />
+                <category android:name="com.keyboard.colorkeyboard" />
             </intent-filter>
         </receiver>
 
@@ -118,7 +118,7 @@
         </service>
 
         <activity
-            android:name="com.smartkeyboard.rainbow.app.MainActivity"
+            android:name="com.keyboard.colorkeyboard.app.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="adjustResize" >
@@ -160,7 +160,7 @@
 
         <!-- for notifying suggestion picked event -->
         <receiver
-            android:name="com.smartkeyboard.rainbow.SuggestionSpanPickedNotificationReceiver"
+            android:name="com.keyboard.colorkeyboard.SuggestionSpanPickedNotificationReceiver"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.text.style.SUGGESTION_PICKED" />
@@ -169,7 +169,7 @@
 
         <!-- wechat sdk required -->
         <activity
-            android:name="com.smartkeyboard.rainbow.wxapi.WXEntryActivity"
+            android:name="com.keyboard.colorkeyboard.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >

@@ -1,4 +1,4 @@
-package com.smartkeyboard.rainbow.view;
+package com.keyboard.colorkeyboard.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -9,7 +9,7 @@ import com.ihs.inputmethod.extended.api.HSKeyboard;
 import com.ihs.inputmethod.extended.api.HSKeyboardPanel;
 import com.ihs.inputmethod.extended.api.HSKeyboardPanel.IHSKeyboardPanelListener;
 import com.ihs.inputmethod.extended.theme.HSKeyboardThemeManager;
-import com.smartkeyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 public class HSThemeSelectPanel {
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.smartkeyboard.rainbow.view.HSSettingsPanelView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.keyboard.colorkeyboard.view.HSSettingsPanelView xmlns:android="http://schemas.android.com/apk/res/android"
     style="?attr/settingsPanelStyle"
     android:layout_width="match_parent"
     android:layout_height="@dimen/config_default_keyboard_height"
@@ -201,4 +201,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</com.smartkeyboard.rainbow.view.HSSettingsPanelView>
+</com.keyboard.colorkeyboard.view.HSSettingsPanelView>

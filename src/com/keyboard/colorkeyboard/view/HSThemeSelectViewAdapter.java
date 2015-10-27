@@ -1,4 +1,4 @@
-package com.smartkeyboard.rainbow.view;
+package com.keyboard.colorkeyboard.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -19,7 +19,7 @@ import com.ihs.inputmethod.extended.eventrecorder.HSGoogleAnalyticsEvent;
 import com.ihs.inputmethod.extended.eventrecorder.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.extended.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.keyboard.KeyboardTheme;
-import com.smartkeyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 public class HSThemeSelectViewAdapter extends BaseAdapter {
     private LayoutInflater mInflater;

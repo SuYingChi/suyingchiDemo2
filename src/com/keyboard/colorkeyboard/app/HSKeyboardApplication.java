@@ -1,4 +1,4 @@
-package com.smartkeyboard.rainbow.app;
+package com.keyboard.colorkeyboard.app;
 
 import android.content.Context;
 
@@ -11,11 +11,11 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.extended.api.HSKeyboard;
 import com.ihs.inputmethod.extended.eventrecorder.HSGoogleAnalyticsUtils;
-import com.smartkeyboard.rainbow.R;
-import com.smartkeyboard.rainbow.utils.HSFeatureUtils;
-import com.smartkeyboard.rainbow.view.HSFontSelectPanel;
-import com.smartkeyboard.rainbow.view.HSSettingsPanel;
-import com.smartkeyboard.rainbow.view.HSThemeSelectPanel;
+import com.keyboard.colorkeyboard.R;
+import com.keyboard.colorkeyboard.utils.HSFeatureUtils;
+import com.keyboard.colorkeyboard.view.HSFontSelectPanel;
+import com.keyboard.colorkeyboard.view.HSSettingsPanel;
+import com.keyboard.colorkeyboard.view.HSThemeSelectPanel;
 
 public class HSKeyboardApplication extends HSApplication {
 
