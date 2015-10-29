@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.keyboard.colorkeyboard.view.HSSettingsPanelView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/settingsPanelStyle"
     android:layout_width="match_parent"
     android:layout_height="@dimen/config_default_keyboard_height"
-    android:background="@color/settings_panel_background"
     android:fillViewport="true"
     android:orientation="vertical"
     android:scrollbars="none" >
@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/settings_panel_background"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -39,9 +38,10 @@
                     android:soundEffectsEnabled="false" />
 
                 <TextView
+                    android:id="@+id/bt_sound_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/bt_sound"
+                    android:layout_below="@id/bt_sound"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="7dp"
                     android:gravity="center"
@@ -64,9 +64,10 @@
                     android:soundEffectsEnabled="false" />
 
                 <TextView
+                    android:id="@+id/bt_correction_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/bt_correction"
+                    android:layout_below="@id/bt_correction"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="7dp"
                     android:gravity="center"
@@ -89,9 +90,10 @@
                     android:soundEffectsEnabled="false" />
 
                 <TextView
+                    android:id="@+id/bt_capitalization_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/bt_capitalization"
+                    android:layout_below="@id/bt_capitalization"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="7dp"
                     android:gravity="center"
@@ -114,9 +116,10 @@
                     android:soundEffectsEnabled="false" />
 
                 <TextView
+                    android:id="@+id/bt_predictive_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/bt_predictive"
+                    android:layout_below="@id/bt_predictive"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="7dp"
                     android:gravity="center"
@@ -147,9 +150,10 @@
                     android:soundEffectsEnabled="false" />
 
                 <TextView
+                    android:id="@+id/bt_swipe_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/bt_swipe"
+                    android:layout_below="@id/bt_swipe"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="7dp"
                     android:gravity="center"
@@ -172,9 +176,10 @@
                     android:soundEffectsEnabled="false" />
 
                 <TextView
+                    android:id="@+id/bt_more_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/bt_more"
+                    android:layout_below="@id/bt_more"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="7dp"
                     android:gravity="center"
@@ -196,4 +201,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+</com.keyboard.colorkeyboard.view.HSSettingsPanelView>

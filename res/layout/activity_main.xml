@@ -1,167 +1,200 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2a9de8"
     android:orientation="vertical"
     tools:context="com.ihs.keyboard.superemoji.app.MainActivity" >
 
-    <ImageView
-        android:id="@+id/view_img_title"
+    <RelativeLayout
+        android:id="@+id/view_main_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/app_title_image" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/main_logo_margin_top" >
+
+        <LinearLayout
+            android:id="@+id/view_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/view_logo_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_logo_img_marginbottom"
+                android:layout_marginTop="@dimen/main_logo_img_margintop"
+                android:scaleType="fitXY"
+                android:src="@drawable/app_rainbow_logo" />
+
+            <TextView
+                android:id="@+id/view_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="RainbowKey"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/main_logo_title_textsize" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_logo"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="@dimen/main_logo_subtitle_paddingleft"
+            android:text="Colorful Chatting"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/main_logo_subtitle_textsize" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/bt_step_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/guide_button_one_selector"
+        android:layout_above="@+id/bt_step_two"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/guide_button_selector"
         android:clipChildren="false" >
 
-        <RelativeLayout
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="17dp"
-            android:clipChildren="false" >
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/app_button_guide_1" >
+        </ImageView>
 
-            <TextView
-                android:id="@+id/text_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:fontFamily="sans-serif"
-                android:text="@string/toast_enable_keyboard"
-                android:textColor="#2a9de8"
-                android:textSize="16sp"
-                android:textStyle="normal" >
-            </TextView>
+        <TextView
+            android:id="@+id/text_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="55dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/toast_enable_keyboard"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/button_guide_textsize"
+            android:textStyle="normal" >
+        </TextView>
 
-            <ImageView
-                android:id="@+id/view_enter_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="240dp"
-                android:src="@drawable/app_button_guide_enter" >
-            </ImageView>
+        <ImageView
+            android:id="@+id/view_enter_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="230dp"
+            android:src="@drawable/app_button_guide_enter" >
+        </ImageView>
 
-            <ImageView
-                android:id="@+id/view_choose_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="230dp"
-                android:src="@drawable/app_button_guide_choose" >
-            </ImageView>
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/view_choose_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="220dp"
+            android:src="@drawable/app_button_guide_choose" >
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/bt_step_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/guide_button_two_selector"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/guide_button_selector"
         android:clipChildren="false" >
 
-        <RelativeLayout
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="17dp"
-            android:clipChildren="false" >
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/app_button_guide_2" >
+        </ImageView>
 
-            <TextView
-                android:id="@+id/text_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:fontFamily="sans-serif"
-                android:text="@string/toast_select_keyboard"
-                android:textColor="#2a9de8"
-                android:textSize="16sp"
-                android:textStyle="normal" >
-            </TextView>
+        <TextView
+            android:id="@+id/text_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="55dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/toast_select_keyboard"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/button_guide_textsize"
+            android:textStyle="normal" >
+        </TextView>
 
-            <ImageView
-                android:id="@+id/view_enter_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="240dp"
-                android:src="@drawable/app_button_guide_enter" >
-            </ImageView>
+        <ImageView
+            android:id="@+id/view_enter_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="230dp"
+            android:src="@drawable/app_button_guide_enter" >
+        </ImageView>
 
-            <ImageView
-                android:id="@+id/view_choose_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="230dp"
-                android:src="@drawable/app_button_guide_choose" >
-            </ImageView>
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/view_choose_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="220dp"
+            android:src="@drawable/app_button_guide_choose" >
+        </ImageView>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/settings_view"
+    <Button
+        android:id="@+id/bt_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-45dp" >
+        android:layout_below="@id/view_main_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:alpha="0"
+        android:background="@drawable/guide_button_selector"
+        android:text="Settings"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/button_settings_textsize" />
 
-        <Button
-            android:id="@+id/bt_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:alpha="0"
-            android:background="@drawable/app_button_guide_settings_bg"
-            android:text="Settings"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
+    <Button
+        android:id="@+id/bt_languages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_settings"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:alpha="0"
+        android:background="@drawable/guide_button_selector"
+        android:text="Languages"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/button_settings_textsize" />
 
-        <Button
-            android:id="@+id/bt_languages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bt_settings"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:alpha="0"
-            android:background="@drawable/app_button_guide_settings_bg"
-            android:text="Languages"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
+    <EditText
+        android:id="@+id/edit_text_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="25dp"
+        android:background="#ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="@string/main_activity_edittext_hint"
+        android:imeOptions="actionNone"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:paddingBottom="10dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:textColorHint="#ff8f8f8f" />
 
-        <EditText
-            android:id="@+id/edit_text_test"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="25dp"
-            android:background="#ffffff"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:hint="@string/main_activity_edittext_hint"
-            android:imeOptions="actionNone"
-            android:inputType="textCapSentences|textAutoCorrect"
-            android:paddingBottom="10dp"
-            android:paddingLeft="2dp"
-            android:paddingTop="10dp"
-            android:singleLine="true"
-            android:textColorHint="#ff8f8f8f" />
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

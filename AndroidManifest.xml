@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.smartkeyboard.rainbow"
+    package="com.keyboard.colorkeyboard"
+    android:installLocation="internalOnly"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -29,16 +30,16 @@
 
     <!-- required by libAppFramework -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.smartkeyboard.rainbow.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <permission
-        android:name="com.smartkeyboard.rainbow.permission.C2D_MESSAGE"
+        android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <application
-        android:name="com.smartkeyboard.rainbow.app.HSKeyboardApplication"
+        android:name="com.keyboard.colorkeyboard.app.HSKeyboardApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
@@ -57,7 +58,7 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.gcm.intent.RETRY" />
 
-                <category android:name="com.smartkeyboard.rainbow" />
+                <category android:name="com.keyboard.colorkeyboard" />
             </intent-filter>
         </receiver>
 
@@ -118,7 +119,7 @@
         </service>
 
         <activity
-            android:name="com.smartkeyboard.rainbow.app.MainActivity"
+            android:name="com.keyboard.colorkeyboard.app.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="adjustResize" >
@@ -137,6 +138,14 @@
         </activity>
         <activity android:name="com.ihs.inputmethod.latin.settings.ThemeSettingsActivity" >
         </activity>
+        <activity
+            android:name="com.ihs.inputmethod.latin.settings.MoreLanguageActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <!-- The service and activity below are required for triggering voice recognition. -->
         <service android:name="com.ihs.inputmethod.extended.voice.ServiceHelper" />
@@ -152,7 +161,7 @@
 
         <!-- for notifying suggestion picked event -->
         <receiver
-            android:name="com.smartkeyboard.rainbow.SuggestionSpanPickedNotificationReceiver"
+            android:name="com.keyboard.colorkeyboard.SuggestionSpanPickedNotificationReceiver"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.text.style.SUGGESTION_PICKED" />
@@ -161,11 +170,38 @@
 
         <!-- wechat sdk required -->
         <activity
-            android:name="com.smartkeyboard.rainbow.wxapi.WXEntryActivity"
+            android:name="com.keyboard.colorkeyboard.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
+        <activity
+            android:name="com.tapjoy.TJCOffersWebView"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name="com.tapjoy.TapjoyVideoView"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name="com.tapjoy.TJAdUnitView"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.tapjoy.mraid.view.ActionHandler"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name="com.tapjoy.mraid.view.Browser"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/fb_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

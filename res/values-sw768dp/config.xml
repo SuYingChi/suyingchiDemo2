@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="config_space_key_offesty_pop">-8dp</dimen>
+    <dimen name="config_key_language_on_space_padding_right_pop">8dp</dimen>
+    <dimen name="config_key_language_on_space_padding_top_pop">0dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_right">8dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top">0dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_right_grey">8dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top_grey">0dp</dimen>
+
+</resources>
