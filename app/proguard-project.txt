@@ -1,0 +1,47 @@
+# To enable ProGuard in your project, edit project.properties
+# to define the proguard.config property as described in that file.
+#
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in ${sdk.dir}/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the ProGuard
+# include property in project.properties.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# Add any project specific keep options here:
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+
+
+# Keep classes and methods that have the @UsedForTesting annotation
+-keep @com.android.inputmethod.annotations.UsedForTesting class *
+-keepclassmembers class * {
+    @com.android.inputmethod.annotations.UsedForTesting *;
+}
+# Keep classes and methods that have the @ExternallyReferenced annotation
+-keep @com.android.inputmethod.annotations.ExternallyReferenced class *
+-keepclassmembers class * {
+    @com.android.inputmethod.annotations.ExternallyReferenced *;
+}
+# Keep native methods
+-keepclassmembers class * {
+    native <methods>;
+}
+
+-keep class com.ihs.inputmethod.latin.** extends com.ihs.inputmethod.latin.Dictionary { *; }
+-keep class com.android.inputmethod.** { *; }
+-keep class org.yaml.snakeyaml.** { *; }
+-keep class com.tencent.mm.sdk.openapi.WXMediaMessage { *;}
+-keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
+
+-include libs/ihs/libAppFramework/lib-appframework.proguard
+-include libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt
+
+-keep public class com.google.** { *; }
