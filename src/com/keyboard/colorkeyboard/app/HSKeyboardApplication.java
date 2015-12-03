@@ -47,8 +47,8 @@ public class HSKeyboardApplication extends HSApplication {
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
                 int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                if (currentapiVersion <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
+                if (currentapiVersion <= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                    HSLog.d("should delay rate alert for sdk version below 4.1");
                     HSAlertMgr.delayRateAlert();
                 }
             }
