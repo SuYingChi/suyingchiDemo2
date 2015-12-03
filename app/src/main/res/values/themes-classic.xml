@@ -195,7 +195,7 @@
     <style name="FontSelectPannel.CLASSIC" parent="KeyboardView.CLASSIC">
 
         <!-- font select panel的divider颜色 -->
-        <item name="fontDividerColor">#bfffffff</item>
+        <item name="fontDividerColor">#20ffffff</item>
         <item name="fontItemSelectedColor">#26ffffff</item>
 
         <!-- font select panel的文字颜色 -->

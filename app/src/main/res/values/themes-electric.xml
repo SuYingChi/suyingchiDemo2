@@ -48,8 +48,8 @@
         <item name="keyHintLetterRatio">@fraction/config_key_hint_letter_ratio_pink</item>
         <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_electric</item>
         <item name="keyLabelOffCenterRatio">-55%</item>
-        <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
-        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio</item>
+        <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_electric</item>
+        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio_electric</item>
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
         <item name="keyTextColor">#cccccc</item>
         <item name="functionalTextColor">#cccccc</item>
@@ -118,7 +118,7 @@
     </style>
 
     <style name="FontSelectPannel.ELECTRIC" parent="KeyboardView.ELECTRIC">
-        <item name="fontDividerColor">#bfffffff</item>
+        <item name="fontDividerColor">#20ffffff</item>
         <item name="fontItemSelectedColor">#26ffffff</item>
         <item name="fontTextColor">#bfffffff</item>
     </style>

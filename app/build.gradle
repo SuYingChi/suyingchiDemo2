@@ -13,7 +13,11 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles 'proguard-project.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt') , 'proguard-project.txt' , '../libs/ihs/libAppFramework/lib-appframework.proguard' , '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
+        }
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt') , 'proguard-project.txt' , '../libs/ihs/libAppFramework/lib-appframework.proguard' , '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
         }
     }
 }
@@ -25,8 +29,8 @@ repositories {
 }
 
 dependencies {
-    compile(name:'libKeyboard-debug', ext:'aar')
-    compile files('libKeyboard-debug.libAppFramework.jar')
+    compile(name:'libKeyboard', ext:'aar')
+    compile files('libKeyboard.libAppFramework.jar')
     compile 'com.google.android.gms:play-services-analytics:8.1.0'
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
 }

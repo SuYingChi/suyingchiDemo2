@@ -115,7 +115,7 @@
     </style>
 
     <style name="FontSelectPannel.FRESHAIR" parent="KeyboardView.FRESHAIR">
-        <item name="fontDividerColor">#bfffffff</item>
+        <item name="fontDividerColor">#20ffffff</item>
         <item name="fontItemSelectedColor">#26ffffff</item>
         <item name="fontTextColor">#bfffffff</item>
     </style>

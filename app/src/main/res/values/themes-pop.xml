@@ -120,7 +120,7 @@
     </style>
 
     <style name="FontSelectPannel.POP" parent="KeyboardView.POP">
-        <item name="fontDividerColor">#bfffffff</item>
+        <item name="fontDividerColor">#40ffffff</item>
         <item name="fontItemSelectedColor">#26ffffff</item>
         <item name="fontTextColor">#bfffffff</item>
     </style>

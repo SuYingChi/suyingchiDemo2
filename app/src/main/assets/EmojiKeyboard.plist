@@ -27,12 +27,6 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(^&apos;^)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(*^.^*)</string>
 						</dict>
 						<dict>
@@ -45,12 +39,6 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>!(^^)!</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(^。^)</string>
 						</dict>
 						<dict>
@@ -58,24 +46,6 @@
 							<integer>1</integer>
 							<key>Image</key>
 							<string>(^_^)v</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(^&apos;^)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(^^)/</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(^^ゞ</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -99,19 +69,7 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(^&lt;^)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(#^.^#)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(^^)v</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -141,12 +99,6 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(=_=)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(T_T)</string>
 						</dict>
 						<dict>
@@ -160,12 +112,6 @@
 							<integer>1</integer>
 							<key>Image</key>
 							<string>(^○^)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>( ′θ`)</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -195,49 +141,13 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(^O^)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(^o^)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(^O^)／</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(^o^)／</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(^o^)丿</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(′ｏ`) </string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>)^o^(</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＼(-o-)／</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -255,49 +165,7 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>＼(-o-)／</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>ヽ(^.^)ノ</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>＼(◎o◎)／！</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>（●＾o＾●）</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(V)o￥o(V)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(~o~)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(+_+)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(+o+) </string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -309,19 +177,7 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(o|o)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(p_-)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(Q ))</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -340,42 +196,6 @@
 							<integer>1</integer>
 							<key>Image</key>
 							<string>(′0ノ`*)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(＠。ε。＠)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>^/^</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>^^;</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>^_^;</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>^m^</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>&lt;^!^&gt;</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -405,31 +225,7 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(-_-;)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(゜_゜)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(゜_゜&gt;)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(~_~)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(~_~;)</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -469,39 +265,9 @@
 						</dict>
 						<dict>
 							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(ToT)/~~~ </string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string> (-。-)y-゜゜゜</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
 							<string>(*_*)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(*_*;</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(*^^)v</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(゜))&lt;&lt;</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -519,19 +285,7 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(*′▽`)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(=′∇`=)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(＾ｕ＾)</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -543,63 +297,8 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(゜レ゜)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(＾◇＾)</string>
 						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(′へ`、 )</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(－－〆)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(′︿`)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(′～`；)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>( ′ロ` )</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(  ;′⌒`)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(゜ロ＼) (／ロ゜)</string>
-						</dict>
-					</array>
-					<key>TabImage</key>
-					<string>(^.^)</string>
-				</dict>
-				<dict>
-					<key>Content</key>
-					<array>
 						<dict>
 							<key>Columns</key>
 							<integer>1</integer>
@@ -736,12 +435,6 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(ΘΘ)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(Θ～Θ〃)</string>
 						</dict>
 						<dict>
@@ -773,12 +466,6 @@
 							<integer>1</integer>
 							<key>Image</key>
 							<string>(ΘдΘ；)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(Θ皿Θメ)</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -820,12 +507,6 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(Θ、Θ)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(Θ３Θ)</string>
 						</dict>
 						<dict>
@@ -838,12 +519,6 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(@_@。</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(＠_＠;)</string>
 						</dict>
 						<dict>
@@ -851,18 +526,6 @@
 							<integer>1</integer>
 							<key>Image</key>
 							<string>(Θ△Θ＠)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(oﾟωﾟo)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(σ｀・д･)σ</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -880,543 +543,15 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>⊙︿⊙</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>⊙ω⊙</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>⊙﹏⊙</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>⊙△⊙</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>⊙▽⊙</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>\(◎o◎)/</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∩▂∩</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∩０∩</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∩︿∩</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∩ω∩</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∩﹏∩</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∩△∩</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∩▽∩</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∪▂∪</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∪０∪</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∪︿∪</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∪ω∪</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∪﹏∪</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∪△∪</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>∪▽∪</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>●▽●</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>●△●</string>
 						</dict>
 					</array>
 					<key>TabImage</key>
-					<string>●ω●</string>
+					<string>(^.^)</string>
 				</dict>
 				<dict>
 					<key>Content</key>
 					<array>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>: -)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>:-(</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>:)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>:(</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>&gt;:(</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>&gt;:-(</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>:-|</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>:-&lt;</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>:-&gt;</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>:-O</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>:-P</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(~o~)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧ω≦</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧０≦</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧△≦</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧▂≦</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧▽≦</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧o≦</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧︿≦</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧﹏≦</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧▽≦y</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(/≧▽≦/)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(≧▽≦)y</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(/≧▽≦)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(≧3≦)/</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(≧ω≦)/</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>o(≧v≦) </string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>≧□≦○</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＞ω＜</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＞▽＜</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＞０＜</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＞︿＜</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＞▂＜</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＞﹏＜</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＞△＜</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>&gt;_&lt;</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＋▽＋</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＋０＋</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＋︿＋</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＋▂＋</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＋ω＋</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＋△＋</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＋﹏＋</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>＋∀＋</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・ˍ・)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・ˍ・*)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>（p・_q）</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(*^・_・)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(*・０・)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・ε・●)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(｡･ω･)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・∀・)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>（/ˍ・、）</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・-・。)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・▽・.)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・_・。)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(* ￣ー￣)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(￣ー￣&quot;)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(＠￣ー￣＠)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(＠・ˍ・)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(*・・*)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・ε・；)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(・ェ・o)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(ー∀ー)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(￣ｏ￣)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(*￣△￣*)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(*￣ro￣)</string>
-						</dict>
 						<dict>
 							<key>Columns</key>
 							<integer>2</integer>
@@ -1429,13 +564,6 @@
 							<key>Image</key>
 							<string>/~┴┴ (≧ｏ≦)(@)</string>
 						</dict>
-					</array>
-					<key>TabImage</key>
-					<string>: -)</string>
-				</dict>
-				<dict>
-					<key>Content</key>
-					<array>
 						<dict>
 							<key>Columns</key>
 							<integer>2</integer>
@@ -1584,6 +712,48 @@
 							<key>Columns</key>
 							<integer>2</integer>
 							<key>Image</key>
+							<string>＼(◎o◎)／！</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>（●＾o＾●）</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>(V)o￥o(V)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>(＠。ε。＠)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>(ToT)/~~~ </string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string> (-。-)y-゜゜゜</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>(゜ロ＼) (／ロ゜)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
 							<string>~~~(⌒ｏ⌒)~~~</string>
 						</dict>
 						<dict>
@@ -1603,18 +773,6 @@
 							<integer>2</integer>
 							<key>Image</key>
 							<string>☆ヾ(⌒ ‿ ⌒)彡ღ</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>♀（￣▽￣）／</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>♂（￣▽￣）／</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -1642,9 +800,33 @@
 						</dict>
 						<dict>
 							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>(oﾟωﾟo)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>(σ｀・д･)σ</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>╰（‵□′）╯</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
 							<integer>4</integer>
 							<key>Image</key>
 							<string>\(&quot;▔□▔)/\(&quot;▔□▔)/\(&quot;▔□▔)/</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>4</integer>
+							<key>Image</key>
+							<string>{{|└(&gt;o&lt; )┘|}}＼(`O´)／θ</string>
 						</dict>
 					</array>
 					<key>TabImage</key>
@@ -1663,31 +845,7 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
-							<string>(¬_¬)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
 							<string>(¬▂¬)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>( ಠ益ಠ)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(◣_◢)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(⋋▂⋌)</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -1771,6 +929,66 @@
 							<key>Columns</key>
 							<integer>1</integer>
 							<key>Image</key>
+							<string>o(≧v≦) </string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string>≧□≦○</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string>(＠・ˍ・)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string>(*・・*)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string>(・ェ・o)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string>(*￣△￣*)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string>(•ิ_•ิ)?</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string> (ಠ_ರ) ?</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string>(´ﾟoﾟ`)??</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
+							<string>(ﾟωﾟ;)?</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>1</integer>
+							<key>Image</key>
 							<string> (^.^* )ゞ</string>
 						</dict>
 						<dict>
@@ -1778,12 +996,6 @@
 							<integer>2</integer>
 							<key>Image</key>
 							<string>ヽ(｀⌒´メ)ノ</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>╰（‵□′）╯</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -1849,7 +1061,7 @@
 							<key>Columns</key>
 							<integer>2</integer>
 							<key>Image</key>
-							<string>{{|└(&gt;o&lt; )┘|}}</string>
+							<string>[[|└(&gt;o&lt; )┘|]]</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -1873,18 +1085,6 @@
 							<key>Columns</key>
 							<integer>2</integer>
 							<key>Image</key>
-							<string>ლ(ಠ益ಠლ)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(屮ಠ益ಠ)屮</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
 							<string>＜彡(;≧皿≦)彡ゞ </string>
 						</dict>
 						<dict>
@@ -1897,37 +1097,7 @@
 							<key>Columns</key>
 							<integer>2</integer>
 							<key>Image</key>
-							<string>╭∩╮（▽）╭∩╮</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>╭∩╮_︿﹀_╭∩╮</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(╬ﾟ◥益◤ﾟ)</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(ノಠ益ಠ)ノ</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>ヽ(ｏ`皿′ｏ)ﾉ</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>щ(ಠ益ಠщ)</string>
+							<string>//(;ﾟДﾟ;)\\</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -1952,6 +1122,18 @@
 							<integer>2</integer>
 							<key>Image</key>
 							<string>(#／。＼#)</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>╭∩╮_︿﹀_╭∩╮</string>
+						</dict>
+						<dict>
+							<key>Columns</key>
+							<integer>2</integer>
+							<key>Image</key>
+							<string>╭∩╮（▽）╭∩╮</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -1991,12 +1173,6 @@
 						</dict>
 						<dict>
 							<key>Columns</key>
-							<integer>4</integer>
-							<key>Image</key>
-							<string>{{|└(&gt;o&lt; )┘|}}＼(`O´)／θ</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
 							<integer>2</integer>
 							<key>Image</key>
 							<string>ノ( º _ ºノ)</string>
@@ -2033,81 +1209,9 @@
 						</dict>
 						<dict>
 							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(•ิ_•ิ)?</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>?:-|</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string> (ಠ_ರ) ?</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string> (´.｀;) ？</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(ﾟ･ﾟ)??</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(´ﾟoﾟ`)??</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(´ﾟ‿ﾟ`)??</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>1</integer>
-							<key>Image</key>
-							<string>(ﾟωﾟ;)?</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>Σ(ﾟДﾟ? )ﾉ</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>٩(๏̯͡๏)ゞ?</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
 							<integer>2</integer>
 							<key>Image</key>
 							<string>(◔_◔)???</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>∑(´□｀；) ???</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>???...(‘＇ェ＇｀；)</string>
 						</dict>
 						<dict>
 							<key>Columns</key>
@@ -2119,37 +1223,7 @@
 							<key>Columns</key>
 							<integer>2</integer>
 							<key>Image</key>
-							<string>Σ(`Д´；)ﾉ????</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(´ε｀；) ??</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(￣Д￣；)????</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
 							<string> ()ﾟヘﾟ)」???</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>/(;ﾟДﾟ;)\??</string>
-						</dict>
-						<dict>
-							<key>Columns</key>
-							<integer>2</integer>
-							<key>Image</key>
-							<string>(・o・；)????</string>
 						</dict>
 						<dict>
 							<key>Columns</key>

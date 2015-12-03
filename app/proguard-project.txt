@@ -41,7 +41,7 @@
 -keep class com.tencent.mm.sdk.openapi.WXMediaMessage { *;}
 -keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
 
--include libs/ihs/libAppFramework/lib-appframework.proguard
--include libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt
+#-include libs/ihs/libAppFramework/lib-appframework.proguard
+#-include libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt
 
 -keep public class com.google.** { *; }
