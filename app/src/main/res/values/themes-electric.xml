@@ -118,7 +118,7 @@
     </style>
 
     <style name="FontSelectPannel.ELECTRIC" parent="KeyboardView.ELECTRIC">
-        <item name="fontDividerColor">#20ffffff</item>
+        <item name="fontDividerColor">#bfffffff</item>
         <item name="fontItemSelectedColor">#26ffffff</item>
         <item name="fontTextColor">#bfffffff</item>
     </style>

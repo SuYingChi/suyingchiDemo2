@@ -25,7 +25,7 @@
     <dimen name="config_key_hint_letter_padding_right_pop">5dp</dimen>
 
     <!-- hint label-->
-    <fraction name="config_key_hint_label_ratio_electric">25%</fraction>
-    <fraction name="config_key_hint_label_off_center_ratio_electric">220%</fraction>
+    <fraction name="config_key_hint_label_ratio_electric">24%</fraction>
+    <fraction name="config_key_hint_label_off_center_ratio_electric">320%</fraction>
 
 </resources>
