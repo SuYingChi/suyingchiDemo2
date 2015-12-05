@@ -16,6 +16,6 @@
     <dimen name="config_key_popup_hint_letter_padding_top_electric">0dp</dimen>
 
     <!-- hint label-->
-    <fraction name="config_key_hint_label_ratio_electric">24%</fraction>
-    <fraction name="config_key_hint_label_off_center_ratio_electric">290%</fraction>
+    <fraction name="config_key_hint_label_ratio_electric">20%</fraction>
+    <fraction name="config_key_hint_label_off_center_ratio_electric">230%</fraction>
 </resources>
