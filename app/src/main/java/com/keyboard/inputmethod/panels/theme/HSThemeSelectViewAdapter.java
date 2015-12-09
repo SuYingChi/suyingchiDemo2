@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
@@ -104,7 +105,14 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
             holder.themeRegionRight.setOnClickListener(null);
         }
 
-
+        if(position==0) {
+            LinearLayout.LayoutParams lpLeft = ((LinearLayout.LayoutParams) (holder.themeRegionLeft.getLayoutParams()));
+            lpLeft.setMargins(0, 1, 0, 0);
+            LinearLayout.LayoutParams lpRight = ((LinearLayout.LayoutParams) (holder.themeRegionRight.getLayoutParams()));
+            lpRight.setMargins(0, 1, 0, 0);
+            holder.themeRegionLeft.setLayoutParams(lpLeft);
+            holder.themeRegionRight.setLayoutParams(lpRight);
+        }
         updateViews(fontLeftIndex, holder.themePreviewLeftPick);
         updateViews(fontRightIndex, holder.themePreviewRightPick);
         return convertView;

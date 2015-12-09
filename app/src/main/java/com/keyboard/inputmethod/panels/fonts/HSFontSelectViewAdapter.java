@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -119,6 +120,14 @@ public class HSFontSelectViewAdapter extends BaseAdapter {
             holder.fontClickRegionRight.setOnClickListener(null);
         }
 
+        if(position==0) {
+            LinearLayout.LayoutParams lpLeft = ((LinearLayout.LayoutParams) (holder.fontClickRegionLeft.getLayoutParams()));
+            lpLeft.setMargins(0, 1, 0, 0);
+            LinearLayout.LayoutParams lpRight = ((LinearLayout.LayoutParams) (holder.fontClickRegionRight.getLayoutParams()));
+            lpRight.setMargins(0, 1, 0, 0);
+            holder.fontClickRegionLeft.setLayoutParams(lpLeft);
+            holder.fontClickRegionRight.setLayoutParams(lpRight);
+        }
         updateViews(fontLeftIndex, holder.fontPickIconLeft, holder.fontClickRegionLeft);
         updateViews(fontRightIndex, holder.fontPickIconRight, holder.fontClickRegionRight);
 
