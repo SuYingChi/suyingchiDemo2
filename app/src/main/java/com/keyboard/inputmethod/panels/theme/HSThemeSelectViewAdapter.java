@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
-import com.keyboard.colorkeyboard.R;
-import com.keyboard.colorkeyboard.utils.Constants;
+import com.keyboard.rainbow.R;
+import com.keyboard.rainbow.utils.Constants;
 
 public class HSThemeSelectViewAdapter extends BaseAdapter {
     private LayoutInflater mInflater;

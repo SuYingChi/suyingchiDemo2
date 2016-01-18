@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "com.keyboard.colorkeyboard"
+        applicationId "com.keyboard.rainbow"
         minSdkVersion 14
         targetSdkVersion 22
     }

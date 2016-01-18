@@ -1,4 +1,4 @@
-package com.keyboard.colorkeyboard.utils;
+package com.keyboard.rainbow.utils;
 
 /**
  * Created by xu.zhang on 10/31/15.
