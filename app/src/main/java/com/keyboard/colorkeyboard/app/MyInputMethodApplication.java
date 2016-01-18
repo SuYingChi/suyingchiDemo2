@@ -1,5 +1,7 @@
 package com.keyboard.colorkeyboard.app;
 
+import android.os.Build;
+
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -17,8 +19,8 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
                 int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                if (currentapiVersion <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
+                if (currentapiVersion <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                    HSLog.d("should delay rate alert for sdk version between 4.1");
                     HSAlertMgr.delayRateAlert();
                 }
             }
