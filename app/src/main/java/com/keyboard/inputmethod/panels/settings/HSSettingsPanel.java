@@ -284,4 +284,14 @@ public class HSSettingsPanel extends HSInputMethodPanel {
         }
     }
 
+
+    @Override
+    public void onShowPanelView() {
+        super.onShowPanelView();
+        updateSoundSettings();
+        updateCorrectionSettings();
+        updateCapitalizationSettings();
+        updatePredictiveSettings();
+        updateSwipeSettings();
+    }
 }
