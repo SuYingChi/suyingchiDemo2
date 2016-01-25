@@ -19,31 +19,31 @@
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="KeyboardTheme.POP.RU">
+    <style name="KeyboardTheme.POP.IW">
 
         <!-- If you are a PM, you don't need to touch the following part of this file. Consult a developer if you have to modify any of the item below -->
         <!-- following are references of styles defined within the rest of this file -->
-        <item name="keyboardStyle">@style/Keyboard.POP.RU</item>
-        <item name="keyboardViewStyle">@style/KeyboardView.POP.RU</item>
-        <item name="mainKeyboardViewStyle">@style/MainKeyboardView.POP.RU</item>
-        <item name="emojiPalettesViewStyle">@style/EmojiPalettesView.POP.RU</item>
-        <item name="bigEmojiPalettesViewStyle">@style/BigEmojiPalettesView.POP.RU</item>
-        <item name="stickerPalettesViewStyle">@style/StickerPalettesView.POP.RU</item>
-        <item name="moreKeysKeyboardStyle">@style/MoreKeysKeyboard.POP.RU</item>
+        <item name="keyboardStyle">@style/Keyboard.POP.IW</item>
+        <item name="keyboardViewStyle">@style/KeyboardView.POP.IW</item>
+        <item name="mainKeyboardViewStyle">@style/MainKeyboardView.POP.IW</item>
+        <item name="emojiPalettesViewStyle">@style/EmojiPalettesView.POP.IW</item>
+        <item name="bigEmojiPalettesViewStyle">@style/BigEmojiPalettesView.POP.IW</item>
+        <item name="stickerPalettesViewStyle">@style/StickerPalettesView.POP.IW</item>
+        <item name="moreKeysKeyboardStyle">@style/MoreKeysKeyboard.POP.IW</item>
         <!-- Note: ICS theme uses the same style for both general more keys and action more keys. -->
-        <item name="moreKeysKeyboardViewStyle">@style/MoreKeysKeyboardView.POP.RU</item>
-        <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.POP.RU</item>
-        <item name="suggestionStripViewStyle">@style/SuggestionStripView.POP.RU</item>
-        <item name="suggestionWordStyle">@style/SuggestionWord.POP.RU</item>
-        <item name="settingsPanelStyle">@style/SettingsPannel.POP.RU</item>
-        <item name="fontSelectPanelStyle">@style/FontSelectPannel.POP.RU</item>
+        <item name="moreKeysKeyboardViewStyle">@style/MoreKeysKeyboardView.POP.IW</item>
+        <item name="moreKeysKeyboardViewForActionStyle">@style/MoreKeysKeyboardView.POP.IW</item>
+        <item name="suggestionStripViewStyle">@style/SuggestionStripView.POP.IW</item>
+        <item name="suggestionWordStyle">@style/SuggestionWord.POP.IW</item>
+        <item name="settingsPanelStyle">@style/SettingsPannel.POP.IW</item>
+        <item name="fontSelectPanelStyle">@style/FontSelectPannel.POP.IW</item>
 
         <!-- reserved area ends here -->
     </style>
 
-    <style name="Keyboard.POP.RU" parent="Keyboard"></style>
+    <style name="Keyboard.POP.IW" parent="Keyboard"></style>
 
-    <style name="KeyboardView.POP.RU" parent="KeyboardView">
+    <style name="KeyboardView.POP.IW" parent="KeyboardView">
         <item name="keyLabelSize">@fraction/config_key_label_ratio_pink</item>
         <item name="keyHintLetterPaddingRight">@dimen/config_key_hint_letter_padding_right_pop</item>
         <item name="keyHintLetterRatio">@fraction/config_key_hint_letter_ratio_pink</item>
@@ -61,7 +61,7 @@
         <item name="keySpaceIconOffsetY">@dimen/config_space_key_offesty_pop</item>
     </style>
 
-    <style name="MainKeyboardView.POP.RU" parent="KeyboardView.POP.RU">
+    <style name="MainKeyboardView.POP.IW" parent="KeyboardView.POP.IW">
         <item name="fontName">myriadarabic_bold</item>
         <item name="hintTypeface">bold</item>
         <item name="keyLetterSize">@fraction/config_key_letter_ratio_pop</item>
@@ -92,12 +92,12 @@
          Though {@link EmojiPalettesView} doesn't extend {@link KeyboardView}, some views inside it,
          for instance delete button, need themed {@link KeyboardView} attributes.
     -->
-    <style name="EmojiPalettesView.POP.RU" parent="MainKeyboardView.POP.RU">
+    <style name="EmojiPalettesView.POP.IW" parent="MainKeyboardView.POP.IW">
         <item name="categoryPageIndicatorColor">#BBFFFFFF</item>
         <item name="categoryPageIndicatorBackground">#33FFFFFF</item>
     </style>
 
-    <style name="MoreKeysKeyboardView.POP.RU" parent="KeyboardView.POP.RU">
+    <style name="MoreKeysKeyboardView.POP.IW" parent="KeyboardView.POP.IW">
         <item name="keyTextColor">#EA000000</item>
         <item name="keyTextPressedColor">#EA000000</item>
         <item name="keyLetterSize">@fraction/config_morekeys_key_letter_ratio</item>
@@ -108,38 +108,38 @@
         <item name="keyTextShadowColor">#EA000000</item>
     </style>
 
-    <style name="SuggestionStripView.POP.RU" parent="KeyboardView.POP.RU">
+    <style name="SuggestionStripView.POP.IW" parent="KeyboardView.POP.IW">
         <item name="colorValidTypedWord">#ffffff</item>
         <item name="colorTypedWord">#000000</item>
         <item name="colorAutoCorrect">#ffffff</item>
         <item name="colorSuggested">#000000</item>
     </style>
 
-    <style name="SettingsPannel.POP.RU" parent="KeyboardView.POP.RU">
+    <style name="SettingsPannel.POP.IW" parent="KeyboardView.POP.IW">
         <item name="settingsTextColor">#bfffffff</item>
     </style>
 
-    <style name="FontSelectPannel.POP.RU" parent="KeyboardView.POP.RU">
+    <style name="FontSelectPannel.POP.IW" parent="KeyboardView.POP.IW">
         <item name="fontDividerColor">#40ffffff</item>
         <item name="fontItemSelectedColor">#26ffffff</item>
         <item name="fontTextColor">#bfffffff</item>
     </style>
 
-    <style name="SuggestionWord.POP.RU" parent="SuggestionWord">
+    <style name="SuggestionWord.POP.IW" parent="SuggestionWord">
         <item name="android:textColor">#FFFFFFFF</item>
         <item name="android:textSize">@dimen/config_suggestion_text_size_pink</item>
     </style>
 
-    <style name="MoreKeysKeyboard.POP.RU" parent="Keyboard.POP.RU">
+    <style name="MoreKeysKeyboard.POP.IW" parent="Keyboard.POP.IW">
         <item name="keyboardTopPadding">0%p</item>
         <item name="keyboardBottomPadding">0%p</item>
         <item name="horizontalGap">0%p</item>
         <item name="touchPositionCorrectionData">@null</item>
     </style>
 
-    <style name="BigEmojiPalettesView.POP.RU" parent="EmojiPalettesView.POP.RU" />
+    <style name="BigEmojiPalettesView.POP.IW" parent="EmojiPalettesView.POP.IW" />
 
-    <style name="StickerPalettesView.POP.RU">
+    <style name="StickerPalettesView.POP.IW">
         <item name="android:background">#ff181818</item>
     </style>
 
