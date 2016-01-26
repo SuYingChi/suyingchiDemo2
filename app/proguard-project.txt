@@ -35,7 +35,7 @@
     native <methods>;
 }
 
--keep class com.ihs.inputmethod.latin.** extends com.ihs.inputmethod.latin.Dictionary { *; }
+-keep class com.ihs.inputmethod.language.** extends com.ihs.inputmethod.language.Dictionary { *; }
 -keep class com.android.inputmethod.** { *; }
 -keep class org.yaml.snakeyaml.** { *; }
 -keep class com.tencent.mm.sdk.openapi.WXMediaMessage { *;}
