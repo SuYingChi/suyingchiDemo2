@@ -102,10 +102,8 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
         <service
-            android:name="com.keyboard.rainbow.app.MyInputMethodService"
+            android:name="com.ihs.inputmethod.latin.LatinIME"
             android:label="@string/english_ime_name"
             android:permission="android.permission.BIND_INPUT_METHOD" >
             <intent-filter>
@@ -116,6 +114,7 @@
                 android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
         <activity
             android:name="com.keyboard.rainbow.app.MainActivity"
