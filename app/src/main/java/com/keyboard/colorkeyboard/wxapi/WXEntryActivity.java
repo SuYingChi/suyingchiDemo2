@@ -1,4 +1,4 @@
-package com.keyboard.rainbow.wxapi;
+package com.keyboard.colorkeyboard.wxapi;
 
 import android.app.Activity;
 import android.content.Intent;

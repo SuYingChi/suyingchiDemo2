@@ -18,8 +18,8 @@ import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.api.HSInputMethodPanel;
 import com.ihs.inputmethod.api.HSInputMethodSettings;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
-import com.keyboard.rainbow.R;
-import com.keyboard.rainbow.utils.Constants;
+import com.keyboard.colorkeyboard.R;
+import com.keyboard.colorkeyboard.utils.Constants;
 
 public class HSSettingsPanel extends HSInputMethodPanel {
 
