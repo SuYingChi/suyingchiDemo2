@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="config_super_emoji_enabled">false</bool>
+    <bool name="config_sticker_enabled">false</bool>
+
+    <!-- preview -->
+    <dimen name="config_key_preview_offset_electric">-5dp</dimen>
+    <!-- space key -->
+    <dimen name="config_key_language_on_space_padding_right_pop">6dp</dimen>
+    <dimen name="config_key_language_on_space_padding_top_pop">-3dp</dimen>
+    <dimen name="config_key_language_on_space_padding_right_electric">6dp</dimen>
+    <dimen name="config_key_language_on_space_padding_top_electric">0dp</dimen>
+    <dimen name="config_space_key_offesty_pop">2dp</dimen>
+
+    <!-- pop up hint -->
+    <dimen name="config_key_popup_hint_letter_padding_right_pop">4dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top_pop">-3dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_right_electric">4dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top_electric">0dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_right_grey">3dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top_grey">-2dp</dimen>
+
+    <!-- hint letter -->
+    <dimen name="config_key_hint_letter_padding_right_pop">5dp</dimen>
+
+    <!-- hint label-->
+    <fraction name="config_key_hint_label_ratio_electric">24%</fraction>
+    <fraction name="config_key_hint_label_off_center_ratio_electric">320%</fraction>
+
+</resources>
