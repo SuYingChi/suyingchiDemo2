@@ -1,4 +1,4 @@
-package com.keyboard.colorkeyboard.app;
+package com.keyboard.rainbow.app;
 
 import android.os.Build;
 

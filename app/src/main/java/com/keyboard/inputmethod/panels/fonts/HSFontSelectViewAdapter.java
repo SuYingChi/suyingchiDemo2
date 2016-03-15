@@ -18,7 +18,7 @@ import com.ihs.inputmethod.api.HSFontManager;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
 import com.ihs.inputmethod.api.HSLetterFont;
-import com.keyboard.colorkeyboard.R;
+import com.keyboard.rainbow.R;
 
 import java.util.List;
 
