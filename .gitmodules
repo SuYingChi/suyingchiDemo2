@@ -1,3 +1,3 @@
-[submodule "libKeyboard"]
-	path = libs/ihs/libKeyboard
-	url = http://git.ihandysoft.com/bingroup/bin_keyboard_android.git
+[submodule "lib_keyboard_android"]
+	path = lib_keyboard_android
+	url = http://git.ihandysoft.com/nogroup/lib_keyboard_android.git

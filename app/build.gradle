@@ -20,6 +20,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt') , 'proguard-project.txt' , '../libs/ihs/libAppFramework/lib-appframework.proguard' , '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
         }
     }
+
+    dexOptions {
+        javaMaxHeapSize "8g"
+    }
 }
 
 repositories {
@@ -29,8 +33,7 @@ repositories {
 }
 
 dependencies {
-    compile(name:'libKeyboard', ext:'aar')
-    compile files('libKeyboard.libAppFramework.jar')
+    compile project(':libKeyboard')
     compile 'com.google.android.gms:play-services-analytics:8.1.0'
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
