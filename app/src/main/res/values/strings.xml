@@ -17,6 +17,7 @@
     <string name="keyboard_theme_pop" translatable="false">Pop</string>
     <string name="keyboard_theme_electric" translatable="false">Electric</string>
     <string name="panel_fonts" translatable="false">fonts</string>
+    <string name="panel_gifs" translatable="false">gif</string>
     <string name="panel_settings" translatable="false">settings</string>
     <string name="panel_theme" translatable="false">theme</string>
     <string name="settings_button_sound">Sounds</string>
@@ -26,5 +27,6 @@
     <string name="settings_button_swipe">Swipe</string>
     <string name="settings_button_more_settings">More Settings</string>
     <string name="fb_app_id">910238615719294</string>
+    <string name="emoji_search_hint">Search GIFs by text or emoji </string>
 
 </resources>

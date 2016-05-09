@@ -26,4 +26,10 @@
     <dimen name="button_settings_textsize">18sp</dimen>
     <dimen name="button_guide_textsize">16sp</dimen>
 
+
+    <!-- gif -->
+    <dimen name="config_gif_tag_text_size">15sp</dimen>
+    <dimen name="config_gif_tag_padding_horizontal">2dp</dimen>
+    <dimen name="config_gif_grid_spacing">1dp</dimen>
+    <dimen name="config_gif_emoji_search_page_id_view_height">2dp</dimen>
 </resources>
