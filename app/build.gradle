@@ -8,6 +8,8 @@ android {
         applicationId "com.keyboard.rainbow"
         minSdkVersion 14
         targetSdkVersion 22
+        // Enabling multidex support.
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -39,4 +41,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     compile 'com.facebook.fresco:fresco:0.7.0'
+    compile 'com.android.support:multidex:1.0.1'
 }
