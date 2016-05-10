@@ -2,6 +2,7 @@ package com.keyboard.inputmethod.panels.gif.ui.view;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -25,6 +27,7 @@ import com.ihs.inputmethod.api.HSInputMethodPanelStripView;
 import com.ihs.inputmethod.api.HSInputMethodSettings;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
 import com.ihs.inputmethod.base.utils.ResourceUtils;
+import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESManager;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESPageGridView;
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
@@ -112,19 +115,30 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 		ImageView iv2= (ImageView) findViewById(R.id.gif_toolbar_back_button_iv);
 		closeButton = (ImageView) findViewById(R.id.close);
 		ImageView iv= (ImageView) findViewById(R.id.gif_toolbar_main_search);
+
+		setBackgroundDrawable(main,"keyboard_gif_search_bar_bg");
+		setImageDrawable(iv,"keyboard_gif_search_bar");
+		setImageDrawable(iv2,"keyboard_gif_left_arrow");
+		setImageDrawable(closeButton,"keyboard_gif_emoji_search_close_button");
 //		main.setBackgroundDrawable(HSKeyboardThemeManager.getNinePatchAssetDrawable(null, "keyboard_gif_search_bar_bg.png"));
 //		iv.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, "keyboard_gif_search_bar.png"));
 //		iv2.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, "keyboard_gif_left_arrow.png"));
 //		closeButton.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, "keyboard_gif_emoji_search_close_button.png"));
-		main.setBackgroundResource(R.drawable.keyboard_gif_search_bar_bg);
-		iv.setImageResource(R.drawable.keyboard_gif_search_bar);
-		iv2.setImageResource(R.drawable.keyboard_gif_left_arrow);
-		closeButton.setImageResource(R.drawable.keyboard_gif_emoji_search_close_button);
-
 
 		initBackAnim();
 		bindEvents();
 
+	}
+
+	private void setBackgroundDrawable(View view, String fileName) {
+		view.setBackgroundDrawable(HSKeyboardThemeManager.getNinePatchAssetDrawable(getDefaultDrawable(fileName),fileName+".png"));
+	}
+	private void setImageDrawable(ImageView iv, String fileName) {
+		iv.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(getDefaultDrawable(fileName),fileName+".png"));
+	}
+
+	private Drawable getDefaultDrawable(String defaultFileName) {
+		return getResources().getDrawable(getResources().getIdentifier(defaultFileName, "drawable", HSApplication.getContext().getPackageName()));
 	}
 
 	private void initBackAnim() {
