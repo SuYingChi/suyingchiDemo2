@@ -7,13 +7,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,14 +60,18 @@ public class MainActivity extends HSActivity {
 
     private View rootView;
 
+    private TextView view_title_text;
+    private View view_logo_img;
     private View bt_step_one;
     private View bt_step_two;
     //    private View bt_step_one_content_view;
     //    private View bt_step_two_content_view;
     private TextView text_one;
     private TextView text_two;
-    private Button bt_settings;
-    private Button bt_languages;
+    private TextView bt_design_theme;
+    private LinearLayout settings_languages_layout;
+    private TextView bt_settings;
+    private TextView bt_languages;
     private ImageView img_rainbow;
     private ImageView img_enter_one;
     private ImageView img_enter_two;
@@ -106,11 +111,14 @@ public class MainActivity extends HSActivity {
         Point size = new Point();
         display.getSize(size);
         int screenWidth = size.x;
-        int screenHeight = size.y;
+        final int screenHeight = size.y;
 
         getWindow().setBackgroundDrawable(HSInputMethodCommonUtils.getScaledImage(getResources().getDrawable(R.drawable.app_bg), screenWidth, screenHeight));
 
 
+
+        view_title_text = (TextView) this.findViewById(R.id.view_title_text);
+        view_logo_img = (View) this.findViewById(R.id.view_logo_img);
         bt_step_one = (View) this.findViewById(R.id.bt_step_one);
         bt_step_two = (View) this.findViewById(R.id.bt_step_two);
         //        bt_step_one_content_view = (View) this.findViewById(R.id.bt_step_one_content_view);
@@ -123,8 +131,10 @@ public class MainActivity extends HSActivity {
         img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
 
-        bt_settings = (Button) this.findViewById(R.id.bt_settings);
-        bt_languages = (Button) this.findViewById(R.id.bt_languages);
+        bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
+        settings_languages_layout = (LinearLayout) this.findViewById(R.id.settings_languages_layout);
+        bt_settings = (TextView) this.findViewById(R.id.bt_settings);
+        bt_languages = (TextView) this.findViewById(R.id.bt_languages);
 
         edit_text_test = (EditText) this.findViewById(R.id.edit_text_test);
 
@@ -132,29 +142,40 @@ public class MainActivity extends HSActivity {
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeRecevier, filter);
 
+        LinearLayout.LayoutParams designThemeLayouParam = (LinearLayout.LayoutParams) bt_design_theme.getLayoutParams();
+        designThemeLayouParam.topMargin = (int) (screenHeight * 0.09);
+
+        LinearLayout.LayoutParams settings_languages_layoutLayoutParams = (LinearLayout.LayoutParams) settings_languages_layout.getLayoutParams();
+        settings_languages_layoutLayoutParams.topMargin = (int) (screenHeight * 0.03646);
 
         if (getResources().getBoolean(R.bool.isTablet)) {
 
             int button_width = (int) (screenWidth * 0.5);
-            float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicWidth());
+            final float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicHeight())
+                    / ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicWidth());
 
-            RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
-            relativeParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            relativeParams.topMargin = (int) (screenHeight * 0.25);
-            bt_settings.setLayoutParams(relativeParams);
+            final float ratio_log_img = ((float) getResources().getDrawable(R.drawable.app_rainbow_logo).getIntrinsicHeight())
+                    / ((float) getResources().getDrawable(R.drawable.app_rainbow_logo).getIntrinsicWidth());
 
-            RelativeLayout.LayoutParams relativeParams2 = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
-            relativeParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            relativeParams2.addRule(RelativeLayout.BELOW, R.id.bt_settings);
 
-            LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams((int) (button_width * ratio_button_guide_settings * 0.5), (int) (button_width
-                    * ratio_button_guide_settings * 0.5));
-            linearParams.gravity = Gravity.CENTER;
-            linearParams.topMargin = 5;
-            img_rainbow.setLayoutParams(linearParams);
-            relativeParams2.topMargin = (int) (button_width * 0.07);
-            bt_languages.setLayoutParams(relativeParams2);
+            bt_design_theme.post(new Runnable() {
+                @Override
+                public void run() {
+                    LinearLayout.LayoutParams designThemeLayouParam = (LinearLayout.LayoutParams) bt_design_theme.getLayoutParams();
+                    designThemeLayouParam.height = (int) (bt_design_theme.getMeasuredWidth() * ratio_button_guide_settings);
+                }
+            });
+
+
+            Paint p1 = new Paint();
+            p1.setTextSize(getResources().getDimension(R.dimen.main_logo_title_textsize));
+            Rect result = new Rect();
+            p1.getTextBounds("RainBowKey", 0, "RainBowKey".length(), result);
+            int textHeight = (int) (result.height() * 0.8f);
+            LinearLayout.LayoutParams logImgLayoutParams = (LinearLayout.LayoutParams) view_logo_img.getLayoutParams();
+            logImgLayoutParams.height = textHeight;
+            logImgLayoutParams.width = (int) (textHeight/ratio_log_img);
+            logImgLayoutParams.topMargin = 0;
 
             int step_button_width = (int) (button_width * 1.1);
 
@@ -212,23 +233,7 @@ public class MainActivity extends HSActivity {
             step_two_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
             step_two_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
             img_choose_two.setLayoutParams(step_two_relativeParams4);
-        } else {
-            int button_width = (int) (screenWidth * 0.7);
-            float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_settings_bg).getIntrinsicWidth());
-
-            RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
-            relativeParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            relativeParams.topMargin = (int) (screenHeight * 0.2);
-            bt_settings.setLayoutParams(relativeParams);
-
-            RelativeLayout.LayoutParams relativeParams2 = new RelativeLayout.LayoutParams(button_width, (int) (button_width * ratio_button_guide_settings));
-            relativeParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            relativeParams2.addRule(RelativeLayout.BELOW, R.id.bt_settings);
-            relativeParams2.topMargin = (int) (button_width * 0.07);
-            bt_languages.setLayoutParams(relativeParams2);
         }
-
         bt_step_one.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,6 +251,13 @@ public class MainActivity extends HSActivity {
                 //                MainActivity.this.doSetpTwoFinishAnimation();
 
                 HSGoogleAnalyticsUtils.logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+            }
+        });
+
+        bt_design_theme.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -414,6 +426,7 @@ public class MainActivity extends HSActivity {
 
             bt_step_one.setVisibility(View.VISIBLE);
             bt_step_two.setVisibility(View.VISIBLE);
+            bt_design_theme.setVisibility(View.INVISIBLE);
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
             bt_step_one.setClickable(true);
@@ -422,6 +435,7 @@ public class MainActivity extends HSActivity {
             bt_step_two.setClickable(false);
             bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
             bt_step_two.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
+            bt_design_theme.setAlpha(0);
             bt_settings.setAlpha(0);
             bt_languages.setAlpha(0);
 
@@ -443,6 +457,7 @@ public class MainActivity extends HSActivity {
 
             bt_step_one.setVisibility(View.VISIBLE);
             bt_step_two.setVisibility(View.VISIBLE);
+            bt_design_theme.setVisibility(View.INVISIBLE);
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
             bt_step_one.setClickable(false);
@@ -459,6 +474,7 @@ public class MainActivity extends HSActivity {
                 bt_step_two.setAlpha(1.0f);
                 bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.guide_button_selector));
             }
+            bt_design_theme.setAlpha(0);
             bt_settings.setAlpha(0);
             bt_languages.setAlpha(0);
 
@@ -482,8 +498,10 @@ public class MainActivity extends HSActivity {
             //scaleTitleImage();
             bt_step_one.setVisibility(View.GONE);
             bt_step_two.setVisibility(View.GONE);
+            bt_design_theme.setVisibility(View.VISIBLE);
             bt_settings.setVisibility(View.VISIBLE);
             bt_languages.setVisibility(View.VISIBLE);
+            bt_design_theme.setAlpha(1);
             bt_settings.setAlpha(1);
             bt_languages.setAlpha(1);
             style = CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL;
@@ -516,8 +534,10 @@ public class MainActivity extends HSActivity {
 
     private void doAppearAnimation() {
         rootView.setBackgroundColor(getResources().getColor(R.color.bg_translucent_black));
+        bt_design_theme.setAlpha(1);
         bt_settings.setAlpha(1);
         bt_languages.setAlpha(1);
+        bt_design_theme.setVisibility(View.VISIBLE);
         bt_settings.setVisibility(View.VISIBLE);
         bt_languages.setVisibility(View.VISIBLE);
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
@@ -541,6 +561,7 @@ public class MainActivity extends HSActivity {
             }
         });
         alphaAnimation.setDuration(500);
+        this.bt_design_theme.startAnimation(alphaAnimation);
         this.bt_settings.startAnimation(alphaAnimation);
         this.bt_languages.startAnimation(alphaAnimation);
     }

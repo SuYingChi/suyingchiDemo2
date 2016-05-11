@@ -18,14 +18,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal" >
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/view_logo_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/main_logo_img_marginbottom"
-                android:layout_marginTop="@dimen/main_logo_img_margintop"
                 android:scaleType="fitXY"
                 android:src="@drawable/app_rainbow_logo" />
 
@@ -152,32 +151,65 @@
         </ImageView>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/bt_settings"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/view_main_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:alpha="0"
-        android:background="@drawable/guide_button_selector"
-        android:text="Settings"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/button_settings_textsize" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/bt_languages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bt_settings"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:alpha="0"
-        android:background="@drawable/guide_button_selector"
-        android:text="Languages"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/button_settings_textsize" />
+        <TextView
+            android:id="@+id/bt_design_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:background="@drawable/entrance_customize_button"
+            android:drawableLeft="@drawable/entrance_customize_icon"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="Design Your Own Keyboard"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/button_settings_textsize" />
+
+
+        <LinearLayout
+            android:id="@+id/settings_languages_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bt_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:alpha="0"
+                android:drawableLeft="@drawable/entrance_settings_icon"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="Settings"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/button_settings_textsize" />
+
+            <TextView
+                android:id="@+id/bt_languages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0"
+                android:drawableLeft="@drawable/entrance_languages_icon"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="Languages"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/button_settings_textsize" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <EditText
         android:id="@+id/edit_text_test"
