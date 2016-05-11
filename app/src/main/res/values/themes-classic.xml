@@ -222,4 +222,7 @@
         <item name="android:background">#ff181818</item>
     </style>
 
+    <style name="GifEmojiSearchView.CLASSIC" parent="GifEmojiSearchView">
+        <item name="android:textColor">@color/gif_emoji_search_hint_color_custom</item>
+    </style>
 </resources>

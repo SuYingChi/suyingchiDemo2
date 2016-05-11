@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -38,6 +37,7 @@
         <item name="settingsPanelStyle">@style/SettingsPannel.GREY</item>
         <item name="fontSelectPanelStyle">@style/FontSelectPannel.GREY</item>
 
+
         <!-- reserved area ends here -->
     </style>
 
@@ -46,15 +46,21 @@
     <style name="KeyboardView.GREY" parent="KeyboardView">
         <item name="keyLabelSize">@fraction/config_key_label_ratio_pink</item>
         <item name="keyHintLetterRatio">@fraction/config_key_hint_letter_ratio_pink</item>
-        <item name="keyHintLetterPaddingRight">@dimen/config_key_hint_letter_padding_right_grey</item>
+        <item name="keyHintLetterPaddingRight">@dimen/config_key_hint_letter_padding_right_grey
+        </item>
         <item name="keyHintLetterPaddingTop">@dimen/config_key_hint_letter_padding_top_grey</item>
         <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_pink</item>
         <item name="keyLabelOffCenterRatio">-80%</item>
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
-        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio</item>
+        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio
+        </item>
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
-        <item name="keyPopupHintLetterPaddingRight">@dimen/config_key_popup_hint_letter_padding_right_grey</item>
-        <item name="keyPopupHintLetterPaddingTop">@dimen/config_key_popup_hint_letter_padding_top_grey</item>
+        <item name="keyPopupHintLetterPaddingRight">
+            @dimen/config_key_popup_hint_letter_padding_right_grey
+        </item>
+        <item name="keyPopupHintLetterPaddingTop">
+            @dimen/config_key_popup_hint_letter_padding_top_grey
+        </item>
         <item name="keyTextColor">#FF37474f</item>
         <item name="functionalTextColor">#FF68747a</item>
         <item name="keyHintLetterColor">#FF68747a</item>
@@ -141,4 +147,7 @@
         <item name="android:background">#ffeceff1</item>
     </style>
 
+    <style name="GifEmojiSearchView.GREY" parent="GifEmojiSearchView">
+        <item name="android:textColor">@color/gif_panel_result_text_color</item>
+    </style>
 </resources>

@@ -38,6 +38,7 @@
         <item name="settingsPanelStyle">@style/SettingsPannel.ELECTRIC</item>
         <item name="fontSelectPanelStyle">@style/FontSelectPannel.ELECTRIC</item>
 
+
         <!-- reserved area ends here -->
     </style>
 
@@ -141,4 +142,7 @@
         <item name="android:background">#ff181818</item>
     </style>
 
+    <style name="GifEmojiSearchView.ELECTRIC" parent="GifEmojiSearchView">
+        <item name="android:textColor">@color/gif_emoji_search_hint_color_custom</item>
+    </style>
 </resources>

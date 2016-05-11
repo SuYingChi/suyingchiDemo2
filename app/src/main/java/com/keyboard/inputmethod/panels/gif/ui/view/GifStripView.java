@@ -115,20 +115,21 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 		ImageView iv2= (ImageView) findViewById(R.id.gif_toolbar_back_button_iv);
 		closeButton = (ImageView) findViewById(R.id.close);
 		ImageView iv= (ImageView) findViewById(R.id.gif_toolbar_main_search);
+		TextView tv_emoji_search_title = (TextView) findViewById(R.id.tv_emoji_search_title);
+		tv_emoji_search_title.setTextColor( HSKeyboardThemeManager.getTextColorFromStyleOfCurrentTheme("GifEmojiSearchView"));
 
 		setBackgroundDrawable(main,"keyboard_gif_search_bar_bg");
 		setImageDrawable(iv,"keyboard_gif_search_bar");
 		setImageDrawable(iv2,"keyboard_gif_left_arrow");
 		setImageDrawable(closeButton,"keyboard_gif_emoji_search_close_button");
-//		main.setBackgroundDrawable(HSKeyboardThemeManager.getNinePatchAssetDrawable(null, "keyboard_gif_search_bar_bg.png"));
-//		iv.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, "keyboard_gif_search_bar.png"));
-//		iv2.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, "keyboard_gif_left_arrow.png"));
-//		closeButton.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(null, "keyboard_gif_emoji_search_close_button.png"));
 
 		initBackAnim();
 		bindEvents();
 
+
 	}
+
+
 
 	private void setBackgroundDrawable(View view, String fileName) {
 		view.setBackgroundDrawable(HSKeyboardThemeManager.getNinePatchAssetDrawable(getDefaultDrawable(fileName),fileName+".png"));

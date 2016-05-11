@@ -38,6 +38,7 @@
         <item name="settingsPanelStyle">@style/SettingsPannel.POP.IW</item>
         <item name="fontSelectPanelStyle">@style/FontSelectPannel.POP.IW</item>
 
+
         <!-- reserved area ends here -->
     </style>
 
@@ -143,4 +144,7 @@
         <item name="android:background">#ff181818</item>
     </style>
 
+    <style name="GifEmojiSearchView.POP.IW" parent="GifEmojiSearchView">
+        <item name="android:textColor">@color/gif_emoji_search_hint_color_custom</item>
+    </style>
 </resources>

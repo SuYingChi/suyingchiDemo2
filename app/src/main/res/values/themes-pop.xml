@@ -38,6 +38,7 @@
         <item name="settingsPanelStyle">@style/SettingsPannel.POP</item>
         <item name="fontSelectPanelStyle">@style/FontSelectPannel.POP</item>
 
+
         <!-- reserved area ends here -->
     </style>
 
@@ -141,6 +142,9 @@
 
     <style name="StickerPalettesView.POP">
         <item name="android:background">#ff181818</item>
+    </style>
+    <style name="GifEmojiSearchView.POP" parent="GifEmojiSearchView">
+        <item name="android:textColor">@color/gif_emoji_search_hint_color_custom</item>
     </style>
 
 </resources>

@@ -137,4 +137,8 @@
         <item name="android:background">#ff181818</item>
     </style>
 
+
+    <style name="GifEmojiSearchView.DARK" parent="GifEmojiSearchView">
+        <item name="android:textColor">@color/gif_panel_result_text_color</item>
+    </style>
 </resources>
