@@ -165,6 +165,33 @@
             <RelativeLayout
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/bt_add_lauguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:soundEffectsEnabled="false" />
+
+                <TextView
+                    android:id="@+id/bt_add_lauguage_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bt_add_lauguage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="@string/settings_button_add_language"
+                    android:textColor="@color/settings_item_text_color"
+                    android:textSize="9sp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1" >
 
                 <ImageButton
@@ -191,7 +218,7 @@
             <RelativeLayout
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2" >
+                android:layout_weight="1" >
             </RelativeLayout>
         </LinearLayout>
 

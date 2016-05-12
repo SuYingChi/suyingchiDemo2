@@ -126,7 +126,7 @@ public class HSThemeSelectViewAdapter extends BaseAdapter {
         mAnimator = createAnimator(view);
         mAnimator.start();
         HSInputMethodTheme.saveKeyboardThemeId(String.valueOf(index));
-        HSGoogleAnalyticsUtils.logKeyboardEvent(Constants.GA_PARAM_ACTION_THEME_CHOSED, HSInputMethodTheme.getThemeNames(index));
+        HSGoogleAnalyticsUtils.logKeyboardEvent(Constants.GA_PARAM_ACTION_THEME_CHOSEN, HSInputMethodTheme.getThemeNames(index));
         notifyDataSetChanged();
     }
 

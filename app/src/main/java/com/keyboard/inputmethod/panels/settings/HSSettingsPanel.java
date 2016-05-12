@@ -38,6 +38,9 @@ public class HSSettingsPanel extends HSInputMethodPanel {
     private final static String SETTINGS_KEY_PREDICT_ON = "settings_key_predictive_on.png";
     private final static String SETTINGS_KEY_SWIPE_OFF = "settings_key_swipe_off.png";
     private final static String SETTINGS_KEY_SWIPE_ON = "settings_key_swipe_on.png";
+    private final static String SETTINGS_KEY_ADD_LANGUAGE_OFF = "settings_key_add_language_on.png";
+    private final static String SETTINGS_KEY_ADD_LANGUAGE_ON = "settings_key_add_language_off.png";
+
 
     private static final String SETTING_ON = "on";
     private static final String SETTING_OFF = "off";
@@ -52,6 +55,7 @@ public class HSSettingsPanel extends HSInputMethodPanel {
     private ImageButton btnCapitalization;
     private ImageButton btnPredictive;
     private ImageButton btnSwipe;
+    private ImageButton btnLanguage;
     private ImageButton btnMore;
 
     private TextView btnSoundsText;
@@ -59,6 +63,7 @@ public class HSSettingsPanel extends HSInputMethodPanel {
     private TextView btnCapitalizationText;
     private TextView btnPredictiveText;
     private TextView btnSwipeText;
+    private TextView btnLanguageText;
     private TextView btnMoreText;
 
 
@@ -200,6 +205,25 @@ public class HSSettingsPanel extends HSInputMethodPanel {
             }
         });
         updateSwipeSettings();
+
+        btnLanguage = (ImageButton) mSettingsView.findViewById(R.id.bt_add_lauguage);
+        btnLanguageText = (TextView) mSettingsView.findViewById(R.id.bt_add_lauguage_label);
+        btnLanguageText.setTextColor(textColor);
+        btnLanguage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HSInputMethod.showLanguageSettingsActivity();
+                HSGoogleAnalyticsUtils.logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_ADD_LANGUAGE_CLICKED);
+            }
+        });
+
+        StateListDrawable addLanguageStatesDrawable = new StateListDrawable();
+        addLanguageStatesDrawable.addState(new int[]{android.R.attr.state_pressed},
+                HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_add_language_off), SETTINGS_KEY_ADD_LANGUAGE_OFF));
+        addLanguageStatesDrawable.addState(new int[]{},
+                HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_add_language_on), SETTINGS_KEY_ADD_LANGUAGE_ON));
+        btnLanguage.setBackgroundDrawable(addLanguageStatesDrawable);
+
 
         btnMore = (ImageButton) mSettingsView.findViewById(R.id.bt_more);
         btnMoreText = (TextView) mSettingsView.findViewById(R.id.bt_more_label);

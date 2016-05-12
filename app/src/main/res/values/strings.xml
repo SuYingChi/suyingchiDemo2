@@ -24,6 +24,7 @@
     <string name="settings_button_auto_capitalization">Auto-capitalization</string>
     <string name="settings_button_word_prediction">Word Prediction</string>
     <string name="settings_button_swipe">Swipe</string>
+    <string name="settings_button_add_language">Add Language</string>
     <string name="settings_button_more_settings">More Settings</string>
     <string name="fb_app_id">910238615719294</string>
 
