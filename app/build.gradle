@@ -15,18 +15,26 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt') , 'proguard-project.txt' , '../libs/ihs/libAppFramework/lib-appframework.proguard' , '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard', '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
         }
-        debug{
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt') , 'proguard-project.txt' , '../libs/ihs/libAppFramework/lib-appframework.proguard' , '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard', '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
         }
     }
-
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+            universalApk false
+        }
+    }
     dexOptions {
         javaMaxHeapSize "8g"
     }
 }
+
 
 repositories {
     flatDir {
