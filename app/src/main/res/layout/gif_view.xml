@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.keyboard.inputmethod.panels.gif.ui.view.GifView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gif_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/gif_background_color"
+    android:gravity="center">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/tag"
+        android:textSize="@dimen/config_gif_tag_text_size"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:visibility="gone"/>
+
+    <!--progress bar-->
+    <ImageView
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true" />
+
+	<View android:id="@+id/anim_one"
+	      android:layout_width="20dp"
+	      android:layout_height="20dp"
+	      android:layout_centerInParent="true"
+	      android:background="@drawable/animation_circle"
+	      android:visibility="invisible"/>
+
+	<View
+		android:id="@+id/alpha_favorite"
+		android:background="#00afeb"
+		android:alpha="0.9"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+	<RelativeLayout
+		android:id="@+id/favorite"
+		android:gravity="center"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<ImageView
+			android:id="@+id/favorite_iv"
+			android:src="@drawable/gif_cell_favorite_selector"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+
+		<ImageView
+			android:id="@+id/delete_iv"
+			android:src="@drawable/gif_cell_favorite_delete"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+
+	</RelativeLayout>
+
+</com.keyboard.inputmethod.panels.gif.ui.view.GifView>

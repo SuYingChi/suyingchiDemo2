@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.keyboard.inputmethod.panels.gif.ui.view.GifStripView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_height="@dimen/config_suggestions_strip_height"
+              android:layout_width="match_parent"
+              android:gravity="center_vertical"
+              android:paddingRight="8dp"
+	>
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		<LinearLayout
+			android:id="@+id/panel_strip"
+			android:orientation="horizontal"
+			android:gravity="center_vertical"
+			android:paddingRight="8dp"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			<LinearLayout
+				android:id="@+id/gif_toolbar_back_button"
+				android:gravity="center"
+				android:paddingTop="5dp"
+				android:paddingBottom="5dp"
+				android:paddingLeft="10dp"
+				android:layout_width="0dp"
+				android:layout_weight="0"
+				android:layout_height="30dp">
+				<ImageView
+					android:id="@+id/gif_toolbar_back_button_iv"
+					android:contentDescription="@string/app_name"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_weight="1"
+				android:id="@+id/gif_toolbar_main"
+				android:layout_marginLeft="8dp"
+				android:layout_width="0dp"
+				android:layout_height="match_parent">
+				<ImageView
+					android:layout_marginLeft="5dp"
+					android:layout_marginRight="7dp"
+					android:id="@+id/gif_toolbar_main_search"
+					android:scaleType="centerInside"
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"/>
+
+				<TextView
+					android:id="@+id/gif_toolbar_text"
+					android:textColor="@color/gif_panel_result_text_color"
+					android:textColorHint="@color/gif_panel_hint_text_color"
+					android:background="@null"
+					android:textSize="16sp"
+					android:gravity="center_vertical"
+					android:hint="@string/emoji_search_hint"
+					android:layout_width="0dp"
+					android:singleLine="true"
+					android:layout_weight="1"
+					android:layout_height="match_parent"/>
+
+				<com.keyboard.inputmethod.panels.gif.ui.view.CustomSearchEditText
+					android:visibility="gone"
+					android:singleLine="true"
+					android:imeOptions="actionSearch"
+					android:id="@+id/gif_toolbar_edit"
+					android:background="@null"
+					android:textSize="16sp"
+					android:textColor="@color/gif_panel_result_text_color"
+					android:textColorHint="@color/gif_panel_hint_text_color"
+					android:gravity="center_vertical"
+					android:hint="@string/emoji_search_hint"
+					android:layout_weight="1"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"/>
+				<RelativeLayout
+					android:gravity="right"
+					android:id="@+id/gif_toolbar_emoji"
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent">
+					<ImageView
+						android:layout_marginLeft="10dp"
+						android:id="@+id/gif_toolbar_emoji_iv"
+						android:src="@drawable/key_notification_fg"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+					<TextView
+						android:layout_marginLeft="10dp"
+						android:layout_marginRight="12dp"
+						android:gravity="center"
+						android:textSize="18sp"
+						android:singleLine="true"
+						android:id="@+id/gif_toolbar_emoji_text"
+						android:textColor="#FFFFFF"
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"/>
+				</RelativeLayout>
+			</LinearLayout>
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/emoji_strip"
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:visibility="gone">
+
+			<ImageView
+				android:id="@+id/close"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:scaleType="centerInside"
+				android:src="@drawable/gif_toolbar_emoji_search_close_button"
+				android:padding="13dp"/>
+
+			<TextView
+				android:gravity="center"
+				android:singleLine="true"
+				android:text="Select emoji to search"
+				android:textSize="20sp"
+				android:textColor="@color/gif_panel_result_text_color"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="match_parent"/>
+
+		</LinearLayout>
+	</FrameLayout>
+
+</com.keyboard.inputmethod.panels.gif.ui.view.GifStripView>

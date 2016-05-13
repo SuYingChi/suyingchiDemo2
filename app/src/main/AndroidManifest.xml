@@ -160,12 +160,6 @@
 
         <!-- wechat sdk required -->
         <activity
-            android:name="com.keyboard.rainbow.wxapi.WXEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
-        <activity
             android:name="com.tapjoy.TJContentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
