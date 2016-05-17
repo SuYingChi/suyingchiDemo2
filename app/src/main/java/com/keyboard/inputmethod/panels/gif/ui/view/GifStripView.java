@@ -116,7 +116,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 		closeButton = (ImageView) findViewById(R.id.close);
 		ImageView iv= (ImageView) findViewById(R.id.gif_toolbar_main_search);
 		TextView tv_emoji_search_title = (TextView) findViewById(R.id.tv_emoji_search_title);
-		tv_emoji_search_title.setTextColor( HSKeyboardThemeManager.getTextColorFromStyleOfCurrentTheme("GifEmojiSearchView"));
+		tv_emoji_search_title.setTextColor( HSKeyboardThemeManager.getTextColorFromStyleOfCurrentTheme("GifEmojiSearchTitleTextViewStyle"));
 
 		setBackgroundDrawable(main,"keyboard_gif_search_bar_bg");
 		setImageDrawable(iv,"keyboard_gif_search_bar");
@@ -381,6 +381,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 		ESManager.getInstance().hideEmojiSearchView();
 		showStrip();
 		emojiText.setText(esItem.getId());
+		emojiText.setTextColor(HSKeyboardThemeManager.getTextColorFromStyleOfCurrentTheme("GifEmojiSearchSelectedTextViewStyle"));
 		panelView.onEmojiClicked(esItem);
 		if(state==StripState.SEARCH){
 			HSInputMethod.getInputService().showPanel(Constants.PANEL_NAME_GIFS);

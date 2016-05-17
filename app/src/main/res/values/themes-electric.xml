@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -50,7 +49,9 @@
         <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_electric</item>
         <item name="keyLabelOffCenterRatio">-55%</item>
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_electric</item>
-        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio_electric</item>
+        <item name="keyHintLabelOffCenterRatio">
+            @fraction/config_key_hint_label_off_center_ratio_electric
+        </item>
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
         <item name="keyTextColor">#cccccc</item>
         <item name="functionalTextColor">#cccccc</item>
@@ -71,10 +72,18 @@
         <item name="gestureFloatingPreviewTextColor">#ffffff</item>
         <item name="gestureFloatingPreviewColor">#cccccc</item>
         <item name="gestureTrailColor">#32a0ff</item>
-        <item name="keyPopupHintLetterPaddingRight">@dimen/config_key_popup_hint_letter_padding_right_electric</item>
-        <item name="keyPopupHintLetterPaddingTop">@dimen/config_key_popup_hint_letter_padding_top_electric</item>
-        <item name="keyLanguageOnSpacePaddingRight">@dimen/config_key_language_on_space_padding_right_electric</item>
-        <item name="keyLanguageOnSpacePaddingTop">@dimen/config_key_language_on_space_padding_top_electric</item>
+        <item name="keyPopupHintLetterPaddingRight">
+            @dimen/config_key_popup_hint_letter_padding_right_electric
+        </item>
+        <item name="keyPopupHintLetterPaddingTop">
+            @dimen/config_key_popup_hint_letter_padding_top_electric
+        </item>
+        <item name="keyLanguageOnSpacePaddingRight">
+            @dimen/config_key_language_on_space_padding_right_electric
+        </item>
+        <item name="keyLanguageOnSpacePaddingTop">
+            @dimen/config_key_language_on_space_padding_top_electric
+        </item>
         <item name="languageOnSpacebarTextColor">#cccccc</item>
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
         <item name="languageOnSpacebarTextShadowColor">#cccccc</item>
@@ -142,7 +151,15 @@
         <item name="android:background">#ff181818</item>
     </style>
 
-    <style name="GifEmojiSearchView.ELECTRIC" parent="GifEmojiSearchView">
+    <style name="GifEmojiSearchTitleTextViewStyle.ELECTRIC" parent="GifEmojiSearchTitleTextViewStyle">
         <item name="android:textColor">@color/gif_emoji_search_hint_color_custom</item>
+    </style>
+
+    <style name="GifEmojiSearchContentTextViewStyle.ELECTRIC" parent="GifEmojiSearchTitleTextViewStyle">
+        <item name="android:textColor">@color/gif_emoji_search_content_color_theme_common</item>
+    </style>
+
+    <style name="GifEmojiSearchSelectedTextViewStyle.ELECTRIC" parent="GifEmojiSearchSelectedTextViewStyle">
+        <item name="android:textColor">@color/translucent_black</item>
     </style>
 </resources>

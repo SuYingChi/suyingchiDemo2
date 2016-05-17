@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
 import com.keyboard.rainbow.R;
 
@@ -74,6 +75,7 @@ public final class ESPageGridViewAdapter extends BaseAdapter implements View.OnC
 		holder.emojiTextView = (TextView) convertView.findViewById(R.id.emoji);
 		holder.emojiTextView.setText(esItem.getId());
 		holder.emojiTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX , mTextSize);
+		holder.emojiTextView.setTextColor(HSKeyboardThemeManager.getTextColorFromStyleOfCurrentTheme("GifEmojiSearchContentTextViewStyle"));
 
 		// emoji text layout
 		holder.emojiTextView.setLayoutParams(new RelativeLayout.LayoutParams(mEmojiDimen, mEmojiDimen));

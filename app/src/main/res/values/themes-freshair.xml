@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -50,7 +49,8 @@
         <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_pink</item>
         <item name="keyLabelOffCenterRatio">-55%</item>
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
-        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio</item>
+        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio
+        </item>
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
         <item name="keyTextColor">#FFFFFFFF</item>
         <item name="functionalTextColor">#FFFFFFFF</item>
@@ -139,7 +139,15 @@
         <item name="android:background">#ff181818</item>
     </style>
 
-    <style name="GifEmojiSearchView.FRESHAIR" parent="GifEmojiSearchView">
+    <style name="GifEmojiSearchTitleTextViewStyle.FRESHAIR" parent="GifEmojiSearchTitleTextViewStyle">
         <item name="android:textColor">@color/gif_emoji_search_hint_color_custom</item>
+    </style>
+
+    <style name="GifEmojiSearchContentTextViewStyle.FRESHAIR" parent="GifEmojiSearchTitleTextViewStyle">
+        <item name="android:textColor">@color/gif_emoji_search_content_color_theme_common</item>
+    </style>
+
+    <style name="GifEmojiSearchSelectedTextViewStyle.FRESHAIR" parent="GifEmojiSearchSelectedTextViewStyle">
+        <item name="android:textColor">@color/translucent_black</item>
     </style>
 </resources>

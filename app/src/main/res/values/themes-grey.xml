@@ -147,7 +147,15 @@
         <item name="android:background">#ffeceff1</item>
     </style>
 
-    <style name="GifEmojiSearchView.GREY" parent="GifEmojiSearchView">
+    <style name="GifEmojiSearchTitleTextViewStyle.GREY" parent="GifEmojiSearchTitleTextViewStyle">
         <item name="android:textColor">@color/gif_panel_result_text_color</item>
+    </style>
+
+    <style name="GifEmojiSearchContentTextViewStyle.GREY" parent="GifEmojiSearchTitleTextViewStyle">
+        <item name="android:textColor">@color/gif_emoji_search_content_color_theme_grey</item>
+    </style>
+
+    <style name="GifEmojiSearchSelectedTextViewStyle.GREY" parent="GifEmojiSearchSelectedTextViewStyle">
+        <item name="android:textColor">@color/translucent_black</item>
     </style>
 </resources>

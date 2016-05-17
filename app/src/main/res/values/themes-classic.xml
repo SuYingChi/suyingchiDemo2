@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -62,7 +61,8 @@
         <item name="keyHintLabelRatio">@fraction/config_key_hint_label_ratio_pink</item>
 
         <!-- 9宫格按键，的hint label相对于按键左端在横轴上的偏移量，0对应的位置为居左，数值表示相对于hint字母宽度的比例 -->
-        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio</item>
+        <item name="keyHintLabelOffCenterRatio">@fraction/config_key_hint_label_off_center_ratio
+        </item>
 
         <!-- preview 按键的文字大小，比例为相对于普通按键高的比例 -->
         <item name="keyPreviewTextRatio">@fraction/config_key_preview_text_ratio_pink</item>
@@ -222,7 +222,16 @@
         <item name="android:background">#ff181818</item>
     </style>
 
-    <style name="GifEmojiSearchView.CLASSIC" parent="GifEmojiSearchView">
+    <style name="GifEmojiSearchTitleTextViewStyle.CLASSIC" parent="GifEmojiSearchTitleTextViewStyle">
         <item name="android:textColor">@color/gif_emoji_search_hint_color_custom</item>
     </style>
+
+    <style name="GifEmojiSearchContentTextViewStyle.CLASSIC" parent="GifEmojiSearchTitleTextViewStyle">
+        <item name="android:textColor">@color/gif_emoji_search_content_color_theme_common</item>
+    </style>
+
+    <style name="GifEmojiSearchSelectedTextViewStyle.CLASSIC" parent="GifEmojiSearchSelectedTextViewStyle">
+        <item name="android:textColor">@color/translucent_black</item>
+    </style>
+
 </resources>

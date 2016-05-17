@@ -37,7 +37,7 @@ public final class GifLoadingView extends LinearLayout {
 
         mGifLoadingCircle = findViewById(R.id.gif_loading_circle);
         mGifLoadingResult = (TextView) findViewById(R.id.gif_loading_result);
-        mGifLoadingResult.setTextColor( HSKeyboardThemeManager.getTextColorFromStyleOfCurrentTheme("GifEmojiSearchView"));
+        mGifLoadingResult.setTextColor( HSKeyboardThemeManager.getTextColorFromStyleOfCurrentTheme("GifEmojiSearchTitleTextViewStyle"));
     }
 
     public void show() {
