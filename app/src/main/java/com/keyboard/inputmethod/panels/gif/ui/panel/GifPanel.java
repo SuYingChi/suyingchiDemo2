@@ -14,11 +14,11 @@ import com.ihs.inputmethod.api.HSInputMethodPanel;
 import com.ihs.inputmethod.api.HSInputMethodPanelStripView;
 import com.ihs.inputmethod.framework.HSKeyboardPanel;
 import com.ihs.inputmethod.framework.HSKeyboardSwitcher;
+import com.ihs.inputmethod.latin.LatinIME;
 import com.keyboard.inputmethod.panels.gif.control.DataManager;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifPanelView;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifStripView;
 import com.keyboard.rainbow.R;
-import com.keyboard.rainbow.app.MyInputMethodService;
 import com.keyboard.rainbow.utils.Constants;
 
 public final class GifPanel extends HSInputMethodPanel {
@@ -32,7 +32,7 @@ public final class GifPanel extends HSInputMethodPanel {
 		HSGlobalNotificationCenter.addObserver(GifStripView.BACK_EVENT, imeActionObserver);
 		HSGlobalNotificationCenter.addObserver(GifStripView.TOSEARCH_EVENT, imeActionObserver);
 		HSGlobalNotificationCenter.addObserver(DataManager.HS_NOTIFICATION_SWITCH_LANGUAGE, imeActionObserver);
-		HSGlobalNotificationCenter.addObserver(MyInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY, imeActionObserver);
+		HSGlobalNotificationCenter.addObserver(LatinIME.HS_NOTIFICATION_SERVICE_DESTROY, imeActionObserver);
 
 		createGifStripView();
 	}
@@ -87,7 +87,7 @@ public final class GifPanel extends HSInputMethodPanel {
 				return;
 			}
 
-			if(MyInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY.equals(eventName)){
+			if(LatinIME.HS_NOTIFICATION_SERVICE_DESTROY.equals(eventName)){
 				mGifPanelView.onServiceDestroy();
 			}
 		}

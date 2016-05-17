@@ -8,6 +8,7 @@ android {
         applicationId "com.keyboard.rainbow"
         minSdkVersion 14
         targetSdkVersion 22
+        multiDexEnabled true
     }
 
     buildTypes {
