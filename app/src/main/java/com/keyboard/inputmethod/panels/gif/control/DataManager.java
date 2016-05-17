@@ -10,7 +10,7 @@ import com.keyboard.inputmethod.panels.gif.dao.DaoHelper;
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
 import com.keyboard.inputmethod.panels.gif.net.request.BaseRequest;
 import com.keyboard.inputmethod.panels.gif.net.request.SearchRequest;
-import com.keyboard.rainbow.app.MyInputMethodService;
+import com.ihs.inputmethod.latin.LatinIME;
 import com.keyboard.rainbow.utils.Constants;
 
 import java.util.ArrayList;
@@ -34,10 +34,10 @@ public final class DataManager {
 	private INotificationObserver savingRecent=new INotificationObserver() {
 		@Override
 		public void onReceive(String s, HSBundle hsBundle) {
-			if(MyInputMethodService.HIDE_WINDOW_EVENT.equals(s)){
+			if(LatinIME.HIDE_WINDOW_EVENT.equals(s)){
 				saveUserDataToDB();
 			}
-			if(MyInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY.equals(s)){
+			if(LatinIME.HS_NOTIFICATION_SERVICE_DESTROY.equals(s)){
 				HSGlobalNotificationCenter.removeObserver(savingRecent);
 			}
 		}
@@ -82,8 +82,8 @@ public final class DataManager {
 		if (instance == null) {
 			init();
 		}
-		HSGlobalNotificationCenter.addObserver(MyInputMethodService.HIDE_WINDOW_EVENT, instance.savingRecent);
-		HSGlobalNotificationCenter.addObserver(MyInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY, instance.savingRecent);
+		HSGlobalNotificationCenter.addObserver(LatinIME.HIDE_WINDOW_EVENT, instance.savingRecent);
+		HSGlobalNotificationCenter.addObserver(LatinIME.HS_NOTIFICATION_SERVICE_DESTROY, instance.savingRecent);
 		return instance;
 	}
 

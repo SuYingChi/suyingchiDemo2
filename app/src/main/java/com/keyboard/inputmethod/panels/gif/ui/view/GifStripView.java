@@ -32,7 +32,7 @@ import com.keyboard.inputmethod.panels.gif.emojisearch.ESManager;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESPageGridView;
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
 import com.keyboard.rainbow.R;
-import com.keyboard.rainbow.app.MyInputMethodService;
+import com.ihs.inputmethod.latin.LatinIME;
 import com.keyboard.rainbow.utils.Constants;
 
 /**
@@ -73,7 +73,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 
 	public GifStripView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		HSGlobalNotificationCenter.addObserver(MyInputMethodService.HS_NOTIFICATION_DISCONNECT_INSIDE_CONNECTION, disconnect);
+		HSGlobalNotificationCenter.addObserver(LatinIME.HS_NOTIFICATION_DISCONNECT_INSIDE_CONNECTION, disconnect);
 		this.setBackgroundColor(HSInputMethodTheme.getThemeMainColor());
 	}
 
@@ -170,7 +170,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 					HSGlobalNotificationCenter.sendNotificationOnMainThread(INPUT_FINISHED_EVENT, bundle);
 					result=s.toString().trim();
 					updateStripViewState(StripState.SEARCH_RESULT);
-					MyInputMethodService.onFinishInputInside();
+					LatinIME.onFinishInputInside();
 				}
 			}
 		});
@@ -189,7 +189,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 					HSGlobalNotificationCenter.sendNotificationOnMainThread(INPUT_FINISHED_EVENT, bundle);
 					result=s;
 					updateStripViewState(StripState.SEARCH_RESULT);
-					MyInputMethodService.onFinishInputInside();
+					LatinIME.onFinishInputInside();
 					return true;
 				}
 				return false;
@@ -257,7 +257,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 
 		search_edit.setText("");
 		search_edit.requestFocus();
-		MyInputMethodService.onStartInputInside(search_edit);
+		LatinIME.onStartInputInside(search_edit);
 		search_edit.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 		emojiText.setVisibility(GONE);
 		emojiIv.setVisibility(VISIBLE);
@@ -290,7 +290,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 	}
 
 	private void toEmoji() {
-		MyInputMethodService.onFinishInputInside();
+		LatinIME.onFinishInputInside();
 		if(last==StripState.ORIGIN||last==StripState.UNSPECIFIED){
 			initToMainAnim();
 		}
@@ -330,7 +330,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 	private void backStripViewState() {
 		if(isEditing){
 			isEditing=false;
-			MyInputMethodService.onFinishInputInside();
+			LatinIME.onFinishInputInside();
 		}
 
 		emojiText.setVisibility(GONE);
@@ -350,7 +350,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 	private INotificationObserver disconnect=new INotificationObserver() {
 		@Override
 		public void onReceive(String s, HSBundle hsBundle) {
-			if(MyInputMethodService.HS_NOTIFICATION_DISCONNECT_INSIDE_CONNECTION.equals(s)){
+			if(LatinIME.HS_NOTIFICATION_DISCONNECT_INSIDE_CONNECTION.equals(s)){
 				search_edit.setText("");
 				isEditing=false;
 				resetSettings();
@@ -419,7 +419,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 	public void onHideStripView() {
 		ESManager.getInstance().hideEmojiSearchView();
 		if(isEditing){
-			MyInputMethodService.onFinishInputInside();
+			LatinIME.onFinishInputInside();
 			isEditing=false;
 		}
 		if(state!=StripState.ORIGIN){
