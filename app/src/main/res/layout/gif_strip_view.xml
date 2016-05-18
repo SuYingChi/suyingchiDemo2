@@ -76,6 +76,8 @@
                     android:textColor="@color/gif_panel_result_text_color"
                     android:textColorHint="@color/gif_panel_hint_text_color"
                     android:textSize="16sp"
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@null"
                     android:visibility="gone" />
 
                 <RelativeLayout
