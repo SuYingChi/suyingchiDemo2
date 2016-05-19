@@ -21,6 +21,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.api.HSFontManager;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodPanelStripView;
@@ -258,6 +259,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 		search_edit.setText("");
 		search_edit.requestFocus();
 		LatinIME.onStartInputInside(search_edit);
+		HSFontManager.getInstance().setmShouldShieldSpecialFont(true);//force use normal font
 		search_edit.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 		emojiText.setVisibility(GONE);
 		emojiIv.setVisibility(VISIBLE);
