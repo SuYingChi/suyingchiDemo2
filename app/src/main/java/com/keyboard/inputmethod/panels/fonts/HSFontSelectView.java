@@ -2,7 +2,6 @@ package com.keyboard.inputmethod.panels.fonts;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -10,15 +9,14 @@ import android.widget.ListView;
 
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
-import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 
 public class HSFontSelectView extends ListView {
-
+    
     private Drawable mBackground;
     private Drawable mItemSelectedBackground;
     private final int fontItemTextColor;
-    private int fontItemDividerColor;
-
+    private final int fontItemDividerColor;
+    
     public HSFontSelectView(final Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -32,51 +30,8 @@ public class HSFontSelectView extends ListView {
         mBackground = getBackground();
         mItemSelectedBackground = mBackground.getConstantState().newDrawable();
         mItemSelectedBackground.mutate().setAlpha(204);
-
-        fontItemDividerColor = getColorWithoutAlpha(HSInputMethodTheme.getThemeMainColor(), fontItemDividerColor);
         setDivider(new ColorDrawable(fontItemDividerColor));
-        HSKeyboardThemeManager.setmFontDividerColor(fontItemDividerColor);
         setDividerHeight(1);
-        setCacheColorHint(fontItemDividerColor);
-    }
-
-    enum ColorType {Red, Blue, Green}
-
-
-    private int getColorWithoutAlpha(int backgroundColor, int frontColor) {
-        //REF:http://406625590.blog.163.com/blog/static/335305972013113144438381/
-        int red = getMixedColor(backgroundColor, frontColor, ColorType.Red);
-        int blue = getMixedColor(backgroundColor, frontColor, ColorType.Blue);
-        int green = getMixedColor(backgroundColor, frontColor, ColorType.Green);
-
-        return Color.rgb(red,blue,green);
-    }
-
-    private int getMixedColor(int backgroundColor, int frontColor, ColorType type) {
-        int color1 = 0;
-        int color2 = 0;
-        switch (type) {
-            case Red:
-                color1 = Color.red(backgroundColor);
-                color2 = Color.red(frontColor);
-                break;
-            case Blue:
-                color1 = Color.blue(backgroundColor);
-                color2 = Color.blue(frontColor);
-                break;
-            case Green:
-                color1 = Color.green(backgroundColor);
-                color2 = Color.green(frontColor);
-                break;
-        }
-        float alpha = getAlpha(frontColor);
-        return (int) (color1 * (1 - alpha) + (color2 * alpha));
-    }
-
-    private float getAlpha(int color) {
-        ColorDrawable cd = new ColorDrawable(color);
-        int alpha = cd.getAlpha();
-        return alpha/255.0f;
     }
 
     @Override
@@ -86,9 +41,9 @@ public class HSFontSelectView extends ListView {
         final int height = HSInputMethodCommonUtils.getDefaultKeyboardHeight();
         setMeasuredDimension(width, height);
     }
-
+    
     public Drawable getItemDefaultBackground() {
-        return mBackground;
+      return mBackground;
     }
 
     public int getItemDividerColor() {
@@ -100,7 +55,7 @@ public class HSFontSelectView extends ListView {
     }
 
     public Drawable getItemSelectedBackground() {
-        return mItemSelectedBackground;
+      return mItemSelectedBackground;
     }
 
     public void onDismiss() {
