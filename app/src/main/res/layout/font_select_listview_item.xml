@@ -37,7 +37,10 @@
             android:textColor="@color/font_item_text_color"
             android:textSize="@dimen/font_item_text_size" />
     </RelativeLayout>
-
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:id="@+id/gap"/>
     <RelativeLayout
         android:id="@+id/rl_font_right"
         android:layout_width="fill_parent"

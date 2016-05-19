@@ -18,6 +18,7 @@ import com.ihs.inputmethod.api.HSFontManager;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
 import com.ihs.inputmethod.api.HSLetterFont;
+import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.keyboard.rainbow.R;
 
 import java.util.List;
@@ -80,6 +81,8 @@ public class HSFontSelectViewAdapter extends BaseAdapter {
             holder.fontNameLeft = (TextView) convertView.findViewById(R.id.tv_font_left);
             holder.fontNameRight = (TextView) convertView.findViewById(R.id.tv_font_right);
             holder.fontPickIconLeft = (ImageView) convertView.findViewById(R.id.iv_font_pick_left);
+            holder.gap = convertView.findViewById(R.id.gap);
+
             holder.fontPickIconLeft.setImageDrawable(HSInputMethodTheme.getStyledAssetDrawable(convertView.getResources().getDrawable(R.drawable.keyboard_font_selected_tick),
                     FONT_SELECTED_TICK));
             holder.fontPickIconRight = (ImageView) convertView.findViewById(R.id.iv_font_pick_right);
@@ -87,6 +90,7 @@ public class HSFontSelectViewAdapter extends BaseAdapter {
                     FONT_SELECTED_TICK));
             holder.fontNameLeft.setTextColor(mParentView.getItemTextColor());
             holder.fontNameRight.setTextColor(mParentView.getItemTextColor());
+            holder.gap.setBackgroundColor(HSKeyboardThemeManager.getmFontDividerColor());
             convertView.setBackgroundColor(mParentView.getItemDividerColor());
             convertView.setTag(holder);
         } else {
@@ -213,5 +217,6 @@ public class HSFontSelectViewAdapter extends BaseAdapter {
         public RelativeLayout fontClickRegionRight;
         public TextView fontNameRight;
         public ImageView fontPickIconRight;
+        public View gap;
     }
 }
