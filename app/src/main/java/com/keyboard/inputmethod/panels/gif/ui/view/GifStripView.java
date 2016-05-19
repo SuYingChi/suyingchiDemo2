@@ -259,7 +259,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 		search_edit.setText("");
 		search_edit.requestFocus();
 		LatinIME.onStartInputInside(search_edit);
-		HSFontManager.getInstance().setmShouldShieldSpecialFont(true);//force use normal font
+		HSFontManager.getInstance().setShouldConvertToSpecialFont(false);//force use normal font
 		search_edit.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 		emojiText.setVisibility(GONE);
 		emojiIv.setVisibility(VISIBLE);
