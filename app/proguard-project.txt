@@ -18,7 +18,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-
+-ignorewarnings
 
 # Keep classes and methods that have the @UsedForTesting annotation
 -keep @com.android.inputmethod.annotations.UsedForTesting class *
