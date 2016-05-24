@@ -7,19 +7,19 @@ import android.view.inputmethod.InputConnection;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.framework.HSInputMethodService;
 import com.keyboard.inputmethod.panels.gif.control.DataManager;
-import com.keyboard.inputmethod.panels.gif.control.GifManager;
 import com.keyboard.inputmethod.panels.gif.dao.base.LanguageDao;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESManager;
 import com.keyboard.inputmethod.panels.gif.ui.view.CustomSearchEditText;
+import com.keyboard.rainbow.thread.AsyncThreadPools;
 
 /**
  * Created by xu.zhang on 11/3/15.
  */
 public class LatinIME extends HSInputMethodService {
-    public static final String HS_NOTIFICATION_SHOW_WINDOW="hs.keyboard.showWindow";
     public static final String HS_NOTIFICATION_DISCONNECT_INSIDE_CONNECTION="hs.keyboard.DISCONNECT_INSIDE_CONNECTION";
     public static final String HS_NOTIFICATION_SERVICE_DESTROY="hs.keyboard.SERVICE_DESTROY";
     public static final String HS_NOTIFICATION_SERVICE_START_INPUT_VIEW="hs.keyboard.SERVICE_START_INPUT_VIEW";
@@ -28,19 +28,17 @@ public class LatinIME extends HSInputMethodService {
     private volatile boolean isOnDestroy=false;
 
     @Override
-    public void showWindow(boolean showInput) {
-        if(showInput)
-            HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SHOW_WINDOW);
-        super.showWindow(showInput);
-    }
-
-    @Override
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
-        GifManager.init();
-        DataManager.getInstance().loadUserData();
+        AsyncThreadPools.execute(new Runnable() {
+            @Override
+            public void run() {
+                DataManager.getInstance().loadUserData();
+            }
+        });
         isOnDestroy=false;
+        HSLog.d("time log, input service on create finished");
     }
 
     public static void onStartInputInside(CustomSearchEditText editText) {
@@ -83,6 +81,7 @@ public class LatinIME extends HSInputMethodService {
         final HSBundle bundle = new HSBundle();
         bundle.putString(HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME, editorInfo.packageName);
         HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_START_INPUT_VIEW, bundle);
+        HSLog.d("time log, input service on start input view finished");
     }
 
     @Override

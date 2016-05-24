@@ -14,6 +14,7 @@ import com.keyboard.inputmethod.panels.gif.net.callback.UICallback;
 import com.keyboard.inputmethod.panels.gif.net.request.BaseRequest;
 import com.keyboard.inputmethod.panels.gif.net.request.TagRequest;
 import com.keyboard.rainbow.R;
+import com.keyboard.rainbow.thread.AsyncThreadPools;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -63,12 +64,12 @@ public final class ESManager {
 	};
 
 	private ESManager() {
-		new Thread() {
+		AsyncThreadPools.execute(new Runnable() {
 			@Override
 			public void run() {
 				mInstance.loadEmojis();
 			}
-		}.start();
+		});
 	}
 
 	public static ESManager getInstance() {
@@ -165,23 +166,23 @@ public final class ESManager {
 			switcher.removeTopView(mESPalettesView);
 			mESShow = false;
 		}
-		new Thread(){
+		AsyncThreadPools.execute(new Runnable() {
 			@Override
 			public void run() {
 				mInstance.loadEmojis();
 			}
-		}.start();
+		});
 	}
 
 	public boolean shuoldEmojiSearchEabled(){
 		final boolean should= mEmojis.size()> SIZE_TO_EABLE_EMOJI_SEARCH;
 		if(!should){
-			new Thread(){
-				@Override
-				public void run() {
-					mInstance.loadEmojis();
-				}
-			}.start();
+			AsyncThreadPools.execute(new Runnable() {
+					@Override
+					public void run() {
+						mInstance.loadEmojis();
+					}
+			});
 		}
 		return should;
 	}

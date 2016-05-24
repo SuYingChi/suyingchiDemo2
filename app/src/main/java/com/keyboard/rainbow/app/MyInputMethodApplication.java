@@ -5,10 +5,7 @@ import android.support.multidex.MultiDex;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.ihs.app.alerts.HSAlertMgr;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
-import com.ihs.app.utils.HSInstallationUtils;
-import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -16,13 +13,9 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.keyboard.inputmethod.panels.KeyboardExtensionUtils;
 import com.keyboard.inputmethod.panels.gif.control.GifManager;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.keyboard.rainbow.thread.AsyncThreadPools;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
-
-    private static boolean isFacebookAppInstalled = false;
-    private static boolean isGooglePlayInstalled = false;
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
@@ -49,27 +42,21 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     public void onCreate() {
         super.onCreate();
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).build();
-        ImageLoader.getInstance().init(config);
-        isFacebookAppInstalled = HSInstallationUtils.isAppInstalled("com.facebook.katana");
-        isGooglePlayInstalled = HSMarketUtils.isMarketInstalled(HSMarketUtils.GOOGLE_MARKET);
-
-        GifManager.init();
         Fresco.initialize(this);
+        AsyncThreadPools.execute(new Runnable() {
+            @Override
+            public void run() {
+                GifManager.init();
+            }
+        });
+        HSLog.d("time log, application oncreated finished");
+
     }
 
     @Override
     public void onTerminate() {
         HSGlobalNotificationCenter.removeObserver(sessionEventObserver);
         super.onTerminate();
-    }
-
-    public static boolean isFacebookAppInstalled() {
-        return isFacebookAppInstalled;
-    }
-
-    public static boolean isGooglePlayInstalled() {
-        return isGooglePlayInstalled;
     }
 
     @Override

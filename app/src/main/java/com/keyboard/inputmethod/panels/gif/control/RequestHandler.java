@@ -7,6 +7,7 @@ import com.keyboard.inputmethod.panels.gif.model.GifItem;
 import com.keyboard.inputmethod.panels.gif.model.TagItem;
 import com.keyboard.inputmethod.panels.gif.net.request.BaseRequest;
 import com.keyboard.inputmethod.panels.gif.net.request.SearchRequest;
+import com.keyboard.rainbow.thread.AsyncThreadPools;
 import com.keyboard.rainbow.utils.Constants;
 
 import org.json.JSONArray;
@@ -16,7 +17,7 @@ import java.util.List;
 public final class RequestHandler {
 
     static void handleRequest(final BaseRequest request) {
-        new Thread(new Runnable() {
+       AsyncThreadPools.execute(new Runnable() {
             @Override
             public void run() {
 	            final List<?> data= DataManager.getInstance().getDataFromLocal(request);
@@ -46,7 +47,7 @@ public final class RequestHandler {
 		            }
 	            });
             }
-        }).start();
+        });
 	    
     }
 

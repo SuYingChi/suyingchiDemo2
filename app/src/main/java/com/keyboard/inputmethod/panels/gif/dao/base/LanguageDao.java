@@ -7,6 +7,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.framework.HSInputMethodService;
 import com.keyboard.inputmethod.panels.gif.control.DataManager;
+import com.keyboard.rainbow.thread.AsyncThreadPools;
 
 import java.util.Locale;
 
@@ -36,12 +37,12 @@ public final class LanguageDao {
 		SharedPreferences pre=PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
 		if(!getCurrentLanguageForDB().equals(pre.getString(PRE_KEY_CURRENT_LANGUAAGE,"en_US"))){
 			pre.edit().putString(PRE_KEY_CURRENT_LANGUAAGE,getCurrentLanguageForDB()).apply();
-			new Thread(){
+			AsyncThreadPools.execute(new Runnable() {
 				@Override
 				public void run() {
 					DataManager.getInstance().switchLanguage();
 				}
-			}.start();
+			});
 		}
 	}
 }
