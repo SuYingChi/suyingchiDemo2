@@ -134,8 +134,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ihs.inputmethod.settings.ThemeSettingsActivity" >
-        </activity>
+
         <activity
             android:name="com.ihs.inputmethod.settings.MoreLanguageActivity"
             android:label="@string/app_name"
