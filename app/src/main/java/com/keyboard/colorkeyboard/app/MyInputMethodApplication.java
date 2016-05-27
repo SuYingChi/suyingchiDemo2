@@ -1,4 +1,4 @@
-package com.keyboard.rainbow.app;
+package com.keyboard.colorkeyboard.app;
 
 import android.content.Context;
 import android.support.multidex.MultiDex;

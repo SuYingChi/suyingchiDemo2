@@ -7,7 +7,7 @@ import com.keyboard.inputmethod.panels.gif.model.GifItem;
 import com.keyboard.inputmethod.panels.gif.model.TagItem;
 import com.keyboard.inputmethod.panels.gif.net.request.BaseRequest;
 import com.keyboard.inputmethod.panels.gif.net.request.SearchRequest;
-import com.keyboard.rainbow.utils.Constants;
+import com.keyboard.colorkeyboard.utils.Constants;
 
 import org.json.JSONArray;
 

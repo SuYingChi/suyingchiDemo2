@@ -7,7 +7,7 @@ import com.keyboard.inputmethod.panels.fonts.HSFontSelectPanel;
 import com.keyboard.inputmethod.panels.gif.ui.panel.GifPanel;
 import com.keyboard.inputmethod.panels.settings.HSSettingsPanel;
 import com.keyboard.inputmethod.panels.theme.HSThemeSelectPanel;
-import com.keyboard.rainbow.utils.Constants;
+import com.keyboard.colorkeyboard.utils.Constants;
 
 
 /**

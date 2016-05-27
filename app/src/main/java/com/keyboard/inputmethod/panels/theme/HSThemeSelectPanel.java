@@ -8,7 +8,7 @@ import android.view.View;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.HSInputMethodPanel;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 public class HSThemeSelectPanel extends HSInputMethodPanel {
 

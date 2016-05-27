@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
 import com.keyboard.inputmethod.panels.gif.net.download.DownloadTask;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 public final class GifView extends RelativeLayout implements View.OnClickListener,View.OnLongClickListener{
 

@@ -7,7 +7,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.ihs.inputmethod.base.utils.ResourceUtils;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 final class ESLayoutParams {
 

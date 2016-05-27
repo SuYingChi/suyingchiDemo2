@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.keyboard.inputmethod.panels.gif.control.DownloadManager;
 import com.keyboard.inputmethod.panels.gif.net.download.DownloadTask;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 
 public final class GifHorizontalScrollView extends RecyclerView {

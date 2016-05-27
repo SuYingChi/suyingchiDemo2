@@ -32,9 +32,9 @@ import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESManager;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESPageGridView;
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 import com.ihs.inputmethod.latin.LatinIME;
-import com.keyboard.rainbow.utils.Constants;
+import com.keyboard.colorkeyboard.utils.Constants;
 
 /**
  * Created by dsapphire on 16/1/9.

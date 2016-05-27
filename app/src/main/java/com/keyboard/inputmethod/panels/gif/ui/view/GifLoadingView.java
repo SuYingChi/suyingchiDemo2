@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 
 public final class GifLoadingView extends LinearLayout {

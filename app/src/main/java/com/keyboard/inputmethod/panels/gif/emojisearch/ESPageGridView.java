@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 public final class ESPageGridView extends GridView {
 

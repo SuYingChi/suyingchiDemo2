@@ -23,7 +23,7 @@ import com.keyboard.inputmethod.panels.gif.ui.view.CustomProgressDrawable;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifHorizontalScrollView;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifPanelView;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifView;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 import java.io.File;
 import java.util.ArrayList;

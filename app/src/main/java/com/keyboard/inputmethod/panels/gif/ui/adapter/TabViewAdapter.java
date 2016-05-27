@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 import java.util.HashMap;
 import java.util.List;

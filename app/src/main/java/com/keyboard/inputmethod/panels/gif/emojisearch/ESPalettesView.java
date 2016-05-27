@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 
 import com.ihs.inputmethod.api.HSInputMethodTheme;
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 public final class ESPalettesView extends LinearLayout implements ViewPager.OnPageChangeListener, ESPageGridView.OnEmojiClickListener {
 

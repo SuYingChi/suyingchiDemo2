@@ -13,7 +13,7 @@ import com.keyboard.inputmethod.panels.gif.model.GifItem;
 import com.keyboard.inputmethod.panels.gif.net.callback.UICallback;
 import com.keyboard.inputmethod.panels.gif.net.request.BaseRequest;
 import com.keyboard.inputmethod.panels.gif.net.request.TagRequest;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;

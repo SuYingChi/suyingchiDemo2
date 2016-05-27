@@ -13,7 +13,7 @@ import com.keyboard.inputmethod.panels.gif.net.download.GifDownloadTask;
 import com.keyboard.inputmethod.panels.gif.net.request.BaseRequest;
 import com.keyboard.inputmethod.panels.gif.utils.ConstantsUtils;
 import com.keyboard.inputmethod.panels.gif.utils.ShareUtils;
-import com.keyboard.rainbow.utils.Constants;
+import com.keyboard.colorkeyboard.utils.Constants;
 
 import java.io.File;
 

@@ -23,7 +23,7 @@ import android.widget.FrameLayout;
 
 import com.ihs.inputmethod.base.utils.ResourceUtils;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifHorizontalScrollView;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 final public class GifLayoutParams {
 

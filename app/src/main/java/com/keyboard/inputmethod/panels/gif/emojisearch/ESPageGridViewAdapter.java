@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 import java.util.List;
 

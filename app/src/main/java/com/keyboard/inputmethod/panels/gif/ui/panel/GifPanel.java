@@ -17,9 +17,9 @@ import com.ihs.inputmethod.framework.HSKeyboardSwitcher;
 import com.keyboard.inputmethod.panels.gif.control.DataManager;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifPanelView;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifStripView;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 import com.ihs.inputmethod.latin.LatinIME;
-import com.keyboard.rainbow.utils.Constants;
+import com.keyboard.colorkeyboard.utils.Constants;
 
 public final class GifPanel extends HSInputMethodPanel {
 	private GifPanelView mGifPanelView;

@@ -12,7 +12,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodPanel;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 public class HSFontSelectPanel extends HSInputMethodPanel {
 

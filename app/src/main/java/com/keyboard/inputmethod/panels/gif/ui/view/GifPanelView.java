@@ -47,7 +47,7 @@ import com.keyboard.inputmethod.panels.gif.ui.panel.GifLayoutParams;
 import com.keyboard.inputmethod.panels.gif.utils.ShareUtils;
 import com.keyboard.inputmethod.panels.utils.DeleteKeyOnTouchListener;
 import com.keyboard.inputmethod.panels.utils.NetworkChangeReceiver;
-import com.keyboard.rainbow.R;
+import com.keyboard.colorkeyboard.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -205,7 +205,7 @@ public final class GifPanelView extends RelativeLayout implements TabViewAdapter
         if (mStripView != null) {
             mStripView.onTabChanged(tabId);
         }
-        HSGoogleAnalyticsUtils.logKeyboardEvent(com.keyboard.rainbow.utils.Constants.KEYBOARD_GIF_TAB_SWITCHED, mGifCategory.getCurrentLogCategoryId());
+        HSGoogleAnalyticsUtils.logKeyboardEvent(com.keyboard.colorkeyboard.utils.Constants.KEYBOARD_GIF_TAB_SWITCHED, mGifCategory.getCurrentLogCategoryId());
     }
 
     private BaseRequest getRequest(String tabId) {
@@ -298,7 +298,7 @@ public final class GifPanelView extends RelativeLayout implements TabViewAdapter
     }
 
     public void onGifClicked(GifItem item) {
-        HSGoogleAnalyticsUtils.logKeyboardEvent(com.keyboard.rainbow.utils.Constants.KEYBOARD_GIF_CLICKED, mGifCategory.getCurrentLogCategoryId());
+        HSGoogleAnalyticsUtils.logKeyboardEvent(com.keyboard.colorkeyboard.utils.Constants.KEYBOARD_GIF_CLICKED, mGifCategory.getCurrentLogCategoryId());
         mp4PackageName = HSInputMethod.getCurrentAppName();
         shareUrl = item.getUrl();
         GifManager.getInstance().notifyImageClicked(item, mp4PackageName, mp4DownloadCallback);
@@ -310,7 +310,7 @@ public final class GifPanelView extends RelativeLayout implements TabViewAdapter
         if (tag.startsWith("#")) {
             tag = tag.substring(1);
         }
-        HSGoogleAnalyticsUtils.logKeyboardEvent(com.keyboard.rainbow.utils.Constants.KEYBOARD_GIF_TAG_CLICKED, tag);
+        HSGoogleAnalyticsUtils.logKeyboardEvent(com.keyboard.colorkeyboard.utils.Constants.KEYBOARD_GIF_TAG_CLICKED, tag);
         mGifCategory.setCurrentExtendedCategoryId(tag);
 
         clear();
