@@ -64,7 +64,8 @@ public final class ShareUtils {
             final Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setPackage(packageName);
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-            shareIntent.setType(mimeType);
+            shareIntent.setDataAndType(uri,mimeType);
+//            shareIntent.setType(mimeType);
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             HSApplication.getContext().startActivity(shareIntent);
         }catch (Exception e){
