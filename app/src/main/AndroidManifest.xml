@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.keyboard.rainbow"
     android:installLocation="internalOnly"
-    android:versionCode="3"
-    android:versionName="1.1.0" >
+    android:versionCode="4"
+    android:versionName="1.2.0" >
 
     <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook"/>
 
@@ -48,6 +48,15 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <!-- AppsFlyer required -->
+        <receiver
+            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name="com.ihs.app.push.impl.GcmBroadcastReceiver"
@@ -135,6 +144,7 @@
             </intent-filter>
         </activity>
 
+
         <activity
             android:name="com.ihs.inputmethod.settings.MoreLanguageActivity"
             android:label="@string/app_name"
@@ -178,11 +188,22 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_app_id" />
 
-        <!--<activity-->
-            <!--android:name="com.facebook.FacebookActivity"-->
-            <!--android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!-- AppsFlyer required -->
+        <receiver android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- required permission by facebook -->
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+
+
     </application>
 
 </manifest>

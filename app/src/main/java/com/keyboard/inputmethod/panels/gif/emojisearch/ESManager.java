@@ -178,10 +178,10 @@ public final class ESManager {
 		final boolean should= mEmojis.size()> SIZE_TO_EABLE_EMOJI_SEARCH;
 		if(!should){
 			AsyncThreadPools.execute(new Runnable() {
-					@Override
-					public void run() {
-						mInstance.loadEmojis();
-					}
+				@Override
+				public void run() {
+					mInstance.loadEmojis();
+				}
 			});
 		}
 		return should;

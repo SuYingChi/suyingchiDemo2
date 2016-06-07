@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
 **
 ** Copyright 2013, The Android Open Source Project
@@ -38,6 +37,7 @@
         <item name="settingsPanelStyle">@style/SettingsPannel.POP.RU</item>
         <item name="fontSelectPanelStyle">@style/FontSelectPannel.POP.RU</item>
 
+
         <!-- reserved area ends here -->
     </style>
 
@@ -45,7 +45,8 @@
 
     <style name="KeyboardView.POP.RU" parent="KeyboardView">
         <item name="keyLabelSize">@fraction/config_key_label_ratio_pink</item>
-        <item name="keyHintLetterPaddingRight">@dimen/config_key_hint_letter_padding_right_pop</item>
+        <item name="keyHintLetterPaddingRight">@dimen/config_key_hint_letter_padding_right_pop
+        </item>
         <item name="keyHintLetterRatio">@fraction/config_key_hint_letter_ratio_pink</item>
         <item name="keyLargeLetterRatio">@fraction/config_key_large_letter_ratio_pop</item>
         <item name="keyLabelOffCenterRatio">-55%</item>
@@ -72,10 +73,18 @@
         <item name="gestureFloatingPreviewTextColor">#010101</item>
         <item name="gestureFloatingPreviewColor">#ffea00</item>
         <item name="gestureTrailColor">#ffff37</item>
-        <item name="keyPopupHintLetterPaddingRight">@dimen/config_key_popup_hint_letter_padding_right_pop</item>
-        <item name="keyPopupHintLetterPaddingTop">@dimen/config_key_popup_hint_letter_padding_top_pop</item>
-        <item name="keyLanguageOnSpacePaddingRight">@dimen/config_key_language_on_space_padding_right_pop</item>
-        <item name="keyLanguageOnSpacePaddingTop">@dimen/config_key_language_on_space_padding_top_pop</item>
+        <item name="keyPopupHintLetterPaddingRight">
+            @dimen/config_key_popup_hint_letter_padding_right_pop
+        </item>
+        <item name="keyPopupHintLetterPaddingTop">
+            @dimen/config_key_popup_hint_letter_padding_top_pop
+        </item>
+        <item name="keyLanguageOnSpacePaddingRight">
+            @dimen/config_key_language_on_space_padding_right_pop
+        </item>
+        <item name="keyLanguageOnSpacePaddingTop">
+            @dimen/config_key_language_on_space_padding_top_pop
+        </item>
         <item name="languageOnSpacebarTextColor">#EA000000</item>
         <item name="languageOnSpacebarTextShadowRadius">1.0</item>
         <item name="languageOnSpacebarTextShadowColor">#EA000000</item>
@@ -143,4 +152,15 @@
         <item name="android:background">#ff181818</item>
     </style>
 
+    <style name="GifEmojiSearchTitleTextViewStyle.POP.RU" parent="GifEmojiSearchTitleTextViewStyle">
+        <item name="android:textColor">@color/gif_emoji_search_hint_color_custom</item>
+    </style>
+
+    <style name="GifEmojiSearchContentTextViewStyle.POP.RU" parent="GifEmojiSearchTitleTextViewStyle">
+        <item name="android:textColor">@color/gif_emoji_search_content_color_theme_common</item>
+    </style>
+
+    <style name="GifEmojiSearchSelectedTextViewStyle.POP.RU" parent="GifEmojiSearchSelectedTextViewStyle">
+        <item name="android:textColor">@color/translucent_black</item>
+    </style>
 </resources>

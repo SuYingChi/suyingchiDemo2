@@ -10,6 +10,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.keyboard.rainbow.R;
 
 
@@ -36,6 +37,7 @@ public final class GifLoadingView extends LinearLayout {
 
         mGifLoadingCircle = findViewById(R.id.gif_loading_circle);
         mGifLoadingResult = (TextView) findViewById(R.id.gif_loading_result);
+        mGifLoadingResult.setTextColor( HSKeyboardThemeManager.getTextColorFromStyleOfCurrentTheme("GifEmojiSearchTitleTextViewStyle"));
     }
 
     public void show() {

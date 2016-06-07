@@ -85,5 +85,6 @@ public class BaseRequest {
 
 	private final static String REQUEST_KEY_KEY ="key";
 	private final static String REQUEST_KEY_LOCALE ="locale";
-	private final static String REQUEST_VALUE_KEY ="XY6T18KH6V13";
+	private final static String REQUEST_VALUE_KEY ="ZJY5JD88TACB";//for rainbowkey
+
 }
