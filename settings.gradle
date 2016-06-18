@@ -1,2 +1,2 @@
-include ':app',':libKeyboard'
+include ':app', ':libKeyboard', ':customTheme'
 project(':libKeyboard').projectDir = new File('lib_keyboard_android/libKeyboard')

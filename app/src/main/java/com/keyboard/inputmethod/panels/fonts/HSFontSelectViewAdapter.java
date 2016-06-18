@@ -80,10 +80,10 @@ public class HSFontSelectViewAdapter extends BaseAdapter {
             holder.fontNameLeft = (TextView) convertView.findViewById(R.id.tv_font_left);
             holder.fontNameRight = (TextView) convertView.findViewById(R.id.tv_font_right);
             holder.fontPickIconLeft = (ImageView) convertView.findViewById(R.id.iv_font_pick_left);
-            holder.fontPickIconLeft.setImageDrawable(HSInputMethodTheme.getStyledAssetDrawable(convertView.getResources().getDrawable(R.drawable.keyboard_font_selected_tick),
+            holder.fontPickIconLeft.setImageDrawable(HSInputMethodTheme.getStyledDrawable(convertView.getResources().getDrawable(R.drawable.keyboard_font_selected_tick),
                     FONT_SELECTED_TICK));
             holder.fontPickIconRight = (ImageView) convertView.findViewById(R.id.iv_font_pick_right);
-            holder.fontPickIconRight.setImageDrawable(HSInputMethodTheme.getStyledAssetDrawable(convertView.getResources().getDrawable(R.drawable.keyboard_font_selected_tick),
+            holder.fontPickIconRight.setImageDrawable(HSInputMethodTheme.getStyledDrawable(convertView.getResources().getDrawable(R.drawable.keyboard_font_selected_tick),
                     FONT_SELECTED_TICK));
             holder.fontNameLeft.setTextColor(mParentView.getItemTextColor());
             holder.fontNameRight.setTextColor(mParentView.getItemTextColor());

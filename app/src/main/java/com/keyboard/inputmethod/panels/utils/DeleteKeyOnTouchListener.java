@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.keyboard.KeyboardActionListener;
+import com.keyboard.rainbow.R;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,8 +21,8 @@ public class DeleteKeyOnTouchListener implements View.OnTouchListener {
 
 	public DeleteKeyOnTouchListener(Context context) {
 		final Resources res = context.getResources();
-		mKeyRepeatStartTimeout = res.getInteger(com.ihs.inputmethod.R.integer.config_key_repeat_start_timeout);
-		mKeyRepeatInterval = res.getInteger(com.ihs.inputmethod.R.integer.config_key_repeat_interval);
+		mKeyRepeatStartTimeout = res.getInteger(R.integer.config_key_repeat_start_timeout);
+		mKeyRepeatInterval = res.getInteger(R.integer.config_key_repeat_interval);
 		mTimer = new CountDownTimer(MAX_REPEAT_COUNT_TIME, mKeyRepeatInterval) {
 			@Override
 			public void onTick(long millisUntilFinished) {

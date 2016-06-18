@@ -10,6 +10,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.customtheme.app.iap.IAPManager;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.keyboard.inputmethod.panels.KeyboardExtensionUtils;
 import com.keyboard.inputmethod.panels.gif.control.GifManager;
@@ -27,6 +28,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                     HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
                     HSAlertMgr.delayRateAlert();
                 }
+                onSessionStart();
             }
 
         }
@@ -63,5 +65,9 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     public void attachBaseContext(Context base) {
         MultiDex.install(base);
         super.attachBaseContext(base);
+    }
+    private void onSessionStart() {
+        //IAP 初始化,将需要购买的所有产品的product id 加入到
+        IAPManager.getManager().init();
     }
 }

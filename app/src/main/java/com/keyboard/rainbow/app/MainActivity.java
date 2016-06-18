@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.customtheme.app.ui.CustomThemeActivity;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
@@ -257,7 +258,8 @@ public class MainActivity extends HSActivity {
         bt_design_theme.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
             }
         });
 

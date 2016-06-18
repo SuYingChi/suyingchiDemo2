@@ -1,12 +1,13 @@
 package com.keyboard.inputmethod.panels;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.customtheme.panels.theme.HSThemeSelectPanel;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodPanel;
 import com.keyboard.inputmethod.panels.fonts.HSFontSelectPanel;
 import com.keyboard.inputmethod.panels.gif.ui.panel.GifPanel;
 import com.keyboard.inputmethod.panels.settings.HSSettingsPanel;
-import com.keyboard.inputmethod.panels.theme.HSThemeSelectPanel;
+import com.keyboard.rainbow.R;
 import com.keyboard.rainbow.utils.Constants;
 
 
@@ -17,7 +18,7 @@ public class KeyboardExtensionUtils {
 
 
     public static void loadPanels() {
-        final String[] panelNames = HSApplication.getContext().getResources().getStringArray(com.ihs.inputmethod.R.array.addtional_panel_names);
+        final String[] panelNames = HSApplication.getContext().getResources().getStringArray(R.array.addtional_panel_names);
         for (String name : panelNames) {
             HSInputMethod.addPanel(createPanel(name));
         }

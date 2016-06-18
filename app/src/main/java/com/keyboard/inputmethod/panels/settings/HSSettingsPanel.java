@@ -219,9 +219,9 @@ public class HSSettingsPanel extends HSInputMethodPanel {
 
         StateListDrawable addLanguageStatesDrawable = new StateListDrawable();
         addLanguageStatesDrawable.addState(new int[]{android.R.attr.state_pressed},
-                HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_add_language_off), SETTINGS_KEY_ADD_LANGUAGE_OFF));
+                HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_add_language_off), SETTINGS_KEY_ADD_LANGUAGE_OFF));
         addLanguageStatesDrawable.addState(new int[]{},
-                HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_add_language_on), SETTINGS_KEY_ADD_LANGUAGE_ON));
+                HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_add_language_on), SETTINGS_KEY_ADD_LANGUAGE_ON));
         btnLanguage.setBackgroundDrawable(addLanguageStatesDrawable);
 
 
@@ -240,10 +240,10 @@ public class HSSettingsPanel extends HSInputMethodPanel {
 
         StateListDrawable btnStatesDrawable = new StateListDrawable();
         btnStatesDrawable.addState(new int[] { android.R.attr.state_pressed },
-                HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_off), SETTINGS_KEY_MORE_OFF));
+                HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_off), SETTINGS_KEY_MORE_OFF));
         btnStatesDrawable.addState(new int[]{},
-                HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_on), SETTINGS_KEY_MORE_ON));
-                HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_on), SETTINGS_KEY_MORE_ON);
+                HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_on), SETTINGS_KEY_MORE_ON));
+                HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_on), SETTINGS_KEY_MORE_ON);
         btnMore.setBackgroundDrawable(btnStatesDrawable);
         return mSettingsView;
     }
@@ -260,50 +260,50 @@ public class HSSettingsPanel extends HSInputMethodPanel {
     private void updateSoundSettings() {
 
         if (HSInputMethodSettings.getKeySoundEnabled()) {
-            btnSounds.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_sound_on),
+            btnSounds.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_sound_on),
                     SETTINGS_KEY_SOUND_ON));
         } else {
-            btnSounds.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_sound_off),
+            btnSounds.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_sound_off),
                     SETTINGS_KEY_SOUND_OFF));
         }
     }
 
     private void updateCorrectionSettings() {
         if (HSInputMethodSettings.getAutoCorrectionEnabled()) {
-            btnCorrection.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_correction_on),
+            btnCorrection.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_correction_on),
                     SETTINGS_KEY_CORRECTION_ON));
         } else {
-            btnCorrection.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_correction_off),
+            btnCorrection.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_correction_off),
                     SETTINGS_KEY_CORRECTION_OFF));
         }
     }
 
     private void updateCapitalizationSettings() {
         if (HSInputMethodSettings.getAutoCapitalizationEnabled()) {
-            btnCapitalization.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_capitalization_on),
+            btnCapitalization.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_capitalization_on),
                     SETTINGS_KEY_CAP_ON));
         } else {
-            btnCapitalization.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_capitalization_off),
+            btnCapitalization.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_capitalization_off),
                     SETTINGS_KEY_CAP_OFF));
         }
     }
 
     private void updatePredictiveSettings() {
         if (HSInputMethodSettings.getWordPredictionEnabled()) {
-            btnPredictive.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_predictive_on),
+            btnPredictive.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_predictive_on),
                     SETTINGS_KEY_PREDICT_ON));
         } else {
-            btnPredictive.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_predictive_off),
+            btnPredictive.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_predictive_off),
                     SETTINGS_KEY_PREDICT_OFF));
         }
     }
 
     private void updateSwipeSettings() {
         if (HSInputMethodSettings.getGestureTypingEnabled()) {
-            btnSwipe.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_swipe_on),
+            btnSwipe.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_swipe_on),
                     SETTINGS_KEY_SWIPE_ON));
         } else {
-            btnSwipe.setBackgroundDrawable(HSInputMethodTheme.getStyledAssetDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_swipe_off),
+            btnSwipe.setBackgroundDrawable(HSInputMethodTheme.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_swipe_off),
                     SETTINGS_KEY_SWIPE_OFF));
         }
     }

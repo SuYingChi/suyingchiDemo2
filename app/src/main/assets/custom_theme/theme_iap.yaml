@@ -1,0 +1,144 @@
+---
+themeContents:
+  custom_theme_backgrounds:
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier1
+    name: Mountain Breeze
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier2
+    name: Rainbow Swirl
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier3
+    name: Rainy Day
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier4
+    name: Galaxy
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier5
+    name: Lasers
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier6
+    name: Green Graffiti
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier7
+    name: Valentines
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier8
+    name: Comets
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier9
+    name: Beach Ball
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier10
+    name: Diamonds
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier11
+    name: Baby Banana
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier12
+    name: Kisses
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier13
+    name: Cherry Gelato
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier14
+    name: Popsicles
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier15
+    name: Burning Earth
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier16
+    name: Crystal Rainbow
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier17
+    name: Marshmallow
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier19
+    name: Golden Petal
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier20
+    name: Desert
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier21
+    name: Dolphins
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.background.tier22
+    name: Rainbow Beam
+    price: "$0.99"
+
+  custom_theme_backgrounds_all:
+    iapID: com.keyboard.colorkeyboard.pid.allbackground
+    name: AllBackgrounds
+    price: "$9.99"
+
+  custom_theme_fonts:
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier1
+    name: A.C.M.E. Secret Agent
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier2
+    name: Abduction2002
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier3
+    name: Acknowledge TT (BRK)
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier4
+    name: Addis Ababa
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier5
+    name: Allstar
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier6
+    name: AmericanTypewriter
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier7
+    name: BradleyHandITCTT-Bold
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier8
+    name: SnellRoundhand
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier9
+    name: Bloodgutter 2000
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier10
+    name: Camelot MF
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier11
+    name: Delaware
+    price: "$1.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier12
+    name: DigitalSerial
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier13
+    name: Durango-Stencil
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier14
+    name: Election Day
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier15
+    name: Eskargot
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier16
+    name: F821-Deco
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier17
+    name: Gandalf
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier18
+    name: Hole-Hearted
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier19
+    name: Janda Apple Cobbler
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier21
+    name: KG Kiss Me Slowly
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier21
+    name: Klytus
+    price: "$0.99"
+  - iapID: com.keyboard.colorkeyboard.pid.font.tier22
+    name: Nasalization
+    price: "$0.99"
+
+  custom_theme_fonts_all:
+    iapID: com.keyboard.colorkeyboard.pid.allfonts
+    name: AllFonts
+    price: "$9.99"
