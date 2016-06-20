@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#282832"
+    android:orientation="vertical">
+
+
+    <com.ihs.inputmethod.keyboard.KeyboardPreviewView
+        android:id="@+id/keyboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/keyboard_view">
+
+        <FrameLayout
+            android:id="@+id/custom_theme_items_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.ihs.customtheme.app.iap.HSThemePromptPurchaseView
+            android:id="@+id/prompt_theme_purchase_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <com.ihs.customtheme.app.iap.CircleProgressView
+        android:id="@+id/progress_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

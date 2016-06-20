@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.customtheme.app.ui.HSCommonHeaderView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/custom_theme_head_common"
+	android:layout_width="match_parent"
+	android:layout_height="50dp"
+	android:background="#32323c">
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_alignParentLeft="true"
+		android:orientation="horizontal">
+
+		<TextView
+			android:id="@+id/custom_theme_title_cancel"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:gravity="center_vertical"
+			android:paddingLeft="5dp"
+			android:text="@string/cancel_capital"
+			android:textColor="@drawable/custom_theme_head_common_button_selector"
+			android:textSize="16sp"/>
+	</LinearLayout>
+
+
+	<TextView
+		android:id="@+id/custom_theme_title_title"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:text="@string/background_capital"
+		android:textColor="#ffffff"
+		android:textSize="21sp"/>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_alignParentRight="true"
+		android:orientation="horizontal">
+
+		<TextView
+			android:id="@+id/custom_theme_title_ok"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:gravity="center_vertical"
+			android:paddingRight="5dp"
+			android:text="@string/next_capital"
+			android:textColor="@drawable/custom_theme_head_common_button_selector"
+			android:textSize="16sp"/>
+
+	</LinearLayout>
+
+</com.ihs.customtheme.app.ui.HSCommonHeaderView>

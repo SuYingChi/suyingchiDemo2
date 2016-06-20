@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.facebook.android:audience-network-sdk:4.7.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':libKeyboard')
+    provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.1'
+    provided 'com.android.support:appcompat-v7:22.1.0'
+    provided 'com.tonicartos:superslim:0.4.13'
+    provided 'com.android.support:recyclerview-v7:22.1.1'
+    provided 'com.zhy:percent-support-extends:1.1.1'
+}
