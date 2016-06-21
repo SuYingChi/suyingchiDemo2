@@ -88,9 +88,11 @@ public class CustomThemeItem1Fragment extends BaseFragment {
                 CustomThemeItemViewHolder viewHolder = (CustomThemeItemViewHolder) recyclerView.findViewHolderForLayoutPosition(firstVisiblePosition);
                 ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
                 int groupCount = (int) (Math.floor((layoutManager.getItemCount() - 1) / layoutManager.getSpanCount()) + 1);
-                layoutParams.height = viewHolder.itemView.getHeight() * groupCount;
-                recyclerView.setLayoutParams(layoutParams);
-                view.removeOnLayoutChangeListener(this);
+                if (viewHolder != null) {
+                    layoutParams.height = viewHolder.itemView.getHeight() * groupCount;
+                    recyclerView.setLayoutParams(layoutParams);
+                    view.removeOnLayoutChangeListener(this);
+                }
             }
         });
     }

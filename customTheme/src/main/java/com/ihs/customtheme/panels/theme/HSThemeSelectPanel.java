@@ -27,7 +27,6 @@ public class HSThemeSelectPanel extends HSInputMethodPanel {
 
     public HSThemeSelectPanel() {
         super(PANEL_NAME_THEME);
-        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_THEME_LIST_CHANGED, themeListChanged);
     }
 
     private HSThemeSelectRecycler mThemeSelectRecyclerView;
@@ -77,7 +76,7 @@ public class HSThemeSelectPanel extends HSInputMethodPanel {
     public void reloadThemeItems() {
         mThemeSelectViewItems.clear();
 
-        if (HSKeyboardThemeManager.KEYBOARD_CUSTOM_THEMES.length > 0) {
+        if (HSKeyboardThemeManager.customThemes.size() > 0) {
             int themeSectionManager = 0;
             int themeHeaderIndex = 0;
             int themeIndex = 0;
@@ -92,7 +91,7 @@ public class HSThemeSelectPanel extends HSInputMethodPanel {
             themeIndex += 1;
 
             // Custom Themes
-            for (int i = 0; i < HSKeyboardThemeManager.KEYBOARD_CUSTOM_THEMES.length; i++, themeIndex++) {
+            for (int i = 0; i < HSKeyboardThemeManager.customThemes.size(); i++, themeIndex++) {
                 mThemeSelectViewItems.add(new HSThemeSelectRecyclerAdapter.ThemeSelectViewItem(null, false, false,
                         i, HSInputMethodTheme.getThemeNameByIndex(i), themeSectionManager, themeHeaderIndex));
             }
@@ -104,8 +103,8 @@ public class HSThemeSelectPanel extends HSInputMethodPanel {
                     HSApplication.getContext().getResources().getString(R.string.default_themes), true, false, 0, null, themeSectionManager, themeHeaderIndex));
             themeIndex += 1;
 
-            for (int i = 0; i < HSKeyboardThemeManager.KEYBOARD_BUILTIN_THEMES.length; i++, themeIndex++) {
-                int index = i + HSKeyboardThemeManager.KEYBOARD_CUSTOM_THEMES.length;
+            for (int i = 0; i < HSKeyboardThemeManager.builtInThemes.size(); i++, themeIndex++) {
+                int index = i + HSKeyboardThemeManager.customThemes.size();
                 mThemeSelectViewItems.add(
                         new HSThemeSelectRecyclerAdapter.ThemeSelectViewItem(null, false, false,
                                 index, HSInputMethodTheme.getThemeNameByIndex(index),
@@ -117,10 +116,22 @@ public class HSThemeSelectPanel extends HSInputMethodPanel {
                     0, null, 0, 0));
 
             // BuiltIn Themes
-            for (int i = 0; i < HSKeyboardThemeManager.KEYBOARD_BUILTIN_THEMES.length; i++) {
+            for (int i = 0; i < HSKeyboardThemeManager.builtInThemes.size(); i++) {
                 mThemeSelectViewItems.add(new HSThemeSelectRecyclerAdapter.ThemeSelectViewItem(null, false, false,
                         i, HSInputMethodTheme.getThemeNameByIndex(i), 0, 0));
             }
         }
+    }
+
+    @Override
+    public void onShowPanelView() {
+        super.onShowPanelView();
+        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_THEME_LIST_CHANGED, themeListChanged);
+    }
+
+    @Override
+    public void onHidePanelView() {
+        super.onHidePanelView();
+        HSGlobalNotificationCenter.removeObserver(themeListChanged);
     }
 }

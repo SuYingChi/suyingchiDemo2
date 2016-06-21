@@ -40,6 +40,7 @@ import com.ihs.customtheme.app.ui.CustomThemeActivity;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
+import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.keyboard.rainbow.R;
 import com.keyboard.rainbow.utils.Constants;
 
@@ -105,6 +106,7 @@ public class MainActivity extends HSActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        HSKeyboardThemeManager.init();
         rootView = (View) this.findViewById(R.id.view_root);
 
         WindowManager wm = this.getWindowManager();
@@ -493,7 +495,12 @@ public class MainActivity extends HSActivity {
             edit_text_test.setFocusableInTouchMode(true);
             edit_text_test.requestFocus();
             //             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(edit_text_test, InputMethodManager.SHOW_IMPLICIT);
+            edit_text_test.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(edit_text_test, InputMethodManager.SHOW_IMPLICIT);
+                }
+            },100);
             rootView.setBackgroundColor(getResources().getColor(R.color.bg_translucent_black));
             if (style == CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL || style == CurrentUIStyle.UISTYLE_STEP_THREE_TEST)
                 return;

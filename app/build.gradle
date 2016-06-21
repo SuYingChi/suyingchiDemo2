@@ -49,16 +49,16 @@ repositories {
 
 dependencies {
     compile project(':libKeyboard')
-//    compile project(':customTheme')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    //custom theme
-    compile(name:'customTheme', ext:'aar')
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.1'
-    compile 'com.android.support:appcompat-v7:22.1.0'
-    compile 'com.tonicartos:superslim:0.4.13'
-    compile 'com.android.support:recyclerview-v7:22.1.1'
-    compile 'com.zhy:percent-support-extends:1.1.1'
+    compile project(':customTheme')
+//    //custom theme
+//    compile(name:'customTheme', ext:'aar')
+//    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.1'
+//    compile 'com.android.support:appcompat-v7:22.1.0'
+//    compile 'com.tonicartos:superslim:0.4.13'
+//    compile 'com.android.support:recyclerview-v7:22.1.1'
+//    compile 'com.zhy:percent-support-extends:1.1.1'
 
 
 

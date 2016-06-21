@@ -207,6 +207,9 @@
 
         <activity android:name="com.ihs.customtheme.app.ui.CustomThemeActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity android:name="com.ihs.customtheme.app.ui.CustomThemeBackgroundCropperActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

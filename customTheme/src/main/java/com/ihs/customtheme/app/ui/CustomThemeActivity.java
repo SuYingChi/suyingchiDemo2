@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -83,6 +84,7 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
 
 
         HSKeyboardThemeManager.init();
+        HSKeyboardThemeManager.setPreviewCustomTheme(true);
 
 
         mThemeContext = new ContextThemeWrapper(HSApplication.getContext(), HSKeyboardThemeManager.getCommonThemeResourceId());
@@ -118,8 +120,10 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
 
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    protected void onDestroy() {
+        super.onDestroy();
+        HSKeyboardThemeManager.setPreviewCustomTheme(false);
+        System.gc();
     }
 
 //    private void onCancelClick() {
@@ -461,4 +465,6 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
 
         }
     }
+
+
 }
