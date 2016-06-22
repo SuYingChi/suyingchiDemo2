@@ -26,6 +26,7 @@
         <item>@string/keyboard_theme_wood</item>
         <item>@string/keyboard_theme_font</item>
         <item>@string/keyboard_theme_pop</item>
+        <item>@string/keyboard_theme_doddle</item>
     </string-array>
 
 </resources>
