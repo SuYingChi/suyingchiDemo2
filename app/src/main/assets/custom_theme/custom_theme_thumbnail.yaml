@@ -1,79 +1,8 @@
 layouts:
   keyboard_phone:
     View:
-    View:
-      viewWidth: 260
-      viewHeight: 130
-      cornerRadius: 5
-      fontSize: 60%
-    en-US:
-      marginTop: 43
-      marginBottom: 0
-      marginLeft: 37
-      marginRight: 37
-      keyWidth: 32
-      keyHeight: 54
-      rows:
-        - keys:
-          - keyName: q
-          - keyName: w
-          - keyName: e
-          - keyName: r
-          - keyName: t
-        - topGap: 14
-          keys:
-          - keyName: a
-            leftGap: 20
-          - keyName: s
-          - keyName: d
-          - keyName: f
-            rightGap: 20
-    ar-EG:
-      marginTop: 43
-      marginBottom: 0
-      marginLeft: 37
-      marginRight: 37
-      keyWidth: 32
-      keyHeight: 54
-      rows:
-        - keys:
-          - keyName: ض
-          - keyName: ص
-          - keyName: ث
-          - keyName: ق
-          - keyName: ف
-        - topGap: 14
-          keys:
-          - keyName: ش
-          - keyName: س
-          - keyName: ي
-          - keyName: ب
-          - keyName: ل
-    ru-RU:
-      marginTop: 43
-      marginBottom: 0
-      marginLeft: 37
-      marginRight: 37
-      keyWidth: 32
-      keyHeight: 54
-      rows:
-        - keys:
-          - keyName: й
-          - keyName: ц
-          - keyName: у
-          - keyName: к
-          - keyName: е
-        - topGap: 14
-          keys:
-          - keyName: ф
-          - keyName: ы
-          - keyName: в
-          - keyName: а
-          - keyName: п
-  keyboard_tablet:
-    View:
-      viewWidth: 510
-      viewHeight: 250
+      viewWidth: 520
+      viewHeight: 260
       cornerRadius: 10
       fontSize: 60%
     en-US:
@@ -81,8 +10,8 @@ layouts:
       marginBottom: 0
       marginLeft: 74
       marginRight: 74
-      keyWidth: 65
-      keyHeight: 104
+      keyWidth: 64
+      keyHeight: 108
       rows:
         - keys:
           - keyName: q
@@ -103,8 +32,8 @@ layouts:
       marginBottom: 0
       marginLeft: 74
       marginRight: 74
-      keyWidth: 65
-      keyHeight: 104
+      keyWidth: 64
+      keyHeight: 108
       rows:
         - keys:
           - keyName: ض
@@ -124,8 +53,78 @@ layouts:
       marginBottom: 0
       marginLeft: 74
       marginRight: 74
-      keyWidth: 65
-      keyHeight: 104
+      keyWidth: 64
+      keyHeight: 108
+      rows:
+        - keys:
+          - keyName: й
+          - keyName: ц
+          - keyName: у
+          - keyName: к
+          - keyName: е
+        - topGap: 28
+          keys:
+          - keyName: ф
+          - keyName: ы
+          - keyName: в
+          - keyName: а
+          - keyName: п
+  keyboard_tablet:
+    View:
+      viewWidth: 520
+      viewHeight: 260
+      cornerRadius: 10
+      fontSize: 60%
+    en-US:
+      marginTop: 86
+      marginBottom: 0
+      marginLeft: 74
+      marginRight: 74
+      keyWidth: 64
+      keyHeight: 108
+      rows:
+        - keys:
+          - keyName: q
+          - keyName: w
+          - keyName: e
+          - keyName: r
+          - keyName: t
+        - topGap: 28
+          keys:
+          - keyName: a
+            leftGap: 40
+          - keyName: s
+          - keyName: d
+          - keyName: f
+            rightGap: 40
+    ar-EG:
+      marginTop: 86
+      marginBottom: 0
+      marginLeft: 74
+      marginRight: 74
+      keyWidth: 64
+      keyHeight: 108
+      rows:
+        - keys:
+          - keyName: ض
+          - keyName: ص
+          - keyName: ث
+          - keyName: ق
+          - keyName: ف
+        - topGap: 28
+          keys:
+          - keyName: ش
+          - keyName: س
+          - keyName: ي
+          - keyName: ب
+          - keyName: ل
+    ru-RU:
+      marginTop: 86
+      marginBottom: 0
+      marginLeft: 74
+      marginRight: 74
+      keyWidth: 64
+      keyHeight: 108
       rows:
         - keys:
           - keyName: й

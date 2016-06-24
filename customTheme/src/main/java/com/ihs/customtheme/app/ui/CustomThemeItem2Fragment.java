@@ -23,8 +23,8 @@ public class CustomThemeItem2Fragment extends BaseFragment {
     private CustomThemeItemAdapter mAdapter2;
     private List<HSCustomThemeItemBase> mViewItems1;
     private List<HSCustomThemeItemBase> mViewItems2;
-    private OnItemClickListener mOnViewItem1ClickListener;
-    private OnItemClickListener mOnViewItem2ClickListener;
+    private OnRecyclerViewItemClickListener mOnViewItem1ClickListener;
+    private OnRecyclerViewItemClickListener mOnViewItem2ClickListener;
     private int itemViewLayout1;
     private int itemViewLayout2;
 
@@ -36,14 +36,14 @@ public class CustomThemeItem2Fragment extends BaseFragment {
     private boolean backButtonVisible;
     private boolean nextButtonVisible;
 
-    private OnHeadButtonClickListener headButtonClickListener;
+    private OnTitleClickListener headButtonClickListener;
 
     public void setItemViewsParams(final int itemViewLayout1,
                                    final int itemViewLayout2,
                                    final List<HSCustomThemeItemBase> viewItems1,
                                    final List<HSCustomThemeItemBase> viewItems2,
-                                   final OnItemClickListener onViewItemClickListener1,
-                                   final OnItemClickListener onViewItemClickListener2
+                                   final OnRecyclerViewItemClickListener onViewItemClickListener1,
+                                   final OnRecyclerViewItemClickListener onViewItemClickListener2
     ) {
         this.itemViewLayout1 = itemViewLayout1;
         this.itemViewLayout2 = itemViewLayout2;
@@ -55,7 +55,7 @@ public class CustomThemeItem2Fragment extends BaseFragment {
 
     public void setViewParams(final String titleCancel, final String titleHead, final String titleOK,
                               final boolean backButtonVisible, final boolean nextButtonVisible,
-                              final String title1, final String title2, final OnHeadButtonClickListener listener) {
+                              final String title1, final String title2, final OnTitleClickListener listener) {
         this.nextButtonVisible = nextButtonVisible;
         this.backButtonVisible = backButtonVisible;
         this.title1 = title1;

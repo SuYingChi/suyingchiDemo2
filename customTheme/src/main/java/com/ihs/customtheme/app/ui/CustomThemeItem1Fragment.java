@@ -21,7 +21,7 @@ public class CustomThemeItem1Fragment extends BaseFragment {
     private RecyclerView mViews;
     private CustomThemeItemAdapter mAdapter;
     private List<HSCustomThemeItemBase> mViewItems;
-    private OnItemClickListener mOnViewItemClickListener;
+    private OnRecyclerViewItemClickListener mOnViewItemClickListener;
     private int itemViewLayout;
 
     private String titleCancel;
@@ -31,11 +31,11 @@ public class CustomThemeItem1Fragment extends BaseFragment {
     private boolean backButtonVisible;
     private boolean nextButtonVisible;
 
-    private OnHeadButtonClickListener headButtonClickListener;
+    private OnTitleClickListener headButtonClickListener;
 
     public void setItemViewsParams(final int itemViewLayout,
                                    final List<HSCustomThemeItemBase> viewItems,
-                                   final OnItemClickListener onViewItemClickListener) {
+                                   final OnRecyclerViewItemClickListener onViewItemClickListener) {
         this.itemViewLayout = itemViewLayout;
         mOnViewItemClickListener = onViewItemClickListener;
         mViewItems = viewItems;
@@ -43,7 +43,7 @@ public class CustomThemeItem1Fragment extends BaseFragment {
 
     public void setViewParams(final String titleCancel, final String titleHead, final String titleOK,
                               final boolean backButtonVisible, final boolean nextButtonVisible,
-                              final String title1, final OnHeadButtonClickListener listener) {
+                              final String title1, final OnTitleClickListener listener) {
         this.nextButtonVisible = nextButtonVisible;
         this.backButtonVisible = backButtonVisible;
         this.title1 = title1;

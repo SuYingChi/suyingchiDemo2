@@ -163,7 +163,7 @@ public final class GifPanelView extends RelativeLayout implements TabViewAdapter
         mGifHSView.addOnChildAttachStateChangeListener(listener);
         mGifLoadingView = (GifLoadingView) findViewById(R.id.gif_loading_view);
         mGifPanelBg = findViewById(R.id.gif_panel_view_alpha);
-        mGifPanelBg.setBackgroundColor(HSInputMethodTheme.getThemeMainColor());
+        mGifPanelBg.setBackgroundColor(HSInputMethodTheme.getThemeMainColor()&0xff000000);
         mGifLayoutParams.setGifBgProperties(mGifPanelBg);// set height for bg to avoid background view higher than gif panel recycler view
         ImageButton mDeleteKey = (ImageButton) findViewById(R.id.delete_button);
         mDeleteKey.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

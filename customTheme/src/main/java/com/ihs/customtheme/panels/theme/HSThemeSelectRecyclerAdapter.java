@@ -26,9 +26,6 @@ import java.util.List;
 public class HSThemeSelectRecyclerAdapter extends RecyclerView.Adapter<HSThemeSelectRecyclerViewHolder> {
     private static final String TAG = HSThemeSelectRecyclerAdapter.class.getSimpleName();
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
 
     private static final int VIEW_TYPE_HEADER = 0x01;
     private static final int VIEW_TYPE_CONTENT = 0x00;
@@ -37,7 +34,6 @@ public class HSThemeSelectRecyclerAdapter extends RecyclerView.Adapter<HSThemeSe
     private int mHeaderDisplay;
     private boolean mMarginsFixed;
     private final Context mContext;
-    private OnItemClickListener mOnItemClickListener;
     private Animator mAnimator;
     private String mCurrentThemeName;
 
@@ -47,9 +43,6 @@ public class HSThemeSelectRecyclerAdapter extends RecyclerView.Adapter<HSThemeSe
         mItems = items;
     }
 
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
-    }
 
     public boolean isItemHeader(int position) {
         return mItems.get(position).isHeader;

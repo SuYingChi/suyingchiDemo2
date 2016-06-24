@@ -30,7 +30,7 @@ public class HSCommonHeaderView extends RelativeLayout {
 	private boolean backButtonVisible;
 	private boolean nextButtonVisible;
 
-	private OnHeadButtonClickListener headButtonClickListener;
+	private OnTitleClickListener headButtonClickListener;
 
 	public HSCommonHeaderView(Context context) {
 		this(context,null);
@@ -145,7 +145,7 @@ public class HSCommonHeaderView extends RelativeLayout {
 		}
 	}
 
-	public void setHeadButtonClickListener(final OnHeadButtonClickListener headButtonClickListener) {
+	public void setHeadButtonClickListener(final OnTitleClickListener headButtonClickListener) {
 		this.headButtonClickListener=headButtonClickListener;
 		setListener();
 	}

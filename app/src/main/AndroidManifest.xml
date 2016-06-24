@@ -3,9 +3,9 @@
     package="com.keyboard.rainbow"
     android:installLocation="internalOnly"
     android:versionCode="4"
-    android:versionName="1.2.0" >
+    android:versionName="1.2.0">
 
-    <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook"/>
+    <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -42,8 +42,9 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
-        tools:replace="android:label"
-        android:supportsRtl="false" >
+        android:largeHeap="true"
+        android:supportsRtl="false"
+        tools:replace="android:label">
 
         <!-- required by libAppFramework -->
         <meta-data
@@ -61,7 +62,7 @@
 
         <receiver
             android:name="com.ihs.app.push.impl.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -76,8 +77,7 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
         <!-- Add the following meta-data for devices running Google Play service. -->
         <meta-data
@@ -90,7 +90,7 @@
         -->
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
@@ -107,15 +107,16 @@
         -->
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
         <service
             android:name="com.ihs.inputmethod.latin.LatinIME"
             android:label="@string/english_ime_name"
-            android:permission="android.permission.BIND_INPUT_METHOD" >
+            android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
@@ -130,7 +131,7 @@
             android:name="com.keyboard.rainbow.app.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -139,7 +140,7 @@
         </activity>
         <activity
             android:name="com.ihs.inputmethod.settings.SettingsActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -149,7 +150,7 @@
         <activity
             android:name="com.ihs.inputmethod.settings.MoreLanguageActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -190,7 +191,8 @@
             android:value="@string/fb_app_id" />
 
         <!-- AppsFlyer required -->
-        <receiver android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
+        <receiver
+            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
@@ -198,18 +200,24 @@
         </receiver>
 
         <!-- required permission by facebook -->
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
-
-
-        <activity android:name="com.ihs.customtheme.app.ui.CustomThemeActivity"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <activity android:name="com.ihs.customtheme.app.ui.CustomThemeBackgroundCropperActivity"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.ihs.customtheme.app.ui.CustomThemeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.ihs.customtheme.app.ui.CustomThemeBackgroundCropperActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

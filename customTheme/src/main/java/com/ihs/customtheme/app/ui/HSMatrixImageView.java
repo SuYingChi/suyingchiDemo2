@@ -87,13 +87,15 @@ public class HSMatrixImageView extends ImageView {
         mMatrix.getValues(values);
         mImageWidth = this.getDrawable().getIntrinsicWidth();
         mImageHeight = this.getDrawable().getIntrinsicHeight();
-        mScale = values[Matrix.MSCALE_X];
+//        mScale = values[Matrix.MSCALE_X];
+        mScale =1.0f* getContext().getResources().getDisplayMetrics().widthPixels/mImageWidth;
 
         float height = mImageHeight * values[Matrix.MSCALE_Y];
         // Y轴居中
         float topMargin = (getHeight() - height) / 2;
         if (topMargin != values[Matrix.MTRANS_Y]) {
             mMatrix.postTranslate(0, topMargin - values[Matrix.MTRANS_Y]);
+            mMatrix.postScale(mScale,mScale);
             setImageMatrix(mMatrix);
         }
     }

@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
@@ -14,10 +15,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.customtheme.R;
 import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
 import com.ihs.inputmethod.theme.HSCustomThemeItemBackground;
 import com.ihs.inputmethod.theme.HSCustomThemeItemBase;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 
 public class CustomThemeBackgroundCropperActivity extends HSActivity {
@@ -43,7 +49,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
         imagePath = getIntent().getStringExtra(CopperImagePath);
         keyboardWidth = getIntent().getIntExtra(KeyboardWidth, 0);
         keyboardHeight = getIntent().getIntExtra(KeyboardHeight, 0);
-
+        HSLog.d(String.format("page:%s,imagePath:%s", getClass().getSimpleName(), imagePath));
         cropperImage = extractThumbNail(imagePath, keyboardWidth, keyboardHeight);
 
         cropperImageMaskView = findViewById(R.id.custom_theme_background_cropper_content_mask_view);
@@ -88,8 +94,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 int[] imageMaskViewLocation = new int[2];
                 cropperImageMaskView.getLocationInWindow(imageMaskViewLocation);
 
-                Bitmap cropperBitmap = takeViewShot(cropperImageView, imageMaskViewLocation[0] - imageViewLocation[0],
-                        imageMaskViewLocation[1] - imageViewLocation[1], keyboardWidth, keyboardHeight);
+                Bitmap cropperBitmap = takeViewShot(cropperImageView, imageMaskViewLocation[0] - imageViewLocation[0],imageMaskViewLocation[1] - imageViewLocation[1], keyboardWidth, keyboardHeight);
                 HSCustomThemeItemBackground background = HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground();
                 if (background != null) {
                     if (background.getItemSource() == HSCustomThemeItemBase.ItemSource.CUSTOMIZED) {
@@ -112,47 +117,96 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
         Bitmap activityShot = view.getDrawingCache();
+//        width = left + width > activityShot.getWidth() ? activityShot.getWidth() - left : width;
+//        height = top + height > activityShot.getHeight() ? activityShot.getHeight() - top : height;
         Bitmap activityShotRet = Bitmap.createBitmap(activityShot, left, top, width, height);
         view.destroyDrawingCache();
         return activityShotRet;
     }
 
     private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
+
     public static Bitmap extractThumbNail(final String path, final int keyboardWidth, final int keyboardHeight) {
         if (path == null || path.equals("") || keyboardWidth <= 0) {
             return null;
         }
 
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        Bitmap tmp = BitmapFactory.decodeFile(path, options);
-        if (tmp != null) {
-            tmp.recycle();
+        ExifInterface ei = null;
+        try {
+            ei = new ExifInterface(path);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+            boolean isRotateNeeded = orientation == ExifInterface.ORIENTATION_ROTATE_90 || orientation == ExifInterface.ORIENTATION_ROTATE_270;
+            Bitmap bitmap = decodeFile(new File(path), keyboardWidth, isRotateNeeded);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    bitmap = rotateImage(bitmap, 90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    bitmap = rotateImage(bitmap, 180);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    bitmap = rotateImage(bitmap, 270);
+                    break;
+                // etc.
+            }
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        // NOTE: out of memory error
-        options.inSampleSize = 1;
-        while (options.outHeight * options.outWidth / options.inSampleSize > MAX_DECODE_PICTURE_SIZE) {
-            options.inSampleSize++;
-        }
-
-        int height = options.outHeight * keyboardWidth / options.outWidth;
-        if (height < keyboardHeight) height = keyboardHeight;
-        options.inJustDecodeBounds = false;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-        if (bitmap == null) {
-            Log.e(TAG, "bitmap decode failed");
-            return null;
-        }
-
-        Log.i(TAG, "bitmap decoded size=" + bitmap.getWidth() + "x" + bitmap.getHeight());
-        final Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, keyboardWidth, height, true);
-        if (scaledBitmap != null && scaledBitmap != bitmap) {
-            bitmap.recycle();
-            return scaledBitmap;
-        }
-
-        return bitmap;
+        return null;
     }
+
+    private static Bitmap decodeFile(File f, int keyboardWidth, boolean isRotateNeeded) {
+        Bitmap b = null;
+
+
+        int IMAGE_MAX_SIZE = 1920;
+        try {
+            //Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+
+            FileInputStream fis = new FileInputStream(f);
+            BitmapFactory.decodeStream(fis, null, o);
+            fis.close();
+            if (isRotateNeeded) {
+                //bitmap should be rotate 90 or 270 degree,so bitmap's height should be same as keyboardWidth
+                int destHeight = keyboardWidth;
+                int destWidth = (int) (destHeight * 1.0 * o.outWidth / o.outHeight);
+
+                o.outHeight = destHeight;
+                o.outWidth = destWidth;
+            }
+
+            int scale = 1;
+
+            if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
+                scale = (int) Math.pow(2, (int) Math.ceil(Math.log(IMAGE_MAX_SIZE /
+                        (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
+            }
+
+            //Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale+1;
+            fis = new FileInputStream(f);
+            b = BitmapFactory.decodeStream(fis, null, o2);
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return b;
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Bitmap retVal;
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        retVal = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+
+        return retVal;
+    }
+
 }

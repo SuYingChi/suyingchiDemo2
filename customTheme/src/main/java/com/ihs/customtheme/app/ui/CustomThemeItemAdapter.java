@@ -16,7 +16,7 @@ import java.util.List;
 public final class CustomThemeItemAdapter extends RecyclerView.Adapter<CustomThemeItemViewHolder> {
 
     private final List<HSCustomThemeItemBase> mItems;
-    private OnItemClickListener mOnItemClickListener;
+    private OnRecyclerViewItemClickListener mOnItemClickListener;
     private final int itemViewLayout;
 
 
@@ -25,7 +25,7 @@ public final class CustomThemeItemAdapter extends RecyclerView.Adapter<CustomThe
         mItems = items;
     }
 
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
@@ -54,7 +54,7 @@ public final class CustomThemeItemAdapter extends RecyclerView.Adapter<CustomThe
                     case MotionEvent.ACTION_UP:
                         doSelectAnimationOnItemViewRelease(v);
                         if (mOnItemClickListener != null) {
-                            mOnItemClickListener.onItemClick(holder);
+                            mOnItemClickListener.onRecyclerViewItemClick(holder);
                         }
                         refreshCheckedState(position);
                         return true;

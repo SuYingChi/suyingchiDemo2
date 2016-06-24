@@ -62,12 +62,6 @@ public class HSThemeSelectPanel extends HSInputMethodPanel {
         mThemeSelectRecyclerAdapter = new HSThemeSelectRecyclerAdapter(HSApplication.getContext(), mHeaderDisplay, mThemeSelectViewItems);
         mThemeSelectRecyclerAdapter.setMarginsFixed(mAreMarginsFixed);
         mThemeSelectRecyclerAdapter.setHeaderDisplay(mHeaderDisplay);
-        mThemeSelectRecyclerAdapter.setOnItemClickListener(new HSThemeSelectRecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-            }
-        });
         mThemeSelectRecyclerView.setAdapter(mThemeSelectRecyclerAdapter);
 
         return mThemeSelectRecyclerView;

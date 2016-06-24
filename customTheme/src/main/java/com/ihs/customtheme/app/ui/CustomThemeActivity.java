@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -20,7 +17,6 @@ import android.view.inputmethod.InputMethodSubtype;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSFragmentActivity;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.customtheme.R;
 import com.ihs.customtheme.app.iap.CircleProgressView;
 import com.ihs.customtheme.app.iap.HSThemePromptPurchaseView;
@@ -44,7 +40,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_CANCELED;
+import pl.aprilapps.easyphotopicker.DefaultCallback;
+import pl.aprilapps.easyphotopicker.EasyImage;
+
 import static android.app.Activity.RESULT_OK;
 
 public class CustomThemeActivity extends HSFragmentActivity implements HSThemePromptPurchaseView.IItemClickListener {
@@ -64,7 +62,7 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
 
     private CustomThemeItem1Fragment backgroundFragment;
     private CustomThemeItem2Fragment buttonFragment;
-    private CustomThemeItem2Fragment textFragment;
+    private CustomThemeItem2Fragment fontFragment;
 
     private HSThemePromptPurchaseView themePromptPurchaseView;
     private HSCustomThemeItemBackground currentSelectedBackground;
@@ -78,27 +76,47 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
     private static final String TAG_BUTTON_FRAGMENT = "tag_button_fragment";
     private static final String TAG_FONT_FRAGMENT = "tag_font_fragment";
 
+    private OnRecyclerViewItemClickListener itemClickListener = new CustomItemClickListener();
+    private final OnTitleClickListener headButtonClickListener = new PageTitleClickListener();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         HSKeyboardThemeManager.init();
         HSKeyboardThemeManager.setPreviewCustomTheme(true);
 
 
+        savedBundle = savedInstanceState;
+        initView();
+
+        initFragments();
+
+        new LoadThemePicturesTask().execute();
+
+
+        EasyImage.configuration(this)
+                .setImagesFolderName("keyboard")
+                .setCopyExistingPicturesToPublicLocation(true);
+
+    }
+
+    private void initView() {
         mThemeContext = new ContextThemeWrapper(HSApplication.getContext(), HSKeyboardThemeManager.getCommonThemeResourceId());
         setContentView(R.layout.custom_theme);
         mKeyboardView = (KeyboardPreviewView) findViewById(R.id.keyboard_view);
         circleProgressView = (CircleProgressView) findViewById(R.id.progress_view);
         loadKeyboard(HSImeSubtypeManager.getInstance().getCurrentInputMethodSubtype(SubtypeSwitcher.DUMMY_NO_LANGUAGE_SUBTYPE));
 
-        savedBundle = savedInstanceState;
 
         themePromptPurchaseView = (HSThemePromptPurchaseView) findViewById(R.id.prompt_theme_purchase_view);
         themePromptPurchaseView.setOnClickListener(promptPurchaseViewClickListener);
         themePromptPurchaseView.addProductPurchaseListener(this);
+        mKeyboardView.refreshPreview();
+    }
 
+    private void initFragments() {
         backgroundFragment = new CustomThemeItem1Fragment();
         backgroundFragment.setViewParams("CANCEL", "BACKGROUND", "NEXT", false, true, getResources().getString(R.string.choose_background), headButtonClickListener);
 
@@ -107,153 +125,10 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
         buttonFragment.setViewParams("BACKGROUND", "BUTTON", "NEXT", true, true,
                 getResources().getString(R.string.choose_button_shape), getResources().getString(R.string.choose_button_style), headButtonClickListener);
 
-        // textFragment
-        textFragment = new CustomThemeItem2Fragment();
-        textFragment.setViewParams("BUTTON", "FONT", "SAVE", true, false,
+        // fontFragment
+        fontFragment = new CustomThemeItem2Fragment();
+        fontFragment.setViewParams("BUTTON", "FONT", "SAVE", true, false,
                 getResources().getString(R.string.choose_text_font), getResources().getString(R.string.choose_text_color), headButtonClickListener);
-
-        new LoadThemePicturesTask().execute();
-
-        mKeyboardView.refreshPreview();
-
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        HSKeyboardThemeManager.setPreviewCustomTheme(false);
-        System.gc();
-    }
-
-//    private void onCancelClick() {
-//        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-//            HSCustomThemeDataManager.getInstance().resetCustomThemeData();
-//            Intent resultIntent = new Intent();
-//            setResult(Activity.RESULT_CANCELED, resultIntent);
-//            CustomThemeActivity.this.finish();
-//        } else if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
-//            onBackPressed();
-//        }
-//    }
-
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            HSCustomThemeDataManager.getInstance().resetCustomThemeData();
-            finish();
-        }
-        super.onBackPressed();
-    }
-
-    private void onOKClick() {
-        if (getSupportFragmentManager().getBackStackEntryCount() < 2) {
-            Fragment nextFragment = null;
-            String fragmentTag = "";
-
-            switch (getSupportFragmentManager().getBackStackEntryCount()) {
-                case 0:
-                    // need pay,can't pass through here
-                    if (currentSelectedBackground != null && !IAPManager.getManager().isOwnProduct(currentSelectedBackground)) {
-                        showPromptPurchaseView(currentSelectedBackground);
-                        return;
-                    }
-                    nextFragment = buttonFragment;
-                    fragmentTag = TAG_BUTTON_FRAGMENT;
-                    break;
-
-                case 1:
-                    nextFragment = textFragment;
-                    fragmentTag = TAG_FONT_FRAGMENT;
-                    break;
-            }
-
-            if (nextFragment != null) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.custom_theme_items_container, nextFragment, fragmentTag)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        } else {
-            if (currentSelectedFont != null && !IAPManager.getManager().isOwnProduct(currentSelectedFont)) {
-                showPromptPurchaseView(currentSelectedFont);
-                return;
-            }
-            saveProgressDialog = ProgressDialog.show(this, null, HSApplication.getContext().getResources().getString(R.string.theme_save_action));
-            new SaveThemeChangesTask().execute();
-        }
-    }
-
-    private static Uri getOutputMediaFileUri() {
-        return Uri.fromFile(getOutputMediaFile());
-    }
-
-    private static File getOutputMediaFile() {
-        File mediaStorageDir = new File(HSApplication.getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "CustomTheme");
-
-        // 如果不存在的话，则创建存储目录
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                return null;
-            }
-        }
-
-        File mediaFile = new File(mediaStorageDir.getPath() + File.separator + "Background.jpg");
-        return mediaFile;
-    }
-
-    private boolean checkCameraHardware() {
-        return HSApplication.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CAPTURE_IMAGE_REQUEST_CODE || requestCode == PICK_PHOTO_REQUEST_CODE) {
-            String imagePath = null;
-            if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
-                if (resultCode == RESULT_OK) {
-                    imagePath = getOutputMediaFile().getAbsolutePath();
-                    HSLog.d(TAG, "Image saved to: \n" + imagePath);
-                } else if (resultCode == RESULT_CANCELED) {
-                    HSLog.d(TAG, "Image capture canceled.");
-                }
-            } else {
-                if (resultCode == RESULT_OK) {
-                    Uri selectedImageUri = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
-                    if (cursor != null) {
-                        cursor.moveToFirst();
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        imagePath = cursor.getString(columnIndex);
-                        cursor.close();
-                        HSLog.d(TAG, "image selected: " + imagePath);
-                    }
-                } else if (resultCode == RESULT_CANCELED) {
-                    HSLog.d(TAG, "Photo pick canceled.");
-                }
-            }
-
-            if (imagePath != null) {
-                Intent openBackgroundCropperIntent = new Intent(CustomThemeActivity.this, CustomThemeBackgroundCropperActivity.class);
-                openBackgroundCropperIntent.putExtra(CustomThemeBackgroundCropperActivity.CopperImagePath, imagePath);
-                final Resources res = mThemeContext.getResources();
-                final int keyboardWidth = ResourceUtils.getDefaultKeyboardWidth(res);
-                final int keyboardHeight = ResourceUtils.getDefaultKeyboardHeight(res);
-                openBackgroundCropperIntent.putExtra(CustomThemeBackgroundCropperActivity.KeyboardWidth, keyboardWidth);
-                openBackgroundCropperIntent.putExtra(CustomThemeBackgroundCropperActivity.KeyboardHeight, keyboardHeight);
-                startActivityForResult(openBackgroundCropperIntent, CROPPER_IMAGE_REQUEST_CODE);
-            }
-        } else if (requestCode == CROPPER_IMAGE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                HSCustomThemeItemBackground background = HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground();
-                if (background != null) {
-                    mKeyboardView.refreshPreview();
-                }
-            }
-        }
     }
 
     public void loadKeyboard(InputMethodSubtype subtype) {
@@ -280,26 +155,198 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
                 100);
     }
 
-    private OnItemClickListener itemClickListener = new OnItemClickListener() {
+
+
+
+    private boolean checkCameraHardware() {
+        return HSApplication.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+
+
+    protected void pickFromCamera() {
+        EasyImage.openCamera(this, 0);
+    }
+
+    protected void pickFromGalery() {
+        /** Some devices such as Samsungs which have their own gallery app require write permission. Testing is advised! */
+        EasyImage.openGallery(this, 0);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CROPPER_IMAGE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                HSCustomThemeItemBackground background = HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground();
+                if (background != null) {
+                    mKeyboardView.refreshPreview();
+                }
+            }
+        } else {
+            EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+                @Override
+                public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
+                    //Some error handling
+                }
+
+                @Override
+                public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
+                    //Handle the image
+                    onPhotoReturned(imageFile);
+                }
+
+                @Override
+                public void onCanceled(EasyImage.ImageSource source, int type) {
+                    //Cancel handling, you might wanna remove taken photo if it was canceled
+                    if (source == EasyImage.ImageSource.CAMERA) {
+                        File photoFile = EasyImage.lastlyTakenButCanceledPhoto(CustomThemeActivity.this);
+                        if (photoFile != null) photoFile.delete();
+                    }
+
+                }
+            });
+        }
+    }
+
+    private void onPhotoReturned(File photoFile) {
+        Intent openBackgroundCropperIntent = new Intent(CustomThemeActivity.this, CustomThemeBackgroundCropperActivity.class);
+        openBackgroundCropperIntent.putExtra(CustomThemeBackgroundCropperActivity.CopperImagePath, photoFile.getAbsolutePath());
+        final Resources res = mThemeContext.getResources();
+        final int keyboardWidth = ResourceUtils.getDefaultKeyboardWidth(res);
+        final int keyboardHeight = ResourceUtils.getDefaultKeyboardHeight(res);
+        openBackgroundCropperIntent.putExtra(CustomThemeBackgroundCropperActivity.KeyboardWidth, keyboardWidth);
+        openBackgroundCropperIntent.putExtra(CustomThemeBackgroundCropperActivity.KeyboardHeight, keyboardHeight);
+        startActivityForResult(openBackgroundCropperIntent, CROPPER_IMAGE_REQUEST_CODE);
+
+    }
+
+    @Override
+    protected void onDestroy(){
+        // Clear any configuration that was done!
+        EasyImage.clearConfiguration(this);
+
+        HSKeyboardThemeManager.setPreviewCustomTheme(false);
+        System.gc();
+        super.onDestroy();
+    }
+
+
+
+    private class CustomItemClickListener implements OnRecyclerViewItemClickListener {
         @Override
-        public void onItemClick(final CustomThemeItemView view) {
-            if (view.getCustomThemeItem().getItemType() == HSCustomThemeItemBase.ItemType.BACKGROUND) {
-                onBackgroundItemClick(view);
+        public void onRecyclerViewItemClick(final CustomThemeItemView view) {
+
+            HSCustomThemeItemBase base = view.getCustomThemeItem();
+            if (base != null) {
+                switch (base.getItemType()) {
+                    case BACKGROUND:
+                        onSetBackground(view);
+                        break;
+                    default:
+                        onSetOtherCustomTheme(view, base);
+                        break;
+
+                }
+
+            }
+
+        }
+
+        private void onSetOtherCustomTheme(CustomThemeItemView view, HSCustomThemeItemBase base) {
+            HSCustomThemeDataManager.getInstance().getCustomThemeData().addCustomThemeDataType(base);
+            view.selectedThemeItem();
+            if (base.getItemType() == HSCustomThemeItemBase.ItemType.FONT) {
+                /** change by cjx*/
+                currentSelectedFont = (HSCustomThemeItemFont) base;
+            }
+            // 检测
+            if (!IAPManager.getManager().isOwnProduct(base)) {
+                showPromptPurchaseView(base);
             } else {
-                onCustomItemClick(view);
+                showPromptPurchaseView(null);
+            }
+            /** change by cjx*/
+            mKeyboardView.refreshPreview();
+        }
+
+        private void onSetBackground(CustomThemeItemView view) {
+            HSCustomThemeItemBackground background = (HSCustomThemeItemBackground) view.getCustomThemeItem();
+            HSCustomThemeDataManager.getInstance().getCustomThemeData().addCustomThemeDataType(background);
+            if (background.getItemSource() == HSCustomThemeItemBase.ItemSource.CUSTOMIZED) {
+                // background page,camera or gallery selected
+                if (background.getCustomizedSource() == HSCustomThemeItemBackground.CustomizedSource.CAMERA) {
+                    if (checkCameraHardware()) {
+                        pickFromCamera();
+                    }
+                } else if (background.getCustomizedSource() == HSCustomThemeItemBackground.CustomizedSource.PHOTO_ALBUM) {
+                    pickFromGalery();
+                }
+            } else if (background.getItemSource() == HSCustomThemeItemBase.ItemSource.BUILT_IN) {
+                //background image selected
+                /** add by cjx */
+                // 检测
+                currentSelectedBackground = background;
+                if (!IAPManager.getManager().isOwnProduct(background)) {
+                    showPromptPurchaseView(background);
+                } else {
+                    showPromptPurchaseView(null);
+                }
+                /** add by cjx */
+                mKeyboardView.refreshPreview();
             }
         }
-    };
+    }
 
-    private final OnHeadButtonClickListener headButtonClickListener = new OnHeadButtonClickListener() {
+    private class PageTitleClickListener implements OnTitleClickListener {
         @Override
         public void onCancelClick() {
-            CustomThemeActivity.this.onBackPressed();
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                HSCustomThemeDataManager.getInstance().resetCustomThemeData();
+                finish();
+            }
+            onBackPressed();
         }
 
         @Override
         public void onOKClick() {
-            CustomThemeActivity.this.onOKClick();
+            if (getSupportFragmentManager().getBackStackEntryCount() < 2) {
+                Fragment nextFragment = null;
+                String fragmentTag = "";
+
+                switch (getSupportFragmentManager().getBackStackEntryCount()) {
+                    case 0://background page
+                        // need pay,can't pass through here
+                        if (currentSelectedBackground != null && !IAPManager.getManager().isOwnProduct(currentSelectedBackground)) {
+                            showPromptPurchaseView(currentSelectedBackground);
+                            return;
+                        }
+                        nextFragment = buttonFragment;
+                        fragmentTag = TAG_BUTTON_FRAGMENT;
+                        break;
+
+                    case 1://button style set page
+                        nextFragment = fontFragment;
+                        fragmentTag = TAG_FONT_FRAGMENT;
+                        break;
+                }
+
+                if (nextFragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.custom_theme_items_container, nextFragment, fragmentTag)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            } else {
+                if (currentSelectedFont != null && !IAPManager.getManager().isOwnProduct(currentSelectedFont)) {
+                    showPromptPurchaseView(currentSelectedFont);
+                    return;
+                }
+                saveProgressDialog = ProgressDialog.show(CustomThemeActivity.this, null, HSApplication.getContext().getResources().getString(R.string.theme_save_action));
+                new SaveThemeChangesTask().execute();
+            }
         }
     };
 
@@ -319,42 +366,6 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
         showPromptPurchaseView(null);
     }
 
-    private void onBackgroundItemClick(final CustomThemeItemView view) {
-
-
-        HSCustomThemeItemBackground background = (HSCustomThemeItemBackground)
-                view.getCustomThemeItem();
-        HSCustomThemeDataManager.getInstance().getCustomThemeData().setCustomThemeData(background);
-        if (background.getItemSource() == HSCustomThemeItemBase.ItemSource.BUILT_IN) {
-            /** add by cjx */
-            // 检测
-            currentSelectedBackground = background;
-            if (!IAPManager.getManager().isOwnProduct(background)) {
-                showPromptPurchaseView(background);
-            } else {
-                showPromptPurchaseView(null);
-            }
-            /** add by cjx */
-            mKeyboardView.refreshPreview();
-        } else if (background.getItemSource() == HSCustomThemeItemBase.ItemSource.CUSTOMIZED) {
-            if (background.getCustomizedSource() == HSCustomThemeItemBackground.CustomizedSource.CAMERA) {
-                if (checkCameraHardware()) {
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    customThemeBackgroundImageUri = getOutputMediaFileUri();
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, customThemeBackgroundImageUri);
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                        startActivityForResult(takePictureIntent, CAPTURE_IMAGE_REQUEST_CODE);
-                    }
-                }
-            } else if (background.getCustomizedSource() == HSCustomThemeItemBackground.CustomizedSource.PHOTO_ALBUM) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, PICK_PHOTO_REQUEST_CODE);
-            }
-        }
-    }
-
-
     private void showPromptPurchaseView(HSCustomThemeItemBase item) {
         if (item != null) {
             themePromptPurchaseView.setVisibility(View.VISIBLE);
@@ -366,26 +377,6 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
         }
     }
 
-
-    private void onCustomItemClick(final CustomThemeItemView view) {
-        HSCustomThemeItemBase base = view.getCustomThemeItem();
-        if (base != null) {
-            HSCustomThemeDataManager.getInstance().getCustomThemeData().setCustomThemeData(base);
-            view.selectedThemeItem();
-            if (base.getItemType() == HSCustomThemeItemBase.ItemType.FONT) {
-                /** change by cjx*/
-                currentSelectedFont = (HSCustomThemeItemFont) base;
-            }
-            // 检测
-            if (!IAPManager.getManager().isOwnProduct(base)) {
-                showPromptPurchaseView(base);
-            } else {
-                showPromptPurchaseView(null);
-            }
-            /** change by cjx*/
-            mKeyboardView.refreshPreview();
-        }
-    }
 
     private class SaveThemeChangesTask extends AsyncTask<Void, Void, String> {
         @Override
@@ -457,7 +448,7 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
                     );
 
 
-                    textFragment.setItemViewsParams(R.layout.custom_theme_item_cell_2, R.layout.custom_theme_item_cell,
+                    fontFragment.setItemViewsParams(R.layout.custom_theme_item_cell_2, R.layout.custom_theme_item_cell,
                             (List<HSCustomThemeItemBase>) resource.get(3), (List<HSCustomThemeItemBase>) resource.get(4), itemClickListener, itemClickListener
                     );
                 }
@@ -465,6 +456,5 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
 
         }
     }
-
 
 }
