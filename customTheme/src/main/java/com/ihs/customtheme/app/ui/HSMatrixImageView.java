@@ -35,12 +35,12 @@ public class HSMatrixImageView extends ImageView {
 
     /**
      * 图片可以向上多少 (下白边), 给正数
-     * */
+     */
     private float mMaxDeltaYTrans;
 
     /**
      * 图片可以向下多少 (上白边), 给负数
-     * */
+     */
     private float mMinDeltaYTrans;
 
     public HSMatrixImageView(Context context, AttributeSet attrs) {
@@ -88,14 +88,14 @@ public class HSMatrixImageView extends ImageView {
         mImageWidth = this.getDrawable().getIntrinsicWidth();
         mImageHeight = this.getDrawable().getIntrinsicHeight();
 //        mScale = values[Matrix.MSCALE_X];
-        mScale =1.0f* getContext().getResources().getDisplayMetrics().widthPixels/mImageWidth;
+        mScale = 1.0f * getContext().getResources().getDisplayMetrics().widthPixels / mImageWidth;
 
-        float height = mImageHeight * values[Matrix.MSCALE_Y];
+        float height = mImageHeight * values[Matrix.MSCALE_Y]*mScale;
         // Y轴居中
         float topMargin = (getHeight() - height) / 2;
         if (topMargin != values[Matrix.MTRANS_Y]) {
+            mMatrix.postScale(mScale, mScale);//scale first,then translate
             mMatrix.postTranslate(0, topMargin - values[Matrix.MTRANS_Y]);
-            mMatrix.postScale(mScale,mScale);
             setImageMatrix(mMatrix);
         }
     }

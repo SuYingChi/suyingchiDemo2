@@ -44,7 +44,7 @@ public final class ESPalettesView extends LinearLayout implements ViewPager.OnPa
         // view pager
         mViewPager = (ViewPager) findViewById(R.id.emoji_viewpager);
         mViewPager.setAdapter(new ESPalettesViewAdapter(this, mESLayoutParams));
-        mViewPager.addOnPageChangeListener(this);
+        mViewPager.setOnPageChangeListener(this);
         mESLayoutParams.setPagerProperties(mViewPager);
 
         // page id view

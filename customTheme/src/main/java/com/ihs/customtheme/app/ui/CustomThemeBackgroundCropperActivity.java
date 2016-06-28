@@ -82,6 +82,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 Intent resultIntent = new Intent();
                 setResult(Activity.RESULT_CANCELED, resultIntent);
                 CustomThemeBackgroundCropperActivity.this.finish();
+
             }
         });
 
@@ -94,13 +95,8 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 int[] imageMaskViewLocation = new int[2];
                 cropperImageMaskView.getLocationInWindow(imageMaskViewLocation);
 
-                Bitmap cropperBitmap = takeViewShot(cropperImageView, imageMaskViewLocation[0] - imageViewLocation[0],imageMaskViewLocation[1] - imageViewLocation[1], keyboardWidth, keyboardHeight);
-                HSCustomThemeItemBackground background = HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground();
-                if (background != null) {
-                    if (background.getItemSource() == HSCustomThemeItemBase.ItemSource.CUSTOMIZED) {
-                        HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground().setCustomizedBitmap(cropperBitmap);
-                    }
-                }
+                Bitmap cropperBitmap = takeViewShot(cropperImageView, imageMaskViewLocation[0] - imageViewLocation[0], imageMaskViewLocation[1] - imageViewLocation[1], keyboardWidth, keyboardHeight);
+                HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground().setCustomizedBitmap(cropperBitmap);
                 Intent resultIntent = new Intent();
                 setResult(Activity.RESULT_OK, resultIntent);
                 CustomThemeBackgroundCropperActivity.this.finish();
@@ -188,7 +184,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
 
             //Decode with inSampleSize
             BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale+1;
+            o2.inSampleSize = scale + 1;
             fis = new FileInputStream(f);
             b = BitmapFactory.decodeStream(fis, null, o2);
             fis.close();

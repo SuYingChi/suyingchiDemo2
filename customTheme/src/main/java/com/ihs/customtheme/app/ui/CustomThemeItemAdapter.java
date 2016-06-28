@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
+import com.ihs.inputmethod.theme.HSCustomThemeItemBackground;
 import com.ihs.inputmethod.theme.HSCustomThemeItemBase;
 
 import java.util.List;
@@ -56,7 +57,11 @@ public final class CustomThemeItemAdapter extends RecyclerView.Adapter<CustomThe
                         if (mOnItemClickListener != null) {
                             mOnItemClickListener.onRecyclerViewItemClick(holder);
                         }
-                        refreshCheckedState(position);
+                        if (!(holder.getCustomThemeItem().getItemType() == HSCustomThemeItemBase.ItemType.BACKGROUND && holder.getCustomThemeItem().getItemSource() == HSCustomThemeItemBase.ItemSource.CUSTOMIZED)) {
+                            //camera or album may cancel while taking picture,so do not set select state for them here.
+                            refreshCheckedState(position);
+                        }
+
                         return true;
                     case MotionEvent.ACTION_CANCEL:
                         doSelectAnimationOnItemViewRelease(v);
@@ -71,13 +76,13 @@ public final class CustomThemeItemAdapter extends RecyclerView.Adapter<CustomThe
 
     private void refreshCheckedState(int position) {
         for (int i = 0; i < mItems.size(); i++) {
-            if(i!=position&&mItems.get(i).isChecked){
-                mItems.get(i).isChecked=false;
+            if (i != position && mItems.get(i).isChecked) {
+                mItems.get(i).isChecked = false;
                 notifyItemChanged(i);
             }
 
-            if(i==position){
-                mItems.get(i).isChecked=true;
+            if (i == position) {
+                mItems.get(i).isChecked = true;
                 notifyItemChanged(i);
             }
 
@@ -142,4 +147,26 @@ public final class CustomThemeItemAdapter extends RecyclerView.Adapter<CustomThe
         view.startAnimation(smallScale);
     }
 
+
+    /**
+     * for custom background camera and album
+     *
+     * @param type
+     */
+    public void resetBackgroundCheckState(int type) {
+        for (int i = 0; i < mItems.size(); i++) {
+            HSCustomThemeItemBase itemBase = mItems.get(i);
+            if (itemBase instanceof HSCustomThemeItemBackground) {
+                HSCustomThemeItemBackground background = (HSCustomThemeItemBackground) itemBase;
+                if (background.getCustomizedSource() != null && type == background.getCustomizedSource().ordinal()) {
+                    //camera,album...
+                    itemBase.isChecked = true;
+                    notifyItemChanged(i);
+                } else if (itemBase.isChecked) {
+                    itemBase.isChecked = false;
+                    notifyItemChanged(i);
+                }
+            }
+        }
+    }
 }

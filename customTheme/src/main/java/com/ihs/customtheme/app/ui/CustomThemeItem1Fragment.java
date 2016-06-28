@@ -128,4 +128,12 @@ public class CustomThemeItem1Fragment extends BaseFragment {
             mAdapter.notifyDataSetChanged();
         }
     }
+
+    /**
+     * for custom background camera and album
+     * @param type
+     */
+    public void resetBackgroundCheckState(int type) {
+        mAdapter.resetBackgroundCheckState(type);
+    }
 }

@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -43,7 +42,10 @@ import java.util.List;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 
+import static android.R.attr.type;
 import static android.app.Activity.RESULT_OK;
+import static com.ihs.inputmethod.theme.HSCustomThemeItemBackground.CustomizedSource.CAMERA;
+import static com.ihs.inputmethod.theme.HSCustomThemeItemBackground.CustomizedSource.PHOTO_ALBUM;
 
 public class CustomThemeActivity extends HSFragmentActivity implements HSThemePromptPurchaseView.IItemClickListener {
 
@@ -131,7 +133,7 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
                 getResources().getString(R.string.choose_text_font), getResources().getString(R.string.choose_text_color), headButtonClickListener);
     }
 
-    public void loadKeyboard(InputMethodSubtype subtype) {
+    private void loadKeyboard(InputMethodSubtype subtype) {
         final KeyboardLayoutSet.Builder builder = new KeyboardLayoutSet.Builder(mThemeContext, new EditorInfo());
         final Resources res = mThemeContext.getResources();
         final int keyboardWidth = ResourceUtils.getDefaultKeyboardWidth(res);
@@ -156,23 +158,23 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
     }
 
 
-
-
     private boolean checkCameraHardware() {
         return HSApplication.getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
 
-
-    protected void pickFromCamera() {
-        EasyImage.openCamera(this, 0);
+    protected void pickFromCamera(int type) {
+        EasyImage.openCamera(this, type);
     }
 
-    protected void pickFromGalery() {
+    protected void pickFromGalery(int type) {
         /** Some devices such as Samsungs which have their own gallery app require write permission. Testing is advised! */
-        EasyImage.openGallery(this, 0);
+        EasyImage.openGallery(this, type);
     }
 
+
+
+    int lastTakePicType=-1;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -180,12 +182,17 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
 
         if (requestCode == CROPPER_IMAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                if(lastTakePicType== CAMERA.ordinal()||lastTakePicType== PHOTO_ALBUM.ordinal()){
+                    backgroundFragment.resetBackgroundCheckState(lastTakePicType);
+                }
+
                 HSCustomThemeItemBackground background = HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground();
-                if (background != null) {
+                if (background.getCustomizedBitmap() != null) {
                     mKeyboardView.refreshPreview();
                 }
             }
         } else {
+            lastTakePicType = -1;//reset last select state
             EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
                 @Override
                 public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
@@ -195,6 +202,7 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
                 @Override
                 public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
                     //Handle the image
+                    lastTakePicType = type;
                     onPhotoReturned(imageFile);
                 }
 
@@ -224,15 +232,16 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         // Clear any configuration that was done!
         EasyImage.clearConfiguration(this);
-
+        if (HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground().getCustomizedBitmap() != null) {
+            HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground().setCustomizedBitmap(null);
+        }
         HSKeyboardThemeManager.setPreviewCustomTheme(false);
         System.gc();
         super.onDestroy();
     }
-
 
 
     private class CustomItemClickListener implements OnRecyclerViewItemClickListener {
@@ -277,14 +286,17 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
             HSCustomThemeDataManager.getInstance().getCustomThemeData().addCustomThemeDataType(background);
             if (background.getItemSource() == HSCustomThemeItemBase.ItemSource.CUSTOMIZED) {
                 // background page,camera or gallery selected
-                if (background.getCustomizedSource() == HSCustomThemeItemBackground.CustomizedSource.CAMERA) {
+                if (background.getCustomizedSource() == CAMERA) {
                     if (checkCameraHardware()) {
-                        pickFromCamera();
+                        pickFromCamera(background.getCustomizedSource().ordinal());
                     }
-                } else if (background.getCustomizedSource() == HSCustomThemeItemBackground.CustomizedSource.PHOTO_ALBUM) {
-                    pickFromGalery();
+                } else if (background.getCustomizedSource() == PHOTO_ALBUM) {
+                    pickFromGalery(background.getCustomizedSource().ordinal());
                 }
             } else if (background.getItemSource() == HSCustomThemeItemBase.ItemSource.BUILT_IN) {
+                if (HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground().getCustomizedBitmap() != null) {
+                    HSCustomThemeDataManager.getInstance().getCustomThemeData().getBackground().setCustomizedBitmap(null);
+                }
                 //background image selected
                 /** add by cjx */
                 // 检测
@@ -348,7 +360,9 @@ public class CustomThemeActivity extends HSFragmentActivity implements HSThemePr
                 new SaveThemeChangesTask().execute();
             }
         }
-    };
+    }
+
+    ;
 
     private View.OnClickListener promptPurchaseViewClickListener = new View.OnClickListener() {
 
