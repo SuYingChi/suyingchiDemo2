@@ -14,6 +14,7 @@ import com.ihs.inputmethod.api.HSInputMethodPanel;
 import com.ihs.inputmethod.api.HSInputMethodPanelStripView;
 import com.ihs.inputmethod.framework.HSKeyboardPanel;
 import com.ihs.inputmethod.framework.HSKeyboardSwitcher;
+import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
 import com.keyboard.inputmethod.panels.gif.control.DataManager;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifPanelView;
 import com.keyboard.inputmethod.panels.gif.ui.view.GifStripView;
@@ -52,7 +53,7 @@ public final class GifPanel extends HSInputMethodPanel {
 				setTabbarBtnState(true);
 				HSKeyboardSwitcher switcher=HSInputMethod.getInputService().getKeyboardSwitcher();
 				if(switcher!=null){
-					HSKeyboardPanel main=switcher.getPanel(HSKeyboardPanel.KEYBOARD_PANEL_KEYBOARD_NAME);
+					HSKeyboardPanel main= KeyboardPluginManager.getInstance().getPanel(HSKeyboardPanel.KEYBOARD_PANEL_KEYBOARD_NAME);
 					if(main!=null){
 						main.setTabbarBtnState(false);
 						main.setTabbarStateEnabled(false);
@@ -71,10 +72,10 @@ public final class GifPanel extends HSInputMethodPanel {
 				if(keyWord!=null&&keyWord.trim().length()>0){
 					HSGoogleAnalyticsUtils.logKeyboardEvent(Constants.KEYBOARD_GIF_SEARCH_BEGIN,keyWord);
 					mGifPanelView.performActionSearch(keyWord);
-					HSInputMethod.getInputService().getKeyboardSwitcher().showPanel(getPanelName());
+					KeyboardPluginManager.getInstance().showPanel(getPanelName());
 				}else{
 					mGifPanelView.setPerformActionBack(true);
-					HSInputMethod.getInputService().getKeyboardSwitcher().showPanel(getPanelName());
+					KeyboardPluginManager.getInstance().showPanel(getPanelName());
 					mGifPanelView.performActionBack();
 				}
 				return;
@@ -82,7 +83,7 @@ public final class GifPanel extends HSInputMethodPanel {
 
 			if (eventName.equals(GifStripView.BACK_EVENT)) {
 				mGifPanelView.setPerformActionBack(true);
-				HSInputMethod.getInputService().getKeyboardSwitcher().showPanel(getPanelName());
+				KeyboardPluginManager.getInstance().showPanel(getPanelName());
 				mGifPanelView.performActionBack();
 				return;
 			}

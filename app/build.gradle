@@ -49,6 +49,7 @@ repositories {
 
 dependencies {
     compile project(':libKeyboard')
+    compile project(':lib_keyboard_ui_modules')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile project(':customTheme')

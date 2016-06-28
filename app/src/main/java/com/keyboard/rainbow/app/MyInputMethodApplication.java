@@ -12,7 +12,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.customtheme.app.iap.IAPManager;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
-import com.keyboard.inputmethod.panels.KeyboardExtensionUtils;
+import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
 import com.keyboard.inputmethod.panels.gif.control.GifManager;
 import com.keyboard.rainbow.thread.AsyncThreadPools;
 
@@ -34,10 +34,12 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         }
     };
 
+
     @Override
-    protected void loadKeyboardPanels() {
-        HSLog.d("load panels ........");
-        KeyboardExtensionUtils.loadPanels();
+    protected void onServiceCreated() {
+//        KeyboardPluginManager.getInstance().initPanels();
+//        KeyboardPluginManager.getInstance().loadPanels();
+        KeyboardPluginManager.getInstance().loadKeyboardPanels();
     }
 
     @Override

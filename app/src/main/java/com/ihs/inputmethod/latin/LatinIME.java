@@ -10,6 +10,8 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.framework.HSInputMethodService;
+import com.ihs.inputmethod.framework.HSKeyboardSwitcher;
+import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
 import com.keyboard.inputmethod.panels.gif.control.DataManager;
 import com.keyboard.inputmethod.panels.gif.dao.base.LanguageDao;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESManager;
@@ -38,6 +40,9 @@ public class LatinIME extends HSInputMethodService {
             }
         });
         isOnDestroy=false;
+        KeyboardPluginManager.getInstance().onInputMethodServiceCreate();
+        setPanelSwitcher(KeyboardPluginManager.getInstance());
+        HSKeyboardSwitcher.init(HSInputMethod.getInputService());
         HSLog.d("time log, input service on create finished");
     }
 

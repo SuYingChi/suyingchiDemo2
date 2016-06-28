@@ -18,6 +18,8 @@ import com.ihs.inputmethod.api.HSFontManager;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
 import com.ihs.inputmethod.api.HSLetterFont;
+import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
+import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.keyboard.rainbow.R;
 
 import java.util.List;
@@ -185,7 +187,7 @@ public class HSFontSelectViewAdapter extends BaseAdapter {
     }
 
     private void onFadeinAnimationEnd(final View target) {
-        HSInputMethod.showMainKeyboard();
+        KeyboardPluginManager.getInstance().showPanel(Constants.PANEL_NAME_KEYBOARD);
         target.clearAnimation();
         mAnimator = null;
     }

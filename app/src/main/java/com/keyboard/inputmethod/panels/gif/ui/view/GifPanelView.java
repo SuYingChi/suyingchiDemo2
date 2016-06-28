@@ -172,8 +172,8 @@ public final class GifPanelView extends RelativeLayout implements TabViewAdapter
 
         String deleteNormalFileName = "tabbar_gif_delete";
         String deletePressedFileName = deleteNormalFileName + "_pressed";
-        deleteKeyDrawable.addState(new int[]{android.R.attr.state_pressed}, HSKeyboardThemeManager.getStyledAssetDrawable(getDefaultDrawable(deletePressedFileName), deletePressedFileName + ".png"));
-        deleteKeyDrawable.addState(new int[]{}, HSKeyboardThemeManager.getStyledAssetDrawable(getDefaultDrawable(deleteNormalFileName), deleteNormalFileName + ".png"));
+        deleteKeyDrawable.addState(new int[]{android.R.attr.state_pressed}, HSKeyboardThemeManager.getStyledDrawable(getDefaultDrawable(deletePressedFileName), deletePressedFileName + ".png"));
+        deleteKeyDrawable.addState(new int[]{}, HSKeyboardThemeManager.getStyledDrawable(getDefaultDrawable(deleteNormalFileName), deleteNormalFileName + ".png"));
         mDeleteKey.setImageDrawable(deleteKeyDrawable);
         mDeleteKey.setOnTouchListener(mDeleteKeyOnTouchListener);
         findViewById(R.id.favorite_added_iv_anim).setVisibility(INVISIBLE);

@@ -29,12 +29,15 @@ import com.ihs.inputmethod.api.HSInputMethodSettings;
 import com.ihs.inputmethod.api.HSInputMethodTheme;
 import com.ihs.inputmethod.base.utils.ResourceUtils;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESManager;
 import com.keyboard.inputmethod.panels.gif.emojisearch.ESPageGridView;
 import com.keyboard.inputmethod.panels.gif.model.GifItem;
 import com.keyboard.rainbow.R;
 import com.ihs.inputmethod.latin.LatinIME;
 import com.keyboard.rainbow.utils.Constants;
+
+import static com.ihs.inputmethod.uimodules.constants.Constants.PANEL_NAME_KEYBOARD;
 
 /**
  * Created by dsapphire on 16/1/9.
@@ -136,7 +139,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 		view.setBackgroundDrawable(HSKeyboardThemeManager.getNinePatchAssetDrawable(getDefaultDrawable(fileName),fileName+".png"));
 	}
 	private void setImageDrawable(ImageView iv, String fileName) {
-		iv.setImageDrawable(HSKeyboardThemeManager.getStyledAssetDrawable(getDefaultDrawable(fileName),fileName+".png"));
+		iv.setImageDrawable(HSKeyboardThemeManager.getStyledDrawable(getDefaultDrawable(fileName),fileName+".png"));
 	}
 
 	private Drawable getDefaultDrawable(String defaultFileName) {
@@ -205,7 +208,7 @@ public final class GifStripView extends HSInputMethodPanelStripView implements E
 				isEditing=true;
 				HSGoogleAnalyticsUtils.logKeyboardEvent(Constants.KEYBOARD_GIF_SEARCH_CLICKED);
 				updateStripViewState(StripState.SEARCH);
-				HSInputMethod.showMainKeyboard();
+				KeyboardPluginManager.getInstance().showPanel(PANEL_NAME_KEYBOARD);
 				HSGlobalNotificationCenter.sendNotificationOnMainThread(TOSEARCH_EVENT);
 				return true;
 			}
