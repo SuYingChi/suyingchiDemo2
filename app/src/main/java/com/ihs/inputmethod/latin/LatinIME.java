@@ -12,10 +12,10 @@ import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.framework.HSInputMethodService;
 import com.ihs.inputmethod.framework.HSKeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
-import com.keyboard.inputmethod.panels.gif.control.DataManager;
-import com.keyboard.inputmethod.panels.gif.dao.base.LanguageDao;
-import com.keyboard.inputmethod.panels.gif.emojisearch.ESManager;
-import com.keyboard.inputmethod.panels.gif.ui.view.CustomSearchEditText;
+import com.ihs.inputmethod.uimodules.ui.gif.common.ui.view.CustomSearchEditText;
+import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.DataManager;
+import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
+import com.ihs.inputmethod.uimodules.ui.gif.riffsy.emojisearch.ESManager;
 import com.keyboard.rainbow.thread.AsyncThreadPools;
 
 /**

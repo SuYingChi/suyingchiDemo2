@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.keyboard.inputmethod.panels.fonts.HSFontSelectView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/font_select_listview"
-    style="?attr/fontSelectPanelStyle"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/config_default_keyboard_height"
-    android:visibility="gone" />

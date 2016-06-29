@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <integer name="custom_theme_background_grid_column_count">6</integer>
-    <dimen name="shape_corners_radius">5dp</dimen>
-</resources>

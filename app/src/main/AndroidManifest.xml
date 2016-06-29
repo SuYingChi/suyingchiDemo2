@@ -208,13 +208,13 @@
 
 
         <activity
-            android:name="com.ihs.customtheme.app.ui.CustomThemeActivity"
+            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
-            android:name="com.ihs.customtheme.app.ui.CustomThemeBackgroundCropperActivity"
+            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeBackgroundCropperActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />

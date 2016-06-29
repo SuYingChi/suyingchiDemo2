@@ -10,10 +10,10 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.customtheme.app.iap.IAPManager;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
-import com.keyboard.inputmethod.panels.gif.control.GifManager;
+import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
+import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.keyboard.rainbow.thread.AsyncThreadPools;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
@@ -37,9 +37,6 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 
     @Override
     protected void onServiceCreated() {
-//        KeyboardPluginManager.getInstance().initPanels();
-//        KeyboardPluginManager.getInstance().loadPanels();
-        KeyboardPluginManager.getInstance().loadKeyboardPanels();
     }
 
     @Override

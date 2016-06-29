@@ -36,13 +36,15 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.customtheme.app.ui.CustomThemeActivity;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeActivity;
 import com.keyboard.rainbow.R;
 import com.keyboard.rainbow.utils.Constants;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MainActivity extends HSActivity {
 

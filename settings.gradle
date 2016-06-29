@@ -1,4 +1,4 @@
-include ':app',  ':customTheme'
+include ':app'
 include ':libKeyboard'
 project(':libKeyboard').projectDir = new File('lib_keyboard_android/libKeyboard')
 include ':lib_keyboard_ui_modules'

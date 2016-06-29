@@ -3,18 +3,19 @@
 
     <!-- For keyboard color scheme option dialog. -->
     <string-array name="addtional_panel_names" translatable="false">
-        <!--<item>@string/panel_keyboard</item>-->
+        <item>@string/panel_keyboard</item>
         <item>@string/panel_theme</item>
         <item>@string/panel_gifs</item>
         <item>@string/panel_fonts</item>
         <item>@string/panel_settings</item>
     </string-array>
+
     <string-array name="addtional_panel_class_names" translatable="false">
-        <!--<item>com.ihs.inputmethod.uimodules.ui.keyboard.KeyboardPanel</item>-->
-        <item>com.ihs.customtheme.panels.theme.HSThemeSelectPanel</item>
-        <item>com.keyboard.inputmethod.panels.gif.ui.panel.GifPanel</item>
-        <item>com.keyboard.inputmethod.panels.fonts.HSFontSelectPanel</item>
-        <item>com.keyboard.inputmethod.panels.settings.HSSettingsPanel</item>
+        <item>com.ihs.inputmethod.uimodules.ui.keyboard.KeyboardPanel</item>
+        <item>com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel</item>
+        <item>com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.panel.GifPanel</item>
+        <item>com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel</item>
+        <item>com.ihs.inputmethod.uimodules.ui.settings.common.HSSettingsPanel</item>
     </string-array>
 
 </resources>
