@@ -10,6 +10,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethod;
+import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.framework.HSInputMethodService;
 import com.ihs.inputmethod.framework.HSKeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
@@ -23,7 +24,7 @@ import com.keyboard.rainbow.thread.AsyncThreadPools;
 /**
  * Created by xu.zhang on 11/3/15.
  */
-public class LatinIME extends HSInputMethodService {
+public class LatinIME extends HSUIInputMethodService {
     public static final String HS_NOTIFICATION_DISCONNECT_INSIDE_CONNECTION="hs.keyboard.DISCONNECT_INSIDE_CONNECTION";
     public static final String HS_NOTIFICATION_SERVICE_DESTROY="hs.keyboard.SERVICE_DESTROY";
     public static final String HS_NOTIFICATION_SERVICE_START_INPUT_VIEW="hs.keyboard.SERVICE_START_INPUT_VIEW";
@@ -46,8 +47,6 @@ public class LatinIME extends HSInputMethodService {
     public void onCreate() {
         super.onCreate();
 
-        HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_START_INPUT_INSIDE,keyboardNotificationObserver);
-        HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_FINISH_INPUT_INSIDE,keyboardNotificationObserver);
 
         Fresco.initialize(this);
         AsyncThreadPools.execute(new Runnable() {
@@ -63,55 +62,9 @@ public class LatinIME extends HSInputMethodService {
         HSLog.d("time log, input service on create finished");
     }
 
-    public static void onStartInputInside(CustomSearchEditText editText) {
-        HSInputMethodService inputMethodService= HSInputMethod.getInputService();
-        inputMethodService.onFinishInputView(true);
-        EditorInfo editorInfo=editText.getEditorInfo();
-        insideConnection=editText.onCreateInputConnection(editorInfo);
-        inputMethodService.onStartInputView(editorInfo, true);
-    }
-
-    public static void onFinishInputInside(){
-        if(insideConnection!=null){
-            HSInputMethodService inputMethodService= HSInputMethod.getInputService();
-            inputMethodService.onFinishInput();
-            inputMethodService.cleanupInternalStateForInsideEditText();
-        }
-    }
-
-    @Override
-    public InputConnection getCurrentInputConnection() {
-        if(insideConnection!=null){
-            return insideConnection;
-        }
-        return super.getCurrentInputConnection();
-    }
-
-    @Override
-    public void onFinishInput() {
-        if(insideConnection!=null){
-            insideConnection=null;
-            HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_DISCONNECT_INSIDE_CONNECTION);
-        }
-        super.onFinishInput();
-    }
-
-    @Override
-    public void onStartInputView(EditorInfo editorInfo, boolean restarting) {
-        super.onStartInputView(editorInfo, restarting);
-        // Broadcast event
-        final HSBundle bundle = new HSBundle();
-        bundle.putString(HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME, editorInfo.packageName);
-        HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_START_INPUT_VIEW, bundle);
-        HSLog.d("time log, input service on start input view finished");
-    }
 
     @Override
     public void onFinishInputView(final boolean finishingInput) {
-        if (insideConnection != null) {
-            insideConnection = null;
-            HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_DISCONNECT_INSIDE_CONNECTION);
-        }
         if(!isOnDestroy){
             ESManager.getInstance().onFinishInputView();
         }
@@ -128,7 +81,6 @@ public class LatinIME extends HSInputMethodService {
     public void onDestroy() {
         isOnDestroy=true;
         super.onDestroy();
-        HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_DESTROY);
     }
 
     @Override
