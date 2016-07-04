@@ -1,5 +1,5 @@
 include ':app'
 include ':libKeyboard'
-project(':libKeyboard').projectDir = new File('lib_keyboard_android/libKeyboard')
+project(':libKeyboard').projectDir = new File('lib_keyboarduimodules_android/lib_keyboard_android/libKeyboard')
 include ':lib_keyboard_ui_modules'
 project(':lib_keyboard_ui_modules').projectDir = new File('lib_keyboarduimodules_android/lib_keyboard_ui_modules')
