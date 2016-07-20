@@ -11,9 +11,11 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,6 +109,8 @@ public class MainActivity extends HSActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        onNewIntent(getIntent());
 
         HSKeyboardThemeManager.init();
         rootView = (View) this.findViewById(R.id.view_root);
@@ -288,6 +292,20 @@ public class MainActivity extends HSActivity {
         }
 
         this.refreshUIState();
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Uri data = intent.getData();
+        if(data!=null) {
+            String pkName = data.getQueryParameter("pkName");
+            if (!TextUtils.isEmpty(pkName)) {
+                HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
+                HSKeyboardThemeManager.setPluginTheme(pkName);
+            }
+        }
     }
 
     /**
