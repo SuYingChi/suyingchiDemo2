@@ -51,6 +51,7 @@ dependencies {
     compile project(':libKeyboard')
     compile project(':lib_keyboard_ui_modules')
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    //compile fileTree(dir: 'libs', include: ['*.aar'])
 
 //    compile project(':customTheme')
 //    //custom theme
@@ -62,10 +63,26 @@ dependencies {
 //    compile 'com.zhy:percent-support-extends:1.1.1'
 
 
-
+//    compile (name:'lib_keyboard_ui_modules-release', ext:'aar')
+//    compile (name:'libKeyboard-googledefault-release', ext:'aar')
     compile 'com.google.android.gms:play-services-analytics:8.1.0'
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
     compile 'com.facebook.android:facebook-android-sdk:4.8.0'
     compile 'com.facebook.fresco:fresco:0.7.0'
     compile 'com.android.support:multidex:1.0.1'
+
+    //compile fileTree(dir: 'libs', include: ['*.jar'])
+    //compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    //compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    //compile 'com.facebook.fresco:fresco:0.7.0'
+//    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+//    //compile 'com.android.support:multidex:1.0.0'
+//    compile 'org.jcodec:jcodec-android:0.1.9'
+//    compile 'com.android.support:support-v4:23.3.0'
+//    //provided 'com.facebook.android:facebook-android-sdk:4.7.0'
+//    compile 'com.android.support:appcompat-v7:23.1.0'
+//    compile 'com.tonicartos:superslim:0.4.13'
+//    compile 'com.android.support:recyclerview-v7:23.0.1'
+//    compile 'com.zhy:percent-support-extends:1.1.1'
+
 }
