@@ -46,8 +46,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeActivity;
 import com.keyboard.rainbow.R;
 import com.keyboard.rainbow.utils.Constants;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 public class MainActivity extends HSActivity {
 
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
@@ -112,7 +110,7 @@ public class MainActivity extends HSActivity {
 
         onNewIntent(getIntent());
 
-        HSKeyboardThemeManager.init();
+
         rootView = (View) this.findViewById(R.id.view_root);
 
         WindowManager wm = this.getWindowManager();

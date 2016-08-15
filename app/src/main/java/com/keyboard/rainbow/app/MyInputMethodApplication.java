@@ -11,7 +11,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
-import com.ihs.inputmethod.uimodules.KeyboardPluginManager;
+import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.keyboard.rainbow.thread.AsyncThreadPools;
@@ -42,6 +42,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        HSKeyboardThemeManager.init();
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         Fresco.initialize(this);
         AsyncThreadPools.execute(new Runnable() {
@@ -51,7 +52,6 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
             }
         });
         HSLog.d("time log, application oncreated finished");
-
     }
 
     @Override
@@ -67,6 +67,11 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     }
     private void onSessionStart() {
         //IAP 初始化,将需要购买的所有产品的product id 加入到
+        AsyncThreadPools.execute(new Runnable() {
+            @Override
+            public void run() {
         IAPManager.getManager().init();
+            }
+        });
     }
 }
