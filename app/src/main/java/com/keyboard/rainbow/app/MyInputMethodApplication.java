@@ -11,9 +11,13 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
+import com.ihs.inputmethod.base.utils.ExecutorUtils;
+import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.HSCustomThemeContentDownloadManager;
 import com.keyboard.rainbow.thread.AsyncThreadPools;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
@@ -52,6 +56,21 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
             }
         });
         HSLog.d("time log, application oncreated finished");
+        MediaController.init();
+        MediaController.getDownloadManger().startDownloadInThreadPool(ExecutorUtils.getFixedExecutor("themeContent"));
+        AsyncThreadPools.execute(new Runnable() {
+            @Override
+            public void run() {
+                HSCustomThemeDataManager.getInstance().initCustomTheme();
+                }
+           });
+
+        AsyncThreadPools.execute(new Runnable() {
+            @Override
+            public void run() {
+                HSCustomThemeContentDownloadManager.getInstance().startDownLoadAllPreview();
+                }
+       });
     }
 
     @Override
