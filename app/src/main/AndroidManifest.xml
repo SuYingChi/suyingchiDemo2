@@ -227,6 +227,13 @@
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.ihs.iap.googleplay.PurchaseActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+
     </application>
 
 </manifest>

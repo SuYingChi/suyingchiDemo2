@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSNotificationConstant;
+import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -33,6 +34,10 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                     HSAlertMgr.delayRateAlert();
                 }
                 onSessionStart();
+            }
+
+            if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
+                HSDiverseSession.end();
             }
 
         }
@@ -86,11 +91,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     }
     private void onSessionStart() {
         //IAP 初始化,将需要购买的所有产品的product id 加入到
-        AsyncThreadPools.execute(new Runnable() {
-            @Override
-            public void run() {
         IAPManager.getManager().init();
-            }
-        });
+        HSDiverseSession.start();
     }
 }
