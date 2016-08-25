@@ -42,7 +42,7 @@ import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.keyboard.rainbow.R;
 import com.keyboard.rainbow.utils.Constants;
 
@@ -265,7 +265,8 @@ public class MainActivity extends HSActivity {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
+                //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
+                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiable();
             }
         });
 
