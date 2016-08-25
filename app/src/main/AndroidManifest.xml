@@ -43,6 +43,7 @@
         android:icon="@drawable/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
         android:largeHeap="true"
+        android:theme="@style/AppBaseTheme"
         android:supportsRtl="false"
         tools:replace="android:label">
 

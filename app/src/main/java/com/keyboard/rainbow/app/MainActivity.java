@@ -43,6 +43,7 @@ import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.rainbow.R;
 import com.keyboard.rainbow.utils.Constants;
 
@@ -508,6 +509,8 @@ public class MainActivity extends HSActivity {
             style = CurrentUIStyle.UISTYLE_STEP_TWO;
 
         } else {
+            startThemeHomeActivity();
+
             edit_text_test.setAlpha(1);
             edit_text_test.setFocusable(true);
             edit_text_test.setFocusableInTouchMode(true);
@@ -533,6 +536,11 @@ public class MainActivity extends HSActivity {
             bt_languages.setAlpha(1);
             style = CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL;
         }
+    }
+
+    private void startThemeHomeActivity() {
+        startActivity(new Intent(MainActivity.this,ThemeHomeActivity.class));
+        finish();
     }
 
     private void doHideAnimation() {
@@ -739,6 +747,7 @@ public class MainActivity extends HSActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 MainActivity.this.doHideAnimation();
+                startThemeHomeActivity();
             }
         });
         img_choose_two.startAnimation(scaleAnimation);
