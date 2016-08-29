@@ -67,15 +67,9 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
             @Override
             public void run() {
                 HSCustomThemeDataManager.getInstance().initCustomTheme();
-                }
-           });
-
-        AsyncThreadPools.execute(new Runnable() {
-            @Override
-            public void run() {
                 HSCustomThemeContentDownloadManager.getInstance().startDownLoadAllPreview();
-                }
-       });
+            }
+           });
     }
 
     @Override
