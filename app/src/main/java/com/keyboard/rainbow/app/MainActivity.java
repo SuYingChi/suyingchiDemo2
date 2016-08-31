@@ -42,9 +42,8 @@ import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.rainbow.R;
 import com.keyboard.rainbow.utils.Constants;
 
@@ -247,7 +246,7 @@ public class MainActivity extends HSActivity {
             @Override
             public void onClick(View v) {
                 showKeyboardEnableDialog();
-                HSGoogleAnalyticsUtils.logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
             }
         });
         bt_step_two.setOnClickListener(new OnClickListener() {
@@ -259,7 +258,7 @@ public class MainActivity extends HSActivity {
                 toast.show();
                 //                MainActivity.this.doSetpTwoFinishAnimation();
 
-                HSGoogleAnalyticsUtils.logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
             }
         });
 
@@ -276,7 +275,7 @@ public class MainActivity extends HSActivity {
             @Override
             public void onClick(View v) {
                 HSInputMethod.showMoreSettingsActivity();
-                HSGoogleAnalyticsUtils.logAppEvent(Constants.GA_PARAM_ACTION_APP_SETTINGS_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_SETTINGS_CLICKED);
             }
         });
 
@@ -284,7 +283,7 @@ public class MainActivity extends HSActivity {
             @Override
             public void onClick(View v) {
                 HSInputMethod.showLanguageSettingsActivity();
-                HSGoogleAnalyticsUtils.logAppEvent(Constants.GA_PARAM_ACTION_APP_LANGUAGES_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_LANGUAGES_CLICKED);
             }
         });
 
@@ -397,14 +396,14 @@ public class MainActivity extends HSActivity {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
-                            HSGoogleAnalyticsUtils.logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                         } else {
                             refreshUIState();
                         }
                     } else {
                         refreshUIState();
 
-                        HSGoogleAnalyticsUtils.logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                     }
                     try {
                         if (settingsContentObserver != null)

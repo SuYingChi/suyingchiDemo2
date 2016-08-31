@@ -61,7 +61,6 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
             }
         });
         HSLog.d("time log, application oncreated finished");
-        MediaController.init();
         MediaController.getDownloadManger().startDownloadInThreadPool(ExecutorUtils.getFixedExecutor("themeContent"));
         AsyncThreadPools.execute(new Runnable() {
             @Override
