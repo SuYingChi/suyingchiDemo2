@@ -13,3 +13,9 @@ allprojects {
         jcenter()
     }
 }
+ext {
+    use_default_facemoji_res = false
+    use_default_gif_res = false
+    use_default_fonts_res = false
+    use_default_sticker_res = false
+}

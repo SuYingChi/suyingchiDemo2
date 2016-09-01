@@ -3,6 +3,7 @@ package com.keyboard.rainbow.app;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -20,6 +21,7 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.HSCustomThemeContentDownloadManager;
 import com.keyboard.rainbow.thread.AsyncThreadPools;
+import io.fabric.sdk.android.Fabric;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
 
@@ -51,6 +53,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         HSKeyboardThemeManager.init();
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         Fresco.initialize(this);
