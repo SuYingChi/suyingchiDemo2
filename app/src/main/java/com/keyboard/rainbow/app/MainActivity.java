@@ -540,8 +540,8 @@ public class MainActivity extends HSActivity {
     }
 
     private void startThemeHomeActivity() {
-        startActivity(new Intent(MainActivity.this,ThemeHomeActivity.class));
-        finish();
+//        startActivity(new Intent(MainActivity.this,ThemeHomeActivity.class));
+//        finish();
     }
 
     private void doHideAnimation() {
