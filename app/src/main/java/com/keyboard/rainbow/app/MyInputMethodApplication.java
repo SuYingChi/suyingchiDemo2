@@ -15,12 +15,12 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.base.utils.ExecutorUtils;
 import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
-import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.HSCustomThemeContentDownloadManager;
 import com.keyboard.rainbow.thread.AsyncThreadPools;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
@@ -54,7 +54,6 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-        HSKeyboardThemeManager.init();
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         Fresco.initialize(this);
         AsyncThreadPools.execute(new Runnable() {
