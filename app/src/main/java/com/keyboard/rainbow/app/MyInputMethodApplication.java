@@ -1,10 +1,7 @@
 package com.keyboard.rainbow.app;
 
-import android.content.Context;
-import android.support.multidex.MultiDex;
+import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.commons.diversesession.HSDiverseSession;
@@ -13,15 +10,11 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
-import com.ihs.inputmethod.base.utils.ExecutorUtils;
+import com.ihs.inputmethod.framework.HSKeyboardSession;
 import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
-import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
-import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.HSCustomThemeContentDownloadManager;
 import com.keyboard.rainbow.thread.AsyncThreadPools;
-
-import io.fabric.sdk.android.Fabric;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
 
@@ -42,6 +35,16 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                 HSDiverseSession.end();
             }
 
+            if (HSDiverseSession.HS_DIVERSE_SESSION_START.equals(notificationName) && HSKeyboardSession.getSessionCount() == 0) {
+                AsyncThreadPools.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        HSCustomThemeDataManager.getInstance().initCustomTheme();
+                        HSCustomThemeContentDownloadManager.getInstance().startDownLoadAllPreview();
+                    }
+                });
+            }
+
         }
     };
 
@@ -52,18 +55,17 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 
     @Override
     public void onCreate() {
+        Log.e("time log", "time log application oncreated started");
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+//        Fabric.with(this, new Crashlytics());//0,5s
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
-        Fresco.initialize(this);
-        AsyncThreadPools.execute(new Runnable() {
-            @Override
-            public void run() {
-                GifManager.init();
-            }
-        });
-        HSLog.d("time log, application oncreated finished");
-        MediaController.getDownloadManger().startDownloadInThreadPool(ExecutorUtils.getFixedExecutor("themeContent"));
+
+//        AsyncThreadPools.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                GifManager.init();
+//            }
+//        });
         AsyncThreadPools.execute(new Runnable() {
             @Override
             public void run() {
@@ -71,6 +73,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                 HSCustomThemeContentDownloadManager.getInstance().startDownLoadAllPreview();
             }
            });
+        Log.e("time log", "time log application oncreated finished");
     }
 
     @Override
@@ -79,11 +82,11 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         super.onTerminate();
     }
 
-    @Override
-    public void attachBaseContext(Context base) {
-        MultiDex.install(base);
-        super.attachBaseContext(base);
-    }
+    //    @Override
+//    public void attachBaseContext(Context base) {
+//        MultiDex.install(base);
+//        super.attachBaseContext(base);
+//    }
     private void onSessionStart() {
         //IAP 初始化,将需要购买的所有产品的product id 加入到
         IAPManager.getManager().init();
