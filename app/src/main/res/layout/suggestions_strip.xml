@@ -106,11 +106,12 @@
                     android:orientation="horizontal"
                     android:soundEffectsEnabled="false"></LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="3px"
+                <com.ihs.inputmethod.suggestions.HSControlPanelStripIndicatorView
+                    android:id="@+id/control_panel_strip_indicator_view"
                     android:layout_alignParentBottom="true"
-                    android:background="@color/suggestion_strip_bottom_line" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <RelativeLayout
