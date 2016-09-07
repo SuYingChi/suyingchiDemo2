@@ -114,6 +114,13 @@
                     android:visibility="gone"/>
             </RelativeLayout>
 
+            <View
+                android:id="@+id/suggestions_trip_separator_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="bottom|left"
+                android:background="@color/suggestion_strip_bottom_line" />
+
             <RelativeLayout
                 android:id="@+id/panel_strip_view_container"
                 android:layout_width="match_parent"
@@ -121,12 +128,6 @@
                 android:hapticFeedbackEnabled="false"
                 android:soundEffectsEnabled="false"></RelativeLayout>
 
-            <View
-                android:id="@+id/suggestions_trip_separator_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="bottom|left"
-                android:background="@color/suggestion_strip_bottom_line" />
         </LinearLayout>
     </FrameLayout>
 
