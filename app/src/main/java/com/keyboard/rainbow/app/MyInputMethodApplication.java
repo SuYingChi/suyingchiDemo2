@@ -10,7 +10,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
-import com.ihs.inputmethod.framework.HSKeyboardSession;
 import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.HSCustomThemeContentDownloadManager;
@@ -35,15 +34,15 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                 HSDiverseSession.end();
             }
 
-            if (HSDiverseSession.HS_DIVERSE_SESSION_START.equals(notificationName) && HSKeyboardSession.getSessionCount() == 0) {
-                AsyncThreadPools.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        HSCustomThemeDataManager.getInstance().initCustomTheme();
-                        HSCustomThemeContentDownloadManager.getInstance().startDownLoadAllPreview();
-                    }
-                });
-            }
+//            if (HSDiverseSession.HS_DIVERSE_SESSION_START.equals(notificationName)) {
+//                AsyncThreadPools.execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        HSCustomThemeDataManager.getInstance().initCustomTheme();
+//                        HSCustomThemeContentDownloadManager.getInstance().startDownLoadAllPreview();
+//                    }
+//                });
+//            }
 
         }
     };
