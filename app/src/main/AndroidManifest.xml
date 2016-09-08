@@ -130,6 +130,7 @@
 
         <activity
             android:name="com.keyboard.rainbow.app.MainActivity"
+            android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="adjustResize">
