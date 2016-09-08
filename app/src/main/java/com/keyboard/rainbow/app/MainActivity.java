@@ -3,6 +3,7 @@ package com.keyboard.rainbow.app;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
@@ -41,6 +42,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
+import com.ihs.inputmethod.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
@@ -312,31 +314,47 @@ public class MainActivity extends HSActivity {
      * Show keyboard enabling dialog
      */
     private void showKeyboardEnableDialog() {
-        // Create custom dialog object
-        final Dialog dialog = new Dialog(this);
-        // hide to default title for Dialog
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        // inflate the layout dialog_layout.xml and set it as contentView
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.enable_keyboard_dialog, null, false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(view);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        HSAlertDialog.build().setTitle("Tips")
+                .setMessage(getResources().getString(R.string.alert_attention_messenger))
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
+                        isInStepOne = true;
+                        Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }).create().show();
 
-        Button positiveBtn = (Button) dialog.findViewById(R.id.enable_alert_btn_ok);
-        positiveBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
-                isInStepOne = true;
-                Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
-                toast.show();
-            }
-        });
 
-        dialog.show();
+
+//        // Create custom dialog object
+//        final Dialog dialog = new Dialog(this);
+//        // hide to default title for Dialog
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//
+//        // inflate the layout dialog_layout.xml and set it as contentView
+//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View view = inflater.inflate(R.layout.enable_keyboard_dialog, null, false);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.setContentView(view);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+//
+//        Button positiveBtn = (Button) dialog.findViewById(R.id.enable_alert_btn_ok);
+//        positiveBtn.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//                startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
+//                isInStepOne = true;
+//                Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
+//                toast.show();
+//            }
+//        });
+//
+//        dialog.show();
     }
 
     public class ImeSettingsContentObserver extends ContentObserver {
