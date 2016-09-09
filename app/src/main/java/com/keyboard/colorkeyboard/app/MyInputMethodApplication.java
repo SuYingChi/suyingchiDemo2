@@ -1,4 +1,4 @@
-package com.keyboard.rainbow.app;
+package com.keyboard.colorkeyboard.app;
 
 import android.util.Log;
 
@@ -13,7 +13,7 @@ import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.HSCustomThemeContentDownloadManager;
-import com.keyboard.rainbow.thread.AsyncThreadPools;
+import com.keyboard.colorkeyboard.thread.AsyncThreadPools;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
 

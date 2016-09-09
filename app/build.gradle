@@ -16,7 +16,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "com.keyboard.rainbow"
+        applicationId "com.keyboard.colorkeyboard"
         minSdkVersion 14
         targetSdkVersion 22
         // Enabling multidex support.

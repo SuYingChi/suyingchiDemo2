@@ -1,4 +1,4 @@
-package com.keyboard.rainbow.thread;
+package com.keyboard.colorkeyboard.thread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

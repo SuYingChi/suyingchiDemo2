@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.keyboard.rainbow"
+    package="com.keyboard.colorkeyboard"
     android:installLocation="internalOnly"
     android:versionCode="6"
     android:versionName="2.0.0">
@@ -34,11 +34,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <permission
-        android:name="com.keyboard.rainbow.permission.C2D_MESSAGE"
+        android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <application
-        android:name="com.keyboard.rainbow.app.MyInputMethodApplication"
+        android:name="com.keyboard.colorkeyboard.app.MyInputMethodApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
@@ -69,7 +69,7 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.gcm.intent.RETRY" />
 
-                <category android:name="com.keyboard.rainbow" />
+                <category android:name="com.keyboard.colorkeyboard" />
             </intent-filter>
         </receiver>
 
@@ -129,7 +129,7 @@
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
         <activity
-            android:name="com.keyboard.rainbow.app.MainActivity"
+            android:name="com.keyboard.colorkeyboard.app.MainActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

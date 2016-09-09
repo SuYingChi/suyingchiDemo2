@@ -1,4 +1,4 @@
-package com.keyboard.rainbow.app;
+package com.keyboard.colorkeyboard.app;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -41,8 +41,8 @@ import com.ihs.inputmethod.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.utils.GAConstants;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.keyboard.rainbow.R;
-import com.keyboard.rainbow.utils.Constants;
+import com.keyboard.colorkeyboard.R;
+import com.keyboard.colorkeyboard.utils.Constants;
 
 public class MainActivity extends HSActivity {
 
