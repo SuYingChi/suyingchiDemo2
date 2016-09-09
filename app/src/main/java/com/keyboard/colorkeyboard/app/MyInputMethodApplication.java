@@ -8,7 +8,6 @@ import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -22,11 +21,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         @Override
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                if (currentapiVersion <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-                    HSAlertMgr.delayRateAlert();
-                }
+                HSAlertMgr.delayRateAlert();
                 onSessionStart();
             }
 

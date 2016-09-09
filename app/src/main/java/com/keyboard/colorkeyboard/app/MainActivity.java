@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Display;
@@ -33,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
@@ -397,6 +399,21 @@ public class MainActivity extends HSActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
+                    if (PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getBoolean("CUSTOM_THEME_SAVE", false)) {
+                        HSAlertMgr.showRateAlert();
+                        PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
+                    }
+                }
+            }
+        }, 100);
+
 
         if (edit_text_test != null) {
             edit_text_test.requestFocus();
