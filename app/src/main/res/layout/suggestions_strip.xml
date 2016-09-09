@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_gravity="top|left"
-            android:layout_marginTop="39dp"
             android:background="@color/suggestion_strip_bottom_line" />
 
         <!--
