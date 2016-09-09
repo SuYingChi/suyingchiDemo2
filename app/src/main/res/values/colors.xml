@@ -14,4 +14,5 @@
     <color name="gif_panel_result_text_color">#6d797f</color>
     <color name="gif_panel_hint_text_color">#A33c3c3c</color>
     <color name="gif_background_color">#ccd1d4</color>
+    <color name="white_text_color_press">#ffffff</color>
 </resources>
