@@ -1,6 +1,5 @@
 package com.keyboard.rainbow.app;
 
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,17 +10,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -29,7 +25,6 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,8 +39,8 @@ import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.utils.GAConstants;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.rainbow.R;
 import com.keyboard.rainbow.utils.Constants;
 
@@ -269,7 +264,9 @@ public class MainActivity extends HSActivity {
             public void onClick(View v) {
 //                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
+
                 IAPManager.getManager().startCustomThemeActivityIfSlotAvaiable();
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent(GAConstants.APP_CUSTOMIZE_ENTRY_CLICKED);
             }
         });
 
