@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -32,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
@@ -39,8 +41,9 @@ import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.utils.GAConstants;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.utils.DrawableUtils;
+import com.ihs.inputmethod.utils.GAConstants;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
@@ -137,6 +140,8 @@ public class MainActivity extends HSActivity {
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
 
         bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
+        bt_design_theme.setBackgroundDrawable(DrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(),R.drawable.entrance_customize_button)));
+
         settings_languages_layout = (LinearLayout) this.findViewById(R.id.settings_languages_layout);
         bt_settings = (TextView) this.findViewById(R.id.bt_settings);
         bt_languages = (TextView) this.findViewById(R.id.bt_languages);
