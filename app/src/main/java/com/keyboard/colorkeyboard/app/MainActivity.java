@@ -141,6 +141,8 @@ public class MainActivity extends HSActivity {
 
         bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
         bt_design_theme.setBackgroundDrawable(DrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(),R.drawable.entrance_customize_button)));
+        float density = getResources().getDisplayMetrics().density;
+        bt_design_theme.setPadding((int)density*20,(int)density*10,(int)density*20,(int)density*10);
 
         settings_languages_layout = (LinearLayout) this.findViewById(R.id.settings_languages_layout);
         bt_settings = (TextView) this.findViewById(R.id.bt_settings);
