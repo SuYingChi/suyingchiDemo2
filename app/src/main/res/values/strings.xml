@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_idle">RainbowKey</string>
     <string name="alert_attention_title">Attention !</string>
-    <string name="alert_attention_messenger">When you enable RainbowKey, you will receive a warning that says the keyboard may collect your personal data. This is a standard Android warning for any third party keyboard. We PROMISE RainbowKey Keyboard  will NEVER collect any of your private data! </string>
+    <string name="alert_attention_messenger">Rainbowkey will never collect any private data like passwords or credits card numbers. </string>
     <string name="toast_enable_keyboard">Enable RainbowKey</string>
     <string name="toast_select_keyboard">Select RainbowKey</string>
     <string name="main_activity_edittext_hint">Try typing here now...</string>

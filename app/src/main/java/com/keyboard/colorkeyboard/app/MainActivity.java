@@ -319,7 +319,7 @@ public class MainActivity extends HSActivity {
      */
     private void showKeyboardEnableDialog() {
 
-        HSAlertDialog.build().setTitle("Tips")
+        HSAlertDialog.build().setTitle(getString(R.string.toast_enable_keyboard))
                 .setMessage(getResources().getString(R.string.alert_attention_messenger))
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
