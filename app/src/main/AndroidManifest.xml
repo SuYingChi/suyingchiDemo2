@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.keyboard.colorkeyboard"
     android:installLocation="internalOnly"
-    android:versionCode="3"
-    android:versionName="1.1.0" >
+    android:versionCode="7"
+    android:versionName="2.0.0">
 
-    <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook"/>
+    <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -29,10 +29,11 @@
 
     <!-- required by libAppFramework -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.keyboard.rainbow.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <uses-permission android:name="com.android.vending.BILLING" />
     <permission
         android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -42,16 +43,28 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
-        android:supportsRtl="true" >
+        android:largeHeap="true"
+        android:theme="@style/AppBaseTheme"
+        android:supportsRtl="false"
+        tools:replace="android:label">
 
         <!-- required by libAppFramework -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <!-- AppsFlyer required -->
+        <receiver
+            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name="com.ihs.app.push.impl.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -66,8 +79,7 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
         <!-- Add the following meta-data for devices running Google Play service. -->
         <meta-data
@@ -80,7 +92,7 @@
         -->
         <receiver
             android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
@@ -97,15 +109,16 @@
         -->
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
         <service
             android:name="com.ihs.inputmethod.latin.LatinIME"
             android:label="@string/english_ime_name"
-            android:permission="android.permission.BIND_INPUT_METHOD" >
+            android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
@@ -118,28 +131,55 @@
 
         <activity
             android:name="com.keyboard.colorkeyboard.app.MainActivity"
+            android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="rainbowKeyboard"
+                    android:host="theme"
+                    />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.ihs.inputmethod.settings.SettingsActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ihs.inputmethod.settings.ThemeSettingsActivity" >
+        <activity
+            android:name="com.ihs.inputmethod.settings.SettingsActivity2"
+            android:label="@string/app_name"
+            android:theme="@style/SettingActivityStyle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
+
+
         <activity
             android:name="com.ihs.inputmethod.settings.MoreLanguageActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.ihs.inputmethod.settings.MoreLanguageActivity2"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/SettingActivityStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -160,12 +200,6 @@
 
         <!-- wechat sdk required -->
         <activity
-            android:name="com.keyboard.colorkeyboard.wxapi.WXEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
-        <activity
             android:name="com.tapjoy.TJContentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -185,11 +219,43 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_app_id" />
 
-        <!--<activity-->
-            <!--android:name="com.facebook.FacebookActivity"-->
-            <!--android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!-- AppsFlyer required -->
+        <receiver
+            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- required permission by facebook -->
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <activity
+            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeBackgroundCropperActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.ihs.iap.googleplay.PurchaseActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+         <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="feab1e2f778877ab60518c2d916f8f331b230358" />
     </application>
 
 </manifest>

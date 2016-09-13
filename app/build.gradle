@@ -1,24 +1,52 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "23.0.0"
 
     defaultConfig {
         applicationId "com.keyboard.colorkeyboard"
         minSdkVersion 14
         targetSdkVersion 22
+        // Enabling multidex support.
+        multiDexEnabled true
+    }
+
+    repositories {
+        mavenCentral()
     }
 
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt') , 'proguard-project.txt' , '../libs/ihs/libAppFramework/lib-appframework.proguard' , '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard', '../libs/ihs/libNativeAds/lib-nativeads.proguard' ,'../libs/ihs/google-play-services_lib/r21/proguard.txt'
         }
-        debug{
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt') , 'proguard-project.txt' , '../libs/ihs/libAppFramework/lib-appframework.proguard' , '../libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard', '../libs/ihs/libNativeAds/lib-nativeads.proguard' ,'../libs/ihs/google-play-services_lib/r21/proguard.txt'
         }
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+            universalApk false
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "8g"
     }
 }
 
@@ -26,12 +54,19 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 dependencies {
-    compile(name:'libKeyboard', ext:'aar')
-    compile files('libKeyboard.libAppFramework.jar')
+    compile project(':libKeyboard')
+    compile project(':lib_keyboard_ui_modules')
     compile 'com.google.android.gms:play-services-analytics:8.1.0'
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.8.0'
+    compile 'com.facebook.fresco:fresco:0.7.0'
+    compile 'com.android.support:multidex:1.0.1'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+        transitive = true;
+    }
 }
+
