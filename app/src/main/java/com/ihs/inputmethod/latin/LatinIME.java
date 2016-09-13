@@ -18,17 +18,9 @@ public class LatinIME extends HSUIInputMethodService {
     public void onCreate() {
         Log.e("time log","time log service oncreated started");
         super.onCreate();
-//        Fresco.initialize(this);
-//        AsyncThreadPools.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                DataManager.getInstance().loadUserData();
-//            }
-//        });
         isOnDestroy=false;
         KeyboardPluginManager.getInstance().onInputMethodServiceCreate();
         setPanelSwitcher(KeyboardPluginManager.getInstance());
-        //HSKeyboardSwitcher.init(HSInputMethod.getInputService());
         Log.e("time log","time log service oncreated started");
     }
 
