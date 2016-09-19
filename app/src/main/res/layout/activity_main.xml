@@ -171,7 +171,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="10dp"
-            android:text="Design Your Own Keyboard"
+            android:text="Create Your Own Keyboard"
             android:textColor="#ffffff"
             android:textSize="@dimen/button_settings_textsize" />
 
@@ -193,7 +193,7 @@
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="Settings"
-                android:textColor="#ffffff"
+                android:textColor="@color/home_text_selector"
                 android:textSize="@dimen/button_settings_textsize" />
 
             <TextView
@@ -205,7 +205,7 @@
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="Languages"
-                android:textColor="#ffffff"
+                android:textColor="@color/home_text_selector"
                 android:textSize="@dimen/button_settings_textsize" />
 
         </LinearLayout>
