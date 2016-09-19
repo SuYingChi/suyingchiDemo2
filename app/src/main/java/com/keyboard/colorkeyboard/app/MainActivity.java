@@ -37,11 +37,12 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.HSInputMethod;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
+import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.utils.DrawableUtils;
 import com.ihs.inputmethod.utils.GAConstants;
 import com.keyboard.colorkeyboard.R;
@@ -280,7 +281,7 @@ public class MainActivity extends HSActivity {
         bt_settings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSInputMethod.showMoreSettingsActivity();
+                HSUIInputMethod.showMoreSettingsActivity();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_SETTINGS_CLICKED);
             }
         });
@@ -288,7 +289,7 @@ public class MainActivity extends HSActivity {
         bt_languages.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSInputMethod.showLanguageSettingsActivity();
+                HSUIInputMethod.showLanguageSettingsActivity();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_LANGUAGES_CLICKED);
             }
         });
@@ -562,8 +563,8 @@ public class MainActivity extends HSActivity {
     }
 
     private void startThemeHomeActivity() {
-//        startActivity(new Intent(MainActivity.this,ThemeHomeActivity.class));
-//        finish();
+        startActivity(new Intent(MainActivity.this,ThemeHomeActivity.class));
+        finish();
     }
 
     private void doHideAnimation() {
