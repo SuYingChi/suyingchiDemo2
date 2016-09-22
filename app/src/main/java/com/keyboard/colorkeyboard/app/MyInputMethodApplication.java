@@ -15,6 +15,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 
 import io.fabric.sdk.android.Fabric;
@@ -50,7 +51,9 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
         IAPManager.getManager().initProductPrices();
-        Fabric.with(this, new Crashlytics());//0,5s
+        if(!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());//0,5s
+        }
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         Log.e("time log", "time log application oncreated finished");
 
