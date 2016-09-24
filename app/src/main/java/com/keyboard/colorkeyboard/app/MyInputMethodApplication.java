@@ -21,6 +21,9 @@ import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.uimodules.BuildConfig;
+import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
+import com.ihs.inputmethod.uimodules.ads.AdConditions;
+import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.GAConstants;
 import com.ihs.inputmethod.utils.ThreadUtils;
@@ -82,6 +85,22 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         HSDiverseSession.start();
         //检测是否已经有非内置的主题包已经被安装过了
         checkIsPluginThemeInstalled();
+        if (AdConditions.isShowMainPageCardNativeAds()) {
+            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.CardAd);
+            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.CardAd);
+        }
+        if (AdConditions.isShowMainThemeNativeAds()) {
+            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeAd);
+            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeAd);
+        }
+        if (AdConditions.isShowThemeDetailNativeAds()) {
+            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeDetailAd);
+            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeDetailAd);
+        }
+        if (AdConditions.isShowThemeTryNativeAds()) {
+            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeTryAd);
+            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeTryAd);
+        }
     }
 
     private void checkIsPluginThemeInstalled() {

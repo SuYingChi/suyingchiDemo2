@@ -42,7 +42,6 @@ android {
         }
         debug {
             minifyEnabled false
-            signingConfig signingConfigs.releaseConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard','../libs/ihs/google-play-services_lib/r21/proguard.txt'
         }
     }
