@@ -74,14 +74,14 @@
             </intent-filter>
         </receiver>
 
+        <!-- android:excludeFromRecents="true"  -->
         <activity
             android:name="com.ihs.app.alerts.impl.AlertActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+         android:launchMode="singleInstance"
+         android:taskAffinity=""
+         android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
-        <!-- Add the following meta-data for devices running Google Play service. -->
+     <!-- Add the following meta-data for devices running Google Play service. -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
