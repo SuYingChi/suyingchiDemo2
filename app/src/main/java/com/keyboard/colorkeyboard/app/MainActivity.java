@@ -310,7 +310,7 @@ public class MainActivity extends HSActivity {
             String pkName = data.getQueryParameter("pkName");
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
-                HSKeyboardThemeManager.setPluginTheme(pkName);
+                HSKeyboardThemeManager.setDownloadedTheme(pkName);
             }
         }
     }
