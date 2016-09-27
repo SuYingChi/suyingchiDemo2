@@ -22,7 +22,14 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
     }
-
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'keyboardarts'
+            keyPassword 'zdhszyzs'
+            storeFile file('KeyboardArts')
+            storePassword 'zdhszyzs'
+        }
+    }
     repositories {
         mavenCentral()
     }
@@ -30,11 +37,13 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard', '../libs/ihs/libNativeAds/lib-nativeads.proguard' ,'../libs/ihs/google-play-services_lib/r21/proguard.txt'
+            signingConfig signingConfigs.releaseConfig
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard' ,'../libs/ihs/google-play-services_lib/r21/proguard.txt'
         }
         debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard', '../libs/ihs/libNativeAds/lib-nativeads.proguard' ,'../libs/ihs/google-play-services_lib/r21/proguard.txt'
+            signingConfig signingConfigs.releaseConfig
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard','../libs/ihs/google-play-services_lib/r21/proguard.txt'
         }
     }
     splits {
