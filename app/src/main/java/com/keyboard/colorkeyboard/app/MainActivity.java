@@ -311,6 +311,12 @@ public class MainActivity extends HSActivity {
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 HSKeyboardThemeManager.setDownloadedTheme(pkName);
+                if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+                    Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
+                    startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+                    startActivity(startThemeHomeIntent);
+                    finish();
+                }
             }
         }
     }
