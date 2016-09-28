@@ -20,7 +20,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
-import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.GAConstants;
 import com.ihs.inputmethod.utils.ThreadUtils;
@@ -60,7 +59,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
         IAPManager.getManager().initProductPrices();
-        if(!BuildConfig.DEBUG) {
+        if(!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
         }
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
