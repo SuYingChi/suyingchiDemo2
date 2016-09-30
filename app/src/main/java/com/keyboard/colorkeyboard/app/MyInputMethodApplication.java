@@ -20,8 +20,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
-import com.ihs.inputmethod.uimodules.BuildConfig;
-import com.ihs.inputmethod.theme.HSCustomThemeDataManager;
 import com.ihs.inputmethod.uimodules.ads.AdConditions;
 import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -75,6 +73,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     @Override
     public void onTerminate() {
         HSGlobalNotificationCenter.removeObserver(sessionEventObserver);
+        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
         super.onTerminate();
     }
 
