@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.alerts.HSAlertMgr;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
@@ -20,6 +21,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
+import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ads.AdConditions;
 import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -29,6 +31,9 @@ import com.ihs.inputmethod.utils.ThreadUtils;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
+
+import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED;
+import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
 
@@ -100,6 +105,9 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
             AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeTryAd);
             AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeTryAd);
         }
+
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER,  HSKeyboardThemeManager.customThemes.size());
     }
 
     private void checkIsPluginThemeInstalled() {
@@ -115,11 +123,13 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                         for (String pluginThemePkNamePrefix : pluginThemePkNamePrefixList) {
                             if (packageInfo.packageName.startsWith(pluginThemePkNamePrefix)) {
                                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"true");
+                                HSAnalytics.logEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"true");
                                 return;
                             }
                         }
                     }
                     HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"false");
+                    HSAnalytics.logEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"false");
                 }
             });
         }
