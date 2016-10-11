@@ -241,7 +241,7 @@
             android:launchMode="singleTop"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeBackgroundCropperActivity"
