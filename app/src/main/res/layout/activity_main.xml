@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ihs.keyboard.superemoji.app.MainActivity" >
+    tools:context="com.keyboard.colorkeyboard.app.MainActivity" >
 
     <RelativeLayout
         android:id="@+id/view_main_logo"
@@ -156,7 +156,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/view_main_logo"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/bt_design_theme"
