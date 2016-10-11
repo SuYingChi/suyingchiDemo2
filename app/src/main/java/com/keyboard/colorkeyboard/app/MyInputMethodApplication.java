@@ -45,8 +45,8 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 //                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 //                if (currentapiVersion <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
 //                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-//                    HSAlertMgr.delayRateAlert();
 //                }
+                HSAlertMgr.delayRateAlert();
                 onSessionStart();
             }
 
