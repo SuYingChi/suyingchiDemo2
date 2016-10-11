@@ -1,9 +1,13 @@
 package com.keyboard.colorkeyboard.app;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -28,6 +32,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.GAConstants;
 import com.ihs.inputmethod.utils.ThreadUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
@@ -36,6 +41,10 @@ import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED;
 import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
 
 public class MyInputMethodApplication extends HSInputMethodApplication {
+
+    private List<Activity> activityList = new ArrayList<>();
+    private static volatile long lastIMECheckingTime;
+
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
@@ -73,6 +82,12 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         Log.e("time log", "time log application oncreated finished");
 
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
+
+        //监视输入法改变
+        getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.DEFAULT_INPUT_METHOD), false,
+                settingsContentObserver);
+        getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
+                settingsContentObserver);
     }
 
     @Override
@@ -135,10 +150,43 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         }
     }
 
+
+    private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
+
+    public class ImeSettingsContentObserver extends ContentObserver {
+        public ImeSettingsContentObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            long time = SystemClock.elapsedRealtime();
+            long timeD = time - lastIMECheckingTime;
+            if (0L >= timeD || timeD >= 500L) {
+                lastIMECheckingTime = time;
+                return;
+            }
+            if (!HSInputMethodCommonUtils.isCurrentIMESelected(getApplicationContext())) {
+                for (Activity activity : activityList) {
+                    if (activity != null && !(activity instanceof MainActivity))
+                        try {
+                            activity.finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                }
+
+            }
+        }
+    }
+
     private ActivityLifecycleCallbacks activityLifecycleCallbacks = new  ActivityLifecycleCallbacks() {
         @Override
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+            if (activity != null) {
+                activityList.add(activity);
+            }
         }
 
         @Override
@@ -148,13 +196,13 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 
         @Override
         public void onActivityResumed(Activity activity) {
-            if(!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())
-                    &&(!HSInputMethodCommonUtils.isCurrentIMEEnabled(activity)||!HSInputMethodCommonUtils.isCurrentIMESelected(activity))){
-                Intent intent = new Intent(activity, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                activity.startActivity(intent);
-                activity.finish();
-            }
+//            if(!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())
+//                    &&(!HSInputMethodCommonUtils.isCurrentIMEEnabled(activity)||!HSInputMethodCommonUtils.isCurrentIMESelected(activity))){
+//                Intent intent = new Intent(activity, MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                activity.startActivity(intent);
+//                activity.finish();
+//            }
         }
 
         @Override
@@ -174,7 +222,9 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 
         @Override
         public void onActivityDestroyed(Activity activity) {
-
+            if (activity != null) {
+                activityList.remove(activity);
+            }
         }
     };
 }
