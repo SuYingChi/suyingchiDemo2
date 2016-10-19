@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Display;
@@ -68,7 +70,7 @@ public class MainActivity extends HSActivity {
     private static float move = 0.15f;
 
     private View rootView;
-
+    private SharedPreferences mPrefs;
     private TextView view_title_text;
     private View view_logo_img;
     private View bt_step_one;
@@ -101,6 +103,10 @@ public class MainActivity extends HSActivity {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
                 if (HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
+                    if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
+                        setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                    }
                     MainActivity.this.doSetpTwoFinishAnimation();
                     style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
                 }
@@ -119,7 +125,7 @@ public class MainActivity extends HSActivity {
             return;
         }
 
-
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         rootView = (View) this.findViewById(R.id.view_root);
 
         WindowManager wm = this.getWindowManager();
@@ -259,7 +265,10 @@ public class MainActivity extends HSActivity {
             @Override
             public void onClick(View v) {
                 showKeyboardEnableDialog();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
+                if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
+                    setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
+                }
             }
         });
         bt_step_two.setOnClickListener(new OnClickListener() {
@@ -270,8 +279,10 @@ public class MainActivity extends HSActivity {
                 Toast toast = Toast.makeText(MainActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
                 toast.show();
                 //                MainActivity.this.doSetpTwoFinishAnimation();
-
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+                if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+                    setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+                }
             }
         });
 
@@ -433,14 +444,15 @@ public class MainActivity extends HSActivity {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                            if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                                setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                            }
                         } else {
                             refreshUIState();
                         }
                     } else {
                         refreshUIState();
-
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                     }
                     try {
                         if (settingsContentObserver != null)
@@ -794,5 +806,14 @@ public class MainActivity extends HSActivity {
             }
         });
         img_choose_two.startAnimation(scaleAnimation);
+    }
+
+
+    private boolean isEventRecorded(String pref_name) {
+        return mPrefs.getBoolean(pref_name, false);
+    }
+
+    private void setEventRecorded(String pref_name) {
+        mPrefs.edit().putBoolean(pref_name, true).apply();
     }
 }
