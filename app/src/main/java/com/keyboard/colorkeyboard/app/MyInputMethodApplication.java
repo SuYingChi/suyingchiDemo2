@@ -1,13 +1,18 @@
 package com.keyboard.colorkeyboard.app;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.alerts.HSAlertMgr;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
@@ -20,26 +25,37 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
+import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.uimodules.ads.AdConditions;
+import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.GAConstants;
 import com.ihs.inputmethod.utils.ThreadUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED;
+import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
+
 public class MyInputMethodApplication extends HSInputMethodApplication {
+
+    private List<Activity> activityList = new ArrayList<>();
+    private static volatile long lastIMECheckingTime;
+
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
         @Override
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                if (currentapiVersion <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-                    HSAlertMgr.delayRateAlert();
-                }
+//                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+//                if (currentapiVersion <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
+//                }
+                HSAlertMgr.delayRateAlert();
                 onSessionStart();
             }
 
@@ -66,11 +82,18 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         Log.e("time log", "time log application oncreated finished");
 
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
+
+        //监视输入法改变
+        getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.DEFAULT_INPUT_METHOD), false,
+                settingsContentObserver);
+        getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
+                settingsContentObserver);
     }
 
     @Override
     public void onTerminate() {
         HSGlobalNotificationCenter.removeObserver(sessionEventObserver);
+        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
         super.onTerminate();
     }
 
@@ -81,6 +104,25 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         HSDiverseSession.start();
         //检测是否已经有非内置的主题包已经被安装过了
         checkIsPluginThemeInstalled();
+        if (AdConditions.isShowMainPageCardNativeAds()) {
+            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.CardAd);
+            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.CardAd);
+        }
+        if (AdConditions.isShowMainThemeNativeAds()) {
+            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeAd);
+            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeAd);
+        }
+        if (AdConditions.isShowThemeDetailNativeAds()) {
+            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeDetailAd);
+            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeDetailAd);
+        }
+        if (AdConditions.isShowThemeTryNativeAds()) {
+            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeTryAd);
+            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeTryAd);
+        }
+
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER,  HSKeyboardThemeManager.customThemes.size());
     }
 
     private void checkIsPluginThemeInstalled() {
@@ -96,20 +138,55 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                         for (String pluginThemePkNamePrefix : pluginThemePkNamePrefixList) {
                             if (packageInfo.packageName.startsWith(pluginThemePkNamePrefix)) {
                                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"true");
+                                HSAnalytics.logEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"true");
                                 return;
                             }
                         }
                     }
                     HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"false");
+                    HSAnalytics.logEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"false");
                 }
             });
+        }
+    }
+
+
+    private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
+
+    public class ImeSettingsContentObserver extends ContentObserver {
+        public ImeSettingsContentObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            long time = SystemClock.elapsedRealtime();
+            long timeD = time - lastIMECheckingTime;
+            if (0L >= timeD || timeD >= 500L) {
+                lastIMECheckingTime = time;
+                return;
+            }
+            if (!HSInputMethodCommonUtils.isCurrentIMESelected(getApplicationContext())) {
+                for (Activity activity : activityList) {
+                    if (activity != null && !(activity instanceof MainActivity))
+                        try {
+                            activity.finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                }
+
+            }
         }
     }
 
     private ActivityLifecycleCallbacks activityLifecycleCallbacks = new  ActivityLifecycleCallbacks() {
         @Override
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+            if (activity != null) {
+                activityList.add(activity);
+            }
         }
 
         @Override
@@ -119,13 +196,13 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 
         @Override
         public void onActivityResumed(Activity activity) {
-            if(!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())
-                    &&(!HSInputMethodCommonUtils.isCurrentIMEEnabled(activity)||!HSInputMethodCommonUtils.isCurrentIMESelected(activity))){
-                Intent intent = new Intent(activity, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                activity.startActivity(intent);
-                activity.finish();
-            }
+//            if(!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())
+//                    &&(!HSInputMethodCommonUtils.isCurrentIMEEnabled(activity)||!HSInputMethodCommonUtils.isCurrentIMESelected(activity))){
+//                Intent intent = new Intent(activity, MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                activity.startActivity(intent);
+//                activity.finish();
+//            }
         }
 
         @Override
@@ -145,7 +222,9 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 
         @Override
         public void onActivityDestroyed(Activity activity) {
-
+            if (activity != null) {
+                activityList.remove(activity);
+            }
         }
     };
 }

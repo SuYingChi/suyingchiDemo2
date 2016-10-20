@@ -5,15 +5,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.ContentObserver;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Display;
@@ -43,6 +47,7 @@ import com.ihs.inputmethod.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.utils.BitmapScaleUtils;
 import com.ihs.inputmethod.utils.DrawableUtils;
 import com.ihs.inputmethod.utils.GAConstants;
 import com.keyboard.colorkeyboard.R;
@@ -65,7 +70,7 @@ public class MainActivity extends HSActivity {
     private static float move = 0.15f;
 
     private View rootView;
-
+    private SharedPreferences mPrefs;
     private TextView view_title_text;
     private View view_logo_img;
     private View bt_step_one;
@@ -98,6 +103,10 @@ public class MainActivity extends HSActivity {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
                 if (HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
+                    if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
+                        setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                    }
                     MainActivity.this.doSetpTwoFinishAnimation();
                     style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
                 }
@@ -111,8 +120,12 @@ public class MainActivity extends HSActivity {
         setContentView(R.layout.activity_main);
 
         onNewIntent(getIntent());
+        if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+           startThemeHomeActivity();
+            return;
+        }
 
-
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         rootView = (View) this.findViewById(R.id.view_root);
 
         WindowManager wm = this.getWindowManager();
@@ -122,8 +135,9 @@ public class MainActivity extends HSActivity {
         int screenWidth = size.x;
         final int screenHeight = size.y;
 
-        getWindow().setBackgroundDrawable(HSInputMethodCommonUtils.getScaledImage(getResources().getDrawable(R.drawable.app_bg), screenWidth, screenHeight));
 
+        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
+        getWindow().setBackgroundDrawable(new BitmapDrawable(BitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
 
 
         view_title_text = (TextView) this.findViewById(R.id.view_title_text);
@@ -251,7 +265,10 @@ public class MainActivity extends HSActivity {
             @Override
             public void onClick(View v) {
                 showKeyboardEnableDialog();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
+                if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
+                    setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
+                }
             }
         });
         bt_step_two.setOnClickListener(new OnClickListener() {
@@ -262,8 +279,10 @@ public class MainActivity extends HSActivity {
                 Toast toast = Toast.makeText(MainActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
                 toast.show();
                 //                MainActivity.this.doSetpTwoFinishAnimation();
-
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+                if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+                    setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+                }
             }
         });
 
@@ -425,14 +444,15 @@ public class MainActivity extends HSActivity {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                            if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                                setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                            }
                         } else {
                             refreshUIState();
                         }
                     } else {
                         refreshUIState();
-
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                     }
                     try {
                         if (settingsContentObserver != null)
@@ -540,36 +560,41 @@ public class MainActivity extends HSActivity {
 
         } else {
             startThemeHomeActivity();
+            return;
 
-            edit_text_test.setAlpha(1);
-            edit_text_test.setFocusable(true);
-            edit_text_test.setFocusableInTouchMode(true);
-            edit_text_test.requestFocus();
-            //             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            edit_text_test.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(edit_text_test, InputMethodManager.SHOW_IMPLICIT);
-                }
-            },100);
-            rootView.setBackgroundColor(getResources().getColor(R.color.bg_translucent_black));
-            if (style == CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL || style == CurrentUIStyle.UISTYLE_STEP_THREE_TEST)
-                return;
-            //scaleTitleImage();
-            bt_step_one.setVisibility(View.GONE);
-            bt_step_two.setVisibility(View.GONE);
-            bt_design_theme.setVisibility(View.VISIBLE);
-            bt_settings.setVisibility(View.VISIBLE);
-            bt_languages.setVisibility(View.VISIBLE);
-            bt_design_theme.setAlpha(1);
-            bt_settings.setAlpha(1);
-            bt_languages.setAlpha(1);
-            style = CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL;
+//            edit_text_test.setAlpha(1);
+//            edit_text_test.setFocusable(true);
+//            edit_text_test.setFocusableInTouchMode(true);
+//            edit_text_test.requestFocus();
+//            //             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//
+//            edit_text_test.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(edit_text_test, InputMethodManager.SHOW_IMPLICIT);
+//                }
+//            },100);
+//            edit_text_test.postDelayed(
+//            rootView.setBackgroundColor(getResources().getColor(R.color.bg_translucent_black));
+//            if (style == CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL || style == CurrentUIStyle.UISTYLE_STEP_THREE_TEST)
+//                return;
+//            //scaleTitleImage();
+//            bt_step_one.setVisibility(View.GONE);
+//            bt_step_two.setVisibility(View.GONE);
+//            bt_design_theme.setVisibility(View.VISIBLE);
+//            bt_settings.setVisibility(View.VISIBLE);
+//            bt_languages.setVisibility(View.VISIBLE);
+//            bt_design_theme.setAlpha(1);
+//            bt_settings.setAlpha(1);
+//            bt_languages.setAlpha(1);
+//            style = CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL;
         }
     }
 
     private void startThemeHomeActivity() {
-        startActivity(new Intent(MainActivity.this,ThemeHomeActivity.class));
+        Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
+        startThemeHomeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startThemeHomeIntent);
         finish();
     }
 
@@ -781,5 +806,14 @@ public class MainActivity extends HSActivity {
             }
         });
         img_choose_two.startAnimation(scaleAnimation);
+    }
+
+
+    private boolean isEventRecorded(String pref_name) {
+        return mPrefs.getBoolean(pref_name, false);
+    }
+
+    private void setEventRecorded(String pref_name) {
+        mPrefs.edit().putBoolean(pref_name, true).apply();
     }
 }
