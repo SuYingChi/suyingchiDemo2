@@ -329,8 +329,8 @@ public class MainActivity extends HSActivity {
             String pkName = data.getQueryParameter("pkName");
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
-                HSKeyboardThemeManager.setDownloadedTheme(pkName);
                 if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+                    HSKeyboardThemeManager.setDownloadedTheme(pkName);
                     Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
                     startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
                     startActivity(startThemeHomeIntent);
