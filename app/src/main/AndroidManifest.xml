@@ -132,8 +132,8 @@
         <activity
             android:name="com.keyboard.colorkeyboard.app.MainActivity"
             android:excludeFromRecents="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:allowTaskReparenting="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

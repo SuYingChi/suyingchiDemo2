@@ -401,13 +401,7 @@ public class MainActivity extends HSActivity {
             super.onChange(selfChange);
             if (HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                i.putExtra("isInStepOne", true);
-                //                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-                finish();
                 try {
                     if (settingsContentObserver != null) {
                         getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
