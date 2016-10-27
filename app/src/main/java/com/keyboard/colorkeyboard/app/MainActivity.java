@@ -93,6 +93,7 @@ public class MainActivity extends HSActivity {
     ;
 
     private boolean isInStepOne;
+    private String needActiveThemePkName = null;
 
     private CurrentUIStyle style;
 
@@ -329,12 +330,9 @@ public class MainActivity extends HSActivity {
             String pkName = data.getQueryParameter("pkName");
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
+                needActiveThemePkName = pkName;
                 if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
-                    HSKeyboardThemeManager.setDownloadedTheme(pkName);
-                    Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-                    startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
-                    startActivity(startThemeHomeIntent);
-                    finish();
+                    startThemeHomeActivity();
                 }
             }
         }
@@ -478,6 +476,7 @@ public class MainActivity extends HSActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        needActiveThemePkName = null;
         try {
             if (settingsContentObserver != null) {
                 getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
@@ -593,7 +592,11 @@ public class MainActivity extends HSActivity {
 
     private void startThemeHomeActivity() {
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-        startThemeHomeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        if(!TextUtils.isEmpty(needActiveThemePkName)) {
+            HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
+            startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+            needActiveThemePkName = null;
+        }
         startActivity(startThemeHomeIntent);
         finish();
     }
