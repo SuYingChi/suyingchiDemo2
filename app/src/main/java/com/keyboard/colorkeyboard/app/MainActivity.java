@@ -93,6 +93,7 @@ public class MainActivity extends HSActivity {
     ;
 
     private boolean isInStepOne;
+    /** 需要激活的主题包的PackageName，当点击主题片包的Apply时会传入 */
     private String needActiveThemePkName = null;
 
     private CurrentUIStyle style;
@@ -332,6 +333,9 @@ public class MainActivity extends HSActivity {
                 }
             }
         }
+        if (getIntent().getBooleanExtra("isInStepOne", false)) {
+            isInStepOne = true;
+        }
     }
 
     /**
@@ -346,6 +350,7 @@ public class MainActivity extends HSActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
+                        isInStepOne = true;
                         Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
                         toast.show();
                     }
@@ -395,8 +400,8 @@ public class MainActivity extends HSActivity {
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
             if (HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
-                isInStepOne = true;
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
+                i.putExtra("isInStepOne", true);
                 startActivity(i);
                 try {
                     if (settingsContentObserver != null) {
@@ -503,8 +508,8 @@ public class MainActivity extends HSActivity {
 
             img_enter_one.setAlpha(255);
             img_enter_two.setAlpha(255);
-            img_choose_one.setVisibility(View.GONE);
-            img_choose_two.setVisibility(View.GONE);
+            img_choose_one.setAlpha(0);
+            img_choose_two.setAlpha(0);
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
         } else if (!HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
@@ -542,8 +547,8 @@ public class MainActivity extends HSActivity {
 
             img_enter_one.setAlpha(0);
             img_enter_two.setAlpha(255);
-            img_choose_one.setVisibility(View.VISIBLE);
-            img_choose_two.setVisibility(View.GONE);
+            img_choose_one.setAlpha(255);
+            img_choose_two.setAlpha(0);
 
             style = CurrentUIStyle.UISTYLE_STEP_TWO;
 
@@ -661,6 +666,7 @@ public class MainActivity extends HSActivity {
                 bt_step_one.setClickable(false);
                 img_enter_one.setAlpha(0);
                 img_choose_one.setVisibility(View.VISIBLE);
+                img_choose_one.setAlpha(255);
             }
 
             @Override
@@ -763,6 +769,7 @@ public class MainActivity extends HSActivity {
                     @Override
                     public void onAnimationStart(Animation animation) {
                         img_enter_two.setAlpha(0);
+                        img_choose_two.setAlpha(255);
                     }
 
                     @Override
@@ -774,7 +781,6 @@ public class MainActivity extends HSActivity {
                         MainActivity.this.doSetpTwoFinishAnimation2();
                     }
                 });
-                img_choose_two.setVisibility(View.VISIBLE);
                 img_choose_two.startAnimation(animationSet);
             }
         });
