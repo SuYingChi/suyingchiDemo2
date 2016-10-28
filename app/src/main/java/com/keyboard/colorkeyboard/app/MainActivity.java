@@ -314,10 +314,6 @@ public class MainActivity extends HSActivity {
             }
         });
 
-        if (getIntent().getBooleanExtra("isInStepOne", false)) {
-            isInStepOne = true;
-        }
-
         this.refreshUIState();
     }
 
@@ -350,7 +346,6 @@ public class MainActivity extends HSActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
-                        isInStepOne = true;
                         Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
                         toast.show();
                     }
@@ -400,6 +395,7 @@ public class MainActivity extends HSActivity {
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
             if (HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
+                isInStepOne = true;
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(i);
                 try {
@@ -507,8 +503,8 @@ public class MainActivity extends HSActivity {
 
             img_enter_one.setAlpha(255);
             img_enter_two.setAlpha(255);
-            img_choose_one.setAlpha(0);
-            img_choose_two.setAlpha(0);
+            img_choose_one.setVisibility(View.GONE);
+            img_choose_two.setVisibility(View.GONE);
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
         } else if (!HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
@@ -546,8 +542,8 @@ public class MainActivity extends HSActivity {
 
             img_enter_one.setAlpha(0);
             img_enter_two.setAlpha(255);
-            img_choose_one.setAlpha(255);
-            img_choose_two.setAlpha(0);
+            img_choose_one.setVisibility(View.VISIBLE);
+            img_choose_two.setVisibility(View.GONE);
 
             style = CurrentUIStyle.UISTYLE_STEP_TWO;
 
@@ -767,7 +763,6 @@ public class MainActivity extends HSActivity {
                     @Override
                     public void onAnimationStart(Animation animation) {
                         img_enter_two.setAlpha(0);
-                        img_choose_two.setAlpha(255);
                     }
 
                     @Override
@@ -779,6 +774,7 @@ public class MainActivity extends HSActivity {
                         MainActivity.this.doSetpTwoFinishAnimation2();
                     }
                 });
+                img_choose_two.setVisibility(View.VISIBLE);
                 img_choose_two.startAnimation(animationSet);
             }
         });
