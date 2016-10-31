@@ -131,12 +131,13 @@ public class MainActivity extends HSActivity {
             return;
         }
 
+
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         if(!isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(INSTRUCTION_SCREEN_VIEWED);
         }
-
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         rootView = (View) this.findViewById(R.id.view_root);
 
         WindowManager wm = this.getWindowManager();
