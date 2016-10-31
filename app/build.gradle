@@ -29,13 +29,13 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            shrinkResources true
+//            shrinkResources true
             signingConfig signingConfigs.releaseConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-r.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard'
         }
         debug {
             minifyEnabled true
-            shrinkResources true
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-d.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard'
         }
     }
