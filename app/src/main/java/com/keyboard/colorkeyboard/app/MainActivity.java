@@ -58,6 +58,7 @@ public class MainActivity extends HSActivity {
 
     private final static String INSTRUCTION_SCREEN_VIEWED="Instruction_screen_viewed";
     private final static String APP_STEP_ONE_HINT_CLICKED="app_step_one_hint_clicked";
+    private final static String APP_STEP_ONE_HINT="app_step_one_hint";
 
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
     private final static float BUTTON_BACKGROUND_OPACITY_ENABLED = 1f;
@@ -137,7 +138,7 @@ public class MainActivity extends HSActivity {
         HSApplication.HSLaunchInfo firstLaunchInfo = HSApplication.getFirstLaunchInfo();
         versionFilterForRecordEvent = (firstLaunchInfo.appVersionCode >= 12);
 
-        if(!isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
+        if(versionFilterForRecordEvent&&!isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(INSTRUCTION_SCREEN_VIEWED);
         }
@@ -364,7 +365,7 @@ public class MainActivity extends HSActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if(!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
+                        if(versionFilterForRecordEvent&&!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
                             setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
                             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
                         }
@@ -376,6 +377,10 @@ public class MainActivity extends HSActivity {
                         toast.show();
                     }
                 }).create().show();
+        if(versionFilterForRecordEvent&&!isEventRecorded(APP_STEP_ONE_HINT)) {
+            setEventRecorded(APP_STEP_ONE_HINT);
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT);
+        }
 
 
 
