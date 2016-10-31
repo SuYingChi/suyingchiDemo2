@@ -62,7 +62,7 @@ public class MainActivity extends HSActivity {
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
     private final static float BUTTON_BACKGROUND_OPACITY_ENABLED = 1f;
     private final static float BUTTON_BACKGROUND_OPACITY_INVISIBLE = 0f;
-
+    private boolean versionFilterForRecordEvent;
     public enum CurrentUIStyle {
         UISTYLE_STEP_ONE,
         UISTYLE_STEP_TWO,
@@ -109,7 +109,7 @@ public class MainActivity extends HSActivity {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
                 if (HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
-                    if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
+                    if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
                         setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                     }
@@ -133,6 +133,9 @@ public class MainActivity extends HSActivity {
 
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        HSApplication.HSLaunchInfo firstLaunchInfo = HSApplication.getFirstLaunchInfo();
+        versionFilterForRecordEvent = (firstLaunchInfo.appVersionCode >= 12);
 
         if(!isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
@@ -277,7 +280,7 @@ public class MainActivity extends HSActivity {
             @Override
             public void onClick(View v) {
                 showKeyboardEnableDialog();
-                if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
+                if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
                 }
@@ -291,7 +294,9 @@ public class MainActivity extends HSActivity {
                 Toast toast = Toast.makeText(MainActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
                 toast.show();
                 //                MainActivity.this.doSetpTwoFinishAnimation();
-                if(isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+
+
+                if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
@@ -453,7 +458,7 @@ public class MainActivity extends HSActivity {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
-                            if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                            if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
                                 setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                             }
