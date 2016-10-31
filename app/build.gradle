@@ -12,7 +12,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
         // Enabling multidex support.
-        multiDexEnabled true
+        multiDexEnabled false
     }
     signingConfigs {
         releaseConfig {
@@ -29,12 +29,14 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             signingConfig signingConfigs.releaseConfig
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard' ,'../libs/ihs/google-play-services_lib/r21/proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-r.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard'
         }
         debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard','../libs/ihs/google-play-services_lib/r21/proguard.txt'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-d.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard'
         }
     }
     splits {
