@@ -55,6 +55,10 @@ import com.keyboard.colorkeyboard.utils.Constants;
 
 public class MainActivity extends HSActivity {
 
+
+    private final static String INSTRUCTION_SCREEN_VIEWED="Instruction_screen_viewed";
+    private final static String APP_STEP_ONE_HINT_CLICKED="app_step_one_hint_clicked";
+
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
     private final static float BUTTON_BACKGROUND_OPACITY_ENABLED = 1f;
     private final static float BUTTON_BACKGROUND_OPACITY_INVISIBLE = 0f;
@@ -125,6 +129,11 @@ public class MainActivity extends HSActivity {
         if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
            startThemeHomeActivity();
             return;
+        }
+
+        if(!isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
+            setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent(INSTRUCTION_SCREEN_VIEWED);
         }
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -281,7 +290,7 @@ public class MainActivity extends HSActivity {
                 Toast toast = Toast.makeText(MainActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
                 toast.show();
                 //                MainActivity.this.doSetpTwoFinishAnimation();
-                if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+                if(isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
@@ -348,6 +357,12 @@ public class MainActivity extends HSActivity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        if(!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
+                            setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
+                        }
+
                         dialog.dismiss();
                         startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
                         isInStepOne = true;
