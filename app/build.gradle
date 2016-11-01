@@ -12,7 +12,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
         // Enabling multidex support.
-        multiDexEnabled false
+        multiDexEnabled true
     }
     signingConfigs {
         releaseConfig {
