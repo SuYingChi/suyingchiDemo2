@@ -136,7 +136,7 @@ public class MainActivity extends HSActivity {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         HSApplication.HSLaunchInfo firstLaunchInfo = HSApplication.getFirstLaunchInfo();
-        versionFilterForRecordEvent = (firstLaunchInfo.appVersionCode >= 12);
+        versionFilterForRecordEvent = (firstLaunchInfo.appVersionCode >= HSApplication.getCurrentLaunchInfo().appVersionCode);
 
         if(versionFilterForRecordEvent&&!isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
