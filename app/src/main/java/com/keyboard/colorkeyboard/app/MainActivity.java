@@ -684,7 +684,7 @@ public class MainActivity extends HSActivity {
 
         AnimationSet animationSet = new AnimationSet(true);
         ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 2.0f, 1f, 2.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(500);
+        scaleAnimation.setDuration(350);
         animationSet.addAnimation(scaleAnimation);
         animationSet.setAnimationListener(new AnimationListener() {
             @Override
@@ -709,7 +709,7 @@ public class MainActivity extends HSActivity {
 
     private void doSetpOneFinishAnimation2() {
         ScaleAnimation scaleAnimation = new ScaleAnimation(2.0f, 1.0f, 2.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(500);
+        scaleAnimation.setDuration(350);
         scaleAnimation.setFillAfter(true);
         scaleAnimation.setAnimationListener(new AnimationListener() {
             @Override
@@ -731,7 +731,7 @@ public class MainActivity extends HSActivity {
     private void doSetpOneFinishAnimation3() {
 
         AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, BUTTON_BACKGROUND_OPACITY_DISABLED);
-        alphaAnimation.setDuration(500);
+        alphaAnimation.setDuration(350);
         alphaAnimation.setFillAfter(true);
         alphaAnimation.setAnimationListener(new AnimationListener() {
             @Override
@@ -785,11 +785,11 @@ public class MainActivity extends HSActivity {
             public void run() {
                 AnimationSet animationSet = new AnimationSet(true);
                 AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-                alphaAnimation.setDuration(500);
+                alphaAnimation.setDuration(350);
                 animationSet.addAnimation(alphaAnimation);
 
                 ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1.5f, 0.5f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                scaleAnimation.setDuration(500);
+                scaleAnimation.setDuration(350);
                 animationSet.addAnimation(scaleAnimation);
                 animationSet.setAnimationListener(new AnimationListener() {
                     @Override
@@ -814,7 +814,7 @@ public class MainActivity extends HSActivity {
 
     private void doSetpTwoFinishAnimation2() {
         ScaleAnimation scaleAnimation = new ScaleAnimation(1.5f, 1.0f, 1.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(500);
+        scaleAnimation.setDuration(350);
         scaleAnimation.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
