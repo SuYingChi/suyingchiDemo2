@@ -10,11 +10,6 @@
 
     </style>
 
-    <style name="SettingActivityStyle" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/settings_main_title_bg_color</item>
-        <item name="colorPrimaryDark">@color/settings_main_title_bg_color_dark</item>
-        <item name="colorAccent">@color/settings_category_title_color</item>
-    </style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">

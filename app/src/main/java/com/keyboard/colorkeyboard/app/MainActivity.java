@@ -318,7 +318,7 @@ public class MainActivity extends HSActivity {
         bt_settings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSUIInputMethod.showMoreSettingsActivity();
+                HSUIInputMethod.launchMoreLanguageActivity();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_SETTINGS_CLICKED);
             }
         });
@@ -326,7 +326,7 @@ public class MainActivity extends HSActivity {
         bt_languages.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSUIInputMethod.showLanguageSettingsActivity();
+                HSUIInputMethod.launchSettingsActivity();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_LANGUAGES_CLICKED);
             }
         });
