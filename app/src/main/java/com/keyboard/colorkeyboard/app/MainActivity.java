@@ -785,11 +785,11 @@ public class MainActivity extends HSActivity {
             public void run() {
                 AnimationSet animationSet = new AnimationSet(true);
                 AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-                alphaAnimation.setDuration(350);
+                alphaAnimation.setDuration(300);
                 animationSet.addAnimation(alphaAnimation);
 
                 ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1.5f, 0.5f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                scaleAnimation.setDuration(350);
+                scaleAnimation.setDuration(300);
                 animationSet.addAnimation(scaleAnimation);
                 animationSet.setAnimationListener(new AnimationListener() {
                     @Override
