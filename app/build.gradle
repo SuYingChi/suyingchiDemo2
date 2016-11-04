@@ -1,15 +1,7 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.jakewharton.hugo'
+
 
 android {
     compileSdkVersion 23
@@ -37,12 +29,14 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+//            shrinkResources true
             signingConfig signingConfigs.releaseConfig
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard' ,'../libs/ihs/google-play-services_lib/r21/proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-r.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard'
         }
         debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard','../libs/ihs/google-play-services_lib/r21/proguard.txt'
+            minifyEnabled true
+//            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-d.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard'
         }
     }
     splits {
@@ -76,5 +70,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
+
+
 }
 

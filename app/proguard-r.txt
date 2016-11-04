@@ -22,6 +22,7 @@
 
 # Keep classes and methods that have the @UsedForTesting annotation
 -keep @com.android.inputmethod.annotations.UsedForTesting class *
+-keepattributes Exceptions,InnerClasses,Signature,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
 -keepclassmembers class * {
     @com.android.inputmethod.annotations.UsedForTesting *;
 }
