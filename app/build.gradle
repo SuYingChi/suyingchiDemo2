@@ -29,14 +29,14 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-//            shrinkResources true
+            shrinkResources true
             signingConfig signingConfigs.releaseConfig
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-r.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-r.txt'
         }
         debug {
             minifyEnabled true
-//            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-d.txt', '../libs/ihs/libAppFramework/lib-appframework.proguard'
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-d.txt'
         }
     }
     splits {
