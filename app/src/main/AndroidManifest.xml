@@ -149,6 +149,21 @@
                     android:host="theme"
                     />
             </intent-filter>
+	        <intent-filter>
+		        <action android:name="android.intent.action.VIEW" />
+		        <category android:name="android.intent.category.DEFAULT"/>
+		        <category android:name="android.intent.category.BROWSABLE"/>
+		        <data android:scheme="http"
+			        android:host="@string/deeplink_site"
+			        android:pathPrefix="/"/>
+	        </intent-filter>
+	        <intent-filter>
+		        <action android:name="android.intent.action.VIEW" />
+		        <category android:name="android.intent.category.DEFAULT"/>
+		        <category android:name="android.intent.category.BROWSABLE"/>
+		        <data android:scheme="http"
+		              android:host="@string/deeplink_site" />
+	        </intent-filter>
         </activity>
 
         <!-- The service and activity below are required for triggering voice recognition. -->

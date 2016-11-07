@@ -38,8 +38,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.api.HSUIInputMethod;
@@ -53,7 +53,7 @@ import com.ihs.inputmethod.utils.GAConstants;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
-public class MainActivity extends HSActivity {
+public class MainActivity extends HSDeepLinkActivity {
 
 
     private final static String INSTRUCTION_SCREEN_VIEWED="Instruction_screen_viewed";
