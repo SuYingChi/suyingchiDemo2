@@ -40,16 +40,16 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.api.HSUIInputMethod;
+import com.ihs.inputmethod.base.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.delete.GAConstants;
+import com.ihs.inputmethod.delete.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.dialogs.HSAlertDialog;
-import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.theme.api.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
-import com.ihs.inputmethod.utils.BitmapScaleUtils;
-import com.ihs.inputmethod.utils.DrawableUtils;
-import com.ihs.inputmethod.utils.GAConstants;
+import com.ihs.inputmethod.utils.api.HSBitmapScaleUtils;
+import com.ihs.inputmethod.utils.api.HSDrawableUtils;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
@@ -153,7 +153,7 @@ public class MainActivity extends HSActivity {
 
 
         Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
-        getWindow().setBackgroundDrawable(new BitmapDrawable(BitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
+        getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
 
 
         view_title_text = (TextView) this.findViewById(R.id.view_title_text);
@@ -171,7 +171,7 @@ public class MainActivity extends HSActivity {
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
 
         bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
-        bt_design_theme.setBackgroundDrawable(DrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(),R.drawable.entrance_customize_button)));
+        bt_design_theme.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(),R.drawable.entrance_customize_button)));
         float density = getResources().getDisplayMetrics().density;
         bt_design_theme.setPadding((int)density*20,(int)density*10,(int)density*20,(int)density*10);
 

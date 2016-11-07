@@ -18,15 +18,15 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.HSInputMethodApplication;
-import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
-import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.base.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.delete.GAConstants;
+import com.ihs.inputmethod.delete.HSInputMethodApplication;
+import com.ihs.inputmethod.delete.HSInputMethodCommonUtils;
+import com.ihs.inputmethod.theme.api.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ads.AdConditions;
 import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.utils.GAConstants;
-import com.ihs.inputmethod.utils.ThreadUtils;
+import com.ihs.inputmethod.utils.api.HSThreadUtils;
 
 import java.util.List;
 
@@ -107,12 +107,12 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         }
 
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER,  HSKeyboardThemeManager.customThemes.size());
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER,  HSKeyboardThemeManager.getCustomThemeList().size());
     }
 
     private void checkIsPluginThemeInstalled() {
         if(HSSessionMgr.getCurrentSessionId() == 1){
-            ThreadUtils.execute(new Runnable() {
+            HSThreadUtils.execute(new Runnable() {
                 @Override
                 public void run() {
                     List<PackageInfo> packages = HSApplication.getContext().getPackageManager().getInstalledPackages(0);
