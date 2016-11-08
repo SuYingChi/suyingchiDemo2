@@ -21,7 +21,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.base.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.delete.GAConstants;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
-import com.ihs.inputmethod.delete.HSInputMethodCommonUtils;
+import com.ihs.inputmethod.framework.api.HSIme;
 import com.ihs.inputmethod.theme.api.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ads.AdConditions;
 import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
@@ -149,7 +149,7 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         @Override
         public void onActivityResumed(Activity activity) {
             if(!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())
-                    &&(!HSInputMethodCommonUtils.isCurrentIMEEnabled(activity)||!HSInputMethodCommonUtils.isCurrentIMESelected(activity))){
+                    &&(!HSIme.isCurrentIMEEnabled(activity)||!HSIme.isCurrentIMESelected(activity))){
                 Intent intent = new Intent(activity, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 activity.startActivity(intent);

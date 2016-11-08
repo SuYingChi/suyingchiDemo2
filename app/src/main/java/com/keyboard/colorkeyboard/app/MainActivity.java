@@ -43,8 +43,8 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.base.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.delete.GAConstants;
-import com.ihs.inputmethod.delete.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.dialogs.HSAlertDialog;
+import com.ihs.inputmethod.framework.api.HSIme;
 import com.ihs.inputmethod.theme.api.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
@@ -109,7 +109,7 @@ public class MainActivity extends HSActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                if (HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
+                if (HSIme.isCurrentIMESelected(MainActivity.this)) {
                     if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
                         setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
@@ -127,7 +127,7 @@ public class MainActivity extends HSActivity {
         setContentView(R.layout.activity_main);
 
         onNewIntent(getIntent());
-        if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+        if(HSIme.isCurrentIMEEnabled(this)&&HSIme.isCurrentIMESelected(this)) {
            startThemeHomeActivity();
             return;
         }
@@ -344,7 +344,7 @@ public class MainActivity extends HSActivity {
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 needActiveThemePkName = pkName;
-                if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+                if(HSIme.isCurrentIMEEnabled(this)&&HSIme.isCurrentIMESelected(this)) {
                     startThemeHomeActivity();
                 }
             }
@@ -425,7 +425,7 @@ public class MainActivity extends HSActivity {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            if (HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
+            if (HSIme.isCurrentIMEEnabled(MainActivity.this)) {
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 i.putExtra("isInStepOne", true);
                 startActivity(i);
@@ -454,12 +454,12 @@ public class MainActivity extends HSActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
+                if (!HSIme.isCurrentIMEEnabled(MainActivity.this)) {
                     getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                             settingsContentObserver);
                     refreshUIState();
                 } else {
-                    if (!HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
+                    if (!HSIme.isCurrentIMESelected(MainActivity.this)) {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
@@ -509,7 +509,7 @@ public class MainActivity extends HSActivity {
     }
 
     private void refreshUIState() {
-        if (!HSInputMethodCommonUtils.isCurrentIMEEnabled(this)) {
+        if (!HSIme.isCurrentIMEEnabled(this)) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);
@@ -538,7 +538,7 @@ public class MainActivity extends HSActivity {
             img_choose_two.setAlpha(0);
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
-        } else if (!HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+        } else if (!HSIme.isCurrentIMESelected(this)) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);
