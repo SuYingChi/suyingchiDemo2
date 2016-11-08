@@ -20,6 +20,6 @@
 
     <string name="deeplink_site">rainbowkey.com</string>
     <string name="deeplink_site_full">http://rainbowkey.com</string>
-    <string name="deeplink_key_word">Rainbow keyboard key word</string>
+    <string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
     <string name="deeplink_description">Rainbow Keyboard description</string>
 </resources>
