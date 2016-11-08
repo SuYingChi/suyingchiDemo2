@@ -19,7 +19,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.base.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.delete.GAConstants;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.framework.api.HSIme;
 import com.ihs.inputmethod.theme.api.HSKeyboardThemeManager;
@@ -122,14 +121,14 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                         PackageInfo packageInfo = packages.get(i);
                         for (String pluginThemePkNamePrefix : pluginThemePkNamePrefixList) {
                             if (packageInfo.packageName.startsWith(pluginThemePkNamePrefix)) {
-                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"true");
-                                HSAnalytics.logEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"true");
+                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_first_open_apk_exist","true");
+                                HSAnalytics.logEvent("app_first_open_apk_exist","true");
                                 return;
                             }
                         }
                     }
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"false");
-                    HSAnalytics.logEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"false");
+                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_first_open_apk_exist","false");
+                    HSAnalytics.logEvent("app_first_open_apk_exist","false");
                 }
             });
         }

@@ -42,7 +42,6 @@ import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.base.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.delete.GAConstants;
 import com.ihs.inputmethod.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.framework.api.HSIme;
 import com.ihs.inputmethod.theme.api.HSKeyboardThemeManager;
@@ -311,7 +310,7 @@ public class MainActivity extends HSActivity {
                 //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
 
                 IAPManager.getManager().startCustomThemeActivityIfSlotAvaiable();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(GAConstants.APP_CUSTOMIZE_ENTRY_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
             }
         });
 
