@@ -1,9 +1,6 @@
 package com.keyboard.colorkeyboard.app;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -20,7 +17,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
-import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ads.AdConditions;
 import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
@@ -72,13 +68,13 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         Log.e("time log", "time log application oncreated finished");
 
-        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
+//        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
     }
 
     @Override
     public void onTerminate() {
         HSGlobalNotificationCenter.removeObserver(sessionEventObserver);
-        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
+//        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
         super.onTerminate();
     }
 
@@ -134,47 +130,48 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
             });
         }
     }
-
-    private ActivityLifecycleCallbacks activityLifecycleCallbacks = new  ActivityLifecycleCallbacks() {
-        @Override
-        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-        }
-
-        @Override
-        public void onActivityStarted(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityResumed(Activity activity) {
-            if(!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())
-                    &&(!HSInputMethodCommonUtils.isCurrentIMEEnabled(activity)||!HSInputMethodCommonUtils.isCurrentIMESelected(activity))){
-                Intent intent = new Intent(activity, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                activity.startActivity(intent);
-                activity.finish();
-            }
-        }
-
-        @Override
-        public void onActivityPaused(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityStopped(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-        }
-
-        @Override
-        public void onActivityDestroyed(Activity activity) {
-
-        }
-    };
+//
+//    private ActivityLifecycleCallbacks activityLifecycleCallbacks = new  ActivityLifecycleCallbacks() {
+//        @Override
+//        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+//
+//        }
+//
+//        @Override
+//        public void onActivityStarted(Activity activity) {
+//
+//        }
+//
+//        @Override
+//        public void onActivityResumed(Activity activity) {
+            //do not use this code for it cause white screen
+//            if(!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())
+//                    &&(!HSInputMethodCommonUtils.isCurrentIMEEnabled(activity)||!HSInputMethodCommonUtils.isCurrentIMESelected(activity))){
+//                Intent intent = new Intent(activity, MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                activity.startActivity(intent);
+//                activity.finish();
+//            }
+//        }
+//
+//        @Override
+//        public void onActivityPaused(Activity activity) {
+//
+//        }
+//
+//        @Override
+//        public void onActivityStopped(Activity activity) {
+//
+//        }
+//
+//        @Override
+//        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+//
+//        }
+//
+//        @Override
+//        public void onActivityDestroyed(Activity activity) {
+//
+//        }
+//    };
 }

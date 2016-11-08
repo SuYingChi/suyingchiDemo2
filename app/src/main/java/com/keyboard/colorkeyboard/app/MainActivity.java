@@ -125,7 +125,7 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        new Exception().printStackTrace();
         onNewIntent(getIntent());
         if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
            startThemeHomeActivity();
