@@ -1,12 +1,15 @@
 package com.keyboard.colorkeyboard.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -19,12 +22,14 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.base.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.delete.HSInputMethodApplication;
+import com.ihs.inputmethod.base.exception.UncaughtExceptionHandler;
 import com.ihs.inputmethod.framework.api.HSIme;
+import com.ihs.inputmethod.theme.KeyboardThemeManager;
 import com.ihs.inputmethod.theme.api.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ads.AdConditions;
 import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.uninstallchecker.UninstallChecker;
 import com.ihs.inputmethod.utils.api.HSThreadUtils;
 
 import java.util.List;
@@ -34,7 +39,7 @@ import io.fabric.sdk.android.Fabric;
 import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED;
 import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
 
-public class MyInputMethodApplication extends HSInputMethodApplication {
+public class MyInputMethodApplication extends HSApplication {
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
@@ -55,15 +60,23 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         }
     };
 
-
-    @Override
-    protected void onServiceCreated() {
-    }
-
     @Override
     public void onCreate() {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
+
+        HSThreadUtils.execute(new Runnable() {
+            @Override
+            public void run() {
+                Fresco.initialize(MyInputMethodApplication.this);
+            }
+        });
+
+        KeyboardThemeManager.init();
+
+        UninstallChecker.startMonitoring(HSConfig.optString("", "Application", "UninstallFeedback", "Url"));
+        UncaughtExceptionHandler.getInstance().init();
+
         IAPManager.getManager().initProductPrices();
         if(!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
@@ -176,4 +189,10 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 
         }
     };
+
+    @Override
+    public void attachBaseContext(Context base) {
+        MultiDex.install(base);
+        super.attachBaseContext(base);
+    }
 }
