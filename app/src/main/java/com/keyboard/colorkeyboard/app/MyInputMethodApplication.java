@@ -61,7 +61,8 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
     public void onCreate() {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
-        IAPManager.getManager().initProductPrices();
+        //IAP 初始化,将需要购买的所有产品的product id 加入到
+        IAPManager.getManager().init();
         if(!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
         }
@@ -80,8 +81,6 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
 
 
     private void onSessionStart() {
-        //IAP 初始化,将需要购买的所有产品的product id 加入到
-        IAPManager.getManager().init();
         HSDiverseSession.start();
         NativeAdManager.getInstance();
         //检测是否已经有非内置的主题包已经被安装过了
