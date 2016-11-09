@@ -18,11 +18,11 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.HSInputMethodApplication;
 import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.uimodules.ads.AdConditions;
-import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.GAConstants;
 import com.ihs.inputmethod.utils.ThreadUtils;
+import com.ihs.keyboardutils.nativeads.NativeAdManager;
+import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 import java.util.List;
 
@@ -83,25 +83,9 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         //IAP 初始化,将需要购买的所有产品的product id 加入到
         IAPManager.getManager().init();
         HSDiverseSession.start();
+        NativeAdManager.getInstance();
         //检测是否已经有非内置的主题包已经被安装过了
         checkIsPluginThemeInstalled();
-        if (AdConditions.isShowMainPageCardNativeAds()) {
-            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.CardAd);
-            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.CardAd);
-        }
-        if (AdConditions.isShowMainThemeNativeAds()) {
-            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeAd);
-            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeAd);
-        }
-        if (AdConditions.isShowThemeDetailNativeAds()) {
-            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeDetailAd);
-            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeDetailAd);
-        }
-        if (AdConditions.isShowThemeTryNativeAds()) {
-            AdNativePoolManager.resetLastHsNativeAdShowedTime(AdNativePoolManager.YamlAdNativePool.ThemeTryAd);
-            AdNativePoolManager.startAppPool(AdNativePoolManager.YamlAdNativePool.ThemeTryAd);
-        }
-
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER,  HSKeyboardThemeManager.customThemes.size());
     }
