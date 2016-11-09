@@ -21,16 +21,16 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.base.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.base.exception.UncaughtExceptionHandler;
-import com.ihs.inputmethod.framework.api.HSIme;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.theme.KeyboardThemeManager;
-import com.ihs.inputmethod.theme.api.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ads.AdConditions;
 import com.ihs.inputmethod.uimodules.ads.AdNativePoolManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uninstallchecker.UninstallChecker;
-import com.ihs.inputmethod.utils.api.HSThreadUtils;
+import com.ihs.inputmethod.api.utils.HSThreadUtils;
 
 import java.util.List;
 
@@ -161,7 +161,7 @@ public class MyInputMethodApplication extends HSApplication {
         @Override
         public void onActivityResumed(Activity activity) {
             if(!activity.getClass().getSimpleName().equals(MainActivity.class.getSimpleName())
-                    &&(!HSIme.isCurrentIMEEnabled(activity)||!HSIme.isCurrentIMESelected(activity))){
+                    &&(!HSInputMethod.isCurrentIMEEnabled(activity)||!HSInputMethod.isCurrentIMESelected(activity))){
                 Intent intent = new Intent(activity, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 activity.startActivity(intent);
