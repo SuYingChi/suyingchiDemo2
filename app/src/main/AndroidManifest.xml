@@ -136,21 +136,39 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data
-                    android:scheme="rainbowKeyboard"
-                    android:host="theme"
-                    />
-            </intent-filter>
         </activity>
 
+        <activity android:name=".app.SplashActivity"
+                  android:theme="@style/SplashTheme"
+                  android:screenOrientation="portrait">
+	        <intent-filter>
+		        <action android:name="android.intent.action.MAIN" />
+		        <category android:name="android.intent.category.LAUNCHER" />
+	        </intent-filter>
+	        <intent-filter>
+		        <action android:name="android.intent.action.VIEW" />
+		        <category android:name="android.intent.category.DEFAULT"/>
+		        <data
+			        android:scheme="rainbowKeyboard"
+			        android:host="theme"
+			        />
+	        </intent-filter>
+	        <intent-filter>
+		        <action android:name="android.intent.action.VIEW" />
+		        <category android:name="android.intent.category.DEFAULT"/>
+		        <category android:name="android.intent.category.BROWSABLE"/>
+		        <data android:scheme="http"
+		              android:host="@string/deeplink_site"
+		              android:pathPrefix="/"/>
+	        </intent-filter>
+	        <intent-filter>
+		        <action android:name="android.intent.action.VIEW" />
+		        <category android:name="android.intent.category.DEFAULT"/>
+		        <category android:name="android.intent.category.BROWSABLE"/>
+		        <data android:scheme="http"
+		              android:host="@string/deeplink_site" />
+	        </intent-filter>
+        </activity>
         <!-- The service and activity below are required for triggering voice recognition. -->
         <service android:name="com.ihs.inputmethod.voice.ServiceHelper" />
 

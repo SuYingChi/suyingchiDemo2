@@ -17,4 +17,9 @@
     <!-- Config for Setting and Language Activity name -->
     <string name="setting_activity_name">com.ihs.inputmethod.settings.SettingsActivity2</string>
     <string name="language_activity_name">com.ihs.inputmethod.settings.MoreLanguageActivity2</string>
+
+    <string name="deeplink_site">rainbowkey.com</string>
+    <string name="deeplink_site_full">http://rainbowkey.com</string>
+    <string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
+    <string name="deeplink_description">Rainbow Keyboard description</string>
 </resources>
