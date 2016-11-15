@@ -298,6 +298,22 @@ public class MainActivity extends HSDeepLinkActivity {
 
 
                 if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+
+
+                    //记第二步点击的时候，如果还没有记第一步点击或第一步enable, 就补上
+
+                    if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)){
+                       return;
+                    }
+
+                    if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)){
+                       return;
+                    }
+
+                    if(!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)||!isEventRecorded(APP_STEP_ONE_HINT)){
+                        return;
+                    }
+
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
