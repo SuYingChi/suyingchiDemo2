@@ -111,24 +111,14 @@ public class MainActivity extends HSDeepLinkActivity {
                 if (HSInputMethod.isCurrentIMESelected(MainActivity.this)) {
                     if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
 
-                        if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)){
-                            return;
+                        if(isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
+                                &&isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)
+                                &&isEventRecorded(APP_STEP_ONE_HINT_CLICKED)
+                                &&isEventRecorded(APP_STEP_ONE_HINT)
+                                &&isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)){
+                            setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                         }
-
-                        if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)){
-                            return;
-                        }
-
-                        if(!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)||!isEventRecorded(APP_STEP_ONE_HINT)){
-                            return;
-                        }
-
-                        if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)){
-                            return;
-                        }
-
-                        setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                     }
                     MainActivity.this.doSetpTwoFinishAnimation();
                     style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
