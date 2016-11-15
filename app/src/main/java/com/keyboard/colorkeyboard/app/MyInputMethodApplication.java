@@ -17,14 +17,12 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.base.exception.UncaughtExceptionHandler;
-import com.ihs.inputmethod.theme.KeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSThreadUtils;
+import com.ihs.inputmethod.base.exception.UncaughtExceptionHandler;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uninstallchecker.UninstallChecker;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 import java.util.List;
 
@@ -66,7 +64,7 @@ public class MyInputMethodApplication extends HSApplication {
             }
         });
 
-        KeyboardThemeManager.init();
+        HSKeyboardThemeManager.init();
 
         UninstallChecker.startMonitoring(HSConfig.optString("", "Application", "UninstallFeedback", "Url"));
         UncaughtExceptionHandler.getInstance().init();
