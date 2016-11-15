@@ -111,6 +111,23 @@ public class MainActivity extends HSDeepLinkActivity {
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
                 if (HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
                     if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
+
+                        if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)){
+                            return;
+                        }
+
+                        if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)){
+                            return;
+                        }
+
+                        if(!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)||!isEventRecorded(APP_STEP_ONE_HINT)){
+                            return;
+                        }
+
+                        if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)){
+                            return;
+                        }
+
                         setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                     }
