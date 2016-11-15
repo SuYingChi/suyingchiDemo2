@@ -7,9 +7,6 @@
 [submodule "libs/ihs/libAppFramework"]
 	path = libs/ihs/libAppFramework
 	url = http://git.ihandysoft.com/bingroup/bin_appframework_android.git
-[submodule "lib_keyboard_android"]
-	path = lib_keyboard_android
-	url = http://git.ihandysoft.com/nogroup/lib_keyboard_android.git
 [submodule "app/src/main/assets/themes"]
 	path = app/src/main/assets/themes
 	url = http://git.ihandysoft.com/bingroup/bin_keyboardresources_android.git
@@ -19,3 +16,6 @@
 [submodule "libs/ihs/libKeyboardUtils"]
 	path = libs/ihs/libKeyboardUtils
 	url = http://git.ihandysoft.com/bingroup/bin_keyboardutils_android.git
+[submodule "libs/ihs/libKeyboard"]
+	path = libs/ihs/libKeyboard
+	url = http://git.ihandysoft.com/bingroup/bin_keyboard_android.git
