@@ -40,16 +40,15 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
-import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
 import com.ihs.inputmethod.api.HSUIInputMethod;
-import com.ihs.inputmethod.dialogs.HSAlertDialog;
-import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
-import com.ihs.inputmethod.utils.BitmapScaleUtils;
-import com.ihs.inputmethod.utils.DrawableUtils;
-import com.ihs.inputmethod.utils.GAConstants;
+import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
+import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
@@ -109,7 +108,7 @@ public class MainActivity extends HSDeepLinkActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                if (HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
+                if (HSInputMethod.isCurrentIMESelected(MainActivity.this)) {
                     if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
 
                         if(isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
@@ -134,7 +133,7 @@ public class MainActivity extends HSDeepLinkActivity {
         setContentView(R.layout.activity_main);
         new Exception().printStackTrace();
         onNewIntent(getIntent());
-        if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+        if(HSInputMethod.isCurrentIMEEnabled(this)&& HSInputMethod.isCurrentIMESelected(this)) {
            startThemeHomeActivity();
             return;
         }
@@ -160,7 +159,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
 
         Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
-        getWindow().setBackgroundDrawable(new BitmapDrawable(BitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
+        getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
 
 
         view_title_text = (TextView) this.findViewById(R.id.view_title_text);
@@ -178,7 +177,7 @@ public class MainActivity extends HSDeepLinkActivity {
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
 
         bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
-        bt_design_theme.setBackgroundDrawable(DrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(),R.drawable.entrance_customize_button)));
+        bt_design_theme.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(),R.drawable.entrance_customize_button)));
         float density = getResources().getDisplayMetrics().density;
         bt_design_theme.setPadding((int)density*20,(int)density*10,(int)density*20,(int)density*10);
 
@@ -334,7 +333,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
 
                 IAPManager.getManager().startCustomThemeActivityIfSlotAvaiable();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(GAConstants.APP_CUSTOMIZE_ENTRY_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
             }
         });
 
@@ -367,7 +366,7 @@ public class MainActivity extends HSDeepLinkActivity {
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 needActiveThemePkName = pkName;
-                if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+                if(HSInputMethod.isCurrentIMEEnabled(this)&& HSInputMethod.isCurrentIMESelected(this)) {
                     startThemeHomeActivity();
                 }
             }
@@ -448,7 +447,7 @@ public class MainActivity extends HSDeepLinkActivity {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            if (HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
+            if (HSInputMethod.isCurrentIMEEnabled(MainActivity.this)) {
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 i.putExtra("isInStepOne", true);
                 startActivity(i);
@@ -477,12 +476,12 @@ public class MainActivity extends HSDeepLinkActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
+                if (!HSInputMethod.isCurrentIMEEnabled(MainActivity.this)) {
                     getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                             settingsContentObserver);
                     refreshUIState();
                 } else {
-                    if (!HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
+                    if (!HSInputMethod.isCurrentIMESelected(MainActivity.this)) {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
@@ -532,7 +531,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private void refreshUIState() {
-        if (!HSInputMethodCommonUtils.isCurrentIMEEnabled(this)) {
+        if (!HSInputMethod.isCurrentIMEEnabled(this)) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);
@@ -561,7 +560,7 @@ public class MainActivity extends HSDeepLinkActivity {
             img_choose_two.setAlpha(0);
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
-        } else if (!HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+        } else if (!HSInputMethod.isCurrentIMESelected(this)) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);

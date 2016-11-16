@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -15,14 +16,13 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.HSInputMethodApplication;
-import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.api.framework.HSUncaughtExceptionHandler;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.utils.GAConstants;
-import com.ihs.inputmethod.utils.ThreadUtils;
+import com.ihs.inputmethod.uninstallchecker.UninstallChecker;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ import io.fabric.sdk.android.Fabric;
 import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED;
 import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
 
-public class MyInputMethodApplication extends HSInputMethodApplication {
+public class MyInputMethodApplication extends HSApplication {
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
 
@@ -52,17 +52,25 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         }
     };
 
-
-    @Override
-    protected void onServiceCreated() {
-    }
-
     @Override
     public void onCreate() {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
-        //IAP 初始化,将需要购买的所有产品的product id 加入到
+
+        HSThreadUtils.execute(new Runnable() {
+            @Override
+            public void run() {
+                Fresco.initialize(MyInputMethodApplication.this);
+            }
+        });
+
+        HSKeyboardThemeManager.init();
+
+        UninstallChecker.startMonitoring(HSConfig.optString("", "Application", "UninstallFeedback", "Url"));
+        HSUncaughtExceptionHandler.getInstance().init();
+
         IAPManager.getManager().init();
+
         if(!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
         }
@@ -86,12 +94,12 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
         //检测是否已经有非内置的主题包已经被安装过了
         checkIsPluginThemeInstalled();
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER,  HSKeyboardThemeManager.customThemes.size());
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER,  HSKeyboardThemeManager.getCustomThemeList().size());
     }
 
     private void checkIsPluginThemeInstalled() {
         if(HSSessionMgr.getCurrentSessionId() == 1){
-            ThreadUtils.execute(new Runnable() {
+            HSThreadUtils.execute(new Runnable() {
                 @Override
                 public void run() {
                     List<PackageInfo> packages = HSApplication.getContext().getPackageManager().getInstalledPackages(0);
@@ -101,18 +109,19 @@ public class MyInputMethodApplication extends HSInputMethodApplication {
                         PackageInfo packageInfo = packages.get(i);
                         for (String pluginThemePkNamePrefix : pluginThemePkNamePrefixList) {
                             if (packageInfo.packageName.startsWith(pluginThemePkNamePrefix)) {
-                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"true");
-                                HSAnalytics.logEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"true");
+                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_first_open_apk_exist","true");
+                                HSAnalytics.logEvent("app_first_open_apk_exist","true");
                                 return;
                             }
                         }
                     }
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"false");
-                    HSAnalytics.logEvent(GAConstants.APP_FIRST_OPEN_PLUGIN_APK_EXIST,"false");
+                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_first_open_apk_exist","false");
+                    HSAnalytics.logEvent("app_first_open_apk_exist","false");
                 }
             });
         }
     }
+
 //
 //    private ActivityLifecycleCallbacks activityLifecycleCallbacks = new  ActivityLifecycleCallbacks() {
 //        @Override

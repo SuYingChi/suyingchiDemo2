@@ -42,7 +42,7 @@
 -keep class com.tencent.mm.sdk.openapi.WXMediaMessage { *;}
 -keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
 
--keep class * extends com.ihs.inputmethod.api.HSInputMethodPanel { *; }
+-keep class * extends com.ihs.inputmethod.framework.HSInputMethodPanel { *; }
 -keep class com.ihs.inputmethod.theme.bean.** { *; }
 # Keep facebook sdk dependencies
 -keep class com.ihs.adcaffe.common.** { *; }
