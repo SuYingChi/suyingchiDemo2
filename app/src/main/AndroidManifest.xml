@@ -221,14 +221,14 @@
 
 
         <activity
-            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeActivity"
+            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.old.CustomThemeActivity"
             android:launchMode="singleTop"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
-            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.CustomThemeBackgroundCropperActivity"
+            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
