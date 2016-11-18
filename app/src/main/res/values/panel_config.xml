@@ -17,7 +17,7 @@
         <item>com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.panel.GifPanel</item>
         <item>com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel</item>
         <item>com.ihs.inputmethod.uimodules.ui.settings.common.HSSettingsPanel</item>
-        <item>com.ihs.inputmethod.uimodules.ui.emoji.googledefault.HSEmojiPanel</item>
+        <item>com.ihs.inputmethod.uimodules.ui.emoji.common.HSEmojiPanel</item>
     </string-array>
 
 </resources>
