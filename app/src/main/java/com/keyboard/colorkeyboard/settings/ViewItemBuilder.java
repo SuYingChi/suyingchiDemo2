@@ -267,7 +267,7 @@ public class ViewItemBuilder {
                     , new ViewItem.ViewItemListener() {
                 @Override
                 public void onItemClick(ViewItem item) {
-//                    showToast("show ads");
+                    showToast("show ads");
                 }
             });
         }

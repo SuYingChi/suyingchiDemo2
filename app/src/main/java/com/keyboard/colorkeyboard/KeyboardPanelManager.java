@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.keyboard.KeyboardPanel;
 import com.ihs.keyboardutils.panelcontainer.KeyboardPanelSwitchContainer;
 
@@ -19,8 +20,6 @@ public class KeyboardPanelManager {
     public static KeyboardPanelManager getInstance(){
         return instance;
     }
-
-
 
 
     private KeyboardPanelSwitchContainer keyboardPanelSwitchContainer;
@@ -43,6 +42,7 @@ public class KeyboardPanelManager {
             keyboardPanelSwitchContainer.setBarView(functionBar);
             keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
         }
+        keyboardPanelSwitchContainer.setBackgroundDrawable(HSKeyboardThemeManager.getCurrentTheme().getKeyboardBackground());
         return keyboardPanelSwitchContainer;
     }
 

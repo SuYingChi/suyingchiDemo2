@@ -57,8 +57,9 @@ public class HSSettingsPanel extends HSInputMethodPanel {
 
         List<ViewItem> items = prepareItems();
         settingsViewPager.setItems(items);
-        //TODO:add NativeAds
+//        //TODO:add NativeAds
 //        NativeAdsHelper.getHelper().onCreateAdView();
+        NativeAdHelper.getInstance().createAd();
 
         iconIndicator.setViewPager(settingsViewPager);
 
@@ -166,19 +167,21 @@ public class HSSettingsPanel extends HSInputMethodPanel {
         super.onDestroyPanelView();
 
         HSGlobalNotificationCenter.removeObserver(observer);
-
+        NativeAdHelper.getInstance().releaseAd();
     }
 
     @Override
     public void onShowPanelView() {
         super.onShowPanelView();
-
-//        NativeAdsHelper.getHelper().onShowAdView();
         if (getPanelView() != null) {
             getPanelView().invalidate();
         }
     }
 
+    @Override
+    public void onHidePanelView() {
+        super.onHidePanelView();
+    }
 
     INotificationObserver observer = new INotificationObserver() {
         @Override
@@ -217,30 +220,6 @@ public class HSSettingsPanel extends HSInputMethodPanel {
                 setViewHeight(settingPanelView, (int) val);
             }
         });
-
-//        animator.addListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animation) {
-//                getPanelView().setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                if (!appear) {
-//                    getPanelView().setVisibility(View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animator animation) {
-//
-//            }
-//        });
         return animator;
     }
 }

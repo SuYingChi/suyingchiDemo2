@@ -45,7 +45,8 @@ public final class FunctionBar extends BaseControlPanelView {
 
         functionLayout = (LinearLayout) findViewById(R.id.function_layout);
         initFunction();
-    }
+//        setBackgroundDrawable(HSKeyboardThemeManager.getCurrentTheme().getSuggestionBackground(HSDrawableUtils.getTransparentBitmapDrawable()));
+}
 
 
     private void initFunction() {

@@ -17,7 +17,7 @@ public class LatinIME extends HSUIInputMethodService {
     public void onCreate() {
         Log.e("time log","time log service oncreated started");
         super.onCreate();
-        KeyboardPluginManager.getInstance().onInputMethodServiceCreate();
+//        KeyboardPluginManager.getInstance().onInputMethodServiceCreate();
         setPanelSwitcher(KeyboardPluginManager.getInstance());
         Log.e("time log","time log service oncreated started");
     }
