@@ -68,7 +68,6 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.8.0'
     compile 'com.facebook.fresco:fresco:0.7.0'
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.mcxiaoke.viewpagerindicator:library:2.4.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
