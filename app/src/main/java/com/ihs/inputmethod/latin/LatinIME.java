@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
-import com.ihs.inputmethod.uimodules.ui.keyboard.KeyboardPanel;
 
 /**
  * Created by xu.zhang on 11/3/15.
@@ -32,6 +31,6 @@ public class LatinIME extends HSUIInputMethodService {
 
     @Override
     public boolean shouldPostResumeSuggestions() {
-        return KeyboardPanel.class==KeyboardPanelManager.getInstance().getKeyboardPanelSwitchContainer().getCurrentPanel().getClass();
+        return KeyboardPanelManager.PANEL_KEYBOARD_CLASS==KeyboardPanelManager.getInstance().getKeyboardPanelSwitchContainer().getCurrentPanel().getClass();
     }
 }
