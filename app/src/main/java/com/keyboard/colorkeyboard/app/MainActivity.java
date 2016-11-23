@@ -94,7 +94,6 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView img_choose_two;
     private EditText edit_text_test;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
-    ;
 
     private boolean isInStepOne;
     /** 需要激活的主题包的PackageName，当点击主题片包的Apply时会传入 */
@@ -331,7 +330,7 @@ public class MainActivity extends HSDeepLinkActivity {
 //                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
 
-                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiable();
+                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiableFromActivity(MainActivity.this,null);
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
             }
         });
@@ -380,7 +379,7 @@ public class MainActivity extends HSDeepLinkActivity {
      */
     private void showKeyboardEnableDialog() {
 
-        HSAlertDialog.build().setTitle(getString(R.string.toast_enable_keyboard))
+        HSAlertDialog.build(this).setTitle(getString(R.string.toast_enable_keyboard))
                 .setMessage(getResources().getString(R.string.alert_attention_messenger))
                 .setPositiveButton("OK, I GOT IT", new DialogInterface.OnClickListener() {
                     @Override
