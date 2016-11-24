@@ -13,16 +13,18 @@ import com.keyboard.colorkeyboard.R;
 
 public final class SplashActivity extends HSDeepLinkActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				startActivity(new Intent(SplashActivity.this,MainActivity.class));
-				finish();
-				overridePendingTransition(R.anim.stand,R.anim.splash);
-			}
-		},500);
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                intent.setData(getIntent().getData());
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.stand, R.anim.splash);
+            }
+        }, 500);
+    }
 }
