@@ -15,8 +15,6 @@ public class LatinIME extends HSUIInputMethodService {
     public void onCreate() {
         Log.e("time log","time log service oncreated started");
         super.onCreate();
-//        KeyboardPluginManager.getInstance().onInputMethodServiceCreate();
-//        setPanelSwitcher(KeyboardPluginManager.getInstance())
         KeyboardPanelManager.getInstance().onInputMethodServiceCreate();
         setPanelSwitcher(KeyboardPanelManager.getInstance());
 // ;
@@ -27,10 +25,5 @@ public class LatinIME extends HSUIInputMethodService {
     @Override
     public View onCreateInputView() {
         return KeyboardPanelManager.getInstance().createKeyboardPanelSwitchContainer(super.onCreateInputView());
-    }
-
-    @Override
-    public boolean shouldPostResumeSuggestions() {
-        return KeyboardPanelManager.PANEL_KEYBOARD_CLASS==KeyboardPanelManager.getInstance().getKeyboardPanelSwitchContainer().getCurrentPanel().getClass();
     }
 }
