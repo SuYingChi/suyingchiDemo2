@@ -10,13 +10,13 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
  * Created by xu.zhang on 11/3/15.
  */
 public class LatinIME extends HSUIInputMethodService {
-
+    KeyboardPanelManager keyboardPanelManager;
     @Override
     public void onCreate() {
         Log.e("time log","time log service oncreated started");
         super.onCreate();
-        KeyboardPanelManager.getInstance().onInputMethodServiceCreate();
-        setPanelSwitcher(KeyboardPanelManager.getInstance());
+        keyboardPanelManager = new KeyboardPanelManager();
+        setPanelSwitcher(keyboardPanelManager);
 // ;
         Log.e("time log","time log service oncreated started");
     }
@@ -24,6 +24,6 @@ public class LatinIME extends HSUIInputMethodService {
 
     @Override
     public View onCreateInputView() {
-        return KeyboardPanelManager.getInstance().createKeyboardPanelSwitchContainer(super.onCreateInputView());
+        return keyboardPanelManager.createKeyboardPanelSwitchContainer(super.onCreateInputView());
     }
 }
