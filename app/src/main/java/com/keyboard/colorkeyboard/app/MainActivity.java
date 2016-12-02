@@ -45,10 +45,9 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
@@ -330,7 +329,7 @@ public class MainActivity extends HSDeepLinkActivity {
 //                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
 
-                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiableFromActivity(MainActivity.this,null);
+//                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiableFromActivity(MainActivity.this,null);
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
             }
         });
