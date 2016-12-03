@@ -21,6 +21,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -39,6 +40,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
@@ -46,22 +48,31 @@ import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+
+import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
+import static com.ihs.inputmethod.uimodules.constants.KeyboardEnableProcceser.PREF_THEME_HOME_SHOWED;
+
+
 public class MainActivity extends HSDeepLinkActivity {
 
 
-    private final static String INSTRUCTION_SCREEN_VIEWED="Instruction_screen_viewed";
-    private final static String APP_STEP_ONE_HINT_CLICKED="app_step_one_hint_clicked";
-    private final static String APP_STEP_ONE_HINT="app_step_one_hint";
+    private final static String INSTRUCTION_SCREEN_VIEWED = "Instruction_screen_viewed";
+    private final static String APP_STEP_ONE_HINT_CLICKED = "app_step_one_hint_clicked";
+    private final static String APP_STEP_ONE_HINT = "app_step_one_hint";
 
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
     private final static float BUTTON_BACKGROUND_OPACITY_ENABLED = 1f;
     private final static float BUTTON_BACKGROUND_OPACITY_INVISIBLE = 0f;
+
     private boolean versionFilterForRecordEvent;
+
     public enum CurrentUIStyle {
         UISTYLE_STEP_ONE,
         UISTYLE_STEP_TWO,
@@ -95,7 +106,9 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
 
     private boolean isInStepOne;
-    /** 需要激活的主题包的PackageName，当点击主题片包的Apply时会传入 */
+    /**
+     * 需要激活的主题包的PackageName，当点击主题片包的Apply时会传入
+     */
     private String needActiveThemePkName = null;
 
     private CurrentUIStyle style;
@@ -107,13 +120,13 @@ public class MainActivity extends HSDeepLinkActivity {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
                 if (HSInputMethod.isCurrentIMESelected(MainActivity.this)) {
-                    if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
+                    if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
 
-                        if(isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
-                                &&isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)
-                                &&isEventRecorded(APP_STEP_ONE_HINT_CLICKED)
-                                &&isEventRecorded(APP_STEP_ONE_HINT)
-                                &&isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)){
+                        if (isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
+                                && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)
+                                && isEventRecorded(APP_STEP_ONE_HINT_CLICKED)
+                                && isEventRecorded(APP_STEP_ONE_HINT)
+                                && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
                             setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                             HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                         }
@@ -130,18 +143,20 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
-        if(HSInputMethod.isCurrentIMEEnabled(this)&& HSInputMethod.isCurrentIMESelected(this)) {
-           startThemeHomeActivity();
+        if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMEEnabled(this) && HSInputMethod.isCurrentIMESelected(this))) {
+            startThemeHomeActivity();
             return;
         }
 
+        //main 出现过一次之后就不再出现
+        HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         HSApplication.HSLaunchInfo firstLaunchInfo = HSApplication.getFirstLaunchInfo();
         versionFilterForRecordEvent = (firstLaunchInfo.appVersionCode >= HSApplication.getCurrentLaunchInfo().appVersionCode);
 
-        if(versionFilterForRecordEvent&&!isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
+        if (versionFilterForRecordEvent && !isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(INSTRUCTION_SCREEN_VIEWED);
         }
@@ -174,9 +189,9 @@ public class MainActivity extends HSDeepLinkActivity {
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
 
         bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
-        bt_design_theme.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(),R.drawable.entrance_customize_button)));
+        bt_design_theme.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.entrance_customize_button)));
         float density = getResources().getDisplayMetrics().density;
-        bt_design_theme.setPadding((int)density*20,(int)density*10,(int)density*20,(int)density*10);
+        bt_design_theme.setPadding((int) density * 20, (int) density * 10, (int) density * 20, (int) density * 10);
 
         settings_languages_layout = (LinearLayout) this.findViewById(R.id.settings_languages_layout);
         bt_settings = (TextView) this.findViewById(R.id.bt_settings);
@@ -220,7 +235,7 @@ public class MainActivity extends HSDeepLinkActivity {
             int textHeight = (int) (result.height() * 0.8f);
             LinearLayout.LayoutParams logImgLayoutParams = (LinearLayout.LayoutParams) view_logo_img.getLayoutParams();
             logImgLayoutParams.height = textHeight;
-            logImgLayoutParams.width = (int) (textHeight/ratio_log_img);
+            logImgLayoutParams.width = (int) (textHeight / ratio_log_img);
             logImgLayoutParams.topMargin = 0;
 
             int step_button_width = (int) (button_width * 1.1);
@@ -284,7 +299,7 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public void onClick(View v) {
                 showKeyboardEnableDialog();
-                if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
+                if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
                 }
@@ -300,20 +315,20 @@ public class MainActivity extends HSDeepLinkActivity {
                 //                MainActivity.this.doSetpTwoFinishAnimation();
 
 
-                if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+                if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
 
 
                     //记第二步点击的时候，如果还没有记第一步点击或第一步enable, 就补上
 
-                    if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)){
-                       return;
+                    if (!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
+                        return;
                     }
 
-                    if(!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)){
-                       return;
+                    if (!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                        return;
                     }
 
-                    if(!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)||!isEventRecorded(APP_STEP_ONE_HINT)){
+                    if (!isEventRecorded(APP_STEP_ONE_HINT_CLICKED) || !isEventRecorded(APP_STEP_ONE_HINT)) {
                         return;
                     }
 
@@ -329,7 +344,9 @@ public class MainActivity extends HSDeepLinkActivity {
 //                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
 
+
 //                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiableFromActivity(MainActivity.this,null);
+
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
             }
         });
@@ -358,12 +375,12 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Uri data = intent.getData();
-        if(data!=null) {
+        if (data != null) {
             String pkName = data.getQueryParameter("pkName");
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 needActiveThemePkName = pkName;
-                if(HSInputMethod.isCurrentIMEEnabled(this)&& HSInputMethod.isCurrentIMESelected(this)) {
+                if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMEEnabled(this) && HSInputMethod.isCurrentIMESelected(this))) {
                     startThemeHomeActivity();
                 }
             }
@@ -384,7 +401,7 @@ public class MainActivity extends HSDeepLinkActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if(versionFilterForRecordEvent&&!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
+                        if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
                             setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
                             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
                         }
@@ -392,15 +409,19 @@ public class MainActivity extends HSDeepLinkActivity {
                         dialog.dismiss();
                         startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
                         isInStepOne = true;
-                        Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getBaseContext(),
+                                "", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                        ImageView imageCodeProject = new ImageView(getBaseContext());
+                        imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+                        toast.setView(imageCodeProject);
                         toast.show();
                     }
                 }).create().show();
-        if(versionFilterForRecordEvent&&!isEventRecorded(APP_STEP_ONE_HINT)) {
+        if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT);
         }
-
 
 
 //        // Create custom dialog object
@@ -482,7 +503,7 @@ public class MainActivity extends HSDeepLinkActivity {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
-                            if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                            if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
                                 setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                             }
@@ -632,7 +653,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private void startThemeHomeActivity() {
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-        if(!TextUtils.isEmpty(needActiveThemePkName)) {
+        if (!TextUtils.isEmpty(needActiveThemePkName)) {
             HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
             startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
             needActiveThemePkName = null;
@@ -859,5 +880,9 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private void setEventRecorded(String pref_name) {
         mPrefs.edit().putBoolean(pref_name, true).apply();
+    }
+
+    private boolean shouldShowThemeHome() {
+        return HSPreferenceHelper.getDefault().getBoolean(PREF_THEME_HOME_SHOWED, false);
     }
 }
