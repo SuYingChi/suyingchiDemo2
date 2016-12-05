@@ -50,9 +50,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
-
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
@@ -119,7 +116,7 @@ public class MainActivity extends HSDeepLinkActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                if (HSInputMethod.isCurrentIMESelected(MainActivity.this)) {
+                if (HSInputMethod.isCurrentIMESelected()) {
                     if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
 
                         if (isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
@@ -143,7 +140,7 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
-        if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMEEnabled(this) && HSInputMethod.isCurrentIMESelected(this))) {
+        if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMEEnabled() && HSInputMethod.isCurrentIMESelected())) {
             startThemeHomeActivity();
             return;
         }
@@ -380,7 +377,7 @@ public class MainActivity extends HSDeepLinkActivity {
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 needActiveThemePkName = pkName;
-                if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMEEnabled(this) && HSInputMethod.isCurrentIMESelected(this))) {
+                if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMEEnabled() && HSInputMethod.isCurrentIMESelected())) {
                     startThemeHomeActivity();
                 }
             }
@@ -465,7 +462,7 @@ public class MainActivity extends HSDeepLinkActivity {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            if (HSInputMethod.isCurrentIMEEnabled(MainActivity.this)) {
+            if (HSInputMethod.isCurrentIMEEnabled()) {
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 i.putExtra("isInStepOne", true);
                 startActivity(i);
@@ -494,12 +491,12 @@ public class MainActivity extends HSDeepLinkActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!HSInputMethod.isCurrentIMEEnabled(MainActivity.this)) {
+                if (!HSInputMethod.isCurrentIMEEnabled()) {
                     getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                             settingsContentObserver);
                     refreshUIState();
                 } else {
-                    if (!HSInputMethod.isCurrentIMESelected(MainActivity.this)) {
+                    if (!HSInputMethod.isCurrentIMESelected()) {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
@@ -549,7 +546,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private void refreshUIState() {
-        if (!HSInputMethod.isCurrentIMEEnabled(this)) {
+        if (!HSInputMethod.isCurrentIMEEnabled()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);
@@ -578,7 +575,7 @@ public class MainActivity extends HSDeepLinkActivity {
             img_choose_two.setAlpha(0);
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
-        } else if (!HSInputMethod.isCurrentIMESelected(this)) {
+        } else if (!HSInputMethod.isCurrentIMESelected()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);
