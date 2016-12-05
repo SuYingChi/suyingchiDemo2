@@ -396,7 +396,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
         HSAlertDialog.build(this).setTitle(getString(R.string.toast_enable_keyboard))
                 .setMessage(getResources().getString(R.string.alert_attention_messenger))
-                .setPositiveButton("OK, I GOT IT", new DialogInterface.OnClickListener() {
+                .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
