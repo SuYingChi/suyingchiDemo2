@@ -54,7 +54,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
-import static com.ihs.inputmethod.uimodules.constants.KeyboardEnableProcceser.PREF_THEME_HOME_SHOWED;
+import static com.ihs.inputmethod.uimodules.constants.KeyboardEnableProcesser.PREF_THEME_HOME_SHOWED;
 
 
 public class MainActivity extends HSDeepLinkActivity {
@@ -140,7 +140,8 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
-        if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMEEnabled() && HSInputMethod.isCurrentIMESelected())) {
+
+        if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
             startThemeHomeActivity();
             return;
         }
@@ -377,7 +378,8 @@ public class MainActivity extends HSDeepLinkActivity {
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 needActiveThemePkName = pkName;
-                if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMEEnabled() && HSInputMethod.isCurrentIMESelected())) {
+
+                if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
                     startThemeHomeActivity();
                 }
             }
