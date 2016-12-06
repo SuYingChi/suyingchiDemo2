@@ -61,6 +61,7 @@ public class MyInputMethodApplication extends HSApplication {
             @Override
             public void run() {
                 Fresco.initialize(MyInputMethodApplication.this);
+                HSKeyboardThemeManager.initCustomTheme();
             }
         });
 
