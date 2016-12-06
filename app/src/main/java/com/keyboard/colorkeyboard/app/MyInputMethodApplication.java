@@ -10,6 +10,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
+import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -20,6 +21,7 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSUncaughtExceptionHandler;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
+import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uninstallchecker.UninstallChecker;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
@@ -78,6 +80,9 @@ public class MyInputMethodApplication extends HSApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
         Log.e("time log", "time log application oncreated finished");
 
+        if(HSVersionControlUtils.isFirstLaunchSinceInstallation()){
+            ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
+        }
 //        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
     }
 
