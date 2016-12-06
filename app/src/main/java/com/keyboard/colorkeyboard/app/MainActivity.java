@@ -54,7 +54,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
-import static com.ihs.inputmethod.uimodules.constants.KeyboardEnableProcesser.PREF_THEME_HOME_SHOWED;
+import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
 
 
 public class MainActivity extends HSDeepLinkActivity {
@@ -408,13 +408,18 @@ public class MainActivity extends HSDeepLinkActivity {
                         dialog.dismiss();
                         startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
                         isInStepOne = true;
-                        Toast toast = Toast.makeText(getBaseContext(),
+                        final Toast toast = Toast.makeText(getBaseContext(),
                                 "", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
                         ImageView imageCodeProject = new ImageView(getBaseContext());
                         imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
                         toast.setView(imageCodeProject);
-                        toast.show();
+                        imageCodeProject.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                toast.show();
+                            }
+                        }, 500);
                     }
                 }).create().show();
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
