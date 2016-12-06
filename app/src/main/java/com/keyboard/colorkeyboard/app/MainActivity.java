@@ -865,7 +865,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                MainActivity.this.doHideAnimation();
+//                MainActivity.this.doHideAnimation();
                 startThemeHomeActivity();
             }
         });
