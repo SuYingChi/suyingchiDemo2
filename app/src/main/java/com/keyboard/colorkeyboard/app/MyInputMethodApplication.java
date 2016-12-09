@@ -4,7 +4,6 @@ import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -62,7 +61,6 @@ public class MyInputMethodApplication extends HSApplication {
         HSThreadUtils.execute(new Runnable() {
             @Override
             public void run() {
-                Fresco.initialize(MyInputMethodApplication.this);
                 HSKeyboardThemeManager.initCustomTheme();
             }
         });
