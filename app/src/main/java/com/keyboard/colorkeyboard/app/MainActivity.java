@@ -412,8 +412,13 @@ public class MainActivity extends HSDeepLinkActivity {
 
                         ImageView imageCodeProject = new ImageView(getApplicationContext());
                         imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-                        KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-                        customViewDialog.show();
+                        final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                        imageCodeProject.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                customViewDialog.show();
+                            }
+                        }, 500);
 
                     }
                 }).create().show();
