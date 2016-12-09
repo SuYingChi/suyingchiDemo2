@@ -50,6 +50,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
@@ -408,18 +409,12 @@ public class MainActivity extends HSDeepLinkActivity {
                         dialog.dismiss();
                         startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
                         isInStepOne = true;
-                        final Toast toast = Toast.makeText(getBaseContext(),
-                                "", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-                        ImageView imageCodeProject = new ImageView(getBaseContext());
+
+                        ImageView imageCodeProject = new ImageView(getApplicationContext());
                         imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-                        toast.setView(imageCodeProject);
-                        imageCodeProject.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                toast.show();
-                            }
-                        }, 500);
+                        KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                        customViewDialog.show();
+
                     }
                 }).create().show();
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
