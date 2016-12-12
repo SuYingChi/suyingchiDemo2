@@ -46,7 +46,7 @@
         android:largeHeap="true"
         android:theme="@style/AppBaseTheme"
         android:supportsRtl="false"
-        tools:replace="android:label">
+        tools:replace="android:label, android:supportsRtl">
 
         <!-- required by libAppFramework -->
         <meta-data

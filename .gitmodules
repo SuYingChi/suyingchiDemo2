@@ -19,3 +19,6 @@
 [submodule "libs/ihs/libKeyboard"]
 	path = libs/ihs/libKeyboard
 	url = http://git.ihandysoft.com/bingroup/bin_keyboard_android.git
+[submodule "libs/ihs/libCommon"]
+	path = libs/ihs/libCommon
+	url = http://git.ihandysoft.com/bingroup/bin_common_android.git
