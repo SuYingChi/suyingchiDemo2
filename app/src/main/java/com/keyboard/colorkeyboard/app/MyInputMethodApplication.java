@@ -25,10 +25,13 @@ import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uninstallchecker.UninstallChecker;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
 
+import net.appcloudbox.api.Data;
+
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.ihs.commons.config.HSConfig.getBoolean;
 import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED;
 import static com.keyboard.colorkeyboard.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
 
@@ -81,7 +84,16 @@ public class MyInputMethodApplication extends HSApplication {
         if(HSVersionControlUtils.isFirstLaunchSinceInstallation()){
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
         }
-//        registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
+
+        Data.init(getApplicationContext(), HSConfig.optString("", "Application", "Analytics", "ProductID"), HSConfig.optString("", "Application", "Analytics", "ChannelID"));
+        Data.setSdkClosed(HSApplication.getContext(), HSConfig.optBoolean(true, "Application", "Analytics", "Closed"));
+
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, new INotificationObserver() {
+            @Override
+            public void onReceive(String s, HSBundle hsBundle) {
+                Data.setSdkClosed(HSApplication.getContext(), HSConfig.optBoolean(true, "Application", "Analytics", "Closed"));
+            }
+        });
     }
 
     @Override
