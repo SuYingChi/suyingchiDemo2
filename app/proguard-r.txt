@@ -84,7 +84,7 @@
 -ignorewarnings
 
 -dontwarn net.appcloudbox.api.**
--libraryjars libs/data.jar
+-libraryjars ../libs/data.jar
 -keep class net.appcloudbox.api.Data { *; }
 -keep class net.appcloudbox.receiver.VReceiver { *; }
 
