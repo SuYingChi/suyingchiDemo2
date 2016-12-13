@@ -83,6 +83,11 @@
 -dontwarn javax.servlet.**
 -ignorewarnings
 
+-dontwarn net.appcloudbox.api.**
+-libraryjars libs/data.jar
+-keep class net.appcloudbox.api.Data { *; }
+-keep class net.appcloudbox.receiver.VReceiver { *; }
+
 #========== from-lib-appframework start ===============
 #========== flurry ===============
 -keepclasseswithmembernames class com.flurry.** { *; }
