@@ -22,3 +22,6 @@
 [submodule "libs/ihs/libCommon"]
 	path = libs/ihs/libCommon
 	url = http://git.ihandysoft.com/bingroup/bin_common_android.git
+[submodule "libs/ihs/libThirdAds"]
+	path = libs/ihs/libThirdAds
+	url = http://git.ihandysoft.com/bingroup/bin_3rdads_android.git
