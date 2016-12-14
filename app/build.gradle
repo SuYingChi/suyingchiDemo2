@@ -52,23 +52,13 @@ android {
     }
 }
 
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
 
 dependencies {
     compile project(':lib_keyboard_ui_modules')
-    compile files('../libs/ihs/libThirdAds/AppNext/AppNextNativeAd.jar')
-    compile files('../libs/ihs/libThirdAds/Avocarrot/avocarrot-sdk.jar')
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'com.facebook.android:facebook-android-sdk:4.8.0'
-    compile 'com.android.support:multidex:1.0.1'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
-        transitive = true;
-    }
-
 
 }
 
