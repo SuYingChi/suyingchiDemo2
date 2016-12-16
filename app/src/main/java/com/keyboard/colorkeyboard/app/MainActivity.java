@@ -21,6 +21,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -38,32 +39,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.HSInputMethodCommonUtils;
+import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSUIInputMethod;
-import com.ihs.inputmethod.dialogs.HSAlertDialog;
-import com.ihs.inputmethod.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
-import com.ihs.inputmethod.utils.BitmapScaleUtils;
-import com.ihs.inputmethod.utils.DrawableUtils;
-import com.ihs.inputmethod.utils.GAConstants;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
-public class MainActivity extends HSActivity {
+import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
 
 
-    private final static String INSTRUCTION_SCREEN_VIEWED="Instruction_screen_viewed";
-    private final static String APP_STEP_ONE_HINT_CLICKED="app_step_one_hint_clicked";
-    private final static String APP_STEP_ONE_HINT="app_step_one_hint";
+public class MainActivity extends HSDeepLinkActivity {
+
+
+    private final static String INSTRUCTION_SCREEN_VIEWED = "Instruction_screen_viewed";
+    private final static String APP_STEP_ONE_HINT_CLICKED = "app_step_one_hint_clicked";
+    private final static String APP_STEP_ONE_HINT = "app_step_one_hint";
 
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
     private final static float BUTTON_BACKGROUND_OPACITY_ENABLED = 1f;
     private final static float BUTTON_BACKGROUND_OPACITY_INVISIBLE = 0f;
+
     private boolean versionFilterForRecordEvent;
+
     public enum CurrentUIStyle {
         UISTYLE_STEP_ONE,
         UISTYLE_STEP_TWO,
@@ -95,10 +102,11 @@ public class MainActivity extends HSActivity {
     private ImageView img_choose_two;
     private EditText edit_text_test;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
-    ;
 
     private boolean isInStepOne;
-    /** 需要激活的主题包的PackageName，当点击主题片包的Apply时会传入 */
+    /**
+     * 需要激活的主题包的PackageName，当点击主题片包的Apply时会传入
+     */
     private String needActiveThemePkName = null;
 
     private CurrentUIStyle style;
@@ -109,10 +117,17 @@ public class MainActivity extends HSActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                if (HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
-                    if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
-                        setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                if (HSInputMethod.isCurrentIMESelected()) {
+                    if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
+
+                        if (isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
+                                && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)
+                                && isEventRecorded(APP_STEP_ONE_HINT_CLICKED)
+                                && isEventRecorded(APP_STEP_ONE_HINT)
+                                && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+                            setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                        }
                     }
                     MainActivity.this.doSetpTwoFinishAnimation();
                     style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
@@ -125,20 +140,22 @@ public class MainActivity extends HSActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         onNewIntent(getIntent());
-        if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
-           startThemeHomeActivity();
+
+        if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
+            startThemeHomeActivity();
             return;
         }
 
+        //main 出现过一次之后就不再出现
+        HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         HSApplication.HSLaunchInfo firstLaunchInfo = HSApplication.getFirstLaunchInfo();
         versionFilterForRecordEvent = (firstLaunchInfo.appVersionCode >= HSApplication.getCurrentLaunchInfo().appVersionCode);
 
-        if(versionFilterForRecordEvent&&!isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
+        if (versionFilterForRecordEvent && !isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(INSTRUCTION_SCREEN_VIEWED);
         }
@@ -153,7 +170,7 @@ public class MainActivity extends HSActivity {
 
 
         Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
-        getWindow().setBackgroundDrawable(new BitmapDrawable(BitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
+        getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
 
 
         view_title_text = (TextView) this.findViewById(R.id.view_title_text);
@@ -171,9 +188,9 @@ public class MainActivity extends HSActivity {
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
 
         bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
-        bt_design_theme.setBackgroundDrawable(DrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(),R.drawable.entrance_customize_button)));
+        bt_design_theme.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.entrance_customize_button)));
         float density = getResources().getDisplayMetrics().density;
-        bt_design_theme.setPadding((int)density*20,(int)density*10,(int)density*20,(int)density*10);
+        bt_design_theme.setPadding((int) density * 20, (int) density * 10, (int) density * 20, (int) density * 10);
 
         settings_languages_layout = (LinearLayout) this.findViewById(R.id.settings_languages_layout);
         bt_settings = (TextView) this.findViewById(R.id.bt_settings);
@@ -217,7 +234,7 @@ public class MainActivity extends HSActivity {
             int textHeight = (int) (result.height() * 0.8f);
             LinearLayout.LayoutParams logImgLayoutParams = (LinearLayout.LayoutParams) view_logo_img.getLayoutParams();
             logImgLayoutParams.height = textHeight;
-            logImgLayoutParams.width = (int) (textHeight/ratio_log_img);
+            logImgLayoutParams.width = (int) (textHeight / ratio_log_img);
             logImgLayoutParams.topMargin = 0;
 
             int step_button_width = (int) (button_width * 1.1);
@@ -281,7 +298,7 @@ public class MainActivity extends HSActivity {
             @Override
             public void onClick(View v) {
                 showKeyboardEnableDialog();
-                if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
+                if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
                 }
@@ -297,7 +314,23 @@ public class MainActivity extends HSActivity {
                 //                MainActivity.this.doSetpTwoFinishAnimation();
 
 
-                if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+                if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+
+
+                    //记第二步点击的时候，如果还没有记第一步点击或第一步enable, 就补上
+
+                    if (!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
+                        return;
+                    }
+
+                    if (!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                        return;
+                    }
+
+                    if (!isEventRecorded(APP_STEP_ONE_HINT_CLICKED) || !isEventRecorded(APP_STEP_ONE_HINT)) {
+                        return;
+                    }
+
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
@@ -310,15 +343,17 @@ public class MainActivity extends HSActivity {
 //                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
 
-                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiable();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(GAConstants.APP_CUSTOMIZE_ENTRY_CLICKED);
+
+//                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiableFromActivity(MainActivity.this,null);
+
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
             }
         });
 
         bt_settings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSUIInputMethod.showMoreSettingsActivity();
+                HSUIInputMethod.launchMoreLanguageActivity();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_SETTINGS_CLICKED);
             }
         });
@@ -326,7 +361,7 @@ public class MainActivity extends HSActivity {
         bt_languages.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSUIInputMethod.showLanguageSettingsActivity();
+                HSUIInputMethod.launchSettingsActivity();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_LANGUAGES_CLICKED);
             }
         });
@@ -339,12 +374,13 @@ public class MainActivity extends HSActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Uri data = intent.getData();
-        if(data!=null) {
+        if (data != null) {
             String pkName = data.getQueryParameter("pkName");
             if (!TextUtils.isEmpty(pkName)) {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 needActiveThemePkName = pkName;
-                if(HSInputMethodCommonUtils.isCurrentIMEEnabled(this)&&HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+
+                if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
                     startThemeHomeActivity();
                 }
             }
@@ -359,13 +395,13 @@ public class MainActivity extends HSActivity {
      */
     private void showKeyboardEnableDialog() {
 
-        HSAlertDialog.build().setTitle(getString(R.string.toast_enable_keyboard))
+        HSAlertDialog.build(this).setTitle(getString(R.string.toast_enable_keyboard))
                 .setMessage(getResources().getString(R.string.alert_attention_messenger))
-                .setPositiveButton("OK, I GOT IT", new DialogInterface.OnClickListener() {
+                .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if(versionFilterForRecordEvent&&!isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
+                        if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
                             setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
                             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
                         }
@@ -373,15 +409,23 @@ public class MainActivity extends HSActivity {
                         dialog.dismiss();
                         startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
                         isInStepOne = true;
-                        Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
-                        toast.show();
+
+                        ImageView imageCodeProject = new ImageView(getApplicationContext());
+                        imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+                        final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                        imageCodeProject.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                customViewDialog.show();
+                            }
+                        }, 500);
+
                     }
                 }).create().show();
-        if(versionFilterForRecordEvent&&!isEventRecorded(APP_STEP_ONE_HINT)) {
+        if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT);
         }
-
 
 
 //        // Create custom dialog object
@@ -425,7 +469,7 @@ public class MainActivity extends HSActivity {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            if (HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
+            if (HSInputMethod.isCurrentIMEEnabled()) {
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 i.putExtra("isInStepOne", true);
                 startActivity(i);
@@ -454,16 +498,16 @@ public class MainActivity extends HSActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!HSInputMethodCommonUtils.isCurrentIMEEnabled(MainActivity.this)) {
+                if (!HSInputMethod.isCurrentIMEEnabled()) {
                     getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                             settingsContentObserver);
                     refreshUIState();
                 } else {
-                    if (!HSInputMethodCommonUtils.isCurrentIMESelected(MainActivity.this)) {
+                    if (!HSInputMethod.isCurrentIMESelected()) {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
-                            if(versionFilterForRecordEvent&&!isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                            if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
                                 setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                             }
@@ -509,7 +553,7 @@ public class MainActivity extends HSActivity {
     }
 
     private void refreshUIState() {
-        if (!HSInputMethodCommonUtils.isCurrentIMEEnabled(this)) {
+        if (!HSInputMethod.isCurrentIMEEnabled()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);
@@ -538,7 +582,7 @@ public class MainActivity extends HSActivity {
             img_choose_two.setAlpha(0);
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
-        } else if (!HSInputMethodCommonUtils.isCurrentIMESelected(this)) {
+        } else if (!HSInputMethod.isCurrentIMESelected()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);
@@ -613,7 +657,7 @@ public class MainActivity extends HSActivity {
 
     private void startThemeHomeActivity() {
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-        if(!TextUtils.isEmpty(needActiveThemePkName)) {
+        if (!TextUtils.isEmpty(needActiveThemePkName)) {
             HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
             startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
             needActiveThemePkName = null;
@@ -826,7 +870,7 @@ public class MainActivity extends HSActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                MainActivity.this.doHideAnimation();
+//                MainActivity.this.doHideAnimation();
                 startThemeHomeActivity();
             }
         });
@@ -840,5 +884,9 @@ public class MainActivity extends HSActivity {
 
     private void setEventRecorded(String pref_name) {
         mPrefs.edit().putBoolean(pref_name, true).apply();
+    }
+
+    private boolean shouldShowThemeHome() {
+        return HSPreferenceHelper.getDefault().getBoolean(PREF_THEME_HOME_SHOWED, false);
     }
 }

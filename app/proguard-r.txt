@@ -42,7 +42,7 @@
 -keep class com.tencent.mm.sdk.openapi.WXMediaMessage { *;}
 -keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
 
--keep class * extends com.ihs.inputmethod.api.HSInputMethodPanel { *; }
+-keep class * extends com.ihs.inputmethod.framework.HSInputMethodPanel { *; }
 -keep class com.ihs.inputmethod.theme.bean.** { *; }
 # Keep facebook sdk dependencies
 -keep class com.ihs.adcaffe.common.** { *; }
@@ -71,7 +71,7 @@
 #-include libs/ihs/libAppFramework/lib-appframework.proguard
 #-include libs/ihs/thirdparty/google-play-services_lib/r21/proguard.txt
 
--keep public class com.google.** { *; }
+-keepclasseswithmembernames class com.google.** { *; }
 
 -keep class org.slf4j.** { *; }
 -keep class com.getsentry.raven.** { *; }
@@ -82,3 +82,56 @@
 -dontwarn javax.naming.**
 -dontwarn javax.servlet.**
 -ignorewarnings
+
+-dontwarn net.appcloudbox.api.**
+-libraryjars ../libs/data.jar
+-keep class net.appcloudbox.api.Data { *; }
+-keep class net.appcloudbox.receiver.VReceiver { *; }
+
+#========== from-lib-appframework start ===============
+#========== flurry ===============
+-keepclasseswithmembernames class com.flurry.** { *; }
+-dontwarn com.flurry.**
+
+# ============= tapjoy ==============
+-keepclasseswithmembernames class com.tapjoy.** { *; }
+-dontwarn com.tapjoy.**
+
+-keepattributes JavascriptInterface
+-keep class * extends java.util.ListResourceBundle {
+protected Object[][] getContents();
+}
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+public static final *** NULL;
+}
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembers class * {
+@com.google.android.gms.common.annotation.KeepName *;
+}
+-keepnames class * implements android.os.Parcelable {
+public static final ** CREATOR;
+}
+-keep class com.google.android.gms.ads.identifier.** { *; }
+
+# ============= appsflyer ==============
+-keepclasseswithmembernames class com.appsflyer.** { *; }
+-dontwarn com.appsflyer.**
+
+# ============= facebook ==============
+-keepclasseswithmembernames class com.facebook.** { *; }
+-dontwarn com.facebook.**
+
+# ============= android.support.v4 ==============
+-dontwarn android.support.v4.**
+
+# ============= appframework ==============
+-assumenosideeffects class com.ihs.commons.utils.HSLog {
+    public static void v(...);
+    public static void d(...);
+    public static void i(...);
+    public static void w(...);
+    public static void e(...);
+    public static void pt(...);
+}
+
+#========== from-lib-appframework end ===============
