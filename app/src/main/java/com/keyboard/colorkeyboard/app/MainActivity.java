@@ -111,6 +111,8 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private CurrentUIStyle style;
 
+    private Handler handler = new Handler();
+
     private BroadcastReceiver imeChangeRecevier = new BroadcastReceiver() {
 
         @Override
@@ -399,26 +401,26 @@ public class MainActivity extends HSDeepLinkActivity {
                 .setMessage(getResources().getString(R.string.alert_attention_messenger))
                 .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, int which) {
 
                         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
                             setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
                             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
                         }
 
-                        dialog.dismiss();
-                        startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
-                        isInStepOne = true;
-
                         ImageView imageCodeProject = new ImageView(getApplicationContext());
                         imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
                         final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-                        imageCodeProject.postDelayed(new Runnable() {
+
+                        handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 customViewDialog.show();
                             }
                         }, 500);
+
+                        startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
+                        isInStepOne = true;
 
                     }
                 }).create().show();
