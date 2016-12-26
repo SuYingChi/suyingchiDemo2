@@ -1,17 +1,18 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.keyboard.colorkeyboard.app.MainActivity" >
+    tools:context="com.keyboard.colorkeyboard.app.MainActivity">
 
     <RelativeLayout
         android:id="@+id/view_main_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/main_logo_margin_top" >
+        android:layout_marginTop="@dimen/main_logo_margin_top">
 
         <LinearLayout
             android:id="@+id/view_logo"
@@ -53,51 +54,58 @@
         android:id="@+id/bt_step_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_marginLeftPercent="15%w"
+        app:layout_marginRightPercent="15%w"
         android:layout_above="@+id/bt_step_two"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="17dp"
         android:background="@drawable/guide_button_selector"
-        android:clipChildren="false" >
+        android:clipChildren="false">
 
         <ImageView
+            android:id="@+id/image_button_guide_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/app_button_guide_1" >
-        </ImageView>
+            android:src="@drawable/app_button_guide_1" />
+
+        <FrameLayout
+            android:id="@+id/view_choose_one_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:id="@+id/view_choose_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_choose" />
+
+            <ImageView
+                android:id="@+id/view_enter_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_enter" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/text_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="55dp"
+            android:layout_centerInParent="true"
             android:fontFamily="sans-serif"
             android:text="@string/toast_enable_keyboard"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="#ffffff"
             android:textSize="@dimen/button_guide_textsize"
-            android:textStyle="normal" >
-        </TextView>
-
-        <ImageView
-            android:id="@+id/view_enter_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="230dp"
-            android:src="@drawable/app_button_guide_enter" >
-        </ImageView>
-
-        <ImageView
-            android:id="@+id/view_choose_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="220dp"
-            android:src="@drawable/app_button_guide_choose" >
-        </ImageView>
+            android:textStyle="normal"></TextView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -106,56 +114,63 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        app:layout_marginLeftPercent="15%w"
+        app:layout_marginRightPercent="15%w"
         android:layout_marginBottom="80dp"
         android:background="@drawable/guide_button_selector"
-        android:clipChildren="false" >
+        android:clipChildren="false">
 
         <ImageView
+            android:id="@+id/image_button_guide_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/app_button_guide_2" >
-        </ImageView>
+            android:src="@drawable/app_button_guide_2" />
+
+        <FrameLayout
+            android:id="@+id/view_choose_two_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:id="@+id/view_choose_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_choose" />
+
+            <ImageView
+                android:id="@+id/view_enter_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_enter" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/text_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="55dp"
+            android:layout_centerInParent="true"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:fontFamily="sans-serif"
             android:text="@string/toast_select_keyboard"
             android:textColor="#ffffff"
             android:textSize="@dimen/button_guide_textsize"
-            android:textStyle="normal" >
-        </TextView>
+            android:textStyle="normal"></TextView>
 
-        <ImageView
-            android:id="@+id/view_enter_two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="230dp"
-            android:src="@drawable/app_button_guide_enter" >
-        </ImageView>
-
-        <ImageView
-            android:id="@+id/view_choose_two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="220dp"
-            android:src="@drawable/app_button_guide_choose" >
-        </ImageView>
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/view_main_logo"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -230,4 +245,4 @@
         android:singleLine="true"
         android:textColorHint="#ff8f8f8f" />
 
-</RelativeLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>
