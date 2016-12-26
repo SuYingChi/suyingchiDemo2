@@ -221,7 +221,6 @@
         android:background="#ffffff"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:hint="@string/main_activity_edittext_hint"
         android:imeOptions="actionNone"
         android:inputType="textCapSentences|textAutoCorrect"
         android:paddingBottom="10dp"

@@ -3,25 +3,7 @@
 
     <string name="app_name">com.keyboard.colorkeyboard</string>
     <string name="app_package_name">com.keyboard.colorkeyboard</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_idle">RainbowKey</string>
-    <string name="alert_attention_title">Attention!</string>
-    <string name="alert_attention_messenger">RainbowKey keyboard treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
-    <string name="toast_enable_keyboard">Enable RainbowKey</string>
-    <string name="toast_select_keyboard">Select RainbowKey</string>
-    <string name="main_activity_edittext_hint">Try typing here now...</string>
     <string name="fb_app_id">910238615719294</string>
-    <string name="emoji_search_hint">Search GIFs by text or emoji </string>
-
-
-    <!-- Config for Setting and Language Activity name -->
-    <string name="deeplink_site">rainbowkey.com</string>
-    <string name="deeplink_site_full">http://rainbowkey.com</string>
-    <string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
-    <string name="deeplink_description">Rainbow Keyboard description</string>
-
-    <string name="setting_activity_name">com.ihs.inputmethod.settings.SettingsActivity2</string>
-    <string name="language_activity_name">com.ihs.inputmethod.settings.MoreLanguageActivity2</string>
 
     <!-- Ad placement ID -->
     <string name="ad_placement_cardad">Colorkey_A(NativeAds)CardAd</string>
