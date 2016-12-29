@@ -135,3 +135,8 @@ public static final ** CREATOR;
 }
 
 #========== from-lib-appframework end ===============
+
+#========== AdMob Adapter start ===============
+ -keep class com.chartboost.** { *; }
+ -keep class com.fyber.mediation.MediationAdapterStarter { *;}
+#========== AdMob Adapter end ===============

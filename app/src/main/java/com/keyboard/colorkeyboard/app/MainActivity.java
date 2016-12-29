@@ -89,8 +89,6 @@ public class MainActivity extends HSDeepLinkActivity {
     private View bt_step_two;
     //    private View bt_step_one_content_view;
     //    private View bt_step_two_content_view;
-    private TextView text_one;
-    private TextView text_two;
     private TextView bt_design_theme;
     private LinearLayout settings_languages_layout;
     private TextView bt_settings;
@@ -181,8 +179,6 @@ public class MainActivity extends HSDeepLinkActivity {
         bt_step_two = (View) this.findViewById(R.id.bt_step_two);
         //        bt_step_one_content_view = (View) this.findViewById(R.id.bt_step_one_content_view);
         //        bt_step_two_content_view = (View) this.findViewById(R.id.bt_step_two_content_view);
-        text_one = (TextView) this.findViewById(R.id.text_one);
-        text_two = (TextView) this.findViewById(R.id.text_two);
         img_rainbow = (ImageView) this.findViewById(R.id.view_logo_img);
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
@@ -259,13 +255,6 @@ public class MainActivity extends HSDeepLinkActivity {
             step_one_linearParams2.topMargin = (int) (step_button_width * 0.07);
             bt_step_two.setLayoutParams(step_one_linearParams2);
 
-
-            RelativeLayout.LayoutParams step_one_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
-            step_one_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            step_one_relativeParams2.leftMargin = (int) (step_button_width * 0.22);
-            text_one.setLayoutParams(step_one_relativeParams2);
-
             RelativeLayout.LayoutParams step_one_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
                     (int) (step_button_width * 0.035 * ratio_img_enter));
             step_one_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
@@ -277,12 +266,6 @@ public class MainActivity extends HSDeepLinkActivity {
             step_one_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
             step_one_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
             img_choose_one.setLayoutParams(step_one_relativeParams4);
-
-            RelativeLayout.LayoutParams step_two_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
-            step_two_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            step_two_relativeParams2.leftMargin = (int) (step_button_width * 0.22);
-            text_two.setLayoutParams(step_two_relativeParams2);
 
             RelativeLayout.LayoutParams step_two_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
                     (int) (step_button_width * 0.035 * ratio_img_enter));
