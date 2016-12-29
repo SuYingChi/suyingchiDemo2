@@ -19,7 +19,13 @@ allprojects {
         }
 
         mavenCentral()
-        maven { url 'https://maven.fabric.io/public' }
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+        maven {
+            name "Fyber's maven repo"
+            url "https://fyber.bintray.com/maven"
+        }
     }
 }
 
