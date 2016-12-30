@@ -132,14 +132,12 @@ public static final ** CREATOR;
 
 #========== AdMob Adapter start ===============
  -keep class com.chartboost.** { *; }
- -keep class com.fyber.mediation.MediationAdapterStarter { *;}
- -keep class com.vungle.mediation.** { *; }
- -dontwarn com.vungle.mediation.**
+ -keep class com.fyber.MediationAdapterStarter { *;}
+ -keep class com.vungle.** { *; }
+ -dontwarn com.vungle.**
  -keep class com.fyber.mediation.** { *; }
  -dontwarn com.fyber.mediation.**
- -keep class com.google.ads.mediation.** { *; }
- -dontwarn com.google.ads.mediation.**
- -keep class com.jirbo.adcolony.** { *; }
- -dontwarn com.jirbo.adcolony.**
+ -keep class com.jirbo.** { *; }
+ -dontwarn com.jirbo.**
 #========== AdMob Adapter end ===============
 
