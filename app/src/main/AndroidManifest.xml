@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.keyboard.colorkeyboard"
     android:installLocation="internalOnly"
-    android:versionCode="18"
-    android:versionName="2.2.2">
+    android:versionCode="19"
+    android:versionName="2.2.3">
 
     <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook" />
 
@@ -77,10 +77,10 @@
 
         <!-- android:excludeFromRecents="true"  -->
         <activity
-            android:name="com.ihs.app.alerts.impl.AlertActivity"
-         android:launchMode="singleInstance"
-         android:taskAffinity=""
-         android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+	        android:name="com.ihs.app.alerts.impl.AlertActivity"
+            android:launchMode="singleInstance"
+	        android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
      <!-- Add the following meta-data for devices running Google Play service. -->
         <meta-data
@@ -231,13 +231,6 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-
-        <activity
-            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.old.CustomThemeActivity"
-            android:launchMode="singleTop"
-            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
 
         <activity
             android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity"
