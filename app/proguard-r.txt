@@ -140,8 +140,8 @@ public static final ** CREATOR;
  -keep class com.fyber.MediationAdapterStarter { *;}
  -keep class com.vungle.** { *; }
  -dontwarn com.vungle.**
- -keep class com.fyber.mediation.** { *; }
- -dontwarn com.fyber.mediation.**
+ -keep class com.fyber.** { *; }
+ -dontwarn com.fyber.**
  -keep class com.jirbo.** { *; }
  -dontwarn com.jirbo.**
 #========== AdMob Adapter end ===============
