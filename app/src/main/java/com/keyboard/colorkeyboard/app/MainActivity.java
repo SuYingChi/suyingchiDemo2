@@ -643,8 +643,12 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
-            HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
-            startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+            final boolean setThemeSucceeded = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
+
+            if (setThemeSucceeded) {
+                startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+            }
+
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
