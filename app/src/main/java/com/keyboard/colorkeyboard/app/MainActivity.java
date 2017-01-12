@@ -87,8 +87,8 @@ public class MainActivity extends HSDeepLinkActivity {
     private View view_logo_img;
     private View bt_step_one;
     private View bt_step_two;
-    //    private View bt_step_one_content_view;
-    //    private View bt_step_two_content_view;
+    private View bt_step_one_layout;
+    private View bt_step_two_layout;
     private TextView bt_design_theme;
     private LinearLayout settings_languages_layout;
     private TextView bt_settings;
@@ -174,11 +174,11 @@ public class MainActivity extends HSDeepLinkActivity {
 
 
         view_title_text = (TextView) this.findViewById(R.id.view_title_text);
-        view_logo_img = (View) this.findViewById(R.id.view_logo_img);
-        bt_step_one = (View) this.findViewById(R.id.bt_step_one);
-        bt_step_two = (View) this.findViewById(R.id.bt_step_two);
-        //        bt_step_one_content_view = (View) this.findViewById(R.id.bt_step_one_content_view);
-        //        bt_step_two_content_view = (View) this.findViewById(R.id.bt_step_two_content_view);
+        view_logo_img = this.findViewById(R.id.view_logo_img);
+        bt_step_one = this.findViewById(R.id.bt_step_one);
+        bt_step_two = this.findViewById(R.id.bt_step_two);
+        bt_step_one_layout =  this.findViewById(R.id.bt_step_one_layout);
+        bt_step_two_layout = this.findViewById(R.id.bt_step_two_layout);
         img_rainbow = (ImageView) this.findViewById(R.id.view_logo_img);
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
@@ -247,13 +247,13 @@ public class MainActivity extends HSDeepLinkActivity {
             RelativeLayout.LayoutParams step_one_linearParams = new RelativeLayout.LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
             step_one_linearParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
             step_one_linearParams.topMargin = (int) (screenHeight * 0.7);
-            bt_step_one.setLayoutParams(step_one_linearParams);
+            bt_step_one_layout.setLayoutParams(step_one_linearParams);
 
             RelativeLayout.LayoutParams step_one_linearParams2 = new RelativeLayout.LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
             step_one_linearParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            step_one_linearParams2.addRule(RelativeLayout.BELOW, R.id.bt_step_one);
+            step_one_linearParams2.addRule(RelativeLayout.BELOW, R.id.bt_step_one_layout);
             step_one_linearParams2.topMargin = (int) (step_button_width * 0.07);
-            bt_step_two.setLayoutParams(step_one_linearParams2);
+            bt_step_two_layout.setLayoutParams(step_one_linearParams2);
 
             RelativeLayout.LayoutParams step_one_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
                     (int) (step_button_width * 0.035 * ratio_img_enter));
