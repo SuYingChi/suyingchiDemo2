@@ -643,9 +643,9 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
-            final boolean setThemeSucceeded = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
+            final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
-            if (setThemeSucceeded) {
+            if (setThemeSucceed) {
                 startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
             }
 
