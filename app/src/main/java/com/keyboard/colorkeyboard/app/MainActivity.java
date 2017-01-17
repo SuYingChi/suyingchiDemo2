@@ -46,6 +46,7 @@ import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -649,7 +650,11 @@ public class MainActivity extends HSDeepLinkActivity {
             if (setThemeSucceed) {
                 startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
             } else {
-                HSToastUtils.toastCenterShort("Fail to apply the theme");
+                HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
+                if (keyboardTheme != null) {
+                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                    HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                }
             }
 
             needActiveThemePkName = null;
