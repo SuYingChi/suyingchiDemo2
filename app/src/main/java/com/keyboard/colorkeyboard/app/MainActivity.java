@@ -50,6 +50,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.colorkeyboard.R;
@@ -647,6 +648,8 @@ public class MainActivity extends HSDeepLinkActivity {
 
             if (setThemeSucceed) {
                 startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+            } else {
+                HSToastUtils.toastCenterShort("Fail to apply the theme");
             }
 
             needActiveThemePkName = null;
