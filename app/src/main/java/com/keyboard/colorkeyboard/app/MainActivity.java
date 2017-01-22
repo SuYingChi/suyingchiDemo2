@@ -46,10 +46,12 @@ import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.keyboard.colorkeyboard.R;
@@ -595,8 +597,18 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
-            HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
-            startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+            final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
+
+            if (setThemeSucceed) {
+                startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+            } else {
+                HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
+                if (keyboardTheme != null) {
+                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                    HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                }
+            }
+
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
