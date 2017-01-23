@@ -34,7 +34,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-r.txt'
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-d.txt'
         }
@@ -49,6 +49,12 @@ android {
     }
     dexOptions {
         javaMaxHeapSize "8g"
+    }
+}
+
+repositories {
+    flatDir {
+        dirs project(':lib_keyboard_ui_modules').file('libs')
     }
 }
 
