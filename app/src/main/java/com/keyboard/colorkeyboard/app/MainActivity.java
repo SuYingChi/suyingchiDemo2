@@ -54,6 +54,7 @@ import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
@@ -169,8 +170,7 @@ public class MainActivity extends HSDeepLinkActivity {
         getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
 
         view_logo_img = this.findViewById(R.id.view_logo_img);
-        bt_step_one = this.findViewById(R.id.bt_step_one);
-        bt_step_two = this.findViewById(R.id.bt_step_two);
+
         img_rainbow = (ImageView) this.findViewById(R.id.view_logo_img);
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
@@ -198,6 +198,13 @@ public class MainActivity extends HSDeepLinkActivity {
         LinearLayout.LayoutParams settings_languages_layoutLayoutParams = (LinearLayout.LayoutParams) settings_languages_layout.getLayoutParams();
         settings_languages_layoutLayoutParams.topMargin = (int) (screenHeight * 0.03646);
 
+
+        bt_step_one = this.findViewById(R.id.bt_step_one);
+        bt_step_two = this.findViewById(R.id.bt_step_two);
+        bt_step_one.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
+                getResources().getDimension(R.dimen.guide_bg_radius)));
+        bt_step_two.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
+                getResources().getDimension(R.dimen.guide_bg_radius)));
         RelativeLayout.LayoutParams stepOneLayoutParams = (RelativeLayout.LayoutParams) bt_step_one.getLayoutParams();
         RelativeLayout.LayoutParams stepTwoLayoutParams = (RelativeLayout.LayoutParams) bt_step_two.getLayoutParams();
         stepOneLayoutParams.setMargins(0,0,0, (int) (screenHeight*0.03f));
