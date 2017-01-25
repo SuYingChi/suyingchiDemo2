@@ -49,157 +49,108 @@
             android:textSize="@dimen/main_logo_subtitle_textsize" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bt_step_two_layout"
-        android:id="@+id/bt_step_one_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
-        android:weightSum="100">
+    <RelativeLayout
+        android:id="@+id/bt_step_one"
+        style="@style/MainGuideBgStyle"
+        android:layout_above="@+id/bt_step_two">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="@integer/step_layout_margin_percent" />
-
-        <RelativeLayout
-            android:id="@+id/bt_step_one"
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/image_button_guide_1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="@integer/step_layout_percent"
-            android:background="@drawable/guide_button_selector"
-            android:clipChildren="false">
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/app_button_guide_1" />
+
+        <FrameLayout
+            android:id="@+id/view_choose_one_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp">
 
             <ImageView
-                android:id="@+id/image_button_guide_1"
+                android:id="@+id/view_choose_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/app_button_guide_1" />
-
-            <FrameLayout
-                android:id="@+id/view_choose_one_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp">
-
-                <ImageView
-                    android:id="@+id/view_choose_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/app_button_guide_choose" />
-
-                <ImageView
-                    android:id="@+id/view_enter_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/app_button_guide_enter" />
-
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/text_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif"
-                android:singleLine="true"
-                android:text="@string/toast_enable_keyboard"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/button_guide_textsize"
-                android:textStyle="normal" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="@integer/step_layout_margin_percent" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/bt_step_two_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
-        android:weightSum="100">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="@integer/step_layout_margin_percent" />
-
-        <RelativeLayout
-            android:id="@+id/bt_step_two"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="@integer/step_layout_percent"
-            android:background="@drawable/guide_button_selector"
-            android:clipChildren="false">
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_choose" />
 
             <ImageView
-                android:id="@+id/image_button_guide_2"
+                android:id="@+id/view_enter_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/app_button_guide_2" />
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_enter" />
 
-            <FrameLayout
-                android:id="@+id/view_choose_two_container"
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/text_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:singleLine="true"
+            android:text="@string/toast_enable_keyboard"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/button_guide_textsize"
+            android:textStyle="normal" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/bt_step_two"
+        style="@style/MainGuideBgStyle"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/image_button_guide_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/app_button_guide_2" />
+
+        <FrameLayout
+            android:id="@+id/view_choose_two_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:id="@+id/view_choose_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp">
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_choose" />
 
-                <ImageView
-                    android:id="@+id/view_choose_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/app_button_guide_choose" />
-
-                <ImageView
-                    android:id="@+id/view_enter_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/app_button_guide_enter" />
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/text_two"
+            <ImageView
+                android:id="@+id/view_enter_two"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif"
-                android:singleLine="true"
-                android:text="@string/toast_select_keyboard"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/button_guide_textsize"
-                android:textStyle="normal"></TextView>
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_enter" />
+        </FrameLayout>
 
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/text_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:singleLine="true"
+            android:text="@string/toast_select_keyboard"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/button_guide_textsize"
+            android:textStyle="normal" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="@integer/step_layout_margin_percent" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -34,7 +34,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-r.txt'
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-d.txt'
         }
@@ -52,11 +52,18 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs project(':lib_keyboard_ui_modules').file('libs')
+    }
+}
+
 
 dependencies {
     compile project(':lib_keyboard_ui_modules')
     compile files('../libs/ihs/libThirdAds/AppNext/AppNextNativeAd.jar')
     compile files('../libs/ihs/libThirdAds/Avocarrot/avocarrot-sdk.jar')
+    compile files('../libs/ihs/libThirdAds/Yeahmobi/cloudssp.jar')
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
