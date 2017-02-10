@@ -205,14 +205,14 @@ public class MainActivity extends HSDeepLinkActivity {
                 ds.setColor(getResources().getColor(R.color.guide_bg_normal_color));
                 ds.setUnderlineText(true);
             }
-        }, 36, 52, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }, 39, 55, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
             @Override
             public void updateDrawState(TextPaint ds) {
                 ds.setColor(getResources().getColor(R.color.guide_bg_normal_color));
                 ds.setUnderlineText(true);
             }
-        }, 57, 71, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }, 60, 74, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         protocolText.setText(ss);
         protocolText.setMovementMethod(LinkMovementMethod.getInstance());
 

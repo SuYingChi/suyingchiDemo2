@@ -239,6 +239,7 @@
         android:paddingLeft="2dp"
         android:paddingTop="10dp"
         android:singleLine="true"
-        android:textColorHint="#ff8f8f8f" />
+        android:textColorHint="#ff8f8f8f"
+        android:visibility="gone"/>
 
 </RelativeLayout>
