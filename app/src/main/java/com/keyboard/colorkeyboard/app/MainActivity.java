@@ -197,22 +197,24 @@ public class MainActivity extends HSDeepLinkActivity {
         settings_languages_layoutLayoutParams.topMargin = (int) (screenHeight * 0.03646);
 
         protocolText = (TextView) findViewById(R.id.privacy_policy_text);
-        String policyText = getString(R.string.privacy_policy);
+        String serviceKeyText = getString(R.string.text_terms_of_service);
+        String policyKeyText = getString(R.string.text_privacy_policy);
+        String policyText = getResources().getString(R.string.privacy_policy,serviceKeyText,policyKeyText);
         SpannableString ss = new SpannableString(policyText);
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
             @Override
             public void updateDrawState(TextPaint ds) {
                 ds.setColor(getResources().getColor(R.color.guide_bg_normal_color));
-                ds.setUnderlineText(true);
+//                ds.setUnderlineText(true);
             }
-        }, 39, 55, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }, policyText.indexOf(serviceKeyText), policyText.indexOf(serviceKeyText) + serviceKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
             @Override
             public void updateDrawState(TextPaint ds) {
                 ds.setColor(getResources().getColor(R.color.guide_bg_normal_color));
-                ds.setUnderlineText(true);
+//                ds.setUnderlineText(true);
             }
-        }, 60, 74, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }, policyText.indexOf(policyKeyText), policyText.indexOf(policyKeyText) + policyKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         protocolText.setText(ss);
         protocolText.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -224,15 +226,12 @@ public class MainActivity extends HSDeepLinkActivity {
                 getResources().getDimension(R.dimen.guide_bg_radius)));
         RelativeLayout.LayoutParams stepOneLayoutParams = (RelativeLayout.LayoutParams) bt_step_one.getLayoutParams();
         RelativeLayout.LayoutParams stepTwoLayoutParams = (RelativeLayout.LayoutParams) bt_step_two.getLayoutParams();
-        RelativeLayout.LayoutParams protocolLayoutParams = (RelativeLayout.LayoutParams) protocolText.getLayoutParams();
         stepOneLayoutParams.setMargins(0, 0, 0, (int) (screenHeight * 0.03f));
         stepTwoLayoutParams.setMargins(0, 0, 0, (int) (screenHeight * 0.03f));
-        protocolLayoutParams.setMargins(0, 0, 0, (int) (screenHeight * 0.05f));
 
         if (getResources().getBoolean(R.bool.isTablet)) {
             stepOneLayoutParams.width = (int) (screenWidth * 0.45f);
             stepTwoLayoutParams.width = (int) (screenWidth * 0.45f);
-            protocolLayoutParams.width = (int) (screenWidth * 0.45f);
 
             final float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicHeight())
                     / ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicWidth());
@@ -261,7 +260,6 @@ public class MainActivity extends HSDeepLinkActivity {
         } else {
             stepOneLayoutParams.width = (int) (screenWidth * 0.75f);
             stepTwoLayoutParams.width = (int) (screenWidth * 0.75f);
-            protocolLayoutParams.width = (int) (screenWidth * 0.75f);
         }
 
 
