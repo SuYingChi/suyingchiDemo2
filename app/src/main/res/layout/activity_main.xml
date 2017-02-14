@@ -104,7 +104,7 @@
     <RelativeLayout
         android:id="@+id/bt_step_two"
         style="@style/MainGuideBgStyle"
-        android:layout_alignParentBottom="true">
+        android:layout_above="@+id/privacy_policy_text">
 
         <ImageView
             android:id="@+id/image_button_guide_2"
@@ -151,6 +151,19 @@
             android:textStyle="normal" />
 
     </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/privacy_policy_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ccffffff"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:textSize="11dp"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -228,6 +241,7 @@
         android:paddingLeft="2dp"
         android:paddingTop="10dp"
         android:singleLine="true"
-        android:textColorHint="#ff8f8f8f" />
+        android:textColorHint="#ff8f8f8f"
+        android:visibility="gone"/>
 
 </RelativeLayout>
