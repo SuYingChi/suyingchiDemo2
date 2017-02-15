@@ -162,7 +162,7 @@
         android:textColor="#ccffffff"
         android:gravity="center_horizontal"
         android:layout_marginBottom="10dp"
-        android:textSize="11dp"
+        android:textSize="13sp"
         />
 
     <LinearLayout

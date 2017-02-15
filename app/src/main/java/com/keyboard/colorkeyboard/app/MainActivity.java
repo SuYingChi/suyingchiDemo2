@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -204,14 +205,16 @@ public class MainActivity extends HSDeepLinkActivity {
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.setColor(getResources().getColor(R.color.guide_bg_normal_color));
+                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 //                ds.setUnderlineText(true);
             }
         }, policyText.indexOf(serviceKeyText), policyText.indexOf(serviceKeyText) + serviceKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.setColor(getResources().getColor(R.color.guide_bg_normal_color));
+                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 //                ds.setUnderlineText(true);
             }
         }, policyText.indexOf(policyKeyText), policyText.indexOf(policyKeyText) + policyKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
