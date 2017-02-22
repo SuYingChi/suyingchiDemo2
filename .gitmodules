@@ -28,3 +28,6 @@
 [submodule "libs/ihs/libInterstitialAds"]
 	path = libs/ihs/libInterstitialAds
 	url = http://git.ihandysoft.com/bingroup/bin_interstitialads_android.git
+[submodule "libs/ihs/libAdsCommon"]
+	path = libs/ihs/libAdsCommon
+	url = http://git.ihandysoft.com/bingroup/bin_adscommon_android.git
