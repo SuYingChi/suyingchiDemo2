@@ -270,6 +270,54 @@
          <meta-data
             android:name="io.fabric.ApiKey"
             android:value="feab1e2f778877ab60518c2d916f8f331b230358" />
+
+
+
+        <permission
+            android:name="${applicationId}.permission.FRAMEWORK_SECURITY"
+            android:protectionLevel="signature" />
+
+        <uses-permission android:name="${applicationId}.permission.FRAMEWORK_SECURITY" />
+
+        <provider
+            android:name="com.ihs.app.framework.inner.SessionProvider"
+            android:authorities="${applicationId}.framework_session"
+            android:enabled="true"
+            android:exported="false"/>
+        <receiver
+            android:name="com.ihs.app.framework.inner.PendingSessionEndReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="hs.app.session.PENDING_SESSION_END" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.ihs.commons.config.RemoteConfigProvider"
+            android:authorities="${applicationId}.framework_remoteconfig"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="com.ihs.commons.config.RemoteConfigReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="hs.diverse.session.SESSION_START" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.ihs.app.analytics.AnalyticsProvider"
+            android:authorities="${applicationId}.framework_analytics"
+            android:enabled="true"
+            android:exported="false" />
+
+        <provider
+            android:name="com.ihs.commons.preference.PreferenceProvider"
+            android:authorities="${applicationId}.framework_preference"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
