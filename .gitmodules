@@ -28,6 +28,3 @@
 [submodule "libs/ihs/libAdsCommon"]
 	path = libs/ihs/libAdsCommon
 	url = http://git.ihandysoft.com/bingroup/bin_adscommon_android.git
-[submodule "lib_keyboard_android"]
-	path = lib_keyboard_android
-	url = /Users/chenyuanming/ASProjects/app_colorkeyboard_android_direct_dependency/lib_keyboard_android
