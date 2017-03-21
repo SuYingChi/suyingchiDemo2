@@ -3,6 +3,8 @@
 
     <bool name="config_super_emoji_enabled">false</bool>
     <bool name="config_sticker_enabled">false</bool>
+    <bool name="is_show_full_screen_ad_when_theme_created">true</bool>
+
     <!-- preview -->
     <dimen name="config_key_preview_offset_electric">-5dp</dimen>
     <!-- space key -->
