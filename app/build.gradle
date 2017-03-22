@@ -66,8 +66,7 @@ dependencies {
     compile files('../libs/ihs/libThirdAds/Yeahmobi/cloudssp.jar')
     compile files('../libs/ihs/libThirdAds/Mobvista/mobvista_native.jar')
     compile(name: 'ihs/libThirdAds/Mobvista/mobvista_common', ext: 'aar')
-    compile(name: 'ihs/libAdsCommon/libAdAdapter', ext: 'aar')
-    compile(name: 'ihs/libAdsCommon/libAdsLoadController', ext: 'aar')
     compile 'com.facebook.android:facebook-android-sdk:4.10.0'
+
 }
 

@@ -29,4 +29,10 @@
         <item name="android:paddingTop">@dimen/guide_bg_padding_top</item>
         <item name="android:paddingBottom">@dimen/guide_bg_padding_top</item>
     </style>
+
+
+    <style name="NativeInterstitialActivity" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
 </resources>

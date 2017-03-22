@@ -26,4 +26,7 @@
     <string name="ga_fullscreen_theme_apply_show_ad">NativeAd_Colorkey_A(NativeAds)ThemeApplyFullScreenAd_Show</string>
     <string name="ga_fullscreen_theme_apply_click_ad">NativeAd_Colorkey_A(NativeAds)ThemeApplyFullScreenAd_Click</string>
     <string name="ga_fullscreen_theme_apply_display_ad">NativeAd_Colorkey_A(NativeAds)ThemeApplyFullScreenAd_DisplayTime</string>
+
+
+    <string name="taskAffinity_interstitial_ads">com.interstitial.ads</string>
 </resources>
