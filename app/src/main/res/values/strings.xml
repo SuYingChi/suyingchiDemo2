@@ -17,15 +17,15 @@
 
 
 
-    <string name="ga_fullscreen_theme_save_load_ad">NativeAd_Colorkey_A(NativeAds)TrialKeyboardFullScreenAd_Load</string>
-    <string name="ga_fullscreen_theme_save_show_ad">NativeAd_Colorkey_A(NativeAds)TrialKeyboardFullScreenAd_Show</string>
-    <string name="ga_fullscreen_theme_save_click_ad">NativeAd_Colorkey_A(NativeAds)TrialKeyboardFullScreenAd_Click</string>
-    <string name="ga_fullscreen_theme_save_display_ad">NativeAd_Colorkey_A(NativeAds)TrialKeyboardFullScreenAd_DisplayTime</string>
+    <string name="ga_fullscreen_theme_save_load_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Load</string>
+    <string name="ga_fullscreen_theme_save_show_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Show</string>
+    <string name="ga_fullscreen_theme_save_click_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Click</string>
+    <string name="ga_fullscreen_theme_save_display_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_DisplayTime</string>
     
-    <string name="ga_fullscreen_theme_apply_load_ad">NativeAd_Colorkey_A(NativeAds)ThemeApplyFullScreenAd_Load</string>
-    <string name="ga_fullscreen_theme_apply_show_ad">NativeAd_Colorkey_A(NativeAds)ThemeApplyFullScreenAd_Show</string>
-    <string name="ga_fullscreen_theme_apply_click_ad">NativeAd_Colorkey_A(NativeAds)ThemeApplyFullScreenAd_Click</string>
-    <string name="ga_fullscreen_theme_apply_display_ad">NativeAd_Colorkey_A(NativeAds)ThemeApplyFullScreenAd_DisplayTime</string>
+    <string name="ga_fullscreen_theme_apply_load_ad">InterstitialAd_Colorkey_A(InterstitialAds)ThemeApplyFullScreenAd_Load</string>
+    <string name="ga_fullscreen_theme_apply_show_ad">InterstitialAd_Colorkey_A(InterstitialAds)ThemeApplyFullScreenAd_Show</string>
+    <string name="ga_fullscreen_theme_apply_click_ad">InterstitialAd_Colorkey_A(InterstitialAds)ThemeApplyFullScreenAd_Click</string>
+    <string name="ga_fullscreen_theme_apply_display_ad">InterstitialAd_Colorkey_A(InterstitialAds)ThemeApplyFullScreenAd_DisplayTime</string>
 
 
     <string name="taskAffinity_interstitial_ads">com.interstitial.ads</string>
