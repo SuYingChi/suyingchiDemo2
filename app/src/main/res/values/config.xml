@@ -29,4 +29,5 @@
     <fraction name="config_key_hint_label_ratio_electric">24%</fraction>
     <fraction name="config_key_hint_label_off_center_ratio_electric">320%</fraction>
 
+    <bool name="config_slots_unlimited">true</bool>
 </resources>
