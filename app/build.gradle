@@ -4,8 +4,8 @@ apply plugin: 'com.jakewharton.hugo'
 
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.keyboard.colorkeyboard"
@@ -52,15 +52,21 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs project(':lib_keyboard_ui_modules').file('libs')
+    }
+}
+
 
 dependencies {
     compile project(':lib_keyboard_ui_modules')
     compile files('../libs/ihs/libThirdAds/AppNext/AppNextNativeAd.jar')
     compile files('../libs/ihs/libThirdAds/Avocarrot/avocarrot-sdk.jar')
-    compile 'com.google.android.gms:play-services-analytics:8.4.0'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
-    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.8.0'
+    compile files('../libs/ihs/libThirdAds/Yeahmobi/cloudssp.jar')
+    compile files('../libs/ihs/libThirdAds/Mobvista/mobvista_native.jar')
+    compile(name: 'ihs/libThirdAds/Mobvista/mobvista_common', ext: 'aar')
+    compile 'com.facebook.android:facebook-android-sdk:4.10.0'
 
 }
 

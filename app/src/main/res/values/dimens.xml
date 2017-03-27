@@ -25,6 +25,8 @@
     <dimen name="main_logo_img_margintop">10dp</dimen>
     <dimen name="button_settings_textsize">14sp</dimen>
     <dimen name="button_guide_textsize">17sp</dimen>
+    <dimen name="guide_bg_radius">8dp</dimen>
+    <dimen name="guide_bg_padding_top">12dp</dimen>
 
 
     <!-- gif -->

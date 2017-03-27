@@ -13,13 +13,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -39,6 +45,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
@@ -46,12 +53,15 @@ import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.keyboard.colorkeyboard.R;
 import com.keyboard.colorkeyboard.utils.Constants;
 
@@ -66,29 +76,24 @@ public class MainActivity extends HSDeepLinkActivity {
     private final static String APP_STEP_ONE_HINT = "app_step_one_hint";
 
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
-    private final static float BUTTON_BACKGROUND_OPACITY_ENABLED = 1f;
-    private final static float BUTTON_BACKGROUND_OPACITY_INVISIBLE = 0f;
+
+    private final static float SCALE_MIN = 0.5f;
+    private final static float SCALE_MAX = 1.5f;
 
     private boolean versionFilterForRecordEvent;
 
     public enum CurrentUIStyle {
         UISTYLE_STEP_ONE,
         UISTYLE_STEP_TWO,
-        UISTYLE_STEP_THREE_NORMAL,
         UISTYLE_STEP_THREE_TEST,
     }
 
-    private static float ratio = 0.7f;
-    private static float move = 0.15f;
-
     private View rootView;
     private SharedPreferences mPrefs;
-    private TextView view_title_text;
     private View view_logo_img;
     private View bt_step_one;
     private View bt_step_two;
-    private View bt_step_one_layout;
-    private View bt_step_two_layout;
+    private TextView protocolText;
     private TextView bt_design_theme;
     private LinearLayout settings_languages_layout;
     private TextView bt_settings;
@@ -159,7 +164,7 @@ public class MainActivity extends HSDeepLinkActivity {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(INSTRUCTION_SCREEN_VIEWED);
         }
-        rootView = (View) this.findViewById(R.id.view_root);
+        rootView = this.findViewById(R.id.view_root);
 
         WindowManager wm = this.getWindowManager();
         Display display = wm.getDefaultDisplay();
@@ -168,47 +173,69 @@ public class MainActivity extends HSDeepLinkActivity {
         int screenWidth = size.x;
         final int screenHeight = size.y;
 
-
         Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
         getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
 
-
-        view_title_text = (TextView) this.findViewById(R.id.view_title_text);
         view_logo_img = this.findViewById(R.id.view_logo_img);
-        bt_step_one = this.findViewById(R.id.bt_step_one);
-        bt_step_two = this.findViewById(R.id.bt_step_two);
-        bt_step_one_layout =  this.findViewById(R.id.bt_step_one_layout);
-        bt_step_two_layout = this.findViewById(R.id.bt_step_two_layout);
         img_rainbow = (ImageView) this.findViewById(R.id.view_logo_img);
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
         img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
+        bt_settings = (TextView) this.findViewById(R.id.bt_settings);
+        bt_languages = (TextView) this.findViewById(R.id.bt_languages);
+        edit_text_test = (EditText) this.findViewById(R.id.edit_text_test);
 
         bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
         bt_design_theme.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.entrance_customize_button)));
         float density = getResources().getDisplayMetrics().density;
         bt_design_theme.setPadding((int) density * 20, (int) density * 10, (int) density * 20, (int) density * 10);
+        LinearLayout.LayoutParams designThemeLayoutParam = (LinearLayout.LayoutParams) bt_design_theme.getLayoutParams();
+        designThemeLayoutParam.topMargin = (int) (screenHeight * 0.09);
 
         settings_languages_layout = (LinearLayout) this.findViewById(R.id.settings_languages_layout);
-        bt_settings = (TextView) this.findViewById(R.id.bt_settings);
-        bt_languages = (TextView) this.findViewById(R.id.bt_languages);
-
-        edit_text_test = (EditText) this.findViewById(R.id.edit_text_test);
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
-        registerReceiver(imeChangeRecevier, filter);
-
-        LinearLayout.LayoutParams designThemeLayouParam = (LinearLayout.LayoutParams) bt_design_theme.getLayoutParams();
-        designThemeLayouParam.topMargin = (int) (screenHeight * 0.09);
-
         LinearLayout.LayoutParams settings_languages_layoutLayoutParams = (LinearLayout.LayoutParams) settings_languages_layout.getLayoutParams();
         settings_languages_layoutLayoutParams.topMargin = (int) (screenHeight * 0.03646);
 
-        if (getResources().getBoolean(R.bool.isTablet)) {
+        protocolText = (TextView) findViewById(R.id.privacy_policy_text);
+        String serviceKeyText = getString(R.string.text_terms_of_service);
+        String policyKeyText = getString(R.string.text_privacy_policy);
+        String policyText = getResources().getString(R.string.privacy_policy,serviceKeyText,policyKeyText);
+        SpannableString ss = new SpannableString(policyText);
+        ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//                ds.setUnderlineText(true);
+            }
+        }, policyText.indexOf(serviceKeyText), policyText.indexOf(serviceKeyText) + serviceKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//                ds.setUnderlineText(true);
+            }
+        }, policyText.indexOf(policyKeyText), policyText.indexOf(policyKeyText) + policyKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        protocolText.setText(ss);
+        protocolText.setMovementMethod(LinkMovementMethod.getInstance());
 
-            int button_width = (int) (screenWidth * 0.5);
+        bt_step_one = this.findViewById(R.id.bt_step_one);
+        bt_step_two = this.findViewById(R.id.bt_step_two);
+        bt_step_one.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
+                getResources().getDimension(R.dimen.guide_bg_radius)));
+        bt_step_two.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
+                getResources().getDimension(R.dimen.guide_bg_radius)));
+        RelativeLayout.LayoutParams stepOneLayoutParams = (RelativeLayout.LayoutParams) bt_step_one.getLayoutParams();
+        RelativeLayout.LayoutParams stepTwoLayoutParams = (RelativeLayout.LayoutParams) bt_step_two.getLayoutParams();
+        stepOneLayoutParams.setMargins(0, 0, 0, (int) (screenHeight * 0.03f));
+        stepTwoLayoutParams.setMargins(0, 0, 0, (int) (screenHeight * 0.03f));
+
+        if (getResources().getBoolean(R.bool.isTablet)) {
+            stepOneLayoutParams.width = (int) (screenWidth * 0.45f);
+            stepTwoLayoutParams.width = (int) (screenWidth * 0.45f);
+
             final float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicHeight())
                     / ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicWidth());
 
@@ -224,7 +251,6 @@ public class MainActivity extends HSDeepLinkActivity {
                 }
             });
 
-
             Paint p1 = new Paint();
             p1.setTextSize(getResources().getDimension(R.dimen.main_logo_title_textsize));
             Rect result = new Rect();
@@ -234,51 +260,12 @@ public class MainActivity extends HSDeepLinkActivity {
             logImgLayoutParams.height = textHeight;
             logImgLayoutParams.width = (int) (textHeight / ratio_log_img);
             logImgLayoutParams.topMargin = 0;
-
-            int step_button_width = (int) (button_width * 1.1);
-
-            float ratio_button_guide_one = ((float) getResources().getDrawable(R.drawable.app_button_guide_bg).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_bg).getIntrinsicWidth());
-            float ratio_img_enter = ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicWidth());
-            float ratio_img_choose = ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicWidth());
-
-            RelativeLayout.LayoutParams step_one_linearParams = new RelativeLayout.LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
-            step_one_linearParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            step_one_linearParams.topMargin = (int) (screenHeight * 0.7);
-            bt_step_one_layout.setLayoutParams(step_one_linearParams);
-
-            RelativeLayout.LayoutParams step_one_linearParams2 = new RelativeLayout.LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
-            step_one_linearParams2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-            step_one_linearParams2.addRule(RelativeLayout.BELOW, R.id.bt_step_one_layout);
-            step_one_linearParams2.topMargin = (int) (step_button_width * 0.07);
-            bt_step_two_layout.setLayoutParams(step_one_linearParams2);
-
-            RelativeLayout.LayoutParams step_one_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
-                    (int) (step_button_width * 0.035 * ratio_img_enter));
-            step_one_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
-            img_enter_one.setLayoutParams(step_one_relativeParams3);
-
-            RelativeLayout.LayoutParams step_one_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
-                    (int) (step_button_width * 0.094 * ratio_img_choose));
-            step_one_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
-            img_choose_one.setLayoutParams(step_one_relativeParams4);
-
-            RelativeLayout.LayoutParams step_two_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
-                    (int) (step_button_width * 0.035 * ratio_img_enter));
-            step_two_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
-            img_enter_two.setLayoutParams(step_two_relativeParams3);
-
-            RelativeLayout.LayoutParams step_two_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
-                    (int) (step_button_width * 0.094 * ratio_img_choose));
-            step_two_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
-            img_choose_two.setLayoutParams(step_two_relativeParams4);
+        } else {
+            stepOneLayoutParams.width = (int) (screenWidth * 0.75f);
+            stepTwoLayoutParams.width = (int) (screenWidth * 0.75f);
         }
+
+
         bt_step_one.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -351,6 +338,10 @@ public class MainActivity extends HSDeepLinkActivity {
             }
         });
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
+        registerReceiver(imeChangeRecevier, filter);
+
         this.refreshUIState();
     }
 
@@ -411,33 +402,6 @@ public class MainActivity extends HSDeepLinkActivity {
             setEventRecorded(APP_STEP_ONE_HINT);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT);
         }
-
-
-//        // Create custom dialog object
-//        final Dialog dialog = new Dialog(this);
-//        // hide to default title for Dialog
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//
-//        // inflate the layout dialog_layout.xml and set it as contentView
-//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View view = inflater.inflate(R.layout.enable_keyboard_dialog, null, false);
-//        dialog.setCanceledOnTouchOutside(false);
-//        dialog.setContentView(view);
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-//
-//        Button positiveBtn = (Button) dialog.findViewById(R.id.enable_alert_btn_ok);
-//        positiveBtn.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//                startActivity(new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS));
-//                isInStepOne = true;
-//                Toast toast = Toast.makeText(MainActivity.this, R.string.toast_enable_keyboard, Toast.LENGTH_LONG);
-//                toast.show();
-//            }
-//        });
-//
-//        dialog.show();
     }
 
     public class ImeSettingsContentObserver extends ContentObserver {
@@ -551,11 +515,9 @@ public class MainActivity extends HSDeepLinkActivity {
             bt_design_theme.setVisibility(View.INVISIBLE);
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
-            bt_step_one.setClickable(true);
-            bt_step_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.guide_button_selector));
+            bt_step_one.setEnabled(true);
             bt_step_one.setAlpha(1.0f);
-            bt_step_two.setClickable(false);
-            bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
+            bt_step_two.setEnabled(false);
             bt_step_two.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
             bt_design_theme.setAlpha(0);
             bt_settings.setAlpha(0);
@@ -585,16 +547,13 @@ public class MainActivity extends HSDeepLinkActivity {
             bt_step_one.setClickable(false);
             if (isInStepOne) {
                 bt_step_one.setAlpha(1.0f);
-                bt_step_two.setClickable(false);
-                bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
+                bt_step_one.setEnabled(false);
                 bt_step_two.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
             } else {
                 bt_step_one.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
-                bt_step_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
-
-                bt_step_two.setClickable(true);
+                bt_step_one.setEnabled(false);
                 bt_step_two.setAlpha(1.0f);
-                bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.guide_button_selector));
+                bt_step_two.setEnabled(true);
             }
             bt_design_theme.setAlpha(0);
             bt_settings.setAlpha(0);
@@ -643,8 +602,18 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
-            HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
-            startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+            final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
+
+            if (setThemeSucceed) {
+                startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+            } else {
+                HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
+                if (keyboardTheme != null) {
+                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                    HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                }
+            }
+
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
@@ -712,7 +681,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private void doSetpOneFinishAnimation() {
 
         AnimationSet animationSet = new AnimationSet(true);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 2.0f, 1f, 2.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_MIN, SCALE_MAX, SCALE_MIN, SCALE_MAX, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(350);
         animationSet.addAnimation(scaleAnimation);
         animationSet.setAnimationListener(new AnimationListener() {
@@ -737,7 +706,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private void doSetpOneFinishAnimation2() {
-        ScaleAnimation scaleAnimation = new ScaleAnimation(2.0f, 1.0f, 2.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_MAX, 1.0f, SCALE_MAX, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(350);
         scaleAnimation.setFillAfter(true);
         scaleAnimation.setAnimationListener(new AnimationListener() {
@@ -765,7 +734,7 @@ public class MainActivity extends HSDeepLinkActivity {
         alphaAnimation.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                bt_step_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.app_button_guide_disable_bg));
+                bt_step_one.setEnabled(false);
             }
 
             @Override
@@ -796,8 +765,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                bt_step_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.guide_button_selector));
-                bt_step_two.setClickable(true);
+                bt_step_two.setEnabled(true);
             }
         });
         bt_step_two.startAnimation(alphaAnimation);
@@ -817,7 +785,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 alphaAnimation.setDuration(300);
                 animationSet.addAnimation(alphaAnimation);
 
-                ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1.5f, 0.5f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_MIN, SCALE_MAX, SCALE_MIN, SCALE_MAX, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 scaleAnimation.setDuration(300);
                 animationSet.addAnimation(scaleAnimation);
                 animationSet.setAnimationListener(new AnimationListener() {
@@ -842,7 +810,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private void doSetpTwoFinishAnimation2() {
-        ScaleAnimation scaleAnimation = new ScaleAnimation(1.5f, 1.0f, 1.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_MAX, 1.0f, SCALE_MAX, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(350);
         scaleAnimation.setAnimationListener(new AnimationListener() {
             @Override

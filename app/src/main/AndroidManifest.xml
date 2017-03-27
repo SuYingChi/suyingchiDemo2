@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.keyboard.colorkeyboard"
     android:installLocation="internalOnly"
-    android:versionCode="21"
-    android:versionName="2.2.3">
+    android:versionCode="29"
+    android:versionName="2.2.7">
 
     <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook" />
 
@@ -20,7 +20,18 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.GET_PACKAGE_SIZE"
+        tools:node="remove" />
+
+    <permission
+        android:name="${applicationId}.permission.FRAMEWORK_SECURITY"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="${applicationId}.permission.FRAMEWORK_SECURITY" />
 
     <!-- <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" /> -->
 
@@ -35,6 +46,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <uses-permission android:name="com.android.vending.BILLING" />
+
     <permission
         android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -45,8 +57,8 @@
         android:icon="@drawable/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
         android:largeHeap="true"
-        android:theme="@style/AppBaseTheme"
         android:supportsRtl="false"
+        android:theme="@style/AppBaseTheme"
         tools:replace="android:label, android:supportsRtl">
 
         <!-- required by libAppFramework -->
@@ -77,26 +89,15 @@
 
         <!-- android:excludeFromRecents="true"  -->
         <activity
-	        android:name="com.ihs.app.alerts.impl.AlertActivity"
+            android:name="com.ihs.app.alerts.impl.AlertActivity"
             android:launchMode="singleInstance"
-	        android:taskAffinity=""
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-     <!-- Add the following meta-data for devices running Google Play service. -->
+        <!-- Add the following meta-data for devices running Google Play service. -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <!-- Data tracker -->
-        <receiver android:name="net.appcloudbox.receiver.VReceiver" >
-            <intent-filter android:priority="1000">
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
 
         <!--
          Optionally, register AnalyticsReceiver and AnalyticsService to support background
@@ -143,43 +144,48 @@
 
         <activity
             android:name="com.keyboard.colorkeyboard.app.MainActivity"
-            android:launchMode="singleTask"
             android:excludeFromRecents="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
 
-        <activity android:name=".app.SplashActivity"
-                  android:theme="@style/SplashTheme"
-                  android:screenOrientation="portrait">
-	        <intent-filter>
-		        <action android:name="android.intent.action.MAIN" />
-		        <category android:name="android.intent.category.LAUNCHER" />
-	        </intent-filter>
-	        <intent-filter>
-		        <action android:name="android.intent.action.VIEW" />
-		        <category android:name="android.intent.category.DEFAULT"/>
-		        <data
-			        android:scheme="rainbowKeyboard"
-			        android:host="theme"
-			        />
-	        </intent-filter>
-	        <intent-filter>
-		        <action android:name="android.intent.action.VIEW" />
-		        <category android:name="android.intent.category.DEFAULT"/>
-		        <category android:name="android.intent.category.BROWSABLE"/>
-		        <data android:scheme="http"
-		              android:host="@string/deeplink_site"
-		              android:pathPrefix="/"/>
-	        </intent-filter>
-	        <intent-filter>
-		        <action android:name="android.intent.action.VIEW" />
-		        <category android:name="android.intent.category.DEFAULT"/>
-		        <category android:name="android.intent.category.BROWSABLE"/>
-		        <data android:scheme="http"
-		              android:host="@string/deeplink_site" />
-	        </intent-filter>
+        <activity
+            android:name=".app.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="theme"
+                    android:scheme="rainbowKeyboard" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/deeplink_site"
+                    android:pathPrefix="/"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/deeplink_site"
+                    android:scheme="http" />
+            </intent-filter>
         </activity>
         <!-- The service and activity below are required for triggering voice recognition. -->
         <service android:name="com.ihs.inputmethod.voice.ServiceHelper" />
@@ -241,8 +247,7 @@
             android:name="com.ihs.iap.googleplay.PurchaseActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent"></activity>
 
         <activity
             android:name="com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2"
@@ -265,9 +270,80 @@
             </intent-filter>
         </activity>
 
-         <meta-data
+        <meta-data
             android:name="io.fabric.ApiKey"
             android:value="feab1e2f778877ab60518c2d916f8f331b230358" />
+
+        <provider
+            android:name="com.ihs.app.framework.inner.SessionProvider"
+            android:authorities="${applicationId}.framework_session"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="com.ihs.app.framework.inner.PendingSessionEndReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="hs.app.session.PENDING_SESSION_END" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.ihs.commons.config.RemoteConfigProvider"
+            android:authorities="${applicationId}.framework_remoteconfig"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="com.ihs.commons.config.RemoteConfigReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="hs.diverse.session.SESSION_START" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.ihs.app.analytics.AnalyticsProvider"
+            android:authorities="${applicationId}.framework_analytics"
+            android:enabled="true"
+            android:exported="false" />
+
+        <provider
+            android:name="com.ihs.commons.preference.PreferenceProvider"
+            android:authorities="${applicationId}.framework_preference"
+            android:enabled="true"
+            android:exported="false" />
+
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/fb_app_id" />
+
+        <activity
+            android:name="com.ihs.interstitialads.nativeads.NativeInterstitialActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:taskAffinity="@string/taskAffinity_interstitial_ads"
+            android:theme="@style/NativeInterstitialActivity" />
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:taskAffinity="@string/taskAffinity_interstitial_ads"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <activity
+            android:name="com.facebook.ads.InterstitialAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:taskAffinity="@string/taskAffinity_interstitial_ads" />
+
+        <activity
+            android:name="com.acb.adadapter.NativeInterstitialAdapter.AcbNativeInterstitialActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity="@string/taskAffinity_interstitial_ads" />
+        <!-- required by libInterstitialAds end -->
     </application>
 
 </manifest>
