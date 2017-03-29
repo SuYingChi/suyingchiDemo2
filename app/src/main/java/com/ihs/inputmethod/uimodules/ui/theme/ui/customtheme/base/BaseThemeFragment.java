@@ -82,7 +82,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
     public void refreshHeaderNextButtonState() {
         boolean isNextButtonEnabled = true;
         for (Object item : chosedItems.values()) {
-            if(item instanceof KCBaseElement) {
+            if (item instanceof KCBaseElement) {
                 isNextButtonEnabled &= ((KCBaseElement) item).hasLocalContent();
             }
         }
@@ -121,7 +121,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
     }
 
     public KCCustomThemeData getCustomThemeData() {
-        return getCustomThemeActivity().getCustomThemeData();
+        return getCustomThemeActivity() == null ? null : getCustomThemeActivity().getCustomThemeData();
     }
 
     public void addChosenItem(KCBaseElement item) {
@@ -177,7 +177,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
                     for (final CategoryItem<?> category : categories) {
                         adapter.register(category.itemClazz, category.provider);
                         Category category1 = new Category(category.categoryName);
-                        if(!data.contains(category1)) {
+                        if (!data.contains(category1)) {
                             data.add(category1);
                         }
                         data.addAll(category.data);

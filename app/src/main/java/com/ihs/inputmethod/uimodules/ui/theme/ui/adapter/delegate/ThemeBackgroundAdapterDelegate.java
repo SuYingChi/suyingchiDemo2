@@ -186,7 +186,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
                             adInfo.hasAd = true;
                             backgrounds.add(adInfo.position, adInfo);
-                            notifyItemInserted(adInfo.position);
+                            notifyDataSetChanged();
+//                            notifyItemInserted(adInfo.position);
                         }
 
                     });

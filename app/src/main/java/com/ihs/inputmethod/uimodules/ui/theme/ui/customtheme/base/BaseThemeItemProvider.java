@@ -41,7 +41,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected F fragment;
 
 
-
     public Handler handler = new Handler(Looper.getMainLooper());
     public BaseItemHolder lastCheckedHolder;
     public Object lastCheckedItem;
@@ -158,6 +157,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected Drawable getBackgroundDrawable(Object item) {
         return null;
     }
+
     protected Drawable getDarkerBackgroundDrawable() {
         return null;
     }
@@ -246,7 +246,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     protected void setItemDrawable(@NonNull BaseItemHolder holder, @NonNull Object item) {
         //content
-        Drawable drawable = ((KCBaseElement)item).getPreview();
+        Drawable drawable = ((KCBaseElement) item).getPreview();
         //如果icon不存在，则下载
         if (drawable != null) {
             //content view
@@ -370,12 +370,11 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                     @Override
                     public void run() {
                         holder.mProgressView.setVisibility(View.INVISIBLE);
-                        if(fragment.getCustomThemeData().isElementChecked(item)) {
+                        if (fragment.getCustomThemeData() != null && fragment.getCustomThemeData().isElementChecked(item)) {
                             showPurchaseAlertIfNeeded(item);
                             selectItem(holder, (KCBaseElement) item);
                             fragment.refreshKeyboardView();
-                        }
-                        else {
+                        } else {
                             holder.mCheckImageView.setVisibility(View.INVISIBLE);
                         }
                         holder.setIsRecyclable(true);
@@ -399,7 +398,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     }
 
     protected void resetToLastItem() {
-        if(lastCheckedItem != null) {
+        if (lastCheckedItem != null) {
             addCustomData((KCBaseElement) lastCheckedItem);
             fragment.notifyAdapterOnMainThread();
         }
