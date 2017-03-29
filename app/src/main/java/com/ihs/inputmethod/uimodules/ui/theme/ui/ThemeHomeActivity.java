@@ -250,7 +250,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
 
-        if (HSInputMethod.isCurrentIMESelected()) {
+        //如果是第一次进入页面并且当前键盘没有被选为自己则弹框。
+        if (!HSInputMethod.isCurrentIMESelected()) {
+            handler.sendEmptyMessageDelayed(HANDLER_SHOW_ACTIVE_DIALOG, 500);
+        } else {
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
