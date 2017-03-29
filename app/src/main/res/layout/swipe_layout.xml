@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              android:background="@drawable/preference_item_background">
+
+	<TextView
+		android:id="@+id/title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="@dimen/header_preference_padding_left"
+		android:textColor="@color/settings_switch_text_color"
+		android:textSize="@dimen/header_preference_main_text_size"/>
+
+	<LinearLayout
+		android:id="@+id/kbd_layout_bg"
+		android:orientation="horizontal"
+		android:background="@drawable/anguage_switch_layout_bg"
+		android:layout_marginLeft="@dimen/header_preference_padding_left"
+		android:layout_gravity="center_vertical"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<ImageView
+			android:layout_margin="5dp"
+			android:scaleType="centerInside"
+			android:src="@drawable/app_language_switch_layout_keyboard"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"/>
+
+		<TextView
+			android:id="@+id/kbd_layout_name"
+			android:textColor="#414141"
+			android:textSize="12sp"
+			android:text="QWERTY"
+			android:gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"/>
+
+		<ImageView
+			android:layout_margin="5dp"
+			android:scaleType="centerInside"
+			android:src="@drawable/app_language_switch_layout_arrow"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"/>
+
+	</LinearLayout>
+
+	<View
+		android:layout_weight="1"
+		android:layout_width="0dp"
+		android:layout_height="match_parent"/>
+
+	<ImageView
+		android:id="@+id/tick"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="@dimen/header_preference_padding_right"
+		android:src="@drawable/settings_language_tick"
+		android:visibility="invisible"/>
+
+</LinearLayout>

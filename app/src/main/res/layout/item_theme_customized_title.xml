@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/UiModuleThemeTitleLayoutView"
+	android:clickable="true">
+
+	<TextView
+		android:id="@+id/customized_title"
+		style="@style/UiModuleThemeTitleTextView"
+		android:layout_gravity="center_vertical"
+		android:layout_weight="1"/>
+
+	<FrameLayout
+		android:id="@+id/edit_layout"
+		android:layout_width="64dp"
+		android:layout_height="match_parent"
+		android:layout_gravity="center"
+		android:foreground="?attr/selectableItemBackgroundBorderless"
+		android:paddingLeft="4dp"
+		android:paddingRight="4dp"
+		>
+
+		<ImageView
+			android:id="@+id/delete_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:src="@drawable/theme_edit_button_light"
+			/>
+
+		<TextView
+			android:id="@+id/done_button"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"
+			android:layout_margin="5dp"
+			android:background="@drawable/edit_done_bg"
+			android:gravity="center"
+			android:paddingLeft="5dp"
+			android:paddingRight="5dp"
+			android:text="@string/done"
+			android:textColor="@color/theme_text_title"
+			android:textSize="11sp"
+			android:visibility="gone"/>
+
+	</FrameLayout>
+
+</LinearLayout>

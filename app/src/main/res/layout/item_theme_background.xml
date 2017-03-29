@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    app:cardBackgroundColor="@color/white_standard"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/common_round_corner"
+    app:cardPreventCornerOverlap="false"
+    >
+
+    <com.ihs.keyboardutils.view.HSGifImageView
+        android:id="@+id/background_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:corner_radius="@dimen/common_round_corner"
+        android:scaleType="centerCrop"/>
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/background_new_mark"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:riv_corner_radius="@dimen/common_round_corner"/>
+
+    <ImageView
+        android:id="@+id/ad_call_to_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_ad_label"
+        android:visibility="gone"/>
+
+</android.support.v7.widget.CardView>

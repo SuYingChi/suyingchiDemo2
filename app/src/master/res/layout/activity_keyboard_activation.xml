@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2a9de8"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/view_img_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/app_title_image" />
+
+    <Button
+        android:id="@+id/bt_step_two"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/fast_charge_toggle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:clipChildren="false"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/tv_set_up_manually"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+    <View
+        android:id="@+id/fast_charge_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/bt_step_one"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/bt_step_two"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:clipChildren="false"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/tv_1_tap_to_set_up_keyboard"
+        android:textColor="#2a9de8"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+
+</RelativeLayout>

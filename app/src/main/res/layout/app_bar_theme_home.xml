@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 tools:context=".ui.theme.ui.ThemeHomeActivity">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            <ImageView
+                android:id="@+id/apk_update_tip"
+                style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:foregroundGravity="center"
+                android:src="@drawable/apk_update_tip"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <!--android:background="#ffe92d"
+                android:background="#FBC02D"-->
+        <TextView
+            android:id="@+id/tv_enable_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_activation_tip"
+            android:drawableRight="@drawable/tv_enable_keyboard_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/tv_enable_keyboard_tip"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:typeface="sans"
+            android:visibility="visible"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <FrameLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/theme_activity_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+    <LinearLayout
+        android:id="@+id/home_create_theme_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:clickable="true"
+        android:background="@drawable/home_create_keyboard_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/home_create_keyboard"
+            android:drawablePadding="9dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/home_create_keyboard"
+            android:textColor="#ffffff"
+            android:textSize="16dp"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

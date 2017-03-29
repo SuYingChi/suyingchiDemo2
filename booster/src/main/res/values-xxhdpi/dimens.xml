@@ -1,0 +1,87 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="main_memory_unit_size">20sp</dimen>
+    <dimen name="main_memory_text_size">24sp</dimen>
+
+    <!--dashboard-->
+    <dimen name="main_dashboard_speed_text_size">15sp</dimen>
+    <dimen name="main_dashboard_speed_margin_top">-25dp</dimen>
+
+    <dimen name="main_battery_warning_text_size">16sp</dimen>
+    <dimen name="main_entrance_text_margintop">0dp</dimen>
+    <dimen name="main_boost_btn_marginbottom">8dp</dimen>
+    <dimen name="main_highligt_margintop">140dp</dimen>
+    <dimen name="main_memory_junk_marginbottom">4dp</dimen>
+    <dimen name="main_apps_list_text_size">16sp</dimen>
+    <dimen name="main_apps_list_text_margintop">10dp</dimen>
+    <dimen name="main_apps_list_icon_size">40dp</dimen>
+    <dimen name="alarm_apps_list_icon_size">30dp</dimen>
+    <dimen name="main_boost_btn_height">66dp</dimen>
+    <dimen name="titlebar_title_textsize">20sp</dimen>
+    <dimen name="divide_line_height">2px</dimen>
+    <dimen name="list_item_height">70dp</dimen>
+    <dimen name="list_item_height_for_junk_clean">59dp</dimen>
+    <dimen name="memory_size_textview_height">78dp</dimen>
+    <dimen name="memory_size_text_size">78sp</dimen>
+    <dimen name="memory_size_text_size_scaled_min">36sp</dimen>
+    <dimen name="unit_text_size">24sp</dimen>
+    <dimen name="unit_text_size_scaled_min">12sp</dimen>
+    <dimen name="unit_text_tip_size">16sp</dimen>
+    <dimen name="unit_text_tip_size_scaled_min">12sp</dimen>
+    <dimen name="used_tip_size">12sp</dimen>
+
+    <dimen name="battery_remaining_time_tip_size">18sp</dimen>
+    <dimen name="battery_remaining_time_tip_size_min">16sp</dimen>
+    <dimen name="battery_remaining_time_value">45sp</dimen>
+    <dimen name="battery_remaining_time_value_min">28sp</dimen>
+    <dimen name="battery_remaining_time_unit">30sp</dimen>
+    <dimen name="battery_remaining_time_unit_min">28sp</dimen>
+    <dimen name="battery_saved_time_tip">16sp</dimen>
+    <dimen name="battery_saved_time_value">20sp</dimen>
+    <dimen name="cpu_status_large_size">20sp</dimen>
+    <dimen name="cpu_status_small_size">16sp</dimen>
+    <dimen name="cpu_temperature_small_size">36sp</dimen>
+    <dimen name="cpu_temperature_large_size">61sp</dimen>
+
+    <dimen name="main_entrance_text_size">13sp</dimen>
+
+    <dimen name="battery_reddot_marginbotton">16sp</dimen>
+    <dimen name="main_entrance_name_margintop">-2dp</dimen>
+
+    <dimen name="detail_subtitle_height">36dp</dimen>
+    <dimen name="detail_subtitle_textsize">14sp</dimen>
+
+    <dimen name="main_boost_btn_text_size">20sp</dimen>
+    <dimen name="battery_opbtn_latertext_size">18sp</dimen>
+
+    <dimen name="battery_op_stop_app_txt_size">20sp</dimen>
+
+    <dimen name="expandable_child_height">72dp</dimen>
+    <dimen name="expandable_foot_view_height">108dp</dimen>
+    <dimen name="main_entrance_detail_margintop">0dp</dimen>
+    <dimen name="boost_left_textsize">56sp</dimen>
+
+    <dimen name="boost_mb_textsize">20sp</dimen>
+    <dimen name="boost_mc_textsize">15sp</dimen>
+    <dimen name="number_margin_top">-12dp</dimen>
+    <dimen name="number_margin_left">0dp</dimen>
+
+    <dimen name="funccard_first_textsize">18sp</dimen>
+    <dimen name="funccard_second_textsize">10sp</dimen>
+    <dimen name="funccard_text_paddingleft">0dp</dimen>
+
+    <dimen name="junk_pic_margintop">1dp</dimen>
+
+    <dimen name="card_paddingright">1dp</dimen>
+    <dimen name="mb_paddingtop">0dp</dimen>
+    <dimen name="robot_margintop">0dp</dimen>
+    ///////////////////////////////cpu
+    <dimen name="app_number_marginleft">-6dp</dimen>
+
+    <dimen name="ad_txt_module_title_one">37dp</dimen>
+    <dimen name="ad_txt_module_title_two">18dp</dimen>
+	<dimen name="ad_txt_module_label">18dp</dimen>
+	<dimen name="ad_txt_module_tip">11dp</dimen>
+    <dimen name="ad_btn_module_one">15dp</dimen>
+    <dimen name="ad_btn_module_two">20dp</dimen>
+</resources>

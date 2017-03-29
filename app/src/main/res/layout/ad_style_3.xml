@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/ad_style3_bg"
+        android:minHeight="40dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="2dp"
+            android:background="@android:color/holo_red_dark"
+            android:padding="2dp">
+
+            <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+                android:id="@+id/ad_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:maxHeight="25dp"
+                android:maxWidth="25dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ad_engine_app_icon" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="12dp">
+
+            <TextView
+                android:id="@+id/ad_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="title desc"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ad_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="sub desc"
+                android:textColor="@color/black_standard"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/ad_call_to_action"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/charging_ad_button_bg"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLength="20"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:text="download"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <FrameLayout
+                android:id="@+id/ad_choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|top" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/layout_no_body"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:visibility="gone">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/no_body_ad_call_to_action"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="18dp"-->
+    <!--android:layout_marginLeft="18dp"-->
+    <!--android:layout_marginRight="18dp"-->
+    <!--android:layout_marginStart="18dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:background="@drawable/ad_card_button_background_selector"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="9dp"-->
+    <!--android:text="Free download"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="14sp"/>-->
+    <!--</LinearLayout>-->
+</RelativeLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+
+    <!--android:id="@+id/ad_view_container"--><!--android:layout_width="match_parent"--><!--android:layout_height="45dp"--><!--android:layout_gravity="center"--><!--android:gravity="center"--><!--android:orientation="horizontal"--><!--android:background="@android:color/darker_gray">-->
+
+    <!--<FrameLayout--><!--android:layout_width="45dp"--><!--android:layout_height="45dp"--><!--android:layout_marginRight="4dp">-->
+
+    <!--<ImageView--><!--android:id="@+id/ad_icon"--><!--android:layout_width="wrap_content"--><!--android:layout_height="match_parent"--><!--android:scaleType="fitXY" />-->
+
+    <!--<ImageView--><!--android:layout_width="14dp"--><!--android:layout_height="9dp"--><!--android:layout_gravity="left|bottom"--><!--android:layout_marginRight="2dp"--><!--android:background="@drawable/emoji_space_ad_band"--><!--android:scaleType="centerInside" />-->
+
+
+    <!--</FrameLayout>-->
+
+    <!--<LinearLayout--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_weight="1"--><!--android:orientation="vertical">-->
+
+    <!--<View--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight="1" />-->
+
+    <!--<TextView--><!--android:id="@+id/ad_title"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:ellipsize="end"--><!--android:fontFamily="roboto"--><!--android:gravity="left|bottom"--><!--android:singleLine="true"--><!--android:textColor="#ffffff"--><!--android:textSize="@dimen/space_ad_action_text_size"--><!--android:textStyle="bold" />-->
+
+    <!--<View--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight="1" />-->
+
+    <!--<TextView--><!--android:id="@+id/ad_body"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:ellipsize="end"--><!--android:fontFamily="roboto-regular"--><!--android:gravity="left|bottom"--><!--android:maxLines="2"--><!--android:textColor="#ffffff"--><!--android:textSize="@dimen/space_ad_body_text_size" />-->
+
+    <!--<View--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight="1" />--><!--</LinearLayout>-->
+
+
+    <!--<LinearLayout--><!--android:id="@+id/action_container"--><!--android:layout_width="@dimen/space_ad_action_text_width"--><!--android:layout_height="match_parent"--><!--android:layout_marginLeft="5dp"--><!--android:layout_marginRight="5dp"--><!--android:orientation="vertical">-->
+
+    <!--<View--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight="3" />-->
+
+    <!--<TextView--><!--android:id="@+id/ad_action"--><!--android:layout_width="match_parent"--><!--android:layout_height="@dimen/space_ad_action_text_height"--><!--android:gravity="center"--><!--android:background="@drawable/emoji_space_ad_action_bg"--><!--android:maxLines="2"--><!--android:textColor="#ffffff"--><!--android:textSize="@dimen/space_ad_action_text_size" />-->
+
+    <!--<View--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight="2" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout >-->

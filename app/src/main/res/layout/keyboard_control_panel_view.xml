@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ControlPanelView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/panel_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/control_panel_strip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hapticFeedbackEnabled="false"
+            android:orientation="horizontal"
+            android:soundEffectsEnabled="false" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/control_button_strip_margin_left">
+                <LinearLayout
+                    android:id="@+id/control_panel_button_strip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:hapticFeedbackEnabled="false"
+                    android:orientation="horizontal"
+                    android:soundEffectsEnabled="false">
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/control_panel_button_indicator_dot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/indicator_dot"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/panel_left_separator"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:background="#839197"/>
+
+            <LinearLayout
+                android:id="@+id/control_panel_supplementary_button_strip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hapticFeedbackEnabled="false"
+                android:orientation="horizontal"
+                android:soundEffectsEnabled="false"
+                android:gravity="right">
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="3px"-->
+            <!--android:background="@color/suggestion_strip_bottom_line"-->
+            <!--android:layout_alignParentBottom="true"/>-->
+    </RelativeLayout>
+</com.ihs.inputmethod.uimodules.ControlPanelView>

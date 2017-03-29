@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="optimize_ad_subtitle">@color/ad_engine_ad_subtitle</color>
+    <string name="optimize_optimize_result">Your phone has been optimized!</string>
+    <string name="optimize_alert_title">Optimize Your Phone</string>
+    <string name="optimize_setting_preference_key">ad_engine_optimize</string>
+    <string name="optimize_optimizing">Optimizing!</string>
+    <string name="optimize_your_phone_preference_key">optimize_your_phone</string>
+</resources>

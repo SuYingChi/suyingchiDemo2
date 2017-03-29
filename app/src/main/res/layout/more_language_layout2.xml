@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/settings_background_color">
+
+	<ScrollView
+		android:id="@+id/scrollView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true">
+
+		<LinearLayout
+			android:id="@+id/ll_current_languages"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" >
+
+			<TextView
+				style="@style/SettingsCategoryTitle"
+				android:fontFamily="sans-serif-medium"
+				android:text="@string/current_languages" >
+			</TextView>
+
+			<LinearLayout
+				android:id="@+id/ll_current_languages_list"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/settings_switch_btn_color_gray"
+				android:orientation="vertical" >
+			</LinearLayout>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/header_preference_padding_left"
+				android:paddingTop="@dimen/switch_language_tip_padding_top"
+				android:text="@string/switch_language_tip"
+				android:textColor="@color/settings_switch_tip_text_color"
+				android:textSize="@dimen/switch_preference_tip_text_size" >
+			</TextView>
+
+			<TextView
+				style="@style/SettingsCategoryTitle"
+				android:layout_marginTop="10dp"
+				android:fontFamily="sans-serif-medium"
+				android:text="@string/available_languages" >
+			</TextView>
+
+			<LinearLayout
+				android:id="@+id/ll_available_languages"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/settings_switch_btn_color_gray"
+				android:orientation="vertical" >
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/progressbar_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/progress_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/setting_panel_item_margin_top"
+        app:layout_aspectRatio="100%"
+        app:layout_heightPercent="70%">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/spinning_progressbar" />
+
+
+        <ImageView
+            android:id="@+id/progress_imgview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside"
+            android:soundEffectsEnabled="false"
+            android:src="@drawable/settings_ad_loading_gift" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progress_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/setting_panel_item_text_margin_top"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="Loading..."
+        android:textSize="9sp" />
+
+</android.support.percent.PercentRelativeLayout>

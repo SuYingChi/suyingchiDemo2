@@ -1,44 +1,52 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.jakewharton.hugo'
-
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
+
     defaultConfig {
-        applicationId "com.keyboard.colorkeyboard"
         minSdkVersion 14
         targetSdkVersion 22
-        // Enabling multidex support.
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
-        releaseConfig {
+
+        masterReleaseConfig {
+            keyAlias 'glowdesign'
+            keyPassword 'zdhszyzs'
+            storeFile file('GlowDesign')
+            storePassword 'zdhszyzs'
+        }
+        smileyReleaseConfig {
+            keyAlias 'emoji'
+            keyPassword 'zdhszyzs'
+            storeFile file('EmojiLabs')
+            storePassword 'zdhszyzs'
+        }
+        colorReleaseConfig {
             keyAlias 'keyboardarts'
             keyPassword 'zdhszyzs'
             storeFile file('KeyboardArts')
             storePassword 'zdhszyzs'
         }
-    }
-    repositories {
-        mavenCentral()
-    }
 
+    }
     buildTypes {
+        //设置Deubug和Release下的编译模式，即proguard文件路径
         release {
             minifyEnabled true
-            shrinkResources false
-            signingConfig signingConfigs.releaseConfig
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-r.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../booster/proguard-rules_release.pro' , 'proguard-r.txt' , 'proguard.txt'
+
         }
         debug {
             minifyEnabled false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-d.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../booster/proguard-rules.pro', 'proguard-d.txt' , 'proguard.txt'
         }
     }
+
     splits {
         abi {
             enable true
@@ -47,26 +55,216 @@ android {
             universalApk false
         }
     }
+
     dexOptions {
         javaMaxHeapSize "8g"
+        jumboMode true
+    }
+
+    productFlavors {
+
+        master {
+            applicationId = "com.masterkeyboard.emoji"
+            versionCode 4
+            versionName "1.1.0"
+            manifestPlaceholders = [APP_ID: applicationId]
+            signingConfig signingConfigs.masterReleaseConfig
+        }
+
+        smiley {
+            applicationId = "com.smartkeyboard.emoji"
+            versionCode 11
+            versionName "1.2.2"
+            manifestPlaceholders = [APP_ID: applicationId]
+            signingConfig signingConfigs.smileyReleaseConfig
+        }
+
+        color {
+            applicationId = "com.keyboard.colorkeyboard"
+            versionCode 29
+            versionName "2.2.7"
+            manifestPlaceholders = [APP_ID: applicationId]
+            signingConfig signingConfigs.colorReleaseConfig
+        }
+
+
+    }
+
+    sourceSets {
+
+        master {
+            manifest.srcFile 'src/master/AndroidManifest.xml'
+            java.srcDirs = ['src/master/java']
+            res.srcDirs += ['src/master/res']
+        }
+
+        smiley {
+            manifest.srcFile 'src/master/AndroidManifest.xml'
+            java.srcDirs = ['src/master/java']
+            res.srcDirs += ['src/smiley/res', 'src/master/res']
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
 repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url "http://repo.appnext.com/" }
+    maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist" }
     flatDir {
-        dirs project(':lib_keyboard_ui_modules').file('libs')
+        dirs 'libs', 'libs/bin_chargingscreen_android'
     }
 }
 
 
-dependencies {
-    compile project(':lib_keyboard_ui_modules')
-    compile files('../libs/ihs/libThirdAds/AppNext/AppNextNativeAd.jar')
-    compile files('../libs/ihs/libThirdAds/Avocarrot/avocarrot-sdk.jar')
-    compile files('../libs/ihs/libThirdAds/Yeahmobi/cloudssp.jar')
-    compile files('../libs/ihs/libThirdAds/Mobvista/mobvista_native.jar')
-    compile(name: 'ihs/libThirdAds/Mobvista/mobvista_common', ext: 'aar')
-    compile 'com.facebook.android:facebook-android-sdk:4.10.0'
 
+dependencies {
+
+    //////////////////////  Ads Configuration Begin ////////////////////////
+    compile getIHandyDependency("com.ihandy.nativeads:libNativeAds", "${rootProject.ext.nativeAdsVersion}")
+    compile getIHandyDependency("com.ihandy.interstitialads:InterstitialAds", "${rootProject.ext.interstitialAdsVersion}")
+
+    //    Admob Adx
+    compile "com.google.android.gms:play-services-ads:${rootProject.ext.gmsVersion}"
+    //    AppNext
+    compile 'com.appnext.sdk:native-ads-sdk:2.+' // Mandatory
+    compile "com.google.android.gms:play-services-basement:${rootProject.ext.gmsVersion}"
+    // Mandatory
+    compile "com.google.android.gms:play-services-location:${rootProject.ext.gmsVersion}"
+    // Mandatory
+    //    Avocarrot
+    compile "com.google.android.gms:play-services-ads:${rootProject.ext.gmsVersion}"
+    compile('com.avocarrot:android-sdk:3.7.+')
+    //    Facebook
+    compile "com.facebook.android:audience-network-sdk:${rootProject.ext.facebookSdkVersion}"
+    compile "com.facebook.android:facebook-android-sdk:${rootProject.ext.facebookSdkVersion}"
+    //    Yeahmobi
+    compile 'com.ihandy.thirdparty.yeahmobi:cloudssp:1.4.6'
+    //    Mobvista
+    //    compile 'com.ihandy.thirdparty.mobvista:mobvista_appwall:8.1.11'
+    compile 'com.ihandy.thirdparty.mobvista:mobvista_common:8.1.11'
+    compile 'com.ihandy.thirdparty.mobvista:mobvista_native:8.1.11'
+    //    Altamob
+    compile 'com.altamob:sdk:4.0.7.1'
+    //////////////////////  Ads Configuration end ////////////////////////
+
+
+    compile(name: 'ihs/libAppFramework/libAppFramework', ext: 'aar')
+    compile 'com.ihandy.thirdparty:tapjoyconnectlibrary:11.10'
+
+
+    masterCompile project(':booster')
+    smileyCompile project(':booster')
+
+    masterCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
+    smileyCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
+
+
+    //ihs related
+    compile files('../libs/libIAP.jar')
+    compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
+    compile(name: 'ihs/libActionTrigger/libActionTrigger', ext: 'aar')
+    compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
+    compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
+    compile(name: 'libcharging', ext: 'aar')
+
+    //android supports
+    compile "com.android.support:support-v4:${rootProject.ext.supportVersion}"
+    compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
+    compile "com.android.support:percent:${rootProject.ext.supportVersion}"
+    compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
+    compile "com.android.support:design:${rootProject.ext.supportVersion}"
+    compile "com.android.support:cardview-v7:${rootProject.ext.supportVersion}"
+    compile "com.android.support:support-v13:${rootProject.ext.supportVersion}"
+
+    //facebook
+    compile "com.facebook.shimmer:shimmer:0.1.0@aar"
+
+    //google
+    compile "com.google.firebase:firebase-appindexing:${rootProject.ext.gmsVersion}"
+    compile "com.google.android.gms:play-services-gcm:${rootProject.ext.gmsVersion}"
+    compile "com.google.android.gms:play-services-analytics:${rootProject.ext.gmsVersion}"
+    compile "com.google.firebase:firebase-appindexing:${rootProject.ext.gmsVersion}"
+
+
+    //3rd party
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'org.jcodec:jcodec-android:0.1.9'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'com.makeramen:roundedimageview:2.2.1'
+    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
+    compile 'com.mcxiaoke.viewpagerindicator:library:2.4.1'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
+        transitive = true;
+    }
+    //AdMob Adapter start
+    compile fileTree(include: ['/*/*.jar'], dir: '../libs/libAdMobMediation')
+    // Adapter for AdMob
+    compile(name: 'libAdMobMediation/vungle/VungleAdapter', 'ext': 'aar')
+    //AdMob Adapter end
+    compile 'com.airbnb.android:lottie:1.5.3'
 }
 
+
+if (!project.hasProperty('use_default_facemoji_res')) {
+    project.ext.use_default_facemoji_res = true
+}
+if (!project.hasProperty('use_default_gif_res')) {
+    project.ext.use_default_gif_res = true
+}
+if (!project.hasProperty('use_default_fonts_res')) {
+    project.ext.use_default_fonts_res = true
+}
+if (!project.hasProperty('use_default_sticker_res')) {
+    project.ext.use_default_sticker_res = true
+}
+
+
+if (use_default_facemoji_res) {
+    println 'use_default_facemoji_res enabled.'
+    android.sourceSets.main.res.srcDirs += [
+            'src/main/res-facemoji',
+    ]
+} else {
+//    android.sourceSets.main.java.excludes += [
+//            '**/uimodules/ui/facemoji/**/*.java',
+//    ]
+}
+
+if (use_default_gif_res) {
+    println 'use_default_gif_res enabled.'
+    android.sourceSets.main.res.srcDirs += [
+            'src/main/res-gif',
+    ]
+} else {
+//    android.sourceSets.main.java.excludes += [
+//            '**/uimodules/ui/gif/**/*.java',
+//    ]
+}
+
+if (use_default_fonts_res) {
+    println 'use_default_fonts_res enabled.'
+    android.sourceSets.main.res.srcDirs += [
+            'src/main/res-fonts',
+    ]
+} else {
+//    android.sourceSets.main.java.excludes += [
+//            '**/uimodules/ui/fonts/**/*.java',
+//    ]
+}
+
+if (use_default_sticker_res) {
+    println 'use_default_sticker_res enabled.'
+    android.sourceSets.main.res.srcDirs += [
+            'src/main/res-sticker',
+    ]
+} else {
+//    android.sourceSets.main.java.excludes += [
+//            '**/uimodules/ui/sticker/**/*.java',
+//    ]
+}

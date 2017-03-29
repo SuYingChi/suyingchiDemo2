@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/UiModuleThemeTitleLayoutView"
+	android:background="?attr/selectableItemBackground"
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<TextView
+		android:id="@+id/title_left"
+		style="@style/UiModuleThemeTitleTextView"
+		android:layout_weight="1"/>
+
+	<TextView
+		android:id="@+id/title_btn_right"
+		style="@style/UiModuleThemeTitleTextView"
+		android:textColor="@color/theme_more_text_color"
+		android:textSize="14sp" />
+
+</LinearLayout>

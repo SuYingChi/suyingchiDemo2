@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_boost_scan_app_tip_number_color">#ffff0000</color>
+    <color name="list_item_sub_title_color">#ff626363</color>
+
+    <color name="alarm_toast_faster_percent_color">#ffff0000</color>
+
+    <color name="notify_color_background">#ff212121</color>
+    <color name="notify_color_bd">#ffbdbdbd</color>
+    <color name="transparent">#00000000</color>
+    <color name="notification_function_press">#33000000</color>
+    <color name="battery_fragment_background">#ff44cc45</color>
+    <color name="battery_scan_background">#ff44cc45</color>
+    <color name="functioncard_body_textcolor">#99666666</color>
+    <color name="infocard_textcolor">#99646464</color>
+
+    <color name="infocard_abovebody_color">#ffffffff</color>
+
+    <color name="infocard_belowbody_color">#99ffffff</color>
+    <color name="alert_setting_text_color">#000000</color>
+
+    <color name="junk_stubborn_background">#fffcdb00</color>
+    <color name="junk_stubborn_background_pressed">#ffedce00</color>
+    <color name="junk_stubborn_item_txt_color">#ffeeeeee</color>
+    <color name="junk_stubborn_item_txt_color_pressed">#ffaaaaaa</color>
+
+    <color name="accessibility_permission_alert_btn_down_pressed">#276bbc</color>
+    <color name="accessibility_permission_alert_btn_down">#3186eb</color>
+
+    <color name="cpu_scan_background">#4A83E4</color>
+    <color name="cpu_scan_title">#68A5FD</color>
+    <color name="cpu_cooled_title">#ff009bff</color>
+    <color name="btn_boost_text_enable">#ffffffff</color>
+    <color name="btn_boost_text_disable">#66ffffff</color>
+
+    <!--ad-->
+    <color name="ad_module_title_color">#ffffff</color>
+    <color name="ad_module_label_color">#5d5d5d</color>
+    <color name="ad_module_inner_divider_color">#e4e4e4</color>
+    <color name="ad_module_tip_color">#595959</color>
+    <color name="ad_module_btn_color">#1097ff</color>
+    <color name="ad_module_btn_color_dark">#0d7cd1</color>
+    <color name="rippleColor">#BBC9C9C9</color>
+</resources>

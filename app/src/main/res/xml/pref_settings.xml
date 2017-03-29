@@ -1,0 +1,48 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/language" />
+    <Preference
+        android:key="choose_language"
+        android:title="@string/language_dict"></Preference>
+
+    <PreferenceCategory android:title="@string/setting_preference_title" />
+    <SwitchPreference
+        android:defaultValue="@bool/config_default_auto_correction_enabled"
+        android:key="auto_correction_enabled"
+        android:title="@string/setting_auto_correction" />
+    <SwitchPreference
+        android:defaultValue="@bool/config_default_auto_capitalization_enabled"
+        android:key="auto_cap"
+        android:title="@string/setting_auto_capitalization" />
+    <SwitchPreference
+        android:defaultValue="@bool/config_default_word_prediction_enabled"
+        android:key="show_suggestions"
+        android:title="@string/setting_word_prediction" />
+    <SwitchPreference
+        android:defaultValue="@bool/config_default_emoji_suggestion_enabled"
+        android:dependency="show_suggestions"
+        android:key="pref_emoji_suggestion_enabled"
+        android:title="@string/setting_emoji_prediction" />
+    <SwitchPreference
+        android:defaultValue="@bool/config_default_gesture_input_enabled"
+        android:key="gesture_input"
+        android:title="@string/setting_swipe_input" />
+    <SwitchPreference
+        android:defaultValue="@bool/config_default_use_double_space_period_enabled"
+        android:key="pref_key_use_double_space_period"
+        android:summary="@string/setting_double_space_period_summary"
+        android:title="@string/setting_double_space_period" />
+    <SwitchPreference
+        android:defaultValue="@bool/config_default_sound_enabled"
+        android:key="sound_on"
+        android:title="@string/setting_sound_on_keypress" />
+    <SwitchPreference
+        android:defaultValue="@bool/config_default_vibration_enabled"
+        android:key="vibrate_on"
+        android:title="@string/setting_vibrate_on_keypress" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/config_charge_switchpreference_key"
+        android:summary="@string/enable_charging_detail"
+        android:title="Fast Charger" />
+</PreferenceScreen>

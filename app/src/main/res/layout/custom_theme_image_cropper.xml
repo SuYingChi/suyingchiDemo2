@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000">
+
+        <TextView
+            android:id="@+id/custom_theme_background_cropper_title_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="@string/cancel"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@drawable/custom_theme_head_common_button_selector"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/filter"
+            android:textColor="#fff"
+            android:textSize="21sp"/>
+
+        <TextView
+            android:id="@+id/custom_theme_background_cropper_title_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical|right"
+            android:text="@string/use"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@drawable/custom_theme_head_common_button_selector"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/custom_theme_background_cropper_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSMatrixImageView
+            android:id="@+id/custom_theme_background_cropper_content_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="matrix"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#4C000000"/>
+
+            <View
+                android:id="@+id/custom_theme_background_cropper_content_mask_view"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#4C000000"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

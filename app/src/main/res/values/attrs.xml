@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomFontTextView">
+        <attr name="fancyfont" format="string" />
+    </declare-styleable>
+    <declare-styleable name="CirclePageIndicator">
+        <attr name="indicator_spacing" format="dimension" />
+        <attr name="indicator_type" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="fraction" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="AnimationLayout">
+        <attr name="enableClickScaleAnim" format="boolean" />
+    </declare-styleable>
+
+    <!--<declare-styleable name="SectorProgressView">-->
+        <!--<attr name="sector_progress_fgColor" format="color" />-->
+        <!--<attr name="sector_progress_percent" format="integer"/>-->
+        <!--<attr name="sector_progress_startAngle" format="integer"/>-->
+        <!--<attr name="sector_progress_isSquare" format="boolean"/>-->
+        <!--<attr name="sector_progress_corners_radius" format="dimension"/>-->
+    <!--</declare-styleable>-->
+
+    <declare-styleable name="SectorProgressView">
+        <attr name="spv_bg_color" format="color" />
+        <attr name="spv_corner_radius" format="dimension|reference" />
+        <attr name="spv_percent" format="integer" />
+        <attr name="spv_gap_width_of_radius_percent" format="integer" />
+        <attr name="spv_sector_radius_percent" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="MediaView">
+        <attr name="supportSmoothScroll" format="boolean" />
+        <attr name="backgroundRadius" format="dimension" />
+    </declare-styleable>
+
+</resources>

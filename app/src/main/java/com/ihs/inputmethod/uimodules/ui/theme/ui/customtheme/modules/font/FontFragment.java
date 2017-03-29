@@ -1,0 +1,29 @@
+package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font;
+
+import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem.CategoryItem;
+import com.keyboard.core.themes.custom.KCCustomThemeManager;
+import com.keyboard.core.themes.custom.elements.KCBaseElement;
+import com.keyboard.core.themes.custom.elements.KCFontElement;
+import com.keyboard.core.themes.custom.elements.KCTextColorElement;
+
+import java.util.Arrays;
+
+
+/**
+ * Created by chenyuanming on 31/10/2016.
+ */
+
+public class FontFragment extends BaseThemeFragment {
+    @Override
+    protected ThemePageItem initiateThemePageItem() {
+        return new ThemePageItem(Arrays.<CategoryItem<?>>asList(
+                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font), KCFontElement.class, new FontProvider(this), KCCustomThemeManager.getInstance().getFontElements())
+                , new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font_color), KCTextColorElement.class, new FontColorProvider(this), KCCustomThemeManager.getInstance().getTextColorElements())
+        ));
+    }
+
+}
