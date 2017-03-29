@@ -34,7 +34,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdProfile;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 import java.util.List;
@@ -232,6 +231,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     public void show(Activity activity, int keyboardActivationRequestCode) {
         activationRequestCode = keyboardActivationRequestCode;
         checkKeyboardState(activity);
+        new AcbInterstitialAdLoader(getContext(),getContext().getResources().getString(R.string.placement_full_screen_trial_keyboard)).load(1,null);
     }
 
     @Override

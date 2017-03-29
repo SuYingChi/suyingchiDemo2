@@ -58,9 +58,9 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
-import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
+import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBackgroundElement;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
@@ -131,7 +131,9 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
                 }
             }, 0);
         }
-
+        if (getContext().getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
+            new AcbInterstitialAdLoader(getContext(), getResources().getString(R.string.placement_full_screen_trial_keyboard)).load(1, null);
+        }
     }
 
     @Override
@@ -440,13 +442,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             case 0:
                 //background
                 action = "app_customize_background_next_clicked";
-                if(customThemeData.getBackgroundImageSource() == KCCustomThemeData.ImageSource.Official) {
+                if (customThemeData.getBackgroundImageSource() == KCCustomThemeData.ImageSource.Official) {
                     label = customThemeData.getBackgroundElement().getName();
-                }
-                else if(customThemeData.getBackgroundImageSource() == KCCustomThemeData.ImageSource.Album) {
+                } else if (customThemeData.getBackgroundImageSource() == KCCustomThemeData.ImageSource.Album) {
                     label = "album";
-                }
-                else if(customThemeData.getBackgroundImageSource() == KCCustomThemeData.ImageSource.Camera) {
+                } else if (customThemeData.getBackgroundImageSource() == KCCustomThemeData.ImageSource.Camera) {
                     label = "camera";
                 }
                 break;
@@ -601,12 +601,13 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
 
 
     private void onNewThemeCreated() {
-        if(!showInterstitialAdsAfterSaveTheme()){
+        if (!showInterstitialAdsAfterSaveTheme()) {
             showTrialKeyboard(false);
         }
     }
+
     private boolean showInterstitialAdsAfterSaveTheme() {
-        if(!getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)){
+        if (!getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
             return false;
         }
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_load_ad));
@@ -638,7 +639,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             interstitialAd.show();
             hasTrialKeyboardShownWhenThemeCreated = true;
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -648,7 +649,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         HSBundle bundle = new HSBundle();
         bundle.putString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, ThemeHomeActivity.class.getSimpleName());
         bundle.putInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE, keyboardActivationFromCustom);
-        bundle.putBoolean(TrialKeyboardDialog.BUNDLE_KEY_HAS_TRIAL_KEYBOARD_SHOWN_WHEN_THEME_CREATED,hasInterstitialAdsShown);
+        bundle.putBoolean(TrialKeyboardDialog.BUNDLE_KEY_HAS_TRIAL_KEYBOARD_SHOWN_WHEN_THEME_CREATED, hasInterstitialAdsShown);
         HSGlobalNotificationCenter.sendNotification(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
         if (!PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();

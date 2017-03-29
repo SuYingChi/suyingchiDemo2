@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.acb.adadapter.AcbInterstitialAd;
+import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -41,6 +44,7 @@ import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
@@ -358,8 +362,45 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private void showTrialKeyboardDialog(int activationCode) {
         if (trialKeyboardDialog == null) {
             trialKeyboardDialog = new TrialKeyboardDialog.Build(ThemeDetailActivity.class.getName()).create(this, this);
+
         }
         trialKeyboardDialog.show(this,activationCode);
+        trialKeyboardDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                showInterstitialAds();
+            }
+        });
+    }
+
+    private void showInterstitialAds() {
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_load_ad));
+            List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), getResources().getString(R.string.placement_full_screen_trial_keyboard), 1);
+            if (interstitialAds.size() > 0) {
+                final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
+                interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
+                    long adDisplayTime = -1;
+
+                    @Override
+                    public void onAdDisplayed() {
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_show_ad));
+                        adDisplayTime = System.currentTimeMillis();
+                    }
+
+                    @Override
+                    public void onAdClicked() {
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_click_ad));
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                        long duration = System.currentTimeMillis() - adDisplayTime;
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_display_ad), String.format("%fs", duration / 1000f));
+                        interstitialAd.release();
+                    }
+                });
+                interstitialAd.show();
+            }
     }
 
     @Override
