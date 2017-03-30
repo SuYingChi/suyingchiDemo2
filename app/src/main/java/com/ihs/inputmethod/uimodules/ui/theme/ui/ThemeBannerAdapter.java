@@ -223,62 +223,88 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             }
         }
 
-        int bannerThemeCount = bannerThemeNames.size();
+        List<HSKeyboardTheme> result = new ArrayList<>();
 
-        // 调整keyboardThemeArrayList的size = 5
-        Iterator<HSKeyboardTheme> iterator = keyboardThemeArrayList.descendingIterator();
-        while (iterator.hasNext()) {
-            if (keyboardThemeArrayList.size() > 5) {
-                HSKeyboardTheme theme = iterator.next();
-                for (HSKeyboardTheme downloadTheme : HSKeyboardThemeManager.getDownloadedThemeList()) {
-                    if (downloadTheme.mThemeName.equals(theme.mThemeName)) {
-                        iterator.remove();
+        LinkedList<HSKeyboardTheme> unDownloadBannerThemes = new LinkedList<>();
+        LinkedList<HSKeyboardTheme> downloadBannerThemes = new LinkedList<>();
+
+        Iterator<HSKeyboardTheme> iterator = keyboardThemeArrayList.iterator();
+        while(iterator.hasNext()) {
+            HSKeyboardTheme theme = iterator.next();
+            if(!HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
+                unDownloadBannerThemes.add(theme);
+            }
+            else {
+                downloadBannerThemes.add(theme);
+            }
+        }
+
+        if(unDownloadBannerThemes.size() == 5) {
+            result.addAll(unDownloadBannerThemes);
+        }
+        else if(unDownloadBannerThemes.size() < 5) {
+            result.addAll(unDownloadBannerThemes);
+            result.addAll(downloadBannerThemes.subList(0, 5 - result.size()));
+        }
+        else {
+            List<String> indexShowCount = new ArrayList<>();
+            int count = unDownloadBannerThemes.size();
+            for (int i = 0; i < count; i++) {
+                int showCount = HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0);
+                indexShowCount.add((showCount > 5 ? 5 : showCount) + "_" + i);
+            }
+
+            for (int i = 0; i < indexShowCount.size(); i++) {
+                if (!indexShowCount.get(i).startsWith("5") && !indexShowCount.get(i).startsWith("0") && result.size() < 5) {
+                    result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
+                }
+                if (result.size() == 5) {
+                    break;
+                }
+            }
+
+            if (result.size() < 5) {
+                for (int i = 0; i < indexShowCount.size(); i++) {
+                    if (indexShowCount.get(i).startsWith("0") && result.size() < 5) {
+                        result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
+                    }
+                    if (result.size() == 5) {
                         break;
                     }
                 }
+            }
 
-            } else {
+            if (result.size() < 5) {
+                for (int i = 0; i < indexShowCount.size(); i++) {
+                    if (indexShowCount.get(i).startsWith("5") && result.size() < 5) {
+                        result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
+                    }
+                    if (result.size() == 5) {
+                        break;
+                    }
+                }
+            }
+        }
+        boolean allUnDownloadBannerThemeHasShowed = true;
+
+        for(int i = 0; i < unDownloadBannerThemes.size(); i++) {
+            if(HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0) < 5) {
+                allUnDownloadBannerThemeHasShowed = false;
                 break;
             }
         }
 
-        // 查找展示次数没有超过5次的主题索引
-        int count = keyboardThemeArrayList.size();
-        List<Integer> fetchShouldShowIndex = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            if (fetchShouldShowIndex.size() < 5) {
-                HSKeyboardTheme theme = keyboardThemeArrayList.get(i);
-                if (HSPreferenceHelper.getDefault().getInt(theme.mThemeName + "_show_count", 0) <= 5) {
-                    fetchShouldShowIndex.add(i);
-                }
-            } else {
-                break;
-            }
-        }
-
-        // 当少于5个时，从头部取，补足5个
-        int fetchShouldShowIndexCount = fetchShouldShowIndex.size();
-        if (fetchShouldShowIndexCount < 5) {
-            int i = 0;
-            while (fetchShouldShowIndex.size() < 5 && i < bannerThemeCount) {
-                if (!fetchShouldShowIndex.contains(i)) {
-                    fetchShouldShowIndex.add(i);
-                }
-                i++;
-            }
-        }
-        // 如果 所有的 都已经超过 5次，则清空 计数器
-        if (fetchShouldShowIndexCount == 0) {
-            for (int i = 0; i < count; i++) {
-                HSKeyboardTheme theme = keyboardThemeArrayList.get(i);
+        if(allUnDownloadBannerThemeHasShowed) {
+            for (int i = 0; i < unDownloadBannerThemes.size(); i++) {
+                HSKeyboardTheme theme = unDownloadBannerThemes.get(i);
                 HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
             }
         }
 
-        List<HSKeyboardTheme> result = new ArrayList<>();
 
-        for (Integer index : fetchShouldShowIndex) {
-            result.add(keyboardThemeArrayList.get(index));
+        for(int i = 0; i < downloadBannerThemes.size(); i++) {
+            HSKeyboardTheme theme = downloadBannerThemes.get(i);
+            HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
         }
 
         setData(result);
@@ -466,11 +492,11 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                 notifyDataSetChanged();
                 int newCurrent = currentItem + (currentItem % count - currentItem % (count + 1));
                 viewPager.setCurrentItem(newCurrent, false);
-                final int fNewCurrent = newCurrent + 1;
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        viewPager.setCurrentItem(fNewCurrent);
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+
                     }
                 }, 800);
 
