@@ -8,6 +8,7 @@
     <string name="ad_placement_themedetailad">Smiley_A(NativeAds)ThemeDetailAd</string>
     <string name="ad_placement_themetryad">Smiley_A(NativeAds)ThemeTryAd</string>
     <string name="ad_placement_uninstall">Smiley_A(NativeAds)Uninstall</string>
+    <string name="ad_placement_customize_theme">Smiley_A(NativeAds)CustomizeThemeAd</string>
 
     <string name="ad_placement_boostdone">Smiley_A(NativeAds)BoostDone</string>
     <string name="ad_placement_applock">Smiley_A(NativeAds)AppLock</string>

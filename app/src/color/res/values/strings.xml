@@ -14,7 +14,7 @@
     <string name="ad_placement_themetryad">Colorkey_A(NativeAds)ThemeTryAd</string>
     <string name="placement_full_screen_trial_keyboard">Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd</string>
     <string name="ad_placement_theme_save_ad">Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd</string>
-
+    <string name="ad_placement_customize_theme">Colorkey_A(NativeAds)CustomizeThemeAd</string>
 
 
     <string name="ga_fullscreen_theme_save_load_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Load</string>

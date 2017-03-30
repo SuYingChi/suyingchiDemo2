@@ -36,4 +36,8 @@
         <attr name="backgroundRadius" format="dimension" />
     </declare-styleable>
 
+
+    <declare-styleable name="RoundedCornerLayout">
+        <attr name="rcl_corner_radius" format="dimension"/>
+    </declare-styleable>
 </resources>

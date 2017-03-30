@@ -2,11 +2,12 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsProvider;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem.CategoryItem;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
-import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCFontElement;
 import com.keyboard.core.themes.custom.elements.KCTextColorElement;
 
@@ -21,8 +22,9 @@ public class FontFragment extends BaseThemeFragment {
     @Override
     protected ThemePageItem initiateThemePageItem() {
         return new ThemePageItem(Arrays.<CategoryItem<?>>asList(
-                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font), KCFontElement.class, new FontProvider(this), KCCustomThemeManager.getInstance().getFontElements())
-                , new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font_color), KCTextColorElement.class, new FontColorProvider(this), KCCustomThemeManager.getInstance().getTextColorElements())
+                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font), AdsItem.class, new AdsProvider(), Arrays.asList(new AdsItem(1,0.75f,false))),
+                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font), KCFontElement.class, new FontProvider(this), KCCustomThemeManager.getInstance().getFontElements()),
+                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font_color), KCTextColorElement.class, new FontColorProvider(this), KCCustomThemeManager.getInstance().getTextColorElements())
         ));
     }
 

@@ -10,6 +10,8 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsProvider;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem.CategoryItem;
@@ -60,6 +62,7 @@ public class BackgroundFragment extends BaseThemeFragment {
     protected ThemePageItem initiateThemePageItem() {
         return new ThemePageItem(Arrays.<CategoryItem<? extends Object>>asList(
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), Integer.class, new CameraAlbumProvider(this), Arrays.asList(new Integer[]{R.drawable.custom_theme_background_camera_fg, R.drawable.custom_theme_background_album_fg})),
+                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), AdsItem.class,new AdsProvider(),Arrays.asList(new AdsItem(false))),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), KCBackgroundElement.class, new BackgroundProvider(this), KCCustomThemeManager.getInstance().getBackgroundElements())
         ));
     }

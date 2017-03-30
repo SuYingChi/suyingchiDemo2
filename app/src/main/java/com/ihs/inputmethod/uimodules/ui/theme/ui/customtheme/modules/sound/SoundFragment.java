@@ -2,10 +2,12 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.sound;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsProvider;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem.CategoryItem;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
-import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCSoundElement;
 
 import java.util.Arrays;
@@ -33,8 +35,9 @@ public final class SoundFragment extends BaseThemeFragment {
 		for(KCSoundElement sound:sounds){
 			sound.setBackgroundColor(colors[index++%colors.length]);
 		}
-		return new ThemePageItem(Arrays.<ThemePageItem.CategoryItem<?>>asList(
-				new ThemePageItem.CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_sound), KCSoundElement.class, new SoundProvider(this), sounds)
+		return new ThemePageItem(Arrays.<CategoryItem<?>>asList(
+				new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_sound), AdsItem.class, new AdsProvider(), Arrays.asList(new AdsItem(true))),
+				new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_sound), KCSoundElement.class, new SoundProvider(this), sounds)
 		));
 	}
 }
