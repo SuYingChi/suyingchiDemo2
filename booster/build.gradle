@@ -35,7 +35,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile files('libs/bin_boost_android/libBoost.jar')
 
-    compile(name: 'ihs/libAppFramework/libAppFramework', ext: 'aar')
+    compile getIHandyDependency("com.ihandy.appframework:libAppframework", "${rootProject.ext.frameworkVersion}")
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
     compile "com.google.android.gms:play-services-analytics:${rootProject.ext.gmsVersion}"
     compile 'com.facebook.shimmer:shimmer:0.1.0@aar'
