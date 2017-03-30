@@ -1,12 +1,6 @@
 [submodule "lib_keyboarduimodules_android"]
 	path = lib_keyboarduimodules_android
 	url = http://git.ihandysoft.com/nogroup/lib_keyboarduimodules_android.git
-[submodule "libs/ihs/libNativeAds"]
-	path = libs/ihs/libNativeAds
-	url = http://git.ihandysoft.com/bingroup/bin_nativeads_android.git
-[submodule "libs/ihs/libAppFramework"]
-	path = libs/ihs/libAppFramework
-	url = http://git.ihandysoft.com/bingroup/bin_appframework_android.git
 [submodule "app/src/main/assets/themes"]
 	path = app/src/main/assets/themes
 	url = http://git.ihandysoft.com/bingroup/bin_keyboardresources_android.git
@@ -25,9 +19,3 @@
 [submodule "libs/ihs/libThirdAds"]
 	path = libs/ihs/libThirdAds
 	url = http://git.ihandysoft.com/bingroup/bin_3rdads_android.git
-[submodule "libs/ihs/libAdsCommon"]
-	path = libs/ihs/libAdsCommon
-	url = http://git.ihandysoft.com/bingroup/bin_adscommon_android.git
-[submodule "libs/ihs/libInterstitialAds"]
-	path = libs/ihs/libInterstitialAds
-	url = http://git.ihandysoft.com/bingroup/bin_interstitialads_android.git

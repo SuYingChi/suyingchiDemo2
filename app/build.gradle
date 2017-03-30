@@ -153,7 +153,7 @@ dependencies {
     //////////////////////  Ads Configuration end ////////////////////////
 
 
-    compile(name: 'ihs/libAppFramework/libAppFramework', ext: 'aar')
+    compile getIHandyDependency("com.ihandy.appframework:libAppframework", "${rootProject.ext.frameworkVersion}")
     compile 'com.ihandy.thirdparty:tapjoyconnectlibrary:11.10'
 
 

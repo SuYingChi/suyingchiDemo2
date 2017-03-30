@@ -18,8 +18,8 @@ plugins {
 //////////////////iHandy Maven configuration end//////////////////
 allprojects {
     //////////////////iHandy Maven configuration begin//////////////////
-
     ext {
+        frameworkVersion = "4.2.0.beta02"
         interstitialAdsVersion = "4.0.1.gm"
         nativeAdsVersion = "4.0.1.gm"
         supportVersion = "25.2.0"
