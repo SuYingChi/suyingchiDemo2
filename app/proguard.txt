@@ -1,0 +1,15 @@
+-keep class * extends com.ihs.inputmethod.api.HSInputMethodPanel { *; }
+-ignorewarnings
+
+#========== AdMob Adapter start ===============
+-keep class com.chartboost.** { *; }
+-keep class com.fyber.MediationAdapterStarter { *;}
+-keep class com.vungle.** { *; }
+-dontwarn com.vungle.**
+-keep class com.fyber.** { *; }
+-dontwarn com.fyber.**
+-keep class com.jirbo.** { *; }
+-dontwarn com.jirbo.**
+-keep class com.applovin.** { *; }
+-dontwarn com.applovin.**
+#========== AdMob Adapter end ===============

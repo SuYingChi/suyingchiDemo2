@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.BaseFunctionBar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/function_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/config_suggestions_strip_height"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+</com.ihs.inputmethod.uimodules.BaseFunctionBar>

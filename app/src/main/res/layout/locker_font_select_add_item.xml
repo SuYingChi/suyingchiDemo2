@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+              android:gravity="center_horizontal"
+              android:padding="6dp"
+    android:background="@color/font_select_ad_itme_bg"
+    android:orientation="horizontal" >
+    <ImageView
+        android:src="@drawable/font_ad_love"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:fontFamily="sans-serif"
+        android:layout_marginLeft="9dp"
+        android:textSize="14sp"
+        android:textColor="#FFFFFF"
+        android:text="Love these fonts?"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/font_ad_tell"
+        android:fontFamily="sans-serif"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/font_ad_text_bg"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:text="Tell a friend"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

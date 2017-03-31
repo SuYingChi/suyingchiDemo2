@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#1b9ce2</color>
+    <color name="colorPrimaryDark">#137db5</color>
+    <color name="colorAccent">#1b9ce2</color>
+    <color name="home_create_keyboard_bg_normal">#f44336</color>
+    <color name="home_create_keyboard_bg_pressed">#c3362b</color>
+    <color name="home_create_keyboard_bg_pressed_ripple">#c3362b</color>
+
+    <color name="font_selection_listview_background">#ffeceff1</color>
+    <color name="settings_panel_background">#ffeceff1</color>
+    <color name="font_item_text_color">#ffffffff</color>
+    <color name="settings_item_text_color">#ff181818</color>
+    <color name="font_divider_color">#ffffffff</color>
+    <color name="bg_translucent_black">#B2000000</color>
+
+    <color name="settings_switch_line_color_gray">#ececec</color>
+    <color name="settings_main_title_bg_color">#263238</color>
+    <color name="settings_switch_btn_color_gray">#dcdcdc</color>
+     <color name="settings_switch_line_color_green">#55009385</color>
+
+    <color name="settings_switch_btn_color_green">#009385</color>
+    <color name="settings_category_title_color">#008d7e</color>
+    <color name="settings_language_title_color">#000000</color>
+
+    <color name="settings_main_title_color">#ffffff</color>
+    <color name="settings_background_color">#ffffff</color>
+    <color name="settings_background_color_pressed">#676767</color>
+    <color name="settings_divder_line_color">#ebebeb</color>
+    <color name="settings_switch_text_color">#000000</color>
+    <color name="settings_switch_tip_text_color"> #676767</color>
+
+    <color name="settings_switch_btn_color_gray_pressed">#646464</color>
+    <color name="settings_more_language_title_color">#ffffff</color>
+
+    <color name="settings_delete_language_dialog_btn_color">#00000000</color>
+    <color name="settings_delete_language_dialog_btn_color_pressed">#ffcccccc</color>
+
+
+    <color name="progressdialog">#18181a</color>
+    <color name="strip_view_tag">#FFFFFF</color>
+    <color name="strip_view_tag_pressed">#000000</color>
+
+    <color name="main_activity_step_one_button_background_pressed">#ff00ac59</color>
+    <color name="main_activity_step_one_button_background">#ff00ca69</color>
+    <color name="main_activity_step_two_button_background_pressed">#ff00b1ab</color>
+    <color name="main_activity_step_two_button_background">#ff00d0c9</color>
+
+
+
+
+    <!-- ad -->
+    <color name="ad_engine_ad_subtitle">#99666666</color>
+
+
+    <!-- theme color -->
+    <color name="theme_more_text_color">@color/colorAccent</color>
+    <color name="white_100_percent">#ffffff</color>
+
+    <color name="selector_keyactive_onetap_normal">#ffffff</color>
+    <color name="selector_keyactive_manual_normal">#59bbfb</color>
+    <color name="selector_keyactive_enable">#0db664</color>
+</resources>

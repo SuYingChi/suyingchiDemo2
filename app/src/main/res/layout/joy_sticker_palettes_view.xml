@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.sticker.StickerPalettesView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    android:visibility="gone"
+    android:id="@+id/stickerPalletesView">
+
+
+    <LinearLayout
+        style="?attr/suggestionStripViewStyle"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/config_suggestions_strip_height"
+        android:orientation="horizontal" >
+
+        <TabHost
+            android:id="@+id/sticker_category_tabhost"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="87.5" >
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none" >
+                <!-- add scroll -->
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:divider="@null" />
+            </HorizontalScrollView>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="0dp"
+                android:layout_height="0dp" >
+
+                <View
+                    android:id="@+id/sticker_keyboard_dummy"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </TabHost>
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:soundEffectsEnabled="false"
+            android:clickable="false"
+            android:contentDescription="@null"
+            android:gravity="center"
+            android:hapticFeedbackEnabled="false"
+            android:longClickable="false"
+            android:background="@drawable/joy_sticker_tab_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageButton
+            android:id="@+id/sticker_keyboard_delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="12.5"
+            android:hapticFeedbackEnabled="false"
+            android:soundEffectsEnabled="false" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/sticker_keyboard_top_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/sticker_keyboard_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.ihs.inputmethod.uimodules.ui.sticker.StickerCategoryPageIndicatorView
+        android:id="@+id/sticker_category_page_id_view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/sticker_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/sticker_keyboard_alphabet_left"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:hapticFeedbackEnabled="false"
+            android:soundEffectsEnabled="false" />
+
+        <RelativeLayout
+            android:id="@+id/sticker_keyboard_space"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.70"
+            android:hapticFeedbackEnabled="false"
+            android:soundEffectsEnabled="false" >
+            <View
+                android:id="@+id/sticker_keyboard_space_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/sticker_keyboard_alphabet_right"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:gravity="center"
+            android:hapticFeedbackEnabled="false"
+            android:soundEffectsEnabled="false" />
+    </LinearLayout>
+
+</com.ihs.inputmethod.uimodules.ui.sticker.StickerPalettesView>

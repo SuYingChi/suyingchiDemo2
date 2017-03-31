@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <integer name="config_emoji_recent_max_count">27</integer>
+    <integer name="config_emoji_col_count">8</integer>
+    <integer name="config_emoji_row_count">3</integer>
+</resources>

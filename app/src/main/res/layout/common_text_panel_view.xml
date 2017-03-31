@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.textart.HSTextPanelView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_gravity="bottom"
+	android:clipChildren="false"
+	android:orientation="vertical">
+	
+	<android.support.v7.widget.RecyclerView
+		android:layout_marginLeft="3dp"
+		android:layout_marginRight="3dp"
+		android:id="@+id/image_category_tabhost"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/config_suggestions_strip_height"
+		/>
+
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/emoji_keyboard_pager"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" />
+</com.ihs.inputmethod.uimodules.ui.textart.HSTextPanelView>

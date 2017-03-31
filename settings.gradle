@@ -1,7 +1,1 @@
-include ':app'
-include ':lib_keyboard_ui_modules'
-project(':lib_keyboard_ui_modules').projectDir = new File('lib_keyboarduimodules_android')
-include ':libKeyboard'
-project(':libKeyboard').projectDir = new File('lib_keyboard_android/libKeyboard')
-
-
+include ':app', ':booster'

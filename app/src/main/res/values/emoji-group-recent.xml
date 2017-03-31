@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="emoji_recent" format="string">
+        <item>U+2467</item>
+        <item>U+2468</item>
+        <item>U+2469</item>
+        <item>U+2122</item>
+        <item>U+2716</item>
+        <item>U+2461</item>
+        <item>U+2462</item>
+        <item>U+2463</item>
+        <item>U+25b6</item>
+        <item>U+21aa</item>
+    </array>
+</resources>

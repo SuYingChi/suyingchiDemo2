@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:widgetLayout="@layout/switch_layout"
+        android:defaultValue="true"
+        android:visibility="gone"
+        android:key="@string/custom_uninstall_preference_key"
+        android:title="@string/custom_uninstall_auto_enable" />
+
+</PreferenceScreen>
