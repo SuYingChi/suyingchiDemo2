@@ -89,8 +89,6 @@ public class KeyboardWakeUpActivity extends HSActivity {
             } else {
                 startThemeHomeActivity();
             }
-        }else{
-            startThemeHomeActivity();
         }
     }
 

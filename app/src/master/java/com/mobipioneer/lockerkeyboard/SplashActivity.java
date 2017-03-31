@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ihs.commons.config.HSConfig;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.mobipioneer.lockerkeyboard.app.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -18,14 +19,14 @@ public class SplashActivity extends AppCompatActivity {
         if (intent == null) {
             intent = new Intent();
         }
+
+        intent.setClass(this, MainActivity.class);
         if (isAccessibilityEnabled) {
             if (!HSAccessibilityService.isAvailable()) {
                 intent.setClass(this, KeyboardActivationActivity.class);
-            } else {
+            } else if(!HSInputMethod.isCurrentIMESelected()){
                 intent.setClass(this, KeyboardWakeUpActivity.class);
             }
-        } else {
-            intent.setClass(this, MainActivity.class);
         }
         startActivity(intent);
         finish();
