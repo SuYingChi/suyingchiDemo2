@@ -336,7 +336,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(themeName);
             }
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_delete).equalsIgnoreCase(text)) {
-            HSKeyboardThemeManager.removeCustomTheme(keyboardTheme);
+            KCCustomThemeManager.getInstance().removeCustomTheme(keyboardTheme.getThemeId());
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_share).equalsIgnoreCase(text)) {
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_share_clicked", themeName);

@@ -211,7 +211,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         // 获取所有的非自定义主题
         List<HSKeyboardTheme> allKeyboardThemesExceptCustomTheme = new ArrayList<>();
         allKeyboardThemesExceptCustomTheme.addAll(HSKeyboardThemeManager.getAllKeyboardThemeList());
-        allKeyboardThemesExceptCustomTheme.removeAll(HSKeyboardThemeManager.getCustomThemeList());
+        allKeyboardThemesExceptCustomTheme.removeAll(KCCustomThemeManager.getInstance().getAllCustomThemes());
 
         // 获取banner主题
         List<String> bannerThemeNames = (List<String>) HSConfig.getList("Application", "ThemeContents", "BannerList");

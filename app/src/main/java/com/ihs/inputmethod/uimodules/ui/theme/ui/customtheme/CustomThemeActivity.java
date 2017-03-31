@@ -582,7 +582,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         @Override
         protected void onPostExecute(String name) {
             if (!TextUtils.isEmpty(name)) {
-                HSKeyboardThemeManager.addCustomTheme(name);
+                KCCustomThemeManager.getInstance().addCustomThemes(name);
                 HSKeyboardThemeManager.setPreviewCustomTheme(false);
                 HSLog.e("custome ximu +" + name);
                 HSKeyboardThemeManager.setKeyboardTheme(name);

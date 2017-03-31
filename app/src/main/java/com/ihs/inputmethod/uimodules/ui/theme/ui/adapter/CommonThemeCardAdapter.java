@@ -192,7 +192,7 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 								themeCardItemClickListener.onMenuDownloadClick(keyboardTheme);
 							}
 						} else if (HSApplication.getContext().getString(R.string.theme_card_menu_delete).equals(title)) {
-							HSKeyboardThemeManager.removeCustomTheme(keyboardTheme);
+							KCCustomThemeManager.getInstance().removeCustomTheme(keyboardTheme.getThemeId());
 							if (themeCardItemClickListener != null) {
 								themeCardItemClickListener.onMenuDeleteClick(keyboardTheme);
 							}
