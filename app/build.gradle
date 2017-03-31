@@ -67,7 +67,7 @@ android {
             applicationId = "com.masterkeyboard.emoji"
             versionCode 4
             versionName "1.1.0"
-            manifestPlaceholders = [APP_ID: applicationId, APPLY_SCHEME: "lockerKeyboard"]
+            manifestPlaceholders = [ APPLY_SCHEME: "lockerKeyboard"]
             signingConfig signingConfigs.masterReleaseConfig
         }
 
@@ -75,7 +75,7 @@ android {
             applicationId = "com.smartkeyboard.emoji"
             versionCode 11
             versionName "1.2.2"
-            manifestPlaceholders = [APP_ID: applicationId, APPLY_SCHEME: "smileyKeyboard"]
+            manifestPlaceholders = [ APPLY_SCHEME: "smileyKeyboard"]
             signingConfig signingConfigs.smileyReleaseConfig
         }
 
@@ -83,7 +83,6 @@ android {
             applicationId = "com.keyboard.colorkeyboard"
             versionCode 29
             versionName "2.2.7"
-            manifestPlaceholders = [APP_ID: applicationId]
             signingConfig signingConfigs.colorReleaseConfig
         }
 

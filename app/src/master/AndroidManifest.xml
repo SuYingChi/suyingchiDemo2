@@ -363,7 +363,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/SettingActivityStyle">
             <intent-filter>
-                <action android:name="${APP_ID}.LAUNCH_SETTINGS" />
+                <action android:name="${applicationId}.LAUNCH_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -374,7 +374,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/SettingActivityStyle">
             <intent-filter>
-                <action android:name="${APP_ID}.LAUNCH_LANGUAGE_SETTINGS" />
+                <action android:name="${applicationId}.LAUNCH_LANGUAGE_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
