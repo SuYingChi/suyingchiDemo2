@@ -219,8 +219,32 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
                 }
             });
 
+            setCharging();
+
+            //only match actionData and actionType, can open setting
+            int actionData = HSConfig.optInteger(0, "Application", "ActionConfig", "EventOccasion", "AppOpen", "ActionData");
+            int actionType = HSConfig.optInteger(0, "Application", "ActionConfig", "EventOccasion", "AppOpen", "ActionType");
+            if (actionData != 1 || actionType != 1) {
+                getPreferenceScreen().removePreference(findPreference(getResources().getString(R.string.input_security_check_preference_key)));
+            }
+            if (actionData != 3 || actionType != 0) {
+                getPreferenceScreen().removePreference(findPreference(getResources().getString(R.string.optimize_your_phone_preference_key)));
+            }
+
+        }
+
+        private void setCharging() {
+
             CheckBoxPreference chargingPreference = (CheckBoxPreference) findPreference(getResources().getString(R.string.config_charge_switchpreference_key));
-            chargingPreference.setChecked(ChargingPrefsUtil.getInstance().isChargingEnabled());
+
+            int chargingEnableStates = ChargingPrefsUtil.getInstance().getChargingEnableStates();
+            if (chargingEnableStates == ChargingPrefsUtil.CHARGING_MUTED) {
+                getPreferenceScreen().removePreference(chargingPreference);
+                return;
+            }
+
+            boolean chargingEnabled = chargingEnableStates == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE;
+            chargingPreference.setChecked(chargingEnabled);
 //            if (!showChargeSetting || !ChargingConfigManager.getManager().enableChargingFunction()) {
 //                getPreferenceScreen().removePreference(chargingPreference);
 //            } else {
@@ -245,17 +269,6 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
                 }
             });
 //            }
-
-            //only match actionData and actionType, can open setting
-            int actionData = HSConfig.optInteger(0, "Application", "ActionConfig", "EventOccasion", "AppOpen", "ActionData");
-            int actionType = HSConfig.optInteger(0, "Application", "ActionConfig", "EventOccasion", "AppOpen", "ActionType");
-            if (actionData != 1 || actionType != 1) {
-                getPreferenceScreen().removePreference(findPreference(getResources().getString(R.string.input_security_check_preference_key)));
-            }
-            if (actionData != 3 || actionType != 0) {
-                getPreferenceScreen().removePreference(findPreference(getResources().getString(R.string.optimize_your_phone_preference_key)));
-            }
-
         }
 
         private void showFunctionFragment(int postion) {
@@ -285,9 +298,6 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
         public void onResume() {
             super.onResume();
             CheckBoxPreference chargingPreference = (CheckBoxPreference) findPreference(getResources().getString(R.string.config_charge_switchpreference_key));
-            if (chargingPreference != null) {
-                chargingPreference.setChecked(ChargingPrefsUtil.getInstance().isChargingEnabled());
-            }
         }
     }
 
