@@ -36,8 +36,8 @@ public class ButtonFragment extends BaseThemeFragment {
             }
         }
         return new ThemePageItem(Arrays.<CategoryItem<?>>asList(
-                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_shape), AdsItem.class,new AdsProvider(),Arrays.asList(new AdsItem(.72f,1,false))),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_shape), KCButtonShapeElement.class, new ButtonShapeProvider(this), KCCustomThemeManager.getInstance().getButtonShapeElements()),
+                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_style), AdsItem.class,new AdsProvider(),Arrays.asList(new AdsItem(true))),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_style), KCButtonStyleElement.class, new ButtonStyleProvider(this), buttonStyles)
         ));
     }

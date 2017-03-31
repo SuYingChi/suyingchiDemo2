@@ -16,6 +16,8 @@
 
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -24,8 +26,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -39,12 +39,10 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
 import me.drakeet.multitype.ItemViewProvider;
 
 
-
 /**
  * @author drakeet
  */
 public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolder> {
-    ImageView loadingView;
 
     @NonNull
     @Override
@@ -57,36 +55,43 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
 
     @Override
     protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull AdsItem adsItem) {
-        holder.adsContainer.removeAllViews();
+        holder.layoutContainer.removeAllViews();
         Context context = holder.itemView.getContext();
         View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_6, null);
-        loadingView = new ImageView(context);
-        loadingView.setImageResource(R.drawable.custom_theme_ad);
-        loadingView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        RoundedCornerLayout roundedCornerLayout = (RoundedCornerLayout) view.findViewById(R.id.adsContainer);
+        RoundedCornerLayout loadingLayout = (RoundedCornerLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ct_item_loading, null);
+        loadingLayout.setCircle(adsItem.isCircleStyle);
 
 
-
-        final NativeAdView nativeAdView = new NativeAdView(context, view, loadingView);
+        final NativeAdView nativeAdView = new NativeAdView(context, view, loadingLayout);
         final NativeAdParams nativeAdParams = new NativeAdParams(context.getString(R.string.ad_placement_customize_theme));
-        nativeAdParams.setScaleType(ImageView.ScaleType.FIT_XY);
         nativeAdView.configParams(nativeAdParams);
-        nativeAdView.setNativeAdType(NativeAdView.NativeAdType.ICON);
+        nativeAdParams.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
-        loadingView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+
+        loadingLayout.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View v) {
             }
 
             @Override
             public void onViewDetachedFromWindow(View v) {
-                doAnimation(holder.adsContainer);
+                if (nativeAdView.getNativeAdContainerView() != null && nativeAdView.getNativeAdContainerView().getAdIconView() != null) {
+                    nativeAdView.getNativeAdContainerView().getAdIconView().setImageViewScaleType(ImageView.ScaleType.FIT_CENTER);
+                }
+                doAnimation(holder.layoutContainer);
             }
         });
 
         nativeAdView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View v) {
-                doAnimation(holder.adsContainer);
+                if (nativeAdView.getNativeAdContainerView() != null) {
+                    if (nativeAdView.getNativeAdContainerView().getAdIconView() != null) {
+                        nativeAdView.getNativeAdContainerView().getAdIconView().setImageViewScaleType(ImageView.ScaleType.FIT_CENTER);
+                    }
+                }
+                doAnimation(holder.layoutContainer);
             }
 
             @Override
@@ -100,27 +105,28 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, height);
         layoutParams.gravity = Gravity.CENTER;
         nativeAdView.setLayoutParams(layoutParams);
-        holder.adsContainer.setLayoutParams(layoutParams);
-        holder.adsContainer.addView(nativeAdView);
-        holder.adsContainer.setCircle(adsItem.isCircleStyle);
+        holder.layoutContainer.addView(nativeAdView);
+        roundedCornerLayout.setCircle(adsItem.isCircleStyle);
         holder.setIsRecyclable(false);
     }
 
     private void doAnimation(View view) {
-        ScaleAnimation animation = new ScaleAnimation(0.9f,1.2f,0.9f,1.2f, Animation.RELATIVE_TO_SELF,.5f,Animation.RELATIVE_TO_SELF,.5f);
-        animation.setDuration(1000);
-        animation.setRepeatCount(2);
-        view.startAnimation(animation);
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator xAnimator = ObjectAnimator.ofFloat(view,"scaleX",1,1.1f,1,1.1f,1);
+        ObjectAnimator yAnimator = ObjectAnimator.ofFloat(view,"scaleY",1,1.1f,1,1.1f,1);
+        animatorSet.playTogether(xAnimator,yAnimator);
+        animatorSet.setDuration(1000);
+        animatorSet.start();
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        RoundedCornerLayout adsContainer;
+        FrameLayout layoutContainer;
 
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            adsContainer = (RoundedCornerLayout) itemView.findViewById(R.id.adsContainer);
+            layoutContainer = (FrameLayout) itemView.findViewById(R.id.layoutContainer);
         }
     }
 
