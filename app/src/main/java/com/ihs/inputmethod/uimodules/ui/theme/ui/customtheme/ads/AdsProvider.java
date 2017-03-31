@@ -39,6 +39,7 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
 import me.drakeet.multitype.ItemViewProvider;
 
 
+
 /**
  * @author drakeet
  */
@@ -78,14 +79,14 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
 
             @Override
             public void onViewDetachedFromWindow(View v) {
-                doAnimation(nativeAdView);
+                doAnimation(holder.adsContainer);
             }
         });
 
         nativeAdView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View v) {
-                doAnimation(nativeAdView);
+                doAnimation(holder.adsContainer);
             }
 
             @Override
@@ -105,11 +106,11 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
         holder.setIsRecyclable(false);
     }
 
-    private void doAnimation(NativeAdView nativeAdView) {
+    private void doAnimation(View view) {
         ScaleAnimation animation = new ScaleAnimation(0.9f,1.2f,0.9f,1.2f, Animation.RELATIVE_TO_SELF,.5f,Animation.RELATIVE_TO_SELF,.5f);
         animation.setDuration(1000);
         animation.setRepeatCount(2);
-        nativeAdView.startAnimation(animation);
+        view.startAnimation(animation);
     }
 
 
