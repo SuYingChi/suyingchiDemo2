@@ -203,8 +203,6 @@ dependencies {
     }
     //AdMob Adapter start
     compile fileTree(include: ['/*/*.jar'], dir: '../libs/libAdMobMediation')
-    // Adapter for AdMob
-    compile(name: 'libAdMobMediation/vungle/VungleAdapter', 'ext': 'aar')
     //AdMob Adapter end
     compile 'com.airbnb.android:lottie:1.5.3'
 }
