@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:fontFamily="sans-serif-medium"
         android:src="@drawable/ic_ad_label" />
 
     <FrameLayout
