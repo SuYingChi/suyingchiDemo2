@@ -3,6 +3,8 @@ package com.ihs.inputmethod.charging;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
+import com.ihs.chargingscreen.HSChargingScreenManager;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -17,11 +19,12 @@ import java.util.Date;
  * charging 相关配置
  */
 public class ChargingConfigManager {
-
+    private static final String TAG = ChargingConfigManager.class.getSimpleName();
     private final static String PREF_KEY_SHOULD_HIDE_CHARGING_HINT = "display_charging_hint";
     public final static String PREF_KEY_USER_SET_CHARGING_TOGGLE = "user_set_charging_toggle";
     public final static String PREF_KEY_CHARGING_NEW_USER = "charging_new_user";
     public final static String PREF_KEY_LOCK_VIEW_CLICKED = "pref_key_lock_view_clicked";
+    private final static String PREF_KEY_ENABLE_ALERT_SHOW_COUNT = "pref_key_lock_enable_alert_show_count";
 
     private final boolean CHARGING_TOGGLE_DEFAULT_VALUE = false;
 
@@ -142,5 +145,56 @@ public class ChargingConfigManager {
      */
     public boolean isLockViewClicked(){
         return HSPreferenceHelper.getDefault(HSApplication.getContext()).getBoolean(PREF_KEY_LOCK_VIEW_CLICKED, false);
+    }
+
+    public void increaseEnableAlertShowCount() {
+        int showCount = HSPreferenceHelper.getDefault(HSApplication.getContext()).getInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, 0);
+        showCount++;
+        HSPreferenceHelper.getDefault(HSApplication.getContext()).putInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, showCount);
+    }
+
+    public boolean shouldShowEnableChargingAlert() {
+        // Charging not support
+        if (ChargingPrefsUtil.isChargingMuted()) {
+            HSLog.i(TAG, "Charging muted");
+            return false;
+        }
+
+        // Charging enabled once
+        if (ChargingPrefsUtil.getInstance().isChargingEnableOnce()) {
+            HSLog.i(TAG, "Charging enable once");
+            return false;
+        }
+
+        // Charging function opened
+        if (HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
+            HSLog.i(TAG, "Charging opened");
+            return false;
+        }
+
+        if (isEnableChargingAlertShowCountAchievedMax()) {
+            HSLog.i(TAG, "Charging enable alert achieved max show count");
+            return false;
+        }
+
+        if (!shouldShowEnableChargingAlertAtThisTime()) {
+            HSLog.i(TAG, "Charging enable alert should not show at session: " + HSSessionMgr.getCurrentSessionId());
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isEnableChargingAlertShowCountAchievedMax() {
+        final int maxCount = HSConfig.optInteger(3, "Application", "FeaturePrompt", "QuitAlert", "MaxShowCount");
+        HSLog.i(TAG, "MaxShowCount: " + maxCount);
+        final int showCount = HSPreferenceHelper.getDefault(HSApplication.getContext()).getInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, 0);
+        return showCount >= maxCount;
+    }
+
+    private boolean shouldShowEnableChargingAlertAtThisTime() {
+        final int sessionInterval = HSConfig.optInteger(3, "Application", "FeaturePrompt", "QuitAlert", "SessionInterval");
+        HSLog.i(TAG, "SessionInterval: " + sessionInterval);
+        return HSSessionMgr.getCurrentSessionId() > 0 && HSSessionMgr.getCurrentSessionId() % sessionInterval == 0;
     }
 }

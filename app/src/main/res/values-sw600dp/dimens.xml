@@ -6,4 +6,6 @@
     <dimen name="facemoji_face_list_picker_size">40dp</dimen>
     <dimen name="facemoji_face_list_picker_margin">30dp</dimen>
     <dimen name="facemoji_face_list_scroll_view_height">80dp</dimen>
+
+    <fraction name="design_dialog_width">60%</fraction>
 </resources>
