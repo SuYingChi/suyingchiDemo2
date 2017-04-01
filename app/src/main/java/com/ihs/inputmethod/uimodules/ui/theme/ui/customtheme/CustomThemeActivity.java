@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme;
 
 import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -29,6 +30,7 @@ import com.acb.adadapter.AcbInterstitialAd;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -41,6 +43,7 @@ import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
@@ -55,6 +58,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.button.Butt
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font.FontFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.sound.SoundFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView;
+import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.nativeads.NativeAdManager;
@@ -599,9 +603,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         }
     }
 
-
     private void onNewThemeCreated() {
-        if (!showInterstitialAdsAfterSaveTheme()) {
+        if (!showInterstitialAdsAfterSaveTheme() && !showChargingEnableAlert()) {
             showTrialKeyboard(false);
         }
     }
@@ -642,6 +645,33 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         } else {
             return false;
         }
+    }
+
+    private boolean showChargingEnableAlert() {
+        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+            dialog.setTitle(getString(R.string.charging_alert_title));
+            dialog.setMessage(getString(R.string.charging_alert_message));
+            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            dialog.setCancelable(true);
+            dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChargingManagerUtil.enableCharging(false);
+                    HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
+                }
+            });
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    showTrialKeyboard(false);
+                }
+            });
+            dialog.show();
+            return true;
+        }
+
+        return false;
     }
 
     private void showTrialKeyboard(boolean hasInterstitialAdsShown) {

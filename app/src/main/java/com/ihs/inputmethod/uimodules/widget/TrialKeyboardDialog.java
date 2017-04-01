@@ -25,12 +25,15 @@ import com.acb.adadapter.AcbInterstitialAd;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -199,6 +202,8 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 });
                 interstitialAd.show();
                 hasTrialKeyboardShownWhenThemeCreated = false;
+            } else {
+                showChargingEnableAlert();
             }
         }else{
             hasTrialKeyboardShownWhenThemeCreated = false;
@@ -227,6 +232,25 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
             }
         }
     };
+
+    private void showChargingEnableAlert() {
+        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+            dialog.setTitle(getContext().getString(R.string.charging_alert_title));
+            dialog.setMessage(getContext().getString(R.string.charging_alert_message));
+            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            dialog.setCancelable(true);
+            dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChargingManagerUtil.enableCharging(false);
+                    HSToastUtils.toastCenterShort(getContext().getString(R.string.charging_enable_toast));
+                }
+            });
+            dialog.show();
+        }
+    }
+
     @NonNull
     private NativeAdView addNativeAdView() {
         String placementName = HSApplication.getContext().getString(R.string.ad_placement_themetryad);

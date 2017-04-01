@@ -153,7 +153,7 @@ public class ChargingConfigManager {
         HSPreferenceHelper.getDefault(HSApplication.getContext()).putInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, showCount);
     }
 
-    public boolean shouldShowEnableChargingAlert() {
+    public boolean shouldShowEnableChargingAlert(boolean limitShowCount) {
         // Charging not support
         if (ChargingPrefsUtil.isChargingMuted()) {
             HSLog.i(TAG, "Charging muted");
@@ -172,14 +172,16 @@ public class ChargingConfigManager {
             return false;
         }
 
-        if (isEnableChargingAlertShowCountAchievedMax()) {
-            HSLog.i(TAG, "Charging enable alert achieved max show count");
-            return false;
-        }
+        if (limitShowCount) {
+            if (isEnableChargingAlertShowCountAchievedMax()) {
+                HSLog.i(TAG, "Charging enable alert achieved max show count");
+                return false;
+            }
 
-        if (!shouldShowEnableChargingAlertAtThisTime()) {
-            HSLog.i(TAG, "Charging enable alert should not show at session: " + HSSessionMgr.getCurrentSessionId());
-            return false;
+            if (!shouldShowEnableChargingAlertAtThisTime()) {
+                HSLog.i(TAG, "Charging enable alert should not show at session: " + HSSessionMgr.getCurrentSessionId());
+                return false;
+            }
         }
 
         return true;

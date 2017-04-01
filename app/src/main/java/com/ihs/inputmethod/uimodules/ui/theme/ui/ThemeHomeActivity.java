@@ -608,7 +608,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     }
 
     private void showEnableChargingAlertIfNeeded() {
-        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert()) {
+        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
 
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());

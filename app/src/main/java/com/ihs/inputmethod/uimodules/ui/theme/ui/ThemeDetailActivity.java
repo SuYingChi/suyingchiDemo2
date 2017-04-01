@@ -28,6 +28,7 @@ import com.acb.adadapter.AcbInterstitialAd;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -40,6 +41,7 @@ import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.ihs.inputmethod.api.utils.HSNetworkConnectionUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -52,6 +54,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
+import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
@@ -303,6 +306,29 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                             handler.sendMessageDelayed(message, 1500);
                         }
                     });
+                    nativeAdView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                        @Override
+                        public void onScrollChanged() {
+                            int[] locationCoordinate = new int[2];
+                            nativeAdView.getLocationOnScreen(locationCoordinate);
+                            Message message = Message.obtain();
+                            message.obj = nativeAdView;
+                            if (nativeAdAlreadyLoadedList.contains(nativeAdView)) {
+                                if (locationCoordinate[1] < HSDisplayUtils.getScreenHeightForContent() && locationCoordinate[1] > (0 - nativeAdView.getHeight())) { //在屏幕内
+                                    message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR;
+                                    handler.sendMessageDelayed(message, 1500);
+                                }
+                                if (locationCoordinate[1] < (0 - nativeAdView.getHeight()) || locationCoordinate[1] > HSDisplayUtils.getScreenHeightForContent()) { //在屏幕外
+                                    handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR);
+                                    message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR;
+                                    handler.sendMessage(message);
+                                }
+                            } else {
+                                // do nothing
+                            }
+
+                        }
+                    });
                     nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themedetailad), width, 1.9f));
                     CardView cardView = ViewConvertor.toCardView(nativeAdView);
                     linearLayout.addView(cardView);
@@ -318,30 +344,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     protected void onResume() {
         super.onResume();
         currentResumeTime = System.currentTimeMillis();
-        nativeAdView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                int[] locationCoordinate = new int[2];
-                nativeAdView.getLocationOnScreen(locationCoordinate);
-                Message message = Message.obtain();
-                message.obj = nativeAdView;
-                if (nativeAdAlreadyLoadedList.contains(nativeAdView)) {
-                    if (locationCoordinate[1] < HSDisplayUtils.getScreenHeightForContent() && locationCoordinate[1] > (0 - nativeAdView.getHeight())) { //在屏幕内
-                        message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR;
-                        handler.sendMessageDelayed(message, 1500);
-                    }
-                    if (locationCoordinate[1] < (0 - nativeAdView.getHeight()) || locationCoordinate[1] > HSDisplayUtils.getScreenHeightForContent()) { //在屏幕外
-
-                        handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR);
-                        message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR;
-                        handler.sendMessage(message);
-                    }
-                } else {
-                    // do nothing
-                }
-
-            }
-        });
     }
 
     @Override
@@ -478,7 +480,27 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     }
                 });
                 interstitialAd.show();
+            } else {
+                showChargingEnableAlert();
             }
+    }
+
+    private void showChargingEnableAlert() {
+        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+            dialog.setTitle(getString(R.string.charging_alert_title));
+            dialog.setMessage(getString(R.string.charging_alert_message));
+            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            dialog.setCancelable(true);
+            dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChargingManagerUtil.enableCharging(false);
+                    HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
+                }
+            });
+            dialog.show();
+        }
     }
 
     @Override
