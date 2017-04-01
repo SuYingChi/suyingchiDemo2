@@ -102,6 +102,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 //        keyboardPanelSwitchContainer.setThemeBackground(HSKeyboardThemeManager.getKeyboardBackgroundDrawable());
         ThemeAnalyticsReporter.getInstance().recordThemeUsage(HSKeyboardThemeManager.getCurrentThemeName());
         hsBackgroundVedioView = new HSMediaView(HSApplication.getContext());
+        hsBackgroundVedioView.setTag("BackgroundView");
         hsBackgroundVedioView.setSupportSmoothScroll(false);
         hsBackgroundVedioView.init();
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
@@ -120,6 +121,27 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
         return keyboardPanelSwitchContainer;
     }
+
+    public void initInputView(View keyboardPanelView) {
+        keyboardPanelSwitchContainer = (KeyboardPanelSwitchContainer) keyboardPanelView;
+        hsBackgroundVedioView = (HSMediaView) keyboardPanelSwitchContainer.findViewWithTag("BackgroundView");
+        ((ViewGroup)hsBackgroundVedioView.getParent()).removeView(hsBackgroundVedioView);
+        keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
+
+        View keyboardView = keyboardPanelView.findViewById(R.id.input_view);
+        ((ViewGroup)keyboardView.getParent()).removeView(keyboardView);
+        keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, keyboardView);
+
+        functionBar = (BaseFunctionBar) keyboardPanelView.findViewById(R.id.function_layout);
+        ((ViewGroup)functionBar.getParent()).removeView(functionBar);
+        setFunctionBar(functionBar);
+        keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
+
+        HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
+    }
+
+
 
     private void createDefaultFunctionBar() {
         functionBar = (BaseFunctionBar) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.base_funtion_bar, null);
