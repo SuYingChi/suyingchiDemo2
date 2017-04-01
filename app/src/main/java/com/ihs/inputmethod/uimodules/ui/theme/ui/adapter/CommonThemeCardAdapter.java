@@ -134,6 +134,17 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			case ThemeCardAdapterDelegate.TAG_MENU:
 				v.setSelected(true);
 				PopupMenu popMenu = ThemeMenuUtils.createPopMenu(v, keyboardTheme);
+				if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.NEED_DOWNLOAD) {
+					if (keyboardTheme.getThemePkName() != null) {
+						boolean shouldDownloadThemeAPK = ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
+						if (shouldDownloadThemeAPK) {
+							Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.theme_card_downloading_tip), Toast.LENGTH_SHORT).show();
+						}
+					}
+					if (themeCardItemClickListener != null) {
+						themeCardItemClickListener.onMenuDownloadClick(keyboardTheme);
+					}
+				}
 				final KeyboardActivationProcessor procceser =
 						new KeyboardActivationProcessor(activity.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
 							@Override
@@ -217,7 +228,9 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 						return true;
 					}
 				});
-				popMenu.show();
+				if (popMenu.getMenu().size() > 0) {
+					popMenu.show();
+				}
 				break;
 			case ThemeCardAdapterDelegate.TAG_CARD:
 				if(model.deleteEnable){

@@ -141,6 +141,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 		keyboardThemeList.addAll(HSKeyboardThemeManager.getAllKeyboardThemeList());
 		keyboardThemeList.removeAll(KCCustomThemeManager.getInstance().getAllCustomThemes());
 		keyboardThemeList.removeAll(HSKeyboardThemeManager.getDownloadedThemeList());
+		keyboardThemeList.removeAll(HSKeyboardThemeManager.getBuiltInThemeList());
 
 		for(HSKeyboardTheme theme :keyboardThemeList){
 			ThemeHomeModel themeModel=new ThemeHomeModel();

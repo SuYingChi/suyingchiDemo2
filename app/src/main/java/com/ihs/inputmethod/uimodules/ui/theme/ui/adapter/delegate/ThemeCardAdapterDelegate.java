@@ -72,8 +72,9 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 				themeCardViewHolder.themeRealImage.setImageDrawable(HSKeyboardThemeManager.getThemePreviewDrawable(keyboardTheme.mThemeName));
 				themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
 				break;
-			case DOWNLOADED:
 			case NEED_DOWNLOAD:
+				themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
+			case DOWNLOADED:
 				final String smallPreviewImgUrl = keyboardTheme.getSmallPreivewImgUrl();
 				if (smallPreviewImgUrl != null) {
 					HSImageLoader.getInstance().displayImage(smallPreviewImgUrl, themeCardViewHolder.themeRealImage, options);

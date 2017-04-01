@@ -28,12 +28,6 @@ public class ThemeMenuUtils {
         final PopupMenu popup = new PopupMenu(v.getContext(), v);
         switch (keyboardTheme.getThemeType()) {
             case NEED_DOWNLOAD:
-                if(ThemeDownloadManager.getInstance().isDownloading(keyboardTheme.mThemeName)) {
-                    popup.getMenu().add(HSApplication.getContext().getString(R.string.theme_card_menu_downloading));
-                }else {
-                    popup.getMenu().add(HSApplication.getContext().getString(R.string.theme_card_menu_download));
-                }
-                popup.getMenu().add(HSApplication.getContext().getString(R.string.theme_card_menu_share));
                 break;
             case DOWNLOADED:
             case BUILD_IN:
