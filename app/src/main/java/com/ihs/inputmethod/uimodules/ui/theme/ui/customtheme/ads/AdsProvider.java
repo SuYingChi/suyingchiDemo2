@@ -112,10 +112,10 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
 
     private void doAnimation(View view) {
         AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator xAnimator = ObjectAnimator.ofFloat(view,"scaleX",1,1.1f,1,1.1f,1);
-        ObjectAnimator yAnimator = ObjectAnimator.ofFloat(view,"scaleY",1,1.1f,1,1.1f,1);
+        ObjectAnimator xAnimator = ObjectAnimator.ofFloat(view,"scaleX",1,1.2f,1,1.2f,1);
+        ObjectAnimator yAnimator = ObjectAnimator.ofFloat(view,"scaleY",1,1.2f,1,1.2f,1);
         animatorSet.playTogether(xAnimator,yAnimator);
-        animatorSet.setDuration(1000);
+        animatorSet.setDuration(900);
         animatorSet.start();
     }
 
