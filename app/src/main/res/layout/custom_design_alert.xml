@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/round_rectangle_white_bg">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius_top_left="@dimen/design_base_corner_radius"
+        app:riv_corner_radius_top_right="@dimen/design_base_corner_radius"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        style="@style/DesignDialogFrame">
+
+        <LinearLayout
+            style="@style/DesignDialogContentArea">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/DesignDialogContentTitle"/>
+
+            <TextView
+                android:id="@+id/tv_message"
+                style="@style/DesignDialogContentBody"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_buttons"
+            style="@style/DesignDialogActionArea">
+
+            <TextView
+                android:id="@+id/btn_negative"
+                style="@style/DesignDialogActionButton"/>
+
+            <TextView
+                android:id="@+id/btn_positive"
+                style="@style/DesignDialogActionButtonHighlight"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_single_button"
+            style="@style/DesignDialogActionArea">
+
+            <TextView
+                android:id="@+id/btn_positive_single"
+                style="@style/DesignDialogSingleActionButton"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
