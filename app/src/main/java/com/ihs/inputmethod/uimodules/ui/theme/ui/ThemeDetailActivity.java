@@ -303,6 +303,29 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                             handler.sendMessageDelayed(message, 1500);
                         }
                     });
+                    nativeAdView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                        @Override
+                        public void onScrollChanged() {
+                            int[] locationCoordinate = new int[2];
+                            nativeAdView.getLocationOnScreen(locationCoordinate);
+                            Message message = Message.obtain();
+                            message.obj = nativeAdView;
+                            if (nativeAdAlreadyLoadedList.contains(nativeAdView)) {
+                                if (locationCoordinate[1] < HSDisplayUtils.getScreenHeightForContent() && locationCoordinate[1] > (0 - nativeAdView.getHeight())) { //在屏幕内
+                                    message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR;
+                                    handler.sendMessageDelayed(message, 1500);
+                                }
+                                if (locationCoordinate[1] < (0 - nativeAdView.getHeight()) || locationCoordinate[1] > HSDisplayUtils.getScreenHeightForContent()) { //在屏幕外
+                                    handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR);
+                                    message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR;
+                                    handler.sendMessage(message);
+                                }
+                            } else {
+                                // do nothing
+                            }
+
+                        }
+                    });
                     nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themedetailad), width, 1.9f));
                     CardView cardView = ViewConvertor.toCardView(nativeAdView);
                     linearLayout.addView(cardView);
@@ -318,30 +341,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     protected void onResume() {
         super.onResume();
         currentResumeTime = System.currentTimeMillis();
-        nativeAdView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                int[] locationCoordinate = new int[2];
-                nativeAdView.getLocationOnScreen(locationCoordinate);
-                Message message = Message.obtain();
-                message.obj = nativeAdView;
-                if (nativeAdAlreadyLoadedList.contains(nativeAdView)) {
-                    if (locationCoordinate[1] < HSDisplayUtils.getScreenHeightForContent() && locationCoordinate[1] > (0 - nativeAdView.getHeight())) { //在屏幕内
-                        message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR;
-                        handler.sendMessageDelayed(message, 1500);
-                    }
-                    if (locationCoordinate[1] < (0 - nativeAdView.getHeight()) || locationCoordinate[1] > HSDisplayUtils.getScreenHeightForContent()) { //在屏幕外
-
-                        handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR);
-                        message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR;
-                        handler.sendMessage(message);
-                    }
-                } else {
-                    // do nothing
-                }
-
-            }
-        });
     }
 
     @Override
