@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -17,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.acb.adadapter.AcbInterstitialAd;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
@@ -60,9 +63,11 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     Build build;
     private OnTrialKeyboardStateChanged onTrialKeyboardStateChanged;
     private boolean isSoftKeyboardOpened;
+    private boolean isNativeAdAlreadyLoaded;
     private ViewGroup rootView;
     private String from;
     private int activationRequestCode;
+    private Handler handler ;
 
     private boolean onlyCloseKeyboard = true;
 
@@ -116,6 +121,8 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 dismiss();
             }
         });
+        handler = new Handler();
+        isNativeAdAlreadyLoaded = false;
 
         editText.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -198,7 +205,28 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         }
     }
 
-
+    Runnable runnable = new Runnable() {
+        /**
+         * When an object implementing interface <code>Runnable</code> is used
+         * to create a thread, starting the thread causes the object's
+         * <code>run</code> method to be called in that separately executing
+         * thread.
+         * <p>
+         * The general contract of the method <code>run</code> is that it may
+         * take any action whatsoever.
+         *
+         * @see Thread#run()
+         */
+        @Override
+        public void run() {
+            if (null != nativeAdView) {
+                TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
+                adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+            } else {
+                // do nothing
+            }
+        }
+    };
     @NonNull
     private NativeAdView addNativeAdView() {
         String placementName = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
@@ -215,15 +243,24 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
             nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
                 @Override
                 public void onAdLoaded(NativeAdView nativeAdView) {
-
+                    isNativeAdAlreadyLoaded = true;
                     HSLog.e("themetry got ad");
                     if (cardView.getParent() == null) {
                         HSLog.e("themetry ad view added");
                         linearLayout.addView(cardView);
                     }
+                    handler.postDelayed(runnable,1500);
                 }
             });
             linearLayout.addView(cardView);
+        } else {
+            if (isNativeAdAlreadyLoaded && null != nativeAdView) {
+                TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
+                adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
+                handler.postDelayed(runnable,1500);
+            } else {
+                // do nothing
+            }
         }
         return nativeAdView;
     }
@@ -254,6 +291,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     @Override
     public void dismiss() {
+        handler.removeCallbacks(runnable);
         if (getContext().getResources().getBoolean(R.bool.trail_key_show_ad_before_close) && onlyCloseKeyboard) {
             onlyCloseKeyboard = false;
             HSInputMethod.hideWindow();
