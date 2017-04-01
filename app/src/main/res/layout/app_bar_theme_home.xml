@@ -87,6 +87,6 @@
             android:gravity="center"
             android:text="@string/home_create_keyboard"
             android:textColor="#ffffff"
-            android:textSize="16dp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

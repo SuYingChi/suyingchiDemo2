@@ -31,6 +31,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 
@@ -191,27 +192,27 @@ public class KeyboardActivationProcessor {
 
 
     private void showKeyboardEnableDialog() {
-        AlertDialog alertDialog = HSAlertDialog.build().setTitle(context.getString(R.string.toast_enable_keyboard))
-                .setMessage(context.getResources().getString(R.string.alert_attention_messenger))
-                .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+        dialog.setTitle(context.getResources().getString(R.string.toast_enable_keyboard));
+        dialog.setMessage(context.getResources().getString(R.string.alert_attention_messenger));
+        dialog.setImageResource(R.drawable.enable_keyboard_alert_top_bg);
+        dialog.setPositiveButton(HSApplication.getContext().getString(R.string.got_it), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
+                    setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
+                }
 
-                        if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
-                            setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
-                        }
+                ImageView imageCodeProject = new ImageView(context);
+                imageCodeProject.setBackgroundResource(R.drawable.toast_enable_rain);
+                CustomViewDialog customViewDialog = new CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                customViewDialog.show();
+            }
+        });
 
-                        dialog.dismiss();
+        dialog.show();
 
-
-                        ImageView imageCodeProject = new ImageView(context);
-                        imageCodeProject.setBackgroundResource(R.drawable.toast_enable_rain);
-                        CustomViewDialog customViewDialog = new CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-                        customViewDialog.show();
-                    }
-                }).create();
-        alertDialog.show();
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="design_dialog_content_area_padding">24dp</dimen>
+    <dimen name="design_dialog_content_title_size">18sp</dimen>
+    <dimen name="design_dialog_content_body_size">14sp</dimen>
+    <dimen name="design_dialog_content_padding_between_title_and_body">20dp</dimen>
+    <dimen name="design_dialog_action_area_height">52dp</dimen>
+    <dimen name="design_dialog_action_button_height">36dp</dimen>
+    <dimen name="design_dialog_action_button_min_width">64dp</dimen>
+    <dimen name="design_dialog_action_button_text_size">@dimen/design_base_text_size</dimen>
+    <dimen name="design_base_padding">8dp</dimen>
+    <dimen name="design_base_text_size">14sp</dimen>
+    <dimen name="design_base_corner_radius">2dp</dimen>
+
+    <color name="design_dialog_content_title_color">#1e1e1e</color>
+    <color name="design_dialog_content_body_color">#676767</color>
+    <color name="design_dialog_action_button_text_color">#3d6efa</color>
+    <color name="design_dialog_action_button_highlight_text_color">#ffffff</color>
+
+    <fraction name="design_dialog_width">85%</fraction>
+
+</resources>

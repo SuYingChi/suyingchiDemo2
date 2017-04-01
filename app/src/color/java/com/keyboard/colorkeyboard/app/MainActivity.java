@@ -63,6 +63,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
+import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.keyboard.colorkeyboard.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
@@ -371,36 +372,37 @@ public class MainActivity extends HSDeepLinkActivity {
      * Show keyboard enabling dialog
      */
     private void showKeyboardEnableDialog() {
+        CustomDesignAlert dialog = new CustomDesignAlert(this);
+        dialog.setTitle(getString(R.string.toast_enable_keyboard));
+        dialog.setMessage(getString(R.string.alert_attention_messenger));
+        dialog.setImageResource(R.drawable.enable_keyboard_alert_top_bg);
+        dialog.setPositiveButton(getString(R.string.got_it), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
+                    setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
+                }
 
-        HSAlertDialog.build(this).setTitle(getString(R.string.toast_enable_keyboard))
-                .setMessage(getResources().getString(R.string.alert_attention_messenger))
-                .setPositiveButton(getString(R.string.got_it), new DialogInterface.OnClickListener() {
+                ImageView imageCodeProject = new ImageView(getApplicationContext());
+                imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+                final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+
+                handler.postDelayed(new Runnable() {
                     @Override
-                    public void onClick(final DialogInterface dialog, int which) {
-
-                        if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
-                            setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
-                        }
-
-                        ImageView imageCodeProject = new ImageView(getApplicationContext());
-                        imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-                        final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                customViewDialog.show();
-                            }
-                        }, 500);
-
-                        Intent intent = new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS);
-                        intent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(intent);
-                        isInStepOne = true;
-
+                    public void run() {
+                        customViewDialog.show();
                     }
-                }).create().show();
+                }, 500);
+
+                Intent intent = new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS);
+                intent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+                isInStepOne = true;
+            }
+        });
+        dialog.show();
+
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT);
