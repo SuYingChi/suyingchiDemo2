@@ -161,7 +161,7 @@ public class ChargingConfigManager {
         }
 
         // Charging enabled once
-        if (ChargingPrefsUtil.getInstance().isChargingEnableOnce()) {
+        if (ChargingPrefsUtil.getInstance().isChargingEnabledBefore()) {
             HSLog.i(TAG, "Charging enable once");
             return false;
         }
