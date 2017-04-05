@@ -230,6 +230,6 @@
 	<string name="home_create_keyboard">Create My Own Keyboard</string>
 
 	<string name="charging_alert_title">Smart Charging</string>
-	<string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently.</string>
+	<string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains Ads.</string>
 	<string name="charging_enable_toast">Smart Charging Enabled</string>
 </resources>
