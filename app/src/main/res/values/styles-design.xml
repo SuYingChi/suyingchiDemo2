@@ -1,0 +1,86 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="DesignDialogFrame">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="DesignDialogContentArea">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/design_dialog_content_area_padding</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="DesignDialogContentTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/design_dialog_content_title_color</item>
+        <item name="android:textSize">@dimen/design_dialog_content_title_size</item>
+    </style>
+
+    <style name="DesignDialogContentBody">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/design_dialog_content_body_color</item>
+        <item name="android:textSize">@dimen/design_dialog_content_body_size</item>
+        <item name="android:layout_marginTop">@dimen/design_dialog_content_padding_between_title_and_body</item>
+    </style>
+
+    <style name="DesignDialogActionArea">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/design_dialog_action_area_height</item>
+        <item name="android:padding">@dimen/design_base_padding</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="DesignDialogActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/design_dialog_action_button_height</item>
+        <item name="android:minWidth">@dimen/design_dialog_action_button_min_width</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/design_dialog_action_button_text_color</item>
+        <item name="android:textSize">@dimen/design_dialog_action_button_text_size</item>
+        <item name="android:paddingLeft">@dimen/design_base_padding</item>
+        <item name="android:paddingRight">@dimen/design_base_padding</item>
+        <item name="android:layout_marginLeft">@dimen/design_base_padding</item>
+    </style>
+
+    <style name="DesignDialogSingleActionButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/design_dialog_action_button_height</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/design_dialog_action_button_highlight_text_color</item>
+        <item name="android:textSize">@dimen/design_dialog_action_button_text_size</item>
+        <item name="android:paddingLeft">@dimen/design_base_padding</item>
+        <item name="android:paddingRight">@dimen/design_base_padding</item>
+    </style>
+
+    <style name="DesignDialogActionButtonHighlight" parent="DesignDialogActionButton">
+        <item name="android:textColor">@color/design_dialog_action_button_highlight_text_color</item>
+    </style>
+
+    <style name="DesignTransparentDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="DesignDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+</resources>

@@ -1,0 +1,211 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:latin="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2a9de8"
+    android:orientation="vertical"
+    tools:context=".app.MainActivity">
+
+    <ImageView
+        android:id="@+id/view_img_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/app_title_image" />
+
+    <RelativeLayout
+        android:id="@+id/bt_step_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bt_step_two"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/guide_button_one_selector"
+        android:clipChildren="false">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="17dp"
+            android:clipChildren="false">
+
+            <TextView
+                android:id="@+id/text_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/toast_enable_keyboard"
+                android:textColor="#2a9de8"
+                android:textSize="16sp"
+                android:textStyle="normal"></TextView>
+
+            <ImageView
+                android:id="@+id/view_enter_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="240dp"
+                android:src="@drawable/app_button_guide_enter"></ImageView>
+
+            <ImageView
+                android:id="@+id/view_choose_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="230dp"
+                android:src="@drawable/app_button_guide_choose"></ImageView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bt_step_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fast_charge_toggle"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/guide_button_two_selector"
+        android:clipChildren="false">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="17dp"
+            android:clipChildren="false">
+
+            <TextView
+                android:id="@+id/text_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/toast_select_keyboard"
+                android:textColor="#2a9de8"
+                android:textSize="16sp"
+                android:textStyle="normal"></TextView>
+
+            <ImageView
+                android:id="@+id/view_enter_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="240dp"
+                android:src="@drawable/app_button_guide_enter"></ImageView>
+
+            <ImageView
+                android:id="@+id/view_choose_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="230dp"
+                android:src="@drawable/app_button_guide_choose"></ImageView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.mobipioneer.lockerkeyboard.app.ToggleButton
+        android:id="@+id/fast_charge_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        latin:button_switch_defaultValue="false"
+        latin:button_switch_preferencekey="@string/config_charge_switchpreference_key"
+        latin:button_switch_tip="Accelerate charging speed by 25%."
+        latin:button_switch_title="Enable Fast Charger" />
+
+    <LinearLayout
+        android:id="@+id/settings_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_img_title"
+        android:layout_marginTop="-45dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bt_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0"
+                android:background="@drawable/app_button_settings"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:text="Settings"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bt_languages"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:alpha="0"
+                    android:background="@drawable/app_button_settings"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:text="Languages"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/bt_lock"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:alpha="0"
+                    android:background="@drawable/app_button_settings"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:text="App Locker"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/edit_text_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="25dp"
+        android:background="#ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="@string/main_activity_edittext_hint"
+        android:imeOptions="actionNone"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:paddingBottom="10dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:textColorHint="#ff8f8f8f" />
+</RelativeLayout>

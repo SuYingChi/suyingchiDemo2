@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="emoji_groups">
+		<item>emoji_recent</item><!--update-->
+		<item>emoji_faces</item><!--update-->
+		<item>emoji_nature</item><!--update-->
+		<item>emoji_food_drink</item><!--new-->
+		<item>emoji_places</item><!--update-->
+		<item>emoji_activity</item><!--new-->
+		<item>emoji_objects</item><!--update-->
+		<item>emoji_symbols</item><!--update-->
+		<item>emoji_flags</item>
+		<item>emoji_emoticons</item>
+	</string-array>
+</resources>

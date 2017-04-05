@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="emoji_groups">
+		<item>emoji_recent</item>
+		<item>emoji_symbols</item>
+		<item>emoji_emoticons</item>
+	</string-array>
+	<string-array name="emoji_groups_text">
+		<item>emoji_emoticons</item>
+	</string-array>
+</resources>

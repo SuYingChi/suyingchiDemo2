@@ -1,275 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.keyboard.colorkeyboard"
-    android:installLocation="internalOnly"
-    android:versionCode="26"
-    android:versionName="2.2.6">
+    package="com.ihs.inputmethod.uimodules">
 
-    <uses-sdk tools:overrideLibrary="com.google.android.gms,com.facebook" />
+    <uses-sdk tools:overrideLibrary="com.facebook,com.facebook.shimmer,android.support.customtabs,com.facebook.ads,com.google.android.gms" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
-    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:node="remove" />
-    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" tools:node="remove" />
-
-
-    <!-- <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" /> -->
-
-
-    <!-- Optional permission for reliable local dispatching on non-Google Play devices -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- required by libAppFramework -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <uses-permission android:name="com.android.vending.BILLING" />
-    <permission
-        android:name="com.keyboard.colorkeyboard.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <application
-        android:name="com.keyboard.colorkeyboard.app.MyInputMethodApplication"
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher_keyboard"
-        android:label="@string/english_ime_name"
-        android:largeHeap="true"
-        android:theme="@style/AppBaseTheme"
-        android:supportsRtl="false"
-        tools:replace="android:label, android:supportsRtl">
-
-        <!-- required by libAppFramework -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <!-- AppsFlyer required -->
-        <receiver
-            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="com.ihs.app.push.impl.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.gcm.intent.RETRY" />
-
-                <category android:name="com.keyboard.colorkeyboard" />
-            </intent-filter>
-        </receiver>
-
-        <!-- android:excludeFromRecents="true"  -->
+    <application>
         <activity
-	        android:name="com.ihs.app.alerts.impl.AlertActivity"
-            android:launchMode="singleInstance"
-	        android:taskAffinity=""
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:name=".ui.theme.ui.ThemeHomeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.theme.ui.ThemeDetailActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
-     <!-- Add the following meta-data for devices running Google Play service. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <!-- Data tracker -->
-        <receiver android:name="net.appcloudbox.receiver.VReceiver" >
-            <intent-filter android:priority="1000">
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
-            </intent-filter>
+        <receiver android:name=".widgets.HSAppWidgetProvider">
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-
-        <!--
-         Optionally, register AnalyticsReceiver and AnalyticsService to support background
-         dispatching on non-Google Play devices
-        -->
-        <receiver
-            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <!--
-         Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
-         installation campaign reporting
-        -->
-        <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.ihs.inputmethod.latin.LatinIME"
-            android:label="@string/english_ime_name"
-            android:permission="android.permission.BIND_INPUT_METHOD">
-            <intent-filter>
-                <action android:name="android.view.InputMethod" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method" />
-        </service>
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
-
-        <activity
-            android:name="com.keyboard.colorkeyboard.app.MainActivity"
-            android:launchMode="singleTask"
-            android:excludeFromRecents="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-
-        <activity android:name=".app.SplashActivity"
-                  android:theme="@style/SplashTheme"
-                  android:screenOrientation="portrait">
-	        <intent-filter>
-		        <action android:name="android.intent.action.MAIN" />
-		        <category android:name="android.intent.category.LAUNCHER" />
-	        </intent-filter>
-	        <intent-filter>
-		        <action android:name="android.intent.action.VIEW" />
-		        <category android:name="android.intent.category.DEFAULT"/>
-		        <data
-			        android:scheme="rainbowKeyboard"
-			        android:host="theme"
-			        />
-	        </intent-filter>
-	        <intent-filter>
-		        <action android:name="android.intent.action.VIEW" />
-		        <category android:name="android.intent.category.DEFAULT"/>
-		        <category android:name="android.intent.category.BROWSABLE"/>
-		        <data android:scheme="http"
-		              android:host="@string/deeplink_site"
-		              android:pathPrefix="/"/>
-	        </intent-filter>
-	        <intent-filter>
-		        <action android:name="android.intent.action.VIEW" />
-		        <category android:name="android.intent.category.DEFAULT"/>
-		        <category android:name="android.intent.category.BROWSABLE"/>
-		        <data android:scheme="http"
-		              android:host="@string/deeplink_site" />
-	        </intent-filter>
-        </activity>
-        <!-- The service and activity below are required for triggering voice recognition. -->
-        <service android:name="com.ihs.inputmethod.voice.ServiceHelper" />
-
-        <activity
-            android:name="com.ihs.inputmethod.voice.ActivityHelper"
-            android:configChanges="keyboard|keyboardHidden|navigation|orientation"
-            android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true"
-            android:hardwareAccelerated="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
-
-        <!-- wechat sdk required -->
-        <activity
-            android:name="com.tapjoy.TJContentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="com.tapjoy.TJAdUnitActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.tapjoy.mraid.view.ActionHandler"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.tapjoy.mraid.view.Browser"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/fb_app_id" />
-
-        <!-- AppsFlyer required -->
-        <receiver
-            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_provider" />
         </receiver>
 
-        <!-- required permission by facebook -->
         <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-
+            android:name=".ui.theme.ui.customtheme.CustomThemeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />\
         <activity
             android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
-            android:name="com.ihs.iap.googleplay.PurchaseActivity"
-            android:label="@string/app_name"
+            android:name=".ui.theme.ui.PurchaseSlotsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent" >
-        </activity>
+            android:theme="@style/PurchaseDialogActivityStyle"
+            android:windowSoftInputMode="stateUnchanged|adjustNothing" />
+
+
+        <!-- Required activities for playback of AdMob video Ads -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <!-- Required activities for playback of Vungle video Ads -->
+        <activity
+            android:name="com.vungle.publisher.VideoFullScreenAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
         <activity
-            android:name="com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2"
-            android:label="@string/app_name"
-            android:theme="@style/SettingActivityStyle">
-            <intent-filter>
-                <action android:name="com.keyboard.colorkeyboard.LAUNCH_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:name="com.vungle.publisher.MraidFullScreenAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <!-- Required activities for playback of Chartboost video Ads -->
+        <activity
+            android:name="com.chartboost.sdk.CBImpressionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <!-- Required activities for playback of AdColony video Ads -->
+        <activity
+            android:name="com.jirbo.adcolony.AdColonyOverlay"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.jirbo.adcolony.AdColonyFullscreen"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.jirbo.adcolony.AdColonyBrowser"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+
+        <!-- Required activities for playback of Applovin video Ads  -->
+        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity" />
+        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity" />
+        <!-- 给applovin配置sdk key，注意，master keyboard需要另外的key-->
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="@string/applovin_sdk_key" />
 
         <activity
-            android:name="com.ihs.inputmethod.uimodules.ui.settings.activities.MoreLanguageActivity2"
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/SettingActivityStyle">
-            <intent-filter>
-                <action android:name="com.keyboard.colorkeyboard.LAUNCH_LANGUAGE_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="feab1e2f778877ab60518c2d916f8f331b230358" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:replace="android:theme" />
     </application>
 
 </manifest>

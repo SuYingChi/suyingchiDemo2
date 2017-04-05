@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="trail_key_show_ad_before_close">false</bool>
+</resources>

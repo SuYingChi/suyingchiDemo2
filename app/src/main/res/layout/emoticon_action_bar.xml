@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonActionBar
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/action_bar"
+	android:layout_width="match_parent"
+	android:gravity="center_vertical"
+	android:layout_height="@dimen/emoticon_panel_actionbar_height"
+	android:background="@color/emoticon_action_bar_bg"
+	android:orientation="horizontal">
+	<TextView
+		android:id="@+id/emoji_keyboard_alphabet_left"
+		android:layout_width="56dp"
+		android:layout_height="@dimen/emoticon_panel_actionbar_height"
+		android:gravity="center"
+		android:hapticFeedbackEnabled="false"
+		android:soundEffectsEnabled="false" />
+
+</com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonActionBar>

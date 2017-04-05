@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<array name="emoji_recent" format="string" >
+		<item>U+D83DU+DE02</item>
+		<item>U+2764U+FE0F</item>
+		<item>U+D83DU+DE0D</item>
+		<item>U+D83DU+DE12</item>
+		<item>U+D83DU+DC4C</item>
+		<item>U+263AU+FE0F</item>
+		<item>U+D83DU+DE0A</item>
+		<item>U+D83DU+DE18</item>
+		<item>U+D83DU+DE2D</item>
+		<item>U+D83DU+DE29</item>
+		<item>U+D83DU+DC95</item>
+		<item>U+D83DU+DE14</item>
+		<item>U+D83DU+DE0F</item>
+		<item>U+D83DU+DE01</item>
+		<item>U+D83DU+DE33</item>
+		<item>U+D83DU+DC4D</item>
+		<item>U+270CU+FE0F</item>
+		<item>U+D83DU+DE09</item>
+		<item>U+D83DU+DE1C</item>
+		<item>U+D83DU+DE0B</item>
+		<item>U+D83DU+DC4F</item>
+	</array>
+</resources>

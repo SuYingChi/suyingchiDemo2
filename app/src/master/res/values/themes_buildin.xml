@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- For keyboard color scheme option dialog. -->
+    <string-array name="themes_buildin_names">
+        <item>Classic</item>
+        <item>Dark</item>
+        <item>White</item>
+    </string-array>
+
+</resources>

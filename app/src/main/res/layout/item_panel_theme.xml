@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:soundEffectsEnabled="false">
+
+	<com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+		android:id="@+id/theme_preview"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_gravity="center"
+		android:contentDescription="@string/app_name"
+		android:scaleType="centerCrop"
+		app:riv_corner_radius="5dp"
+		app:riv_mutate_background="true"
+		app:riv_oval="false"/>
+
+	<ImageView
+		android:id="@+id/theme_check"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_gravity="center"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/preview_keyboard_chosed"
+		android:visibility="gone"/>
+
+	<ImageView
+		android:id="@+id/theme_delete"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end|top"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/preview_keyboard_delete"
+		android:visibility="gone"/>
+
+</FrameLayout>

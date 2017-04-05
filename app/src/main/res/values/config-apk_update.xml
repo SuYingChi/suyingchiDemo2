@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- update enabled / disabled-->
+    <bool name="apk_update_enabled">false</bool>
+
+    <dimen name="apk_update_alert_top_icon_margin">20dp</dimen>
+    <dimen name="apk_update_alert_button_radius">2dp</dimen>
+    <dimen name="apk_update_alert_bkg_radius">2dp</dimen>
+    <dimen name="apk_update_alert_btn_elevation">1dp</dimen>
+
+    <color name="apk_update_alert_bg">#fafafa</color>
+
+</resources>
