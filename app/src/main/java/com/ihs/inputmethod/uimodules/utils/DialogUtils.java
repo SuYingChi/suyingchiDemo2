@@ -59,7 +59,7 @@ public class DialogUtils {
         initView(appInfo, dialog, view);
 
 
-        dialog.getWindow().setType(LayoutParams.TYPE_TOAST);
+        dialog.getWindow().setType(LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
