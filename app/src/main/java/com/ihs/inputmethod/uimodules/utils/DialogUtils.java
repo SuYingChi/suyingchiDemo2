@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.utils;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
@@ -58,8 +59,11 @@ public class DialogUtils {
 
         initView(appInfo, dialog, view);
 
-
-        dialog.getWindow().setType(LayoutParams.TYPE_SYSTEM_ALERT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            dialog.getWindow().setType(LayoutParams.TYPE_TOAST);
+        } else {
+            dialog.getWindow().setType(LayoutParams.TYPE_SYSTEM_ALERT);
+        }
         dialog.show();
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
