@@ -17,6 +17,7 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
+import com.ihs.inputmethod.framework.KeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
@@ -44,7 +45,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private KeyboardPanelSwitchContainer keyboardPanelSwitchContainer;
     private BaseFunctionBar functionBar;
     private HSMediaView hsBackgroundVedioView;
-
+    private boolean hasObserver;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -94,8 +95,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-
-    public View onCreateInputView(View keyboardPanelView) {
+    public View onCreateInputView(View keyboardPanelView, boolean shouldShowPanel) {
         onInputViewDestroy();
         keyboardPanelSwitchContainer = new KeyboardPanelSwitchContainer();
         //todo 改为东哥backgroundView
@@ -113,32 +113,36 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
-        keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
+        if(shouldShowPanel) {
+            showPanel(KeyboardPanel.class);
+        }
 
         addOrUpdateBackgroundView();
 
-        HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
         return keyboardPanelSwitchContainer;
     }
 
-    public void initInputView(View keyboardPanelView) {
-        keyboardPanelSwitchContainer = (KeyboardPanelSwitchContainer) keyboardPanelView;
+    @Override
+    public void showPanel(Class<?> keyboardPanelClass) {
+        super.showPanel(keyboardPanelClass);
+        keyboardPanelSwitchContainer.showPanel(keyboardPanelClass);
+        if(!hasObserver) {
+            HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
+            HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
+            hasObserver = true;
+        }
+    }
+
+    public void initPanelContainer(View panelSwitchContainer) {
+        keyboardPanelSwitchContainer = (KeyboardPanelSwitchContainer) panelSwitchContainer;
         hsBackgroundVedioView = (HSMediaView) keyboardPanelSwitchContainer.findViewWithTag("BackgroundView");
-        ((ViewGroup)hsBackgroundVedioView.getParent()).removeView(hsBackgroundVedioView);
-        keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
-
-        View keyboardView = keyboardPanelView.findViewById(R.id.input_view);
-        ((ViewGroup)keyboardView.getParent()).removeView(keyboardView);
+        View keyboardView = KeyboardSwitcher.getInstance().getKeyboardPanelView();
+        if(keyboardView.getParent() != null) {
+            ((ViewGroup) keyboardView.getParent()).removeView(keyboardView);
+        }
         keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, keyboardView);
-
-        functionBar = (BaseFunctionBar) keyboardPanelView.findViewById(R.id.function_layout);
-        ((ViewGroup)functionBar.getParent()).removeView(functionBar);
-        setFunctionBar(functionBar);
-        keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
-
-        HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
+        functionBar = (BaseFunctionBar) panelSwitchContainer.findViewById(R.id.function_layout);
+        showPanel(KeyboardPanel.class);
     }
 
 
