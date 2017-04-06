@@ -106,7 +106,9 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                 case MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR:
                     if (null != nativeAdView) {
                         TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                        adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+                        if (null != adButtonView) {
+                            adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+                        }
                     } else {
                         // do nothing
                     }
@@ -114,7 +116,9 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                 case MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR:
                     if (null != nativeAdView) {
                         TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                        adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
+                        if (null != adButtonView) {
+                            adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
+                        }
                     } else {
                         // do nothing
                     }

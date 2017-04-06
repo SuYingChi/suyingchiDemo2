@@ -63,7 +63,9 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
             NativeAdView nativeAdView = (NativeAdView) msg.obj;
             if (null != nativeAdView) {
                 TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-				adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+				if (null != adButtonView) {
+					adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+				}
             } else {
                 // do nothing
             }
