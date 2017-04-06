@@ -363,6 +363,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             try {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 currentFragment = getFragmentClasses().get(pageIndex).newInstance();
+                currentFragment.setCustomThemeData(customThemeData);
                 transaction.replace(R.id.custom_theme_items_container, currentFragment).commit();
 
                 updateHeaderView();
@@ -561,9 +562,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         }
     }
 
-    public KCCustomThemeData getCustomThemeData() {
-        return customThemeData;
-    }
 
     protected class SaveThemeChangesTask extends AsyncTask<Bitmap, Void, String> {
         @Override
