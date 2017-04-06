@@ -45,7 +45,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private KeyboardPanelSwitchContainer keyboardPanelSwitchContainer;
     private BaseFunctionBar functionBar;
     private HSMediaView hsBackgroundVedioView;
-    private boolean hasObserver;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -114,11 +113,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         setFunctionBar(functionBar);
         addOrUpdateBackgroundView();
 
-        if(!hasObserver) {
-            HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
-            HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
-            hasObserver = true;
-        }
+        HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
 
         return keyboardPanelSwitchContainer;
     }
