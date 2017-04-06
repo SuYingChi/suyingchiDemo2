@@ -13,15 +13,18 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate.ThemeTitleAdap
  */
 
 public final class ThemeHomeAdapter extends CommonThemeCardAdapter {
+    public interface OnThemeAdItemClickListener {
+        void onThemeAdClick(int position);
+    }
 
-    public ThemeHomeAdapter(Activity activity, ThemeCardItemClickListener themeCardItemClickListener, boolean themeAnalyticsEnabled) {
+    public ThemeHomeAdapter(Activity activity, ThemeCardItemClickListener themeCardItemClickListener, OnThemeAdItemClickListener themeAdItemClickListener, boolean themeAnalyticsEnabled) {
         super(activity, themeCardItemClickListener, themeAnalyticsEnabled);
-        delegatesManager.addDelegate(new ThemeAdAdapterDelegate())
+
+        delegatesManager.addDelegate(new ThemeAdAdapterDelegate(themeAdItemClickListener))
                 .addDelegate(new ThemeTitleAdapterDelegate())
                 .addDelegate(new ThemeBackgroundAdapterDelegate(activity))
                 .addDelegate(new ThemeBannerAdapterDelegate(activity, themeAnalyticsEnabled))
                 .addDelegate(new ThemeSmallAdAdapterDelegate());
 
     }
-
 }

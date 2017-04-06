@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,15 +14,12 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPProduct;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.ThemeHomeAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
@@ -37,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapter.ThemeCardItemClickListener {
+public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapter.ThemeCardItemClickListener, ThemeHomeAdapter.OnThemeAdItemClickListener {
 
 	public final static String NOTIFICATION_THEME_HOME_DESTROY="ThemeHomeFragment.destroy";
 	public final static String NOTIFICATION_THEME_HOME_STOP="ThemeHomeFragment.stop";
@@ -70,7 +66,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
 	private void initView() {
 		isThemeAnalyticsEnabled = ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled();
-		adapter=new ThemeHomeAdapter(getActivity(),this,isThemeAnalyticsEnabled);
+		adapter=new ThemeHomeAdapter(getActivity(),this,this,isThemeAnalyticsEnabled);
 
 
 		GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -167,6 +163,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 					int adPosition = (int) item.get("Position");
 					if(adPosition == pos) {
 						ad.span = (int)item.get("Span");
+						ad.adPlacement = (String) item.get("NativeAd");
 					}
 				}
 				if (pos <= themeList.size()) {
@@ -284,4 +281,14 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 		super.onDestroy();
 	}
 
+	@Override
+	public void onThemeAdClick(int position) {
+		ThemeHomeModel item = themeHomeModelList.get(position);
+
+		// Which ad's placement is ThemeAd
+		if (item.isThemeAd()) {
+			themeHomeModelList.remove(position);
+			adapter.notifyItemRemoved(position);
+		}
+	}
 }

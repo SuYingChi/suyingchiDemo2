@@ -232,4 +232,6 @@
 	<string name="charging_alert_title">Smart Charging</string>
 	<string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains Ads.</string>
 	<string name="charging_enable_toast">Smart Charging Enabled</string>
+
+	<string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
 </resources>

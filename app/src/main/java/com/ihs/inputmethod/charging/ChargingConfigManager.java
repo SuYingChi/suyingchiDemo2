@@ -25,6 +25,7 @@ public class ChargingConfigManager {
     public final static String PREF_KEY_CHARGING_NEW_USER = "charging_new_user";
     public final static String PREF_KEY_LOCK_VIEW_CLICKED = "pref_key_lock_view_clicked";
     private final static String PREF_KEY_ENABLE_ALERT_SHOW_COUNT = "pref_key_lock_enable_alert_show_count";
+    private final static String PREF_KEY_ENABLE_CARD_SHOW_COUNT = "pref_key_lock_enable_card_show_count";
 
     private final boolean CHARGING_TOGGLE_DEFAULT_VALUE = false;
 
@@ -147,13 +148,7 @@ public class ChargingConfigManager {
         return HSPreferenceHelper.getDefault(HSApplication.getContext()).getBoolean(PREF_KEY_LOCK_VIEW_CLICKED, false);
     }
 
-    public void increaseEnableAlertShowCount() {
-        int showCount = HSPreferenceHelper.getDefault(HSApplication.getContext()).getInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, 0);
-        showCount++;
-        HSPreferenceHelper.getDefault(HSApplication.getContext()).putInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, showCount);
-    }
-
-    public boolean shouldShowEnableChargingAlert(boolean limitShowCount) {
+    private boolean shouldFocusOnChargingEnableEvent() {
         // Charging not support
         if (ChargingPrefsUtil.isChargingMuted()) {
             HSLog.i(TAG, "Charging muted");
@@ -169,6 +164,20 @@ public class ChargingConfigManager {
         // Charging function opened
         if (HSChargingScreenManager.getInstance().isChargingModuleOpened()) {
             HSLog.i(TAG, "Charging opened");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void increaseEnableAlertShowCount() {
+        int showCount = HSPreferenceHelper.getDefault(HSApplication.getContext()).getInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, 0);
+        showCount++;
+        HSPreferenceHelper.getDefault(HSApplication.getContext()).putInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, showCount);
+    }
+
+    public boolean shouldShowEnableChargingAlert(boolean limitShowCount) {
+        if (!shouldFocusOnChargingEnableEvent()) {
             return false;
         }
 
@@ -196,6 +205,45 @@ public class ChargingConfigManager {
 
     private boolean shouldShowEnableChargingAlertAtThisTime() {
         final int sessionInterval = HSConfig.optInteger(3, "Application", "FeaturePrompt", "QuitAlert", "SessionInterval");
+        HSLog.i(TAG, "SessionInterval: " + sessionInterval);
+        return HSSessionMgr.getCurrentSessionId() > 0 && HSSessionMgr.getCurrentSessionId() % sessionInterval == 0;
+    }
+
+    public void increaseEnableCardShowCount() {
+        int showCount = HSPreferenceHelper.getDefault(HSApplication.getContext()).getInt(PREF_KEY_ENABLE_CARD_SHOW_COUNT, 0);
+        showCount++;
+        HSPreferenceHelper.getDefault(HSApplication.getContext()).putInt(PREF_KEY_ENABLE_CARD_SHOW_COUNT, showCount);
+    }
+
+    public boolean shouldShowEnableChargingCard(boolean limitShowCount) {
+        if (!shouldFocusOnChargingEnableEvent()) {
+            return false;
+        }
+
+        if (limitShowCount) {
+            if (isEnableChargingCardShowCountAchievedMax()) {
+                HSLog.i(TAG, "Charging enable card achieved max show count");
+                return false;
+            }
+
+            if (!shouldShowEnableChargingCardAtThisTime()) {
+                HSLog.i(TAG, "Charging enable card should not show at session: " + HSSessionMgr.getCurrentSessionId());
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isEnableChargingCardShowCountAchievedMax() {
+        final int maxCount = HSConfig.optInteger(3, "Application", "FeaturePrompt", "ThemeCard", "MaxShowCount");
+        HSLog.i(TAG, "MaxShowCount: " + maxCount);
+        final int showCount = HSPreferenceHelper.getDefault(HSApplication.getContext()).getInt(PREF_KEY_ENABLE_CARD_SHOW_COUNT, 0);
+        return showCount >= maxCount;
+    }
+
+    private boolean shouldShowEnableChargingCardAtThisTime() {
+        final int sessionInterval = HSConfig.optInteger(3, "Application", "FeaturePrompt", "ThemeCard", "SessionInterval");
         HSLog.i(TAG, "SessionInterval: " + sessionInterval);
         return HSSessionMgr.getCurrentSessionId() > 0 && HSSessionMgr.getCurrentSessionId() % sessionInterval == 0;
     }
