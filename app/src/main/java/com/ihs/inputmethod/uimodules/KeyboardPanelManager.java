@@ -95,7 +95,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public View onCreateInputView(View keyboardPanelView, boolean shouldShowPanel) {
+    public View onCreateInputView(View keyboardPanelView) {
         onInputViewDestroy();
         keyboardPanelSwitchContainer = new KeyboardPanelSwitchContainer();
         //todo 改为东哥backgroundView
@@ -106,46 +106,28 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         hsBackgroundVedioView.setSupportSmoothScroll(false);
         hsBackgroundVedioView.init();
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
-        keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, keyboardPanelView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
 
         keyboardPanelSwitchContainer.setWebHistoryView(WebContentSearchManager.getInstance().getWebSearchHistoryView());
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
-        if(shouldShowPanel) {
-            showPanel(KeyboardPanel.class);
-        }
-
         addOrUpdateBackgroundView();
 
-        return keyboardPanelSwitchContainer;
-    }
-
-    @Override
-    public void showPanel(Class<?> keyboardPanelClass) {
-        super.showPanel(keyboardPanelClass);
-        keyboardPanelSwitchContainer.showPanel(keyboardPanelClass);
         if(!hasObserver) {
             HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
             HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
             hasObserver = true;
         }
+
+        return keyboardPanelSwitchContainer;
     }
 
-    public void initPanelContainer(View panelSwitchContainer) {
-        keyboardPanelSwitchContainer = (KeyboardPanelSwitchContainer) panelSwitchContainer;
-        hsBackgroundVedioView = (HSMediaView) keyboardPanelSwitchContainer.findViewWithTag("BackgroundView");
-        View keyboardView = KeyboardSwitcher.getInstance().getKeyboardPanelView();
-        if(keyboardView.getParent() != null) {
-            ((ViewGroup) keyboardView.getParent()).removeView(keyboardView);
-        }
-        keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, keyboardView);
-        functionBar = (BaseFunctionBar) panelSwitchContainer.findViewById(R.id.function_layout);
-        showPanel(KeyboardPanel.class);
+    @Override
+    public void showKeyboardPanel() {
+        keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
+        keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
     }
-
-
 
     private void createDefaultFunctionBar() {
         functionBar = (BaseFunctionBar) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.base_funtion_bar, null);
