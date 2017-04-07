@@ -647,6 +647,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
 
     private boolean showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_show");
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(getString(R.string.charging_alert_title));
             dialog.setMessage(getString(R.string.charging_alert_message));
@@ -657,6 +658,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
                     HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
                 }
             });
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
