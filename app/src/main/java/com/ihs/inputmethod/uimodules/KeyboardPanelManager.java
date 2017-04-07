@@ -194,7 +194,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void showKeyboardWithMenu() {
         if (keyboardPanelSwitchContainer != null) {
-            keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
+            showKeyboardPanel();
         }
         if (functionBar != null) {
             functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
@@ -227,6 +227,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void resetKeyboardBarState() {
         if (keyboardPanelSwitchContainer != null) {
+            if(keyboardPanelSwitchContainer.getKeyboardPanel() == null) {
+                keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
+            }
             keyboardPanelSwitchContainer.getKeyboardPanel().switchSuggestionState(0);
             keyboardPanelSwitchContainer.getBarViewGroup().setVisibility(View.VISIBLE);
         }
