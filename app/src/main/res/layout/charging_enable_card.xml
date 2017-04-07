@@ -25,18 +25,6 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tv_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:text="@string/charging_alert_message"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:layout_marginTop="45dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="34dp"/>
-
-            <TextView
                 android:id="@+id/tv_enable_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,8 +33,22 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="22dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginTop="18dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"/>
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/charging_alert_message"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="14dp"
+                android:layout_above="@id/tv_enable_button"/>
         </RelativeLayout>
 
     </LinearLayout>
