@@ -130,7 +130,7 @@ dependencies {
     //    Admob Adx
     compile "com.google.android.gms:play-services-ads:${rootProject.ext.gmsVersion}"
     //    AppNext
-    compile 'com.appnext.sdk:native-ads-sdk:2.+' // Mandatory
+    compile 'com.appnext.sdk:native-ads-sdk:1.6.1' // Mandatory
     compile "com.google.android.gms:play-services-basement:${rootProject.ext.gmsVersion}"
     // Mandatory
     compile "com.google.android.gms:play-services-location:${rootProject.ext.gmsVersion}"
