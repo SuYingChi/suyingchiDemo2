@@ -15,19 +15,17 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.text.TextUtils;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
-import com.ihs.booster.R;
 import com.ihs.booster.boost.common.viewdata.BoostApp;
 import com.ihs.booster.boost.memory.MemoryPrefsManager;
 import com.ihs.booster.utils.processes.AndroidAppProcess;
 import com.ihs.booster.utils.processes.ProcessUtils;
+import com.ihs.commons.utils.HSLog;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -57,28 +55,6 @@ public class AppUtils {
         return appName;
     }
 
-    public static Drawable getAppIcon(String packageName) {
-        Drawable icon = HSApplication.getContext().getResources().getDrawable(R.mipmap.app_icon_default);
-        try {
-            icon = HSApplication.getContext().getPackageManager().getApplicationIcon(packageName);
-        } catch (Exception e) {
-        }
-        return icon;
-    }
-
-    public static Drawable getApkIcon(String apkFilePath) {
-        Drawable apkIcon = HSApplication.getContext().getResources().getDrawable(R.mipmap.app_icon_default);
-        try {
-            PackageManager pm = HSApplication.getContext().getPackageManager();
-            PackageInfo pi = pm.getPackageArchiveInfo(apkFilePath, 0);
-            pi.applicationInfo.sourceDir = apkFilePath;
-            pi.applicationInfo.publicSourceDir = apkFilePath;
-            apkIcon = pi.applicationInfo.loadIcon(pm);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return apkIcon;
-    }
 
     public static boolean isAppInstalled(String packageName) {
         PackageInfo packageInfo = null;

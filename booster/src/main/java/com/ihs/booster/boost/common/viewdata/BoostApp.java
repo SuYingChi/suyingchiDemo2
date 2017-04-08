@@ -128,18 +128,6 @@ public class BoostApp extends BaseItemData {
         this.mDataSize = mDataSize;
     }
 
-    public Drawable getApplicationIcon() {
-        if (appIcon == null) {
-            if (hsBoostFile != null) {
-                if (hsBoostFile.isValidApk) {
-                    appIcon = AppUtils.getApkIcon(hsBoostFile.filePath);
-                }
-            } else {
-                appIcon = AppUtils.getAppIcon(mPackageName);
-            }
-        }
-        return appIcon;
-    }
 
     public String getApplicationName() {
         if (null == applicationName) {
