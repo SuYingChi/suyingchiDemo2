@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.mobipioneer.lockerkeyboard.SplashActivity;
@@ -187,16 +188,19 @@ public class WakeKeyboardService extends Service {
                             bundle.putBoolean(Constants.BUNDLE_AUTO_ENABLE_KEYBOARD,true);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_enable_clicked");
                         }
                     }).setNegativeButton("Later", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             recordKeyboardShow();
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_cancel_clicked");
                         }
                     }).create();
         }
 
         if (!alertDialog.isShowing()) {
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_show");
             alertDialog.show();
         }
         recordKeyboardShow();
