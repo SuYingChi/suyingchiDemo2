@@ -39,7 +39,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     private static InputConnection insideConnection = null;
 
-    private KeyboardPanelManager keyboardPanelManager;
+    private static KeyboardPanelManager getKeyboardPanelMananger() {
+        return (KeyboardPanelManager) keyboardPanelSwitcher;
+    }
 
     private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
         @Override
@@ -60,7 +62,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             if (intent.getAction().equals(ACTION_CLOSE_SYSTEM_DIALOGS)) {
                 String reason = intent.getStringExtra("reason");
                 if (reason != null && reason.equals("homekey")) {
-                    keyboardPanelManager.onHomePressed();
+                    getKeyboardPanelMananger().onHomePressed();
                 }
             }
         }
@@ -79,16 +81,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_RESET_EDIT_INFO, keyboardNotificationObserver);
 
-        keyboardPanelManager = new KeyboardPanelManager();
-        setKeyboardSwitcher(keyboardPanelManager);
-
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            keyboardPanelManager.onBackPressed();
+            getKeyboardPanelMananger().onBackPressed();
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -154,10 +153,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         Log.e("time log", "time log service onstartInputView started");
         KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("StartInputView");
         super.onStartInputView(editorInfo, restarting);
-        keyboardPanelManager.beforeStartInputView();
+        getKeyboardPanelMananger().beforeStartInputView();
 
         if (insideConnection == null && restarting) {
-            keyboardPanelManager.showKeyboardWithMenu();
+            getKeyboardPanelMananger().showKeyboardWithMenu();
         }
         // Broadcast event
         final HSBundle bundle = new HSBundle();
@@ -202,7 +201,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         unregisterReceiver(this.receiver);
         super.onDestroy();
-        keyboardPanelManager.onInputViewDestroy();
+        getKeyboardPanelMananger().onInputViewDestroy();
         HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_DESTROY);
     }
 
@@ -222,7 +221,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public void hideWindow() {
         super.hideWindow();
-        keyboardPanelManager.resetKeyboardBarState();
+        getKeyboardPanelMananger().resetKeyboardBarState();
         HSLog.e("keyboard lifecycle ----hide window----");
     }
 }
