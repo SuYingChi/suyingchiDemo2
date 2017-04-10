@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.booster.utils.DisplayUtils;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.mobipioneer.inputmethod.panels.settings.model.ViewItem;
 import com.viewpagerindicator.IconPagerAdapter;

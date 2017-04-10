@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.booster.utils.DisplayUtils;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 
 /**

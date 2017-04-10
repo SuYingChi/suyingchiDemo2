@@ -2,7 +2,6 @@ package com.mobipioneer.lockerkeyboard.app;
 
 import android.view.inputmethod.EditorInfo;
 
-import com.ihs.booster.HSBoostManager;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 
 /**
@@ -24,7 +23,6 @@ public class MyInputMethodService extends HSUIInputMethodService {
     @Override
     public void onStartInputView(EditorInfo editorInfo, boolean restarting) {
         super.onStartInputView(editorInfo, restarting);
-        HSBoostManager.getInstance().showShortcutAnimation();
     }
 
 }
