@@ -19,6 +19,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.mobipioneer.lockerkeyboard.SplashActivity;
@@ -178,6 +179,7 @@ public class WakeKeyboardService extends Service {
     private void showAlert() {
         if (alertDialog == null) {
             alertDialog = new KCAlert.Builder().setTitle("More Emojis")
+                    .setTopImageResource(R.drawable.enable_keyboard_remind_top)
                     .setMessage("Want to try more emojis and keyboard themes?")
                     .setPositiveButton("OK", new View.OnClickListener() {
                         @Override
