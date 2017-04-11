@@ -124,8 +124,8 @@ repositories {
 dependencies {
 
     //////////////////////  Ads Configuration Begin ////////////////////////
-    compile getIHandyDependency("com.ihandy.nativeads:libNativeAds", "${rootProject.ext.nativeAdsVersion}")
-    compile getIHandyDependency("com.ihandy.interstitialads:InterstitialAds", "${rootProject.ext.interstitialAdsVersion}")
+    compile "com.ihandy.nativeads:libNativeAds.${rootProject.ext.nativeAdsVersion}"
+    compile "com.ihandy.interstitialads:InterstitialAds.${rootProject.ext.interstitialAdsVersion}"
 
     //    Admob Adx
     compile "com.google.android.gms:play-services-ads:${rootProject.ext.gmsVersion}"
@@ -152,7 +152,7 @@ dependencies {
     //////////////////////  Ads Configuration end ////////////////////////
 
 
-    compile getIHandyDependency("com.ihandy.appframework:libAppframework", "${rootProject.ext.frameworkVersion}")
+    compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile 'com.ihandy.thirdparty:tapjoyconnectlibrary:11.10'
 
 
