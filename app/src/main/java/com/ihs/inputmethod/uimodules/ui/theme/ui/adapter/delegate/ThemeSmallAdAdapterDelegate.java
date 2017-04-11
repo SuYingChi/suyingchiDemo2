@@ -30,6 +30,10 @@ import java.util.List;
  */
 public final class ThemeSmallAdAdapterDelegate extends ThemeAdAdapterDelegate {
 
+    public ThemeSmallAdAdapterDelegate() {
+        super(null);
+    }
+
     @Override
     protected boolean isForViewType(@NonNull List<ThemeHomeModel> items, int position) {
         return items.get(position).span == 1 && items.get(position).isAd;

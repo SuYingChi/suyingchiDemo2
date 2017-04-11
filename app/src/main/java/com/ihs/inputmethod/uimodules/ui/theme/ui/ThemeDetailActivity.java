@@ -50,7 +50,6 @@ import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
@@ -110,7 +109,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 case MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR:
                     if (null != nativeAdView) {
                         TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                        adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+                        if (null != adButtonView) {
+                            adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+                        }
                     } else {
                         // do nothing
                     }
@@ -118,7 +119,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 case MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR:
                     if (null != nativeAdView) {
                         TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                        adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
+                        if (null != adButtonView) {
+                            adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
+                        }
                     } else {
                         // do nothing
                     }
@@ -487,6 +490,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_show");
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(getString(R.string.charging_alert_title));
             dialog.setMessage(getString(R.string.charging_alert_message));
@@ -497,6 +501,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
                     HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
                 }
             });
             dialog.show();

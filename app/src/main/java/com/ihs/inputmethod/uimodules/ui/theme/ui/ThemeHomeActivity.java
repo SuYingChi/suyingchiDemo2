@@ -17,22 +17,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ihs.actiontrigger.utils.HSPermissionManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
-import com.ihs.charging.ChargingPreferenceUtil;
-import com.ihs.chargingscreen.HSChargingScreenManager;
-import com.ihs.chargingscreen.utils.ChargingGARecorder;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -45,7 +39,6 @@ import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
@@ -62,9 +55,7 @@ import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import org.json.JSONObject;
 
-import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;
-import static com.cloudtech.ads.c.c.f;
 
 /**
  * Created by jixiang on 16/8/17.
@@ -610,6 +601,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private void showEnableChargingAlertIfNeeded() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_quitAlert_prompt_show");
 
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(getString(R.string.charging_alert_title));
@@ -621,6 +613,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
                     HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_quitAlert_prompt_click");
                 }
             });
             dialog.show();

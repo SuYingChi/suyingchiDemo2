@@ -3,7 +3,6 @@ package com.mobipioneer.lockerkeyboard.service;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,14 +11,17 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
+import com.ihs.keyboardutils.alerts.KCAlert;
 import com.mobipioneer.lockerkeyboard.SplashActivity;
 
 import java.lang.reflect.Field;
@@ -75,7 +77,7 @@ public class WakeKeyboardService extends Service {
 
         if (lastKeyboardAlertShowTime > lastKeyboardChangeTime) {
             long seconds = (System.currentTimeMillis() - lastKeyboardAlertShowTime) / 1000;
-            HSLog.d("KeyboardService", String.format("键盘alert超过:%dd %dh %dm %ds", seconds/60/60/24, (seconds/60/60)%24,(seconds/60)%60,seconds));
+            HSLog.d("KeyboardService", String.format("键盘alert超过:%dd %dh %dm %ds", seconds / 60 / 60 / 24, (seconds / 60 / 60) % 24, (seconds / 60) % 60, seconds));
             if (System.currentTimeMillis() - lastKeyboardAlertShowTime > keyboardAlertRemindInterval) {
                 //键盘未切换过，点击later超过RemindInterval天
                 showAlert();
@@ -83,7 +85,7 @@ public class WakeKeyboardService extends Service {
         } else {
             //从本键盘切换到别的键盘超过RemindWhenNotActive天
             long seconds = (System.currentTimeMillis() - lastKeyboardChangeTime) / 1000;
-            HSLog.d("KeyboardService", String.format("键盘切走超过:%dd %dh %dm %ds", seconds/60/24, (seconds/60/60)%24,(seconds/60)%60,seconds));
+            HSLog.d("KeyboardService", String.format("键盘切走超过:%dd %dh %dm %ds", seconds / 60 / 24, (seconds / 60 / 60) % 24, (seconds / 60) % 60, seconds));
             if (System.currentTimeMillis() - lastKeyboardChangeTime > keyboardChangeRemindInterval) {
                 //键盘未切换过，点击later超过RemindInterval天
                 showAlert();
@@ -171,39 +173,40 @@ public class WakeKeyboardService extends Service {
         preferenceHelper.putLong(SP_KEY_LAST_KEYBOARD_AlERT_SHOW, System.currentTimeMillis());
     }
 
-    android.support.v7.app.AlertDialog alertDialog;
+    KCAlert alertDialog;
     private ActivityManager.RunningServiceInfo runningServiceInfo;
 
     private void showAlert() {
         if (alertDialog == null) {
-            alertDialog = HSAlertDialog.build().setTitle("More Emojis")
+            alertDialog = new KCAlert.Builder().setTitle("More Emojis and Themes")
+                    .setTopImageResource(R.drawable.enable_keyboard_remind_top)
                     .setMessage("Want to try more emojis and keyboard themes?")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("OK", new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(View v) {
                             Context context = WakeKeyboardService.this;
                             Intent intent = new Intent(context, SplashActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putBoolean(Constants.BUNDLE_AUTO_ENABLE_KEYBOARD,true);
+                            bundle.putBoolean(Constants.BUNDLE_AUTO_ENABLE_KEYBOARD, true);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_enable_clicked");
                         }
-                    }).setNegativeButton("Later", new DialogInterface.OnClickListener() {
+                    }).setNegativeButton("Later", new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(View v) {
                             recordKeyboardShow();
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_cancel_clicked");
                         }
-                    }).create();
+                    }).build();
         }
 
-        if (!alertDialog.isShowing()) {
-            alertDialog.show();
-        }
+        alertDialog.show();
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_show");
         recordKeyboardShow();
 
     }
 
- 
 
     public boolean isEqual(Object obj1, Object obj2) {
         if (obj1 == null || obj2 == null) {

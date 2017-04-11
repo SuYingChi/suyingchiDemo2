@@ -363,6 +363,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             try {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 currentFragment = getFragmentClasses().get(pageIndex).newInstance();
+                currentFragment.setCustomThemeData(customThemeData);
                 transaction.replace(R.id.custom_theme_items_container, currentFragment).commit();
 
                 updateHeaderView();
@@ -561,9 +562,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         }
     }
 
-    public KCCustomThemeData getCustomThemeData() {
-        return customThemeData;
-    }
 
     protected class SaveThemeChangesTask extends AsyncTask<Bitmap, Void, String> {
         @Override
@@ -649,6 +647,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
 
     private boolean showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_show");
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(getString(R.string.charging_alert_title));
             dialog.setMessage(getString(R.string.charging_alert_message));
@@ -659,6 +658,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
                     HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
                 }
             });
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

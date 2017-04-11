@@ -116,6 +116,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trial_keyboard_dialog);
+        handler = new Handler();
         final EditText editText = (EditText) findViewById(R.id.edit_text_input);
         rootView = (ViewGroup) findViewById(R.id.root_view);
         rootView.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +125,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 dismiss();
             }
         });
-        handler = new Handler();
         isNativeAdAlreadyLoaded = false;
 
         editText.requestFocus();
@@ -226,7 +226,9 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         public void run() {
             if (null != nativeAdView) {
                 TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+                if (null != adButtonView) {
+                    adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+                }
             } else {
                 // do nothing
             }
@@ -235,6 +237,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_show");
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(getContext().getString(R.string.charging_alert_title));
             dialog.setMessage(getContext().getString(R.string.charging_alert_message));
@@ -245,6 +248,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
                     HSToastUtils.toastCenterShort(getContext().getString(R.string.charging_enable_toast));
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
                 }
             });
             dialog.show();

@@ -119,9 +119,14 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         }
         return pageItem;
     }
+    KCCustomThemeData customThemeData;
+
+    public void setCustomThemeData(KCCustomThemeData customThemeData) {
+        this.customThemeData = customThemeData;
+    }
 
     public KCCustomThemeData getCustomThemeData() {
-        return getCustomThemeActivity() == null ? null : getCustomThemeActivity().getCustomThemeData();
+        return customThemeData;
     }
 
     public void addChosenItem(KCBaseElement item) {

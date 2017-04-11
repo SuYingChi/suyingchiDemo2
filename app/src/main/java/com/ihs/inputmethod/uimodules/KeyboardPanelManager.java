@@ -17,6 +17,7 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
+import com.ihs.inputmethod.framework.KeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
@@ -24,7 +25,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
-import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -44,7 +44,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private KeyboardPanelSwitchContainer keyboardPanelSwitchContainer;
     private BaseFunctionBar functionBar;
     private HSMediaView hsBackgroundVedioView;
-
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -94,7 +93,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-
     public View onCreateInputView(View keyboardPanelView) {
         onInputViewDestroy();
         keyboardPanelSwitchContainer = new KeyboardPanelSwitchContainer();
@@ -102,23 +100,28 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 //        keyboardPanelSwitchContainer.setThemeBackground(HSKeyboardThemeManager.getKeyboardBackgroundDrawable());
         ThemeAnalyticsReporter.getInstance().recordThemeUsage(HSKeyboardThemeManager.getCurrentThemeName());
         hsBackgroundVedioView = new HSMediaView(HSApplication.getContext());
+        hsBackgroundVedioView.setTag("BackgroundView");
         hsBackgroundVedioView.setSupportSmoothScroll(false);
         hsBackgroundVedioView.init();
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
-        keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, keyboardPanelView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
 
-        keyboardPanelSwitchContainer.setWebHistoryView(WebContentSearchManager.getInstance().getWebSearchHistoryView());
+//        keyboardPanelSwitchContainer.setWebHistoryView(WebContentSearchManager.getInstance().getWebSearchHistoryView());
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
-        keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
-
         addOrUpdateBackgroundView();
 
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
+
         return keyboardPanelSwitchContainer;
+    }
+
+    @Override
+    public void showKeyboardPanel() {
+        keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
+        keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
     }
 
     private void createDefaultFunctionBar() {
@@ -191,7 +194,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void showKeyboardWithMenu() {
         if (keyboardPanelSwitchContainer != null) {
-            keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
+            showKeyboardPanel();
         }
         if (functionBar != null) {
             functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
@@ -224,6 +227,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void resetKeyboardBarState() {
         if (keyboardPanelSwitchContainer != null) {
+            if(keyboardPanelSwitchContainer.getKeyboardPanel() == null) {
+                keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
+            }
             keyboardPanelSwitchContainer.getKeyboardPanel().switchSuggestionState(0);
             keyboardPanelSwitchContainer.getBarViewGroup().setVisibility(View.VISIBLE);
         }

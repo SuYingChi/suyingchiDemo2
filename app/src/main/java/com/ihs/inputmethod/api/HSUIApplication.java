@@ -23,10 +23,12 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.feature.customuiratealert.CustomUIRateAlertManager;
+import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -96,6 +98,10 @@ public class HSUIApplication extends HSInputMethodApplication {
         });
 
         setChargingFunctionStatus();
+
+        HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
+        HSInputMethodService.initResourcesBeforeOnCreate();
+
     }
 
     /**
