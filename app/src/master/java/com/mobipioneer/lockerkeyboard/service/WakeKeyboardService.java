@@ -178,7 +178,7 @@ public class WakeKeyboardService extends Service {
 
     private void showAlert() {
         if (alertDialog == null) {
-            alertDialog = new KCAlert.Builder().setTitle("More Emojis")
+            alertDialog = new KCAlert.Builder().setTitle("More Emojis and Themes")
                     .setTopImageResource(R.drawable.enable_keyboard_remind_top)
                     .setMessage("Want to try more emojis and keyboard themes?")
                     .setPositiveButton("OK", new View.OnClickListener() {
