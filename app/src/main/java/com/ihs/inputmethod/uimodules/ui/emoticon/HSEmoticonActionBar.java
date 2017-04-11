@@ -24,7 +24,6 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -119,7 +118,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
 
         if(!IAPManager.getManager().hasPurchaseNoAds()) {
-            boolean showIconAd = HSConfig.getBoolean("Application", "NativeAds", "ShowIconAd");
+            boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
             View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
             if(!showIconAd) {
                 adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
