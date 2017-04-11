@@ -81,4 +81,5 @@
     <string name="retry">RETRY</string>
     <string name="dialog_set_up_manual_message">Auto Set-up keyboard doesn\'t work on some devices, please try it again or set up keyboard manually.</string>
 
+
 </resources>

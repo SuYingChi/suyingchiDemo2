@@ -156,8 +156,8 @@ dependencies {
     compile 'com.ihandy.thirdparty:tapjoyconnectlibrary:11.10'
 
 
-    masterCompile project(':booster')
-    smileyCompile project(':booster')
+//    masterCompile project(':booster')
+//    smileyCompile project(':booster')
 
     masterCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
     smileyCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
