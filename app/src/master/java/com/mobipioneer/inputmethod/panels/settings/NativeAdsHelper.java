@@ -9,7 +9,6 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -50,7 +49,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
 
-import static com.ihs.booster.common.recyclerview.animator.impl.ItemMoveAnimationManager.TAG;
 
 
 /**
@@ -131,7 +129,6 @@ public class NativeAdsHelper {
     private INotificationObserver loadDataObserver = new INotificationObserver() {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
-            Log.d(TAG, "onReceive() called with: eventName = [" + eventName + "], notificaiton = [" + notificaiton + "]");
 
             if (notificaiton != null) {
                 if ((notificaiton.getInt(AdsConstants.KEY_ADS_OWNER) != AdsConstants.ADS_OWNER_SETTINGS)) {

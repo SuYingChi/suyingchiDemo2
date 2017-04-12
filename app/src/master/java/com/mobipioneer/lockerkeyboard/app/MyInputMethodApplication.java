@@ -10,11 +10,9 @@ import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.ihs.actiontrigger.HSActionTrigger;
 import com.ihs.actiontrigger.model.ActionBean;
-import com.ihs.actiontrigger.model.AppInfoBean;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.app.utils.HSMarketUtils;
-import com.ihs.booster.HSBoostManager;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -24,10 +22,6 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.uimodules.utils.DialogUtils;
-import com.mobipioneer.lockerkeyboard.ads.engine.ADECustomBoostAlert;
-import com.mobipioneer.lockerkeyboard.ads.engine.ADEInputSecurityCheckAlert;
-import com.mobipioneer.lockerkeyboard.ads.engine.ADEOptimizeActivity;
 import com.mobipioneer.lockerkeyboard.service.WakeKeyboardService;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -120,8 +114,6 @@ public class MyInputMethodApplication extends HSUIApplication {
 
 //        AppLockManager.init(this);
 
-        HSBoostManager.getInstance();
-
         isFacebookAppInstalled = HSInstallationUtils.isAppInstalled("com.facebook.katana");
         isGooglePlayInstalled = HSMarketUtils.isMarketInstalled(HSMarketUtils.GOOGLE_MARKET);
 
@@ -195,24 +187,6 @@ public class MyInputMethodApplication extends HSUIApplication {
                 } else {
                     return false;
                 }
-
-            case 1:
-                switch (adData) {
-                    case 0:
-                        ADECustomBoostAlert adeCustomBoostAlert = new ADECustomBoostAlert(getApplicationContext(), eventAction, eventLabel);
-                        return adeCustomBoostAlert.show();
-                    case 1:
-                        ADEInputSecurityCheckAlert adeInputSecurityCheckAlert = new ADEInputSecurityCheckAlert(getApplicationContext(), eventAction, eventLabel);
-                        return adeInputSecurityCheckAlert.show();
-                    case 2:
-                        Object object = actionBean.getData();
-                        return object instanceof AppInfoBean && DialogUtils.showUninstallAlert((AppInfoBean) object);
-
-                }
-                break;
-
-            case 3:
-                return ADEOptimizeActivity.launch(eventAction, eventLabel);
         }
         return false;
 

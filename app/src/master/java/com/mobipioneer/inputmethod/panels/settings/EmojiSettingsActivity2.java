@@ -38,7 +38,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.framework.RichInputMethodManager;
@@ -48,10 +47,6 @@ import com.ihs.inputmethod.uimodules.ui.settings.activities.MoreLanguageActivity
 import com.mobipioneer.lockerkeyboard.utils.Constants;
 
 import java.util.List;
-
-import static com.mobipioneer.lockerkeyboard.ads.engine.common.ADEConstants.ADE_ITEM_CUSTOM_BOOST;
-import static com.mobipioneer.lockerkeyboard.ads.engine.common.ADEConstants.ADE_ITEM_INPUT_SECURITY_CHECK;
-import static com.mobipioneer.lockerkeyboard.ads.engine.common.ADEConstants.ADE_ITEM_OPTIMIZE;
 
 public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
     private int adItem;
@@ -190,13 +185,6 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
         }
 
         private void initPreference() {
-            findPreference("phone_boost").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    showFunctionFragment(ADE_ITEM_CUSTOM_BOOST);
-                    return true;
-                }
-            });
             findPreference(getString(R.string.custom_uninstall_preference_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -204,33 +192,7 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
-            findPreference("input_security_check").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    showFunctionFragment(ADE_ITEM_INPUT_SECURITY_CHECK);
-                    return true;
-                }
-            });
-            findPreference("optimize_your_phone").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    showFunctionFragment(ADE_ITEM_OPTIMIZE);
-                    return true;
-                }
-            });
-
             setCharging();
-
-            //only match actionData and actionType, can open setting
-            int actionData = HSConfig.optInteger(0, "Application", "ActionConfig", "EventOccasion", "AppOpen", "ActionData");
-            int actionType = HSConfig.optInteger(0, "Application", "ActionConfig", "EventOccasion", "AppOpen", "ActionType");
-            if (actionData != 1 || actionType != 1) {
-                getPreferenceScreen().removePreference(findPreference(getResources().getString(R.string.input_security_check_preference_key)));
-            }
-            if (actionData != 3 || actionType != 0) {
-                getPreferenceScreen().removePreference(findPreference(getResources().getString(R.string.optimize_your_phone_preference_key)));
-            }
-
         }
 
         private void setCharging() {
@@ -315,45 +277,6 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             Bundle arguments = getArguments();
             int ad_item = arguments.getInt("ad_item", 0);
-
-            Preference preference0 = findPreference(getResources().getString(R.string.custom_boost_setting_preference_key));
-            preference0.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("settings_boost_turn" + ((boolean) newValue ? " On" : "Off"));
-                    return true;
-                }
-            });
-            Preference preference1 = findPreference(getResources().getString(R.string.input_security_check_setting_preference_key));
-            preference1.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("settings_inputSecurityCheck_turn" + ((boolean) newValue ? "On" : "Off"));
-                    return true;
-                }
-            });
-            Preference preference2 = findPreference(getResources().getString(R.string.optimize_setting_preference_key));
-            preference2.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("settings_optimization_turn" + ((boolean) newValue ? "On" : "Off"));
-                    return true;
-                }
-            });
-            switch (ad_item) {
-                case ADE_ITEM_CUSTOM_BOOST:
-                    getPreferenceScreen().removePreference(preference1);
-                    getPreferenceScreen().removePreference(preference2);
-                    break;
-                case ADE_ITEM_INPUT_SECURITY_CHECK:
-                    getPreferenceScreen().removePreference(preference0);
-                    getPreferenceScreen().removePreference(preference2);
-                    break;
-                case ADE_ITEM_OPTIMIZE:
-                    getPreferenceScreen().removePreference(preference0);
-                    getPreferenceScreen().removePreference(preference1);
-                    break;
-            }
         }
 
         @Override

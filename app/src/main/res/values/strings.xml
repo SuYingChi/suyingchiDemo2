@@ -234,4 +234,10 @@
 	<string name="charging_enable_toast">Smart Charging Enabled</string>
 
 	<string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
+
+	<string name="accessibility_service" translatable="false">Emoji Keyboard</string>
+	<string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
+With accessibility authorization, I can help you setup keyboard directly!
+
+Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
 </resources>
