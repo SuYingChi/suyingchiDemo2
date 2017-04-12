@@ -42,6 +42,7 @@ import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -141,8 +142,18 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             }
         }
 
-        void updateBackgroundList() {
+        private void destroyCurrentData() {
+            for (Map.Entry<String, NativeAdView> nativeAdViewEntry : backgroundNativeAdViews.entrySet()) {
+                nativeAdViewEntry.getValue().setOnFirstAdRespondListener(null);
+            }
+            backgroundNativeAdViews.clear();
             backgrounds.clear();
+        }
+
+        private Map<String, NativeAdView> backgroundNativeAdViews = new HashMap<>();
+
+        void updateBackgroundList() {
+            destroyCurrentData();
             Map themeContents = HSConfig.getMap("Application", "ThemeContents");
             List homeBackgrounds = (List) themeContents.get("custom_theme_backgrounds_home");
             for (int i = 0; i < homeBackgrounds.size(); i++) {
@@ -186,13 +197,13 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
                             adInfo.hasAd = true;
                             backgrounds.add(adInfo.position, adInfo);
-//                            notifyDataSetChanged();
                             notifyItemInserted(adInfo.position);
                         }
 
                     });
                     nativeAdView.configParams(new NativeAdParams(adInfo.nativeAd, ViewGroup.LayoutParams.MATCH_PARENT, 1));
                     adInfo.nativeAdView = nativeAdView;
+                    backgroundNativeAdViews.put(adInfo.nativeAd + adInfo.position, nativeAdView);
                 }
             }
             notifyDataSetChanged();
