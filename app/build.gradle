@@ -38,12 +38,12 @@ android {
         //设置Deubug和Release下的编译模式，即proguard文件路径
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../booster/proguard-rules_release.pro' , 'proguard-r.txt' , 'proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt' , 'proguard-r.txt' , 'proguard.txt'
 
         }
         debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../booster/proguard-rules.pro', 'proguard-d.txt' , 'proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', 'proguard-d.txt' , 'proguard.txt'
         }
     }
 
