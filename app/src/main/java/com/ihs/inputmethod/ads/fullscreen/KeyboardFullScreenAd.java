@@ -7,7 +7,6 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.inputmethod.api.HSKeyboardSession;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 
 import java.util.Collections;
@@ -31,20 +30,19 @@ public class KeyboardFullScreenAd extends FullScreenAd {
         INotificationObserver observer = new INotificationObserver() {
             @Override
             public void onReceive(String s, HSBundle hsBundle) {
-                if(HSKeyboardSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD.equals(s)) {
+                if (KeyboardFullScreenAdSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD.equals(s)) {
                     preLoad();
-                    if("Open".equals(occasion)) {
+                    if ("Open".equals(occasion)) {
                         show();
                     }
-                }
-                else {
-                    if(HSUIInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY.equals(s)) {
+                } else {
+                    if (HSUIInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY.equals(s)) {
                         release();
                     }
                 }
             }
         };
-        HSGlobalNotificationCenter.addObserver(HSKeyboardSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD, observer);
+        HSGlobalNotificationCenter.addObserver(KeyboardFullScreenAdSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD, observer);
         HSGlobalNotificationCenter.addObserver(HSUIInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY, observer);
     }
 
@@ -52,17 +50,17 @@ public class KeyboardFullScreenAd extends FullScreenAd {
     protected boolean isConditionSatisfied() {
         // 1. Plist是否显示广告
         boolean shouldShow = HSConfig.getBoolean("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "Show");
-        if(!shouldShow) {
+        if (!shouldShow) {
             return false;
         }
         // 2. 当前session所在组的index
         int sessionIndex = getCurrentSessionGroupIndex();
-        if(sessionIndex == -1) {
+        if (sessionIndex == -1) {
             return false;
         }
         // 3. 如果当前session所在组的index已经加载过广告了，则return false， 反之，return true
         Set<String> sessions = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getStringSet(SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS, new HashSet<String>());
-        if(!sessions.contains(sessionIndex + "")) {
+        if (!sessions.contains(sessionIndex + "")) {
             return true;
         }
         return false;
@@ -72,7 +70,7 @@ public class KeyboardFullScreenAd extends FullScreenAd {
     protected void hasFetchedAd() {
         // 1. 当前session所在组的index
         int sessionIndex = getCurrentSessionGroupIndex();
-        if(sessionIndex == -1) {
+        if (sessionIndex == -1) {
             return;
         }
         // 2. 当前已经显示过广告的组的index
@@ -85,19 +83,22 @@ public class KeyboardFullScreenAd extends FullScreenAd {
 
     private int getCurrentSessionGroupIndex() {
         // 1. 获取当前session索引
-        int currentSessionIndex = HSKeyboardSession.getInstance().getKeyboardSessionIndex();
+        int currentSessionIndex = KeyboardFullScreenAdSession.getKeyboardFullScreenAdSessionIndex();
         // 3. 获取plist允许弹出广告的session列表
         List<Integer> showAdSessionIndexs = (List<Integer>) HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay");
         // 4. 查找比当前session索引小的索引
         Collections.sort(showAdSessionIndexs);
 
         int sessionTemp = -1;
-        for(int sessionIndex : showAdSessionIndexs) {
-            if(currentSessionIndex >= sessionIndex) {
+        for (int sessionIndex : showAdSessionIndexs) {
+            if (currentSessionIndex >= sessionIndex) {
                 sessionTemp = sessionIndex;
             }
         }
         return sessionTemp;
     }
 
+    public static void resetKeyboardFullScreenAdSessions() {
+        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putStringSet(KeyboardFullScreenAd.SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS, new HashSet<String>()).apply();
+    }
 }

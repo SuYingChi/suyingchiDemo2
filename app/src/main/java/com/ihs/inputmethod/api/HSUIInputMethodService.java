@@ -17,6 +17,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
@@ -26,6 +27,7 @@ import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
@@ -77,8 +79,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if(Intent.ACTION_DATE_CHANGED.equals(action)) {
-                PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putInt(HSKeyboardSession.SP_KEYBOARD_SESSION_CURRENT_INDEX, 0).apply();
-                PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putStringSet(KeyboardFullScreenAd.SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS, new HashSet<String>()).apply();
+                KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
+                KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
             }
         }
     };
@@ -91,7 +93,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public void onCreate() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
         super.onCreate();
-        HSKeyboardSession.getInstance();
+        KeyboardFullScreenAdSession.getInstance();
         registerReceiver(this.dateReceiver, new IntentFilter(Intent.ACTION_DATE_CHANGED));
         registerReceiver(this.receiver, new IntentFilter(ACTION_CLOSE_SYSTEM_DIALOGS));
 
@@ -100,8 +102,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_RESET_EDIT_INFO, keyboardNotificationObserver);
 
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
-        openFullScreenAd = new KeyboardFullScreenAd("Colorkey_A(InterstitialAds)OpenKeyboardFullScreenAd", "Open");
-        closeFullScreenAd = new KeyboardFullScreenAd("Colorkey_A(InterstitialAds)CloseKeyboardFullScreenAd", "Close");
+        openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
+        closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_close_keyboard), "Close");
     }
 
     @Override
