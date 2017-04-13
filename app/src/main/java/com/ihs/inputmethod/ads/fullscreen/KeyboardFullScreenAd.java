@@ -49,7 +49,7 @@ public class KeyboardFullScreenAd extends FullScreenAd {
     @Override
     protected boolean isConditionSatisfied() {
         // 1. Plist是否显示广告
-        boolean shouldShow = HSConfig.getBoolean("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "Show");
+        boolean shouldShow = HSConfig.optBoolean(false, "Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "Show");
         if (!shouldShow) {
             return false;
         }
@@ -86,13 +86,15 @@ public class KeyboardFullScreenAd extends FullScreenAd {
         int currentSessionIndex = KeyboardFullScreenAdSession.getKeyboardFullScreenAdSessionIndex();
         // 3. 获取plist允许弹出广告的session列表
         List<Integer> showAdSessionIndexs = (List<Integer>) HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay");
-        // 4. 查找比当前session索引小的索引
-        Collections.sort(showAdSessionIndexs);
-
         int sessionTemp = -1;
-        for (int sessionIndex : showAdSessionIndexs) {
-            if (currentSessionIndex >= sessionIndex) {
-                sessionTemp = sessionIndex;
+        // 4. 查找比当前session索引小的索引
+        if(showAdSessionIndexs != null) {
+            Collections.sort(showAdSessionIndexs);
+
+            for (int sessionIndex : showAdSessionIndexs) {
+                if (currentSessionIndex >= sessionIndex) {
+                    sessionTemp = sessionIndex;
+                }
             }
         }
         return sessionTemp;
