@@ -98,7 +98,7 @@ android {
         }
 
         smiley {
-            manifest.srcFile 'src/master/AndroidManifest.xml'
+            manifest.srcFile 'src/smiley/AndroidManifest.xml'
             java.srcDirs = ['src/master/java']
             res.srcDirs += ['src/smiley/res', 'src/master/res']
         }
