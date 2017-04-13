@@ -12,16 +12,10 @@ import com.ihs.inputmethod.uimodules.R;
 
 public final class CustomizedTitleViewHolder extends RecyclerView.ViewHolder {
 
-	View deleteButton;
-	View doneButton;
-	View clickView;
 	TextView title;
 
 	public CustomizedTitleViewHolder(View itemView) {
 		super(itemView);
-		deleteButton =itemView.findViewById(R.id.delete_button);
-		doneButton=itemView.findViewById(R.id.done_button);
-		clickView=itemView.findViewById(R.id.edit_layout);
 		title= (TextView) itemView.findViewById(R.id.customized_title);
 	}
 }

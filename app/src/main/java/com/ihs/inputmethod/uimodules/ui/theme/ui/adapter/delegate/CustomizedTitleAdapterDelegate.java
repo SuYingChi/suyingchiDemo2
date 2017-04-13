@@ -39,28 +39,6 @@ public final class CustomizedTitleAdapterDelegate extends AdapterDelegate<List<T
 		final ThemeHomeModel model=items.get(position);
 
 		viewHolder.title.setText(model.customizedTitle);
-		viewHolder.clickView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				model.deleteButtonVisible=!model.deleteButtonVisible;
-				if(model.deleteButtonVisible){
-					viewHolder.deleteButton.setVisibility(View.VISIBLE);
-					viewHolder.doneButton.setVisibility(View.GONE);
-				}else{
-					viewHolder.deleteButton.setVisibility(View.GONE);
-					viewHolder.doneButton.setVisibility(View.VISIBLE);
-				}
-				model.customizedTitleClickListener.onClick(v);
-			}
-		});
-
-		if(model.deleteButtonVisible){
-			viewHolder.deleteButton.setVisibility(View.VISIBLE);
-			viewHolder.doneButton.setVisibility(View.GONE);
-		}else{
-			viewHolder.deleteButton.setVisibility(View.GONE);
-			viewHolder.doneButton.setVisibility(View.VISIBLE);
-		}
 	}
 
 	@Override
