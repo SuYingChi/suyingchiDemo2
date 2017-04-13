@@ -38,6 +38,7 @@ public class KeyboardFullScreenAd extends FullScreenAd {
                 } else {
                     if (HSUIInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY.equals(s)) {
                         release();
+                        HSGlobalNotificationCenter.removeObserver(this);
                     }
                 }
             }
