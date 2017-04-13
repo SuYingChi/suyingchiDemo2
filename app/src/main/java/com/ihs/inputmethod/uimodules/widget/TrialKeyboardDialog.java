@@ -319,7 +319,9 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     @Override
     public void dismiss() {
-        handler.removeCallbacks(runnable);
+        if (null != handler) {
+            handler.removeCallbacks(runnable);
+        }
         if (getContext().getResources().getBoolean(R.bool.trail_key_show_ad_before_close) && onlyCloseKeyboard) {
             onlyCloseKeyboard = false;
             HSInputMethod.hideWindow();
