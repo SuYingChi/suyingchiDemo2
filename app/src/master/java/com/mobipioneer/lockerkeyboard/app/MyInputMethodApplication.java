@@ -10,7 +10,9 @@ import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.ihs.actiontrigger.HSActionTrigger;
 import com.ihs.actiontrigger.model.ActionBean;
+import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
@@ -22,6 +24,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.feature.customuiratealert.CustomUIRateAlertManager;
 import com.mobipioneer.lockerkeyboard.service.WakeKeyboardService;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -64,8 +67,9 @@ public class MyInputMethodApplication extends HSUIApplication {
 
             } else if (HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK.equals(notificationName)) {
 //                AppLockMgr.startLocker(HSApplication.getContext());
+            } else if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
+                HSAlertMgr.delayRateAlert();
             }
-
         }
     };
 
@@ -106,8 +110,10 @@ public class MyInputMethodApplication extends HSUIApplication {
 
         AcbInterstitialAdManager.getInstance(HSApplication.getContext());
 
+        CustomUIRateAlertManager.initialize();
 
         HSGlobalNotificationCenter.addObserver(HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK, sessionEventObserver);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).build();
         ImageLoader.getInstance().init(config);
