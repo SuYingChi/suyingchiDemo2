@@ -33,7 +33,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -515,13 +514,13 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        HSAlertMgr.delayRateAlert();
+        //HSAlertMgr.delayRateAlert();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        HSAlertMgr.showRateAlert();
+        //HSAlertMgr.showRateAlert();
         if (edit_text_test != null) {
             edit_text_test.requestFocus();
 //            if (HSInputMethod.getInputService() != null) {
