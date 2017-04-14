@@ -51,6 +51,8 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 
 	private ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener;
 
+	private boolean shouldShowChargingEnableCard;
+
 	protected int width;
 	protected Handler handler = new Handler() {
 		/**
@@ -125,14 +127,17 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 
 		final CardView cardView = (CardView) holder.itemView;
 
-		boolean showChargingEnableView = false;
-
 		if (items.get(position).isThemeAd()) {
-			showChargingEnableView = ChargingConfigManager.getManager().shouldShowEnableChargingCard(true);
+			if (!this.shouldShowChargingEnableCard) {
+				this.shouldShowChargingEnableCard = ChargingConfigManager.getManager().shouldShowEnableChargingCard(true);
+				if (this.shouldShowChargingEnableCard) {
+					ChargingConfigManager.getManager().increaseEnableCardShowCount();
+					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_show");
+				}
+			}
 		}
 
-		if (showChargingEnableView) {// Show charging enable view
-			ChargingConfigManager.getManager().increaseEnableCardShowCount();
+		if (items.get(position).isThemeAd() && this.shouldShowChargingEnableCard) {// Show charging enable view
 			View chargingEnableView = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.charging_enable_card, null);
 			chargingEnableView.setTag("chargingenableview");
 			cardView.addView(chargingEnableView);
@@ -145,8 +150,6 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_click");
 				}
 			});
-
-			HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_show");
 		} else {// Show ad
 			String nativeAd = getNativeAd(position);
 			if (nativeAdViewCached.get(nativeAd) == null) {
