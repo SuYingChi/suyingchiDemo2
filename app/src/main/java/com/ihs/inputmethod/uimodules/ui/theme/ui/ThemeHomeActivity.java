@@ -275,7 +275,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             getIntent().putExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
         }
         else {
-            if(trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
+            String from = intent.getStringExtra("From");
+            if(trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
                 Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store), Toast.LENGTH_SHORT).show();
             }
         }

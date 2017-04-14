@@ -92,6 +92,7 @@ public class HSNewSettingsPanel extends BasePanel {
 //                getPanelActionListener().showChildPanel(HSThemeSelectPanel.class, bundle);
                 Intent intent = new Intent(HSApplication.getContext(), ThemeHomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("From", "Keyboard");
                 HSApplication.getContext().startActivity(intent);
 
                 item.hideNewMark();
