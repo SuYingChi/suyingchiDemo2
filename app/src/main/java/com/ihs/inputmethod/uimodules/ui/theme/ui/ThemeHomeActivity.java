@@ -274,6 +274,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             showTrialKeyboardDialog(keyboardActivationFromHomeWithTrial, false);
             getIntent().putExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
         }
+        else {
+            if(trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
+                Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store), Toast.LENGTH_SHORT).show();
+            }
+        }
         MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
         onNavigationItemSelected(item);
     }
