@@ -234,6 +234,7 @@
 	<string name="charging_enable_toast">Smart Charging Enabled</string>
 
 	<string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
+	<string name="quit_alert_placement_native_ad">Colorkey_A(NativeAds)QuitAlert</string>
 
 	<string name="accessibility_service" translatable="false">Emoji Keyboard</string>
 	<string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️

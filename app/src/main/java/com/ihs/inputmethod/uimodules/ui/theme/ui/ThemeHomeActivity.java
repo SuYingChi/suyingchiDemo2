@@ -51,6 +51,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import org.json.JSONObject;
@@ -88,6 +89,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     private View apkUpdateTip;
     private View noAds;
+    private ExitAlert exitAlert;
 
     private static final int keyboardActivationFromHome = 11;
     private static final int keyboardActivationFromHomeWithTrial = 12;
@@ -260,6 +262,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
+        exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.quit_alert_placement_native_ad));
         onNewIntent(getIntent());
     }
 
@@ -332,7 +335,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 //                }
 //            }
 //        }, 100);
-
     }
 
     @Override
@@ -600,11 +602,18 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     @Override
     public void onBackPressed() {
-        showEnableChargingAlertIfNeeded();
-        super.onBackPressed();
+        if (!showEnableChargingAlertIfNeeded()) {
+            if (!exitAlert.show()) {
+                HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
+                super.onBackPressed();
+            }
+        } else {
+            HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
+            super.onBackPressed();
+        }
     }
 
-    private void showEnableChargingAlertIfNeeded() {
+    private boolean showEnableChargingAlertIfNeeded() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_quitAlert_prompt_show");
@@ -623,6 +632,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 }
             });
             dialog.show();
+            return true;
         }
+        return false;
     }
 }
