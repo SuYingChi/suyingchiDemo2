@@ -21,7 +21,6 @@ import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.view.SectorProgressView;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
@@ -69,7 +68,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         public RoundedImageView mLockedImageView;
         public RoundedImageView mNewMarkImageView;
         public RoundedImageView mPlaceholderView;
-        public SectorProgressView mProgressView;
+//        public SectorProgressView mProgressView;
         public View itemView;
         public OnDownloadingProgressListener downloadingProgressListener;
 
@@ -83,7 +82,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             mLockedImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_locked);
             mNewMarkImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
             mPlaceholderView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
-            mProgressView = (SectorProgressView) itemView.findViewById(R.id.custom_theme_item_progress);
+//            mProgressView = (SectorProgressView) itemView.findViewById(R.id.custom_theme_item_progress);
 
             mPlaceholderView.setCornerRadius(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.custom_theme_background_item_corners_radius));
         }
@@ -129,7 +128,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 delayAfterDownloadComplete = 4000;
             }
 
-            adLoadingView.configParams(getBackgroundDrawable(item), baseElement.getPreview(), "Applying...", "Apply Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+            adLoadingView.configParams(getBackgroundDrawable(item), baseElement.getPreview(), "Applying...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
                 @Override
                 public void onDismiss() {
                     if (holder.downloadingProgressListener != null) {
@@ -164,7 +163,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             } else {
                 adLoadingView.startFakeLoading();
             }
-            adLoadingView.showInDialog();
+            adLoadingView.showInDialog(fragment.getActivity());
         }
     }
 
@@ -389,8 +388,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
 
     private void startDownloadContent(BaseItemHolder holder, I item) {
-        holder.mProgressView.setVisibility(View.VISIBLE);
-        setLayoutParams(holder.mContentImageView, holder.mProgressView);
+//        holder.mProgressView.setVisibility(View.VISIBLE);
+//        setLayoutParams(holder.mContentImageView, holder.mProgressView);
         downloadContent(holder, item);
     }
 
@@ -430,9 +429,9 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        holder.mProgressView.setVisibility(View.VISIBLE);
-                        holder.mProgressView.setPercent((int) (percent * 100));
-                        holder.mProgressView.postInvalidate();
+//                        holder.mProgressView.setVisibility(View.VISIBLE);
+//                        holder.mProgressView.setPercent((int) (percent * 100));
+//                        holder.mProgressView.postInvalidate();
                         if (holder.downloadingProgressListener != null) {
                             holder.downloadingProgressListener.onUpdate((int) (percent * 100));
                         }
@@ -459,7 +458,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        holder.mProgressView.setVisibility(View.INVISIBLE);
+//                        holder.mProgressView.setVisibility(View.INVISIBLE);
                         holder.setIsRecyclable(true);
                     }
                 });
@@ -472,7 +471,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         handler.post(new Runnable() {
             @Override
             public void run() {
-                holder.mProgressView.setVisibility(View.INVISIBLE);
+//                holder.mProgressView.setVisibility(View.INVISIBLE);
                 if (fragment.getCustomThemeData() != null && fragment.getCustomThemeData().isElementChecked(item)) {
                     showPurchaseAlertIfNeeded(item);
                     selectItem(holder, (KCBaseElement) item);
