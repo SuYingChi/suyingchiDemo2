@@ -1,5 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.button;
 
+import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
@@ -7,11 +10,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
+import com.keyboard.core.themes.custom.KCCustomThemeHelper;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
-import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
+import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
 
 /**
  * Created by chenyuanming on 31/10/2016.
