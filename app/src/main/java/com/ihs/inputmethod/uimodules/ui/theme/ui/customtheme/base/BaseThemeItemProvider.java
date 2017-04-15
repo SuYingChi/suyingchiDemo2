@@ -115,17 +115,21 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         if (holder == lastCheckedHolder) {
             return;
         }
-
         addCustomData((KCBaseElement) item);
-
         if (android.text.TextUtils.isEmpty(adPlacementName)) {
             checkItemBaseOnDownloadAndPurchaseSate(holder, item);
         } else {
             final KCBaseElement baseElement = (KCBaseElement) item;
 
             final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
+            boolean hasDownloadThemeContent = baseElement.hasLocalContent();
 
-            adLoadingView.configParams(holder.mBackgroundImageView.getDrawable(), baseElement.getPreview(), "Applying...", "Apply Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+            int delayAfterDownloadComplete = 1000;
+            if (!hasDownloadThemeContent) {
+                delayAfterDownloadComplete = 4000;
+            }
+
+            adLoadingView.configParams(getBackgroundDrawable(item), baseElement.getPreview(), "Applying...", "Apply Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
                 @Override
                 public void onDismiss() {
                     if (holder.downloadingProgressListener != null) {
@@ -137,12 +141,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                     }
                 }
 
-                @Override
-                public void onProgressComplete() {
-
-                }
-            });
-            boolean hasDownloadThemeContent = baseElement.hasLocalContent();
+            }, delayAfterDownloadComplete);
             setNotNew(holder, baseElement);
             if (!hasDownloadThemeContent) {
                 startDownloadContent(holder, item);
@@ -150,7 +149,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                     @Override
                     public void onUpdate(int percent) {
                         HSLog.e("onUpdate +" + percent);
-                        adLoadingView.updateProgressPercent(percent, 1000, false);
+                        adLoadingView.updateProgressPercent(percent);
                     }
 
                     @Override
@@ -163,7 +162,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                     }
                 };
             } else {
-                adLoadingView.updateProgressPercent(0, 4000, true);
+                adLoadingView.startFakeLoading();
             }
             adLoadingView.showInDialog();
         }

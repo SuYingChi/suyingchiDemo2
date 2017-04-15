@@ -74,13 +74,14 @@ public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElem
 
     @Override
     protected Drawable getBackgroundDrawable(Object item) {
-        if(mainColor == -1) {
+        if (mainColor == -1) {
             mainColor = fragment.getCustomThemeData().getBackgroundMainColor();
         }
-        if(backgroundDrawable == null) {
-            backgroundDrawable = KCElementResourseHelper.getButtonStyleBackgroundDrawable(mainColor);
+        if (backgroundDrawable == null) {
+//            backgroundDrawable = KCElementResourseHelper.getButtonStyleBackgroundDrawable(mainColor);
+            backgroundDrawable = getButtonStyleBackgroundDrawable(mainColor);
         }
-        return backgroundDrawable;
+        return getButtonStyleBackgroundDrawable(mainColor);
     }
 
     @Override
@@ -92,5 +93,15 @@ public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElem
             darkBackgroundDrawable = KCElementResourseHelper.getButtonStyleDarkerBackgroundDrawable(mainColor);
         }
         return darkBackgroundDrawable;
+    }
+    public static Drawable getButtonStyleBackgroundDrawable(int backgroundMainColor) {
+        Bitmap bitmap = KCCustomThemeHelper.getLocalCustomElementBitmap(KCButtonStyleElement.class, "keyboard_custom_theme_button_style_bg.png");
+        if (bitmap != null) {
+            BitmapDrawable drawable = new BitmapDrawable(bitmap);
+            drawable.setColorFilter(backgroundMainColor, PorterDuff.Mode.SRC_IN);
+            return drawable;
+        } else {
+            return null;
+        }
     }
 }
