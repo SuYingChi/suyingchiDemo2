@@ -91,16 +91,10 @@ android {
 
     sourceSets {
 
-        master {
-            manifest.srcFile 'src/master/AndroidManifest.xml'
-            java.srcDirs = ['src/master/java']
-            res.srcDirs += ['src/master/res']
-        }
-
         smiley {
             manifest.srcFile 'src/smiley/AndroidManifest.xml'
-            java.srcDirs = ['src/master/java']
-            res.srcDirs += ['src/smiley/res', 'src/master/res']
+            java.srcDirs += ['src/master/java']
+            res.srcDirs += ['src/master/res']
         }
     }
 

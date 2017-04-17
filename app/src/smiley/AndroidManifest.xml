@@ -65,7 +65,7 @@
     <!-- New permission add at 2017/4/13 end-->
 
     <application
-        android:name="com.mobipioneer.lockerkeyboard.app.MyInputMethodApplication"
+        android:name="com.smartkeyboard.emoji.app.MyInputMethodApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
@@ -150,18 +150,6 @@
         </receiver>
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
-        <service
-            android:name="com.mobipioneer.lockerkeyboard.app.MyInputMethodService"
-            android:label="@string/english_service_label"
-            android:permission="android.permission.BIND_INPUT_METHOD">
-            <intent-filter>
-                <action android:name="android.view.InputMethod" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method" />
-        </service>
 
         <activity
             android:name="com.mobipioneer.lockerkeyboard.ads.engine.common.ADEItemSettingActivity"
@@ -481,6 +469,19 @@
         <!--end of devicemonitor libs-->
 
         <service android:name="com.mobipioneer.lockerkeyboard.service.WakeKeyboardService"/>
+
+        <service
+            android:name="com.smartkeyboard.emoji.app.MyInputMethodService"
+            android:label="@string/english_service_label"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
 
     </application>
 
