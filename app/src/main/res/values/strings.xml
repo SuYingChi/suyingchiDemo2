@@ -194,13 +194,6 @@
 	<string name="purchase_error_item">ITEM UNAVAILABLE</string>
 	<string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
 
-	<!-- Theme new tip -->
-	<string name="new_background_tip">New background available</string>
-	<string name="new_font_tip">New font available</string>
-	<string name="new_tap_effect_tip">New tap effect available</string>
-	<string name="new_click_sound_tip">New click sound available</string>
-	<string name="new_theme_tip">New themes available</string>
-
 	<!--deep link-->
 	<string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
 	<string name="deeplink_description">Rainbow Keyboard description</string>

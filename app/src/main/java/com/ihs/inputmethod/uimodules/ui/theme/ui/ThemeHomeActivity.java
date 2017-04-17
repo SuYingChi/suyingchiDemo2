@@ -39,6 +39,7 @@ import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
@@ -276,10 +277,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.removeMessages(HANDLER_SHOW_ACTIVE_DIALOG);
             showTrialKeyboardDialog(keyboardActivationFromHomeWithTrial, false);
             getIntent().putExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
-        }
-        else {
+        } else {
             String from = intent.getStringExtra("From");
-            if(trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
+            if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
                 Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store), Toast.LENGTH_SHORT).show();
             }
         }
@@ -320,21 +320,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         refreshApkUpdateViews();
-//        UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-//                if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-//                    if (PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).getBoolean("CUSTOM_THEME_SAVE", false)) {
-//                        PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
-//                        HSAlertMgr.showRateAlert();
-//                    } else {
-//                        HSLog.e("CUSTOM_THEME_SAVE_NULL");
-//                    }
-//                }
-//            }
-//        }, 100);
+
+        // TODO: 这里应该调用一个将所有元素都标记为已读的接口，而不是自己将元素列出来。具体应该把Tip的逻辑重新整理下，这里暂时先这么写
+        HSThemeNewTipController.getInstance().setTypeAllRead(
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME,
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_BACKGROUND,
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_EFFECT,
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_FONT,
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_SOUND);
     }
 
     @Override

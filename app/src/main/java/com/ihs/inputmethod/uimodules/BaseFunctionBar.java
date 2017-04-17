@@ -87,25 +87,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         this.setBackgroundDrawable(getTransparentRippleBackground());
 
         functionLayout.addView(clothView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-
-//        //search view
-//        webSeachView = new BaseFunction(getContext());
-//        ImageView webIcon = new ImageView(getContext());
-//        refreshDrawable(webIcon, "menu_search.png", R.drawable.web_search_icon_funcbar);
-//        webIcon.setScaleType(ImageView.ScaleType.CENTER);
-//        webSeachView.setFunctionView(webIcon);
-//        webSeachView.setId(R.id.web_search_icon);
-//        webSeachView.setOnClickListener(this);
-//
-//        LayoutParams param = new LayoutParams(
-//                LayoutParams.MATCH_PARENT,
-//                LayoutParams.MATCH_PARENT, 1.0f);
-//        functionLayout.addView(new View(getContext()), param);
-//
-//        if (HSDisplayUtils.getRotation(getContext()) == Surface.ROTATION_0) {
-//            functionLayout.addView(webSeachView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        }
     }
 
 
@@ -161,11 +142,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
     public void setSettingButtonType(int type) {
         settingsButton.setButtonType(type);
-//        if (type == SettingsButton.SettingButtonType.MENU) {
-//            webSeachView.setVisibility(VISIBLE);
-//        } else {
-//            webSeachView.setVisibility(GONE);
-//        }
 
         updateFunctionAndSettingButtonSize();
     }
@@ -190,17 +166,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     public void hideNewMark() {
         baseFunction.hideNewTip();
     }
-
-//    @Override
-//    public void onMeasured(int w, int h) {
-//        ViewGroup.LayoutParams layoutParams = clothButtonVG.getLayoutParams();
-//        layoutParams.width = w;
-//    }
-//
-//    @Override
-//    public void onSetMargin(int margin) {
-//
-//    }
 
     public interface OnFunctionBarItemClickListener {
         void onFunctionBarItemClick(View v);

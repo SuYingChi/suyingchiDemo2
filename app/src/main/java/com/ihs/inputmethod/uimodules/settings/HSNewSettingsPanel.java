@@ -27,7 +27,6 @@ import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -87,9 +86,6 @@ public class HSNewSettingsPanel extends BasePanel {
         themeItem = ViewItemBuilder.getThemesItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
-//                Bundle bundle = new Bundle();
-//                bundle.putBoolean(BUNDLE_KEY_SHOW_TIP, item.isShowingNewMark());
-//                getPanelActionListener().showChildPanel(HSThemeSelectPanel.class, bundle);
                 Intent intent = new Intent(HSApplication.getContext(), ThemeHomeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("From", "Keyboard");
