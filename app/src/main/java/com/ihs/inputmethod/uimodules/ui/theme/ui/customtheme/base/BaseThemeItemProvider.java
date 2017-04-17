@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -68,7 +70,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         public RoundedImageView mLockedImageView;
         public RoundedImageView mNewMarkImageView;
         public RoundedImageView mPlaceholderView;
-//        public SectorProgressView mProgressView;
+        //        public SectorProgressView mProgressView;
         public View itemView;
         public OnDownloadingProgressListener downloadingProgressListener;
 
@@ -128,7 +130,11 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 delayAfterDownloadComplete = 4000;
             }
 
-            adLoadingView.configParams(getBackgroundDrawable(item), baseElement.getPreview(), "Applying...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+            Drawable backgroundDrawable = getBackgroundDrawable(item);
+            if (backgroundDrawable == null) {
+                backgroundDrawable = new ColorDrawable(Color.BLACK);
+            }
+            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Applying...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
                 @Override
                 public void onDismiss() {
                     if (holder.downloadingProgressListener != null) {
@@ -163,7 +169,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             } else {
                 adLoadingView.startFakeLoading();
             }
-            adLoadingView.showInDialog(fragment.getActivity());
+            adLoadingView.showInDialog();
         }
     }
 
