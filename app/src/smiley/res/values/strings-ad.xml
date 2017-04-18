@@ -25,4 +25,7 @@
     <string name="ga_fullscreen_theme_save_show_ad">NativeAd_Smiley_A(NativeAds)ThemeApplyFullScreenAd_Show</string>
     <string name="ga_fullscreen_theme_save_click_ad">NativeAd_Smiley_A(NativeAds)ThemeApplyFullScreenAd_Click</string>
     <string name="ga_fullscreen_theme_save_display_ad">NativeAd_Smiley_A(NativeAds)ThemeApplyFullScreenAd_DisplayTime</string>
+
+    <string name="ad_placement_applying">Smiley_A(NativeAds)ApplyingItem</string>
+
 </resources>

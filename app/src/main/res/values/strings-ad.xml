@@ -28,5 +28,5 @@
     <string name="ga_fullscreen_theme_save_click_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_Click</string>
     <string name="ga_fullscreen_theme_save_display_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_DisplayTime</string>
 
-    <string name="ad_placement_applying">Colorkey_A(NativeAds)ApplyingItem</string>
+    <string name="ad_placement_applying">Master_A(NativeAds)ApplyingItem</string>
 </resources>

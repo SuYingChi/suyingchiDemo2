@@ -28,6 +28,7 @@
 
 
     <string name="ad_placement_charging">Colorkey_A(NativeAds)Charging</string>
+    <string name="ad_placement_applying">Colorkey_A(NativeAds)ApplyingItem</string>
 
 
     <string name="taskAffinity_interstitial_ads">com.interstitial.ads</string>
