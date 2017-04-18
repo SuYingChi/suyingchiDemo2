@@ -263,7 +263,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
-        exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.quit_alert_placement_native_ad));
+        exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_exit_alert_dialog));
         onNewIntent(getIntent());
     }
 
@@ -595,12 +595,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     @Override
     public void onBackPressed() {
-        if (!showEnableChargingAlertIfNeeded()) {
-            if (!exitAlert.show()) {
-                HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
-                super.onBackPressed();
-            }
-        } else {
+        if (showEnableChargingAlertIfNeeded() || !exitAlert.show()) {
             HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
             super.onBackPressed();
         }
