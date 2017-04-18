@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,13 +23,13 @@ import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.view.SectorProgressView;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
+import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonShapeElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
-import com.keyboard.core.themes.custom.elements.KCBaseElement;
 
 import java.io.File;
 
@@ -53,15 +55,24 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     private boolean hasDefaultItemSelectStateSet = false;
 
     public static class BaseItemHolder extends RecyclerView.ViewHolder {
+
+        interface OnDownloadingProgressListener {
+            void onUpdate(int percent);
+
+            void onDownloadSucceeded();
+
+            void onDownloadFailed();
+        }
+
         public HSGifImageView mContentImageView;
         public RoundedImageView mCheckImageView;
         public RoundedImageView mBackgroundImageView;
         public RoundedImageView mLockedImageView;
         public RoundedImageView mNewMarkImageView;
         public RoundedImageView mPlaceholderView;
-        public SectorProgressView mProgressView;
+        //        public SectorProgressView mProgressView;
         public View itemView;
-
+        public OnDownloadingProgressListener downloadingProgressListener;
 
         public BaseItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,7 +84,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             mLockedImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_locked);
             mNewMarkImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
             mPlaceholderView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
-            mProgressView = (SectorProgressView) itemView.findViewById(R.id.custom_theme_item_progress);
+//            mProgressView = (SectorProgressView) itemView.findViewById(R.id.custom_theme_item_progress);
 
             mPlaceholderView.setCornerRadius(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.custom_theme_background_item_corners_radius));
         }
@@ -100,9 +111,75 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
     }
 
-    protected void onItemClicked(final V holder, final I item) {
+
+    protected void onItemClicked(final V holder, final I item, String adPlacementName) {
+        if (holder == lastCheckedHolder) {
+            return;
+        }
         addCustomData((KCBaseElement) item);
-        checkItemBaseOnDownloadAndPurchaseSate(holder, item);
+        if (android.text.TextUtils.isEmpty(adPlacementName)) {
+            checkItemBaseOnDownloadAndPurchaseSate(holder, item);
+        } else {
+            final KCBaseElement baseElement = (KCBaseElement) item;
+
+            final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
+            boolean hasDownloadThemeContent = baseElement.hasLocalContent();
+
+            int delayAfterDownloadComplete = 1000;
+            if (!hasDownloadThemeContent) {
+                delayAfterDownloadComplete = 4000;
+            }
+
+            Drawable backgroundDrawable = getBackgroundDrawable(item);
+            if (backgroundDrawable == null) {
+                backgroundDrawable = new ColorDrawable(Color.BLACK);
+            }
+            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Applying...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+                @Override
+                public void onDismiss() {
+                    if (holder.downloadingProgressListener != null) {
+                        onItemDownloadSucceeded(holder, item);
+                    } else {
+                        showPurchaseAlertIfNeeded(item);
+                        selectItem(holder, baseElement);
+                        fragment.refreshKeyboardView();
+                    }
+                }
+
+            }, delayAfterDownloadComplete);
+            setNotNew(holder, baseElement);
+            if (!hasDownloadThemeContent) {
+                startDownloadContent(holder, item);
+                holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
+                    @Override
+                    public void onUpdate(int percent) {
+                        HSLog.e("onUpdate +" + percent);
+                        adLoadingView.updateProgressPercent(percent);
+                    }
+
+                    @Override
+                    public void onDownloadSucceeded() {
+                    }
+
+                    @Override
+                    public void onDownloadFailed() {
+                        //// TODO: 17/4/14 applying failed ;
+                    }
+                };
+            } else {
+                adLoadingView.startFakeLoading();
+            }
+            adLoadingView.showInDialog();
+        }
+    }
+
+    protected void onItemClicked(final V holder, final I item, boolean showApplyAd) {
+        if (showApplyAd) {
+            onItemClicked(holder, item, HSApplication.getContext().getResources().getString(R.string.ad_placement_applying));
+        } else {
+            addCustomData((KCBaseElement) item);
+            checkItemBaseOnDownloadAndPurchaseSate(holder, item);
+        }
     }
 
     private void checkItemBaseOnDownloadAndPurchaseSate(final V holder, final I item) {
@@ -176,6 +253,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
+
+            //备注 2017.04.14 取消iap弹窗 liuyu1需求
             //check is need show lock
             if (!IAPManager.getManager().isOwnProduct(item)) {
                 //locked view
@@ -197,7 +276,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected void updateItemSelection(@NonNull final V holder, @NonNull final KCBaseElement item) {
         if (isCustomThemeItemSelected(item)) {
             if (!hasDefaultItemSelectStateSet) {
-                onItemClicked(holder, (I) item);
+                onItemClicked(holder, (I) item, false);
                 hasDefaultItemSelectStateSet = true;
             } else {
                 selectItem(holder, item);
@@ -315,8 +394,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
 
     private void startDownloadContent(BaseItemHolder holder, I item) {
-        holder.mProgressView.setVisibility(View.VISIBLE);
-        setLayoutParams(holder.mContentImageView, holder.mProgressView);
+//        holder.mProgressView.setVisibility(View.VISIBLE);
+//        setLayoutParams(holder.mContentImageView, holder.mProgressView);
         downloadContent(holder, item);
     }
 
@@ -356,45 +435,60 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        holder.mProgressView.setVisibility(View.VISIBLE);
-                        holder.mProgressView.setPercent((int) (percent * 100));
-                        holder.mProgressView.postInvalidate();
+//                        holder.mProgressView.setVisibility(View.VISIBLE);
+//                        holder.mProgressView.setPercent((int) (percent * 100));
+//                        holder.mProgressView.postInvalidate();
+                        if (holder.downloadingProgressListener != null) {
+                            holder.downloadingProgressListener.onUpdate((int) (percent * 100));
+                        }
                     }
                 });
             }
 
             @Override
             public void onDownloadSucceeded(File file) {
-                fragment.refreshHeaderNextButtonState();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        holder.mProgressView.setVisibility(View.INVISIBLE);
-                        if (fragment.getCustomThemeData() != null && fragment.getCustomThemeData().isElementChecked(item)) {
-                            showPurchaseAlertIfNeeded(item);
-                            selectItem(holder, (KCBaseElement) item);
-                            fragment.refreshKeyboardView();
-                        } else {
-                            holder.mCheckImageView.setVisibility(View.INVISIBLE);
-                        }
-                        holder.setIsRecyclable(true);
-                    }
-                });
-                HSGlobalNotificationCenter.sendNotificationOnMainThread(KCCustomThemeManager.NOTIFICATION_CUSTOM_THEME_CONTENT_DOWNLOAD_FINISHED);
+                if (holder.downloadingProgressListener != null) {
+                    holder.downloadingProgressListener.onDownloadSucceeded();
+                } else {
+                    onItemDownloadSucceeded(holder, item);
+                }
             }
 
             @Override
             public void onDownloadFailed(File file) {
+                if (holder.downloadingProgressListener != null) {
+                    holder.downloadingProgressListener.onDownloadFailed();
+                }
+
                 resetToLastItem();
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        holder.mProgressView.setVisibility(View.INVISIBLE);
+//                        holder.mProgressView.setVisibility(View.INVISIBLE);
                         holder.setIsRecyclable(true);
                     }
                 });
             }
         }, false /* isPreview */);
+    }
+
+    private void onItemDownloadSucceeded(final BaseItemHolder holder, final I item) {
+        fragment.refreshHeaderNextButtonState();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+//                holder.mProgressView.setVisibility(View.INVISIBLE);
+                if (fragment.getCustomThemeData() != null && fragment.getCustomThemeData().isElementChecked(item)) {
+                    showPurchaseAlertIfNeeded(item);
+                    selectItem(holder, (KCBaseElement) item);
+                    fragment.refreshKeyboardView();
+                } else {
+                    holder.mCheckImageView.setVisibility(View.INVISIBLE);
+                }
+                holder.setIsRecyclable(true);
+            }
+        });
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(KCCustomThemeManager.NOTIFICATION_CUSTOM_THEME_CONTENT_DOWNLOAD_FINISHED);
     }
 
     protected void resetToLastItem() {
@@ -420,7 +514,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             doSelectAnimationOnItemViewRelease(v);
                             fragment.addChosenItem((KCBaseElement) item);
                             fragment.refreshHeaderNextButtonState();
-                            onItemClicked((V) holder, item);
+                            onItemClicked((V) holder, item, true);
                             if (item instanceof KCButtonShapeElement) {
                                 fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
                             }
@@ -460,26 +554,26 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         };
 
-        Animation.AnimationListener resetAnimationListener = new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        };
+//        Animation.AnimationListener resetAnimationListener = new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        };
 
 
         bigScale.setAnimationListener(bigScaleAnimationListener);
-        reset.setAnimationListener(resetAnimationListener);
+//        reset.setAnimationListener(resetAnimationListener);
         view.startAnimation(bigScale);
     }
 
