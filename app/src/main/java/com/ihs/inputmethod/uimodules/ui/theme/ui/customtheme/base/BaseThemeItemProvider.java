@@ -146,7 +146,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                     }
                 }
 
-            }, delayAfterDownloadComplete);
+            }, delayAfterDownloadComplete, IAPManager.getManager().hasPurchaseNoAds());
             setNotNew(holder, baseElement);
             if (!hasDownloadThemeContent) {
                 startDownloadContent(holder, item);
