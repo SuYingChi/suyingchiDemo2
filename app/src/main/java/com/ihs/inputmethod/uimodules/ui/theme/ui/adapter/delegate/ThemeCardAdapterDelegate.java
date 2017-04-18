@@ -29,6 +29,7 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 	public final static int TAG_DELETE =0;
 	public final static int TAG_MENU   =1;
 	public final static int TAG_CARD   =2;
+	public final static int TAG_DOWNLOAD = 3;
 
 	private boolean themeAnalyticsEnabled;
 	private View.OnClickListener cardViewOnClickListener;
@@ -91,7 +92,12 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 		themeCardViewHolder.themeDelete.setOnClickListener(cardViewOnClickListener);
 
 		themeCardViewHolder.moreMenuImage.setTag(model);
-		themeCardViewHolder.moreMenuImage.setTag(R.id.theme_card_view_tag_key_action,TAG_MENU);
+		if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.NEED_DOWNLOAD) {
+			themeCardViewHolder.moreMenuImage.setTag(R.id.theme_card_view_tag_key_action, TAG_DOWNLOAD);
+		} else {
+			themeCardViewHolder.moreMenuImage.setTag(R.id.theme_card_view_tag_key_action, TAG_MENU);
+		}
+
 		themeCardViewHolder.moreMenuImage.setTag(R.id.theme_card_view_tag_key_position,position);
 		themeCardViewHolder.moreMenuImage.setOnClickListener(cardViewOnClickListener);
 
