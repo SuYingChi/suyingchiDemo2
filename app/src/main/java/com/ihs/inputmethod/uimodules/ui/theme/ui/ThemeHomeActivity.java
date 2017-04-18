@@ -53,6 +53,7 @@ import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.alerts.ExitAlert;
+import com.ihs.keyboardutils.alerts.KCAlert;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import org.json.JSONObject;
@@ -230,27 +231,24 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         //界面被启动 请求 扫描权限
         if (getResources().getBoolean(R.bool.config_ask_for_usage_permission) && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppCompactDialogStyle);
-            builder.setTitle(getString(R.string.dialog_app_usage_title));
-            builder.setMessage(getString(R.string.dialog_app_usage_tips));
-            builder.setPositiveButton(getString(R.string.dialog_agree).toUpperCase(), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (Build.VERSION.SDK_INT >= 21 && !HSPermissionManager.isUsageAccessGranted()) {
-                        isFromUsageAccessActivity = true;
-                    }
-                    HSPermissionManager.enableUsageAccessPermission();
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
-                }
-            });
-            builder.setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+
             HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
-            builder.show();
+            new KCAlert.Builder(this)
+                    .setTitle(getString(R.string.dialog_app_usage_title))
+                    .setMessage(getString(R.string.dialog_app_usage_tips))
+                    .setTopImageResource(R.drawable.enable_keyboard_alert_top_bg)
+                    .setPositiveButton(getString(R.string.dialog_agree).toUpperCase(), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !HSPermissionManager.isUsageAccessGranted()) {
+                                isFromUsageAccessActivity = true;
+                            }
+                            HSPermissionManager.enableUsageAccessPermission();
+                            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), null)
+                    .show();
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_showed");
         }
 

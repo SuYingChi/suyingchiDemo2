@@ -265,14 +265,14 @@ public class KeyboardActivationActivity extends HSActivity {
                     .setTitle(getString(R.string.alert_enable_access_warn_title))
                     .setMessage(getString(R.string.alert_enable_access_warn_content))
                     .setTopImageResource(R.drawable.accessibility_alert_top_image)
-                    .setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                    .setPositiveButton(getString(R.string.enable).toUpperCase(), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             logOneTimeGA(app_alert_auto_setkey_enable_clicked);
                             autoSetupKeyboard();
                         }
                     })
-                    .setNegativeButton(getString(R.string.cancel), null)
+                    .setNegativeButton(getString(R.string.cancel).toUpperCase(), null)
                     .show();
             logOneTimeGA(app_alert_auto_setkey_showed);
         }
