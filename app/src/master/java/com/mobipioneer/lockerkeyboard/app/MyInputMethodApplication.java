@@ -38,7 +38,6 @@ public class MyInputMethodApplication extends HSUIApplication {
 
     private static boolean isFacebookAppInstalled = false;
     private static boolean isGooglePlayInstalled = false;
-    private Intent actionService;
 
 
     protected INotificationObserver sessionEventObserver = new INotificationObserver() {
@@ -52,18 +51,6 @@ public class MyInputMethodApplication extends HSUIApplication {
                 if (!prefs.contains(PREF_KEY_CHARGING_NEW_USER)) {
                     prefs.putBoolean(PREF_KEY_CHARGING_NEW_USER, HSConfig.optBoolean(false, "Application", "ChargeLocker", "NewUser"));
                 }
-
-                try {
-                    stopService(actionService);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                try {
-                    startActivity(actionService);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
 
             } else if (HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK.equals(notificationName)) {
 //                AppLockMgr.startLocker(HSApplication.getContext());
@@ -86,25 +73,6 @@ public class MyInputMethodApplication extends HSUIApplication {
     public void onCreate() {
         super.onCreate();
 
-        actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
-        startService(actionService);
-        bindService(actionService, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                HSActionTrigger.ActionBinder binder = (HSActionTrigger.ActionBinder) service;
-                binder.setOnActionTriggeredListener(new HSActionTrigger.OnActionTriggeredListener() {
-                    @Override
-                    public boolean onAction(ActionBean actionBean) {
-                        return handleAction(actionBean);
-                    }
-                });
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        }, BIND_AUTO_CREATE);
 
         startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
 
@@ -125,78 +93,6 @@ public class MyInputMethodApplication extends HSUIApplication {
 
     }
 
-
-    private boolean handleAction(ActionBean actionBean) {
-        //ActionType: 0对应TypeBoostHalfScreen; 1对应BoostHalfScreen; 2对应TypeBoostFullScreen;
-        // 3对应BoostFullScreen; 4对应AdFullScreen; 5对应AdNotification; 6对应PopUpAlert; 7对应SetKey
-        final int adType = actionBean.getActionType();
-
-        //ActionData: TypeBoostHalfScreen：0对应xx,1对应xx; BoostHalfScreen：0对应Boost,
-        // 1对应InputSecurityCheck; TypeBoostFullScreen:0对应xx ; BoostFullScreen:0对应Optimize
-        final int adData = actionBean.getActionData();
-
-
-        String eventType = actionBean.getEventType();
-        HSLog.e(adType + "adType  " + adData + " ------ liuyu yao kan de");
-        String eventAction = "";
-        switch (eventType) {
-            case HSActionTrigger.EVENT_KEY_APPOPEN:
-                eventAction = "ad_appOpen_Clicked";
-                break;
-            case HSActionTrigger.EVENT_KEY_APPQUIT:
-                eventAction = "ad_appQuit_Clicked";
-                break;
-            case HSActionTrigger.EVENT_KEY_PHONELIGHT:
-                eventAction = "ad_phoneWake_Clicked";
-                break;
-            case HSActionTrigger.EVENT_KEY_PHONEUNLOCK:
-                eventAction = "ad_phoneUnlock_Clicked";
-                break;
-            case HSActionTrigger.EVENT_KEY_APPUNINSTALL:
-                eventAction = "ad_appUninstall_show";
-                break;
-        }
-
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(eventAction, adType + ";" + adData);
-        final String eventLabel = adType + ";" + adData;
-        switch (adType) {
-
-            //full scrn ad
-            case 4:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("NativeAd_AppOpenedFullScreenAd_Load");
-                List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), "Master_A(InterstitialAds)AppOpenedFullScreenAd", 1);
-                if (interstitialAds.size() > 0) {
-                    final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-                    interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                        long adDisplayTime = -1;
-
-                        @Override
-                        public void onAdDisplayed() {
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("NativeAd_AppOpenedFullScreenAd_Show");
-                            adDisplayTime = System.currentTimeMillis();
-                        }
-
-                        @Override
-                        public void onAdClicked() {
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("NativeAd_AppOpenedFullScreenAd_Click");
-                        }
-
-                        @Override
-                        public void onAdClosed() {
-                            long duration = System.currentTimeMillis() - adDisplayTime;
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("NativeAd_AppOpenedFullScreenAd_DisplayTime", String.format("%fs", duration / 1000f));
-                            interstitialAd.release();
-                        }
-                    });
-                    interstitialAd.show();
-                    return true;
-                } else {
-                    return false;
-                }
-        }
-        return false;
-
-    }
 
 
     @Override
