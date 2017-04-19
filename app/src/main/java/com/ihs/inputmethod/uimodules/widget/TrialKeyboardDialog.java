@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -19,7 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.acb.adadapter.AcbInterstitialAd;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
@@ -34,6 +31,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
+import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -66,11 +64,9 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     Build build;
     private OnTrialKeyboardStateChanged onTrialKeyboardStateChanged;
     private boolean isSoftKeyboardOpened;
-    private boolean isNativeAdAlreadyLoaded;
     private ViewGroup rootView;
     private String from;
     private int activationRequestCode;
-    private Handler handler ;
 
     private boolean onlyCloseKeyboard = true;
 
@@ -116,7 +112,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trial_keyboard_dialog);
-        handler = new Handler();
         final EditText editText = (EditText) findViewById(R.id.edit_text_input);
         rootView = (ViewGroup) findViewById(R.id.root_view);
         rootView.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +120,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 dismiss();
             }
         });
-        isNativeAdAlreadyLoaded = false;
 
         editText.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -210,30 +204,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         }
     }
 
-    Runnable runnable = new Runnable() {
-        /**
-         * When an object implementing interface <code>Runnable</code> is used
-         * to create a thread, starting the thread causes the object's
-         * <code>run</code> method to be called in that separately executing
-         * thread.
-         * <p>
-         * The general contract of the method <code>run</code> is that it may
-         * take any action whatsoever.
-         *
-         * @see Thread#run()
-         */
-        @Override
-        public void run() {
-            if (null != nativeAdView) {
-                TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                if (null != adButtonView) {
-                    adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
-                }
-            } else {
-                // do nothing
-            }
-        }
-    };
 
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
@@ -267,28 +237,19 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
             nativeAdView = new NativeAdView(HSApplication.getContext(), view, null);
             nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
             final CardView cardView = ViewConvertor.toCardView(nativeAdView);
+            NativeAdViewButtonHelper.autoHighlight(nativeAdView);
 
             nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
                 @Override
                 public void onAdLoaded(NativeAdView nativeAdView) {
-                    isNativeAdAlreadyLoaded = true;
                     HSLog.e("themetry got ad");
                     if (cardView.getParent() == null) {
                         HSLog.e("themetry ad view added");
                         linearLayout.addView(cardView);
                     }
-                    handler.postDelayed(runnable,1500);
                 }
             });
             linearLayout.addView(cardView);
-        } else {
-            if (isNativeAdAlreadyLoaded && null != nativeAdView) {
-                TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
-                handler.postDelayed(runnable,1500);
-            } else {
-                // do nothing
-            }
         }
         return nativeAdView;
     }
@@ -319,9 +280,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     @Override
     public void dismiss() {
-        if (null != handler) {
-            handler.removeCallbacks(runnable);
-        }
         if (getContext().getResources().getBoolean(R.bool.trail_key_show_ad_before_close) && onlyCloseKeyboard) {
             onlyCloseKeyboard = false;
             HSInputMethod.hideWindow();

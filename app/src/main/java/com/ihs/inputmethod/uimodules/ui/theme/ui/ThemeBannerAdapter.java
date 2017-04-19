@@ -2,8 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -13,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -27,6 +24,7 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSImageLoader;
+import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -49,14 +47,11 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     private final static int AUTO_SCROLL_DELAY_DEFAULT = 6000;
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
-    private final static int MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR = 3;
-    private final static int MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR = 4;
     private static int AUTO_SCROLL_DELAY;
 
     private ViewPager viewPager;
     private Activity activity;
     private List<HSKeyboardTheme> keyboardThemeList;
-    private List<View> nativeAdAlreadyLoadedList;
     private boolean isStartLoop = false;
     private boolean isLoop = true;
     private boolean isInfinite = true;
@@ -103,28 +98,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                         }
                     }
                     break;
-                case MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR:
-                    if (null != nativeAdView) {
-                        TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                        if (null != adButtonView) {
-                            adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
-                        }
-                    } else {
-                        // do nothing
-                    }
-                    break;
-                case MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR:
-                    if (null != nativeAdView) {
-                        TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                        if (null != adButtonView) {
-                            adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
-                        }
-                    } else {
-                        // do nothing
-                    }
-                    break;
-                default:
-                    break;
             }
         }
     };
@@ -147,14 +120,10 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                         adCardView = ViewConvertor.toCardView(nativeAdView);
                         adCardView.setCardBackgroundColor(0xfff6f6f6);
                         scrollToPreAdPosition();
-                        if (!nativeAdAlreadyLoadedList.contains(nativeAdView)) {
-                            nativeAdAlreadyLoadedList.add(nativeAdView);
-                        } else {
-                            // do nothing
-                        }
                     }
                 });
                 nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_cardad)));
+                NativeAdViewButtonHelper.autoHighlight(nativeAdView);
             }
         }
     }
@@ -357,7 +326,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
     public ThemeBannerAdapter(Activity activity) {
         this.activity = activity;
-        nativeAdAlreadyLoadedList = new ArrayList<>();
         AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
@@ -481,12 +449,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         // 记录当前item显示次数
         int newPosition = position % getRealCount();
         if (keyboardThemeList.get(newPosition) == null) { //当前位置为广告位
-            if (nativeAdAlreadyLoadedList.contains(nativeAdView)) { //广告已经加载好
-                handler.sendEmptyMessage(MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR);
-                handler.sendEmptyMessageDelayed(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR, 1500);
-            } else {
-                // do nothing
-            }
             return;
         }
         String themeName = keyboardThemeList.get(newPosition).mThemeName;
@@ -498,9 +460,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (state == ViewPager.SCROLL_STATE_SETTLING) {
-            handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR);
-        }
     }
 
     /**
