@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -15,7 +14,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -128,6 +126,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             IAPManager.getManager().onVerifySuccessed(productId, jsonObject);
             HSIAPManager.getInstance().removeListener(this);
             HSGlobalNotificationCenter.sendNotification(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED);
+            navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
         }
 
         @Override
@@ -226,6 +225,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // init update function
         navigationView.getMenu().findItem(R.id.nav_update).setVisible(ApkUtils.isUpdateEnabled());
+        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(!IAPManager.getManager().hasPurchaseNoAds());
         apkUpdateTip = findViewById(R.id.apk_update_tip);
 
 
