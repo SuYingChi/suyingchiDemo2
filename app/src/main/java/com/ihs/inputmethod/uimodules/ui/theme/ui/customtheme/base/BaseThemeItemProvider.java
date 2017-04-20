@@ -151,8 +151,9 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 backgroundDrawable = new ColorDrawable(Color.BLACK);
             }
             adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Applying...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+
                 @Override
-                public void onDismiss() {
+                public void onDismiss(boolean success) {
                     if (holder.downloadingProgressListener != null) {
                         onItemDownloadSucceeded(holder, item);
                     } else {
