@@ -185,13 +185,18 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
         }
 
         private void initPreference() {
-            findPreference(getString(R.string.custom_uninstall_preference_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    showUninstallFragment();
-                    return true;
-                }
-            });
+            if (!getActivity().getResources().getBoolean(R.bool.hide_uninstall_setting)) {
+                findPreference(getString(R.string.custom_uninstall_preference_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        showUninstallFragment();
+                        return true;
+                    }
+                });
+            } else {
+                getPreferenceScreen().removePreference(findPreference(getString(R.string.custom_uninstall_preference_key)));
+            }
+
             setCharging();
         }
 
@@ -223,7 +228,7 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
                     }
 
                     if (isSwitchOn) {
-                         ChargingManagerUtil.enableCharging(false);
+                        ChargingManagerUtil.enableCharging(false);
                     } else {
                         ChargingManagerUtil.disableCharging();
                     }
