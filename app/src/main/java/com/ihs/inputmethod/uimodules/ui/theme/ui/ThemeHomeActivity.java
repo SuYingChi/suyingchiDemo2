@@ -225,7 +225,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // init update function
         navigationView.getMenu().findItem(R.id.nav_update).setVisible(ApkUtils.isUpdateEnabled());
-        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(!IAPManager.getManager().hasPurchaseNoAds());
+        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(getResources().getBoolean(R.bool.show_remove_ads_menu) && !IAPManager.getManager().hasPurchaseNoAds());
         apkUpdateTip = findViewById(R.id.apk_update_tip);
 
 

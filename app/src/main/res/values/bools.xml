@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="trail_key_show_ad_before_close">false</bool>
-    <bool name="hide_uninstall_setting">false</bool>
+    <bool name="show_uninstall_setting">true</bool>
+    <bool name="show_remove_ads_menu">true</bool>
 </resources>

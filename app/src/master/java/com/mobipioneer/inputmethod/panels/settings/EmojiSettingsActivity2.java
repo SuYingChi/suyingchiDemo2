@@ -185,7 +185,7 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
         }
 
         private void initPreference() {
-            if (!getActivity().getResources().getBoolean(R.bool.hide_uninstall_setting)) {
+            if (getActivity().getResources().getBoolean(R.bool.show_uninstall_setting)) {
                 findPreference(getString(R.string.custom_uninstall_preference_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
