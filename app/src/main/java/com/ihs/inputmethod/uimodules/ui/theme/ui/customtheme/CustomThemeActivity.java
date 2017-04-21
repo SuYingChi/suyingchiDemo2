@@ -404,6 +404,9 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             public void onLeftClick(View view) {
                 if (isFirstPage()) {
                     //首页返回
+                    Intent intent = getIntent();
+                    String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
+                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_cancel_clicked", customEntry);
                     finish();
                 } else {
                     //回上一页
@@ -454,6 +457,9 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
                 } else if (customThemeData.getBackgroundImageSource() == KCCustomThemeData.ImageSource.Camera) {
                     label = "camera";
                 }
+                Intent intent = getIntent();
+                String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent(action, customEntry);
                 break;
             case 1:
                 //button

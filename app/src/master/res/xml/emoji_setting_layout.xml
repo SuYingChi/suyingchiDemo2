@@ -54,15 +54,6 @@
         android:title="Fast Charger"
         android:widgetLayout="@layout/switch_layout" />
     <Preference
-        android:key="@string/custom_boost_preference_key"
-        android:title="@string/custom_boost_alert_title" />
-    <Preference
-        android:key="@string/input_security_check_preference_key"
-        android:title="@string/input_security_check_alert_title" />
-    <Preference
-        android:key="@string/optimize_your_phone_preference_key"
-        android:title="@string/optimize_alert_title" />
-    <Preference
         android:key="@string/custom_uninstall_preference_key"
         android:title="@string/custom_uninstall_alert_title" />
 </PreferenceScreen>

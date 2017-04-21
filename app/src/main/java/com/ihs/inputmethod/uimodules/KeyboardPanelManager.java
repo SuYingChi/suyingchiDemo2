@@ -187,6 +187,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (view.getId() == R.id.func_cloth_button) {
             Intent intent = new Intent(HSApplication.getContext(), ThemeHomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("From", "Keyboard");
             HSApplication.getContext().startActivity(intent);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_cloth_button_click");
         }

@@ -62,7 +62,7 @@ public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.
 		recyclerView.setLayoutManager(layoutManager);
 
 		customTitle.isCustomizedTitle=true;
-		customTitle.deleteButtonVisible=true;
+		customTitle.deleteButtonVisible=false;
 		customTitle.customizedTitle=getString(R.string.my_theme_customized_theme_title);
 		customTitle.customizedTitleClickListener=this;
 

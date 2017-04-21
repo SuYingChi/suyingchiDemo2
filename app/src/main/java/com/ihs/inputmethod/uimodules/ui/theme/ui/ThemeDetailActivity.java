@@ -3,11 +3,8 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
@@ -19,7 +16,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,6 +40,7 @@ import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
+import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
@@ -83,7 +80,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private RecyclerView recommendRecyclerView;
     private CommonThemeCardAdapter themeCardAdapter;
     private TrialKeyboardDialog trialKeyboardDialog;
-    private List<View> nativeAdAlreadyLoadedList;
 
     private String themeName;
     private HSKeyboardTheme.ThemeType themeType;
@@ -93,44 +89,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     public final static String INTENT_KEY_THEME_NAME = "themeName";
 
     private static final int keyboardActivationFromDetail = 6;
-    private static final int MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR = 1;
-    private static final int MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR = 2;
-
-    private Handler handler = new Handler() {
-        /**
-         * Subclasses must implement this to receive messages.
-         *
-         * @param msg
-         */
-        @Override
-        public void handleMessage(Message msg) {
-            NativeAdView nativeAdView = (NativeAdView) msg.obj;
-            switch (msg.what) {
-                case MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR:
-                    if (null != nativeAdView) {
-                        TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                        if (null != adButtonView) {
-                            adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
-                        }
-                    } else {
-                        // do nothing
-                    }
-                    break;
-                case MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR:
-                    if (null != nativeAdView) {
-                        TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
-                        if (null != adButtonView) {
-                            adButtonView.getBackground().setColorFilter(HSApplication.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
-                        }
-                    } else {
-                        // do nothing
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -247,7 +205,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme_detail);
-        nativeAdAlreadyLoadedList = new ArrayList<>();
         initView();
         onNewIntent(getIntent());
 
@@ -295,44 +252,8 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     loadingView.setLayoutParams(loadingLP);
                     loadingView.setGravity(Gravity.CENTER);
                     nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
-                    nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
-                        @Override
-                        public void onAdLoaded(NativeAdView nativeAdView) {
-                            if (!nativeAdAlreadyLoadedList.contains(nativeAdView)) {
-                                nativeAdAlreadyLoadedList.add(nativeAdView);
-                            } else {
-                                // do nothing
-                            }
-                            Message message = Message.obtain();
-                            message.obj = nativeAdView;
-                            message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR;
-                            handler.sendMessageDelayed(message, 1500);
-                        }
-                    });
-                    nativeAdView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-                        @Override
-                        public void onScrollChanged() {
-                            int[] locationCoordinate = new int[2];
-                            nativeAdView.getLocationOnScreen(locationCoordinate);
-                            Message message = Message.obtain();
-                            message.obj = nativeAdView;
-                            if (nativeAdAlreadyLoadedList.contains(nativeAdView)) {
-                                if (locationCoordinate[1] < HSDisplayUtils.getScreenHeightForContent() && locationCoordinate[1] > (0 - nativeAdView.getHeight())) { //在屏幕内
-                                    message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR;
-                                    handler.sendMessageDelayed(message, 1500);
-                                }
-                                if (locationCoordinate[1] < (0 - nativeAdView.getHeight()) || locationCoordinate[1] > HSDisplayUtils.getScreenHeightForContent()) { //在屏幕外
-                                    handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR);
-                                    message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR;
-                                    handler.sendMessage(message);
-                                }
-                            } else {
-                                // do nothing
-                            }
-
-                        }
-                    });
                     nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themedetailad), width, 1.9f));
+                    NativeAdViewButtonHelper.autoHighlight(nativeAdView);
                     CardView cardView = ViewConvertor.toCardView(nativeAdView);
                     linearLayout.addView(cardView);
                 } else
@@ -586,8 +507,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             nativeAdView.release();
             nativeAdView = null;
         }
-        handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR);
-        handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGEN_COLOR);
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
         if (trialKeyboardDialog != null) {
             trialKeyboardDialog.dismiss();

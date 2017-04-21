@@ -3,21 +3,17 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBackgroundElement;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
-import com.keyboard.core.themes.custom.elements.KCButtonShapeElement;
-import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
 
 import java.io.File;
 
@@ -69,7 +65,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
         super.onBindViewHolder(holder, item);
         ViewGroup.LayoutParams layoutParams = holder.mContentImageView.getLayoutParams();
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / fragment.SPAN_COUNT - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) * 2 - 2;
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) * 2 - 2;
 
         layoutParams.height = width;
         layoutParams.width = width;
@@ -79,11 +75,11 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
 
     private void updateItemSelection(@NonNull BaseItemHolder holder, Object item) {
 //        if (!hasDefaultItemSelectStateSet) {
-            if (fragment.getCustomThemeData().getBackgroundImageSource() == KCCustomThemeData.ImageSource.Official && fragment.getCustomThemeData().isElementChecked(item)) {
-                holder.mCheckImageView.setVisibility(View.VISIBLE);
-            } else {
-                holder.mCheckImageView.setVisibility(View.INVISIBLE);
-            }
+        if (fragment.getCustomThemeData().getBackgroundImageSource() == KCCustomThemeData.ImageSource.Official && fragment.getCustomThemeData().isElementChecked(item)) {
+            holder.mCheckImageView.setVisibility(View.VISIBLE);
+        } else {
+            holder.mCheckImageView.setVisibility(View.INVISIBLE);
+        }
 //        } /*else {
 //            if (item instanceof KCBackgroundCamera || item instanceof KCBackgroundAlbum) {
 //                selectItem(holder, item);
@@ -114,7 +110,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                         doSelectAnimationOnItemViewRelease(v);
                         fragment.addChosenItem(item);
                         fragment.refreshHeaderNextButtonState();
-                        onItemClicked(holder, item);
+                        onItemClicked(holder, item, true);
                         return true;
                     case MotionEvent.ACTION_CANCEL:
                         doSelectAnimationOnItemViewRelease(v);
@@ -132,4 +128,5 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                 fragment.getCustomThemeData().getBackgroundElement().getName().equals(item.getName());
 
     }
+
 }

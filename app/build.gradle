@@ -38,12 +38,12 @@ android {
         //设置Deubug和Release下的编译模式，即proguard文件路径
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../booster/proguard-rules_release.pro' , 'proguard-r.txt' , 'proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt' , 'proguard-r.txt' , 'proguard.txt'
 
         }
         debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', '../booster/proguard-rules.pro', 'proguard-d.txt' , 'proguard.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', 'proguard-d.txt' , 'proguard.txt'
         }
     }
 
@@ -73,7 +73,7 @@ android {
 
         smiley {
             applicationId = "com.smartkeyboard.emoji"
-            versionCode 11
+            versionCode 12
             versionName "2.0.0"
             manifestPlaceholders = [ APPLY_SCHEME: "smileyKeyboard"]
             signingConfig signingConfigs.smileyReleaseConfig
@@ -81,8 +81,8 @@ android {
 
         color {
             applicationId = "com.keyboard.colorkeyboard"
-            versionCode 34
-            versionName "2.2.9"
+            versionCode 35
+            versionName "2.3.0"
             signingConfig signingConfigs.colorReleaseConfig
         }
 
@@ -91,16 +91,10 @@ android {
 
     sourceSets {
 
-        master {
-            manifest.srcFile 'src/master/AndroidManifest.xml'
-            java.srcDirs = ['src/master/java']
-            res.srcDirs += ['src/master/res']
-        }
-
         smiley {
-            manifest.srcFile 'src/master/AndroidManifest.xml'
-            java.srcDirs = ['src/master/java']
-            res.srcDirs += ['src/smiley/res', 'src/master/res']
+            manifest.srcFile 'src/smiley/AndroidManifest.xml'
+            java.srcDirs += ['src/master/java']
+            res.srcDirs += ['src/master/res']
         }
     }
 
@@ -124,8 +118,8 @@ repositories {
 dependencies {
 
     //////////////////////  Ads Configuration Begin ////////////////////////
-    compile getIHandyDependency("com.ihandy.nativeads:libNativeAds", "${rootProject.ext.nativeAdsVersion}")
-    compile getIHandyDependency("com.ihandy.interstitialads:InterstitialAds", "${rootProject.ext.interstitialAdsVersion}")
+    compile "com.ihandy.nativeads:libNativeAds.${rootProject.ext.nativeAdsVersion}"
+    compile "com.ihandy.interstitialads:InterstitialAds.${rootProject.ext.interstitialAdsVersion}"
 
     //    Admob Adx
     compile "com.google.android.gms:play-services-ads:${rootProject.ext.gmsVersion}"
@@ -152,12 +146,12 @@ dependencies {
     //////////////////////  Ads Configuration end ////////////////////////
 
 
-    compile getIHandyDependency("com.ihandy.appframework:libAppframework", "${rootProject.ext.frameworkVersion}")
+    compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile 'com.ihandy.thirdparty:tapjoyconnectlibrary:11.10'
 
 
-    masterCompile project(':booster')
-    smileyCompile project(':booster')
+//    masterCompile project(':booster')
+//    smileyCompile project(':booster')
 
     masterCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
     smileyCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')

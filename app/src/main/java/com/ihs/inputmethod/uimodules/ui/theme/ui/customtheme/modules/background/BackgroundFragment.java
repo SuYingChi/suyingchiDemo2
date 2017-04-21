@@ -62,7 +62,7 @@ public class BackgroundFragment extends BaseThemeFragment {
     protected ThemePageItem initiateThemePageItem() {
         return new ThemePageItem(Arrays.<CategoryItem<? extends Object>>asList(
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), Integer.class, new CameraAlbumProvider(this), Arrays.asList(new Integer[]{R.drawable.custom_theme_background_camera_fg, R.drawable.custom_theme_background_album_fg})),
-                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), AdsItem.class,new AdsProvider(),Arrays.asList(new AdsItem(false))),
+                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), AdsItem.class, new AdsProvider(), getAdsItems(false)),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), KCBackgroundElement.class, new BackgroundProvider(this), KCCustomThemeManager.getInstance().getBackgroundElements())
         ));
     }
@@ -98,16 +98,15 @@ public class BackgroundFragment extends BaseThemeFragment {
                     }
                 }
 
-                if(data != null) {
+                if (data != null) {
                     getCustomThemeData().setCustomizedBackgroundImagePath(data.getStringExtra("CropperImagePath"));
                     KCCustomThemeData.ImageSource preImageSource = getCustomThemeData().getBackgroundImageSource();
-                    if(lastTakePicType == TYPE_OPEN_CAMERA) {
+                    if (lastTakePicType == TYPE_OPEN_CAMERA) {
                         getCustomThemeData().setBackgroundImageSource(KCCustomThemeData.ImageSource.Camera);
-                    }
-                    else if(lastTakePicType == TYPE_OPEN_GALLERY) {
+                    } else if (lastTakePicType == TYPE_OPEN_GALLERY) {
                         getCustomThemeData().setBackgroundImageSource(KCCustomThemeData.ImageSource.Album);
                     }
-                    if(preImageSource == KCCustomThemeData.ImageSource.Official) {
+                    if (preImageSource == KCCustomThemeData.ImageSource.Official) {
                         notifyAdapterOnMainThread();
                     }
                     refreshKeyboardView();

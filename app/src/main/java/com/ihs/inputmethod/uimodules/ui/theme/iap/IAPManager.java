@@ -16,8 +16,6 @@ import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.PurchaseSlotsActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -82,18 +80,18 @@ public class IAPManager {
         iapProduct.queryOwnProductIds();
     }
 
-    public void onConfigChange(){
+    public void onConfigChange() {
         iapProduct.onConfigChange();
     }
 
     /**
      * 判断是否已购买此商品
-     *
+     *        //备注 2017.04.14 取消iap弹窗 liuyu1需求
      * @param item
      * @return
      */
     public boolean isOwnProduct(KCBaseElement item) {
-        return iapProduct.isOwnProduct(item);
+        return true; //&& iapProduct.isOwnProduct(item);
     }
 
     public boolean isOwnProduct(String productId) {

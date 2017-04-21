@@ -36,7 +36,7 @@ public final class SoundFragment extends BaseThemeFragment {
 			sound.setBackgroundColor(colors[index++%colors.length]);
 		}
 		return new ThemePageItem(Arrays.<CategoryItem<?>>asList(
-				new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_sound), AdsItem.class, new AdsProvider(), Arrays.asList(new AdsItem(true))),
+				new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_sound), AdsItem.class, new AdsProvider(), getAdsItems(true)),
 				new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_sound), KCSoundElement.class, new SoundProvider(this), sounds)
 		));
 	}

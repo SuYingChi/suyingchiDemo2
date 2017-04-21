@@ -24,6 +24,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
+import com.ihs.keyboardutils.alerts.KCAlert;
 import com.mobipioneer.lockerkeyboard.accessbility.AccGALogger;
 import com.mobipioneer.lockerkeyboard.accessbility.AccessibilityEventListener;
 import com.mobipioneer.lockerkeyboard.accessbility.GivenSizeVideoView;
@@ -260,32 +261,20 @@ public class KeyboardActivationActivity extends HSActivity {
 
         if (shouldShowEnableDialog && !HSAccessibilityService.isAvailable()) {
 
-            final View dialogView = View.inflate(getApplication(), R.layout.dialog_enable_accessbility_warn, null);
-
-
-            final CustomViewDialog warnDialog = new CustomViewDialog(this);
-            warnDialog.setContentView(dialogView);
-            warnDialog.setCanceledOnTouchOutside(true);
-            dialogView.findViewById(R.id.tv_cancel).setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.settings_background_color));
-            dialogView.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    warnDialog.cancel();
-                }
-            });
-
-            dialogView.findViewById(R.id.tv_confirm).setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_enable));
-            dialogView.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    logOneTimeGA(app_alert_auto_setkey_enable_clicked);
-                    autoSetupKeyboard();
-                    warnDialog.dismiss();
-                }
-            });
-
+            new KCAlert.Builder(this)
+                    .setTitle(getString(R.string.alert_enable_access_warn_title))
+                    .setMessage(getString(R.string.alert_enable_access_warn_content))
+                    .setTopImageResource(R.drawable.accessibility_alert_top_image)
+                    .setPositiveButton(getString(R.string.enable).toUpperCase(), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            logOneTimeGA(app_alert_auto_setkey_enable_clicked);
+                            autoSetupKeyboard();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.cancel).toUpperCase(), null)
+                    .show();
             logOneTimeGA(app_alert_auto_setkey_showed);
-            warnDialog.show();
         }
     }
 

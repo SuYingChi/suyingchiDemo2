@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -15,7 +14,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +37,7 @@ import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
@@ -51,6 +50,8 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.keyboardutils.alerts.ExitAlert;
+import com.ihs.keyboardutils.alerts.KCAlert;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import org.json.JSONObject;
@@ -88,6 +89,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     private View apkUpdateTip;
     private View noAds;
+    private ExitAlert exitAlert;
 
     private static final int keyboardActivationFromHome = 11;
     private static final int keyboardActivationFromHomeWithTrial = 12;
@@ -124,6 +126,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             IAPManager.getManager().onVerifySuccessed(productId, jsonObject);
             HSIAPManager.getInstance().removeListener(this);
             HSGlobalNotificationCenter.sendNotification(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED);
+            navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
         }
 
         @Override
@@ -222,32 +225,30 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // init update function
         navigationView.getMenu().findItem(R.id.nav_update).setVisible(ApkUtils.isUpdateEnabled());
+        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(getResources().getBoolean(R.bool.show_remove_ads_menu) && !IAPManager.getManager().hasPurchaseNoAds());
         apkUpdateTip = findViewById(R.id.apk_update_tip);
 
 
         //界面被启动 请求 扫描权限
         if (getResources().getBoolean(R.bool.config_ask_for_usage_permission) && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppCompactDialogStyle);
-            builder.setTitle(getString(R.string.dialog_app_usage_title));
-            builder.setMessage(getString(R.string.dialog_app_usage_tips));
-            builder.setPositiveButton(getString(R.string.dialog_agree).toUpperCase(), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (Build.VERSION.SDK_INT >= 21 && !HSPermissionManager.isUsageAccessGranted()) {
-                        isFromUsageAccessActivity = true;
-                    }
-                    HSPermissionManager.enableUsageAccessPermission();
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
-                }
-            });
-            builder.setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+
             HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
-            builder.show();
+            new KCAlert.Builder(this)
+                    .setTitle(getString(R.string.dialog_app_usage_title))
+                    .setMessage(getString(R.string.dialog_app_usage_tips))
+                    .setTopImageResource(R.drawable.enable_keyboard_alert_top_bg)
+                    .setPositiveButton(getString(R.string.dialog_agree).toUpperCase(), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !HSPermissionManager.isUsageAccessGranted()) {
+                                isFromUsageAccessActivity = true;
+                            }
+                            HSPermissionManager.enableUsageAccessPermission();
+                            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), null)
+                    .show();
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_showed");
         }
 
@@ -260,6 +261,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
+        exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_exit_alert_dialog));
         onNewIntent(getIntent());
     }
 
@@ -273,6 +275,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.removeMessages(HANDLER_SHOW_ACTIVE_DIALOG);
             showTrialKeyboardDialog(keyboardActivationFromHomeWithTrial, false);
             getIntent().putExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
+        } else {
+            String from = intent.getStringExtra("From");
+            if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
+                Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store), Toast.LENGTH_SHORT).show();
+            }
         }
         MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
         onNavigationItemSelected(item);
@@ -311,22 +318,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         refreshApkUpdateViews();
-//        UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-//                if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-//                    if (PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).getBoolean("CUSTOM_THEME_SAVE", false)) {
-//                        PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
-//                        HSAlertMgr.showRateAlert();
-//                    } else {
-//                        HSLog.e("CUSTOM_THEME_SAVE_NULL");
-//                    }
-//                }
-//            }
-//        }, 100);
 
+        // TODO: 这里应该调用一个将所有元素都标记为已读的接口，而不是自己将元素列出来。具体应该把Tip的逻辑重新整理下，这里暂时先这么写
+        HSThemeNewTipController.getInstance().setTypeAllRead(
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME,
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_BACKGROUND,
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_EFFECT,
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_FONT,
+                HSThemeNewTipController.ThemeTipType.NEW_TIP_SOUND);
     }
 
     @Override
@@ -594,11 +593,13 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     @Override
     public void onBackPressed() {
-        showEnableChargingAlertIfNeeded();
-        super.onBackPressed();
+        if (showEnableChargingAlertIfNeeded() || !exitAlert.show()) {
+            HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
+            super.onBackPressed();
+        }
     }
 
-    private void showEnableChargingAlertIfNeeded() {
+    private boolean showEnableChargingAlertIfNeeded() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_quitAlert_prompt_show");
@@ -617,6 +618,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 }
             });
             dialog.show();
+            return true;
         }
+        return false;
     }
 }

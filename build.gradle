@@ -5,7 +5,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.1'
         classpath 'io.fabric.tools:gradle:1.+'
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
@@ -19,25 +19,12 @@ plugins {
 allprojects {
     //////////////////iHandy Maven configuration begin//////////////////
     ext {
-        frameworkVersion = "4.2.0.gm"
-        interstitialAdsVersion = "4.0.1.gm"
-        nativeAdsVersion = "4.0.1.gm"
+        frameworkVersion = "gm:4.2.0.gm"
+        interstitialAdsVersion = "gm:4.0.1.gm"
+        nativeAdsVersion = "gm:4.0.1.gm"
         supportVersion = "25.2.0"
         facebookSdkVersion = "4.20.0"
         gmsVersion = "10.2.0"
-    }
-
-    ext.getIHandyDependency = {
-        prefix, version ->
-            String text = version;
-            String dependency;
-            if (text.contains("beta")) {
-                dependency = prefix + ".beta:$version";
-            } else if (text.contains("gm")) {
-                dependency = prefix + ".gm:$version";
-            }
-            println "\n" + dependency + "\n"
-            return dependency
     }
     //////////////////iHandy Maven configuration end//////////////////
 

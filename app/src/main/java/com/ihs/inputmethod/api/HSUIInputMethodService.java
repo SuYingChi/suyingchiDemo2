@@ -5,28 +5,34 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
-import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
+
+import java.util.HashSet;
 
 /**
  * Created by xu.zhang on 11/3/15.
@@ -68,26 +74,43 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
     };
 
+    private final BroadcastReceiver dateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(Intent.ACTION_DATE_CHANGED.equals(action)) {
+                KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
+                KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
+            }
+        }
+    };
+
+    private KeyboardFullScreenAd openFullScreenAd;
+    private KeyboardFullScreenAd closeFullScreenAd;
 
 
     @Override
     public void onCreate() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
         super.onCreate();
+        KeyboardFullScreenAdSession.getInstance();
+        registerReceiver(this.dateReceiver, new IntentFilter(Intent.ACTION_DATE_CHANGED));
         registerReceiver(this.receiver, new IntentFilter(ACTION_CLOSE_SYSTEM_DIALOGS));
-
 
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_RESET_EDIT_INFO, keyboardNotificationObserver);
 
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
+        openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
+        closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_close_keyboard), "Close");
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             getKeyboardPanelMananger().onBackPressed();
+            closeFullScreenAd.show();
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -200,6 +223,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         WebContentSearchManager.getInstance().storeHistory();
 
         unregisterReceiver(this.receiver);
+        unregisterReceiver(this.dateReceiver);
         super.onDestroy();
         getKeyboardPanelMananger().onInputViewDestroy();
         HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_DESTROY);

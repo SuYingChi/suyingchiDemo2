@@ -194,13 +194,6 @@
 	<string name="purchase_error_item">ITEM UNAVAILABLE</string>
 	<string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
 
-	<!-- Theme new tip -->
-	<string name="new_background_tip">New background available</string>
-	<string name="new_font_tip">New font available</string>
-	<string name="new_tap_effect_tip">New tap effect available</string>
-	<string name="new_click_sound_tip">New click sound available</string>
-	<string name="new_theme_tip">New themes available</string>
-
 	<!--deep link-->
 	<string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
 	<string name="deeplink_description">Rainbow Keyboard description</string>
@@ -230,8 +223,17 @@
 	<string name="home_create_keyboard">Create My Own Keyboard</string>
 
 	<string name="charging_alert_title">Smart Charging</string>
-	<string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains Ads.</string>
+	<string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains sponsored contents.</string>
 	<string name="charging_enable_toast">Smart Charging Enabled</string>
 
+	<string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
+
 	<string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
+	<string name="ad_placement_exit_alert_dialog">Master_A(NativeAds)AppQuit</string>
+
+	<string name="accessibility_service" translatable="false">Emoji Keyboard</string>
+	<string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
+With accessibility authorization, I can help you setup keyboard directly!
+
+Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
 </resources>
