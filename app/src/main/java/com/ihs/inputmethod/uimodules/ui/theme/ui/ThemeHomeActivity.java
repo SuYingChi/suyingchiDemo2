@@ -230,7 +230,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
 
         //界面被启动 请求 扫描权限
-        if (getResources().getBoolean(R.bool.config_ask_for_usage_permission) && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
+        if (HSConfig.optBoolean(false,"Application","AccessUsageAlert", "enable") && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
 
             HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
             new KCAlert.Builder(this)
@@ -462,7 +462,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 return true;
             } else {
                 if (currentSessionId - HSPreferenceHelper.getDefault().getInt(SP_LAST_USAGE_ALERT_SESSION_ID, 0)
-                        >= HSConfig.optInteger(0, "Application", "AccessUsageAlertInterval")) {
+                        >= HSConfig.optInteger(0, "Application","AccessUsageAlert", "AskInterval")) {
                     HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, currentSessionId);
                     return true;
                 }

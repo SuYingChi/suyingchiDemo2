@@ -29,4 +29,10 @@
     <string name="ga_fullscreen_theme_save_display_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_DisplayTime</string>
 
     <string name="ad_placement_applying">Master_A(NativeAds)ApplyingItem</string>
+
+    <string name="placement_full_screen_at_app_open">Master_A(InterstitialAds)AppOpenedFullScreenAd</string>
+    <string name="placement_full_screen_at_phone_unlock">Master_A(InterstitialAds)PhoneUnlockFullScreenAd</string>
+    <string name="placement_full_screen_at_app_quit">Master_A(InterstitialAds)AppQuitFullScreenAd</string>
+    <string name="placement_full_screen_at_phone_wake">Master_A(InterstitialAds)PhoneWakeFullScreenAd</string>
+    <string name="placement_full_screen_at_app_uninstall">Master_A(InterstitialAds)AppUninstallFullScreenAd</string>
 </resources>
