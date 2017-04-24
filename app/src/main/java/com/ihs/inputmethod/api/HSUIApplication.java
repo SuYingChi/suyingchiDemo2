@@ -40,7 +40,6 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.List;
@@ -241,7 +240,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     protected void onSessionStart() {
         HSDiverseSession.start();
-        NativeAdManager.getInstance();
         //检测是否已经有非内置的主题包已经被安装过了
         checkIsPluginThemeInstalled();
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
