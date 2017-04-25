@@ -165,7 +165,7 @@ dependencies {
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
     compile(name: 'libcharging', ext: 'aar')
 
-    //android supports
+    //android supportsb
     compile "com.android.support:support-v4:${rootProject.ext.supportVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:percent:${rootProject.ext.supportVersion}"
