@@ -65,8 +65,8 @@ android {
 
         master {
             applicationId = "com.masterkeyboard.emoji"
-            versionCode 4
-            versionName "1.1.0"
+            versionCode 5
+            versionName "1.1.1"
             manifestPlaceholders = [ APPLY_SCHEME: "lockerKeyboard"]
             signingConfig signingConfigs.masterReleaseConfig
         }
@@ -165,7 +165,7 @@ dependencies {
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
     compile(name: 'libcharging', ext: 'aar')
 
-    //android supportsb
+    //android supports
     compile "com.android.support:support-v4:${rootProject.ext.supportVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
     compile "com.android.support:percent:${rootProject.ext.supportVersion}"
