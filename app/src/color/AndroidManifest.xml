@@ -16,12 +16,20 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <uses-permission
-        android:name="android.permission.ACCESS_FINE_LOCATION"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.ACCESS_COARSE_LOCATION"
-        tools:node="remove" />
+    <!--permission add same with kika.2017.4.26 liuyu-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+
 
     <permission
         android:name="${applicationId}.permission.FRAMEWORK_SECURITY"
@@ -311,33 +319,33 @@
         <activity
             android:name="com.ihs.interstitialads.nativeads.NativeInterstitialActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:noHistory="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
             android:taskAffinity="@string/taskAffinity_interstitial_ads"
             android:theme="@style/NativeInterstitialActivity" />
 
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:taskAffinity="@string/taskAffinity_interstitial_ads"
-            android:noHistory="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity="@string/taskAffinity_interstitial_ads"
             android:theme="@android:style/Theme.Translucent" />
 
         <activity
             android:name="com.facebook.ads.InterstitialAdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:noHistory="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
             android:taskAffinity="@string/taskAffinity_interstitial_ads" />
 
         <activity
             android:name="com.acb.adadapter.NativeInterstitialAdapter.AcbNativeInterstitialActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:noHistory="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
             android:taskAffinity="@string/taskAffinity_interstitial_ads" />
         <!-- required by libInterstitialAds end -->
 
