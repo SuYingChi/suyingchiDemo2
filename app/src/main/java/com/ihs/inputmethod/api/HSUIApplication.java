@@ -23,6 +23,7 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -79,6 +80,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }else if(HSNotificationConstant.HS_SESSION_END.equals(notificationName)){
+                ChargingPrefsUtil.getInstance().setChargingForFirstSession();
             }
         }
     };
@@ -176,6 +179,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                 adPlacementName = getString(R.string.placement_full_screen_at_app_uninstall);
                 break;
         }
+
+        new AcbInterstitialAdLoader(this,adPlacementName).load(1,null);
 
         switch (adType) {
             //full scrn ad

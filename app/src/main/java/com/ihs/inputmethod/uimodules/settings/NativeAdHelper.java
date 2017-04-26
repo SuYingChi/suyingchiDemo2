@@ -14,8 +14,6 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
-import static com.ihs.keyboardutils.nativeads.NativeAdConfig.canShowIconAd;
-
 /**
  * Created by jixiang on 16/11/18.
  */
@@ -56,11 +54,7 @@ public class NativeAdHelper {
         public AdView(Context context) {
             super(context);
             View.inflate(context, R.layout.panel_settings_ad_item, this);
-            if (canShowIconAd()) {
-                findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
-            } else {
-                findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-            }
+            findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
             TextView adTitleText = (TextView) findViewById(R.id.ad_title);
             adTitleText.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());
         }
