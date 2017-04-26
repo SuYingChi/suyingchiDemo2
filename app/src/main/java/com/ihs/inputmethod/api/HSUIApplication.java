@@ -47,6 +47,7 @@ import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.ihs.chargingscreen.HSChargingScreenManager.registerChargingService;
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_SET_CHARGING_TOGGLE;
 import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPENED;
 import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
@@ -77,9 +78,12 @@ public class HSUIApplication extends HSInputMethodApplication {
                 }
                 try {
                     startService(actionService);
+                    bindActionTrigger();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                registerChargingService();
             }else if(HSNotificationConstant.HS_SESSION_END.equals(notificationName)){
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
             }
@@ -131,6 +135,10 @@ public class HSUIApplication extends HSInputMethodApplication {
         //增加action trigger 2017.4.19
         actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
         startService(actionService);
+        bindActionTrigger();
+    }
+
+    private void bindActionTrigger() {
         bindService(actionService, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
