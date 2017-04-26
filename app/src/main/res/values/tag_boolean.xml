@@ -3,5 +3,5 @@
 
     <bool name="isTablet">false</bool>
     <bool name="is_show_full_screen_ad_after_show_trial_keyboard">true</bool>
-    <bool name="is_show_full_screen_ad_when_theme_created">false</bool>
+    <bool name="is_show_full_screen_ad_when_theme_created">true</bool>
 </resources>
