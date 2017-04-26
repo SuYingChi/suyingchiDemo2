@@ -76,7 +76,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                     e.printStackTrace();
                 }
                 try {
-                    startActivity(actionService);
+                    startService(actionService);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
