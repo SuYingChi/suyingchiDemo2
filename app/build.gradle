@@ -121,28 +121,27 @@ dependencies {
     compile "com.ihandy.nativeads:libNativeAds.${rootProject.ext.nativeAdsVersion}"
     compile "com.ihandy.interstitialads:InterstitialAds.${rootProject.ext.interstitialAdsVersion}"
 
-    //    Admob Adx
+
     compile "com.google.android.gms:play-services-ads:${rootProject.ext.gmsVersion}"
-    //    AppNext
-    compile 'com.appnext.sdk:native-ads-sdk:1.6.1' // Mandatory
     compile "com.google.android.gms:play-services-basement:${rootProject.ext.gmsVersion}"
-    // Mandatory
     compile "com.google.android.gms:play-services-location:${rootProject.ext.gmsVersion}"
-    // Mandatory
-    //    Avocarrot
-    compile "com.google.android.gms:play-services-ads:${rootProject.ext.gmsVersion}"
-    compile('com.avocarrot:android-sdk:3.7.+')
-    //    Facebook
-    compile "com.facebook.android:audience-network-sdk:${rootProject.ext.facebookSdkVersion}"
-    compile "com.facebook.android:facebook-android-sdk:${rootProject.ext.facebookSdkVersion}"
-    //    Yeahmobi
-    compile 'com.ihandy.thirdparty.yeahmobi:cloudssp:1.4.6'
-    //    Mobvista
-    //    compile 'com.ihandy.thirdparty.mobvista:mobvista_appwall:8.1.11'
-    compile 'com.ihandy.thirdparty.mobvista:mobvista_common:8.1.11'
-    compile 'com.ihandy.thirdparty.mobvista:mobvista_native:8.1.11'
-    //    Altamob
-    compile 'com.altamob:sdk:4.0.7.1'
+    compile "com.google.android.gms:play-services-analytics:${rootProject.ext.gmsVersion}"
+    compile "com.google.android.gms:play-services-gcm:${rootProject.ext.gmsVersion}"
+
+
+    // Native Ads
+    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.0.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAltamobNativeAdapter.gm:4.1.0.gm'
+//    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.0.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.1.gm'
+
+    // Interstitial Ads
+    compile 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.1.0.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdFBInterstitialAdapter.gm:4.1.0.gm'
     //////////////////////  Ads Configuration end ////////////////////////
 
 
@@ -179,10 +178,6 @@ dependencies {
 
     //google
     compile "com.google.firebase:firebase-appindexing:${rootProject.ext.gmsVersion}"
-    compile "com.google.android.gms:play-services-gcm:${rootProject.ext.gmsVersion}"
-    compile "com.google.android.gms:play-services-analytics:${rootProject.ext.gmsVersion}"
-    compile "com.google.firebase:firebase-appindexing:${rootProject.ext.gmsVersion}"
-
 
     //3rd party
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'

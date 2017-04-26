@@ -20,11 +20,11 @@ allprojects {
     //////////////////iHandy Maven configuration begin//////////////////
     ext {
         frameworkVersion = "gm:4.2.0.gm"
-        interstitialAdsVersion = "gm:4.0.1.gm"
-        nativeAdsVersion = "gm:4.0.1.gm"
-        supportVersion = "25.2.0"
+        interstitialAdsVersion = "gm:4.1.1.gm"
+        nativeAdsVersion = "gm:4.1.2.gm"
+        supportVersion = "25.3.0"
         facebookSdkVersion = "4.20.0"
-        gmsVersion = "10.2.0"
+        gmsVersion = "10.2.1"
     }
     //////////////////iHandy Maven configuration end//////////////////
 

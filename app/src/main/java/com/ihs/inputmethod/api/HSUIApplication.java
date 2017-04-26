@@ -92,6 +92,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         super.onCreate();
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
+
         //IAPManager.getManager().init()内部也会监听Session Start，由于存储监听集合的数据结构是List，因此确保HSUIApplication先接收SessionStart事件
         IAPManager.getManager().queryOwnProductIds();
         HSKeyboardThemeManager.init();
