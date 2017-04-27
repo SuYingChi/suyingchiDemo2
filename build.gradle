@@ -3,6 +3,7 @@ buildscript {
     repositories {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        maven { url "http://dl.appnext.com/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'

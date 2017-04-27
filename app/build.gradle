@@ -106,7 +106,7 @@ android {
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
-    maven { url "http://repo.appnext.com/" }
+    maven { url "http://dl.appnext.com/" }
     maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist" }
     flatDir {
         dirs 'libs', 'libs/bin_chargingscreen_android'
@@ -138,10 +138,13 @@ dependencies {
     compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.1.gm'
 
+    compile 'com.ihandy.3rdadadapter:libAdAppnextNativeAdapter.beta:4.1.0.beta03'
+
     // Interstitial Ads
     compile 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdFBInterstitialAdapter.gm:4.1.0.gm'
+
     //////////////////////  Ads Configuration end ////////////////////////
 
 
