@@ -73,8 +73,8 @@ android {
 
         smiley {
             applicationId = "com.smartkeyboard.emoji"
-            versionCode 12
-            versionName "2.0.0"
+            versionCode 13
+            versionName "2.0.1"
             manifestPlaceholders = [ APPLY_SCHEME: "smileyKeyboard"]
             signingConfig signingConfigs.smileyReleaseConfig
         }
