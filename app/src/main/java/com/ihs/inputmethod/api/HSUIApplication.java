@@ -68,22 +68,22 @@ public class HSUIApplication extends HSInputMethodApplication {
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
                 IAPManager.getManager().queryOwnProductIds();
+
+                try{
+                    Intent actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
+                    startService(actionService);
+                    bindActionTrigger(actionService);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                //增加action trigger 2017.4.19
+
+
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 IAPManager.getManager().onConfigChange();
 
-                try {
-                    stopService(actionService);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                try {
-                    startService(actionService);
-                    bindActionTrigger();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
                 registerChargingService();
+
             }else if(HSNotificationConstant.HS_SESSION_END.equals(notificationName)){
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
             }
@@ -130,15 +130,9 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         HSInputMethodService.initResourcesBeforeOnCreate();
-
-
-        //增加action trigger 2017.4.19
-        actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
-        startService(actionService);
-        bindActionTrigger();
     }
 
-    private void bindActionTrigger() {
+    private void bindActionTrigger(Intent actionService) {
         bindService(actionService, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
