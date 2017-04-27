@@ -89,7 +89,7 @@
 	<string name="settings_button_sound">@string/setting_item_sounds</string>
 	<string name="settings_button_tell_a_friend">Dillo ai tuoi amici</string>
 	<string name="settings_button_tell_a_friend_tip">Share your message now</string>
-	<string name="settings_button_tell_a_friend_content">Ehi, devi assolutamente provare l\'applicazione RainbowKey, che ti permette di personalizzare la tastiera del tuo dispositivo con le tue immagini preferite! E poi, i font e le emoji sono davvero fantastiche. Scarica #RainbowKey gratuitamente all'indirizzo http://rainbowkey.com</string>
+	<string name="settings_button_tell_a_friend_content">Ehi, devi assolutamente provare l\'applicazione RainbowKey, che ti permette di personalizzare la tastiera del tuo dispositivo con le tue immagini preferite! E poi, i font e le emoji sono davvero fantastiche. Scarica #RainbowKey gratuitamente all\'indirizzo http://rainbowkey.com</string>
 	<string name="settings_button_auto_correction">@string/setting_auto_correction</string>
 	<string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
 	<string name="settings_button_word_prediction">@string/setting_word_prediction</string>

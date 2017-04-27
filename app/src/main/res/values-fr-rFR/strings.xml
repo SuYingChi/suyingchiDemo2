@@ -53,7 +53,7 @@
 	<string name="delete_language_description">Supprimer cette langue ?</string>
 	<string name="current_languages">Langages Courants</string>
 	<string name="available_languages">Langages Disponibles</string>
-	<string name="switch_language_tip">Pour changer de langue depuis le clavier, maintenez la barre d'espace enfoncée.</string>
+	<string name="switch_language_tip">Pour changer de langue depuis le clavier, maintenez la barre d\'espace enfoncée.</string>
 
 	<!--lib-->
 	<string name="choose_language">Choix de la langue</string>
@@ -69,9 +69,9 @@
 	<string name="setting_emoji_prediction">Émoticônes automatiques</string>
 	<string name="setting_swipe_input">Saisie en balayant</string>
 	<string name="setting_double_space_period">Point avec double espace</string>
-	<string name="setting_double_space_period_summary">Toucher deux fois la barre espace insère un point suivi d'un espace.</string>
-	<string name="setting_sound_on_keypress">Son à l'appui sur une touche</string>
-	<string name="setting_vibrate_on_keypress">Vibration à l'appui sur une touche</string>
+	<string name="setting_double_space_period_summary">Toucher deux fois la barre espace insère un point suivi d\'un espace.</string>
+	<string name="setting_sound_on_keypress">Son à l\'appui sur une touche</string>
+	<string name="setting_vibrate_on_keypress">Vibration à l\'appui sur une touche</string>
 
 	<!--new settings panel-->
 	<string name="setting_item_themes" >Themes</string>
@@ -89,7 +89,7 @@
 	<string name="settings_button_sound">@string/setting_item_sounds</string>
 	<string name="settings_button_tell_a_friend">En parler à un ami</string>
 	<string name="settings_button_tell_a_friend_tip">Share your message now</string>
-	<string name="settings_button_tell_a_friend_content">Bonjour ! Vous devez essayer l'application clavier RainbowKey. Vous pouvez personnaliser votre clavier avec vos propres photos ! En plus, les polices et les émoticônes sont géniales. Téléchargez #RainbowKey gratuitement ://rainbowkey.com</string>
+	<string name="settings_button_tell_a_friend_content">Bonjour ! Vous devez essayer l\'application clavier RainbowKey. Vous pouvez personnaliser votre clavier avec vos propres photos ! En plus, les polices et les émoticônes sont géniales. Téléchargez #RainbowKey gratuitement ://rainbowkey.com</string>
 	<string name="settings_button_auto_correction">@string/setting_auto_correction</string>
 	<string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
 	<string name="settings_button_word_prediction">@string/setting_word_prediction</string>
@@ -171,13 +171,13 @@
 	<string name="custom_theme_title_font">Choisir la police</string>
 	<string name="custom_theme_title_font_color">Choisir la couleur de la police</string>
 	<string name="custom_theme_title_sound">Choisir le son du clic</string>
-	<string name="custom_theme_title_effect">Choisir l'effet au toucher</string>
-	<string name="custom_theme_sound_tip">Pour utiliser l'effet sonore, désactivez le mode silencieux ou activez le son à l'appui sur une touche dans la section des paramètres.</string>
+	<string name="custom_theme_title_effect">Choisir l\'effet au toucher</string>
+	<string name="custom_theme_sound_tip">Pour utiliser l\'effet sonore, désactivez le mode silencieux ou activez le son à l\'appui sur une touche dans la section des paramètres.</string>
 
 	<!--IAP Tip Info -->
-	<string name="purchase_error_message">Achat indisponible pour l'instant, réessayez plus tard.</string>
+	<string name="purchase_error_message">Achat indisponible pour l\'instant, réessayez plus tard.</string>
 	<string name="purchase_google_play_unavailable">Les achats de Google Play sont indisponibles sur votre appareil.</string>
-	<string name="purchase_unavailable">L'achat est indisponible.</string>
+	<string name="purchase_unavailable">L\'achat est indisponible.</string>
 
 	<string name="current_theme_price">Déverrouiller pour %1$s</string>
 	<string name="all_theme_price">Tous les %1$s pour %2$s</string>
