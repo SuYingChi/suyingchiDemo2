@@ -130,8 +130,9 @@
 
     <com.mobipioneer.lockerkeyboard.app.ToggleButton
         android:id="@+id/fast_charge_toggle"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
