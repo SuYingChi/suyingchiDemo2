@@ -248,4 +248,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         getKeyboardPanelMananger().resetKeyboardBarState();
         HSLog.e("keyboard lifecycle ----hide window----");
     }
+
+    @Override
+    public void onStartInput(EditorInfo editorInfo, boolean restarting) {
+        super.onStartInput(editorInfo, restarting);
+        if(restarting){
+            getKeyboardPanelMananger().resetKeyboardBarState();
+        }
+    }
 }
