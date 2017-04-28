@@ -28,7 +28,6 @@ import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -289,7 +288,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
 
     @NonNull
     protected List<AdsItem> getAdsItems(float widthRatio, float heightRatio, boolean isCircleStyle) {
-        return IAPManager.getManager().hasPurchaseNoAds() ? new List<AdsItem>() {
+        return new List<AdsItem>() {
             @Override
             public int size() {
                 return 0;
@@ -409,7 +408,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
             public List<AdsItem> subList(int fromIndex, int toIndex) {
                 return null;
             }
-        } : Arrays.asList(new AdsItem(widthRatio, heightRatio, isCircleStyle));
+        };
     }
 
 }
