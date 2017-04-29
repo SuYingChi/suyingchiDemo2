@@ -164,20 +164,19 @@ public class MainActivity extends HSDeepLinkActivity {
         }
         setContentView(R.layout.activity_main);
 
-        if (Build.VERSION.SDK_INT < 17 || !getResources().getBoolean(R.bool.show_main_back)) {
-            View iv_back = findViewById(R.id.iv_back);
-            if(iv_back!=null){
+        View iv_back = findViewById(R.id.iv_back);
+
+        if (iv_back != null) {
+            if (Build.VERSION.SDK_INT < 17 || !getResources().getBoolean(R.bool.show_main_back)) {
                 iv_back.setVisibility(GONE);
             }
-
+            iv_back.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
-
-        findViewById(R.id.iv_back).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         onNewIntent(getIntent());
         if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
@@ -464,34 +463,34 @@ public class MainActivity extends HSDeepLinkActivity {
      */
     private void showKeyboardEnableDialog() {
         new KCAlert.Builder(this)
-            .setTitle(getString(R.string.toast_enable_keyboard))
-            .setMessage(getString(R.string.alert_attention_messenger))
-            .setTopImageResource(R.drawable.enable_keyboard_alert_top_bg)
-            .setPositiveButton(getString(R.string.got_it), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
-                        setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
-                    }
-
-                    Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-                    intent.setFlags(FLAG_ACTIVITY_NO_HISTORY );
-                    startActivity(intent);
-                    isInStepOne = true;
-
-                    ImageView imageCodeProject = new ImageView(getApplicationContext());
-                    imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-                    final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-                    imageCodeProject.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            customViewDialog.show();
+                .setTitle(getString(R.string.toast_enable_keyboard))
+                .setMessage(getString(R.string.alert_attention_messenger))
+                .setTopImageResource(R.drawable.enable_keyboard_alert_top_bg)
+                .setPositiveButton(getString(R.string.got_it), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
+                            setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
                         }
-                    }, 500);
-                }
-            })
-            .show();
+
+                        Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+                        intent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                        isInStepOne = true;
+
+                        ImageView imageCodeProject = new ImageView(getApplicationContext());
+                        imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+                        final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                        imageCodeProject.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                customViewDialog.show();
+                            }
+                        }, 500);
+                    }
+                })
+                .show();
 
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
@@ -502,7 +501,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private void startThemeHomeActivity() {
         Intent startThemeHomeIntent = getIntent();
-        if(startThemeHomeIntent==null){
+        if (startThemeHomeIntent == null) {
             startThemeHomeIntent = new Intent();
         }
         startThemeHomeIntent.setClass(MainActivity.this, ThemeHomeActivity.class);
