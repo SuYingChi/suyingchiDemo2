@@ -22,7 +22,7 @@
     <string name="ga_fullscreen_theme_save_show_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Show</string>
     <string name="ga_fullscreen_theme_save_click_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Click</string>
     <string name="ga_fullscreen_theme_save_display_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_DisplayTime</string>
-    
+
     <string name="ga_fullscreen_theme_apply_load_ad">InterstitialAd_Colorkey_A(InterstitialAds)ThemeApplyFullScreenAd_Load</string>
     <string name="ga_fullscreen_theme_apply_show_ad">InterstitialAd_Colorkey_A(InterstitialAds)ThemeApplyFullScreenAd_Show</string>
     <string name="ga_fullscreen_theme_apply_click_ad">InterstitialAd_Colorkey_A(InterstitialAds)ThemeApplyFullScreenAd_Click</string>
@@ -32,6 +32,14 @@
     <string name="ad_placement_charging">Colorkey_A(NativeAds)Charging</string>
     <string name="ad_placement_applying">Colorkey_A(NativeAds)ApplyingItem</string>
 
+    <string name="placement_full_screen_at_app_open">Colorkey_A(InterstitialAds)AppOpenedFullScreenAd</string>
+    <string name="placement_full_screen_at_phone_unlock">Colorkey_A(InterstitialAds)PhoneUnlockFullScreenAd</string>
+    <string name="placement_full_screen_at_app_quit">Colorkey_A(InterstitialAds)AppQuitFullScreenAd</string>
+    <string name="placement_full_screen_at_phone_wake">Colorkey_A(InterstitialAds)PhoneWakeFullScreenAd</string>
+    <string name="placement_full_screen_at_app_uninstall">Colorkey_A(InterstitialAds)AppUninstallFullScreenAd</string>
 
     <string name="taskAffinity_interstitial_ads">com.interstitial.ads</string>
+    <string name="tip_usage_access">Find %s and switch it on.</string>
+
+    <string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
 </resources>

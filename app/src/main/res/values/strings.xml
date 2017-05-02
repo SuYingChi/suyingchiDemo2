@@ -228,7 +228,7 @@
 
 	<string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
-	<string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
+	<string name="theme_ad_placement_theme_ad">Master_A(NativeAds)ThemeAd</string>
 	<string name="ad_placement_exit_alert_dialog">Master_A(NativeAds)AppQuit</string>
 
 	<string name="accessibility_service" translatable="false">Emoji Keyboard</string>

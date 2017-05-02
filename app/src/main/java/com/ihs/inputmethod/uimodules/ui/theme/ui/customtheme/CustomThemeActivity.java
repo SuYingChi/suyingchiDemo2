@@ -61,7 +61,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
-import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -573,7 +572,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            NativeAdManager.preloadAd(HSApplication.getContext().getString(R.string.ad_placement_themetryad));
         }
 
         @Override

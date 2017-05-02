@@ -165,7 +165,11 @@ public class MainActivity extends HSDeepLinkActivity {
         setContentView(R.layout.activity_main);
 
         if (Build.VERSION.SDK_INT < 17 || !getResources().getBoolean(R.bool.show_main_back)) {
-            findViewById(R.id.iv_back).setVisibility(GONE);
+            View iv_back = findViewById(R.id.iv_back);
+            if(iv_back!=null){
+                iv_back.setVisibility(GONE);
+            }
+
         }
 
         findViewById(R.id.iv_back).setOnClickListener(new OnClickListener() {

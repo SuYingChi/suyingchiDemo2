@@ -48,7 +48,6 @@ import java.util.List;
 import java.util.Map;
 
 import static android.view.View.GONE;
-import static com.ihs.keyboardutils.nativeads.NativeAdConfig.canShowIconAd;
 
 /**
  * Created by wenbinduan on 2016/12/22.
@@ -143,9 +142,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
         }
 
         private void destroyCurrentData() {
-            for (Map.Entry<String, NativeAdView> nativeAdViewEntry : backgroundNativeAdViews.entrySet()) {
-                nativeAdViewEntry.getValue().setOnFirstAdRespondListener(null);
-            }
             backgroundNativeAdViews.clear();
             backgrounds.clear();
         }
@@ -183,23 +179,14 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                     NativeAdView nativeAdView = new NativeAdView(HSApplication.getContext(), view, null);
                     nativeAdView.setNativeAdType(NativeAdView.NativeAdType.ICON);
                     nativeAdView.setTag("nativeadview");
-                    nativeAdView.setOnFirstAdRespondListener(nativeAdView.new OnFirstAdRespondListener() {
+                    nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
                         @Override
-                        public void onAdResponse(final NativeAdView nativeAdView) {
-                            onAdResponseFinished();
-                            if (canShowIconAd()) {
-                                nativeAdView.findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
-                            } else {
-                                nativeAdView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-                            }
-
-                            Log.e("aaa", "adloaded");
-
+                        public void onAdLoaded(NativeAdView nativeAdView) {
+                            nativeAdView.findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
                             adInfo.hasAd = true;
                             backgrounds.add(adInfo.position, adInfo);
                             notifyItemInserted(adInfo.position);
                         }
-
                     });
                     nativeAdView.configParams(new NativeAdParams(adInfo.nativeAd, ViewGroup.LayoutParams.MATCH_PARENT, 1));
                     adInfo.nativeAdView = nativeAdView;

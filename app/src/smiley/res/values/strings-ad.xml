@@ -32,4 +32,11 @@
 
     <string name="ad_placement_applying">Smiley_A(NativeAds)ApplyingItem</string>
 
+    <string name="placement_full_screen_at_app_open">Smiley_A(InterstitialAds)AppOpenedFullScreenAd</string>
+    <string name="placement_full_screen_at_phone_unlock">Smiley_A(InterstitialAds)PhoneUnlockFullScreenAd</string>
+    <string name="placement_full_screen_at_app_quit">Smiley_A(InterstitialAds)AppQuitFullScreenAd</string>
+    <string name="placement_full_screen_at_phone_wake">Smiley_A(InterstitialAds)PhoneWakeFullScreenAd</string>
+    <string name="placement_full_screen_at_app_uninstall">Smiley_A(InterstitialAds)AppUninstallFullScreenAd</string>
+
+    <string name="theme_ad_placement_theme_ad">Smiley_A(NativeAds)ThemeAd</string>
 </resources>

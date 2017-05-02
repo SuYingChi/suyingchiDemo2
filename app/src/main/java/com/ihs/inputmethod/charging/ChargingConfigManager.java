@@ -150,8 +150,8 @@ public class ChargingConfigManager {
 
     private boolean shouldFocusOnChargingEnableEvent() {
         // Charging not support
-        if (ChargingPrefsUtil.isChargingMuted()) {
-            HSLog.i(TAG, "Charging muted");
+        if (ChargingPrefsUtil.getChargingEnableStates() != ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED) {
+            HSLog.i(TAG, "Charging is NOT default disabled");
             return false;
         }
 

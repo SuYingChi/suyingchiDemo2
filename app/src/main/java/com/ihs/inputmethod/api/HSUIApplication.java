@@ -1,12 +1,20 @@
 package com.ihs.inputmethod.api;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.acb.adadapter.AcbInterstitialAd;
+import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.crashlytics.android.Crashlytics;
+import com.ihs.actiontrigger.HSActionTrigger;
+import com.ihs.actiontrigger.model.ActionBean;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -15,6 +23,7 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -32,18 +41,20 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.keyboardutils.nativeads.NativeAdManager;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.ihs.chargingscreen.HSChargingScreenManager.registerChargingService;
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_SET_CHARGING_TOGGLE;
 import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPENED;
 import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
 
 public class HSUIApplication extends HSInputMethodApplication {
+
+    private Intent actionService;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -57,8 +68,24 @@ public class HSUIApplication extends HSInputMethodApplication {
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
                 IAPManager.getManager().queryOwnProductIds();
+
+                try{
+                    Intent actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
+                    startService(actionService);
+                    bindActionTrigger(actionService);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                //增加action trigger 2017.4.19
+
+
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 IAPManager.getManager().onConfigChange();
+
+                registerChargingService();
+
+            }else if(HSNotificationConstant.HS_SESSION_END.equals(notificationName)){
+                ChargingPrefsUtil.getInstance().setChargingForFirstSession();
             }
         }
     };
@@ -69,6 +96,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         super.onCreate();
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
+
         //IAPManager.getManager().init()内部也会监听Session Start，由于存储监听集合的数据结构是List，因此确保HSUIApplication先接收SessionStart事件
         IAPManager.getManager().queryOwnProductIds();
         HSKeyboardThemeManager.init();
@@ -101,6 +130,98 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         HSInputMethodService.initResourcesBeforeOnCreate();
+    }
+
+    private void bindActionTrigger(Intent actionService) {
+        bindService(actionService, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                HSActionTrigger.ActionBinder binder = (HSActionTrigger.ActionBinder) service;
+                binder.setOnActionTriggeredListener(new HSActionTrigger.OnActionTriggeredListener() {
+                    @Override
+                    public boolean onAction(ActionBean actionBean) {
+                        return handleAction(actionBean);
+                    }
+                });
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        }, BIND_AUTO_CREATE);
+    }
+
+
+    private boolean handleAction(ActionBean actionBean) {
+        //ActionType: 0对应TypeBoostHalfScreen; 1对应BoostHalfScreen; 2对应TypeBoostFullScreen;
+        // 3对应BoostFullScreen; 4对应AdFullScreen; 5对应AdNotification; 6对应PopUpAlert; 7对应SetKey
+        final int adType = actionBean.getActionType();
+
+        //ActionData: TypeBoostHalfScreen：0对应xx,1对应xx; BoostHalfScreen：0对应Boost,
+        // 1对应InputSecurityCheck; TypeBoostFullScreen:0对应xx ; BoostFullScreen:0对应Optimize
+        final int adData = actionBean.getActionData();
+
+
+        String eventType = actionBean.getEventType();
+        HSLog.e(adType + "adType  " + adData + " ------ liuyu yao kan de");
+        String adPlacementName = "";
+        switch (eventType) {
+            case HSActionTrigger.EVENT_KEY_APPOPEN:
+                adPlacementName = getString(R.string.placement_full_screen_at_app_open);
+                break;
+            case HSActionTrigger.EVENT_KEY_APPQUIT:
+                adPlacementName = getString(R.string.placement_full_screen_at_app_quit);
+                break;
+            case HSActionTrigger.EVENT_KEY_PHONELIGHT:
+                adPlacementName = getString(R.string.placement_full_screen_at_phone_wake);
+                break;
+            case HSActionTrigger.EVENT_KEY_PHONEUNLOCK:
+                adPlacementName = getString(R.string.placement_full_screen_at_phone_unlock);
+                break;
+            case HSActionTrigger.EVENT_KEY_APPUNINSTALL:
+                adPlacementName = getString(R.string.placement_full_screen_at_app_uninstall);
+                break;
+        }
+
+        new AcbInterstitialAdLoader(this,adPlacementName).load(1,null);
+
+        switch (adType) {
+            //full scrn ad
+            case 4:
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent(adPlacementName + "_Load");
+                List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), adPlacementName, 1);
+                if (interstitialAds.size() > 0) {
+                    final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
+                    final String finalAdPlacementName = adPlacementName;
+                    interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
+                        long adDisplayTime = -1;
+
+                        @Override
+                        public void onAdDisplayed() {
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_Show");
+                            adDisplayTime = System.currentTimeMillis();
+                        }
+
+                        @Override
+                        public void onAdClicked() {
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_Click");
+                        }
+
+                        @Override
+                        public void onAdClosed() {
+                            long duration = System.currentTimeMillis() - adDisplayTime;
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_DisplayTime", String.format("%fs", duration / 1000f));
+                            interstitialAd.release();
+                        }
+                    });
+                    interstitialAd.show();
+                    return true;
+                } else {
+                    return false;
+                }
+        }
+        return false;
 
     }
 
@@ -128,11 +249,10 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     protected void onSessionStart() {
         HSDiverseSession.start();
-        NativeAdManager.getInstance();
         //检测是否已经有非内置的主题包已经被安装过了
         checkIsPluginThemeInstalled();
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER,  KCCustomThemeManager.getInstance().getAllCustomThemes().size());
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER, KCCustomThemeManager.getInstance().getAllCustomThemes().size());
     }
 
     private void checkIsPluginThemeInstalled() {
