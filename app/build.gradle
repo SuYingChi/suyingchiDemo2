@@ -65,16 +65,16 @@ android {
 
         master {
             applicationId = "com.masterkeyboard.emoji"
-            versionCode 5
-            versionName "1.1.1"
+            versionCode 6
+            versionName "1.1.2"
             manifestPlaceholders = [ APPLY_SCHEME: "lockerKeyboard"]
             signingConfig signingConfigs.masterReleaseConfig
         }
 
         smiley {
             applicationId = "com.smartkeyboard.emoji"
-            versionCode 14
-            versionName "2.0.1"
+            versionCode 15
+            versionName "2.0.2"
             manifestPlaceholders = [ APPLY_SCHEME: "smileyKeyboard"]
             signingConfig signingConfigs.smileyReleaseConfig
         }
