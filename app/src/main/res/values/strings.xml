@@ -75,6 +75,7 @@
 
 	<!--new settings panel-->
 	<string name="setting_item_themes" >Themes</string>
+	<string name="setting_item_my_theme" >Create Theme</string>
 	<string name="setting_item_fonts" >Fonts</string>
 	<string name="setting_item_correction">@string/setting_auto_correction</string>
 	<string name="setting_item_sounds">"Sounds"</string>

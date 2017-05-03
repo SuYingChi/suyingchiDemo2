@@ -21,6 +21,8 @@ final class ViewItemBuilder {
     private final static String SETTINGS_KEY_THEME = "settings_key_theme.png";
     private final static String SETTINGS_KEY_THEME_PRESSED = "settings_key_theme_pressed.png";
 
+    private final static String SETTINGS_KEY_MY_THEME = "settings_key_my_theme.png";
+    private final static String SETTINGS_KEY_MY_THEME_PRESSED = "settings_key_my_theme_pressed.png";
 
     private final static String SETTINGS_KEY_FONTS = "settings_key_fonts.png";
     private final static String SETTINGS_KEY_FONTS_PRESSED = "settings_key_fonts_pressed.png";
@@ -71,6 +73,11 @@ final class ViewItemBuilder {
                 , viewItemListener, false);
     }
 
+    static ViewItem getMyThemeItem(ViewItem.ViewItemListener viewItemListener) {
+        return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_my_theme),
+                getStateListDrawable(SETTINGS_KEY_MY_THEME, SETTINGS_KEY_MY_THEME_PRESSED)
+                , viewItemListener, false);
+    }
 
     static ViewItem getSoundsItem() {
 
