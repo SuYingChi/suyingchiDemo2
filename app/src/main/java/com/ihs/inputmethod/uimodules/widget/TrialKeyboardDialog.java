@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import com.acb.adadapter.AcbInterstitialAd;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.alerts.HSAlertMgr;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -255,6 +256,22 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     }
 
     public void show(Activity activity, int keyboardActivationRequestCode) {
+        switch (keyboardActivationRequestCode) {
+            case 10: // My Themes apply
+                HSAnalytics.logEvent("keyboard_try_viewed", "from", "appliedTheme");
+                HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "appliedTheme", null, null, null);
+                break;
+            case 12: // 新安装皮肤
+                HSAnalytics.logEvent("keyboard_try_viewed", "from", "externalTheme");
+                HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "externalTheme", null, null, null);
+                break;
+            case 15: // 自定义皮肤
+                HSAnalytics.logEvent("keyboard_try_viewed", "from", "customizedTheme");
+                HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "customizedTheme", null, null, null);
+                break;
+            default:
+                break;
+        }
         activationRequestCode = keyboardActivationRequestCode;
         checkKeyboardState(activity);
         new AcbInterstitialAdLoader(getContext(),getContext().getResources().getString(R.string.placement_full_screen_trial_keyboard)).load(1,null);
