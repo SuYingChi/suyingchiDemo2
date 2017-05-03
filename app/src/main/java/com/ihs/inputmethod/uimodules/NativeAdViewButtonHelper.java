@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
@@ -32,7 +31,7 @@ public class NativeAdViewButtonHelper {
                     if (null != nativeAdView && nativeAdView.isAdLoaded()) {
                         TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
                         if (null != adButtonView) {
-                            adButtonView.getBackground().setColorFilter(nativeAdView.getContext().getResources().getColor(R.color.ad_button_green_state), PorterDuff.Mode.SRC_ATOP);
+                            adButtonView.setBackgroundResource(R.drawable.ad_native_ad_view_button_bg_selector);
                         }
                     }
                     break;
@@ -40,7 +39,7 @@ public class NativeAdViewButtonHelper {
                     if (null != nativeAdView && nativeAdView.isAdLoaded()) {
                         TextView adButtonView = (TextView) nativeAdView.findViewById(R.id.ad_call_to_action);
                         if (null != adButtonView) {
-                            adButtonView.getBackground().setColorFilter(nativeAdView.getContext().getResources().getColor(R.color.ad_button_blue), PorterDuff.Mode.SRC_ATOP);
+                            adButtonView.setBackgroundResource(R.drawable.charging_ad_button_bg);
                         }
                     }
                     break;
@@ -124,18 +123,20 @@ public class NativeAdViewButtonHelper {
     }
 
     private static void onViewEnvironmentChanged(NativeAdView nativeAdView, Rect screenRect) {
-        boolean ready = isViewEnvironmentReady(nativeAdView, screenRect);
-        if (ready) {
-            Message message = handler.obtainMessage();
-            message.obj = nativeAdView;
-            message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR;
-            handler.sendMessageDelayed(message, 1500);
-        } else {
-            Message message = handler.obtainMessage();
-            handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR, nativeAdView);
-            message.obj = nativeAdView;
-            message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGIN_COLOR;
-            handler.sendMessage(message);
+        if (nativeAdView.isAdLoaded()) {
+            boolean ready = isViewEnvironmentReady(nativeAdView, screenRect);
+            if (ready) {
+                Message message = handler.obtainMessage();
+                message.obj = nativeAdView;
+                message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR;
+                handler.sendMessageDelayed(message, 1500);
+            } else {
+                Message message = handler.obtainMessage();
+                handler.removeMessages(MSG_CHANGE_AD_BUTTON_BACKGROUND_NEW_COLOR, nativeAdView);
+                message.obj = nativeAdView;
+                message.what = MSG_CHANGE_AD_BUTTON_BACKGROUND_ORIGIN_COLOR;
+                handler.sendMessage(message);
+            }
         }
     }
 }
