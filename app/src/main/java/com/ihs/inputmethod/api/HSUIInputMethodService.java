@@ -30,6 +30,7 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
+import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 
 import java.util.HashSet;
@@ -110,7 +111,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             getKeyboardPanelMananger().onBackPressed();
-            closeFullScreenAd.show();
+            if(!IAPManager.getManager().hasPurchaseNoAds()) {
+                closeFullScreenAd.show();
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
