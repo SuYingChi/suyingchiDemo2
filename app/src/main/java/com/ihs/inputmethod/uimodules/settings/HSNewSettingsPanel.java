@@ -15,7 +15,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -223,6 +222,7 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onAnimationStart(Animation animation) {
                 BaseFunctionBar functionBar = (BaseFunctionBar) panelActionListener.getBarView();
+                functionBar.setSettingButtonType(appear ? SettingsButton.SettingButtonType.SETTING : SettingsButton.SettingButtonType.MENU);
                 functionBar.setFunctionEnable(false);
                 if (onAnimationListener != null) {
                     onAnimationListener.onAnimationStart(animation);
@@ -232,7 +232,7 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onAnimationEnd(Animation animation) {
                 BaseFunctionBar functionBar = (BaseFunctionBar) panelActionListener.getBarView();
-                functionBar.setSettingButtonType(appear ? SettingsButton.SettingButtonType.SETTING : SettingsButton.SettingButtonType.MENU);
+                //functionBar.setSettingButtonType(appear ? SettingsButton.SettingButtonType.SETTING : SettingsButton.SettingButtonType.MENU);
                 functionBar.setFunctionEnable(true);
                 if (onAnimationListener != null) {
                     onAnimationListener.onAnimationEnd(animation);
