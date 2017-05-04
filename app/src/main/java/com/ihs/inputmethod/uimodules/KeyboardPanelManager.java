@@ -20,6 +20,7 @@ import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.framework.KeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
+import com.ihs.inputmethod.uimodules.settings.SettingsButtonView;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
@@ -158,16 +159,20 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     @Override
     public void onFunctionBarItemClick(View view) {
         if (view.getId() == R.id.func_setting_button) {
-            int settingButtonType = functionBar.getSettingButtonType();
+            SettingsButtonView settingsButtonView = functionBar.getSettingsButton();
+            int settingButtonType = settingsButtonView.getButtonType();
+
             switch (settingButtonType) {
                 case SettingsButton.SettingButtonType.MENU:
-                    functionBar.doFunctionButtonSwitchAnimation();
+                    settingsButtonView.doFunctionButtonSwitchAnimation();
+                    //functionBar.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_function_button_click");
                     break;
 
                 case SettingsButton.SettingButtonType.SETTING:
-                    functionBar.doFunctionButtonSwitchAnimation();
+                    settingsButtonView.doFunctionButtonSwitchAnimation();
+                    //functionBar.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.backToParentPanel(false);
                     break;
 
