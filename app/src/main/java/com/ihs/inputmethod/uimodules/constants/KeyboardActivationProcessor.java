@@ -310,7 +310,7 @@ public class KeyboardActivationProcessor {
     };
 
     public void release() {
-
+        onKeyboardActivationChangedListener = null;
         try {
             context.unregisterReceiver(imeChangeRecevier);
         } catch (Exception e) {

@@ -112,7 +112,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         if (!IAPManager.getManager().hasPurchaseNoAds()) {
             if (adCardView == null) {
                 View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
-                nativeAdView = new NativeAdView(activity, view);
+                nativeAdView = new NativeAdView(HSApplication.getContext(), view);
                 nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
                     @Override
                     public void onAdLoaded(NativeAdView nativeAdView) {
@@ -480,6 +480,12 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         if (adCardView != null) {
             ((NativeAdView) adCardView.getChildAt(0)).release();
         }
+
+        if(nativeAdView!=null){
+            nativeAdView.release();
+            nativeAdView = null;
+        }
+
         viewPager.removeAllViews();
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);

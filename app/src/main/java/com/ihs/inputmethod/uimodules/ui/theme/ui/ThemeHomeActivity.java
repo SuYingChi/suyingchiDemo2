@@ -90,6 +90,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private View apkUpdateTip;
     private View noAds;
     private ExitAlert exitAlert;
+    private RewardVideoHelper rewardVideoHelper;
 
     private static final int keyboardActivationFromHome = 11;
     private static final int keyboardActivationFromHomeWithTrial = 12;
@@ -141,7 +142,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RewardVideoHelper rewardVideoHelper = new RewardVideoHelper(this, null);
+        rewardVideoHelper = new RewardVideoHelper(this, null);
         rewardVideoHelper.loadVideo();
 
         setContentView(R.layout.activity_theme_home);
@@ -441,6 +442,13 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
+        keyboardActivationProcessor.release();
+        keyboardActivationProcessor = null;
+
+        if(rewardVideoHelper != null){
+            rewardVideoHelper.destroy();
+            rewardVideoHelper = null;
+        }
         super.onDestroy();
     }
 
