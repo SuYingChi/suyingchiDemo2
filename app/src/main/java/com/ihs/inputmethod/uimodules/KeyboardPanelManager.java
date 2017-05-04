@@ -165,14 +165,12 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             switch (settingButtonType) {
                 case SettingsButton.SettingButtonType.MENU:
                     settingsButtonView.doFunctionButtonSwitchAnimation();
-                    //functionBar.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_function_button_click");
                     break;
 
                 case SettingsButton.SettingButtonType.SETTING:
                     settingsButtonView.doFunctionButtonSwitchAnimation();
-                    //functionBar.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.backToParentPanel(false);
                     break;
 

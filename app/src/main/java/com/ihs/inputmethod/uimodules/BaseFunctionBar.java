@@ -34,8 +34,6 @@ import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTranspa
 
 public final class BaseFunctionBar extends LinearLayout implements View.OnClickListener {
     private LinearLayout functionLayout;
-//    private SettingsButton settingsButton;
-//    private SettingsButton backButton;
     private SettingsButtonView settingsButtonView;
     private OnFunctionBarItemClickListener onFunctionBarClickListener;
     private BaseFunction baseFunction;
@@ -72,20 +70,10 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
 
     private void initFunctionBar() {
-        //settingsButton = new SettingsButton(getContext());
-
-        //settingsButtonView = (SettingsButtonView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.settings_button_view, null);//new SettingsButtonView(getContext());
         settingsButtonView = new SettingsButtonView(getContext());
-
-//        backButton = new SettingsButton(getContext());
-//        backButton.setButtonType(SettingsButton.SettingButtonType.SETTING);
-//        backButton.setVisibility(View.INVISIBLE);
-
         baseFunction = new BaseFunction(HSApplication.getContext());
         baseFunction.setId(R.id.func_setting_button);
         baseFunction.setFunctionView(settingsButtonView);
-        //baseFunction.setFunctionView(settingsButton);
-        //baseFunction.setFunctionBackView(backButton);
         baseFunction.setOnClickListener(this);
         baseFunction.setNewTipStatueChangeListener(settingsButtonView);
         updateFunctionAndSettingButtonSize();
@@ -119,8 +107,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     private void updateFunctionAndSettingButtonSize() {
         final FrameLayout.LayoutParams llp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         llp.gravity = Gravity.CENTER;
-//        settingsButton.setLayoutParams(llp);
-//        backButton.setLayoutParams(llp);
         settingsButtonView.setLayoutParams(llp);
 
         LayoutParams functionLayoutParam = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, getResources().getDimensionPixelSize(R.dimen.config_suggestions_strip_height));
@@ -155,17 +141,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     }
 
     public void setSettingButtonType(int type) {
-        //settingsButton.setButtonType(type);
-//        if (type == SettingsButton.SettingButtonType.MENU) {
-//            settingsButton.setButtonType(type);
-//            settingsButton.setVisibility(View.VISIBLE);
-//            backButton.setVisibility(View.INVISIBLE);
-//        } else {
-//            backButton.setButtonType(type);
-//            backButton.setVisibility(View.VISIBLE);
-//            settingsButton.setVisibility(View.INVISIBLE);
-//        }
-
         settingsButtonView.setButtonType(type);
 
         updateFunctionAndSettingButtonSize();
@@ -173,16 +148,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
     public SettingsButtonView getSettingsButton() {
         return settingsButtonView;
-    }
-
-    public int getSettingButtonType() {
-        //return settingsButton.getButtonType();
-//        if (settingsButton.isShown()) {
-//            return settingsButton.getButtonType();
-//        } else {
-//            return backButton.getButtonType();
-//        }
-        return settingsButtonView.getButtonType();
     }
 
     public void onDestroy() {
@@ -241,9 +206,5 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
             drawable = getFuncButtonDrawable(drawable);
         }
         funcButton.setImageDrawable(drawable);
-    }
-
-    public void doFunctionButtonSwitchAnimation() {
-        baseFunction.doFunctionButtonSwitchAnimation();
     }
 }
