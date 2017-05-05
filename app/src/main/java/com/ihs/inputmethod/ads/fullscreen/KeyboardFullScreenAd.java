@@ -7,7 +7,9 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
+import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,7 +34,7 @@ public class KeyboardFullScreenAd extends FullScreenAd {
             public void onReceive(String s, HSBundle hsBundle) {
                 if (KeyboardFullScreenAdSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD.equals(s)) {
                     preLoad();
-                    if ("Open".equals(occasion)) {
+                    if (!IAPManager.getManager().hasPurchaseNoAds()&&"Open".equals(occasion)) {
                         show();
                     }
                 } else {

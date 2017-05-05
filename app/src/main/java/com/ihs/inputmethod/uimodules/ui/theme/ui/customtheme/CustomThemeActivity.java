@@ -612,7 +612,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
     }
 
     private boolean showInterstitialAdsAfterSaveTheme() {
-        if (!getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
+        if (IAPManager.getManager().hasPurchaseNoAds() || !getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
             return false;
         }
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_load_ad));

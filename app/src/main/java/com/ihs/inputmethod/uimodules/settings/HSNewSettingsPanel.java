@@ -27,6 +27,7 @@ import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -97,6 +98,15 @@ public class HSNewSettingsPanel extends BasePanel {
             }
         });
         items.add(themeItem);
+        items.add(ViewItemBuilder.getMyThemeItem(new ViewItem.ViewItemListener() {
+            @Override
+            public void onItemClick(ViewItem item) {
+                Bundle bundle = new Bundle();
+                String customEntry = "keyboard";
+                bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
+                IAPManager.startCustomThemeActivity(bundle);
+            }
+        }));
         items.add(ViewItemBuilder.getFontsItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
@@ -108,7 +118,7 @@ public class HSNewSettingsPanel extends BasePanel {
         items.add(ViewItemBuilder.getAutoCorrectionItem());
         // items.add(ViewItemBuilder.getAutoCapitalizationItem());
         // items.add(ViewItemBuilder.getPredicationItem());
-        items.add(ViewItemBuilder.getSwipeItem());
+        // items.add(ViewItemBuilder.getSwipeItem());
         items.add(ViewItemBuilder.getLanguageItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {

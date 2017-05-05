@@ -65,24 +65,24 @@ android {
 
         master {
             applicationId = "com.masterkeyboard.emoji"
-            versionCode 5
-            versionName "1.1.1"
+            versionCode 6
+            versionName "1.1.2"
             manifestPlaceholders = [ APPLY_SCHEME: "lockerKeyboard"]
             signingConfig signingConfigs.masterReleaseConfig
         }
 
         smiley {
             applicationId = "com.smartkeyboard.emoji"
-            versionCode 14
-            versionName "2.0.1"
+            versionCode 15
+            versionName "2.0.2"
             manifestPlaceholders = [ APPLY_SCHEME: "smileyKeyboard"]
             signingConfig signingConfigs.smileyReleaseConfig
         }
 
         color {
             applicationId = "com.keyboard.colorkeyboard"
-            versionCode 36
-            versionName "2.3.1"
+            versionCode 37
+            versionName "2.3.2"
             signingConfig signingConfigs.colorReleaseConfig
         }
 
@@ -132,11 +132,11 @@ dependencies {
     // Native Ads
     compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.1.gm'
-    compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.0.gm'
+    compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdAltamobNativeAdapter.gm:4.1.0.gm'
 //    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.1.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.2.gm'
 
     compile 'com.ihandy.3rdadadapter:libAdAppnextNativeAdapter.gm:4.1.0.gm'
 
