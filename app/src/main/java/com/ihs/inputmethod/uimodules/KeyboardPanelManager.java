@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -212,9 +213,12 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void beforeStartInputView() {
-
         if (hsBackgroundVedioView != null) {
             hsBackgroundVedioView.setHSBackground(HSKeyboardThemeManager.getCurrentThemeBackgroundPath());
+        }
+
+        if (FeatureDelayReleaseUtil.checkFeatureReadyToWork("feature_clipboard_bar", 1)) {
+            keyboardPanelSwitchContainer.showClipboardBar();
         }
     }
 
