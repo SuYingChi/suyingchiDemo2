@@ -1,0 +1,24 @@
+stages:
+- build
+- cleanup_build
+
+build_job:
+  stage: build
+  script:
+  - git submodule update --init
+  - ./gradlew assemble
+  - ./gradlew app:dependencies > app/build/outputs/build-dependencies.txt
+  artifacts:
+    paths:
+    - app/build/outputs/apk/
+    - app/build/outputs/mapping/*/*/mapping.txt
+    - app/build/outputs/build-dependencies.txt
+    expire_in: 1 week
+  tags:
+  - camera
+
+cleanup_build_job:
+  stage: cleanup_build
+  script:
+  - ./gradlew clean
+  when: on_failure
