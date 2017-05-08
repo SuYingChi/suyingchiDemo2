@@ -120,6 +120,13 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
+
+        <receiver android:enabled="true" android:name="com.ihs.inputmethod.api.NotificationBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.ihs.intent.notification" >
+                </action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

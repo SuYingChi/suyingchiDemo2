@@ -41,8 +41,10 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
@@ -69,11 +71,11 @@ public class HSUIApplication extends HSInputMethodApplication {
                 onSessionStart();
                 IAPManager.getManager().queryOwnProductIds();
 
-                try{
+                try {
                     Intent actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
                     startService(actionService);
                     bindActionTrigger(actionService);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 //增加action trigger 2017.4.19
@@ -84,7 +86,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
                 registerChargingService();
 
-            }else if(HSNotificationConstant.HS_SESSION_END.equals(notificationName)){
+            } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
             }
         }
@@ -130,6 +132,25 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         HSInputMethodService.initResourcesBeforeOnCreate();
+
+
+        registerNotificationEvent();
+    }
+
+    private void registerNotificationEvent() {
+
+        KCNotificationManager.getInstance().setNotificationResponserType(KCNotificationManager.TYPE_BROADCAST);
+        //注册notification事件
+        ArrayList<String> eventList = new ArrayList<>();
+        eventList.add("ChangeFont");
+        eventList.add("Charging");
+        eventList.add("SetPhotoAsBackground");
+        eventList.add("ChangeTheme");
+        for (String event : eventList) {
+            Intent resultIntent = new Intent(NotificationBroadcastReceiver.INTENT_NOTIFICATION);
+            resultIntent.putExtra("eventName", event);
+            KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
+        }
     }
 
     private void bindActionTrigger(Intent actionService) {
@@ -184,7 +205,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 break;
         }
 
-        new AcbInterstitialAdLoader(this,adPlacementName).load(1,null);
+        new AcbInterstitialAdLoader(this, adPlacementName).load(1, null);
 
         switch (adType) {
             //full scrn ad
