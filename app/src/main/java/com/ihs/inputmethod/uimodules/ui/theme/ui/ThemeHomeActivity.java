@@ -262,6 +262,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
+        showEnableChargingAlertIfNeeded();
+
         exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_exit_alert_dialog),IAPManager.getManager().hasPurchaseNoAds());
         onNewIntent(getIntent());
     }
@@ -601,7 +603,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     @Override
     public void onBackPressed() {
-        if (showEnableChargingAlertIfNeeded() || !exitAlert.show(IAPManager.getManager().hasPurchaseNoAds())) {
+        if (!exitAlert.show(IAPManager.getManager().hasPurchaseNoAds())) {
             HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
             super.onBackPressed();
         }
