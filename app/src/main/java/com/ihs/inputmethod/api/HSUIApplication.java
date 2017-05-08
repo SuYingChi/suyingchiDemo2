@@ -88,6 +88,9 @@ public class HSUIApplication extends HSInputMethodApplication {
 
             } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
+                if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE){
+                    KCNotificationManager.getInstance().removeNotificationEvent("Charging");
+                }
             }
         }
     };
@@ -147,7 +150,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         eventList.add("SetPhotoAsBackground");
         eventList.add("ChangeTheme");
         for (String event : eventList) {
-            Intent resultIntent = new Intent(NotificationBroadcastReceiver.INTENT_NOTIFICATION);
+            Intent resultIntent = new Intent(this,NotificationBroadcastReceiver.class);
             resultIntent.putExtra("eventName", event);
             KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
         }

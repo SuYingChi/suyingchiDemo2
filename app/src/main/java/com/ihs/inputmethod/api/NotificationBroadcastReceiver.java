@@ -16,7 +16,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        HSLog.e(intent.toString());
+        HSLog.e(intent.getStringExtra("eventName") + intent.toString());
         switch (intent.getStringExtra("eventName")) {
             case "Charging":
                 HSUIInputMethod.launchSettingsActivity();

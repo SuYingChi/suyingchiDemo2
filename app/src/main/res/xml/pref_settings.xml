@@ -45,4 +45,10 @@
         android:key="@string/config_charge_switchpreference_key"
         android:summary="@string/enable_charging_detail"
         android:title="Fast Charger" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/prefs_notification_enable"
+        android:title="Push Notifications"
+         />
 </PreferenceScreen>

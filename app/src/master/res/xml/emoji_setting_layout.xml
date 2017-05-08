@@ -56,4 +56,11 @@
     <Preference
         android:key="@string/custom_uninstall_preference_key"
         android:title="@string/custom_uninstall_alert_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="@string/prefs_notification_enable"
+        android:title="Push Notifications"
+        android:widgetLayout="@layout/switch_layout" />
+
 </PreferenceScreen>
