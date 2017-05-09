@@ -90,6 +90,10 @@ public class HSUIApplication extends HSInputMethodApplication {
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
                 if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE){
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
+                }else if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED){
+                    Intent resultIntent = new Intent(getContext(),NotificationBroadcastReceiver.class);
+                    resultIntent.putExtra("eventName", "Charging");
+                    KCNotificationManager.getInstance().addNotificationEvent("Charging",resultIntent);
                 }
             }
         }
