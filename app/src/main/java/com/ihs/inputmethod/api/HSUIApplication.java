@@ -20,6 +20,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
+import com.ihs.app.framework.inner.HomeKeyTracker;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -55,6 +56,7 @@ import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPEN
 public class HSUIApplication extends HSInputMethodApplication {
 
     private Intent actionService;
+    private HomeKeyTracker homeKeyTracker;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -67,6 +69,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 //                }
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
+                homeKeyTracker.startTracker();
                 IAPManager.getManager().queryOwnProductIds();
 
                 try{
@@ -86,6 +89,14 @@ public class HSUIApplication extends HSInputMethodApplication {
 
             }else if(HSNotificationConstant.HS_SESSION_END.equals(notificationName)){
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
+                if(homeKeyTracker.isHomeKeyPressed()) {
+                    HSAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
+                    HSAnalytics.logGoogleAnalyticsEvent("app", "keyboard", "app_quit_way", "home", null, null, null);
+                } else {
+                    HSAnalytics.logEvent("app_quit_way", "app_quit_way", "other");
+                    HSAnalytics.logGoogleAnalyticsEvent("app", "keyboard", "app_quit_way", "other", null, null, null);
+                }
+                homeKeyTracker.stopTracker();
             }
         }
     };
@@ -130,6 +141,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         HSInputMethodService.initResourcesBeforeOnCreate();
+        homeKeyTracker = new HomeKeyTracker(this);
     }
 
     private void bindActionTrigger(Intent actionService) {
