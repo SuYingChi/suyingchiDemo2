@@ -321,14 +321,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         refreshApkUpdateViews();
-
-        // TODO: 这里应该调用一个将所有元素都标记为已读的接口，而不是自己将元素列出来。具体应该把Tip的逻辑重新整理下，这里暂时先这么写
-        HSThemeNewTipController.getInstance().setTypeAllRead(
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME,
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_BACKGROUND,
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_EFFECT,
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_FONT,
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_SOUND);
     }
 
     @Override
