@@ -85,7 +85,7 @@ public class CustomUIRateAlertUtils {
         }
     }
 
-    public static void showRateAlert(String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {
+    private static void showRateAlert(String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {
         updateRateAlertInfo(s1, s2, list1, list2);
 
         final CustomUIRateAlert dialog = new CustomUIRateAlert(HSApplication.getContext());
