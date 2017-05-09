@@ -173,10 +173,18 @@ public class KeyboardActivationProcessor {
 
             Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
             if (activity != null) {
-                activity.startActivity(intent);
+                try{
+                    activity.startActivity(intent);
+                }catch (Exception e){
+                    HSToastUtils.toastBottomShort("Launch Setting Failed, please setup keyboard manually");
+                }
             } else {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_NO_HISTORY );
-                context.startActivity(intent);
+                try{
+                    context.startActivity(intent);
+                }catch (Exception e){
+                    HSToastUtils.toastBottomShort("Launch Setting Failed, please setup keyboard manually");
+                }
             }
 
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_PRIVACY_ALERT, 500);
