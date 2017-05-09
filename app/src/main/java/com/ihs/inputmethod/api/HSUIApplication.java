@@ -91,10 +91,10 @@ public class HSUIApplication extends HSInputMethodApplication {
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
                 if(homeKeyTracker.isHomeKeyPressed()) {
                     HSAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
-                    HSAnalytics.logGoogleAnalyticsEvent("app", "keyboard", "app_quit_way", "home", null, null, null);
+                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "home");
                 } else {
                     HSAnalytics.logEvent("app_quit_way", "app_quit_way", "other");
-                    HSAnalytics.logGoogleAnalyticsEvent("app", "keyboard", "app_quit_way", "other", null, null, null);
+                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "other");
                 }
                 homeKeyTracker.stopTracker();
             }

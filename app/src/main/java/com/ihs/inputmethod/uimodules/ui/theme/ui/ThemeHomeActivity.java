@@ -606,6 +606,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         exitAlert.setShowAd(!IAPManager.getManager().hasPurchaseNoAds());
         if (!exitAlert.show()) {
             HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "back");
             super.onBackPressed();
         }
     }
