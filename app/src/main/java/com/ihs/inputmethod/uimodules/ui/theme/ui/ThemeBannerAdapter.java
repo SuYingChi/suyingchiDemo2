@@ -154,7 +154,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             } else if (ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP.equals(s)) {
                 stopAutoScroll();
             } else if (ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
-                removeNativeAdView();
+                // removeNativeAdView();
             }
 
         }
@@ -452,7 +452,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             return;
         }
         String themeName = keyboardThemeList.get(newPosition).mThemeName;
-        HSLog.e("CurrentPosition:" + themeName + "; Position:" + newPosition);
+        HSLog.d("CurrentPosition: " + themeName + "; Position: " + newPosition);
         int currentShowCount = HSPreferenceHelper.getDefault().getInt(themeName + "_show_count", 0);
         ++currentShowCount;
         HSPreferenceHelper.getDefault().putInt(themeName + "_show_count", currentShowCount);
@@ -479,11 +479,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     public void recycle() {
         if (adCardView != null) {
             ((NativeAdView) adCardView.getChildAt(0)).release();
-        }
-
-        if(nativeAdView!=null){
-            nativeAdView.release();
-            nativeAdView = null;
         }
 
         viewPager.removeAllViews();

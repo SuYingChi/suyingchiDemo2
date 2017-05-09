@@ -50,7 +50,7 @@ public final class ThemeBannerAdapterDelegate extends AdapterDelegate<List<Theme
 		themeBannerAdapter.setViewPager(viewPager);
 		themeBannerAdapter.initData();
 		viewPager.setAdapter(themeBannerAdapter);
-		themeBannerAdapter.startToFetchNativeAd();
+		// themeBannerAdapter.startToFetchNativeAd();
 		themeBannerAdapter.startAutoScroll();
 
 		return viewHolder;
