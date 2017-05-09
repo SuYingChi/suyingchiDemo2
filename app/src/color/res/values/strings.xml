@@ -42,4 +42,6 @@
     <string name="tip_usage_access">Find %s and switch it on.</string>
 
     <string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
+
+    <string name="feedback_email">private.keyboardarts@gmail.com</string>
 </resources>

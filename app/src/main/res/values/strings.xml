@@ -237,4 +237,7 @@
 With accessibility authorization, I can help you setup keyboard directly!
 
 Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
+
+	<!-- Product Master's config -->
+	<string name="feedback_email">feedback.glowdesign@hotmail.com</string>
 </resources>
