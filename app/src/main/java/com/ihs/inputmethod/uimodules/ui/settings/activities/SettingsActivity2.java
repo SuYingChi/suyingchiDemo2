@@ -143,9 +143,9 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     }
 
                     if (isSwitchOn) {
-                        ChargingManagerUtil.enableCharging(false);
+                        ChargingManagerUtil.enableCharging(false,"setting");
                     } else {
-                        ChargingManagerUtil.disableCharging();
+                        ChargingManagerUtil.disableCharging("setting");
                     }
                     return true;
                 }

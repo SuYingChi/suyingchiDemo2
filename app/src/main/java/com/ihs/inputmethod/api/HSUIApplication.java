@@ -90,10 +90,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
                 if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE){
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
-                }else if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_DISABLED){
-                    Intent resultIntent = new Intent(getContext(),NotificationBroadcastReceiver.class);
-                    resultIntent.putExtra("eventName", "Charging");
-                    KCNotificationManager.getInstance().addNotificationEvent("Charging",resultIntent);
                 }
             }
         }
@@ -157,6 +153,9 @@ public class HSUIApplication extends HSInputMethodApplication {
             Intent resultIntent = new Intent(this,NotificationBroadcastReceiver.class);
             resultIntent.putExtra("eventName", event);
             KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
+        }
+        if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE){
+            KCNotificationManager.getInstance().removeNotificationEvent("Charging");
         }
     }
 
@@ -262,12 +261,12 @@ public class HSUIApplication extends HSInputMethodApplication {
             // 如果不是第一个sesstion 并且 不包含 PREF_KEY_CHARGING_NEW_USER
             if (!prefs.contains(PREF_KEY_USER_SET_CHARGING_TOGGLE)) {
                 HSLog.d("jx,未发现remote config变化 shouldOpenChargingFunction");
-                ChargingManagerUtil.enableCharging(false);
+                ChargingManagerUtil.enableCharging(false,"plist");
                 prefs.putBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, true);
             } else {
                 boolean userSetting = prefs.getBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, false);
                 if (userSetting) {
-                    ChargingManagerUtil.enableCharging(false);
+                    ChargingManagerUtil.enableCharging(false,"plist");
                 }
             }
         } else {

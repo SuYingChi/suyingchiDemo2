@@ -42,7 +42,6 @@ import android.widget.Toast;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -244,11 +243,11 @@ public class MainActivity extends HSDeepLinkActivity {
                     ChargingConfigManager.getManager().setUserChangeChargingToggle();
                 }
 
-                if (isSwitchOn) {
-                    ChargingManagerUtil.enableCharging(false);
-                } else {
-                    ChargingManagerUtil.disableCharging();
-                }
+//                if (isSwitchOn) {
+//                    ChargingManagerUtil.enableCharging(false);
+//                } else {
+//                    ChargingManagerUtil.disableCharging();
+//                }
             }
         });
 

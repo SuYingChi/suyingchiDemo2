@@ -660,7 +660,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ChargingManagerUtil.enableCharging(false);
+                    ChargingManagerUtil.enableCharging(false,"saving");
                     HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
                 }

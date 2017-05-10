@@ -120,7 +120,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				@Override
 				public void onClick(View v) {
 					HSToastUtils.toastCenterLong(HSApplication.getContext().getString(R.string.charging_enable_toast));
-					ChargingManagerUtil.enableCharging(false);
+					ChargingManagerUtil.enableCharging(false,"card");
 					themeAdOnClickListener.onThemeAdClick(position);
 					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_click");
 				}

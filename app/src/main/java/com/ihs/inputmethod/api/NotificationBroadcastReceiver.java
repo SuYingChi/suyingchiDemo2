@@ -4,9 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.keyboardutils.notification.KCNotificationManager;
 
 /**
  * Created by Arthur on 17/5/6.
@@ -19,16 +22,18 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Intent intent1 = new Intent(context, ThemeHomeActivity.class);
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent1);
-        
+
         HSLog.e(intent.getStringExtra("eventName") + intent.toString());
         switch (intent.getStringExtra("eventName")) {
             case "Charging":
-                HSUIInputMethod.launchSettingsActivity();
+                ChargingManagerUtil.enableCharging(true,"notification");
+                KCNotificationManager.getInstance().removeNotificationEvent("Charging");
+                HSToastUtils.toastBottomShort("Fast Charging Enabled");
                 break;
             case "SetPhotoAsBackground":
             case "ChangeTheme":
             case "ChangeFont":
+                context.startActivity(intent1);
                 IAPManager.startCustomThemeActivity(null);
                 break;
         }
