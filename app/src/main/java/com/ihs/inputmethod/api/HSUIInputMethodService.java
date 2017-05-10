@@ -42,6 +42,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     private static InputConnection insideConnection = null;
 
+    private boolean isInputViewShowing = false;
+
     private static KeyboardPanelManager getKeyboardPanelMananger() {
         return (KeyboardPanelManager) keyboardPanelSwitcher;
     }
@@ -105,11 +107,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && isInputViewShowing) {
             getKeyboardPanelMananger().onBackPressed();
-            if(!IAPManager.getManager().hasPurchaseNoAds()) {
+            EditorInfo editorInfo = getCurrentInputEditorInfo();
+            if (editorInfo != null && !editorInfo.packageName.equals(getPackageName())) {
                 closeFullScreenAd.show();
             }
+
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -172,6 +176,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public void onStartInputView(EditorInfo editorInfo, boolean restarting) {
+        isInputViewShowing = true;
         Log.e("time log", "time log service onstartInputView started");
         KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("StartInputView");
         super.onStartInputView(editorInfo, restarting);
@@ -199,11 +204,17 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         KeyboardAnalyticsReporter.getInstance().onKeyboardSessionStart();
         KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
 
+        if (!restarting) {
+            openFullScreenAd.show();
+
+            openFullScreenAd.preLoad();
+            closeFullScreenAd.preLoad();
+        }
     }
 
     @Override
     public void onFinishInputView(final boolean finishingInput) {
-
+        isInputViewShowing = false;
         if (WebContentSearchManager.ControlStripState.PANEL_CONTROL != WebContentSearchManager.stripState) {
             HSGlobalNotificationCenter.sendNotificationOnMainThread(WebContentSearchManager.SHOW_CONTROL_PANEL_STRIP_VIEW);
         }
