@@ -244,21 +244,25 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         if(!IAPManager.getManager().hasPurchaseNoAds()) {
             // 添加广告
             if (nativeAdView == null) {
-                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
-                if (HSNetworkConnectionUtils.isNetworkConnected()) {
-                    int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
-                    View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
-                    LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
-                    LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
-                    loadingView.setLayoutParams(loadingLP);
-                    loadingView.setGravity(Gravity.CENTER);
-                    nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
-                    nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themedetailad), width, 1.9f));
-                    NativeAdViewButtonHelper.autoHighlight(nativeAdView);
-                    CardView cardView = ViewConvertor.toCardView(nativeAdView);
-                    linearLayout.addView(cardView);
-                } else
-                    linearLayout.setVisibility(View.GONE);
+                final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
+                int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
+                View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
+                LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
+                LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
+                loadingView.setLayoutParams(loadingLP);
+                loadingView.setGravity(Gravity.CENTER);
+                nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
+                nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themedetailad), width, 1.9f));
+                NativeAdViewButtonHelper.autoHighlight(nativeAdView);
+                CardView cardView = ViewConvertor.toCardView(nativeAdView);
+                linearLayout.addView(cardView);
+                linearLayout.setVisibility(View.GONE);
+                nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                    @Override
+                    public void onAdLoaded(NativeAdView nativeAdView) {
+                        linearLayout.setVisibility(View.VISIBLE);
+                    }
+                });
             }
         }
     }
