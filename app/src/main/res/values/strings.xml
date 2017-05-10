@@ -3,7 +3,7 @@
 	<!--base-->
 	<string name="settings">Settings</string>
 	<string name="enabled">Enabled</string>
-	<string name="enable">ENABLE</string>
+	<string name="enable">OK</string>
 	<string name="disabled">Disabled</string>
 	<string name="language">Language</string>
 	<string name="languages">Languages</string>
