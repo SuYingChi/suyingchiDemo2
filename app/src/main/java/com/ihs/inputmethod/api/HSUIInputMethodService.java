@@ -5,20 +5,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -32,8 +30,6 @@ import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
-
-import java.util.HashSet;
 
 /**
  * Created by xu.zhang on 11/3/15.
@@ -184,11 +180,11 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (insideConnection == null && restarting) {
             getKeyboardPanelMananger().showKeyboardWithMenu();
         }
-        // Broadcast event
-        final HSBundle bundle = new HSBundle();
-        if (editorInfo != null) {
-            bundle.putString(HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME, editorInfo.packageName);
-        }
+//        // Broadcast event
+//        final HSBundle bundle = new HSBundle();
+//        if (editorInfo != null) {
+//            bundle.putString(HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME, editorInfo.packageName);
+//        }
 
 //        HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_START_INPUT_VIEW, bundle);
         Log.e("time log", "time log service onstartInputView finished");
