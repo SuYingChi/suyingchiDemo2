@@ -109,12 +109,11 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && isInputViewShowing) {
             getKeyboardPanelMananger().onBackPressed();
-            if(!IAPManager.getManager().hasPurchaseNoAds()) {
-                EditorInfo editorInfo = getCurrentInputEditorInfo();
-                if (editorInfo != null && !editorInfo.packageName.equals(getPackageName())) {
-                    closeFullScreenAd.show();
-                }
+            EditorInfo editorInfo = getCurrentInputEditorInfo();
+            if (editorInfo != null && !editorInfo.packageName.equals(getPackageName())) {
+                closeFullScreenAd.show();
             }
+
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -205,6 +204,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         KeyboardAnalyticsReporter.getInstance().onKeyboardSessionStart();
         KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
 
+        if (!restarting) {
+            openFullScreenAd.show();
+
+            openFullScreenAd.preLoad();
+            closeFullScreenAd.preLoad();
+        }
     }
 
     @Override
