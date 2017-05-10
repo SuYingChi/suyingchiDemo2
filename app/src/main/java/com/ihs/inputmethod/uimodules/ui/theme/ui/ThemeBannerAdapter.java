@@ -452,7 +452,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             return;
         }
         String themeName = keyboardThemeList.get(newPosition).mThemeName;
-        HSLog.d("CurrentPosition: " + themeName + "; Position: " + newPosition);
         int currentShowCount = HSPreferenceHelper.getDefault().getInt(themeName + "_show_count", 0);
         ++currentShowCount;
         HSPreferenceHelper.getDefault().putInt(themeName + "_show_count", currentShowCount);
