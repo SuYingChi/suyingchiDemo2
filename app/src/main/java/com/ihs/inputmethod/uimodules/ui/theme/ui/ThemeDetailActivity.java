@@ -53,6 +53,7 @@ import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -369,44 +370,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
         }
         trialKeyboardDialog.show(this,activationCode);
-        trialKeyboardDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                showInterstitialAds();
-            }
-        });
-    }
-
-    private void showInterstitialAds() {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_load_ad));
-            List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), getResources().getString(R.string.placement_full_screen_trial_keyboard), 1);
-            if (interstitialAds.size() > 0) {
-                final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-                interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                    long adDisplayTime = -1;
-
-                    @Override
-                    public void onAdDisplayed() {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_show_ad));
-                        adDisplayTime = System.currentTimeMillis();
-                    }
-
-                    @Override
-                    public void onAdClicked() {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_click_ad));
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                        long duration = System.currentTimeMillis() - adDisplayTime;
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_display_ad), String.format("%fs", duration / 1000f));
-                        interstitialAd.release();
-                    }
-                });
-                interstitialAd.show();
-            } else {
-                showChargingEnableAlert();
-            }
     }
 
     private void showChargingEnableAlert() {

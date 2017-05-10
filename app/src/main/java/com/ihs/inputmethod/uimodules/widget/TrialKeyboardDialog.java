@@ -38,6 +38,7 @@ import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
@@ -134,32 +135,31 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 HSLog.e("app_keyboardtest_view_show_time : " + time);
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_keyboardtest_view_show_time", String.valueOf(time));
 
-                if (from.contains("ThemeHomeActivity")) {
-                    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                    if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        boolean isRateAlertShownThisTime = false;
-                        HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-                        if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
-                            if (!HSAlertMgr.isAlertShown()) {
-                                //当前session未显示过
-                                HSLog.d("TrialKeyboardDialog", "RateAlert当前session未显示过");
-                                HSAlertMgr.showRateAlert();
-                                if (HSAlertMgr.isAlertShown()) {
-                                    //本次弹出了RateAlert
-                                    isRateAlertShownThisTime = true;
-                                    HSLog.d("TrialKeyboardDialog", "本次弹出了RateAlert");
-                                }
+                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    boolean isRateAlertShownThisTime = false;
+                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
+                    if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
+                        if (!HSAlertMgr.isAlertShown()) {
+                            //当前session未显示过
+                            HSLog.d("TrialKeyboardDialog", "RateAlert当前session未显示过");
+                            HSAlertMgr.showRateAlert();
+                            if (HSAlertMgr.isAlertShown()) {
+                                //本次弹出了RateAlert
+                                isRateAlertShownThisTime = true;
+                                HSLog.d("TrialKeyboardDialog", "本次弹出了RateAlert");
                             }
+                        }
 
-                            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
-                        } else {
-                            HSLog.e("CUSTOM_THEME_SAVE_NULL");
-                        }
-                        if (!isRateAlertShownThisTime) {
-                            showInterstitialAds();
-                        }
+                        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
+                    } else {
+                        HSLog.e("CUSTOM_THEME_SAVE_NULL");
+                    }
+                    if (!isRateAlertShownThisTime) {
+                        showInterstitialAds();
                     }
                 }
+
                 isSoftKeyboardOpened = false;
                 if (nativeAdView != null) {
 //                    nativeAdView.release();
@@ -170,41 +170,16 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     private void showInterstitialAds() {
         if (!CustomThemeActivity.hasTrialKeyboardShownWhenThemeCreated && getContext().getResources().getBoolean(R.bool.is_show_full_screen_ad_after_show_trial_keyboard) && !IAPManager.getManager().hasPurchaseNoAds()) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_apply_load_ad));
-            List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), getContext().getResources().getString(R.string.placement_full_screen_trial_keyboard), 1);
-            if (interstitialAds.size() > 0) {
-                final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-                interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                    long adDisplayTime = -1;
-
-                    @Override
-                    public void onAdDisplayed() {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_apply_show_ad));
-                        adDisplayTime = System.currentTimeMillis();
-                    }
-
-                    @Override
-                    public void onAdClicked() {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_apply_click_ad));
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                        long duration = System.currentTimeMillis() - adDisplayTime;
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_apply_display_ad), String.format("%fs", duration / 1000f));
-                        interstitialAd.release();
-                    }
-                });
-                interstitialAd.show();
+            boolean adShown = KCInterstitialAd.show(getContext().getString(R.string.placement_full_screen_trial_keyboard));
+            if (adShown) {
                 hasTrialKeyboardShownWhenThemeCreated = false;
             } else {
                 showChargingEnableAlert();
             }
-        }else{
+        } else {
             hasTrialKeyboardShownWhenThemeCreated = false;
         }
     }
-
 
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
@@ -234,7 +209,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
         int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
         View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
-        if(nativeAdView == null){
+        if (nativeAdView == null) {
             nativeAdView = new NativeAdView(HSApplication.getContext(), view, null);
             nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
             final CardView cardView = ViewConvertor.toCardView(nativeAdView);
@@ -274,7 +249,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         }
         activationRequestCode = keyboardActivationRequestCode;
         checkKeyboardState(activity);
-        new AcbInterstitialAdLoader(getContext(),getContext().getResources().getString(R.string.placement_full_screen_trial_keyboard)).load(1,null);
+        KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_trial_keyboard));
     }
 
     @Override
