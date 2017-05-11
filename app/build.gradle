@@ -130,7 +130,7 @@ dependencies {
 
 
     // Native Ads
-    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.beta:4.1.2.beta01'
+    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdAltamobNativeAdapter.gm:4.1.0.gm'
