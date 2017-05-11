@@ -134,7 +134,7 @@ dependencies {
     compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdAltamobNativeAdapter.gm:4.1.0.gm'
-//    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.0.gm'
+    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.2.gm'
 
