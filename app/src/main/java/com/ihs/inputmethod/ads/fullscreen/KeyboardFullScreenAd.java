@@ -47,23 +47,6 @@ public class KeyboardFullScreenAd {
     public KeyboardFullScreenAd(String placementName, final String occasion) {
         this.placementName = placementName;
         this.occasion = occasion;
-        INotificationObserver observer = new INotificationObserver() {
-            @Override
-            public void onReceive(String s, HSBundle hsBundle) {
-                if (KeyboardFullScreenAdSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD.equals(s)) {
-                    preLoad();
-                    if (!IAPManager.getManager().hasPurchaseNoAds() && "Open".equals(occasion)) {
-                        show();
-                    }
-                } else {
-                    if (HSUIInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY.equals(s)) {
-                        HSGlobalNotificationCenter.removeObserver(this);
-                    }
-                }
-            }
-        };
-        HSGlobalNotificationCenter.addObserver(KeyboardFullScreenAdSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD, observer);
-        HSGlobalNotificationCenter.addObserver(HSUIInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY, observer);
     }
 
     protected boolean isConditionSatisfied() {
