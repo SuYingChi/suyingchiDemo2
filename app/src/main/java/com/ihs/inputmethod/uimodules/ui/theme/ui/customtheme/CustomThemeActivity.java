@@ -61,6 +61,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -75,6 +76,7 @@ import java.util.List;
 
 import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 import static com.ihs.app.framework.HSApplication.getContext;
+import static com.ihs.keyboardutils.ads.KCInterstitialAd.show;
 
 
 public class CustomThemeActivity extends HSAppCompatActivity implements IItemClickListener, INotificationObserver {
@@ -87,6 +89,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
     public static final String BUNDLE_KEY_CUSTOMIZE_ENTRY = "customize_entry";
 
     public static final int keyboardActivationFromCustom = 15;
+
+    private static final int FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD = 1;
 
     private HSKeyboardThemePreview keyboardView;
     private HSMediaView mp4HSBackgroundView;
@@ -133,9 +137,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
                     loadAsync();
                 }
             }, 0);
-        }
-        if (getContext().getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
-            new AcbInterstitialAdLoader(getContext(), getResources().getString(R.string.placement_full_screen_trial_keyboard)).load(1, null);
         }
     }
 
@@ -359,6 +360,12 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
 
     public void showFragment(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < getFragmentClasses().size()) {
+            if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD) {
+                if (getContext().getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
+                    KCInterstitialAd.load(getString(R.string.placement_full_screen_save_custom_theme));
+                }
+            }
+
             try {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 currentFragment = getFragmentClasses().get(pageIndex).newInstance();
@@ -615,38 +622,14 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         if (IAPManager.getManager().hasPurchaseNoAds() || !getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
             return false;
         }
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_load_ad));
-        List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), getContext().getResources().getString(R.string.placement_full_screen_trial_keyboard), 1);
-        if (interstitialAds.size() > 0) {
-            final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-            interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                long adDisplayTime = -1;
+        boolean interstitialAdShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_save_custom_theme), new KCInterstitialAd.OnAdCloseListener() {
+            @Override
+            public void onAdClose() {
+                showTrialKeyboard(true);
+            }
+        });
 
-                @Override
-                public void onAdDisplayed() {
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_show_ad));
-                    adDisplayTime = System.currentTimeMillis();
-                }
-
-                @Override
-                public void onAdClicked() {
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_click_ad));
-                }
-
-                @Override
-                public void onAdClosed() {
-                    long duration = System.currentTimeMillis() - adDisplayTime;
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_display_ad), String.format("%fs", duration / 1000f));
-                    interstitialAd.release();
-                    showTrialKeyboard(true);
-                }
-            });
-            interstitialAd.show();
-            hasTrialKeyboardShownWhenThemeCreated = true;
-            return true;
-        } else {
-            return false;
-        }
+        return interstitialAdShown;
     }
 
     private boolean showChargingEnableAlert() {

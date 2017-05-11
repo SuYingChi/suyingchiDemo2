@@ -20,6 +20,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
+import com.ihs.app.framework.inner.HomeKeyTracker;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -36,7 +37,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
-import com.ihs.inputmethod.feature.customuiratealert.CustomUIRateAlertManager;
+import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
@@ -57,6 +58,7 @@ import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPEN
 public class HSUIApplication extends HSInputMethodApplication {
 
     private Intent actionService;
+    private HomeKeyTracker homeKeyTracker;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -69,6 +71,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 //                }
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
+                homeKeyTracker.startTracker();
                 IAPManager.getManager().queryOwnProductIds();
 
                 try {
@@ -91,6 +94,14 @@ public class HSUIApplication extends HSInputMethodApplication {
                 if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE){
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 }
+                if(homeKeyTracker.isHomeKeyPressed()) {
+                    HSAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
+                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "home");
+                } else {
+                    HSAnalytics.logEvent("app_quit_way", "app_quit_way", "other");
+                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "other");
+                }
+                homeKeyTracker.stopTracker();
             }
         }
     };
@@ -109,7 +120,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         AcbNativeAdManager.sharedInstance();
 
-        CustomUIRateAlertManager.initialize();
+        CustomUIRateAlertUtils.initialize();
 
         if (!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
@@ -136,8 +147,9 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         HSInputMethodService.initResourcesBeforeOnCreate();
 
-
         registerNotificationEvent();
+        homeKeyTracker = new HomeKeyTracker(this);
+
     }
 
     private void registerNotificationEvent() {

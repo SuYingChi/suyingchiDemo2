@@ -106,4 +106,5 @@
     <color name="ad_button_blue_pressed">#3000e0</color>
     <color name="ad_button_green_state">#00c753</color>
     <color name="ad_button_green_state_pressed">#00a947</color>
+    <color name="base_function_bg_color">#30ffffff</color>
 </resources>

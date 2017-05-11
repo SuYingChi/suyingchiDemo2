@@ -262,6 +262,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
+<<<<<<< HEAD
+=======
+        showEnableChargingAlertIfNeeded();
+
+>>>>>>> f4298ca393cb770ce074bbbe820f9fd74b6fd3d0
         exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_exit_alert_dialog));
         onNewIntent(getIntent());
     }
@@ -319,14 +324,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         refreshApkUpdateViews();
-
-        // TODO: 这里应该调用一个将所有元素都标记为已读的接口，而不是自己将元素列出来。具体应该把Tip的逻辑重新整理下，这里暂时先这么写
-        HSThemeNewTipController.getInstance().setTypeAllRead(
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME,
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_BACKGROUND,
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_EFFECT,
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_FONT,
-                HSThemeNewTipController.ThemeTipType.NEW_TIP_SOUND);
     }
 
     @Override
@@ -601,8 +598,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     @Override
     public void onBackPressed() {
-        if (showEnableChargingAlertIfNeeded() || !exitAlert.show()) {
+        exitAlert.setShowAd(!IAPManager.getManager().hasPurchaseNoAds());
+        if (!exitAlert.show()) {
             HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "back");
             super.onBackPressed();
         }
     }

@@ -3,7 +3,7 @@
 	<!--base-->
 	<string name="settings">Settings</string>
 	<string name="enabled">Enabled</string>
-	<string name="enable">ENABLE</string>
+	<string name="enable">OK</string>
 	<string name="disabled">Disabled</string>
 	<string name="language">Language</string>
 	<string name="languages">Languages</string>
@@ -195,6 +195,13 @@
 	<string name="purchase_error_item">ITEM UNAVAILABLE</string>
 	<string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
 
+	<!-- Theme new tip -->
+	<string name="new_background_tip">New background available</string>
+	<string name="new_font_tip">New font available</string>
+	<string name="new_tap_effect_tip">New tap effect available</string>
+	<string name="new_click_sound_tip">New click sound available</string>
+	<string name="new_theme_tip">New themes available</string>
+
 	<!--deep link-->
 	<string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
 	<string name="deeplink_description">Rainbow Keyboard description</string>
@@ -237,4 +244,7 @@
 With accessibility authorization, I can help you setup keyboard directly!
 
 Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
+
+	<!-- Product Master's config -->
+	<string name="feedback_email">feedback.glowdesign@hotmail.com</string>
 </resources>

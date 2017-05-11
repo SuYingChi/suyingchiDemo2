@@ -12,6 +12,7 @@ import android.os.Build;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.uimodules.R;
 
 import java.util.Arrays;
 
@@ -42,8 +43,7 @@ public class RippleDrawableUtils {
         int pressedColor = Color.parseColor("#30ffffff");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor)),
-                    getStateListDrawable(normalColor, pressedColor, -1, radius), getRippleMask(pressedColor, radius));
+            return HSApplication.getContext().getResources().getDrawable(R.drawable.base_function_bg);
         } else {
             return getStateListDrawable(normalColor, pressedColor, -1, radius);
         }

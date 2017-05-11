@@ -5,20 +5,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -33,8 +31,6 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 
-import java.util.HashSet;
-
 /**
  * Created by xu.zhang on 11/3/15.
  */
@@ -45,6 +41,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
 
     private static InputConnection insideConnection = null;
+
+    private boolean isInputViewShowing = false;
 
     private static KeyboardPanelManager getKeyboardPanelMananger() {
         return (KeyboardPanelManager) keyboardPanelSwitcher;
@@ -109,11 +107,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && isInputViewShowing) {
             getKeyboardPanelMananger().onBackPressed();
-            if(!IAPManager.getManager().hasPurchaseNoAds()) {
+            EditorInfo editorInfo = getCurrentInputEditorInfo();
+            if (editorInfo != null && !editorInfo.packageName.equals(getPackageName())) {
                 closeFullScreenAd.show();
             }
+
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -176,6 +176,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public void onStartInputView(EditorInfo editorInfo, boolean restarting) {
+        isInputViewShowing = true;
         Log.e("time log", "time log service onstartInputView started");
         KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("StartInputView");
         super.onStartInputView(editorInfo, restarting);
@@ -184,11 +185,11 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (insideConnection == null && restarting) {
             getKeyboardPanelMananger().showKeyboardWithMenu();
         }
-        // Broadcast event
-        final HSBundle bundle = new HSBundle();
-        if (editorInfo != null) {
-            bundle.putString(HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME, editorInfo.packageName);
-        }
+//        // Broadcast event
+//        final HSBundle bundle = new HSBundle();
+//        if (editorInfo != null) {
+//            bundle.putString(HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME, editorInfo.packageName);
+//        }
 
 //        HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_START_INPUT_VIEW, bundle);
         Log.e("time log", "time log service onstartInputView finished");
@@ -203,11 +204,17 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         KeyboardAnalyticsReporter.getInstance().onKeyboardSessionStart();
         KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
 
+        if (!restarting) {
+            openFullScreenAd.show();
+
+            openFullScreenAd.preLoad();
+            closeFullScreenAd.preLoad();
+        }
     }
 
     @Override
     public void onFinishInputView(final boolean finishingInput) {
-
+        isInputViewShowing = false;
         if (WebContentSearchManager.ControlStripState.PANEL_CONTROL != WebContentSearchManager.stripState) {
             HSGlobalNotificationCenter.sendNotificationOnMainThread(WebContentSearchManager.SHOW_CONTROL_PANEL_STRIP_VIEW);
         }

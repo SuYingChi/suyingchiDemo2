@@ -208,7 +208,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void showEmojiPanel() {
-        keyboardPanelSwitchContainer.showPanel(HSEmoticonPanel.class);
+        keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
     }
 
