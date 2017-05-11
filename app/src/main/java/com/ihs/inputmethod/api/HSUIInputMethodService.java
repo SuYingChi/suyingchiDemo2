@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -109,13 +110,22 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && isInputViewShowing) {
             getKeyboardPanelMananger().onBackPressed();
-            EditorInfo editorInfo = getCurrentInputEditorInfo();
-            if (editorInfo != null && !editorInfo.packageName.equals(getPackageName())) {
+            if (!isKeyboardInItsOwnApp()) {
                 closeFullScreenAd.show();
             }
-
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private boolean isKeyboardInItsOwnApp() {
+        EditorInfo editorInfo = getCurrentInputEditorInfo();
+        if (editorInfo == null) {
+            return false;
+        } else if (TextUtils.equals(editorInfo.packageName, getPackageName())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -205,10 +215,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
 
         if (!restarting) {
-            openFullScreenAd.show();
+            if (!isKeyboardInItsOwnApp()) {
+                openFullScreenAd.show();
 
-            openFullScreenAd.preLoad();
-            closeFullScreenAd.preLoad();
+                openFullScreenAd.preLoad();
+                closeFullScreenAd.preLoad();
+            }
         }
     }
 
