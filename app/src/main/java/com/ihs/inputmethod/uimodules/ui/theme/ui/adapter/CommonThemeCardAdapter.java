@@ -250,7 +250,7 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
 	private void setThemeNotNew(HSKeyboardTheme keyboardTheme) {
-		if(keyboardTheme.isNewTheme()) {
+		if (HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName)) {
 			HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);
 		}
 	}
