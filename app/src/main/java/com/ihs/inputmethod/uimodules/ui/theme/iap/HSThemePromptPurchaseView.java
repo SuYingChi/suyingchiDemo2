@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.theme.iap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -13,15 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.reward.RewardItem;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.reward.RewardVideoHelper;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
-import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 
 import org.json.JSONObject;
@@ -30,7 +26,7 @@ import org.json.JSONObject;
 /**
  * Created by jixiang on 16/5/3.
  */
-public class HSThemePromptPurchaseView extends LinearLayout implements View.OnClickListener, HSIAPManager.HSIAPListener, RewardVideoHelper.RewardResultListener {
+public class HSThemePromptPurchaseView extends LinearLayout implements View.OnClickListener, HSIAPManager.HSIAPListener{
 
     View rootView;
     ImageView themeImage;
@@ -42,7 +38,6 @@ public class HSThemePromptPurchaseView extends LinearLayout implements View.OnCl
     View themePriceLayout;
     View watchViewUnlockViewLayout;
 
-    RewardVideoHelper rewardVideoHelper;
     IItemClickListener itemClickListener;
     KCBaseElement currentCustomThemeItem;
 
@@ -57,7 +52,6 @@ public class HSThemePromptPurchaseView extends LinearLayout implements View.OnCl
     public HSThemePromptPurchaseView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setClickable(true);
-        rewardVideoHelper = new RewardVideoHelper((Activity) context, this);
         rootView = View.inflate(context, R.layout.prompt_theme_purchase_view, this);
         initView();
         HSIAPManager.getInstance().addListener(this);
@@ -157,48 +151,8 @@ public class HSThemePromptPurchaseView extends LinearLayout implements View.OnCl
                 itemClickListener.onCloseButtonClick();
             }
         } else if (id == R.id.watch_video_unlock_layout) {
-            rewardVideoHelper.loadAndShowVideo();
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("iapalert_custom_WatchVideoToUnlock_clicked");
         }
-    }
-
-
-    @Override
-    public void onRewardedSuccess() {
-        if (currentCustomThemeItem != null) {
-            IAPManager.getManager().unlockProductViaWatchVideo(IAPManager.getManager().getProductId(currentCustomThemeItem));
-        }
-        setVisibility(GONE);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("iapalert_custom_WatchVideoToUnlock_VideoCompleted");
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-    }
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-    }
-
-    @Override
-    public void onRewardedVideoStartLoad() {
-        setVisibility(GONE);
-    }
-
-    @Override
-    public void onRewardedVideoStart() {
-        setVisibility(GONE);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("iapalert_custom_WatchVideoToUnlock_VideoStarted");
-    }
-
-    @Override
-    public void onRewardedVideoLoadTimeout() {
-        setVisibility(GONE);
-    }
-
-    @Override
-    public void onRewardedFinish() {
-        setVisibility(GONE);
     }
 
     private void purchaseCurrentItemTheme() {
