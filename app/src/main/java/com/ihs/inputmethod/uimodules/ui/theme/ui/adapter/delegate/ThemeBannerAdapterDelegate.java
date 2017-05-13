@@ -38,15 +38,18 @@ public final class ThemeBannerAdapterDelegate extends AdapterDelegate<List<Theme
 	@Override
 	protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
 		ThemeBannerViewHolder viewHolder=new ThemeBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_theme_banners,parent,false));
-		ThemeBannerAdapter themeBannerAdapter = new ThemeBannerAdapter(activity);
+
+		int bannerWidth = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels
+				- HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.theme_store_viewpager_page_margin) * 2
+				- HSApplication.getContext().getResources().getDimensionPixelOffset(R.dimen.theme_store_viewpager_padding_left)
+				- HSApplication.getContext().getResources().getDimensionPixelOffset(R.dimen.theme_store_viewpager_padding_right);
+		int bannerHeight = (int) (bannerWidth * (10 / 19f));
+
+		ThemeBannerAdapter themeBannerAdapter = new ThemeBannerAdapter(activity,bannerWidth,bannerHeight);
 		themeBannerAdapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
 		ViewPager viewPager =viewHolder.viewPager;
 		viewPager.setPageMargin(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.theme_store_viewpager_page_margin));
-		viewPager.getLayoutParams().height = (int) ((HSApplication.getContext().getResources().getDisplayMetrics().widthPixels
-				- HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.theme_store_viewpager_page_margin) * 2
-				- HSApplication.getContext().getResources().getDimensionPixelOffset(R.dimen.theme_store_viewpager_padding_left)
-				- HSApplication.getContext().getResources().getDimensionPixelOffset(R.dimen.theme_store_viewpager_padding_right)) * (10 / 19f)
-				+ HSApplication.getContext().getResources().getDisplayMetrics().density * 10);
+		viewPager.getLayoutParams().height = (int) (bannerHeight + HSApplication.getContext().getResources().getDisplayMetrics().density * 10);
 		themeBannerAdapter.setViewPager(viewPager);
 		themeBannerAdapter.initData();
 		viewPager.setAdapter(themeBannerAdapter);

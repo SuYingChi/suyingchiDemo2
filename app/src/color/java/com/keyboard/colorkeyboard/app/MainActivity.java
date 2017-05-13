@@ -2,7 +2,6 @@ package com.keyboard.colorkeyboard.app;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -51,7 +50,6 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -504,6 +502,7 @@ public class MainActivity extends HSDeepLinkActivity {
         } catch (IllegalArgumentException ex) {
             HSLog.e("content observer not registered yet");
         }
+        getWindow().setBackgroundDrawable(null);
     }
 
     private void refreshUIState() {

@@ -63,7 +63,7 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
         loadingLayout.setCircle(adsItem.isCircleStyle);
 
 
-        final NativeAdView nativeAdView = new NativeAdView(context, view, loadingLayout);
+        final NativeAdView nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingLayout);
         final NativeAdParams nativeAdParams = new NativeAdParams(context.getString(R.string.ad_placement_customize_theme));
         nativeAdView.configParams(nativeAdParams);
         nativeAdParams.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

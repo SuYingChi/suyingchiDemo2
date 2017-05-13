@@ -17,7 +17,6 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
@@ -33,7 +32,10 @@ import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,6 +50,8 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
     private static int AUTO_SCROLL_DELAY;
+    private final int bannerWidth;
+    private final int bannerHeight;
 
     private ViewPager viewPager;
     private Activity activity;
@@ -65,6 +69,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .displayer(new RoundedBitmapDisplayer(HSDisplayUtils.dip2px(2)))
             .cacheInMemory(true).cacheOnDisk(true)
+            .imageScaleType(ImageScaleType.EXACTLY)
             .build();
     private boolean themeAnalyticsEnabled = false;
 
@@ -324,8 +329,10 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         }
     }
 
-    public ThemeBannerAdapter(Activity activity) {
+    public ThemeBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
         this.activity = activity;
+        this.bannerWidth = bannerWidth;
+        this.bannerHeight = bannerHeight;
         AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
@@ -390,7 +397,8 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             final ImageView imageView = (ImageView) view.findViewById(R.id.theme_banner_image);
             if (keyboardTheme.getThemeBannerImgUrl() != null) {
                 imageView.setImageResource(R.drawable.image_placeholder);
-                HSImageLoader.getInstance().displayImage(keyboardTheme.getThemeBannerImgUrl(), imageView, displayImageOptions);
+                ImageSize imageSize = new ImageSize(bannerWidth,bannerHeight);
+                HSImageLoader.getInstance().displayImage(keyboardTheme.getThemeBannerImgUrl(), new ImageViewAware(imageView), displayImageOptions,imageSize,null,null);
 
             }
 
@@ -479,6 +487,10 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         if (adCardView != null) {
             ((NativeAdView) adCardView.getChildAt(0)).release();
         }
+
+        stopAutoScroll();
+        handler.removeCallbacksAndMessages(null);
+        handler = null;
 
         viewPager.removeAllViews();
 
