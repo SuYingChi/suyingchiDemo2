@@ -29,7 +29,6 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 
 /**
@@ -37,7 +36,6 @@ import com.ihs.inputmethod.websearch.WebContentSearchManager;
  */
 public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String HS_NOTIFICATION_SERVICE_DESTROY = "hs.keyboard.SERVICE_DESTROY";
-    public static final String HS_NOTIFICATION_SERVICE_START_INPUT_VIEW = "hs.keyboard.SERVICE_START_INPUT_VIEW";
     public static final String HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME = "editor_owner_package_name";
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
 
@@ -195,13 +193,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (insideConnection == null && restarting) {
             getKeyboardPanelMananger().showKeyboardWithMenu();
         }
-//        // Broadcast event
-//        final HSBundle bundle = new HSBundle();
-//        if (editorInfo != null) {
-//            bundle.putString(HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME, editorInfo.packageName);
-//        }
-
-//        HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_START_INPUT_VIEW, bundle);
         Log.e("time log", "time log service onstartInputView finished");
 
         mHandler.postDelayed(new Runnable() {
