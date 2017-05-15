@@ -21,7 +21,6 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
-import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
@@ -138,7 +137,6 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				nativeAdView.setTag("nativeadview");
 				nativeAdView.configParams(new NativeAdParams(nativeAd, width, 1.9f));
 				cardView.addView(nativeAdView);
-				NativeAdViewButtonHelper.autoHighlight(nativeAdView);
 				nativeAdViewCached.put(nativeAd, nativeAdView);
 			} else {
 				ViewGroup parent = ((ViewGroup) nativeAdViewCached.get(nativeAd).getParent());

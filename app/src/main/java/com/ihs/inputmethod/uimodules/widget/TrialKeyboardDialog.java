@@ -30,7 +30,6 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
-import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -209,7 +208,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
             nativeAdView = new NativeAdView(HSApplication.getContext(), view, null);
             nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
             final CardView cardView = ViewConvertor.toCardView(nativeAdView);
-            NativeAdViewButtonHelper.autoHighlight(nativeAdView);
 
             nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
                 @Override

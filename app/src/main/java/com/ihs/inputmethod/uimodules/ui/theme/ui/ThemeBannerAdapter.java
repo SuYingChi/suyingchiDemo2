@@ -24,7 +24,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSImageLoader;
-import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
@@ -129,7 +128,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                     }
                 });
                 nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_cardad)));
-                NativeAdViewButtonHelper.autoHighlight(nativeAdView);
             }
         }
     }

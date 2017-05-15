@@ -36,7 +36,6 @@ import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
-import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
@@ -248,7 +247,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 loadingView.setGravity(Gravity.CENTER);
                 nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
                 nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themedetailad), width, 1.9f));
-                NativeAdViewButtonHelper.autoHighlight(nativeAdView);
                 CardView cardView = ViewConvertor.toCardView(nativeAdView);
                 linearLayout.addView(cardView);
                 linearLayout.setVisibility(View.GONE);
