@@ -129,7 +129,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 			String nativeAd = getNativeAd(position);
 			if (nativeAdViewCached.get(nativeAd) == null) {
 				View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
-				LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
+				LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.theme_ad_loading, null);
 				LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f) + HSDisplayUtils.dip2px(65));
 				loadingView.setLayoutParams(loadingLP);
 				loadingView.setGravity(Gravity.CENTER);
