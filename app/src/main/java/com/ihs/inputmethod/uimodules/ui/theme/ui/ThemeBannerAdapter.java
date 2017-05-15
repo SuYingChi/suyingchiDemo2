@@ -21,6 +21,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
@@ -409,6 +410,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                     intent.putExtra(ThemeDetailActivity.INTENT_KEY_THEME_NAME, keyboardTheme.mThemeName);
                     activity.startActivity(intent);
                     HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("store_banner_clicked", keyboardTheme.mThemeName);
+                    HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);
                     if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                         ThemeAnalyticsReporter.getInstance().recordBannerThemeClick(keyboardTheme.mThemeName);
                     }

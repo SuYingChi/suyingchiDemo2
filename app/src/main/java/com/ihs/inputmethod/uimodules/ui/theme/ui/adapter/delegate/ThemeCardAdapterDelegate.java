@@ -70,8 +70,8 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 		holder.itemView.setTag(keyboardTheme.mThemeName);
 
 		themeCardViewHolder.themeDelete.setVisibility(View.GONE);
-		
-		themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName)&& HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
+
+		themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
 		switch (keyboardTheme.getThemeType()) {
 			case CUSTOM:
 				themeCardViewHolder.themeName.setText(HSApplication.getContext().getString(R.string.theme_card_custom_theme_default_name));
