@@ -1,10 +1,12 @@
 package com.ihs.inputmethod.api;
 
 
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -268,5 +270,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if(restarting){
             getKeyboardPanelMananger().resetKeyboardBarState();
         }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
     }
 }

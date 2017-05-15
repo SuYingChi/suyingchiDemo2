@@ -26,8 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -76,7 +74,6 @@ import java.util.List;
 
 import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 import static com.ihs.app.framework.HSApplication.getContext;
-import static com.ihs.keyboardutils.ads.KCInterstitialAd.show;
 
 
 public class CustomThemeActivity extends HSAppCompatActivity implements IItemClickListener, INotificationObserver {
@@ -643,7 +640,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ChargingManagerUtil.enableCharging(false,"saving");
+                    ChargingManagerUtil.enableCharging(false, "saving");
                     HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
                 }

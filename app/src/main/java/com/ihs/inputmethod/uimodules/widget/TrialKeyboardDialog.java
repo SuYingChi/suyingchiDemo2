@@ -18,8 +18,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -41,8 +39,6 @@ import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
-
-import java.util.List;
 
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.hasTrialKeyboardShownWhenThemeCreated;
@@ -192,7 +188,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
             dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ChargingManagerUtil.enableCharging(false,"saving");
+                    ChargingManagerUtil.enableCharging(false, "saving");
                     HSToastUtils.toastCenterShort(getContext().getString(R.string.charging_enable_toast));
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
                 }

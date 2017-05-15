@@ -8,8 +8,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.crashlytics.android.Crashlytics;
@@ -42,6 +40,7 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
@@ -223,42 +222,12 @@ public class HSUIApplication extends HSInputMethodApplication {
                 break;
         }
 
-        new AcbInterstitialAdLoader(this, adPlacementName).load(1, null);
+        KCInterstitialAd.load(adPlacementName);
 
         switch (adType) {
             //full scrn ad
             case 4:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(adPlacementName + "_Load");
-                List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), adPlacementName, 1);
-                if (interstitialAds.size() > 0) {
-                    final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-                    final String finalAdPlacementName = adPlacementName;
-                    interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                        long adDisplayTime = -1;
-
-                        @Override
-                        public void onAdDisplayed() {
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_Show");
-                            adDisplayTime = System.currentTimeMillis();
-                        }
-
-                        @Override
-                        public void onAdClicked() {
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_Click");
-                        }
-
-                        @Override
-                        public void onAdClosed() {
-                            long duration = System.currentTimeMillis() - adDisplayTime;
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_DisplayTime", String.format("%fs", duration / 1000f));
-                            interstitialAd.release();
-                        }
-                    });
-                    interstitialAd.show();
-                    return true;
-                } else {
-                    return false;
-                }
+                return KCInterstitialAd.show(adPlacementName);
         }
         return false;
 
