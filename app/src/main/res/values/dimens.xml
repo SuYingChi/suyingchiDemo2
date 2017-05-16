@@ -120,7 +120,8 @@
     <dimen name="theme_title_text_size">20sp</dimen>
     <dimen name="theme_new_tip_text">18sp</dimen>
 
-    <dimen name="emoticon_panel_actionbar_height">40dp</dimen>
+    <dimen name="emoticon_panel_actionbar_height">46dp</dimen>
+    <dimen name="emoticon_panel_ad_margin_top">5dp</dimen>
 
     <dimen name="setting_panel_item_margin_top">5dp</dimen>
     <dimen name="setting_panel_item_text_margin_top">3dp</dimen>

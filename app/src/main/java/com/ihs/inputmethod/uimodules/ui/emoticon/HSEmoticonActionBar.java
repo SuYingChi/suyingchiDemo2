@@ -13,7 +13,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -137,7 +136,8 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             params.gravity = Gravity.CENTER_VERTICAL;
             RelativeLayout adContainer = new RelativeLayout(getContext());
             adContainer.setTag("NativeAd");
-            RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            int adHeight =  height -  HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
+            RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(adHeight, adHeight);
             adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
             adContainer.addView(adView, adLayoutParams);
             addView(adContainer, params);
