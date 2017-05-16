@@ -161,7 +161,6 @@ dependencies {
 
     //ihs related
     compile files('../libs/libIAP.jar')
-    compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
     compile(name: 'ihs/libActionTrigger/libActionTrigger', ext: 'aar')
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
