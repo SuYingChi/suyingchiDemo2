@@ -1,12 +1,10 @@
 package com.ihs.inputmethod.api;
 
 
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,10 +12,12 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
@@ -32,6 +32,10 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
+
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by xu.zhang on 11/3/15.
@@ -108,16 +112,97 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && isInputViewShowing) {
-            getKeyboardPanelMananger().onBackPressed();
-            if (!isKeyboardInItsOwnApp()) {
-                closeFullScreenAd.show();
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (isInputViewShowing) {
+                getKeyboardPanelMananger().onBackPressed();
+                if (!isInOwnApp()) {
+                    closeFullScreenAd.show();
+                }
+            } else {
+                showBackAdIfNeeded();
             }
         }
+
         return super.onKeyDown(keyCode, event);
     }
 
-    private boolean isKeyboardInItsOwnApp() {
+    private boolean showBackAdIfNeeded() {
+        boolean enabled = HSConfig.getBoolean("Application", "InterstitialAds", "BackButton", "Show");
+
+        if (!enabled) {
+            return false;
+        }
+
+        if (isInRightAppForBackAd()) {
+            HSPreferenceHelper prefs = HSPreferenceHelper.create(this, "BackAd");
+
+            long lastBackTimeMillis = prefs.getLong("LastBackTime", 0);
+            int backCount = prefs.getInt("BackCount", 0);
+            long currentBackTimeMillis = System.currentTimeMillis();
+
+            Calendar lastBackCalendar = Calendar.getInstance();
+            lastBackCalendar.setTimeInMillis(lastBackTimeMillis);
+
+            Calendar currentBackCalendar = Calendar.getInstance();
+            currentBackCalendar.setTimeInMillis(currentBackTimeMillis);
+
+            int hitBackCount = prefs.getInt("HitBackIndex", -1);
+
+            if (currentBackCalendar.get(Calendar.YEAR) == lastBackCalendar.get(Calendar.YEAR) &&
+                    currentBackCalendar.get(Calendar.DAY_OF_YEAR) == lastBackCalendar.get(Calendar.DAY_OF_YEAR)) {
+                backCount ++;
+            } else {
+                backCount = 1;
+                hitBackCount = -1;
+                prefs.putInt("HitBackCount", hitBackCount);
+            }
+            prefs.putLong("LastBackTime", currentBackTimeMillis);
+            prefs.putInt("BackCount", backCount);
+
+            List<Integer> backCountList = (List<Integer>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "BackCountOfDay");
+            for (int targetBackCount : backCountList) {
+                if (backCount >= targetBackCount && hitBackCount < targetBackCount) {
+                    boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard));
+                    if (adShown) {
+                        hitBackCount = backCount;
+                        prefs.putInt("HitBackIndex", hitBackCount);
+                        return true;
+                    } else {
+                        KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                    }
+                    break;
+                }
+            }
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isInRightAppForBackAd() {
+        if (isInOwnApp() || isInputViewShowing) {
+            return false;
+        }
+
+        EditorInfo editorInfo = getCurrentInputEditorInfo();
+        if (editorInfo == null || editorInfo.packageName == null) {
+            return false;
+        }
+
+        List<String> packageNameBlackList = (List<String>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "PackageNameExclude");
+        if (packageNameBlackList == null) {
+            return true;
+        }
+
+        for (String blockedPackageName : packageNameBlackList) {
+            if (editorInfo.packageName.contains(blockedPackageName)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isInOwnApp() {
         EditorInfo editorInfo = getCurrentInputEditorInfo();
         if (editorInfo == null) {
             return false;
@@ -208,7 +293,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
 
         if (!restarting) {
-            if (!isKeyboardInItsOwnApp()) {
+            if (!isInOwnApp()) {
                 openFullScreenAd.show();
 
                 openFullScreenAd.preLoad();
