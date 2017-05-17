@@ -32,7 +32,7 @@ public class KeyboardFullScreenAd {
 
     public boolean show() {
         if (isConditionSatisfied()) {
-            boolean adShown = KCInterstitialAd.show(placementName);
+            boolean adShown = KCInterstitialAd.show(placementName, null, true);
             if (adShown) {
                 hasFetchedAd();
                 return true;

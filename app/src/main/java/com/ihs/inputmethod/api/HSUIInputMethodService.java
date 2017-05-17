@@ -162,7 +162,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             List<Integer> backCountList = (List<Integer>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "BackCountOfDay");
             for (int targetBackCount : backCountList) {
                 if (backCount >= targetBackCount && hitBackCount < targetBackCount) {
-                    boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard));
+                    boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, true);
                     if (adShown) {
                         hitBackCount = backCount;
                         prefs.putInt("HitBackIndex", hitBackCount);

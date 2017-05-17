@@ -227,7 +227,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         switch (adType) {
             //full scrn ad
             case 4:
-                return KCInterstitialAd.show(adPlacementName);
+                return KCInterstitialAd.show(adPlacementName, null, true);
         }
         return false;
 
