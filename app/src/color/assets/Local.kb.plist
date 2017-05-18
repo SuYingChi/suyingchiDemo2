@@ -2689,6 +2689,8 @@
 						<array/>
 					</dict>
 				</array>
+				<key>preloadOnlyInWifi</key>
+				<false/>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
 			</dict>
@@ -3532,6 +3534,8 @@
 						<array/>
 					</dict>
 				</array>
+				<key>preloadOnlyInWifi</key>
+				<false/>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
 			</dict>
@@ -4889,6 +4893,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>preloadOnlyInWifi</key>
+				<false/>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
 			</dict>
