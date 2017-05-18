@@ -1,0 +1,49 @@
+libCommons:
+  RemoteConfig:
+    PlistFile: "Local.gd"
+    PlistUrl: "http://cdn.appcloudbox.net/glowdesign/apps/masterkeyboard/configs/config-master_keyboard-1.1.2.gd"
+  Analytics:
+      FlurryKey: "JX3NQ5RVMN4PMYH8J86C"
+      FacebookID: "1651195371844917"
+      TapjoySDKKey: "kCPYXFb7QbKg0Lrtzre6zQECtyL84OEver49TGEFbddQqLxpN6galX3fzPwp"
+      TapjoyEngagementID: "372155a4-fa46-4f69-a404-36c1128b35a7"
+      FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
+      FlurryStoredMaxCount: 1000
+      GoogleTrackId: "UA-66468004-6"
+      GooglePercentage: 1000
+  DiverseSession:
+    AppManageDiverseSession: true
+
+  Market:
+    DefaultMarket: "Google"
+    3rdChannel: "GP"
+    Markets:
+      Google:
+        AppPackage: "com.android.vending"
+        AppUrl: "market://details?id="
+        WebUrl: "https://play.google.com/store/apps/details?id="
+      Amazon:
+        AppPackage: "com.amazon.venezia"
+        AppUrl: "amzn://apps/android?p="
+        WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
+  Connection:
+    SigKey: "607_1"
+    HashKey: "NHC#{e3AnA>?XKSu;W6T7RS:,u<<No#)"
+
+libFramework:
+  Push:
+    SenderID: "956858875870ß"
+    SendTokenToServer: yes
+  Alerts:
+    LocalFile: "Alerts.gd"
+    RemoteUrl: "http://cdn.appcloudbox.net/glowdesign/apps/masterkeyboard/alerts/master_keyboard-1.1.2-alert.gd"
+      
+libKeyboard:
+  DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
+
+libNativeAds:
+  Test:
+    Admob:
+      DeviceId: "EA139D36298CF67CF2CAA699EB07C6B3"
+libIAP:
+  IAPVerifyUrl: "https://mpmaster.appcloudbox.net/keyboard/master/receipt/verify"

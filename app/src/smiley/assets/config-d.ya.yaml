@@ -1,0 +1,32 @@
+libCommons:
+  RemoteConfig:
+    PlistFile: "Local.ic"
+    PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-emojikeyboard-2.0.1.ic"
+  Analytics:
+      FlurryKey: "FC2GWXDVFTZHFK7KX6KV"
+      FacebookID: "1474873346171463"
+      TapjoySDKKey: "xngEmwWtQly0k_AqtdONawECiQlH0ihPQFWD0LYIPuBwFQqH1SU3JkosT66A"
+      FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
+      GoogleTrackerID: "UA-66468004-1"
+  Market:
+    DefaultMarket: "Google"
+    Markets:
+      Google:
+        AppPackage: "com.android.vending"
+        AppUrl: "market://details?id="
+        WebUrl: "https://play.google.com/store/apps/details?id="
+      Amazon:
+        AppPackage: "com.amazon.venezia"
+        AppUrl: "amzn://apps/android?p="
+        WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
+      
+libFramework:
+  Push:
+    SenderID: "805407701758"
+    SendTokenToServer: yes
+  Alerts:
+    LocalFile: "Alerts.ic"
+    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/emojikeyboard-2.0.2-alerts.ic"
+      
+libKeyboard:
+  DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"  
