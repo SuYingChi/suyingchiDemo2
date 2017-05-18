@@ -2,18 +2,26 @@ package com.ihs.inputmethod.uimodules;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.acb.adadapter.AcbNativeAd;
+import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSError;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -24,11 +32,15 @@ import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.widget.CustomBarGPAdAdapter;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.View.GONE;
 
@@ -38,6 +50,7 @@ import static android.view.View.GONE;
 
 public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseFunctionBar.OnFunctionBarItemClickListener {
 
+
     public KeyboardPanelManager() {
     }
 
@@ -45,6 +58,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private KeyboardPanelSwitchContainer keyboardPanelSwitchContainer;
     private BaseFunctionBar functionBar;
     private HSMediaView hsBackgroundVedioView;
+    private List<AcbNativeAd> gpNativeAdList = new ArrayList<>();
+
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -107,7 +122,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
 
-//        keyboardPanelSwitchContainer.setWebHistoryView(WebContentSearchManager.getInstance().getWebSearchHistoryView());
+        keyboardPanelSwitchContainer.setCustomizeBar(getCustomizeBar());
+
+        //        keyboardPanelSwitchContainer.setWebHistoryView(WebContentSearchManager.getInstance().getWebSearchHistoryView());
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
@@ -236,7 +253,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void resetKeyboardBarState() {
         if (keyboardPanelSwitchContainer != null) {
-            if(keyboardPanelSwitchContainer.getKeyboardPanel() == null) {
+            if (keyboardPanelSwitchContainer.getKeyboardPanel() == null) {
                 keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
             }
             keyboardPanelSwitchContainer.getKeyboardPanel().switchSuggestionState(0);
@@ -244,4 +261,35 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
+    public View getCustomizeBar() {
+        RecyclerView recyclerView = new RecyclerView(HSApplication.getContext());
+        recyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
+        int padding = DisplayUtils.dip2px(8);
+        recyclerView.setPadding(padding,DisplayUtils.dip2px(6),padding,DisplayUtils.dip2px(6));
+        final CustomBarGPAdAdapter adapter = new CustomBarGPAdAdapter();
+        recyclerView.setAdapter(adapter);
+        GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+//        recyclerView.addItemDecoration(new MarginDecoration(this));/
+//        recyclerView.addItemDecoration(new ItemGridAdapter(getApplicationContext()));
+
+        new AcbNativeAdLoader(HSApplication.getContext(), "Colorkey_A(NativeAds)GooglePlayIcon").load(5, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
+            @Override
+            public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
+                for (AcbNativeAd acbNativeAd : list) {
+                    gpNativeAdList.add(acbNativeAd);
+                }
+                HSLog.e("load ads" + gpNativeAdList.size());
+                adapter.setAdList(gpNativeAdList);
+            }
+
+            @Override
+            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+
+            }
+        });
+
+        return recyclerView;
+    }
 }

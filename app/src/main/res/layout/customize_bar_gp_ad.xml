@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="18dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:id="@+id/ad_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/setting_panel_item_margin_top">
+
+        <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+            android:id="@+id/ad_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal" />
+
+        <FrameLayout
+            android:id="@+id/ad_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right" />
+
+        <ImageView
+            android:id="@+id/ad_call_to_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_ad_label" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/ad_title"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ad_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/setting_panel_item_text_margin_top"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:fontFamily="@string/font_robot_regular"
+        android:text="ad_ttle"
+        android:textSize="10sp"
+        android:textColor="@android:color/black"
+        />
+
+
+</LinearLayout>
