@@ -1,0 +1,17 @@
+android {
+    applicationVariants.all { variant ->
+        def buildType = variant.buildType.name
+        def flavor = variant.flavorName
+        def taskMiddleName = variant.variantData.name.capitalize()
+
+        // For all builds: perform plist -> pa conversion before merge{Variant}Assets tasks
+        Task mergeAssets = tasks.findByName("merge${taskMiddleName}Assets")
+        Task encodePlistArchives = tasks.create(name: "encode${taskMiddleName}PlistArchives",
+                type: Exec,
+                group: 'Air Launcher',
+                description: 'Perform plist -> pa conversion before merge{Variant}Assets tasks.') {
+            commandLine './plist-conv.sh'
+        }
+        mergeAssets.finalizedBy encodePlistArchives
+    }
+}
