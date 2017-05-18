@@ -197,16 +197,20 @@ public class ChargingConfigManager {
     }
 
     private boolean isEnableChargingAlertShowCountAchievedMax() {
-        final int maxCount = HSConfig.optInteger(3, "Application", "FeaturePrompt", "QuitAlert", "MaxShowCount");
+        final int maxCount = HSConfig.optInteger(3, "Application", "FeaturePrompt", "ChargerLockerAlert", "MaxShowCount");
         HSLog.i(TAG, "MaxShowCount: " + maxCount);
         final int showCount = HSPreferenceHelper.getDefault(HSApplication.getContext()).getInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, 0);
         return showCount >= maxCount;
     }
 
     private boolean shouldShowEnableChargingAlertAtThisTime() {
-        final int sessionInterval = HSConfig.optInteger(3, "Application", "FeaturePrompt", "QuitAlert", "SessionInterval");
+        final int sessionInterval = HSConfig.optInteger(3, "Application", "FeaturePrompt", "ChargerLockerAlert", "SessionInterval");
         HSLog.i(TAG, "SessionInterval: " + sessionInterval);
-        return HSSessionMgr.getCurrentSessionId() > 0 && HSSessionMgr.getCurrentSessionId() % sessionInterval == 0;
+        if (sessionInterval > 0) {
+            return HSSessionMgr.getCurrentSessionId() % (sessionInterval + 1) == 1;
+        }
+
+        return true;
     }
 
     public void increaseEnableCardShowCount() {
@@ -245,6 +249,10 @@ public class ChargingConfigManager {
     private boolean shouldShowEnableChargingCardAtThisTime() {
         final int sessionInterval = HSConfig.optInteger(3, "Application", "FeaturePrompt", "ThemeCard", "SessionInterval");
         HSLog.i(TAG, "SessionInterval: " + sessionInterval);
-        return HSSessionMgr.getCurrentSessionId() > 0 && HSSessionMgr.getCurrentSessionId() % sessionInterval == 0;
+        if (sessionInterval > 0) {
+            return HSSessionMgr.getCurrentSessionId() % (sessionInterval + 1) == 1;
+        }
+
+        return true;
     }
 }
