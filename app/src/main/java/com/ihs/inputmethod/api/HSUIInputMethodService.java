@@ -48,6 +48,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     private static InputConnection insideConnection = null;
 
     private boolean isInputViewShowing = false;
+    private String currentAppPackageName;
 
     private static KeyboardPanelManager getKeyboardPanelMananger() {
         return (KeyboardPanelManager) keyboardPanelSwitcher;
@@ -184,8 +185,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             return false;
         }
 
-        EditorInfo editorInfo = getCurrentInputEditorInfo();
-        if (editorInfo == null || editorInfo.packageName == null) {
+        if (currentAppPackageName == null) {
             return false;
         }
 
@@ -195,7 +195,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
 
         for (String blockedPackageName : packageNameBlackList) {
-            if (editorInfo.packageName.contains(blockedPackageName)) {
+            if (currentAppPackageName.contains(blockedPackageName)) {
                 return false;
             }
         }
@@ -206,7 +206,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         EditorInfo editorInfo = getCurrentInputEditorInfo();
         if (editorInfo == null) {
             return false;
-        } else if (TextUtils.equals(editorInfo.packageName, getPackageName())) {
+        } else if (TextUtils.equals(currentAppPackageName, getPackageName())) {
             return true;
         } else {
             return false;
@@ -355,6 +355,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if(restarting){
             getKeyboardPanelMananger().resetKeyboardBarState();
         }
+
+        // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
+        // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
+        currentAppPackageName = editorInfo.packageName;
     }
 
     @Override
