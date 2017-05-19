@@ -18,14 +18,12 @@ package com.ihs.inputmethod.uimodules.ui.emoji;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.os.Handler;
+import android.os.AsyncTask;
 import android.util.Pair;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.model.Emoji;
 import com.ihs.inputmethod.uimodules.ui.common.model.EmojiGroup;
@@ -42,18 +40,14 @@ final class EmojiCategory {
 //	private final String PREF_LAST_SHOWN_ITEM_POSITION = "emoji_tab_last_show_item_position_";
 //	private final String PREF_LAST_SHOWN_ITEM_OFFSET = "emoji_tab_last_show_item_offset_";
 	private final String PREF_EMOJI_RECENT_KEYS = "emoji_recent_keys";
-
-	private List<EmojiGroup> tabs=new ArrayList<>();
-	private EmojiGroup recent;
 	private final List<Emoji> recentTemp=new ArrayList<>();
 	private final EmojiGroup suggestion;
-
 	private final SharedPreferences prefs;
 	private final int maxRecentCount;
 	private final int rowCount;
-
+	private List<EmojiGroup> tabs=new ArrayList<>();
+	private EmojiGroup recent;
 	private String currentTabName = RECENT;
-	private final EmojiLoader emojiLoader;
 	private boolean hasPendingRecent;
 	private HSEmojiPanelView panelView;
 	private boolean suggestionAdded=false;
@@ -67,43 +61,13 @@ final class EmojiCategory {
 
 		suggestion=new EmojiGroup(SUGGESTION,false);
 
-		emojiLoader=new EmojiLoader();
 
 		currentTabName = this.prefs.getString(PRE_LAST_SHOWN_TAB_KEY,getDefaultTab());
 
 	}
 
 	void loadDataAsync(){
-		HSThreadUtils.execute(new Runnable() {
-			@Override
-			public void run() {
-				emojiLoader.loadEmoji();
-
-				tabs.addAll(emojiLoader.getEmojiGroups());
-
-				recent=tabs.get(0);
-				loadRecent();
-				while(recent.getEmojiList().size()>maxRecentCount){
-					recent.removeLastEmoji();
-				}
-
-				if(suggestionAdded){
-					tabs.add(1,suggestion);
-				}
-
-				for(final EmojiGroup group:tabs){
-					group.sortEmoji(rowCount);
-				}
-				new Handler(HSApplication.getContext().getMainLooper()).post(new Runnable() {
-					@Override
-					public void run() {
-						panelView.onDataLoaded();
-					}
-				});
-			}
-		});
-
-
+		new LoadDataTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 
 	void addSuggestionTab() {
@@ -116,7 +80,7 @@ final class EmojiCategory {
 		final List<String> suggestionEmojis= HSEmojiSuggestionManager.getFollowEmojiForTypedWords();
 		for(final String suggestionStr:suggestionEmojis){
 			final Emoji emoji=new Emoji(suggestionStr,1,false);
-			if(emojiLoader.isTextEmoji(emoji)){
+			if(EmojiLoader.getInstance().isTextEmoji(emoji)){
 				final Emoji text=new Emoji(suggestionStr,1,true);
 				suggestion.addEmoji(text);
 				continue;
@@ -127,9 +91,8 @@ final class EmojiCategory {
 	}
 
 	List<String> getTabs() {
-		return emojiLoader.getTabs();
+		return EmojiLoader.getInstance().getTabs();
 	}
-
 
 	String getDefaultTab() {
 		final List<String> tab=getTabs();
@@ -142,7 +105,6 @@ final class EmojiCategory {
 	String getCurrentTabName() {
 		return currentTabName;
 	}
-
 
 	void setCurrentTabName(final String tabName) {
 		currentTabName = tabName;
@@ -162,6 +124,10 @@ final class EmojiCategory {
 		return RECENT;
 	}
 
+	boolean isRecentTab(final String tabName) {
+		return RECENT.equals(tabName);
+	}
+
 //	void saveLastShownItemPosition(final int position, final int offset) {
 //		final String tab=getTabNameForPosition(position);
 //		int itemPosition=position;
@@ -174,11 +140,6 @@ final class EmojiCategory {
 //		prefs.edit().putInt(PREF_LAST_SHOWN_ITEM_POSITION + tab, itemPosition).apply();
 //		prefs.edit().putInt(PREF_LAST_SHOWN_ITEM_OFFSET + tab, offset).apply();
 //	}
-
-
-	boolean isRecentTab(final String tabName) {
-		return RECENT.equals(tabName);
-	}
 
 	void saveRecent(){
 		final List<Object> keys=new ArrayList<>();
@@ -199,7 +160,7 @@ final class EmojiCategory {
 		}
 		for(final Object key:keys){
 			final Emoji emoji=new Emoji(key.toString(),1,false);
-			if(emojiLoader.isTextEmoji(emoji)){
+			if(EmojiLoader.getInstance().isTextEmoji(emoji)){
 				final Emoji text=new Emoji(key.toString(),1,true);
 				recent.addEmoji(text);
 				continue;
@@ -224,7 +185,7 @@ final class EmojiCategory {
 	boolean hasPendingRecent(){
 		return hasPendingRecent;
 	}
-	
+
 	void flushPendingRecentEmoji() {
 		hasPendingRecent=false;
 		recent.clearEmoji();
@@ -233,7 +194,7 @@ final class EmojiCategory {
 		}
 		recent.sortEmoji(rowCount);
 	}
-
+	
 	Pair<Integer,Integer> getLastShownItemPositionForTab(String tab) {
 //		final int lastShowItem =prefs.getInt(PREF_LAST_SHOWN_ITEM_POSITION +tab,0);
 //		final int offset =prefs.getInt(PREF_LAST_SHOWN_ITEM_OFFSET +tab,0);
@@ -259,5 +220,35 @@ final class EmojiCategory {
 
 	boolean isRecentEmpty() {
 		return recentTemp.isEmpty();
+	}
+
+	private class LoadDataTask extends AsyncTask<Void,Void,Void>{
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			EmojiLoader.getInstance().loadEmoji();
+
+			tabs.addAll(EmojiLoader.getInstance().getEmojiGroups());
+
+			recent=tabs.get(0);
+			loadRecent();
+			while(recent.getEmojiList().size()>maxRecentCount){
+				recent.removeLastEmoji();
+			}
+
+			if(suggestionAdded){
+				tabs.add(1,suggestion);
+			}
+
+			for(final EmojiGroup group:tabs){
+				group.sortEmoji(rowCount);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			panelView.onDataLoaded();
+		}
 	}
 }

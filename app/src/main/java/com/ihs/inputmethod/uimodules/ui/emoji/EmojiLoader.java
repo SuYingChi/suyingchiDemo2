@@ -18,51 +18,65 @@ import java.util.List;
  */
 
 final class EmojiLoader {
-
+	private static EmojiLoader instance;
 	private List<EmojiGroup> emojiGroups;
 	private List<Emoji> textEmoji=new ArrayList<>();
 
-	EmojiLoader() {
+	private EmojiLoader() {
 		emojiGroups=new ArrayList<>();
 	}
 
-	void loadEmoji(){
-		final Resources res= HSApplication.getContext().getResources();
-		final String packageName=HSApplication.getContext().getPackageName();
-		final String release=Build.VERSION.RELEASE;
-		final String[] versions=res.getStringArray(R.array.emoji_group_versions);
-		final String version=getRightVersion(versions,release).replace(".","_");
-
-		int emojiGroupArrayId=res.getIdentifier("emoji_groups"+version,"array",packageName);
-		if(emojiGroupArrayId<=0){
-			emojiGroupArrayId=R.array.emoji_groups;
+	public static EmojiLoader getInstance(){
+		if(instance == null){
+			synchronized (EmojiLoader.class){
+				if(instance == null){
+					instance = new EmojiLoader();
+				}
+			}
 		}
-		final String[] emojiGroupNames=res.getStringArray(emojiGroupArrayId);
-		final String[] textGroupNames=res.getStringArray(R.array.emoji_groups_text);
+		return instance;
+	}
 
-		for (final String groupName : emojiGroupNames) {
-			final EmojiGroup group = new EmojiGroup(groupName, false);
-			int emojiGroupId=res.getIdentifier(groupName+version,"array",packageName);
-			if(emojiGroupId<=0){
-				emojiGroupId=res.getIdentifier(groupName, "array", packageName);
+
+	void loadEmoji(){
+		if (emojiGroups.size() == 0) {
+			final Resources res = HSApplication.getContext().getResources();
+			final String packageName = HSApplication.getContext().getPackageName();
+			final String release = Build.VERSION.RELEASE;
+			final String[] versions = res.getStringArray(R.array.emoji_group_versions);
+			final String version = getRightVersion(versions, release).replace(".", "_");
+
+			int emojiGroupArrayId = res.getIdentifier("emoji_groups" + version, "array", packageName);
+			if (emojiGroupArrayId <= 0) {
+				emojiGroupArrayId = R.array.emoji_groups;
 			}
-			final boolean isText=contain(textGroupNames,groupName);
-			final String[] emojiStrings = res.getStringArray(emojiGroupId);
+			final String[] emojiGroupNames = res.getStringArray(emojiGroupArrayId);
+			final String[] textGroupNames = res.getStringArray(R.array.emoji_groups_text);
 
-			if(isText){
-				for (final String emojiStr : emojiStrings) {
-					final Emoji emoji = new Emoji(emojiStr, 1, true);
-					group.addEmoji(emoji);
+			for (final String groupName : emojiGroupNames) {
+				final EmojiGroup group = new EmojiGroup(groupName, false);
+				int emojiGroupId = res.getIdentifier(groupName + version, "array", packageName);
+				if (emojiGroupId <= 0) {
+					emojiGroupId = res.getIdentifier(groupName, "array", packageName);
 				}
-				textEmoji.addAll(group.getEmojiList());
-			}else{
-				for (final String emojiStr : emojiStrings) {
-					final Emoji emoji = new Emoji(codeToEmoji(emojiStr), 1, false);
-					group.addEmoji(emoji);
+				final boolean isText = contain(textGroupNames, groupName);
+				final String[] emojiStrings = res.getStringArray(emojiGroupId);
+
+				if (isText) {
+					for (final String emojiStr : emojiStrings) {
+						final Emoji emoji = new Emoji(emojiStr, 1, true);
+						group.addEmoji(emoji);
+					}
+					textEmoji.addAll(group.getEmojiList());
+				} else {
+					for (final String emojiStr : emojiStrings) {
+						final Emoji emoji = new Emoji(codeToEmoji(emojiStr), 1, false);
+						group.addEmoji(emoji);
+					}
 				}
+
+				emojiGroups.add(group);
 			}
-
-			emojiGroups.add(group);
 		}
 	}
 

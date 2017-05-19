@@ -55,19 +55,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     private Map<Class, View> btnMap = new HashMap<>();
     private Map<String, Class> panels = new HashMap<>();
     private NativeAdView adView;
-
-    public HSEmoticonActionBar(Context context) {
-        this(context, null);
-    }
-
-    public HSEmoticonActionBar(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public HSEmoticonActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
-    }
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
@@ -79,12 +66,25 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         }
     };
 
+    public HSEmoticonActionBar(Context context) {
+        this(context, null);
+    }
+
+    public HSEmoticonActionBar(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+    public HSEmoticonActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+    }
+
     public void release() {
+        HSGlobalNotificationCenter.removeObserver(notificationObserver);
         if (adView != null) {
-            HSGlobalNotificationCenter.removeObserver(notificationObserver);
             adView.release();
             adView = null;
         }
+        containerListener = null;
     }
 
     @Override
@@ -117,30 +117,46 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
 
         if(!IAPManager.getManager().hasPurchaseNoAds()) {
-            boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
-            View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
-            if(!showIconAd) {
-                adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-            }
-            View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
+            final boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
+            final LayoutParams params = new LayoutParams(0, height, 1.0f);
+            params.gravity = Gravity.CENTER_VERTICAL;
+            final RelativeLayout adContainer = new RelativeLayout(getContext());
+            adContainer.setTag("NativeAd");
+            addView(adContainer, params);
+
+            final View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
             if(!showIconAd) {
                 adLoadingView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
             }
             ImageView loadingImageView = (ImageView) adLoadingView.findViewById(R.id.ad_loading_image);
             Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_gift");
             loadingImageView.setImageDrawable(drawable);
-            final NativeAdView adView = new NativeAdView(getContext(), adLayoutView, adLoadingView);
-            adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
-            adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
-            final LayoutParams params = new LayoutParams(0, height, 1.0f);
-            params.gravity = Gravity.CENTER_VERTICAL;
-            RelativeLayout adContainer = new RelativeLayout(getContext());
-            adContainer.setTag("NativeAd");
+
             int adHeight =  height -  HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
-            RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(adHeight, adHeight);
+            final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(adHeight, adHeight);
             adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-            adContainer.addView(adView, adLayoutParams);
-            addView(adContainer, params);
+            adContainer.addView(adLoadingView,adLayoutParams);
+
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
+                    if(!showIconAd) {
+                        adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
+                    }
+                    adView = new NativeAdView(HSApplication.getContext(), adLayoutView, null);
+                    adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
+                    adView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                        @Override
+                        public void onAdLoaded(NativeAdView nativeAdView) {
+                            adContainer.removeView(adLoadingView);
+                        }
+                    });
+                    adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
+                    adContainer.addView(adView, adLayoutParams);
+                }
+            },500);
         }
 
         alphabet_left = (TextView) findViewById(R.id.emoji_keyboard_alphabet_left);
@@ -264,4 +280,5 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     public void setKeyboardPanelActionListener(BasePanel.OnPanelActionListener panelActionListener) {
         this.keyboardActionListener = panelActionListener;
     }
+
 }
