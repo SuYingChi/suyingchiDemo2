@@ -1,0 +1,124 @@
+package com.ihs.inputmethod.uimodules.widget.goolgeplayad;
+
+import android.content.Context;
+import android.support.annotation.AttrRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+
+import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.uimodules.R;
+
+/**
+ * Created by Arthur on 17/5/18.
+ */
+
+public class CustomizeBarLayout extends FrameLayout {
+    private int lastX;
+    private int lastY;
+
+    private boolean lockedMode  = true;
+
+    public CustomizeBarLayout(@NonNull Context context) {
+        super(context);
+        init();
+    }
+    private FrameLayout container ;
+
+    private void init() {
+        setClickable(true);
+        View inflate = inflate(getContext(), R.layout.customize_bar_bg, null);
+        addView(inflate,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        container = (FrameLayout) findViewById(R.id.fl_container);
+
+//        findViewById(R.id.fl_iv_strip).setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(container.getVisibility() != VISIBLE){
+//                    container.setVisibility(VISIBLE);
+//                    getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.14);
+//                    requestLayout();
+//                }
+//            }
+//        });
+    }
+
+    @Override
+    public void setLayoutParams(ViewGroup.LayoutParams params) {
+        super.setLayoutParams(params);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if(container.getVisibility() == GONE){
+            getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+        }else{
+            getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.15);
+        }
+    }
+
+    public CustomizeBarLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public CustomizeBarLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    public void setContent(View child){
+        if(child.getParent()!=null){
+            ((ViewGroup) child.getParent()).removeView(child);
+        }
+        container.addView(child,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+    }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //记录触摸点的坐标
+                lastX = x;
+                lastY = y;
+                lockedMode = true;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                //计算偏移量
+                int offsetX = x - lastX;
+                int offsetY = y - lastY;
+                //在当前left,top,right,bottom的基础上加上便宜量
+                HSLog.e(""+offsetY);
+
+                if(offsetY > 50 && lockedMode){
+                    if(container.getVisibility() != GONE){
+                        container.setVisibility(GONE);
+                        getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+                        requestLayout();
+                    }
+                    lockedMode = false;
+                }else if(offsetY < -20 && lockedMode){
+                    if(container.getVisibility() == GONE){
+                        container.setVisibility(VISIBLE);
+                        getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.15);
+                        requestLayout();
+                    }
+                    lockedMode = false;
+                }
+                break;
+
+        }
+
+        return super.dispatchTouchEvent(event);
+    }
+}

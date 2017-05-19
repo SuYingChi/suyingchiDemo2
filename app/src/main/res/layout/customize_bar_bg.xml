@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:paddingTop="10dp"
+    android:background="@android:color/transparent"
+    app:layout_heightPercent="15%">
+
+    <FrameLayout
+        android:background="#f6f6f6"
+        android:id="@+id/fl_iv_strip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="3dp"
+        android:paddingTop="5dp">
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/iv_strip"
+            android:layout_width="38dp"
+            android:layout_height="4dp"
+            android:background="@drawable/customize_bar_strip" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:background="#f6f6f6"
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fl_iv_strip" />
+
+</android.support.percent.PercentRelativeLayout>

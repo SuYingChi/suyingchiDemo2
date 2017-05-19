@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.widget;
+package com.ihs.inputmethod.uimodules.widget.goolgeplayad;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
