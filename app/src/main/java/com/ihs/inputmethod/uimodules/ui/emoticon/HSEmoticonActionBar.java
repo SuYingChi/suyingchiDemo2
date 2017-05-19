@@ -55,6 +55,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     private Map<Class, View> btnMap = new HashMap<>();
     private Map<String, Class> panels = new HashMap<>();
     private NativeAdView adView;
+    private boolean released;
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
@@ -79,6 +80,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     }
 
     public void release() {
+        released = true;
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
         if (adView != null) {
             adView.release();
@@ -140,21 +142,22 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
-                    View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
-                    if(!showIconAd) {
-                        adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-                    }
-                    adView = new NativeAdView(HSApplication.getContext(), adLayoutView, null);
-                    adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
-                    adView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
-                        @Override
-                        public void onAdLoaded(NativeAdView nativeAdView) {
-                            adContainer.removeView(adLoadingView);
+                    if (!released) {
+                        View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
+                        if (!showIconAd) {
+                            adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
                         }
-                    });
-                    adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
-                    adContainer.addView(adView, adLayoutParams);
+                        adView = new NativeAdView(HSApplication.getContext(), adLayoutView, null);
+                        adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
+                        adView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                            @Override
+                            public void onAdLoaded(NativeAdView nativeAdView) {
+                                adContainer.removeView(adLoadingView);
+                            }
+                        });
+                        adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
+                        adContainer.addView(adView, adLayoutParams);
+                    }
                 }
             },500);
         }
