@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -114,11 +115,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+
             if (isInputViewShowing) {
                 getKeyboardPanelMananger().onBackPressed();
                 if (!isInOwnApp()) {
                     closeFullScreenAd.show();
                 }
+                HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
             } else {
                 showBackAdIfNeeded();
             }
@@ -135,6 +138,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
 
         if (isInRightAppForBackAd()) {
+            HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
             HSPreferenceHelper prefs = HSPreferenceHelper.create(this, "BackAd");
 
             long lastBackTimeMillis = prefs.getLong("LastBackTime", 0);
@@ -176,6 +180,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
             return false;
         } else {
+            HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
             return false;
         }
     }
