@@ -8,7 +8,7 @@ libCommons:
       TapjoySDKKey: "Y5_zVkZeSreG2Z7B_wtM8gECBliMafnGOk44En6LHlqRPGoWow2uhWFacJZj"
       TapjoyEngagementID: "d407ac82-6255-47e8-9004-295d79998ad4"
       FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
-      GoogleTrackId: ""
+      GoogleTrackId: "UA-66666666-2"
       FlurryStoredMaxCount: 1000
       GooglePercentage: 1000
   DiverseSession:

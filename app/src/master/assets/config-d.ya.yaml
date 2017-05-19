@@ -8,7 +8,7 @@ libCommons:
       TapjoySDKKey: ""
       TapjoyEngagementID: ""
       FlyerKey: ""
-      GoogleTrackId: ""
+      GoogleTrackId: "UA-66666666-2"
       FlurryStoredMaxCount: 1000
   Market:
     DefaultMarket: "Google"

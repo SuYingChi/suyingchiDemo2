@@ -272,15 +272,11 @@
 				<dict>
 					<key>BackCountOfDay</key>
 					<array>
-						<integer>5</integer>
-						<integer>10</integer>
-						<integer>15</integer>
+						<integer>30</integer>
 					</array>
 					<key>PackageNameExclude</key>
 					<array>
 						<string>android</string>
-						<string>whatsapp</string>
-						<string>facebook</string>
 					</array>
 					<key>Show</key>
 					<true/>
