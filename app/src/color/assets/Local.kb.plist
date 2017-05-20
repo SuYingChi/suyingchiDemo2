@@ -375,6 +375,24 @@
 				<true/>
 				<key>isShowMainThemeNativeAds</key>
 				<true/>
+				<key>KeyboardFunctionBarGiftAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array>
+						<integer>5</integer>
+					</array>
+					<key>Show</key>
+					<true/>
+				</dict>
+				<key>KeyboardEmojiTopLeftTabAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array>
+						<integer>3</integer>
+					</array>
+					<key>Show</key>
+					<true/>
+				</dict>
 				<key>isShowThemeDetailNativeAds</key>
 				<true/>
 				<key>isShowThemeTryNativeAds</key>
