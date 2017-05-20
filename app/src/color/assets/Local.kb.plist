@@ -2398,6 +2398,19 @@
 		</dict>
 		<key>adAdapter</key>
 		<dict>
+			<key>mobvistanative</key>
+			<dict>
+				<key>expireTime</key>
+				<integer>3600</integer>
+				<key>frequencyCap</key>
+				<integer>200</integer>
+				<key>frequencyTime</key>
+				<integer>5</integer>
+				<key>appid</key>
+				<string>32888</string>
+				<key>appkey</key>
+				<string>5d987f51a56ec88c79b727ce656f6d03</string>
+			</dict>
 			<key>admobinterstitial</key>
 			<dict>
 				<key>expireTime</key>
@@ -4095,9 +4108,9 @@
 			<key>Colorkey_A(NativeAds)GooglePlayIcon</key>
 			<dict>
 				<key>deDuplicate</key>
-				<true/>
+				<false/>
 				<key>packageFilter</key>
-				<true/>
+				<false/>
 				<key>parallelCount</key>
 				<integer>5</integer>
 				<key>serialList</key>
@@ -4114,7 +4127,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>10</integer>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4140,7 +4153,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>9</integer>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4166,7 +4179,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>8</integer>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4184,7 +4197,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>leadboltnative</string>
+						<string>avocarrotnative</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -4192,12 +4205,13 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>7</integer>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
-							<string>kIS1EGe2l3yMKwEWOrGpm22KMlAUD3q3</string>
+							<string>1f659eb0ebf98ea880179d1c7750847f43defed8</string>
+							<string>82980c2f-7598-4858-8663-cd64e899ccdb</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
@@ -4210,7 +4224,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>pubnative</string>
+						<string>mobvistanative</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -4218,12 +4232,274 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>6</integer>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
-							<string>1018747</string>
+							<string>12844</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>yeahmobinative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1797</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>altamobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1662684189370000_1769833153869131</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>appnextnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>5dc261ec-61c9-4b72-93ae-4bd2a11017a0</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>avocarrotnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1f659eb0ebf98ea880179d1c7750847f43defed8</string>
+							<string>774147c8-d679-49ed-b35e-243efe8aec12</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mobvistanative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>12845</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>yeahmobinative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>1</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1798</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>altamobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>1</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1662684189370000_1769833153869132</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>appnextnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>1</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>85536533-6d0c-42de-8318-3b5e93b43849</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>avocarrotnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>1</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1f659eb0ebf98ea880179d1c7750847f43defed8</string>
+							<string>e8feeeea-e4ce-4ebf-ac95-fefdd8ac1af0</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mobvistanative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>1</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>12846</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>

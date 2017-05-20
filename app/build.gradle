@@ -137,7 +137,7 @@ dependencies {
     compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.2.gm'
-
+    compile 'com.ihandy.3rdadadapter:libAdMobVistaNativeAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAppnextNativeAdapter.gm:4.1.0.gm'
 
     // Interstitial Ads

@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -24,18 +23,67 @@ public class CustomizeBarLayout extends FrameLayout {
     private int lastY;
 
     private boolean lockedMode  = true;
+    private OnCustomizeBarListener customizeBarListener;
 
-    public CustomizeBarLayout(@NonNull Context context) {
+    public interface OnCustomizeBarListener{
+        void onHide();
+    }
+
+    public CustomizeBarLayout(@NonNull Context context,OnCustomizeBarListener customizeBarListener) {
         super(context);
+        this.customizeBarListener = customizeBarListener;
         init();
+
     }
     private FrameLayout container ;
 
     private void init() {
-        setClickable(true);
         View inflate = inflate(getContext(), R.layout.customize_bar_bg, null);
-        addView(inflate,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        addView(inflate);
         container = (FrameLayout) findViewById(R.id.fl_container);
+
+        findViewById(R.id.fl_iv_strip).setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        //记录触摸点的坐标
+                        lastX = x;
+                        lastY = y;
+                        lockedMode = true;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        //计算偏移量
+                        int offsetX = x - lastX;
+                        int offsetY = y - lastY;
+                        //在当前left,top,right,bottom的基础上加上便宜量
+                        HSLog.e("" + offsetY);
+
+                        if (offsetY > 10 && lockedMode) {
+                            if (container.getVisibility() != GONE) {
+                                customizeBarListener.onHide();
+//                        container.setVisibility(GONE);
+//                        getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+//                        requestLayout();
+                            }
+                            lockedMode = false;
+                        }
+//                else if(offsetY < -3 && lockedMode){
+//                    if(container.getVisibility() == GONE){
+//                        container.setVisibility(VISIBLE);
+//                        getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.151);
+//                        requestLayout();
+//                    }
+//                    lockedMode = false;
+//                }
+                        break;
+                }
+                return true;
+            }
+        });
 
 //        findViewById(R.id.fl_iv_strip).setOnClickListener(new OnClickListener() {
 //            @Override
@@ -57,11 +105,11 @@ public class CustomizeBarLayout extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if(container.getVisibility() == GONE){
-            getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-        }else{
-            getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.15);
-        }
+//        if(container.getVisibility() == GONE){
+//            getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+//        }else{
+            getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.14);
+//        }
     }
 
     public CustomizeBarLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -82,43 +130,45 @@ public class CustomizeBarLayout extends FrameLayout {
     }
 
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                //记录触摸点的坐标
-                lastX = x;
-                lastY = y;
-                lockedMode = true;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                //计算偏移量
-                int offsetX = x - lastX;
-                int offsetY = y - lastY;
-                //在当前left,top,right,bottom的基础上加上便宜量
-                HSLog.e(""+offsetY);
-
-                if(offsetY > 50 && lockedMode){
-                    if(container.getVisibility() != GONE){
-                        container.setVisibility(GONE);
-                        getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-                        requestLayout();
-                    }
-                    lockedMode = false;
-                }else if(offsetY < -20 && lockedMode){
-                    if(container.getVisibility() == GONE){
-                        container.setVisibility(VISIBLE);
-                        getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.15);
-                        requestLayout();
-                    }
-                    lockedMode = false;
-                }
-                break;
-
-        }
-
-        return super.dispatchTouchEvent(event);
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent event) {
+//        int x = (int) event.getX();
+//        int y = (int) event.getY();
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                //记录触摸点的坐标
+//                lastX = x;
+//                lastY = y;
+//                lockedMode = true;
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                //计算偏移量
+//                int offsetX = x - lastX;
+//                int offsetY = y - lastY;
+//                //在当前left,top,right,bottom的基础上加上便宜量
+//                HSLog.e(""+offsetY);
+//
+//                if(offsetY > 200 && lockedMode){
+//                    if(container.getVisibility() != GONE){
+//                        customizeBarListener.onHide();
+////                        container.setVisibility(GONE);
+////                        getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+////                        requestLayout();
+//                    }
+//                    lockedMode = false;
+//                }
+////                else if(offsetY < -3 && lockedMode){
+////                    if(container.getVisibility() == GONE){
+////                        container.setVisibility(VISIBLE);
+////                        getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.151);
+////                        requestLayout();
+////                    }
+////                    lockedMode = false;
+////                }
+//                break;
+//
+//        }
+//
+//        return super.dispatchTouchEvent(event);
+//    }
 }

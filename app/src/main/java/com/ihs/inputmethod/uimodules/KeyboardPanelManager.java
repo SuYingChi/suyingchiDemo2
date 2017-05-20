@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
 import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.framework.HSApplication;
@@ -46,6 +48,7 @@ import java.util.List;
 
 import static android.view.Surface.ROTATION_0;
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * Created by jixiang on 16/11/17.
@@ -63,6 +66,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private HSMediaView hsBackgroundVedioView;
     private List<AcbNativeAd> gpNativeAdList = new ArrayList<>();
     private CustomBarGPAdAdapter gpAdAdapter;
+    private AcbNativeAdLoader acbNativeAdLoader;
 
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
@@ -126,7 +130,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
 
-        if(HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0){
+        if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
             keyboardPanelSwitchContainer.setCustomizeBar(getCustomizeBar());
         }
 
@@ -270,19 +274,43 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     private void reloadGpAd() {
+        keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+        for (AcbNativeAd acbNativeAd : gpNativeAdList) {
+            acbNativeAd.release();
+        }
+
         gpNativeAdList.clear();
-        new AcbNativeAdLoader(HSApplication.getContext(), "Colorkey_A(NativeAds)GooglePlayIcon").load(5, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
+        gpAdAdapter.clearAdList();
+
+        if(acbNativeAdLoader!=null){
+            acbNativeAdLoader.cancel();
+        }
+
+        acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(),HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
+        acbNativeAdLoader.load(5, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
+                if(keyboardPanelSwitchContainer.getCustomizeBar().getVisibility()!=VISIBLE){
+                    keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(View.VISIBLE);
+                }
                 for (AcbNativeAd acbNativeAd : list) {
+                    acbNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
+                        @Override
+                        public void onAdClick(AcbAd acbAd) {
+                            Toast.makeText(HSApplication.getContext(), acbAd.getVendor().toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    HSLog.e("load ads: " + acbNativeAd.toString());
+                    gpAdAdapter.addAd(acbNativeAd);
                     gpNativeAdList.add(acbNativeAd);
                 }
-                HSLog.e("load ads" + gpNativeAdList.size());
-                gpAdAdapter.setAdList(gpNativeAdList);
             }
 
             @Override
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+                if(hsError!=null){
+                    HSLog.e("ad finish", hsError.getMessage());
+                }
 
             }
         });
@@ -291,9 +319,10 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public View getCustomizeBar() {
         RecyclerView recyclerView = new RecyclerView(HSApplication.getContext());
+        recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
         recyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
         int padding = DisplayUtils.dip2px(8);
-        recyclerView.setPadding(padding,0,padding,0);
+        recyclerView.setPadding(padding, 0, padding, 0);
         gpAdAdapter = new CustomBarGPAdAdapter();
         recyclerView.setAdapter(gpAdAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
@@ -302,7 +331,12 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 //        recyclerView.addItemDecoration(new MarginDecoration(this));/
 //        recyclerView.addItemDecoration(new ItemGridAdapter(getApplicationContext()));
 
-        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext());
+        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
+            @Override
+            public void onHide() {
+                keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+            }
+        });
         customizeBarLayout.setContent(recyclerView);
 
         reloadGpAd();
