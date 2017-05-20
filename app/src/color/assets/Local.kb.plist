@@ -6,50 +6,6 @@
 	<dict>
 		<key>Application</key>
 		<dict>
-			<key>Lucky</key>
-			<dict>
-				<key>ChanceIncrementPeriodSeconds</key>
-				<integer>600</integer>
-				<key>FullChanceCount</key>
-				<integer>20</integer>
-				<key>LargeBoxAdCount</key>
-				<integer>3</integer>
-				<key>PriorityThemes</key>
-				<array>
-					<string>com.themelab.launcher.clash
-com.themelab.launcher.clash</string>
-					<string>com.themelab.launcher.forest</string>
-					<string>com.themelab.launcher.gdanger</string>
-					<string>com.themelab.launcher.pure</string>
-					<string>com.themelab.launcher.fruit</string>
-					<string>com.themelab.launcher.world</string>
-				</array>
-				<key>SmallBoxAdCount</key>
-				<integer>3</integer>
-				<key>SmallBoxColor</key>
-				<dict>
-					<key>Green</key>
-					<integer>8</integer>
-					<key>Red</key>
-					<integer>2</integer>
-				</dict>
-				<key>SmallBoxContent</key>
-				<dict>
-					<key>Chances</key>
-					<integer>2</integer>
-					<key>Empty</key>
-					<integer>8</integer>
-				</dict>
-				<key>Types</key>
-				<dict>
-					<key>Bomb</key>
-					<integer>15</integer>
-					<key>LargeBox</key>
-					<integer>10</integer>
-					<key>SmallBox</key>
-					<integer>75</integer>
-				</dict>
-			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -384,6 +340,50 @@ com.themelab.launcher.clash</string>
 					<integer>2</integer>
 					<key>Title</key>
 					<string>Enable Smart Charging!</string>
+				</dict>
+			</dict>
+			<key>Lucky</key>
+			<dict>
+				<key>ChanceIncrementPeriodSeconds</key>
+				<integer>600</integer>
+				<key>FullChanceCount</key>
+				<integer>60</integer>
+				<key>LargeBoxAdCount</key>
+				<integer>3</integer>
+				<key>PriorityThemes</key>
+				<array>
+					<string>com.themelab.launcher.clash
+com.themelab.launcher.clash</string>
+					<string>com.themelab.launcher.forest</string>
+					<string>com.themelab.launcher.gdanger</string>
+					<string>com.themelab.launcher.pure</string>
+					<string>com.themelab.launcher.fruit</string>
+					<string>com.themelab.launcher.world</string>
+				</array>
+				<key>SmallBoxAdCount</key>
+				<integer>3</integer>
+				<key>SmallBoxColor</key>
+				<dict>
+					<key>Green</key>
+					<integer>8</integer>
+					<key>Red</key>
+					<integer>2</integer>
+				</dict>
+				<key>SmallBoxContent</key>
+				<dict>
+					<key>Chances</key>
+					<integer>2</integer>
+					<key>Empty</key>
+					<integer>8</integer>
+				</dict>
+				<key>Types</key>
+				<dict>
+					<key>Bomb</key>
+					<integer>15</integer>
+					<key>LargeBox</key>
+					<integer>10</integer>
+					<key>SmallBox</key>
+					<integer>75</integer>
 				</dict>
 			</dict>
 			<key>NativeAds</key>
@@ -2616,6 +2616,8 @@ com.themelab.launcher.clash</string>
 					<key>strategy</key>
 					<string>initiative</string>
 				</dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
 				<key>serialList</key>
 				<array>
 					<dict>
@@ -2729,8 +2731,6 @@ com.themelab.launcher.clash</string>
 						<array/>
 					</dict>
 				</array>
-				<key>preloadOnlyInWifi</key>
-				<false/>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
 			</dict>
@@ -3505,6 +3505,8 @@ com.themelab.launcher.clash</string>
 					<key>strategy</key>
 					<string>initiative</string>
 				</dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
 				<key>serialList</key>
 				<array>
 					<dict>
@@ -3574,8 +3576,6 @@ com.themelab.launcher.clash</string>
 						<array/>
 					</dict>
 				</array>
-				<key>preloadOnlyInWifi</key>
-				<false/>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
 			</dict>
@@ -4113,6 +4113,352 @@ com.themelab.launcher.clash</string>
 		</dict>
 		<key>nativeAds</key>
 		<dict>
+			<key>500_A(NativeAds)Lucky</key>
+			<dict>
+				<key>deDuplicate</key>
+				<false/>
+				<key>packageFilter</key>
+				<false/>
+				<key>parallelCount</key>
+				<integer>2</integer>
+				<key>parallelList</key>
+				<array>
+					<dict>
+						<key>adType</key>
+						<string>FacebookNative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>20</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>203324980095622_279192422508877</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>imageView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/8061503883</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>imageView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>18</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/9100665478</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>imageView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+				</array>
+				<key>preCacheIcon</key>
+				<true/>
+				<key>preCacheImage</key>
+				<false/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>adType</key>
+						<string>adxNative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/6693901438</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>imageView</string>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>yeahmobinative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>1</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>809</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string></string>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>adxNative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/5217193558</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>imageView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>FacebookNative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>10</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>203324980095622_258804034547716</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>imageView</string>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobNative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/1536550680</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string></string>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobNative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/1659460682</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string></string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+				</array>
+			</dict>
 			<key>Colorkey_A(NativeAds)ApplyingItem</key>
 			<dict>
 				<key>deDuplicate</key>
@@ -4461,6 +4807,8 @@ com.themelab.launcher.clash</string>
 					<key>strategy</key>
 					<string>initiative</string>
 				</dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
 				<key>serialList</key>
 				<array>
 					<dict>
@@ -4933,8 +5281,6 @@ com.themelab.launcher.clash</string>
 						</array>
 					</dict>
 				</array>
-				<key>preloadOnlyInWifi</key>
-				<false/>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
 			</dict>

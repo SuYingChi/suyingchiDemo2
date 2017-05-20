@@ -1,7 +1,7 @@
 libCommons:
   RemoteConfig:
     PlistFile: "Local.kb"
-    PlistUrl: "ahttps://emojidevelop.s3.amazonaws.com/apps_android/config/config-colorkeyboard-2.3.3.kb"
+    PlistUrl: "1https://emojidevelop.s3.amazonaws.com/apps_android/config/config-colorkeyboard-2.3.3.kb"
   Analytics:
       FlurryKey: "GTJN395TKWN6T8T6YKC3"
       FacebookID: "910238615719294"
