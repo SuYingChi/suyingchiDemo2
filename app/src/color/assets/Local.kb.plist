@@ -277,6 +277,8 @@
 					<key>PackageNameExclude</key>
 					<array>
 						<string>android</string>
+						<string>facebook</string>
+						<string>com.whatsapp</string>
 					</array>
 					<key>Show</key>
 					<true/>
