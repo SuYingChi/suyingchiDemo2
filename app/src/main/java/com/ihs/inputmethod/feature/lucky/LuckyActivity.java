@@ -2,6 +2,7 @@ package com.ihs.inputmethod.feature.lucky;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -65,7 +66,7 @@ public class LuckyActivity extends HSAppCompatActivity
      *   -----------------
      */
 
-    public static final String PREF_KEY_LUCKY_LAUNCHED = "lucky_launched";
+    public static final String PREF_KEY_LUCKY_CREATED = "pref_key_lucky_created";
     private static final String PREF_KEY_MUTE_SOUND_EFFECTS = "lucky_mute_sound_effects";
 
     private static final int MESSAGE_UPDATE_LIGHT = 0;
@@ -126,6 +127,23 @@ public class LuckyActivity extends HSAppCompatActivity
 
     private ViewState mViewState = ViewState.GAME;
 
+
+    public static void installShortCut(){
+        if(!HSPreferenceHelper.getDefault().contains(PREF_KEY_LUCKY_CREATED)){
+            HSPreferenceHelper.getDefault().putBoolean(PREF_KEY_LUCKY_CREATED,true);
+        }else{
+            return;
+        }
+
+        Intent shortcutIntent = new Intent(HSApplication.getContext(), LuckyActivity.class);
+        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent addIntent = new Intent();
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "keyboard lucy");
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(HSApplication.getContext(), R.drawable.ic_lucky));
+        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        HSApplication.getContext().sendBroadcast(addIntent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

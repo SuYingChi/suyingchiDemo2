@@ -32,7 +32,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
+                <com.ihs.inputmethod.feature.lucky.view.GameScene
                     android:id="@+id/lucky_game_moving_belt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
