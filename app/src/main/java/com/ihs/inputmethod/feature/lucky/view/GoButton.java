@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.feature.lucky.view;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
@@ -14,10 +15,10 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.ihs.inputmethod.feature.common.CommonUtils;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.uimodules.R;
+
 
 /**
  * The "GO" button on the bottom.

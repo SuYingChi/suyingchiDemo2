@@ -21,9 +21,6 @@ import com.honeycomb.launcher.R;
 import com.honeycomb.launcher.ad.AdPlacements;
 import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
 import com.honeycomb.launcher.lucky.view.AwardView;
-import com.honeycomb.launcher.lucky.view.GameScene;
-import com.honeycomb.launcher.lucky.view.GoButton;
-import com.honeycomb.launcher.model.LauncherFiles;
 import com.honeycomb.launcher.util.ActivityUtils;
 import com.honeycomb.launcher.util.ToastUtils;
 import com.honeycomb.launcher.util.Utils;
@@ -33,6 +30,8 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.feature.lucky.view.GameScene;
+import com.ihs.inputmethod.feature.lucky.view.GoButton;
 
 import java.util.Locale;
 
@@ -46,6 +45,7 @@ public class LuckyActivity extends HSAppCompatActivity
         AcbNativeAd.AcbNativeClickListener, AcbNativeAd.AcbAdListener {
 
     private static final String TAG = LuckyActivity.class.getSimpleName();
+    static final String LUCKY_PREFS = "lucksp";
 
     /**
      * Terminology:
@@ -76,7 +76,7 @@ public class LuckyActivity extends HSAppCompatActivity
     private static final float CHANCE_TIMER_POSITION_Y_RATIO = 0.0421f;
 
     private final HSPreferenceHelper mPrefs = HSPreferenceHelper.create(HSApplication.getContext(),
-            LauncherFiles.LUCKY_PREFS);
+            LUCKY_PREFS);
 
     private GameScene mScene;
     private GoButton mGoButton;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="launcher_widget_lucky_title">Şanslı</string>
+    <string name="lucky_game_award_boom_description">İken.</string>
+    <string name="lucky_game_award_chances_description">Tebrikler +3 kez </string>
+    <string name="lucky_game_award_chances_receive_btn">Al</string>
+    <string name="lucky_game_award_empty_action">TEKRAR DENE</string>
+    <string name="lucky_game_award_no_network_description">Ağ bağlantısı yok! </string>
+    <string name="no_network_connection">Ağ bağlantısı yok! </string>
+    <string name="lucky_game_award_theme_action">KUR</string>
+    <string name="lucky_game_award_theme_description">Yeni bir tema buldum! </string>
+    <string name="lucky_game_award_wallpaper_description">Muhteşem Duvar Kâğıdı!</string>
+    <string name="lucky_game_award_wallpaper_action">DUVAR KADIĞI OLARAK AYARLA</string>
+    <string name="lucky_game_chance_counter">Şans: %1$s</string>
+
+    <string name="lucky_game_award_ad_related_title">Bir ödül kazandın!</string>
+    <string name="lucky_game_chance_restore_timer">%1$s içinde daha fazla al</string>
+</resources>

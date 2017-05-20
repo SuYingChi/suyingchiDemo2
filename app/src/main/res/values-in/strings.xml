@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="launcher_widget_lucky_title">Beruntung </string>
+    <string name="lucky_game_award_boom_description">kali </string>
+    <string name="lucky_game_award_chances_description">ucapan selamat +3 kali </string>
+    <string name="lucky_game_award_chances_receive_btn">Terima</string>
+    <string name="lucky_game_award_empty_action">COBA LAGI</string>
+    <string name="lucky_game_award_no_network_description">Tidak ada koneksi jaringan! </string>
+    <string name="no_network_connection">Tidak ada koneksi jaringan! </string>
+    <string name="lucky_game_award_theme_action">PASANG</string>
+    <string name="lucky_game_award_theme_description">Ditemukan tema baru! </string>
+    <string name="lucky_game_award_wallpaper_description">Wallpaper Luar Biasa!</string>
+    <string name="lucky_game_award_wallpaper_action">ATUR SEBAGAI WALLPAPER</string>
+    <string name="lucky_game_chance_counter">Kesempatan: %1$s</string>
+    <string name="lucky_game_award_ad_related_title">Anda sudah memenangkan hadiah!</string>
+    <string name="lucky_game_chance_restore_timer">Dapatkan lainnya di %1$s</string>
+</resources>

@@ -20,19 +20,17 @@ import android.widget.FrameLayout;
 
 import com.acb.adadapter.AcbNativeAd;
 import com.acb.nativeads.AcbNativeAdLoader;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.AdAnalytics;
-import com.honeycomb.launcher.ad.AdPlacements;
-import com.honeycomb.launcher.lucky.GameConfig;
-import com.honeycomb.launcher.lucky.LuckyActivity;
-import com.honeycomb.launcher.lucky.LuckyPreloadManager;
-import com.honeycomb.launcher.lucky.MusicPlayer;
-import com.honeycomb.launcher.lucky.TargetInfo;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.feature.lucky.GameConfig;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
+import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
+import com.ihs.inputmethod.feature.lucky.MusicPlayer;
+import com.ihs.inputmethod.feature.lucky.TargetInfo;
+import com.ihs.inputmethod.uimodules.R;
 
 import java.util.HashMap;
 import java.util.List;

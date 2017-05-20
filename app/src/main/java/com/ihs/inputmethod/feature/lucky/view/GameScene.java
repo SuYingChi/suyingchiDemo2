@@ -23,13 +23,13 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.honeycomb.launcher.BuildConfig;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.lucky.GameConfig;
-import com.honeycomb.launcher.lucky.GameState;
-import com.honeycomb.launcher.lucky.TargetInfo;
-import com.honeycomb.launcher.util.Thunk;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.feature.common.Thunk;
+import com.ihs.inputmethod.feature.lucky.GameConfig;
+import com.ihs.inputmethod.feature.lucky.GameState;
+import com.ihs.inputmethod.feature.lucky.TargetInfo;
+import com.ihs.inputmethod.uimodules.BuildConfig;
+import com.ihs.inputmethod.uimodules.R;
 
 import java.util.List;
 
@@ -107,7 +107,8 @@ public class GameScene extends View {
     private static final int DRAW_COMPONENT_BORDER_LIGHTS = 1;
 
     private float[] mOutVal = new float[1];
-    @Thunk float[] mInCoord = new float[2];
+    @Thunk
+    float[] mInCoord = new float[2];
     @Thunk float[] mOutCoord = new float[2];
     private int[] mCoords = new int[2];
     private Rect mRect = new Rect();
