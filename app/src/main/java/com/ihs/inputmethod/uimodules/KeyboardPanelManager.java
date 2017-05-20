@@ -292,6 +292,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
                 if(keyboardPanelSwitchContainer.getCustomizeBar().getVisibility()!=VISIBLE){
                     keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(View.VISIBLE);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_show","GooglePlay_Search");
                 }
                 for (AcbNativeAd acbNativeAd : list) {
                     acbNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
@@ -335,6 +336,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             @Override
             public void onHide() {
                 keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_close","GooglePlay_Search");
             }
         });
         customizeBarLayout.setContent(recyclerView);
