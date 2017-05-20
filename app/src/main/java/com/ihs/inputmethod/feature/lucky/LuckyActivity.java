@@ -17,25 +17,25 @@ import android.widget.TextView;
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
 import com.acb.nativeads.AcbNativeAdLoader;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.ad.AdPlacements;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.lucky.view.AwardView;
-import com.honeycomb.launcher.util.ActivityUtils;
-import com.honeycomb.launcher.util.ToastUtils;
-import com.honeycomb.launcher.util.Utils;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.feature.common.ActivityUtils;
+import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
+import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.feature.lucky.view.AwardView;
 import com.ihs.inputmethod.feature.lucky.view.GameScene;
 import com.ihs.inputmethod.feature.lucky.view.GoButton;
+import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.Locale;
 
-import hugo.weaving.DebugLog;
+import static com.ihs.inputmethod.feature.common.CommonUtils.setupTransparentSystemBarsForLmp;
+
 
 /**
  * Main activity for Lucky game.
@@ -126,7 +126,7 @@ public class LuckyActivity extends HSAppCompatActivity
 
     private ViewState mViewState = ViewState.GAME;
 
-    @DebugLog
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +138,7 @@ public class LuckyActivity extends HSAppCompatActivity
         initView(mute);
     }
 
-    @DebugLog
+
     private void initView(boolean muteSoundEffects) {
         View catchActionBtn = ViewUtils.findViewById(this, R.id.lucky_game_catch_action_btn);
         mMuteButton = ViewUtils.findViewById(this, R.id.lucky_game_mute_btn);
@@ -156,6 +156,7 @@ public class LuckyActivity extends HSAppCompatActivity
         mAwardView.setMusicPlayer(mMusicPlayer);
 
         mScene.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onGlobalLayout() {
                 int bannerHeight = banner.findViewById(R.id.lucky_game_top_banner_image).getHeight();
@@ -179,7 +180,7 @@ public class LuckyActivity extends HSAppCompatActivity
         mBannerLight2 = ViewUtils.findViewById(banner, R.id.lucky_game_top_banner_image_light_red);
     }
 
-    @DebugLog
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -200,12 +201,13 @@ public class LuckyActivity extends HSAppCompatActivity
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Utils.setupTransparentSystemBarsForLmp(this);
+        setupTransparentSystemBarsForLmp(this);
         ActivityUtils.setNavigationBarColor(this, ContextCompat.getColor(this, android.R.color.black));
         ActivityUtils.hideStatusBar(this);
     }
 
-    @DebugLog
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -225,7 +227,7 @@ public class LuckyActivity extends HSAppCompatActivity
     }
 
     @Override
-    @DebugLog
+
     protected void onStop() {
         super.onStop();
         mEventLogger.onStop();
@@ -234,7 +236,7 @@ public class LuckyActivity extends HSAppCompatActivity
     }
 
     @Override
-    @DebugLog
+
     protected void onDestroy() {
         super.onDestroy();
 
@@ -389,7 +391,7 @@ public class LuckyActivity extends HSAppCompatActivity
     }
 
     @Override
-    @DebugLog
+
     public void onBackPressed() {
         if (mViewState != ViewState.GAME) {
             hideAwardView("Back");
@@ -415,7 +417,7 @@ public class LuckyActivity extends HSAppCompatActivity
 
     public void requestAds() {
         //request ad
-        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), AdPlacements.LUCKY_NATIVE_AD_PLACEMENT_NAME);
+        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_lucky));
         loader.load(1, null);
     }
 
@@ -434,7 +436,7 @@ public class LuckyActivity extends HSAppCompatActivity
         return null;
     }
 
-    @DebugLog
+
     public void hideAwardView(@Nullable String logCloseMethod) {
         if (logCloseMethod != null) {
             mEventLogger.logAwardViewCloseEvent(mViewState, logCloseMethod);
@@ -499,7 +501,7 @@ public class LuckyActivity extends HSAppCompatActivity
     private class MusicPlayerHandler extends Handler {
         static final int START_BACKGROUND_MUSIC_MSG = 1003;
 
-        @DebugLog
+
         MusicPlayerHandler() {
             super(Looper.getMainLooper());
         }
@@ -534,7 +536,7 @@ public class LuckyActivity extends HSAppCompatActivity
             }
         }
 
-        @DebugLog
+
         void onStop() {
             if (!mAdClickedUponStop) {
                 HSAnalytics.logEvent("Lucky_Times_TimeLength", "Duration",

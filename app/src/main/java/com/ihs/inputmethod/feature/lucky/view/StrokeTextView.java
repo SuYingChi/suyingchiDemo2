@@ -5,14 +5,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-
-import com.honeycomb.launcher.view.DebuggableTextView;
+import android.widget.TextView;
 
 /**
  * Created by zhijieli on 11/8/16.
  */
 
-public class StrokeTextView extends DebuggableTextView {
+public class StrokeTextView extends TextView {
 
     public StrokeTextView(Context context, AttributeSet attrs) {
         super(context, attrs);

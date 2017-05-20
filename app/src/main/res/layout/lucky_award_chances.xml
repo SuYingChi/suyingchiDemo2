@@ -187,7 +187,7 @@
         </FrameLayout>
     </FrameLayout>
 
-    <com.honeycomb.launcher.lucky.view.StrokeTextView
+    <com.ihs.inputmethod.feature.common.StrokeTextView
         android:id="@+id/lucky_game_award_chances_receive_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

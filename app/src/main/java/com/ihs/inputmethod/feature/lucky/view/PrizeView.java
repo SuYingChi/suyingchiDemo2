@@ -16,10 +16,10 @@ import android.widget.TextView;
 import com.acb.adadapter.AcbNativeAd;
 import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
 import com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.lucky.LuckyActivity;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
+import com.ihs.inputmethod.uimodules.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;

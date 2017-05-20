@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.lucky.LuckyActivity;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.ihs.inputmethod.feature.common.CommonUtils;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
+import com.ihs.inputmethod.uimodules.R;
 
 import java.util.Locale;
 

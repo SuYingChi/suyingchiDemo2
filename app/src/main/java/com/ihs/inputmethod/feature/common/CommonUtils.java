@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -67,6 +69,20 @@ public class CommonUtils {
 
     public static int pxFromDp(float dp) {
         return Math.round(dp * getDensityRatio());
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setupTransparentSystemBarsForLmp(Activity activityContext) {
+        if (CommonUtils.ATLEAST_LOLLIPOP) {
+            Window window = activityContext.getWindow();
+            window.getAttributes().systemUiVisibility |= (View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
+                    .SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
     }
 
     public static float getDensityRatio() {

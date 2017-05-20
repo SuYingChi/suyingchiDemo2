@@ -11,15 +11,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.lucky.LuckyPreloadManager;
-import com.honeycomb.launcher.theme.ThemeInfo;
-import com.honeycomb.launcher.util.LauncherConfig;
-import com.honeycomb.launcher.util.Utils;
-import com.honeycomb.launcher.util.ViewUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.utils.HSMarketUtils;
+import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
+import com.ihs.inputmethod.feature.common.LauncherConfig;
+import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
+import com.ihs.inputmethod.uimodules.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
@@ -105,8 +104,8 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
                 mBanner);
 
         mPackageName = (String) info.get("packageName");
-        mTitle.setText(LauncherConfig.getMultilingualString(info, ThemeInfo.CONFIG_KEY_NAME));
-        mBody.setText(LauncherConfig.getMultilingualString(info, ThemeInfo.CONFIG_KEY_SHORT_DESC));
+        mTitle.setText(LauncherConfig.getMultilingualString(info, "Name"));
+        mBody.setText(LauncherConfig.getMultilingualString(info, "ShortDescription"));
 
         return true;
     }

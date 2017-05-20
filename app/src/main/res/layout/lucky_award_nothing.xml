@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.honeycomb.launcher.lucky.view.NothingView
+<com.ihs.inputmethod.feature.lucky.view.NothingView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         android:layout_marginTop="300dp"
         android:background="@drawable/lucky_award_nothing_small_circle" />
 
-    <com.honeycomb.launcher.lucky.view.StrokeTextView
+    <com.ihs.inputmethod.feature.common.StrokeTextView
         android:id="@+id/lucky_game_nothing_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,4 +52,4 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
-</com.honeycomb.launcher.lucky.view.NothingView>
+</com.ihs.inputmethod.feature.lucky.view.NothingView>

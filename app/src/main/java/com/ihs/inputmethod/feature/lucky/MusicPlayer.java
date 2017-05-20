@@ -6,17 +6,13 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.support.annotation.RawRes;
 
-import com.crashlytics.android.core.CrashlyticsCore;
-import com.honeycomb.launcher.debug.CrashlyticsLog;
-import com.honeycomb.launcher.util.ConcurrentUtils;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.feature.common.ConcurrentUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
-import hugo.weaving.DebugLog;
 
 /**
  * Handles sound effects of game.
@@ -31,7 +27,7 @@ public class MusicPlayer {
     private MediaPlayer mBackground;
     private boolean mMute;
 
-    @DebugLog
+
     MusicPlayer(boolean mute) {
         mMute = mute;
     }
@@ -134,7 +130,7 @@ public class MusicPlayer {
             try {
                 media.start();
             } catch (IllegalStateException e) {
-                CrashlyticsCore.getInstance().logException(new CrashlyticsLog("media start illegal state"));
+                e.printStackTrace();
             }
         }
     }
@@ -161,7 +157,7 @@ public class MusicPlayer {
                             media.pause();
                         } catch (IllegalStateException e) {
                             //media state : dle, Initialized, Prepared, Stopped, Error
-                            CrashlyticsCore.getInstance().logException(new CrashlyticsLog("media pause illegal state exception"));
+                            e.printStackTrace();
                             continue;
                         }
                         synchronized (mMutedMedias) {
@@ -178,7 +174,7 @@ public class MusicPlayer {
                             media.start();
                         } catch (IllegalStateException e) {
                             //media state : dle, Initialized, Stopped, Error
-                            CrashlyticsCore.getInstance().logException(new CrashlyticsLog("media start illegal state exception"));
+                            e.printStackTrace();
                             continue;
                         }
                     }
@@ -193,7 +189,7 @@ public class MusicPlayer {
         return media.isLooping();
     }
 
-    @DebugLog
+
     void release() {
         Collection<MediaPlayer> medias;
         synchronized (mMedias) {

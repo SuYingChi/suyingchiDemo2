@@ -3,20 +3,22 @@ package com.ihs.inputmethod.feature.lucky.view;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.TouchDelegate;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.animation.LauncherAnimUtils;
-import com.honeycomb.launcher.lucky.LuckyActivity;
-import com.honeycomb.launcher.util.CommonUtils;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.feature.common.CommonUtils;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
+import com.ihs.inputmethod.uimodules.R;
 
 
 public class BoxView extends RelativeLayout implements View.OnClickListener {
@@ -53,6 +55,8 @@ public class BoxView extends RelativeLayout implements View.OnClickListener {
     public BoxView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+    public static final TimeInterpolator ACCELERATE_QUAD =
+            AnimationUtils.loadInterpolator(HSApplication.getContext(), R.anim.accelerate_quad);
 
     @Override
     protected void onFinishInflate() {
@@ -96,7 +100,7 @@ public class BoxView extends RelativeLayout implements View.OnClickListener {
     private AnimatorSet getFadeInAnimation() {
         ObjectAnimator fadeIn = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 1.0f);
         fadeIn.setDuration(BACKGROUND_FADE_IN_DURATION);
-        fadeIn.addListener(new com.honeycomb.launcher.animation.AnimatorListenerAdapter() {
+        fadeIn.addListener(new com.ihs.inputmethod.feature.common.AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
                 setAlpha(0.0f);
@@ -205,20 +209,20 @@ public class BoxView extends RelativeLayout implements View.OnClickListener {
 
         ObjectAnimator transXRibbonL1 = ObjectAnimator.ofFloat(mRibbonLeft1, "translationX", 0.0f, -300.0f);
         transXRibbonL1.setDuration(BOX_ENLARGE_SIZE_DURATION);
-        transXRibbonL1.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transXRibbonL1.setInterpolator(ACCELERATE_QUAD);
         ObjectAnimator transYRibbonL1 = ObjectAnimator.ofFloat(mRibbonLeft1, "translationY", 0.0f, -200.0f);
         transYRibbonL1.setDuration(BOX_ENLARGE_SIZE_DURATION);
-        transYRibbonL1.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transYRibbonL1.setInterpolator(ACCELERATE_QUAD);
 
         ObjectAnimator ribbonFadeOutL1 = ObjectAnimator.ofFloat(mRibbonLeft1, "alpha", 0, 1, 0);
         ribbonFadeOutL1.setDuration(BOX_ENLARGE_SIZE_DURATION);
 
         ObjectAnimator transXRibbonL2 = ObjectAnimator.ofFloat(mRibbonLeft2, "translationX", 0.0f, -250.0f);
         transXRibbonL2.setDuration(BOX_ENLARGE_SIZE_DURATION);
-        transXRibbonL2.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transXRibbonL2.setInterpolator(ACCELERATE_QUAD);
         ObjectAnimator transYRibbonL2 = ObjectAnimator.ofFloat(mRibbonLeft2, "translationY", 0.0f, -120.0f);
         transYRibbonL2.setDuration(BOX_ENLARGE_SIZE_DURATION);
-        transYRibbonL2.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transYRibbonL2.setInterpolator(ACCELERATE_QUAD);
 
         ObjectAnimator ribbonFadeOutL2 = ObjectAnimator.ofFloat(mRibbonLeft2, "alpha", 0, 1, 0);
         ribbonFadeOutL2.setDuration(BOX_ENLARGE_SIZE_DURATION);
@@ -226,11 +230,11 @@ public class BoxView extends RelativeLayout implements View.OnClickListener {
         ObjectAnimator transXRibbonL3 = ObjectAnimator.ofFloat(mRibbonLeft3, "translationX", 0.0f, -200.0f);
         transXRibbonL3.setDuration(BOX_ENLARGE_SIZE_DURATION - RIBBON_TRANS_DELAY_DURATION);
         transXRibbonL3.setStartDelay(RIBBON_TRANS_DELAY_DURATION);
-        transXRibbonL3.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transXRibbonL3.setInterpolator(ACCELERATE_QUAD);
         ObjectAnimator transYRibbonL3 = ObjectAnimator.ofFloat(mRibbonLeft3, "translationY", 0.0f, -150.0f);
         transYRibbonL3.setDuration(BOX_ENLARGE_SIZE_DURATION - RIBBON_TRANS_DELAY_DURATION);
         transYRibbonL3.setStartDelay(RIBBON_TRANS_DELAY_DURATION);
-        transYRibbonL3.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transYRibbonL3.setInterpolator(ACCELERATE_QUAD);
 
         ObjectAnimator ribbonFadeOutL3 = ObjectAnimator.ofFloat(mRibbonLeft3, "alpha", 0, 1, 0);
         ribbonFadeOutL3.setDuration(BOX_ENLARGE_SIZE_DURATION - RIBBON_TRANS_DELAY_DURATION);
@@ -250,20 +254,20 @@ public class BoxView extends RelativeLayout implements View.OnClickListener {
 
         ObjectAnimator transXRibbonR1 = ObjectAnimator.ofFloat(mRibbonRight1, "translationX", 0.0f, 200.0f);
         transXRibbonR1.setDuration(BOX_ENLARGE_SIZE_DURATION);
-        transXRibbonR1.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transXRibbonR1.setInterpolator(ACCELERATE_QUAD);
         ObjectAnimator transYRibbonR1 = ObjectAnimator.ofFloat(mRibbonRight1, "translationY", 0.0f, -150.0f);
         transYRibbonR1.setDuration(BOX_ENLARGE_SIZE_DURATION);
-        transYRibbonR1.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transYRibbonR1.setInterpolator(ACCELERATE_QUAD);
 
         ObjectAnimator ribbonFadeOutR1 = ObjectAnimator.ofFloat(mRibbonRight1, "alpha", 0, 1, 0);
         ribbonFadeOutR1.setDuration(BOX_ENLARGE_SIZE_DURATION);
 
         ObjectAnimator transXRibbonR2 = ObjectAnimator.ofFloat(mRibbonRight2, "translationX", 0.0f, 200.0f);
         transXRibbonR2.setDuration(BOX_ENLARGE_SIZE_DURATION);
-        transXRibbonR2.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transXRibbonR2.setInterpolator(ACCELERATE_QUAD);
         ObjectAnimator transYRibbonR2 = ObjectAnimator.ofFloat(mRibbonRight2, "translationY", 0.0f, -150.0f);
         transYRibbonR2.setDuration(BOX_ENLARGE_SIZE_DURATION);
-        transYRibbonR2.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transYRibbonR2.setInterpolator(ACCELERATE_QUAD);
 
         ObjectAnimator ribbonFadeOutR2 = ObjectAnimator.ofFloat(mRibbonRight2, "alpha", 0, 1, 0);
         ribbonFadeOutR2.setDuration(BOX_ENLARGE_SIZE_DURATION);
@@ -271,11 +275,11 @@ public class BoxView extends RelativeLayout implements View.OnClickListener {
         ObjectAnimator transXRibbonR3 = ObjectAnimator.ofFloat(mRibbonRight3, "translationX", 0.0f, 200.0f);
         transXRibbonR3.setDuration(BOX_ENLARGE_SIZE_DURATION - RIBBON_TRANS_DELAY_DURATION);
         transXRibbonR3.setStartDelay(RIBBON_TRANS_DELAY_DURATION);
-        transXRibbonR3.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transXRibbonR3.setInterpolator(ACCELERATE_QUAD);
         ObjectAnimator transYRibbonR3 = ObjectAnimator.ofFloat(mRibbonRight3, "translationY", 0.0f, -150.0f);
         transYRibbonR3.setDuration(BOX_ENLARGE_SIZE_DURATION - RIBBON_TRANS_DELAY_DURATION);
         transYRibbonR3.setStartDelay(RIBBON_TRANS_DELAY_DURATION);
-        transYRibbonR3.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        transYRibbonR3.setInterpolator(ACCELERATE_QUAD);
 
         ObjectAnimator ribbonFadeOutR3 = ObjectAnimator.ofFloat(mRibbonRight3, "alpha", 0, 1, 0);
         ribbonFadeOutR3.setDuration(BOX_ENLARGE_SIZE_DURATION - RIBBON_TRANS_DELAY_DURATION);
@@ -342,14 +346,14 @@ public class BoxView extends RelativeLayout implements View.OnClickListener {
         mPearl.setScaleY(0.0f);
         mPearl.setAlpha(1.0f);
         ObjectAnimator pearlTransDown = ObjectAnimator.ofFloat(mPearl, "translationY", -80, 0);
-        pearlTransDown.setInterpolator(LauncherAnimUtils.DECELERATE_QUAD);
+        pearlTransDown.setInterpolator( AnimationUtils.loadInterpolator(HSApplication.getContext(), R.anim.decelerate_quad));
         pearlTransDown.setDuration(BOX_REDUCE_SIZE_DURATION - COVER_SINGLE_TRANSLATION_UP_DURATION);
         ObjectAnimator enlargePearlX = ObjectAnimator.ofFloat(mPearl, "scaleX", PEARL_REDUCE_FACTOR, BOX_REDUCE_FACTOR);
         enlargePearlX.setDuration(BOX_REDUCE_SIZE_DURATION);
         ObjectAnimator enlargePearlY = ObjectAnimator.ofFloat(mPearl, "scaleY", PEARL_REDUCE_FACTOR, BOX_REDUCE_FACTOR);
         enlargePearlY.setDuration(BOX_REDUCE_SIZE_DURATION);
         ObjectAnimator pearlFadeOut = ObjectAnimator.ofFloat(mPearl, "alpha", 0.0f, 1.0f, 0.0f, 1.0f);
-        pearlFadeOut.setInterpolator(LauncherAnimUtils.ACCELERATE_QUAD);
+        pearlFadeOut.setInterpolator(ACCELERATE_QUAD);
         pearlFadeOut.setDuration(BOX_REDUCE_SIZE_DURATION);
 
         AnimatorSet set = new AnimatorSet();

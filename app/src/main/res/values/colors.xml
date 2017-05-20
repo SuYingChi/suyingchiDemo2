@@ -109,5 +109,7 @@
     <color name="base_function_bg_color">#30ffffff</color>
     <!-- Lucky -->
     <color name="lucky_award_bg">#e5000000</color>
+    <color name="material_text_white_primary">#deffffff</color>
+    <color name="material_ripple_white">#33FFFFFF</color>
 
 </resources>

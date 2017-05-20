@@ -7,8 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.DrawableRes;
 
-import com.honeycomb.launcher.R;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.uimodules.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,10 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import hugo.weaving.DebugLog;
-
-import static com.honeycomb.launcher.lucky.TargetInfo.Type.BOMB;
-import static com.honeycomb.launcher.lucky.TargetInfo.Type.SMALL_BOX;
+import static com.ihs.inputmethod.feature.lucky.TargetInfo.Type.BOMB;
+import static com.ihs.inputmethod.feature.lucky.TargetInfo.Type.SMALL_BOX;
 
 public class TargetInfo {
 
@@ -113,7 +111,7 @@ public class TargetInfo {
         }
     }
 
-    @DebugLog
+
     static void release() {
         sBitmapCache.clear();
     }
@@ -126,7 +124,7 @@ public class TargetInfo {
             target.trackIndex = sTrackIndices.get(i);
             target.type = sTypes.get(i);
 
-            if (target.type == Type.SMALL_BOX) {
+            if (target.type == SMALL_BOX) {
                 if (sSmallBoxColors.get(sSmallBoxColorIndex++) == SMALL_BOX_COLOR_RED) {
                     target.setFlags(FLAG_RED_COLOR, true);
                 }

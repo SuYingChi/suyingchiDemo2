@@ -40,4 +40,37 @@
     <declare-styleable name="RoundedCornerLayout">
         <attr name="rcl_corner_radius" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="InsettableFrameLayout_Layout">
+        <attr name="layout_ignoreInsets" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="HorizontalBannerImageView">
+        <attr name="aspectRatioOverride" format="float" />
+        <attr name="scaleType" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerImageView">
+        <attr name="round_left_top_corner_radius" format="dimension" />
+        <attr name="round_right_top_corner_radius" format="dimension" />
+        <attr name="round_left_bottom_corner_radius" format="dimension" />
+        <attr name="round_right_bottom_corner_radius" format="dimension" />
+        <attr name="round_border_width" format="dimension" />
+        <attr name="round_border_color" format="color" />
+        <attr name="round_oval" format="boolean" />
+        <attr name="android:scaleType" />
+    </declare-styleable>
+
+    <declare-styleable name="TypefacedTextView">
+        <attr name="typeface" format="reference" />
+        <attr name="font_style" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+            <enum name="bold_italic" value="3" />
+        </attr>
+
+        <attr name="drawable_width" format="dimension" />
+        <attr name="drawable_height" format="dimension" />
+    </declare-styleable>
 </resources>

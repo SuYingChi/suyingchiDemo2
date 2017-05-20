@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.util.Utils;
+import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.inputmethod.uimodules.R;
 
 
 public abstract class FlyAwardBaseView extends RelativeLayout {

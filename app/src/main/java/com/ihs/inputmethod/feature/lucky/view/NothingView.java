@@ -6,13 +6,13 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.animation.LauncherAnimUtils;
-import com.honeycomb.launcher.lucky.LuckyActivity;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
+import com.ihs.inputmethod.uimodules.R;
 
 
 public class NothingView extends FrameLayout implements View.OnClickListener {
@@ -76,11 +76,11 @@ public class NothingView extends FrameLayout implements View.OnClickListener {
         mBigCircle.setScaleY(1.0f);
 
         ObjectAnimator circleX = ObjectAnimator.ofFloat(mBigCircle, "scaleX", 0.8f, 2.0f, 1.2f);
-        circleX.setInterpolator(LauncherAnimUtils.ACCELERATE_DECELERATE);
+        circleX.setInterpolator(new AccelerateDecelerateInterpolator());
         circleX.setDuration(CIRCLE_ENLARGE_DURATION);
 
         ObjectAnimator circleY = ObjectAnimator.ofFloat(mBigCircle, "scaleY", 0.8f, 2.0f, 1.2f);
-        circleY.setInterpolator(LauncherAnimUtils.ACCELERATE_DECELERATE);
+        circleY.setInterpolator(new AccelerateDecelerateInterpolator());
         circleY.setDuration(CIRCLE_ENLARGE_DURATION);
 
         AnimatorSet circle = new AnimatorSet();
@@ -100,11 +100,11 @@ public class NothingView extends FrameLayout implements View.OnClickListener {
         mSmallCircle.setAlpha(0.0f);
 
         ObjectAnimator circleX = ObjectAnimator.ofFloat(mSmallCircle, "scaleX", 1.0f, 2.0f, 1.1f);
-        circleX.setInterpolator(LauncherAnimUtils.ACCELERATE_DECELERATE);
+        circleX.setInterpolator(new AccelerateDecelerateInterpolator());
         circleX.setDuration(CIRCLE_ENLARGE_DURATION);
 
         ObjectAnimator circleY = ObjectAnimator.ofFloat(mSmallCircle, "scaleY", 1.0f, 2.0f, 1.1f);
-        circleY.setInterpolator(LauncherAnimUtils.ACCELERATE_DECELERATE);
+        circleY.setInterpolator(new AccelerateDecelerateInterpolator());
         circleY.setDuration(CIRCLE_ENLARGE_DURATION);
 
         ObjectAnimator fadeIn = ObjectAnimator.ofFloat(mSmallCircle, "alpha", 0.0f, 1.0f);

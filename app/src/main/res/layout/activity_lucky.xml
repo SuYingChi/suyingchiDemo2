@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.honeycomb.launcher.view.CustomRootView
+<com.ihs.inputmethod.feature.common.CustomRootView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         tools:ignore="ContentDescription">
 
-        <com.honeycomb.launcher.view.HorizontalBannerImageView
+        <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/lucky_background"
@@ -32,7 +32,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <com.honeycomb.launcher.lucky.view.GameScene
+                <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
                     android:id="@+id/lucky_game_moving_belt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <com.honeycomb.launcher.view.HorizontalBannerImageView
+                    <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
                         android:id="@+id/lucky_game_top_banner_image"
                         style="@style/LuckyBannerImage"
                         android:src="@drawable/lucky_banner"
@@ -50,19 +50,19 @@
 
                     <!-- Use two views (not one view switching images) to avoid overhead in unnecessary
                          re-measure. This keeps animation smooth. -->
-                    <com.honeycomb.launcher.view.HorizontalBannerImageView
+                    <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
                         android:id="@+id/lucky_game_top_banner_image_light_yellow"
                         style="@style/LuckyBannerImage"
                         android:src="@drawable/lucky_banner_light_yellow"
                         app:aspectRatioOverride="1.922"/>
 
-                    <com.honeycomb.launcher.view.HorizontalBannerImageView
+                    <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
                         android:id="@+id/lucky_game_top_banner_image_light_red"
                         style="@style/LuckyBannerImage"
                         android:src="@drawable/lucky_banner_light_red"
                         app:aspectRatioOverride="1.922"/>
 
-                    <com.honeycomb.launcher.view.TypefacedTextView
+                    <com.ihs.inputmethod.feature.common.TypefacedTextView
                         android:id="@+id/lucky_game_chance_counter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                         tools:ignore="SpUsage"
                         tools:text="Chance: 009"/>
 
-                    <com.honeycomb.launcher.view.TypefacedTextView
+                    <com.ihs.inputmethod.feature.common.TypefacedTextView
                         android:id="@+id/lucky_game_chance_restore_timer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         </LinearLayout>
 
         <!-- Enclose action button image view in this layout for clipping -->
-        <com.honeycomb.launcher.lucky.view.GoButton
+        <com.ihs.inputmethod.feature.lucky.view.GoButton
             android:id="@+id/lucky_game_catch_action_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/lucky_go_button_click_effect"
                 android:visibility="invisible"/>
-        </com.honeycomb.launcher.lucky.view.GoButton>
+        </com.ihs.inputmethod.feature.lucky.view.GoButton>
 
         <ImageView
             android:id="@+id/lucky_game_mute_btn"
@@ -142,4 +142,4 @@
     </FrameLayout>
 
     <include layout="@layout/navigation_bar_bg"/>
-</com.honeycomb.launcher.view.CustomRootView>
+</com.ihs.inputmethod.feature.common.CustomRootView>

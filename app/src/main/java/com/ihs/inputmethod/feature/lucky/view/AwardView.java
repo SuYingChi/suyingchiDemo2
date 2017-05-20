@@ -31,13 +31,13 @@ import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
 import com.ihs.inputmethod.feature.lucky.MusicPlayer;
 import com.ihs.inputmethod.feature.lucky.TargetInfo;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import hugo.weaving.DebugLog;
 
 /**
  * Container for popup view that shows award.
@@ -70,7 +70,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
     private NothingView mEmptyView;
     private BombView mBombView;
     private NoNetworkView mNoNetwork;
-    private WallpaperView mWallpaperView;
     private ThemeView mThemeView;
 
     private View mChancesView;
@@ -109,7 +108,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         mMusicPlayer = musicPlayer;
     }
 
-    @DebugLog
+
     private BoxView getBoxView() {
         if (mBoxView == null) {
             HSLog.d(TAG, "Inflate ad box container");
@@ -118,7 +117,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         return mBoxView;
     }
 
-    @DebugLog
+
     private PrizeView getPrizeView() {
         if (mPrizeView == null) {
             HSLog.d(TAG, "Inflate ad view");
@@ -128,7 +127,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         return mPrizeView;
     }
 
-    @DebugLog
+
     private NothingView getEmptyView() {
         if (mEmptyView == null) {
             mEmptyView = (NothingView) mInflater.inflate(R.layout.lucky_award_nothing, this, false);
@@ -136,15 +135,8 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         return mEmptyView;
     }
 
-    @DebugLog
-    private WallpaperView getWallpaperView() {
-        if (mWallpaperView == null) {
-            mWallpaperView = (WallpaperView) mInflater.inflate(R.layout.lucky_award_wallpaper_view, this, false);
-        }
-        return mWallpaperView;
-    }
 
-    @DebugLog
+
     private ThemeView getThemeView() {
         if (mThemeView == null) {
             mThemeView = (ThemeView) mInflater.inflate(R.layout.lucky_award_theme_view, this, false);
@@ -152,7 +144,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         return mThemeView;
     }
 
-    @DebugLog
+
     private NoNetworkView getNetworkErrorView() {
         if (mNoNetwork == null) {
             mNoNetwork = (NoNetworkView) mInflater.inflate(R.layout.lucky_award_no_network, this, false);
@@ -160,7 +152,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         return mNoNetwork;
     }
 
-    @DebugLog
+
     private View getBombView() {
         if (mBombView == null) {
             mBombView = (BombView) mInflater.inflate(R.layout.lucky_award_bomb, this, false);
@@ -168,7 +160,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         return mBombView;
     }
 
-    @DebugLog
+
     private View getChancesView() {
         if (mChancesView == null) {
             View chancesView = mInflater.inflate(R.layout.lucky_award_chances, this, false);
@@ -211,12 +203,10 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                     shouldShowAd = mCurrentLargeAdCount < mLargeBoxAdCount;
                 }
                 if (shouldShowAd) {
-                    List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), AdPlacements.LUCKY_NATIVE_AD_PLACEMENT_NAME, 1);
+                    List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_lucky), 1);
                     mAd = ads.isEmpty() ? null : ads.get(0);
                     if (mAd != null) {
-                        AdAnalytics.logAppViewEvent(AdPlacements.LUCKY_NATIVE_AD_PLACEMENT_NAME, true);
-                    } else {
-                        AdAnalytics.logAppViewEvent(AdPlacements.LUCKY_NATIVE_AD_PLACEMENT_NAME, false);
+                        KCAnalyticUtil.logEvent(HSApplication.getContext().getString(R.string.ad_placement_lucky));
                     }
                 } else {
                     mAd = null;
@@ -234,9 +224,9 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                     PrizeView prizeView = getPrizeView();
                     prizeView.resetVisible();
                     if (isSmall) {
-                        mCurrentSmallAdCount ++;
+                        mCurrentSmallAdCount++;
                     } else {
-                        mCurrentLargeAdCount ++;
+                        mCurrentLargeAdCount++;
                     }
                     prizeView.fillAd(mAd);
                     if (prizeView.getParent() == null) {
@@ -250,40 +240,26 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                     mMusicPlayer.play(getContext(), R.raw.lucky_sound_award_open);
                 } else {
                     if (isSmall) {
-                        if (getWallpaperView().fetchWallpaper()) {
-                            HSAnalytics.logEvent("Lucky_Award_Wallpaper_Shown");
-                            ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_WALLPAPER);
-                            if (getWallpaperView().getParent() == null) {
-                                getWallpaperView().setTag(VIEW_TAG);
-                                getBoxView().addView(getWallpaperView(), 0);
-                            }
-                            getWallpaperView().setVisibility(INVISIBLE);
+                        GameConfig config = ((LuckyActivity) getContext()).getGameConfig();
+                        if (config == null || sRand.nextFloat() <= config.getSmallBoxChancesProbability()) {
+                            HSAnalytics.logEvent("Lucky_Award_Chances_Shown");
+                            ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_CHANCES);
                             getBoxView().setVisibility(GONE);
+
+                            if (getChancesView().getParent() == null) {
+                                getChancesView().setTag(VIEW_TAG);
+                                getBoxView().addView(getChancesView(), 0);
+                            }
+                            getChancesView().setVisibility(INVISIBLE);
                             addView(getBoxView());
-                            showWallpaperView();
+                            mChancesAnimator = getChancesAnimation();
+                            showChanceAwardView();
                             mMusicPlayer.play(getContext(), R.raw.lucky_sound_award_open);
                         } else {
-                            GameConfig config = ((LuckyActivity) getContext()).getGameConfig();
-                            if (config == null || sRand.nextFloat() <= config.getSmallBoxChancesProbability()) {
-                                HSAnalytics.logEvent("Lucky_Award_Chances_Shown");
-                                ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_CHANCES);
-                                getBoxView().setVisibility(GONE);
-
-                                if (getChancesView().getParent() == null) {
-                                    getChancesView().setTag(VIEW_TAG);
-                                    getBoxView().addView(getChancesView(), 0);
-                                }
-                                getChancesView().setVisibility(INVISIBLE);
-                                addView(getBoxView());
-                                mChancesAnimator = getChancesAnimation();
-                                showChanceAwardView();
-                                mMusicPlayer.play(getContext(), R.raw.lucky_sound_award_open);
-                            } else {
-                                ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_NOTHING);
-                                showEmpty();
-                            }
-                            mShouldRefresh = false;
+                            ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_NOTHING);
+                            showEmpty();
                         }
+                        mShouldRefresh = false;
                     } else {
                         if (getThemeView().fetchTheme()) {
                             HSAnalytics.logEvent("Lucky_Award_Theme_Shown");
@@ -337,11 +313,15 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         }
 
         if (mShouldRefresh) {
-            if (mViewState == LuckyActivity.ViewState.AWARD_SMALL) {
-                LuckyPreloadManager.getInstance().refreshWallpaper(true);
-            } else if (mViewState == LuckyActivity.ViewState.AWARD_LARGE) {
-                LuckyPreloadManager.getInstance().refreshTheme(true);
-            }
+
+            //// TODO: 17/5/20 launcher 小礼物刷新墙纸
+//            if (mViewState == LuckyActivity.ViewState.AWARD_SMALL) {
+//                LuckyPreloadManager.getInstance().refreshWallpaper(true);
+//            } else if (mViewState == LuckyActivity.ViewState.AWARD_LARGE) {
+//                LuckyPreloadManager.getInstance().refreshTheme(true);
+//            }
+
+            LuckyPreloadManager.getInstance().refreshTheme(true);
         }
         mShouldRefresh = true;
 
@@ -418,7 +398,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         }
 
         mChancesAnimator.setStartDelay(OTHER_VIEW_DELAY_DURATION);
-        mChancesAnimator.addListener(new com.honeycomb.launcher.animation.AnimatorListenerAdapter() {
+        mChancesAnimator.addListener(new com.ihs.inputmethod.feature.common.AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
                 getChancesView().setVisibility(VISIBLE);
@@ -431,26 +411,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         mAwardAnimators.start();
     }
 
-    private void showWallpaperView() {
-        if (mAwardAnimators != null && mAwardAnimators.isRunning()) {
-            mAwardAnimators.end();
-            getBoxView().setVisibility(GONE);
-        }
-
-
-        ObjectAnimator wallpaper = getWallpaperView().getWallpaperAnimation();
-        wallpaper.setStartDelay(WALLPAPER_DELAY_DURATION);
-        wallpaper.addListener(new com.honeycomb.launcher.animation.AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                getWallpaperView().setVisibility(VISIBLE);
-            }
-        });
-
-        mAwardAnimators = new AnimatorSet();
-        mAwardAnimators.playTogether(getBoxView().getBoxAnimation(), wallpaper);
-        mAwardAnimators.start();
-    }
 
     private void showThemeView() {
         if (mAwardAnimators != null && mAwardAnimators.isRunning()) {
@@ -460,10 +420,9 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
 
         AnimatorSet theme = getThemeView().getThemeAnimation();
         theme.setStartDelay(THEME_DELAY_DURATION);
-        theme.addListener(new com.honeycomb.launcher.animation.AnimatorListenerAdapter() {
+        theme.addListener(new com.ihs.inputmethod.feature.common.AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                getWallpaperView().setVisibility(VISIBLE);
             }
         });
 
@@ -566,7 +525,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         return bitmap;
     }
 
-    @DebugLog
+
     public static void release() {
         // These bitmaps are obtained by BitmapFactory.decodeResource(), for which the framework
         // maintains a resource cache and the bitmaps created are held and reused. We shall NOT

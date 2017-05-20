@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="roboto_light" translatable="false">sans-serif-light</string>
+    <string name="roboto_medium" translatable="false">sans-serif-medium</string>
+    <string name="roboto_regular" translatable="false">sans-serif</string>
+    <string name="roboto_condensed" translatable="false">sans-serif-condensed</string>
+    <string name="roboto_thin" translatable="false">sans-serif-thin</string>
+    <string name="ds_digib" translatable="false">DS-DIGIB</string>
+    <string name="akrobat_light" translatable="false">Akrobat-Light-simple</string>
+    <string name="proxima_nova_regular" translatable="false">ProximaNova-Regular</string>
+    <string name="proxima_nova_light" translatable="false">ProximaNova-Light</string>
+    <string name="proxima_nova_thin" translatable="false">ProximaNova-Thin</string>
+    <string name="proxima_nova_semibold" translatable="false">ProximaNova-Semibold</string>
+    <string name="proxima_nova_regular_condensed" translatable="false">ProximaNova-Regular-Condensed</string>
+</resources>

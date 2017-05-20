@@ -8,10 +8,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.lucky.LuckyActivity;
-import com.honeycomb.launcher.util.Utils;
-import com.honeycomb.launcher.util.ViewUtils;
+import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.inputmethod.feature.common.ViewUtils;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
+import com.ihs.inputmethod.uimodules.R;
 
 
 public class NoNetworkView extends FrameLayout implements View.OnClickListener {

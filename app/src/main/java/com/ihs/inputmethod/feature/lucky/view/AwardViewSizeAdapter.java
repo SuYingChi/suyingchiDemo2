@@ -6,7 +6,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.honeycomb.launcher.R;
+import com.ihs.inputmethod.uimodules.R;
+
 
 /**
  * Scales {@link AwardView} to adapt different screen sizes.

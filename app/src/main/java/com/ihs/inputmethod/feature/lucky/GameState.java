@@ -3,23 +3,23 @@ package com.ihs.inputmethod.feature.lucky;
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.view.Choreographer;
+import android.view.animation.LinearInterpolator;
 
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.animation.LauncherAnimUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hugo.weaving.DebugLog;
-
+@SuppressLint("NewApi")
 public class GameState {
 
     private static final String TAG = GameState.class.getSimpleName();
@@ -111,7 +111,7 @@ public class GameState {
         return mChanceCount;
     }
 
-    @DebugLog
+
     public void reset() {
         mBeltTranslation = 0f;
         mArmPosition = 0f;
@@ -425,7 +425,7 @@ public class GameState {
         CatchAnimator(long duration) {
             ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
             animator.setDuration(duration);
-            animator.setInterpolator(LauncherAnimUtils.LINEAR);
+            animator.setInterpolator(new LinearInterpolator());
             mAnimator = animator;
         }
 

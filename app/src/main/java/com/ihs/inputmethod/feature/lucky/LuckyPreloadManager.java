@@ -2,24 +2,20 @@ package com.ihs.inputmethod.feature.lucky;
 
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.honeycomb.launcher.BuildConfig;
-import com.honeycomb.launcher.customize.CustomizeConfig;
-import com.honeycomb.launcher.customize.WallpaperInfo;
-import com.honeycomb.launcher.lucky.view.ThemeView;
-import com.honeycomb.launcher.lucky.view.WallpaperView;
-import com.honeycomb.launcher.theme.ThemeInfo;
-import com.honeycomb.launcher.util.ConcurrentUtils;
-import com.honeycomb.launcher.util.LauncherConfig;
-import com.honeycomb.launcher.util.Utils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.feature.common.ConcurrentUtils;
+import com.ihs.inputmethod.feature.common.CustomizeConfig;
+import com.ihs.inputmethod.feature.common.LauncherConfig;
+import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.inputmethod.feature.lucky.view.ThemeView;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,8 +27,6 @@ public class LuckyPreloadManager {
 
     private static final String TAG = LuckyPreloadManager.class.getSimpleName();
 
-    private static final String PREF_KEY_WALLPAPER_ICON_URL = "preload_wallpaper_icon_url";
-    private static final String PREF_KEY_WALLPAPER_IMAGE_URL = "preload_wallpaper_image_url";
     private static final String PREF_KEY_THEME_PACKAGE_NAME = "preload_theme_package_name";
 
     @SuppressWarnings("PointlessBooleanExpression")
@@ -41,9 +35,7 @@ public class LuckyPreloadManager {
     private volatile static LuckyPreloadManager sInstance;
 
     private Map mThemeInfo;
-    private WallpaperInfo mInfo;
     private List<String> mThemePackages;
-    private List<Integer> mWallpaperSizeTable;
     private Random mRandom = new Random();
 
     public static LuckyPreloadManager getInstance() {
@@ -63,38 +55,6 @@ public class LuckyPreloadManager {
         }
         int randIndex = mRandom.nextInt(mThemePackages.size());
         return mThemePackages.get(randIndex);
-    }
-
-    @SuppressWarnings("unchecked")
-    private WallpaperInfo getRandomWallpaperInfo() {
-        if (mWallpaperSizeTable.isEmpty()) {
-            return null;
-        }
-        int index = mRandom.nextInt(mWallpaperSizeTable.get(mWallpaperSizeTable.size() - 1));
-        int categoryIndex = -1;
-        //noinspection StatementWithEmptyBody
-        while (index > mWallpaperSizeTable.get(++categoryIndex)) ;
-        int wallpaperIndex = index - (categoryIndex > 0 ?
-                mWallpaperSizeTable.get(categoryIndex - 1) : 0);
-        List<Map<String, ?>> config = (List<Map<String, ?>>) CustomizeConfig.getList("Wallpapers");
-        if (config == null) {
-            return null;
-        }
-        if (categoryIndex >= config.size()) {
-            categoryIndex = config.size() - 1;
-        }
-
-        List<Map<String, ?>> wallpaperList = (List<Map<String, ?>>) config.get(categoryIndex).get("Wallpapers");
-        if (wallpaperIndex >= wallpaperList.size()) {
-            wallpaperIndex = wallpaperList.size() - 1;
-        }
-        Map<String, String> wallpaper = (Map<String, String>) wallpaperList.get(wallpaperIndex);
-        String hdUrl = wallpaper.get("Hd");
-        String thumbnailUrl = wallpaper.get("Thumb");
-        if (TextUtils.isEmpty(hdUrl) || TextUtils.isEmpty(thumbnailUrl)) {
-            return null;
-        }
-        return new WallpaperInfo(hdUrl, thumbnailUrl);
     }
 
     private void downloadFileAsync(final File output, final String url) {
@@ -151,11 +111,6 @@ public class LuckyPreloadManager {
         HSPreferenceHelper.getDefault().putString(PREF_KEY_THEME_PACKAGE_NAME, "");
     }
 
-    private void resetWallpaperInfo() {
-        HSPreferenceHelper.getDefault().putString(PREF_KEY_WALLPAPER_ICON_URL, "");
-        HSPreferenceHelper.getDefault().putString(PREF_KEY_WALLPAPER_IMAGE_URL, "");
-    }
-
     @SuppressWarnings("unchecked")
     private boolean restoreThemeInfo() {
         String packageName = HSPreferenceHelper.getDefault().getString(PREF_KEY_THEME_PACKAGE_NAME, "");
@@ -170,17 +125,6 @@ public class LuckyPreloadManager {
             return false;
         }
         mThemeInfo.put("packageName", packageName);
-        return true;
-    }
-
-    private boolean restoreWallpaperInfo() {
-        String iconUrl = HSPreferenceHelper.getDefault().getString(PREF_KEY_WALLPAPER_ICON_URL, "");
-        String wallpaperUrl = HSPreferenceHelper.getDefault().getString(PREF_KEY_WALLPAPER_IMAGE_URL, "");
-        if (iconUrl.isEmpty() || wallpaperUrl.isEmpty()) {
-            resetWallpaperInfo();
-            return false;
-        }
-        mInfo = new WallpaperInfo(iconUrl, wallpaperUrl);
         return true;
     }
 
@@ -213,24 +157,6 @@ public class LuckyPreloadManager {
                     configThemes.addAll(validThemes); // Add non-priority themes ONCE
                     mThemePackages = configThemes;
                 }
-
-                {
-                    List<Map<String, ?>> config = (List<Map<String, ?>>) CustomizeConfig.getList("Wallpapers");
-                    if (config == null) {
-                        config = new ArrayList<>();
-                    }
-                    int categoryCount = config.size();
-                    mWallpaperSizeTable = new ArrayList<>(categoryCount);
-                    for (int i = 0; i < categoryCount; i++) {
-                        List<Map<String, ?>> wallpaperList = (List<Map<String, ?>>) config.get(i).get("Wallpapers");
-                        if (wallpaperList == null) continue;
-                        if (i == 0) {
-                            mWallpaperSizeTable.add(i, wallpaperList.size());
-                        } else {
-                            mWallpaperSizeTable.add(i, mWallpaperSizeTable.get(i - 1) + wallpaperList.size());
-                        }
-                    }
-                }
             }
         });
     }
@@ -251,23 +177,6 @@ public class LuckyPreloadManager {
         }
 
         return !(iconFile && themeFile);
-    }
-
-    private boolean shouldRefreshWallpaper() {
-        File icon = new File(Utils.getDirectory(WallpaperView.WALLPAPER_PRELOAD_DIRECTORY), WallpaperView.ICON);
-        File wallpaper = new File(Utils.getDirectory(WallpaperView.WALLPAPER_PRELOAD_DIRECTORY), WallpaperView.WALLPAPER);
-
-        boolean iconFile = icon.exists() && isCompleteDownload(icon);
-        boolean wallpaperFile = wallpaper.exists() && isCompleteDownload(wallpaper);
-        if (iconFile && wallpaperFile) {
-            if (mInfo == null) {
-                if (!restoreWallpaperInfo()) {
-                    return true;
-                }
-            }
-        }
-
-        return !(iconFile && wallpaperFile);
     }
 
     public void refreshTheme(final boolean force) {
@@ -305,49 +214,15 @@ public class LuckyPreloadManager {
                 //save theme info
                 HSPreferenceHelper.getDefault().putString(PREF_KEY_THEME_PACKAGE_NAME, name);
 
-                String themeIconUrl = LauncherConfig.getMultilingualString(mThemeInfo, ThemeInfo.CONFIG_KEY_ICON);
+                String themeIconUrl = LauncherConfig.getMultilingualString(mThemeInfo, "Icon");
                 downloadFileAsync(themeIcon, themeIconUrl);
 
-                String banner = LauncherConfig.getMultilingualString(mThemeInfo, ThemeInfo.CONFIG_KEY_BANNER);
+                String banner = LauncherConfig.getMultilingualString(mThemeInfo, "Banner");
                 downloadFileAsync(theme, banner);
             }
         });
     }
 
-    public void refreshWallpaper(final boolean force) {
-        ConcurrentUtils.postOnSingleThreadExecutor(new Runnable() {
-            @Override
-            public void run() {
-                if (!shouldRefreshWallpaper() && !force) {
-                    return;
-                }
-                File icon = new File(Utils.getDirectory(WallpaperView.WALLPAPER_PRELOAD_DIRECTORY), WallpaperView.ICON);
-                if (icon.exists()) {
-                    boolean deleted = icon.delete();
-                    HSLog.d(TAG, "Delete file " + icon + ": " + deleted);
-                }
-
-                File wallpaper = new File(Utils.getDirectory(WallpaperView.WALLPAPER_PRELOAD_DIRECTORY), WallpaperView.WALLPAPER);
-                if (wallpaper.exists()) {
-                    boolean deleted = wallpaper.delete();
-                    HSLog.d(TAG, "Delete file " + wallpaper + ": " + deleted);
-                }
-
-                mInfo = getRandomWallpaperInfo();
-                if (mInfo == null || mInfo.getThumbnailUrl().isEmpty() || mInfo.getWallpaperUrl().isEmpty()) {
-                    resetWallpaperInfo();
-                    return;
-                }
-
-                //save wallpaper info
-                HSPreferenceHelper.getDefault().putString(PREF_KEY_WALLPAPER_ICON_URL, mInfo.getThumbnailUrl());
-                HSPreferenceHelper.getDefault().putString(PREF_KEY_WALLPAPER_IMAGE_URL, mInfo.getWallpaperUrl());
-
-                downloadFileAsync(wallpaper, mInfo.getWallpaperUrl());
-                downloadFileAsync(icon, mInfo.getThumbnailUrl());
-            }
-        });
-    }
 
     public Map getThemeInfo() {
         File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
@@ -362,16 +237,4 @@ public class LuckyPreloadManager {
         return mThemeInfo;
     }
 
-    public WallpaperInfo getLuckyWallpaper() {
-        File icon = new File(Utils.getDirectory(WallpaperView.WALLPAPER_PRELOAD_DIRECTORY), WallpaperView.ICON);
-        File wallpaper = new File(Utils.getDirectory(WallpaperView.WALLPAPER_PRELOAD_DIRECTORY), WallpaperView.WALLPAPER);
-
-        if (mInfo == null || !icon.exists() || !wallpaper.exists()) {
-            return null;
-        }
-        if (!isCompleteDownload(icon) || !isCompleteDownload(wallpaper)) {
-            return null;
-        }
-        return mInfo;
-    }
 }

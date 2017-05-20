@@ -6,9 +6,9 @@ import android.support.annotation.IdRes;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.honeycomb.launcher.R;
-import com.honeycomb.launcher.animation.AnimatorListenerAdapter;
-import com.honeycomb.launcher.util.Utils;
+import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
+import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.inputmethod.uimodules.R;
 
 @SuppressWarnings("unused")
 class ChancesAnimationAdapter extends AnimatorListenerAdapter {
