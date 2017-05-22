@@ -94,6 +94,15 @@ public class WakeKeyboardService extends Service {
     }
 
     @Override
+    public void onDestroy() {
+        if(timer!=null){
+            timer.cancel();
+            timer.purge();
+        }
+        super.onDestroy();
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         boolean enable = HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable");
         if (!enable) {
@@ -110,7 +119,15 @@ public class WakeKeyboardService extends Service {
             public void run() {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                List<InputMethodInfo> mInputMethodProperties = imm.getEnabledInputMethodList();
+                List<InputMethodInfo> enabledInputMethodList;
+                try{
+                    enabledInputMethodList = imm.getEnabledInputMethodList();
+                }catch (Exception e){
+                    HSLog.e("获取系统服务失败");
+                    return;
+                }
+
+                List<InputMethodInfo> mInputMethodProperties = enabledInputMethodList;
                 for (int i = 0; i < mInputMethodProperties.size(); i++) {
                     InputMethodInfo imi = mInputMethodProperties.get(i);
                     if (imi.getId().equals(Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD))) {
