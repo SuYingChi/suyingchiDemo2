@@ -47,14 +47,30 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
 
     private static InputConnection insideConnection = null;
-
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(ACTION_CLOSE_SYSTEM_DIALOGS)) {
+                String reason = intent.getStringExtra("reason");
+                if (reason != null && reason.equals("homekey")) {
+                    getKeyboardPanelMananger().onHomePressed();
+                }
+            }
+        }
+    };
+    private final BroadcastReceiver dateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(Intent.ACTION_DATE_CHANGED.equals(action)) {
+                KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
+                KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
+            }
+        }
+    };
     private boolean isInputViewShowing = false;
     private String currentAppPackageName;
-
-    private static KeyboardPanelManager getKeyboardPanelMananger() {
-        return (KeyboardPanelManager) keyboardPanelSwitcher;
-    }
-
+    private KeyboardFullScreenAd openFullScreenAd;
+    private KeyboardFullScreenAd closeFullScreenAd;
     private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
@@ -69,31 +85,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
     };
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(ACTION_CLOSE_SYSTEM_DIALOGS)) {
-                String reason = intent.getStringExtra("reason");
-                if (reason != null && reason.equals("homekey")) {
-                    getKeyboardPanelMananger().onHomePressed();
-                }
-            }
-        }
-    };
-
-    private final BroadcastReceiver dateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(Intent.ACTION_DATE_CHANGED.equals(action)) {
-                KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
-                KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
-            }
-        }
-    };
-
-    private KeyboardFullScreenAd openFullScreenAd;
-    private KeyboardFullScreenAd closeFullScreenAd;
-
+    private static KeyboardPanelManager getKeyboardPanelMananger() {
+        return (KeyboardPanelManager) keyboardPanelSwitcher;
+    }
 
     @Override
     public void onCreate() {
@@ -131,7 +125,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     }
 
     private boolean showBackAdIfNeeded() {
-        boolean enabled = HSConfig.getBoolean("Application", "InterstitialAds", "BackButton", "Show");
+        boolean enabled = HSConfig.optBoolean(false,"Application", "InterstitialAds", "BackButton", "Show");
 
         if (!enabled) {
             return false;
