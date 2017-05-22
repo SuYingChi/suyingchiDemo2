@@ -33,6 +33,7 @@
             tools:text="Rlash Royale" />
 
         <com.ihs.inputmethod.feature.common.TypefacedTextView
+            android:visibility="gone"
             android:id="@+id/lucky_game_theme_body"
             android:layout_width="280dp"
             android:layout_height="wrap_content"

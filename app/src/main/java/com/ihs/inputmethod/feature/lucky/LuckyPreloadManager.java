@@ -2,6 +2,7 @@ package com.ihs.inputmethod.feature.lucky;
 
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.ihs.commons.config.HSConfig;
@@ -10,9 +11,9 @@ import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.feature.common.ConcurrentUtils;
-import com.ihs.inputmethod.feature.common.CustomizeConfig;
-import com.ihs.inputmethod.feature.common.LauncherConfig;
 import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.lucky.view.ThemeView;
 import com.ihs.inputmethod.uimodules.BuildConfig;
@@ -33,10 +34,12 @@ public class LuckyPreloadManager {
     private static final boolean DEBUG_LUCKY_PRELOAD = false && BuildConfig.DEBUG;
 
     private volatile static LuckyPreloadManager sInstance;
-
-    private Map mThemeInfo;
-    private List<String> mThemePackages;
+    private List<Map<String, String>> themeMapList;
     private Random mRandom = new Random();
+
+    private Map<String, String> themeItemInfo;
+    private HSKeyboardTheme themeItem;
+
 
     public static LuckyPreloadManager getInstance() {
         if (sInstance == null) {
@@ -49,12 +52,12 @@ public class LuckyPreloadManager {
         return sInstance;
     }
 
-    private String getRandomThemePackage() {
-        if (mThemePackages.isEmpty()) {
+    private Map<String, String> getRandomThemeName() {
+        if (themeMapList.isEmpty()) {
             return null;
         }
-        int randIndex = mRandom.nextInt(mThemePackages.size());
-        return mThemePackages.get(randIndex);
+        int randIndex = mRandom.nextInt(themeMapList.size());
+        return themeMapList.get(randIndex);
     }
 
     private void downloadFileAsync(final File output, final String url) {
@@ -118,13 +121,6 @@ public class LuckyPreloadManager {
             resetThemeInfo();
             return false;
         }
-        mThemeInfo = CustomizeConfig.getMap("Themes", "OnlineDescriptions", packageName);
-
-        if (mThemeInfo == null || mThemeInfo.isEmpty()) {
-            resetThemeInfo();
-            return false;
-        }
-        mThemeInfo.put("packageName", packageName);
         return true;
     }
 
@@ -138,24 +134,14 @@ public class LuckyPreloadManager {
             @Override
             public void run() {
                 {
-                    List<String> configThemes = new ArrayList<>((List<String>) HSConfig.getList("Application", "Lucky", "PriorityThemes"));
-                    List<String> validThemes = new ArrayList<>();
-                    Map<String, ?> description = CustomizeConfig.getMap("Themes", "OnlineDescriptions");
-                    if (description != null) {
-                        validThemes.addAll(description.keySet());
+                    try {
+                        themeMapList = (List<Map<String, String>>) HSConfig.getList("Application", "Lucky", "PriorityThemes");
+                    } catch (Exception e) {
+                        HSLog.e("lucky theme map error");
                     }
-                    List<String> invalid = new ArrayList<>();
-                    for (String configTheme : configThemes) {
-                        if (!validThemes.contains(configTheme)) {
-                            invalid.add(configTheme);
-                        }
+                    if (themeMapList == null) {
+                        themeMapList = new ArrayList<>();
                     }
-                    configThemes.removeAll(invalid);
-                    validThemes.removeAll(configThemes);
-                    List<String> configThemesCopy = new ArrayList<>(configThemes);
-                    configThemes.addAll(configThemesCopy); // Copy to make priority themes appear TWICE
-                    configThemes.addAll(validThemes); // Add non-priority themes ONCE
-                    mThemePackages = configThemes;
                 }
             }
         });
@@ -163,16 +149,14 @@ public class LuckyPreloadManager {
 
     private boolean shouldRefreshTheme() {
         File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
-        File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.THEME);
+        File banner = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
 
         boolean iconFile = themeIcon.exists() && isCompleteDownload(themeIcon);
-        boolean themeFile = theme.exists() && isCompleteDownload(theme);
+        boolean themeFile = banner.exists() && isCompleteDownload(banner);
 
         if (iconFile && themeFile) {
-            if (mThemeInfo == null) {
-                if (!restoreThemeInfo()) {
-                    return true;
-                }
+            if (!restoreThemeInfo()) {
+                return true;
             }
         }
 
@@ -193,48 +177,53 @@ public class LuckyPreloadManager {
                     HSLog.d(TAG, "Delete file " + themeIcon + ": " + deleted);
                 }
 
-                File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.THEME);
+                File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
                 if (theme.exists()) {
                     boolean deleted = theme.delete();
                     HSLog.d(TAG, "Delete file " + theme + ": " + deleted);
                 }
 
-                String name = getRandomThemePackage();
-                if (name == null) {
-                    resetThemeInfo();
-                    return;
-                }
-                mThemeInfo = CustomizeConfig.getMap("Themes", "OnlineDescriptions", name);
-                if (mThemeInfo == null || mThemeInfo.isEmpty()) {
+                themeItemInfo = getRandomThemeName();
+                if (themeItemInfo == null || themeItemInfo.isEmpty()) {
                     resetThemeInfo();
                     return;
                 }
 
-                mThemeInfo.put("packageName", name);
                 //save theme info
-                HSPreferenceHelper.getDefault().putString(PREF_KEY_THEME_PACKAGE_NAME, name);
+                String themeName = themeItemInfo.get("Name");
+                HSPreferenceHelper.getDefault().putString(PREF_KEY_THEME_PACKAGE_NAME, themeName);
 
-                String themeIconUrl = LauncherConfig.getMultilingualString(mThemeInfo, "Icon");
+                String themeIconUrl = themeItemInfo.get(ThemeView.ICON);
                 downloadFileAsync(themeIcon, themeIconUrl);
 
-                String banner = LauncherConfig.getMultilingualString(mThemeInfo, "Banner");
+                String banner = "";
+                for (HSKeyboardTheme hsKeyboardTheme : HSKeyboardThemeManager.getAllKeyboardThemeList()) {
+                    if (hsKeyboardTheme.mThemeName.equals(themeName)) {
+                        themeItem = hsKeyboardTheme;
+                        banner = hsKeyboardTheme.getThemeBannerImgUrl();
+                        if (TextUtils.isEmpty(banner)) {
+                            banner = hsKeyboardTheme.getLargePreivewImgUrl();
+                        }
+                    }
+                }
                 downloadFileAsync(theme, banner);
             }
         });
     }
 
 
-    public Map getThemeInfo() {
+    public HSKeyboardTheme getThemeInfo() {
         File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
-        File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.THEME);
-        if (mThemeInfo == null || mThemeInfo.isEmpty() ||
+        File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
+        if (themeItemInfo == null || themeItemInfo.isEmpty() ||
                 !themeIcon.exists() || !theme.exists()) {
             return null;
         }
         if (!isCompleteDownload(themeIcon) || !isCompleteDownload(theme)) {
             return null;
         }
-        return mThemeInfo;
+
+        return themeItem;
     }
 
 }

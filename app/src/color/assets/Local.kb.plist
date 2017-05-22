@@ -311,7 +311,7 @@
 					<key>Interval</key>
 					<integer>3</integer>
 					<key>Message</key>
-					<string> Let&apos;s try a fun new font!</string>
+					<string> Let's try a fun new font!</string>
 					<key>Priority</key>
 					<integer>0</integer>
 					<key>Title</key>
@@ -322,7 +322,7 @@
 					<key>Interval</key>
 					<integer>3</integer>
 					<key>Message</key>
-					<string> It&apos;s time to change your keyboard!</string>
+					<string> It's time to change your keyboard!</string>
 					<key>Priority</key>
 					<integer>1</integer>
 					<key>Title</key>
@@ -345,20 +345,25 @@
 			<key>Lucky</key>
 			<dict>
 				<key>ChanceIncrementPeriodSeconds</key>
-				<integer>600</integer>
+				<integer>1</integer>
 				<key>FullChanceCount</key>
-				<integer>60</integer>
+				<integer>30</integer>
 				<key>LargeBoxAdCount</key>
 				<integer>3</integer>
 				<key>PriorityThemes</key>
 				<array>
-					<string>com.themelab.launcher.clash
-com.themelab.launcher.clash</string>
-					<string>com.themelab.launcher.forest</string>
-					<string>com.themelab.launcher.gdanger</string>
-					<string>com.themelab.launcher.pure</string>
-					<string>com.themelab.launcher.fruit</string>
-					<string>com.themelab.launcher.world</string>
+					<dict>
+						<key>Icon</key>
+						<string>https://s3.amazonaws.com/emojidevelop/resource/Downloads/custom_theme_icon/PinkDrops.png</string>
+						<key>Name</key>
+						<string>PinkDrops</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>https://s3.amazonaws.com/emojidevelop/resource/Downloads/custom_theme_icon/PinkDrops.png</string>
+						<key>Name</key>
+						<string>PinkDrops</string>
+					</dict>
 				</array>
 				<key>SmallBoxAdCount</key>
 				<integer>3</integer>
@@ -379,11 +384,11 @@ com.themelab.launcher.clash</string>
 				<key>Types</key>
 				<dict>
 					<key>Bomb</key>
-					<integer>15</integer>
+					<integer>0</integer>
 					<key>LargeBox</key>
-					<integer>10</integer>
+					<integer>50</integer>
 					<key>SmallBox</key>
-					<integer>75</integer>
+					<integer>0</integer>
 				</dict>
 			</dict>
 			<key>NativeAds</key>
@@ -2767,7 +2772,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.13</real>
+								<real>2.1299999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2793,7 +2798,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>6.13</real>
+								<real>6.1299999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2871,7 +2876,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.86</real>
+								<real>0.85999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2898,7 +2903,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.8</real>
+								<real>0.80000000000000004</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2924,7 +2929,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.73</real>
+								<real>0.72999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2950,7 +2955,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.6</real>
+								<real>0.59999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3057,7 +3062,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.1</real>
+								<real>4.0999999999999996</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3083,7 +3088,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.9</real>
+								<real>2.8999999999999999</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -3111,7 +3116,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.6</real>
+								<real>1.6000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3216,7 +3221,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.41</real>
+								<real>2.4100000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3242,7 +3247,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.24</real>
+								<real>2.2400000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3268,7 +3273,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.94</real>
+								<real>1.9399999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3294,7 +3299,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.93</real>
+								<real>0.93000000000000005</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3369,7 +3374,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.45</real>
+								<real>3.4500000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3919,7 +3924,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>18.2</real>
+								<real>18.199999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3947,7 +3952,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7.8</real>
+								<real>7.7999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4507,7 +4512,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.97</real>
+								<real>0.96999999999999997</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4535,7 +4540,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.53</real>
+								<real>0.53000000000000003</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4592,7 +4597,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.89</real>
+								<real>4.8899999999999997</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4620,7 +4625,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.62</real>
+								<real>1.6200000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4677,7 +4682,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.9399999999999999</real>
+								<real>0.93999999999999995</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4705,7 +4710,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.3</real>
+								<real>0.29999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4733,7 +4738,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.2</real>
+								<real>0.20000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4764,7 +4769,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4826,7 +4831,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4891,7 +4896,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.23</real>
+								<real>0.23000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4993,7 +4998,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.9</real>
+								<real>0.90000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5060,7 +5065,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.3</real>
+								<real>4.2999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5096,7 +5101,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.1</real>
+								<real>3.1000000000000001</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -5193,7 +5198,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.6</real>
+								<real>1.6000000000000001</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -5225,7 +5230,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.8</real>
+								<real>0.80000000000000004</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5260,7 +5265,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.3</real>
+								<real>0.29999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5751,7 +5756,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.33</real>
+								<real>0.33000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5777,7 +5782,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.36</real>
+								<real>0.35999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5830,7 +5835,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6099,7 +6104,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.42</real>
+								<real>0.41999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6169,7 +6174,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.4</real>
+								<real>0.40000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6296,7 +6301,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.65</real>
+								<real>0.65000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6329,7 +6334,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6378,7 +6383,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.12</real>
+								<real>1.1200000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6413,7 +6418,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.32</real>
+								<real>1.3200000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6448,7 +6453,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.33</real>
+								<real>1.3300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6518,7 +6523,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.21</real>
+								<real>0.20999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6554,7 +6559,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5.48</real>
+								<real>5.4800000000000004</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6589,7 +6594,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>6.51</real>
+								<real>6.5099999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6659,7 +6664,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.61</real>
+								<real>0.60999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6819,7 +6824,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.33</real>
+								<real>1.3300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6854,7 +6859,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.2</real>
+								<real>0.20000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6927,7 +6932,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.66</real>
+								<real>2.6600000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7032,7 +7037,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.8</real>
+								<real>0.80000000000000004</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7073,7 +7078,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7110,7 +7115,7 @@ com.themelab.launcher.clash</string>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>

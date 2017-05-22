@@ -12,31 +12,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.utils.HSMarketUtils;
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
-import com.ihs.inputmethod.feature.common.LauncherConfig;
 import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
+import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
-import java.util.Map;
 
 
 public class ThemeView extends FlyAwardBaseView implements View.OnClickListener {
 
     public static final String THEME_DIRECTORY = "preload" + File.separator + "theme";
-    public static final String ICON = "icon";
-    public static final String THEME = "theme";
-
-    private String mPackageName;
+    public static final String ICON = "Icon";
+    public static final String BANNER = "banner";
 
     private View mContainer;
     private ImageView mBanner;
     private TextView mTitle;
     private TextView mBody;
+    private HSKeyboardTheme themeItem;
 
     public ThemeView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -92,21 +90,17 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
     }
 
     public boolean fetchTheme() {
-        Map info = LuckyPreloadManager.getInstance().getThemeInfo();
-        if (info == null) {
+        themeItem = LuckyPreloadManager.getInstance().getThemeInfo();
+        if (themeItem == null) {
             return false;
         }
 
-        File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.THEME);
-
+        File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
         ImageLoader.getInstance().displayImage(
                 Uri.fromFile(theme).toString(),
                 mBanner);
-
-        mPackageName = (String) info.get("packageName");
-        mTitle.setText(LauncherConfig.getMultilingualString(info, "Name"));
-        mBody.setText(LauncherConfig.getMultilingualString(info, "ShortDescription"));
-
+        mTitle.setText(themeItem.getThemeShowName());
+//        mBody.setText(LauncherConfig.getMultilingualString(themeItem., "ShortDescription"));
         return true;
     }
 
@@ -117,7 +111,7 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.lucky_game_theme_action) {
-            HSMarketUtils.browseAPP(mPackageName);
+            ThemeDownloadManager.getInstance().downloadTheme(themeItem);
             HSAnalytics.logEvent("Lucky_Award_Theme_Install_Clicked");
         }
     }
