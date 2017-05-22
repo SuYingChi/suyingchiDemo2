@@ -31,7 +31,6 @@ import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
 import com.ihs.inputmethod.feature.lucky.MusicPlayer;
 import com.ihs.inputmethod.feature.lucky.TargetInfo;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -205,9 +204,17 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                 if (shouldShowAd) {
                     List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_lucky), 1);
                     mAd = ads.isEmpty() ? null : ads.get(0);
+
+                    String showed;
+                    HashMap<String,String> map = new HashMap<>();
                     if (mAd != null) {
-                        KCAnalyticUtil.logEvent(HSApplication.getContext().getString(R.string.ad_placement_lucky));
+                        showed = "true";
+                    } else {
+                        showed = "no";
                     }
+                    map.put("show",showed);
+                    HSAnalytics.logEvent("Lucky_Ad_should_show",map);
+
                 } else {
                     mAd = null;
                     if (isSmall) {
