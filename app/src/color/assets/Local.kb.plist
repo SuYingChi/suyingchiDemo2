@@ -306,6 +306,11 @@
 					</dict>
 				</dict>
 			</dict>
+			<key>KeyboardEmoji</key>
+			<dict>
+				<key>ShowAdTitle</key>
+				<true/>
+			</dict>
 			<key>LocalNotifications</key>
 			<dict>
 				<key>ChangeTheme</key>
@@ -339,6 +344,24 @@
 			<dict>
 				<key>FetchAdInterval</key>
 				<real>15000</real>
+				<key>KeyboardEmojiTopLeftTabAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array>
+						<integer>3</integer>
+					</array>
+					<key>Show</key>
+					<true/>
+				</dict>
+				<key>KeyboardFunctionBarGiftAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array>
+						<integer>5</integer>
+					</array>
+					<key>Show</key>
+					<true/>
+				</dict>
 				<key>NativeAdPosition</key>
 				<dict>
 					<key>HomeBackgroundAd</key>
@@ -368,24 +391,6 @@
 				<true/>
 				<key>isShowMainThemeNativeAds</key>
 				<true/>
-				<key>KeyboardFunctionBarGiftAd</key>
-				<dict>
-					<key>SessionIndexOfDay</key>
-					<array>
-						<integer>5</integer>
-					</array>
-					<key>Show</key>
-					<true/>
-				</dict>
-				<key>KeyboardEmojiTopLeftTabAd</key>
-				<dict>
-					<key>SessionIndexOfDay</key>
-					<array>
-						<integer>3</integer>
-					</array>
-					<key>Show</key>
-					<true/>
-				</dict>
 				<key>isShowThemeDetailNativeAds</key>
 				<true/>
 				<key>isShowThemeTryNativeAds</key>
@@ -2782,7 +2787,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.13</real>
+								<real>2.1299999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2808,7 +2813,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>6.13</real>
+								<real>6.1299999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2886,7 +2891,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.86</real>
+								<real>0.85999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2913,7 +2918,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.8</real>
+								<real>0.80000000000000004</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2939,7 +2944,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.73</real>
+								<real>0.72999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -2965,7 +2970,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.6</real>
+								<real>0.59999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3072,7 +3077,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.1</real>
+								<real>4.0999999999999996</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3098,7 +3103,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.9</real>
+								<real>2.8999999999999999</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -3126,7 +3131,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.6</real>
+								<real>1.6000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3231,7 +3236,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.41</real>
+								<real>2.4100000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3257,7 +3262,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.24</real>
+								<real>2.2400000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3283,7 +3288,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.94</real>
+								<real>1.9399999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3309,7 +3314,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.93</real>
+								<real>0.93000000000000005</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3384,7 +3389,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.45</real>
+								<real>3.4500000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3934,7 +3939,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>18.2</real>
+								<real>18.199999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -3962,7 +3967,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7.8</real>
+								<real>7.7999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4176,7 +4181,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.97</real>
+								<real>0.96999999999999997</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4204,7 +4209,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.53</real>
+								<real>0.53000000000000003</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4261,7 +4266,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.89</real>
+								<real>4.8899999999999997</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4289,7 +4294,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.62</real>
+								<real>1.6200000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4346,7 +4351,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.9399999999999999</real>
+								<real>0.93999999999999995</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4374,7 +4379,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.3</real>
+								<real>0.29999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4402,7 +4407,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.2</real>
+								<real>0.20000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4433,7 +4438,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4495,7 +4500,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4560,7 +4565,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.23</real>
+								<real>0.23000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4662,7 +4667,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.9</real>
+								<real>0.90000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4729,7 +4734,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.3</real>
+								<real>4.2999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4765,7 +4770,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.1</real>
+								<real>3.1000000000000001</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -4862,7 +4867,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.6</real>
+								<real>1.6000000000000001</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -4894,7 +4899,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.8</real>
+								<real>0.80000000000000004</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4929,7 +4934,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.3</real>
+								<real>0.29999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5420,7 +5425,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.33</real>
+								<real>0.33000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5446,7 +5451,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.36</real>
+								<real>0.35999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5499,7 +5504,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5768,7 +5773,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.42</real>
+								<real>0.41999999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5838,7 +5843,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.4</real>
+								<real>0.40000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5965,7 +5970,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.65</real>
+								<real>0.65000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5998,7 +6003,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6047,7 +6052,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.12</real>
+								<real>1.1200000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6082,7 +6087,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.32</real>
+								<real>1.3200000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6117,7 +6122,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.33</real>
+								<real>1.3300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6187,7 +6192,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.21</real>
+								<real>0.20999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6223,7 +6228,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5.48</real>
+								<real>5.4800000000000004</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6258,7 +6263,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>6.51</real>
+								<real>6.5099999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6328,7 +6333,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.61</real>
+								<real>0.60999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6488,7 +6493,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.33</real>
+								<real>1.3300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6523,7 +6528,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.2</real>
+								<real>0.20000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6596,7 +6601,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>2.66</real>
+								<real>2.6600000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6701,7 +6706,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.8</real>
+								<real>0.80000000000000004</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6742,7 +6747,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6779,7 +6784,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
