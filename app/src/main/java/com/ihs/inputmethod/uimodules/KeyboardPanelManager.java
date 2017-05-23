@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
@@ -133,8 +132,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
             keyboardPanelSwitchContainer.setCustomizeBar(getCustomizeBar());
         }
-
-        //        keyboardPanelSwitchContainer.setWebHistoryView(WebContentSearchManager.getInstance().getWebSearchHistoryView());
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
@@ -298,10 +295,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     acbNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                         @Override
                         public void onAdClick(AcbAd acbAd) {
-                            Toast.makeText(HSApplication.getContext(), acbAd.getVendor().toString(), Toast.LENGTH_LONG).show();
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_click","GooglePlay_Search");
                         }
                     });
-                    HSLog.e("load ads: " + acbNativeAd.toString());
                     gpAdAdapter.addAd(acbNativeAd);
                     gpNativeAdList.add(acbNativeAd);
                 }
@@ -309,10 +305,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
             @Override
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
-                if(hsError!=null){
-                    HSLog.e("ad finish", hsError.getMessage());
-                }
-
             }
         });
     }
@@ -329,8 +321,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-//        recyclerView.addItemDecoration(new MarginDecoration(this));/
-//        recyclerView.addItemDecoration(new ItemGridAdapter(getApplicationContext()));
 
         CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
             @Override
@@ -340,7 +330,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             }
         });
         customizeBarLayout.setContent(recyclerView);
-
         reloadGpAd();
         return customizeBarLayout;
     }

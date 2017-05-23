@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 
 /**
@@ -65,36 +64,15 @@ public class CustomizeBarLayout extends FrameLayout {
                         if (offsetY > 10 && lockedMode) {
                             if (container.getVisibility() != GONE) {
                                 customizeBarListener.onHide();
-//                        container.setVisibility(GONE);
-//                        getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-//                        requestLayout();
                             }
                             lockedMode = false;
                         }
-//                else if(offsetY < -3 && lockedMode){
-//                    if(container.getVisibility() == GONE){
-//                        container.setVisibility(VISIBLE);
-//                        getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.151);
-//                        requestLayout();
-//                    }
-//                    lockedMode = false;
-//                }
                         break;
                 }
                 return true;
             }
         });
 
-//        findViewById(R.id.fl_iv_strip).setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(container.getVisibility() != VISIBLE){
-//                    container.setVisibility(VISIBLE);
-//                    getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.14);
-//                    requestLayout();
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -105,11 +83,7 @@ public class CustomizeBarLayout extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        if(container.getVisibility() == GONE){
-//            getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-//        }else{
-            getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.14);
-//        }
+//            getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.14);
     }
 
     public CustomizeBarLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -126,49 +100,8 @@ public class CustomizeBarLayout extends FrameLayout {
         if(child.getParent()!=null){
             ((ViewGroup) child.getParent()).removeView(child);
         }
-        container.addView(child,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        container.addView(child,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     }
 
 
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent event) {
-//        int x = (int) event.getX();
-//        int y = (int) event.getY();
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                //记录触摸点的坐标
-//                lastX = x;
-//                lastY = y;
-//                lockedMode = true;
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                //计算偏移量
-//                int offsetX = x - lastX;
-//                int offsetY = y - lastY;
-//                //在当前left,top,right,bottom的基础上加上便宜量
-//                HSLog.e(""+offsetY);
-//
-//                if(offsetY > 200 && lockedMode){
-//                    if(container.getVisibility() != GONE){
-//                        customizeBarListener.onHide();
-////                        container.setVisibility(GONE);
-////                        getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-////                        requestLayout();
-//                    }
-//                    lockedMode = false;
-//                }
-////                else if(offsetY < -3 && lockedMode){
-////                    if(container.getVisibility() == GONE){
-////                        container.setVisibility(VISIBLE);
-////                        getLayoutParams().height = (int) (HSDisplayUtils.getScreenHeightForContent()*0.151);
-////                        requestLayout();
-////                    }
-////                    lockedMode = false;
-////                }
-//                break;
-//
-//        }
-//
-//        return super.dispatchTouchEvent(event);
-//    }
 }
