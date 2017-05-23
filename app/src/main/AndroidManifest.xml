@@ -67,48 +67,48 @@
             android:windowSoftInputMode="stateUnchanged|adjustNothing" />
 
 
-        <!-- Required activities for playback of AdMob video Ads -->
+
+        <!-- showQuietly Config Start-->
+        <!-- AppLovin全屏 -->
+        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.acb.adadapter.ApplovinInterstitialAdapter.AcbAppLovinInterstitialActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+
+        <!-- Avocarrot全屏 -->
+        <activity android:name="com.avocarrot.androidsdk.VideoActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.avocarrot.androidsdk.RedirectActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+
+        <!-- Facebook全屏 -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@android:style/Theme.Translucent" />
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet"
+            android:theme="@android:style/Theme.Translucent"/>
+        <activity android:name="com.facebook.CustomTabMainActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.facebook.ads.AudienceNetworkActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
 
-        <!-- Required activities for playback of Vungle video Ads -->
-        <activity
-            android:name="com.vungle.publisher.VideoFullScreenAdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <!-- AdMob全屏和Adx全屏 -->
+        <activity android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
 
-        <activity
-            android:name="com.vungle.publisher.MraidFullScreenAdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <!-- showQuietly Config End-->
 
-        <!-- Required activities for playback of Chartboost video Ads -->
-        <activity
-            android:name="com.chartboost.sdk.CBImpressionActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:excludeFromRecents="true"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-
-        <!-- Required activities for playback of AdColony video Ads -->
-        <activity
-            android:name="com.jirbo.adcolony.AdColonyOverlay"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.jirbo.adcolony.AdColonyFullscreen"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.jirbo.adcolony.AdColonyBrowser"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-
-        <!-- Required activities for playback of Applovin video Ads  -->
-        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity" />
-        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity" />
         <!-- 给applovin配置sdk key，注意，master keyboard需要另外的key-->
         <meta-data
             android:name="applovin.sdk.key"
@@ -118,10 +118,12 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
 
-        <receiver android:enabled="true" android:name="com.ihs.inputmethod.api.NotificationBroadcastReceiver">
+        <receiver android:name="com.ihs.inputmethod.api.NotificationBroadcastReceiver" android:enabled="true">
             <intent-filter>
                 <action android:name="com.ihs.intent.notification" >
                 </action>

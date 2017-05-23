@@ -121,7 +121,8 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
         if(!IAPManager.getManager().hasPurchaseNoAds()) {
             final boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
-            final LayoutParams params = new LayoutParams(0, height, 1.6f);
+            final boolean showAdTitle = HSConfig.optBoolean(true,"Application", "KeyboardEmoji", "ShowAdTitle");
+            final LayoutParams params = new LayoutParams(0, height, showAdTitle?1.6f:1.0f);
             params.gravity = Gravity.CENTER_VERTICAL;
             final RelativeLayout adContainer = new RelativeLayout(getContext());
             adContainer.setTag("NativeAd");
@@ -136,7 +137,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             loadingImageView.setImageDrawable(drawable);
 
             int adHeight =  height -  HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
-            final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
+            final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(showAdTitle ? ViewGroup.LayoutParams.MATCH_PARENT : adHeight, adHeight);
             adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
             adContainer.addView(adLoadingView,adLayoutParams);
 
@@ -147,6 +148,9 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                         View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
                         if (!showIconAd) {
                             adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
+                        }
+                        if (!showAdTitle) {
+                            adLayoutView.findViewById(R.id.ad_title).setVisibility(GONE);
                         }
                         adView = new NativeAdView(HSApplication.getContext(), adLayoutView, null);
                         adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
