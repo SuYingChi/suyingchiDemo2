@@ -3,7 +3,6 @@ package com.ihs.inputmethod.api;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageInfo;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -23,7 +22,6 @@ import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -33,26 +31,21 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
-import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
-import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
 import static com.ihs.chargingscreen.HSChargingScreenManager.registerChargingService;
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_SET_CHARGING_TOGGLE;
-import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPENED;
-import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
 
 public class HSUIApplication extends HSInputMethodApplication {
 
@@ -90,10 +83,10 @@ public class HSUIApplication extends HSInputMethodApplication {
 
             } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
-                if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE){
+                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 }
-                if(homeKeyTracker.isHomeKeyPressed()) {
+                if (homeKeyTracker.isHomeKeyPressed()) {
                     HSAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
                     HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "home");
                 } else {
@@ -161,11 +154,11 @@ public class HSUIApplication extends HSInputMethodApplication {
         eventList.add("SetPhotoAsBackground");
         eventList.add("ChangeTheme");
         for (String event : eventList) {
-            Intent resultIntent = new Intent(this,NotificationBroadcastReceiver.class);
+            Intent resultIntent = new Intent(this, NotificationBroadcastReceiver.class);
             resultIntent.putExtra("eventName", event);
             KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
         }
-        if(ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE){
+        if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
             KCNotificationManager.getInstance().removeNotificationEvent("Charging");
         }
     }
@@ -242,12 +235,12 @@ public class HSUIApplication extends HSInputMethodApplication {
             // 如果不是第一个sesstion 并且 不包含 PREF_KEY_CHARGING_NEW_USER
             if (!prefs.contains(PREF_KEY_USER_SET_CHARGING_TOGGLE)) {
                 HSLog.d("jx,未发现remote config变化 shouldOpenChargingFunction");
-                ChargingManagerUtil.enableCharging(false,"plist");
+                ChargingManagerUtil.enableCharging(false, "plist");
                 prefs.putBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, true);
             } else {
                 boolean userSetting = prefs.getBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, false);
                 if (userSetting) {
-                    ChargingManagerUtil.enableCharging(false,"plist");
+                    ChargingManagerUtil.enableCharging(false, "plist");
                 }
             }
         } else {
@@ -257,34 +250,5 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     protected void onSessionStart() {
         HSDiverseSession.start();
-        //检测是否已经有非内置的主题包已经被安装过了
-        checkIsPluginThemeInstalled();
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER, KCCustomThemeManager.getInstance().getAllCustomThemes().size());
-    }
-
-    private void checkIsPluginThemeInstalled() {
-        if (HSSessionMgr.getCurrentSessionId() == 1) {
-            HSThreadUtils.execute(new Runnable() {
-                @Override
-                public void run() {
-                    List<PackageInfo> packages = HSApplication.getContext().getPackageManager().getInstalledPackages(0);
-                    //获取主题包前缀,可能有多个
-                    List<String> pluginThemePkNamePrefixList = (List<String>) HSConfig.getList("Application", "PluginTheme", "PluginThemePkNamePrefix");
-                    for (int i = 0; i < packages.size(); i++) {
-                        PackageInfo packageInfo = packages.get(i);
-                        for (String pluginThemePkNamePrefix : pluginThemePkNamePrefixList) {
-                            if (packageInfo.packageName.startsWith(pluginThemePkNamePrefix)) {
-                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_first_open_apk_exist", "true");
-                                HSAnalytics.logEvent("app_first_open_apk_exist", "true");
-                                return;
-                            }
-                        }
-                    }
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_first_open_apk_exist", "false");
-                    HSAnalytics.logEvent("app_first_open_apk_exist", "false");
-                }
-            });
-        }
     }
 }
