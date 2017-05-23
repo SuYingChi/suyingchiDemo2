@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.feature.lucky.view.ThemeView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/lucky_award_bg"
+    tools:ignore="ContentDescription">
+
+    <RelativeLayout
+        android:id="@+id/lucky_game_theme_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ihs.inputmethod.feature.common.TypefacedTextView
+            android:id="@+id/lucky_game_theme_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lucky_game_theme_found_text"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@+id/lucky_game_theme_icon"
+            android:layout_toRightOf="@+id/lucky_game_theme_icon"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Rlash Royale" />
+
+        <com.ihs.inputmethod.feature.common.TypefacedTextView
+            android:visibility="gone"
+            android:id="@+id/lucky_game_theme_body"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lucky_game_theme_title"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/lucky_game_theme_icon"
+            android:layout_toRightOf="@+id/lucky_game_theme_icon"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            tools:text="Rlash Royale xxxxxx....." />
+
+        <FrameLayout
+            android:id="@+id/lucky_game_theme_image_bg"
+            android:layout_width="396dp"
+            android:layout_height="221dp"
+            android:layout_below="@+id/lucky_game_theme_icon"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/lucky_game_theme_image_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="17dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="17dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="35dp"
+                android:scaleType="centerCrop" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/lucky_award_ad_frame" />
+        </FrameLayout>
+
+        <com.ihs.inputmethod.feature.common.StrokeTextView
+            android:id="@+id/lucky_game_theme_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lucky_game_theme_image_bg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="33dp"
+            android:background="@drawable/lucky_action_btn"
+            android:gravity="center"
+            android:text="@string/lucky_game_award_theme_action"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+            android:id="@+id/lucky_game_theme_icon"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_alignLeft="@+id/lucky_game_theme_image_bg"
+            android:layout_alignStart="@+id/lucky_game_theme_image_bg"
+            android:layout_below="@+id/lucky_game_theme_found_text"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/lucky_game_theme_found_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="17dp"
+            android:text="@string/lucky_game_award_theme_description"
+            android:textColor="#fff100"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/lucky_game_drag_theme_icon"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/lucky_award_ad_question_mark"
+        android:visibility="gone" />
+</com.ihs.inputmethod.feature.lucky.view.ThemeView>

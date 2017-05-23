@@ -32,6 +32,8 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
+import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
@@ -141,7 +143,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerNotificationEvent();
         homeKeyTracker = new HomeKeyTracker(this);
-
+        LuckyActivity.installShortCut();
     }
 
     private void registerNotificationEvent() {

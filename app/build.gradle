@@ -12,6 +12,11 @@ android {
         targetSdkVersion 22
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField 'String', 'CUSTOMIZE_CONFIG_DEBUG',
+                '"http://cdn.appcloudbox.net/launcherapps/apps/launcher/configs/config-launcher-customize-1.3.4-44-DISABLED.la"'
+        buildConfigField 'String', 'CUSTOMIZE_CONFIG_RELEASE',
+                '"http://cdn.appcloudbox.net/launcherapps/apps/launcher/configs/config-launcher-customize-1.4.0-60.la"'
     }
     signingConfigs {
 

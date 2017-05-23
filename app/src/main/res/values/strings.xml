@@ -244,4 +244,19 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
 
 	<!-- Product Master's config -->
 	<string name="feedback_email">feedback.glowdesign@hotmail.com</string>
+
+
+	<string name="lucky_game_award_no_network_description">No network connection!</string>
+	<string name="lucky_game_award_chances_receive_btn">ACCEPT</string>
+	<string name="lucky_game_award_theme_action">DOWNLOAD</string>
+	<string name="lucky_game_chance_restore_timer">More grabs in %1$s</string>
+	<string name="lucky_game_award_wallpaper_description">Wonderful Wallpaper!</string>
+	<string name="lucky_game_award_wallpaper_action">SET AS WALLPAPER</string>
+	<string name="lucky_game_award_chances_description">Congratulations! +3 grabs!</string>
+	<string name="lucky_game_award_theme_description">Found a new theme!</string>
+	<string name="lucky_game_chance_counter">Grabs: %1$s</string>
+	<string name="lucky_game_award_boom_description">"GRABS: "</string>
+	<string name="lucky_game_award_ad_related_title">You’ve won a prize!</string>
+	<string name="launcher_widget_lucky_title">Lucky</string>
+	<string name="lucky_game_award_empty_action">TRY AGAIN</string>
 </resources>

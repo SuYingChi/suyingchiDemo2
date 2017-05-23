@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.feature.common.CustomRootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ContentDescription">
+
+    <!-- Do not change container_view id -->
+    <FrameLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription">
+
+        <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/lucky_background"
+            app:aspectRatioOverride="0.6543"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <com.ihs.inputmethod.feature.lucky.view.GameScene
+                    android:id="@+id/lucky_game_moving_belt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <RelativeLayout
+                    android:id="@+id/lucky_game_top_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
+                        android:id="@+id/lucky_game_top_banner_image"
+                        style="@style/LuckyBannerImage"
+                        android:src="@drawable/lucky_banner"
+                        app:aspectRatioOverride="1.922"/>
+
+                    <!-- Use two views (not one view switching images) to avoid overhead in unnecessary
+                         re-measure. This keeps animation smooth. -->
+                    <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
+                        android:id="@+id/lucky_game_top_banner_image_light_yellow"
+                        style="@style/LuckyBannerImage"
+                        android:src="@drawable/lucky_banner_light_yellow"
+                        app:aspectRatioOverride="1.922"/>
+
+                    <com.ihs.inputmethod.feature.common.HorizontalBannerImageView
+                        android:id="@+id/lucky_game_top_banner_image_light_red"
+                        style="@style/LuckyBannerImage"
+                        android:src="@drawable/lucky_banner_light_red"
+                        app:aspectRatioOverride="1.922"/>
+
+                    <com.ihs.inputmethod.feature.common.TypefacedTextView
+                        android:id="@+id/lucky_game_chance_counter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/lucky_game_chance_restore_timer"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:textColor="#fafa00"
+                        android:textSize="22dp"
+                        app:typeface="@string/ds_digib"
+                        tools:ignore="SpUsage"
+                        tools:text="Chance: 009"/>
+
+                    <com.ihs.inputmethod.feature.common.TypefacedTextView
+                        android:id="@+id/lucky_game_chance_restore_timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/lucky_game_top_banner_image"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/material_text_white_primary"
+                        android:textSize="10dp"
+                        app:typeface="@string/proxima_nova_semibold"
+                        tools:ignore="SpUsage"
+                        tools:text="More changes in 12:35"/>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/lucky_operate_shadow"/>
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:scaleType="fitXY"
+                android:src="@drawable/lucky_operate"/>
+        </LinearLayout>
+
+        <!-- Enclose action button image view in this layout for clipping -->
+        <com.ihs.inputmethod.feature.lucky.view.GoButton
+            android:id="@+id/lucky_game_catch_action_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="30dp"
+            android:clipChildren="true">
+
+            <ImageView
+                android:id="@+id/lucky_game_catch_action_btn_base"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lucky_go_button"/>
+
+            <ImageView
+                android:id="@+id/lucky_game_catch_action_btn_click_effect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lucky_go_button_click_effect"
+                android:visibility="invisible"/>
+        </com.ihs.inputmethod.feature.lucky.view.GoButton>
+
+        <ImageView
+            android:id="@+id/lucky_game_mute_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/lucky_mute_btn_not_muted"/>
+
+        <include layout="@layout/award_view"/>
+    </FrameLayout>
+
+    <include layout="@layout/navigation_bar_bg"/>
+</com.ihs.inputmethod.feature.common.CustomRootView>

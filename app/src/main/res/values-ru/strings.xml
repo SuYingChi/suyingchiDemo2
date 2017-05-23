@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="lucky_game_award_boom_description"> раз(а) </string>
+    <string name="lucky_game_award_chances_description"> Поздравляем +3 раза </string>
+    <string name="lucky_game_award_chances_receive_btn"> Получить</string>
+    <string name="lucky_game_award_empty_action"> ПОВТОРИТЕ ПОПЫТКУ</string>
+    <string name="lucky_game_award_no_network_description"> Нет подключения к сети!</string>
+    <string name="no_network_connection"> Нет подключения к сети!</string>
+    <string name="lucky_game_award_theme_action"> УСТАНОВИТЬ</string>
+    <string name="lucky_game_award_theme_description">Найдена новая тема!</string>
+    <string name="lucky_game_award_wallpaper_description">Волшебные обои!</string>
+    <string name="lucky_game_award_wallpaper_action"> УСТАНОВИТЬ КАК ОБОИ</string>
+    <string name="lucky_game_chance_counter"> Шанс: %1$s</string>
+    <string name="lucky_game_award_ad_related_title">Вы выиграли приз!</string>
+    <string name="lucky_game_chance_restore_timer">Больше захватов через %1$s</string>
+</resources>

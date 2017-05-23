@@ -107,4 +107,9 @@
     <color name="ad_button_green_state">#00c753</color>
     <color name="ad_button_green_state_pressed">#00a947</color>
     <color name="base_function_bg_color">#30ffffff</color>
+    <!-- Lucky -->
+    <color name="lucky_award_bg">#e5000000</color>
+    <color name="material_text_white_primary">#deffffff</color>
+    <color name="material_ripple_white">#33FFFFFF</color>
+
 </resources>

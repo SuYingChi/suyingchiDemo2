@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="launcher_widget_lucky_title">Sortudo</string>
+    <string name="lucky_game_award_boom_description">Vezes</string>
+    <string name="lucky_game_award_chances_description">Parabéns +3 vezes</string>
+    <string name="lucky_game_award_chances_receive_btn">Receber</string>
+    <string name="lucky_game_award_empty_action">TENTAR NOVAMENTE</string>
+    <string name="lucky_game_award_no_network_description">Sem ligação à rede!</string>
+    <string name="no_network_connection">Sem ligação à rede!</string>
+    <string name="lucky_game_award_theme_action">INSTALAR</string>
+    <string name="lucky_game_award_theme_description">Encontrado um novo tema!</string>
+    <string name="lucky_game_award_wallpaper_description">Papel de parede incrível!</string>
+    <string name="lucky_game_award_wallpaper_action">DEFINIR COMO PAPEL DE PAREDE</string>
+    <string name="lucky_game_chance_counter">Hipótese: %1$s</string>
+    <string name="lucky_game_award_ad_related_title">Ganhaste um prémio!</string>
+    <string name="lucky_game_chance_restore_timer">Mais prémios em %1$s</string>
+</resources>

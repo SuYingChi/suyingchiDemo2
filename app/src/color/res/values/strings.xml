@@ -6,6 +6,8 @@
     <string name="fb_app_id">910238615719294</string>
 
     <!-- Ad placement ID -->
+    <string name="ad_placement_lucky">"500_A(NativeAds)Lucky"</string>
+
     <string name="ad_placement_cardad">Colorkey_A(NativeAds)CardAd</string>
     <string name="ad_placement_keyboardemojiad">Colorkey_A(NativeAds)KeyboardEmojiAd</string>
     <string name="ad_placement_keyboardsettingsad">Colorkey_A(NativeAds)KeyboardSettingsAd</string>
