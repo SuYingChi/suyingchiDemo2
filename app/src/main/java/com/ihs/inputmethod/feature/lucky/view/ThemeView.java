@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
-import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
@@ -68,7 +67,7 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
         holdOn.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animator) {
-                File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
+                File themeIcon = new File(LuckyPreloadManager.getDirectory(themeItem.mThemeName), ThemeView.ICON);
                 ImageLoader.getInstance().displayImage(
                         Uri.fromFile(themeIcon).toString(),
                         mDragIcon);
@@ -95,7 +94,7 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
             return false;
         }
 
-        File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
+        File theme = new File(LuckyPreloadManager.getDirectory(themeItem.mThemeName), ThemeView.BANNER);
         ImageLoader.getInstance().displayImage(
                 Uri.fromFile(theme).toString(),
                 mBanner);

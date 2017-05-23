@@ -266,6 +266,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                             ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_NOTHING);
                             showEmpty();
                         }
+                        //小盒子暂时不做刷新处理
                         mShouldRefresh = false;
                     } else {
                         if (getThemeView().fetchTheme()) {

@@ -349,7 +349,7 @@
 				<key>FullChanceCount</key>
 				<integer>30</integer>
 				<key>LargeBoxAdCount</key>
-				<integer>3</integer>
+				<integer>1</integer>
 				<key>PriorityThemes</key>
 				<array>
 					<dict>
@@ -360,9 +360,9 @@
 					</dict>
 					<dict>
 						<key>Icon</key>
-						<string>https://s3.amazonaws.com/emojidevelop/resource/Downloads/custom_theme_icon/PinkDrops.png</string>
+						<string>https://s3.amazonaws.com/emojidevelop/resource/Downloads/custom_theme_icon/Kawaii.png</string>
 						<key>Name</key>
-						<string>PinkDrops</string>
+						<string>Kawaii</string>
 					</dict>
 				</array>
 				<key>SmallBoxAdCount</key>

@@ -2,7 +2,6 @@ package com.ihs.inputmethod.feature.lucky;
 
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.ihs.commons.config.HSConfig;
@@ -147,41 +146,43 @@ public class LuckyPreloadManager {
         });
     }
 
-    private boolean shouldRefreshTheme() {
-        File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
-        File banner = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
-
-        boolean iconFile = themeIcon.exists() && isCompleteDownload(themeIcon);
-        boolean themeFile = banner.exists() && isCompleteDownload(banner);
-
-        if (iconFile && themeFile) {
-            if (!restoreThemeInfo()) {
-                return true;
-            }
-        }
-
-        return !(iconFile && themeFile);
-    }
+//    private boolean shouldRefreshTheme() {
+//        File themeIcon = new File(getDirectory(), ThemeView.ICON);
+//        File banner = new File(getDirectory(), ThemeView.BANNER);
+//
+//        boolean iconFile = themeIcon.exists() && isCompleteDownload(themeIcon);
+//        boolean themeFile = banner.exists() && isCompleteDownload(banner);
+//
+//        if (iconFile && themeFile) {
+//            if (!restoreThemeInfo()) {
+//                return true;
+//            }
+//        }
+//
+//        return !(iconFile && themeFile);
+//    }
 
     public void refreshTheme(final boolean force) {
         ConcurrentUtils.postOnSingleThreadExecutor(new Runnable() {
             @SuppressWarnings("unchecked")
             @Override
             public void run() {
-                if (!shouldRefreshTheme() && !force) {
+                if (!force) {
                     return;
                 }
-                File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
-                if (themeIcon.exists()) {
-                    boolean deleted = themeIcon.delete();
-                    HSLog.d(TAG, "Delete file " + themeIcon + ": " + deleted);
-                }
-
-                File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
-                if (theme.exists()) {
-                    boolean deleted = theme.delete();
-                    HSLog.d(TAG, "Delete file " + theme + ": " + deleted);
-                }
+                //不重新下载图
+//                HSLog.e(TAG,"Force Refresh");
+//                File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
+//                if (themeIcon.exists()) {
+//                    boolean deleted = themeIcon.delete();
+//                    HSLog.d(TAG, "Delete file " + themeIcon + ": " + deleted);
+//                }
+//
+//                File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
+//                if (theme.exists()) {
+//                    boolean deleted = theme.delete();
+//                    HSLog.d(TAG, "Delete file " + theme + ": " + deleted);
+//                }
 
                 themeItemInfo = getRandomThemeName();
                 if (themeItemInfo == null || themeItemInfo.isEmpty()) {
@@ -193,28 +194,31 @@ public class LuckyPreloadManager {
                 String themeName = themeItemInfo.get("Name");
                 HSPreferenceHelper.getDefault().putString(PREF_KEY_THEME_PACKAGE_NAME, themeName);
 
-                String themeIconUrl = themeItemInfo.get(ThemeView.ICON);
-                downloadFileAsync(themeIcon, themeIconUrl);
+                File themeIcon = new File(getDirectory(themeName), ThemeView.ICON);
+                if(!themeIcon.exists()){
+                    String themeIconUrl = themeItemInfo.get(ThemeView.ICON);
+                    downloadFileAsync(themeIcon, themeIconUrl);
+                }
 
-                String banner = "";
                 for (HSKeyboardTheme hsKeyboardTheme : HSKeyboardThemeManager.getAllKeyboardThemeList()) {
                     if (hsKeyboardTheme.mThemeName.equals(themeName)) {
                         themeItem = hsKeyboardTheme;
-                        banner = hsKeyboardTheme.getThemeBannerImgUrl();
-                        if (TextUtils.isEmpty(banner)) {
-                            banner = hsKeyboardTheme.getLargePreivewImgUrl();
-                        }
                     }
                 }
-                downloadFileAsync(theme, banner);
+
+                File themeBanner = new File(getDirectory(themeName), ThemeView.BANNER);
+                if(!themeBanner.exists()){
+                    String banner = themeItem.getThemeBannerImgUrl();
+                    downloadFileAsync(themeBanner, banner);
+                }
             }
         });
     }
 
 
     public HSKeyboardTheme getThemeInfo() {
-        File themeIcon = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.ICON);
-        File theme = new File(Utils.getDirectory(ThemeView.THEME_DIRECTORY), ThemeView.BANNER);
+        File themeIcon = new File(getDirectory(themeItem.mThemeName), ThemeView.ICON);
+        File theme = new File(getDirectory(themeItem.mThemeName), ThemeView.BANNER);
         if (themeItemInfo == null || themeItemInfo.isEmpty() ||
                 !themeIcon.exists() || !theme.exists()) {
             return null;
@@ -224,6 +228,10 @@ public class LuckyPreloadManager {
         }
 
         return themeItem;
+    }
+
+    public static File getDirectory(String themeName) {
+        return Utils.getDirectory(ThemeView.THEME_DIRECTORY+File.separator+themeName);
     }
 
 }
