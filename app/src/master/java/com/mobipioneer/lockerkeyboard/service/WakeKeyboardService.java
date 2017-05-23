@@ -13,12 +13,12 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
-import android.view.inputmethod.InputMethodManager;
 
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.keyboardutils.alerts.KCAlert;
@@ -95,7 +95,7 @@ public class WakeKeyboardService extends Service {
 
     @Override
     public void onDestroy() {
-        if(timer!=null){
+        if (timer != null) {
             timer.cancel();
             timer.purge();
         }
@@ -118,11 +118,10 @@ public class WakeKeyboardService extends Service {
             @Override
             public void run() {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 List<InputMethodInfo> enabledInputMethodList;
-                try{
-                    enabledInputMethodList = imm.getEnabledInputMethodList();
-                }catch (Exception e){
+                try {
+                    enabledInputMethodList = HSInputMethodListManager.getEnabledInputMethodList();
+                } catch (Exception e) {
                     HSLog.e("获取系统服务失败");
                     return;
                 }

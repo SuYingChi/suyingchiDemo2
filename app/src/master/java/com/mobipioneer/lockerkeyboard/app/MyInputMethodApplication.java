@@ -63,8 +63,9 @@ public class MyInputMethodApplication extends HSUIApplication {
     public void onCreate() {
         super.onCreate();
 
-
-        startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
+        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
+            startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
+        }
 
         AcbInterstitialAdManager.getInstance(HSApplication.getContext());
 

@@ -27,7 +27,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -124,10 +124,10 @@ public class KeyboardActivationProcessor {
     }
 
 
-    public void activateKeyboard(Activity activity,boolean showActivationDialog, int activateRequestCode) {
+    public void activateKeyboard(Activity activity, boolean showActivationDialog, int activateRequestCode) {
         activationRequestCode = activateRequestCode;
 
-        if (HSInputMethod.isCurrentIMESelected()) {
+        if (HSInputMethodListManager.isMyInputMethodSelected()) {
             onKeyboardActivationChangedListener.keyboardSelected(activationRequestCode);
             return;
         }
@@ -167,22 +167,22 @@ public class KeyboardActivationProcessor {
 
     private void enableOrSelectKeyboard(Activity activity) {
 
-        if (!HSInputMethod.isCurrentIMEEnabled()) {
+        if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
             context.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                     settingsContentObserver);
 
             Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
             if (activity != null) {
-                try{
+                try {
                     activity.startActivity(intent);
-                }catch (Exception e){
+                } catch (Exception e) {
                     HSToastUtils.toastBottomShort("Launch Setting Failed, please setup keyboard manually");
                 }
             } else {
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_NO_HISTORY );
-                try{
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_NO_HISTORY);
+                try {
                     context.startActivity(intent);
-                }catch (Exception e){
+                } catch (Exception e) {
                     HSToastUtils.toastBottomShort("Launch Setting Failed, please setup keyboard manually");
                 }
             }
@@ -272,7 +272,7 @@ public class KeyboardActivationProcessor {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            if (HSInputMethod.isCurrentIMEEnabled()) {
+            if (HSInputMethodListManager.isMyInputMethodEnabled()) {
                 Intent i = new Intent(context, activityClass);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 HSToastUtils.cancel();
@@ -300,7 +300,7 @@ public class KeyboardActivationProcessor {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                if (HSInputMethod.isCurrentIMESelected()) {
+                if (HSInputMethodListManager.isMyInputMethodSelected()) {
                     onKeyboardActivationChangedListener.keyboardSelected(activationRequestCode);
                     if (versionFilterForRecordEvent && !isEventRecorded(GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
                         if (isEventRecorded(GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)

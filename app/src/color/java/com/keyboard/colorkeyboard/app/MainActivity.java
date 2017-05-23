@@ -50,7 +50,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
@@ -122,7 +122,7 @@ public class MainActivity extends HSDeepLinkActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                if (HSInputMethod.isCurrentIMESelected()) {
+                if (HSInputMethodListManager.isMyInputMethodSelected()) {
                     if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
 
                         if (isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
@@ -147,7 +147,7 @@ public class MainActivity extends HSDeepLinkActivity {
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
-        if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
+        if (shouldShowThemeHome() || (HSInputMethodListManager.isMyInputMethodSelected())) {
             startThemeHomeActivity();
             return;
         }
@@ -356,7 +356,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 needActiveThemePkName = pkName;
 
-                if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
+                if (shouldShowThemeHome() || (HSInputMethodListManager.isMyInputMethodSelected())) {
                     startThemeHomeActivity();
                 }
             }
@@ -421,7 +421,7 @@ public class MainActivity extends HSDeepLinkActivity {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            if (HSInputMethod.isCurrentIMEEnabled()) {
+            if (HSInputMethodListManager.isMyInputMethodEnabled()) {
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 i.putExtra("isInStepOne", true);
                 startActivity(i);
@@ -450,12 +450,12 @@ public class MainActivity extends HSDeepLinkActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!HSInputMethod.isCurrentIMEEnabled()) {
+                if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                     getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                             settingsContentObserver);
                     refreshUIState();
                 } else {
-                    if (!HSInputMethod.isCurrentIMESelected()) {
+                    if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
@@ -506,7 +506,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private void refreshUIState() {
-        if (!HSInputMethod.isCurrentIMEEnabled()) {
+        if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);
@@ -533,7 +533,7 @@ public class MainActivity extends HSDeepLinkActivity {
             img_choose_two.setAlpha(0);
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
-        } else if (!HSInputMethod.isCurrentIMESelected()) {
+        } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
             rootView.setBackgroundColor(Color.TRANSPARENT);

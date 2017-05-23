@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -21,7 +20,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.mobipioneer.lockerkeyboard.KeyboardActivationActivity;
@@ -101,7 +100,7 @@ public class SetupKeyboardAccessibilityService {
             rootWindow = event.getSource();
         }
 
-        if (!inputMethodEnabled && HSInputMethod.isCurrentIMEEnabled()) {
+        if (!inputMethodEnabled && HSInputMethodListManager.isMyInputMethodEnabled()) {
             inputMethodEnabled = true;
             imeSettingState++;
             InputMethodManager m = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -110,7 +109,7 @@ public class SetupKeyboardAccessibilityService {
         }
 
         if (!event.getPackageName().toString().contains("android")) {
-            if (!HSInputMethod.isCurrentIMEEnabled()) {
+            if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                 Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_NO_HISTORY);
                 HSApplication.getContext().startActivity(intent);
@@ -283,7 +282,7 @@ public class SetupKeyboardAccessibilityService {
             super.onChange(selfChange);
 
 
-            if (isCurrentIMEEnabled()) {
+            if (HSInputMethodListManager.isMyInputMethodEnabled()) {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -303,18 +302,6 @@ public class SetupKeyboardAccessibilityService {
             }
         }
     }
-
-    private boolean isCurrentIMEEnabled() {
-        InputMethodManager mImm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        for (final InputMethodInfo imi : mImm.getEnabledInputMethodList()) {
-            if (imi.getPackageName().equals(HSApplication.getContext().getPackageName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     public void onDestroy() {
         handler.removeCallbacksAndMessages(null);

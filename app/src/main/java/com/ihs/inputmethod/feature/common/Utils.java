@@ -222,7 +222,6 @@ public final class Utils {
     public static final int FLASHLIGHT_STATUS_ON = 1;
 
 
-
     public static boolean isWifiEnabled() {
         WifiManager wifiManager = (WifiManager) HSApplication.getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         return wifiManager.isWifiEnabled();
@@ -461,7 +460,9 @@ public final class Utils {
         }
     }
 
-    public static @NonNull Bitmap decodeResourceWithFallback(Resources res, int id) {
+    public static
+    @NonNull
+    Bitmap decodeResourceWithFallback(Resources res, int id) {
         Bitmap decoded = BitmapFactory.decodeResource(res, id);
         if (decoded == null) {
             decoded = createFallbackBitmap();
@@ -469,7 +470,9 @@ public final class Utils {
         return decoded;
     }
 
-    public static @NonNull Bitmap createFallbackBitmap() {
+    public static
+    @NonNull
+    Bitmap createFallbackBitmap() {
         return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
     }
 
@@ -991,7 +994,6 @@ public final class Utils {
     }
 
 
-
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
@@ -1247,7 +1249,9 @@ public final class Utils {
      * Retrieve, creating if needed, a new directory of given name in which we
      * can place our own custom data files.
      */
-    public static @Nullable File getDirectory(String dirPath) {
+    public static
+    @Nullable
+    File getDirectory(String dirPath) {
         File file = HSApplication.getContext().getFilesDir();
         String[] path = dirPath.split(File.separator);
         for (String dir : path) {

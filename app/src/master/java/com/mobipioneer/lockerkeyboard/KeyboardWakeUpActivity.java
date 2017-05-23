@@ -14,6 +14,7 @@ import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.mobipioneer.lockerkeyboard.accessbility.AccessibilityEventListener;
@@ -41,7 +42,7 @@ public class KeyboardWakeUpActivity extends HSActivity {
     }
 
     private void checkShouldAutoSelectKeyboard() {
-        if (!HSInputMethod.isCurrentIMESelected()) {
+        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             if (HSAccessibilityService.isAvailable()) {
 
                 final AccessibilityEventListener accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
@@ -55,7 +56,7 @@ public class KeyboardWakeUpActivity extends HSActivity {
                     public void onReceive(Context context, Intent intent) {
                         String action = intent.getAction();
                         if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                            if (HSInputMethod.isCurrentIMESelected()) {
+                            if (HSInputMethodListManager.isMyInputMethodSelected()) {
                                 HSAccessibilityService.unregisterEvent(listenerKey);
                                 accessibilityEventListener.onDestroy();
 

@@ -21,6 +21,7 @@ import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
@@ -67,7 +68,7 @@ public class KeyboardActivationActivity extends HSActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                if (HSInputMethod.isCurrentIMESelected()) {
+                if (HSInputMethodListManager.isMyInputMethodSelected()) {
 
                     Intent actIntent = getIntent();
                     if (actIntent == null) {

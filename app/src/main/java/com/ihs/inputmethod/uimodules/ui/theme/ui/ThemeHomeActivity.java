@@ -36,6 +36,7 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
@@ -86,7 +87,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == HANDLER_SHOW_ACTIVE_DIALOG) {
-                if (!HSInputMethod.isCurrentIMESelected()) {
+                if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                     keyboardActivationProcessor.showHomePageActivationDialog(ThemeHomeActivity.this);
                 }
             } else if (msg.what == HANDLER_SHOW_UPDATE_DIALOG) {
@@ -258,7 +259,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
 
         //如果是第一次进入页面并且当前键盘没有被选为自己则弹框。
-        if (!HSInputMethod.isCurrentIMESelected()) {
+        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_ACTIVE_DIALOG, 500);
         } else {
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
@@ -470,7 +471,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     @Override
     public void activeDialogDismissed() {
-        if (!HSInputMethod.isCurrentIMESelected()) {
+        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             enableTipTV.setVisibility(View.VISIBLE);
         }
     }
@@ -494,7 +495,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     @Override
     public void onTrailKeyPrevented() {
-        if (!HSInputMethod.isCurrentIMESelected()) {
+        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             enableTipTV.setVisibility(View.VISIBLE);
         }
     }
@@ -502,7 +503,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private void restoreNavigationView() {
         if (THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag)) {
             navigationView.setCheckedItem(R.id.nav_theme_store);
-            if (shouldShowActivationTip && !HSInputMethod.isCurrentIMESelected()) {
+            if (shouldShowActivationTip && !HSInputMethodListManager.isMyInputMethodSelected()) {
                 enableTipTV.setVisibility(View.VISIBLE);
             } else {
                 enableTipTV.setVisibility(GONE);

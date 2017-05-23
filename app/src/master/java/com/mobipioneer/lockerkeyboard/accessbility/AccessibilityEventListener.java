@@ -10,6 +10,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.devicemonitor.accessibility.IAccEventListener;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_permission_accessibility_allowed;
@@ -44,8 +45,8 @@ public class AccessibilityEventListener implements IAccEventListener {
 
         switch (modeCode) {
             case MODE_SETUP_KEYBOARD:
-                if (!HSInputMethod.isCurrentIMESelected()) {
-                    if (!HSInputMethod.isCurrentIMEEnabled()) {
+                if (!HSInputMethodListManager.isMyInputMethodSelected()) {
+                    if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                         Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_NO_HISTORY);
                         HSApplication.getContext().startActivity(intent);
@@ -64,7 +65,7 @@ public class AccessibilityEventListener implements IAccEventListener {
     public void onEvent(AccessibilityEvent accessibilityEvent) throws RemoteException {
         switch (modeCode) {
             case MODE_SETUP_KEYBOARD:
-                if (!HSInputMethod.isCurrentIMESelected()) {
+                if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                     setupKeyboard(accessibilityEvent);
                 }
                 break;

@@ -155,7 +155,8 @@ public class CommonUtils {
      * Returns value of {@link Locale#getDefault()} when no current locale is set on given context.
      */
     @SuppressWarnings("deprecation")
-    public static @NonNull
+    public static
+    @NonNull
     Locale getLocale(@NonNull Context context) {
         Locale locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

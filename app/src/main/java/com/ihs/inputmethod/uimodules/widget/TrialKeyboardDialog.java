@@ -27,6 +27,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
@@ -87,7 +88,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     }
 
     private void checkKeyboardState(Activity activity) {
-        if (!HSInputMethod.isCurrentIMESelected()) {
+        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             KeyboardActivationProcessor keyboardActivationProcessor;
             try {
                 keyboardActivationProcessor = new KeyboardActivationProcessor(Class.forName(from), this);
