@@ -40,15 +40,6 @@ import java.util.Map;
 public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>> {
 
 	protected Map<String, View> nativeAdViewCached;
-
-	protected List<Map<String, Object>> themeAdInfos;
-
-	private ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener;
-
-	private boolean shouldShowChargingEnableCard;
-
-	protected int width;
-
 	private final INotificationObserver notificationObserver = new INotificationObserver() {
 		@Override
 		public void onReceive(String s, HSBundle hsBundle) {
@@ -58,6 +49,17 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 			}
 		}
 	};
+	protected List<Map<String, Object>> themeAdInfos;
+	protected int width;
+	private ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener;
+	private boolean shouldShowChargingEnableCard;
+
+	public ThemeAdAdapterDelegate(ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener) {
+		themeAdInfos = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "ThemeAd");
+		nativeAdViewCached = new HashMap<>();
+		this.themeAdOnClickListener = themeAdOnClickListener;
+		HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
+	}
 
 	public void release() {
 		for(Map.Entry<String, View> entry : nativeAdViewCached.entrySet()) {
@@ -65,13 +67,6 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				((NativeAdView)entry.getValue()).release();
 			}
 		}
-	}
-
-	public ThemeAdAdapterDelegate(ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener) {
-		themeAdInfos = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "ThemeAd");
-		nativeAdViewCached = new HashMap<>();
-		this.themeAdOnClickListener = themeAdOnClickListener;
-		HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
 	}
 
 	@Override
@@ -127,7 +122,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 		} else {// Show ad
 			String nativeAd = getNativeAd(position);
 			if (nativeAdViewCached.get(nativeAd) == null) {
-				View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
+				View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_theme_card, null);
 				LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.theme_ad_loading, null);
 				LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f) + HSDisplayUtils.dip2px(65));
 				loadingView.setLayoutParams(loadingLP);

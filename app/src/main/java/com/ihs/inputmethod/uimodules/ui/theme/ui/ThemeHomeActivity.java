@@ -60,38 +60,28 @@ import static android.view.View.GONE;
  * Created by jixiang on 16/8/17.
  */
 public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged {
+    public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
-
+    private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
+    private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
+    private static final int keyboardActivationFromHome = 11;
+    private static final int keyboardActivationFromHomeWithTrial = 12;
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
     private static int HANDLER_SHOW_UPDATE_DIALOG = 102;
-
     private AppBarLayout appbarLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private FloatingActionButton fab;
-
-    private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
-    private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
     private String currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
-
-    public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     private TrialKeyboardDialog trialKeyboardDialog;
-
     private boolean isFromUsageAccessActivity;
     private View enableTipTV;
     private boolean shouldShowActivationTip;
-
     private ThemeHomeActivity context = ThemeHomeActivity.this;
-
     private KeyboardActivationProcessor keyboardActivationProcessor;
-
     private View apkUpdateTip;
     private View noAds;
     private ExitAlert exitAlert;
-
-    private static final int keyboardActivationFromHome = 11;
-    private static final int keyboardActivationFromHomeWithTrial = 12;
-
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -135,12 +125,29 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             HSGlobalNotificationCenter.sendNotification(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED);
         }
     };
+    private INotificationObserver notificationObserver = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (CustomThemeActivity
+                    .NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
+                if (hsBundle != null) {
+                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
+                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
+                    boolean hasTrialKeyboardShownWhenThemeCreated = hsBundle.getBoolean(TrialKeyboardDialog.BUNDLE_KEY_HAS_TRIAL_KEYBOARD_SHOWN_WHEN_THEME_CREATED, false);
+                    if (ThemeHomeActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
+                        showTrialKeyboardDialog(activationCode, hasTrialKeyboardShownWhenThemeCreated);
+                    }
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_theme_home);
+        getWindow().setBackgroundDrawable(null);
 
         // Init custom theme res in case we fail before
         //HSKeyboardThemeManager.initCustomThemeResource();
@@ -261,7 +268,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_exit_alert_dialog));
         onNewIntent(getIntent());
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -397,23 +403,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    private INotificationObserver notificationObserver = new INotificationObserver() {
-        @Override
-        public void onReceive(String s, HSBundle hsBundle) {
-            if (CustomThemeActivity
-                    .NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
-                if (hsBundle != null) {
-                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
-                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
-                    boolean hasTrialKeyboardShownWhenThemeCreated = hsBundle.getBoolean(TrialKeyboardDialog.BUNDLE_KEY_HAS_TRIAL_KEYBOARD_SHOWN_WHEN_THEME_CREATED, false);
-                    if (ThemeHomeActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
-                        showTrialKeyboardDialog(activationCode, hasTrialKeyboardShownWhenThemeCreated);
-                    }
-                }
-            }
-        }
-    };
 
     private void showTrialKeyboardDialog(int activationCode, boolean hasTrialKeyboardShownWhenThemeCreated) {
         if (trialKeyboardDialog == null) {

@@ -31,7 +31,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
-import com.ihs.keyboardutils.view.HSGifImageView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -88,8 +87,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
     @Override
     protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        ThemeBackgroundViewHolder viewHolder = (ThemeBackgroundViewHolder) holder;
-        viewHolder.recyclerView.getAdapter().notifyDataSetChanged();
+//        ThemeBackgroundViewHolder viewHolder = (ThemeBackgroundViewHolder) holder;
+//        viewHolder.recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -102,6 +101,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
         private Activity activity;
         private int portraitScreenWidth;
         private List<Object> backgrounds = new ArrayList<>();
+        private Map<String, NativeAdView> backgroundNativeAdViews = new HashMap<>();
         private final INotificationObserver notificationObserver = new INotificationObserver() {
             @Override
             public void onReceive(String s, HSBundle hsBundle) {
@@ -126,6 +126,17 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
             }
         };
+        private int itemDimension;
+
+        public ThemeBackgroundAdapter(Activity activity) {
+            this.activity = activity;
+            int widthPixels = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+            int heightPixels = HSApplication.getContext().getResources().getDisplayMetrics().heightPixels;
+            portraitScreenWidth = widthPixels < heightPixels ? widthPixels : heightPixels;
+            HSGlobalNotificationCenter.addObserver(KCCustomThemeManager.NOTIFICATION_KEY_CUSTOM_THEME_ELEMENT_CHANGED, notificationObserver);
+            HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
+            HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+        }
 
         public void release() {
             Iterator<Object> iterator = backgrounds.iterator();
@@ -145,8 +156,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             backgroundNativeAdViews.clear();
             backgrounds.clear();
         }
-
-        private Map<String, NativeAdView> backgroundNativeAdViews = new HashMap<>();
 
         void updateBackgroundList() {
             destroyCurrentData();
@@ -196,37 +205,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             notifyDataSetChanged();
         }
 
-        static class NativeAdInfo implements Comparable<NativeAdInfo> {
-            private String nativeAd;
-            private int position;
-            private boolean hasAd = false;
-            private NativeAdView nativeAdView = null;
-
-
-            @Override
-            public int compareTo(@NonNull NativeAdInfo o) {
-                if (position < o.position) {
-                    return -1;
-                }
-                if (position > o.position) {
-                    return 1;
-                }
-                return 0;
-            }
-        }
-
-        public ThemeBackgroundAdapter(Activity activity) {
-            this.activity = activity;
-            int widthPixels = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels;
-            int heightPixels = HSApplication.getContext().getResources().getDisplayMetrics().heightPixels;
-            portraitScreenWidth = widthPixels < heightPixels ? widthPixels : heightPixels;
-            HSGlobalNotificationCenter.addObserver(KCCustomThemeManager.NOTIFICATION_KEY_CUSTOM_THEME_ELEMENT_CHANGED, notificationObserver);
-            HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
-            HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
-        }
-
-        private int itemDimension;
-
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
             View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_theme_background, parent, false);
@@ -244,7 +222,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
             if (position == 0) {
                 holder.backgroundContent.setVisibility(View.VISIBLE);
-                holder.backgroundNewMark.setVisibility(View.VISIBLE);
                 holder.backgroundContent.setImageResource(R.drawable.camera_icon);
                 holder.backgroundNewMark.setVisibility(GONE);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -261,7 +238,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 });
             } else if (position == 1) {
                 holder.backgroundContent.setVisibility(View.VISIBLE);
-                holder.backgroundNewMark.setVisibility(View.VISIBLE);
                 holder.backgroundContent.setImageResource(R.drawable.gallery_icon);
                 holder.backgroundNewMark.setVisibility(GONE);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -422,7 +398,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             return position;
         }
 
-
         private boolean isNewItem(KCBaseElement item) {
             boolean isNewTheme = item.isNew();
             if (isNewTheme) {
@@ -437,13 +412,32 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             }
         }
 
+        static class NativeAdInfo implements Comparable<NativeAdInfo> {
+            private String nativeAd;
+            private int position;
+            private boolean hasAd = false;
+            private NativeAdView nativeAdView = null;
+
+
+            @Override
+            public int compareTo(@NonNull NativeAdInfo o) {
+                if (position < o.position) {
+                    return -1;
+                }
+                if (position > o.position) {
+                    return 1;
+                }
+                return 0;
+            }
+        }
+
         static class Holder extends RecyclerView.ViewHolder {
-            HSGifImageView backgroundContent;
+            ImageView backgroundContent;
             ImageView backgroundNewMark;
 
             public Holder(View itemView) {
                 super(itemView);
-                backgroundContent = (HSGifImageView) itemView.findViewById(R.id.background_content);
+                backgroundContent = (ImageView) itemView.findViewById(R.id.background_content);
                 backgroundNewMark = (ImageView) itemView.findViewById(R.id.background_new_mark);
                 CompatUtils.setCardViewMaxElevation((CardView) itemView);
             }
