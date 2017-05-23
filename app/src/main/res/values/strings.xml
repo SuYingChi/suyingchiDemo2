@@ -236,9 +236,6 @@
 
 	<string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
-	<string name="theme_ad_placement_theme_ad">Master_A(NativeAds)ThemeAd</string>
-	<string name="ad_placement_exit_alert_dialog">Master_A(NativeAds)AppQuit</string>
-
 	<string name="accessibility_service" translatable="false">Emoji Keyboard</string>
 	<string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
 With accessibility authorization, I can help you setup keyboard directly!
@@ -247,5 +244,4 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
 
 	<!-- Product Master's config -->
 	<string name="feedback_email">feedback.glowdesign@hotmail.com</string>
-    <string name="ad_placement_google_play_ad">Colorkey_A(NativeAds)GooglePlayIcon</string>
 </resources>

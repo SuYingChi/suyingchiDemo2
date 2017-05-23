@@ -22,7 +22,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -128,10 +127,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         hsBackgroundVedioView.init();
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
-
-        if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
-            keyboardPanelSwitchContainer.setCustomizeBar(getCustomizeBar());
-        }
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
@@ -258,7 +253,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public void resetKeyboardBarState() {
+    public void resetKeyboardBarState(boolean needReloadAd) {
         if (keyboardPanelSwitchContainer != null) {
             if (keyboardPanelSwitchContainer.getKeyboardPanel() == null) {
                 keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
@@ -266,11 +261,28 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             keyboardPanelSwitchContainer.getKeyboardPanel().switchSuggestionState(0);
             keyboardPanelSwitchContainer.getBarViewGroup().setVisibility(View.VISIBLE);
 
-            reloadGpAd();
+            if (needReloadAd) {
+                reloadGpAd();
+            } else {
+                removeCustomizeBar();
+            }
+        }
+    }
+
+    public void removeCustomizeBar() {
+        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+        if(gpNativeAdList!=null){
+            for (AcbNativeAd acbNativeAd : gpNativeAdList) {
+                acbNativeAd.release();
+            }
         }
     }
 
     private void reloadGpAd() {
+        if (gpNativeAdList == null) {
+            return;
+        }
+
         keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
         for (AcbNativeAd acbNativeAd : gpNativeAdList) {
             acbNativeAd.release();
@@ -279,23 +291,23 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         gpNativeAdList.clear();
         gpAdAdapter.clearAdList();
 
-        if(acbNativeAdLoader!=null){
+        if (acbNativeAdLoader != null) {
             acbNativeAdLoader.cancel();
         }
 
-        acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(),HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
+        acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
         acbNativeAdLoader.load(5, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
-                if(keyboardPanelSwitchContainer.getCustomizeBar().getVisibility()!=VISIBLE){
+                if (keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() != VISIBLE) {
                     keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(View.VISIBLE);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_show","GooglePlay_Search");
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_show", "GooglePlay_Search");
                 }
                 for (AcbNativeAd acbNativeAd : list) {
                     acbNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                         @Override
                         public void onAdClick(AcbAd acbAd) {
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_click","GooglePlay_Search");
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_click", "GooglePlay_Search");
                         }
                     });
                     gpAdAdapter.addAd(acbNativeAd);
@@ -310,27 +322,31 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
 
-    public View getCustomizeBar() {
-        RecyclerView recyclerView = new RecyclerView(HSApplication.getContext());
-        recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-        recyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
+    public void getCustomizeBar() {
+        RecyclerView gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
+        gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        gpAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
         int padding = DisplayUtils.dip2px(8);
-        recyclerView.setPadding(padding, 0, padding, 0);
+        gpAdRecyclerView.setPadding(padding, 0, padding, 0);
         gpAdAdapter = new CustomBarGPAdAdapter();
-        recyclerView.setAdapter(gpAdAdapter);
+        gpAdRecyclerView.setAdapter(gpAdAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+        gpAdRecyclerView.setLayoutManager(layoutManager);
+        gpAdRecyclerView.setHasFixedSize(true);
 
         CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
             @Override
             public void onHide() {
+                acbNativeAdLoader.cancel();
                 keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_close","GooglePlay_Search");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_close", "GooglePlay_Search");
             }
         });
-        customizeBarLayout.setContent(recyclerView);
+        customizeBarLayout.setContent(gpAdRecyclerView);
         reloadGpAd();
-        return customizeBarLayout;
+        if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
+            keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
+        }
     }
+
 }

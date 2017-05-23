@@ -45,6 +45,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String HS_NOTIFICATION_SERVICE_DESTROY = "hs.keyboard.SERVICE_DESTROY";
     public static final String HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME = "editor_owner_package_name";
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
+    private String googlePlayPackageName;
+
 
     private static InputConnection insideConnection = null;
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -61,7 +63,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(Intent.ACTION_DATE_CHANGED.equals(action)) {
+            if (Intent.ACTION_DATE_CHANGED.equals(action)) {
                 KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
                 KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
             }
@@ -125,7 +127,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     }
 
     private boolean showBackAdIfNeeded() {
-        boolean enabled = HSConfig.optBoolean(false,"Application", "InterstitialAds", "BackButton", "Show");
+        boolean enabled = HSConfig.optBoolean(false, "Application", "InterstitialAds", "BackButton", "Show");
 
         if (!enabled) {
             return false;
@@ -149,7 +151,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
             if (currentBackCalendar.get(Calendar.YEAR) == lastBackCalendar.get(Calendar.YEAR) &&
                     currentBackCalendar.get(Calendar.DAY_OF_YEAR) == lastBackCalendar.get(Calendar.DAY_OF_YEAR)) {
-                backCount ++;
+                backCount++;
             } else {
                 backCount = 1;
                 hitBackCount = -1;
@@ -344,20 +346,26 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public void hideWindow() {
         super.hideWindow();
-        getKeyboardPanelMananger().resetKeyboardBarState();
+        getKeyboardPanelMananger().resetKeyboardBarState(currentAppPackageName.equals(googlePlayPackageName));
         HSLog.e("keyboard lifecycle ----hide window----");
     }
 
     @Override
     public void onStartInput(EditorInfo editorInfo, boolean restarting) {
         super.onStartInput(editorInfo, restarting);
-        if(restarting){
-            getKeyboardPanelMananger().resetKeyboardBarState();
+        if (restarting) {
+            getKeyboardPanelMananger().resetKeyboardBarState(currentAppPackageName.equals(googlePlayPackageName));
         }
 
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
+        googlePlayPackageName = "com.android.vending";
+        if (currentAppPackageName.equals(googlePlayPackageName)) {
+            getKeyboardPanelMananger().getCustomizeBar();
+        }else{
+            getKeyboardPanelMananger().removeCustomizeBar();
+        }
     }
 
     @Override

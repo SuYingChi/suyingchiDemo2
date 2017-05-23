@@ -14,6 +14,12 @@
     <string name="ad_placement_applock">Master_A((NativeAds)AppLock</string>
     <string name="ad_placement_optimization">Master_A((NativeAds)Optimization</string>
     <string name="ad_placement_charging">Master_A(NativeAds)Charging</string>
+    <string name="theme_ad_placement_theme_ad">Master_A(NativeAds)ThemeAd</string>
+    <string name="ad_placement_exit_alert_dialog">Master_A(NativeAds)AppQuit</string>
+    <string name="ad_placement_google_play_ad">Master_A(NativeAds)GooglePlayIcon</string>
+
+
+
 
     <string name="placement_full_screen_save_custom_theme">INTERSTITIAL_AD_PLACEMENT_SAVE_CUSTOM_THEME</string>
     <string name="placement_full_screen_trial_keyboard">Master_A(InterstitialAds)TiralKeyboardFullScreenAd</string>
