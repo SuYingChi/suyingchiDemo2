@@ -6,6 +6,55 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>Lucky</key>
+			<dict>
+				<key>ChanceIncrementPeriodSeconds</key>
+				<integer>600</integer>
+				<key>FullChanceCount</key>
+				<integer>20</integer>
+				<key>LargeBoxAdCount</key>
+				<integer>3</integer>
+				<key>PriorityThemes</key>
+				<array>
+					<dict>
+						<key>Icon</key>
+						<string>https://s3.amazonaws.com/emojidevelop/resource/Downloads/custom_theme_icon/PinkDrops.png</string>
+						<key>Name</key>
+						<string>PinkDrops</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>https://s3.amazonaws.com/emojidevelop/resource/Downloads/custom_theme_icon/Kawaii.png</string>
+						<key>Name</key>
+						<string>Kawaii</string>
+					</dict>
+				</array>
+				<key>SmallBoxAdCount</key>
+				<integer>3</integer>
+				<key>SmallBoxColor</key>
+				<dict>
+					<key>Green</key>
+					<integer>8</integer>
+					<key>Red</key>
+					<integer>2</integer>
+				</dict>
+				<key>SmallBoxContent</key>
+				<dict>
+					<key>Chances</key>
+					<integer>2</integer>
+					<key>Empty</key>
+					<integer>8</integer>
+				</dict>
+				<key>Types</key>
+				<dict>
+					<key>Bomb</key>
+					<integer>15</integer>
+					<key>LargeBox</key>
+					<integer>10</integer>
+					<key>SmallBox</key>
+					<integer>75</integer>
+				</dict>
+			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -4882,6 +4931,15 @@
 			</dict>
 			<key>Colorkey_A(NativeAds)KeyboardLuckyAd</key>
 			<dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
 				<key>deDuplicate</key>
 				<true/>
 				<key>packageFilter</key>

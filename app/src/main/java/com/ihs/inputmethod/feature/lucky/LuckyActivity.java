@@ -140,7 +140,7 @@ public class LuckyActivity extends HSAppCompatActivity
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Intent addIntent = new Intent();
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "keyboard lucy");
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "keyboard lucky");
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(HSApplication.getContext(), R.drawable.ic_lucky));
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         HSApplication.getContext().sendBroadcast(addIntent);

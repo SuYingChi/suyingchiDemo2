@@ -1,16 +1,9 @@
 package com.ihs.inputmethod.feature.common;
 
-import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.libraryconfig.HSLibrarySessionManager;
 import com.ihs.commons.libraryconfig.HSLibraryconfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSMapUtils;
-import com.ihs.commons.utils.HSPlistParser;
-import com.ihs.inputmethod.uimodules.BuildConfig;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,32 +82,8 @@ public class CustomizeConfig implements HSLibraryconfig.ILibraryListener {
         if (sInstance == null) {
             sInstance = new CustomizeConfig();
         }
-        sInstance.doInit();
     }
 
-    private void doInit() {
-        HSLibrarySessionManager.getInstance().startSessionForLibrary(sConfigProvider);
-        Map<String, ?> localConfigData = parseLocalConfig();
-        String remoteConfigUrl = BuildConfig.DEBUG ?
-                BuildConfig.CUSTOMIZE_CONFIG_DEBUG : BuildConfig.CUSTOMIZE_CONFIG_RELEASE;
-
-        HSLog.d("LibraryConfig", "Load wallpaper config, fire a remote fetch");
-        HSLibraryconfig.getInstance().startForLibrary(remoteConfigUrl, localConfigData, sConfigProvider, this);
-    }
-
-    private Map<String, ?> parseLocalConfig() {
-        Map<String, ?> data = null;
-        InputStream is = null;
-        try {
-            is = HSApplication.getContext().getAssets().open(WALLPAPERS_CONFIG_LOCAL_FILE_NAME);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (is != null) {
-            data = HSPlistParser.parse(is, true);
-        }
-        return data;
-    }
 
     @Override
     public void onRemoteConfigDidFinishInitialization() {
