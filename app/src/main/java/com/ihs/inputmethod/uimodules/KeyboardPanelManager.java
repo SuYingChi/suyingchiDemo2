@@ -18,6 +18,7 @@ import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -32,6 +33,7 @@ import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
+import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarGPAdAdapter;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
@@ -65,6 +67,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private List<AcbNativeAd> gpNativeAdList = new ArrayList<>();
     private CustomBarGPAdAdapter gpAdAdapter;
     private AcbNativeAdLoader acbNativeAdLoader;
+    private RecyclerView gpAdRecyclerView;
 
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
@@ -253,25 +256,20 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public void resetKeyboardBarState(boolean needReloadAd) {
+    public void resetKeyboardBarState() {
         if (keyboardPanelSwitchContainer != null) {
             if (keyboardPanelSwitchContainer.getKeyboardPanel() == null) {
                 keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
             }
             keyboardPanelSwitchContainer.getKeyboardPanel().switchSuggestionState(0);
             keyboardPanelSwitchContainer.getBarViewGroup().setVisibility(View.VISIBLE);
-
-            if (needReloadAd) {
-                reloadGpAd();
-            } else {
-                removeCustomizeBar();
-            }
         }
     }
 
     public void removeCustomizeBar() {
         keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
-        if(gpNativeAdList!=null){
+        gpAdRecyclerView = null;
+        if (gpNativeAdList != null) {
             for (AcbNativeAd acbNativeAd : gpNativeAdList) {
                 acbNativeAd.release();
             }
@@ -322,8 +320,13 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
 
-    public void getCustomizeBar() {
-        RecyclerView gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
+    public void showCustomizeBar() {
+        if(gpAdRecyclerView!=null || IAPManager.getManager().hasPurchaseNoAds()
+                || !HSConfig.optBoolean(true,"KeyboardToolBar","GooglePlay","ShowAd")){
+            return;
+        }
+
+        gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
         gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
         gpAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
         int padding = DisplayUtils.dip2px(8);

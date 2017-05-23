@@ -346,7 +346,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public void hideWindow() {
         super.hideWindow();
-        getKeyboardPanelMananger().resetKeyboardBarState(currentAppPackageName.equals(googlePlayPackageName));
+        getKeyboardPanelMananger().resetKeyboardBarState();
         HSLog.e("keyboard lifecycle ----hide window----");
     }
 
@@ -354,7 +354,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public void onStartInput(EditorInfo editorInfo, boolean restarting) {
         super.onStartInput(editorInfo, restarting);
         if (restarting) {
-            getKeyboardPanelMananger().resetKeyboardBarState(currentAppPackageName.equals(googlePlayPackageName));
+            getKeyboardPanelMananger().resetKeyboardBarState();
         }
 
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
@@ -362,7 +362,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         currentAppPackageName = editorInfo.packageName;
         googlePlayPackageName = "com.android.vending";
         if (currentAppPackageName.equals(googlePlayPackageName)) {
-            getKeyboardPanelMananger().getCustomizeBar();
+            getKeyboardPanelMananger().showCustomizeBar();
         }else{
             getKeyboardPanelMananger().removeCustomizeBar();
         }
