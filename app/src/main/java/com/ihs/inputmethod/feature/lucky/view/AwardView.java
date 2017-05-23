@@ -197,6 +197,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                 boolean shouldShowAd;
                 if (state == LuckyActivity.ViewState.AWARD_SMALL) {
                     shouldShowAd = mCurrentSmallAdCount < mSmallBoxAdCount;
+                    //// TODO: 17/5/23 小盒子现在跟大盒子一样
                     isSmall = true;
                 } else {
                     shouldShowAd = mCurrentLargeAdCount < mLargeBoxAdCount;
@@ -246,7 +247,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
 
                     mMusicPlayer.play(getContext(), R.raw.lucky_sound_award_open);
                 } else {
-                    if (isSmall) {
+                    if (false) {
                         GameConfig config = ((LuckyActivity) getContext()).getGameConfig();
                         if (config == null || sRand.nextFloat() <= config.getSmallBoxChancesProbability()) {
                             HSAnalytics.logEvent("Lucky_Award_Chances_Shown");
