@@ -45,7 +45,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String HS_NOTIFICATION_SERVICE_DESTROY = "hs.keyboard.SERVICE_DESTROY";
     public static final String HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME = "editor_owner_package_name";
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
-    private String googlePlayPackageName;
+    private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
 
 
     private static InputConnection insideConnection = null;
@@ -351,6 +351,14 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     }
 
     @Override
+    public void showWindow(boolean showInput) {
+        super.showWindow(showInput);
+        if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)){
+            getKeyboardPanelMananger().logCustomizeBarShowed();
+        }
+    }
+
+    @Override
     public void onStartInput(EditorInfo editorInfo, boolean restarting) {
         super.onStartInput(editorInfo, restarting);
         if (restarting) {
@@ -360,8 +368,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
-        googlePlayPackageName = "com.android.vending";
-        if (currentAppPackageName.equals(googlePlayPackageName)) {
+        if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
             getKeyboardPanelMananger().showCustomizeBar();
         }else{
             getKeyboardPanelMananger().removeCustomizeBar();
