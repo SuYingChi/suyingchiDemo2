@@ -7,12 +7,12 @@ import android.view.View;
 /**
  * Created by dsapphire on 16/2/27.
  */
-final class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+public final class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
 	private int spacing;
 	private int headerNum;
 
-	GridSpacingItemDecoration(int spacing, int headerNum) {
+	public GridSpacingItemDecoration(int spacing, int headerNum) {
 		this.spacing = spacing;
 		this.headerNum = headerNum;
 	}

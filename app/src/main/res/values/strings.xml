@@ -247,4 +247,5 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
 
 	<!-- Product Master's config -->
 	<string name="feedback_email">feedback.glowdesign@hotmail.com</string>
+    <string name="ad_placement_google_play_ad">Colorkey_A(NativeAds)GooglePlayIcon</string>
 </resources>

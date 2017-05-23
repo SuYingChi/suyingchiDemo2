@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f6f6f6"
+    >
+    <ImageView
+        android:background="@drawable/customize_bar_gp_ad_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        />
+
+    <FrameLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/fl_iv_strip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="3dp"
+        android:paddingTop="5dp">
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/iv_strip"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:background="@drawable/customize_bar_strip" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:gravity="center_horizontal"
+        android:background="#f6f6f6"
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fl_iv_strip" />
+
+</android.support.percent.PercentRelativeLayout>
