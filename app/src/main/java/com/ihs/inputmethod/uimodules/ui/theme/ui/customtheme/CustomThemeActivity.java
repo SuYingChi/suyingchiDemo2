@@ -79,8 +79,6 @@ import static com.ihs.app.framework.HSApplication.getContext;
 
 
 public class CustomThemeActivity extends HSAppCompatActivity implements IItemClickListener, INotificationObserver {
-    public static boolean hasTrialKeyboardShownWhenThemeCreated;
-
     public static final String NOTIFICATION_SHOW_TRIAL_KEYBOARD = "hs.inputmethod.uimodules.ui.theme.ui.SHOW_TRIAL_KEYBOARD"; //显示试用键盘
     public static final String BUNDLE_KEY_BACKGROUND_NAME = "BUNDLE_KEY_BACKGROUND_NAME";
     public static final String BUNDLE_KEY_BACKGROUND_USE_CAMERA = "BUNDLE_KEY_BACKGROUND_USE_CAMERA";
@@ -360,7 +358,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
     public void showFragment(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < getFragmentClasses().size()) {
             if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD) {
-                if (getContext().getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
+                if (!IAPManager.getManager().hasPurchaseNoAds()) {
                     KCInterstitialAd.load(getString(R.string.placement_full_screen_save_custom_theme));
                 }
             }
@@ -613,18 +611,18 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
 
     private void onNewThemeCreated() {
         if (!showInterstitialAdsAfterSaveTheme() && !showChargingEnableAlert()) {
-            showTrialKeyboard(false);
+            showTrialKeyboard();
         }
     }
 
     private boolean showInterstitialAdsAfterSaveTheme() {
-        if (IAPManager.getManager().hasPurchaseNoAds() || !getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
+        if (IAPManager.getManager().hasPurchaseNoAds()) {
             return false;
         }
         boolean interstitialAdShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_save_custom_theme), new KCInterstitialAd.OnAdCloseListener() {
             @Override
             public void onAdClose() {
-                showTrialKeyboard(true);
+                showTrialKeyboard();
             }
         });
 
@@ -652,7 +650,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        showTrialKeyboard(false);
+                        showTrialKeyboard();
                     }
                 });
                 dialog.show();
@@ -668,12 +666,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         return false;
     }
 
-    private void showTrialKeyboard(boolean hasInterstitialAdsShown) {
+    private void showTrialKeyboard() {
         setResult(RESULT_OK);
         HSBundle bundle = new HSBundle();
         bundle.putString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, ThemeHomeActivity.class.getSimpleName());
         bundle.putInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE, keyboardActivationFromCustom);
-        bundle.putBoolean(TrialKeyboardDialog.BUNDLE_KEY_HAS_TRIAL_KEYBOARD_SHOWN_WHEN_THEME_CREATED, hasInterstitialAdsShown);
         HSGlobalNotificationCenter.sendNotification(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
         if (!PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();

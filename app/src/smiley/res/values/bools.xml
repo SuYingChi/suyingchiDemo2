@@ -2,5 +2,4 @@
 <resources>
     <bool name="show_uninstall_setting">false</bool>
     <bool name="show_remove_ads_menu">false</bool>
-    <bool name="is_show_full_screen_ad_when_theme_created">true</bool>
 </resources>

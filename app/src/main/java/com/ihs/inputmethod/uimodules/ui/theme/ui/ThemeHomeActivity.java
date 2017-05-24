@@ -134,9 +134,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 if (hsBundle != null) {
                     String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
                     int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
-                    boolean hasTrialKeyboardShownWhenThemeCreated = hsBundle.getBoolean(TrialKeyboardDialog.BUNDLE_KEY_HAS_TRIAL_KEYBOARD_SHOWN_WHEN_THEME_CREATED, false);
                     if (ThemeHomeActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
-                        showTrialKeyboardDialog(activationCode, hasTrialKeyboardShownWhenThemeCreated);
+                        showTrialKeyboardDialog(activationCode, false);
                     }
                 }
             }
@@ -277,7 +276,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         boolean showTrial = intent.getBooleanExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
         if (showTrial) {
             handler.removeMessages(HANDLER_SHOW_ACTIVE_DIALOG);
-            showTrialKeyboardDialog(keyboardActivationFromHomeWithTrial, false);
+            showTrialKeyboardDialog(keyboardActivationFromHomeWithTrial, true);
             getIntent().putExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
         } else {
             String from = intent.getStringExtra("From");
@@ -405,9 +404,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
-    private void showTrialKeyboardDialog(int activationCode, boolean hasTrialKeyboardShownWhenThemeCreated) {
+    private void showTrialKeyboardDialog(int activationCode, boolean shouldShowAdOnDismiss) {
         if (trialKeyboardDialog == null) {
-            trialKeyboardDialog = new TrialKeyboardDialog.Build(ThemeHomeActivity.class.getName()).create(context, this, hasTrialKeyboardShownWhenThemeCreated);
+            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, this, shouldShowAdOnDismiss);
         }
         trialKeyboardDialog.show(this, activationCode);
     }
@@ -460,7 +459,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     public void keyboardSelected(int requestCode) {
         if (keyboardActivationFromHomeWithTrial == requestCode || CustomThemeActivity.keyboardActivationFromCustom == requestCode) {
-            showTrialKeyboardDialog(requestCode, false);
+            showTrialKeyboardDialog(requestCode, true);
         }
         enableTipTV.setVisibility(GONE);
     }

@@ -22,7 +22,7 @@ import com.ihs.inputmethod.uimodules.widget.videoview.videoplayerview.ui.VideoPl
 
 /**
  * Created by ihandysoft on 16/12/20.
- * if Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT, support mp4
+ * if Builder.VERSION.SDK_INT >= Builder.VERSION_CODES.KITKAT, support mp4
  */
 
 class HSTextureView extends RelativeLayout implements IMediaView {
