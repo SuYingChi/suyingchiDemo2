@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -21,7 +22,9 @@ import android.widget.LinearLayout;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
@@ -179,21 +182,29 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_show");
-            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-            dialog.setTitle(getContext().getString(R.string.charging_alert_title));
-            dialog.setMessage(getContext().getString(R.string.charging_alert_message));
-            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-            dialog.setCancelable(true);
-            dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ChargingManagerUtil.enableCharging(false, "saving");
-                    HSToastUtils.toastCenterShort(getContext().getString(R.string.charging_enable_toast));
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
-                }
-            });
-            dialog.show();
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+            if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
+
+                CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+                dialog.setTitle(getContext().getString(R.string.charging_alert_title));
+                dialog.setMessage(getContext().getString(R.string.charging_alert_message));
+                dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+                dialog.setCancelable(true);
+                dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ChargingManagerUtil.enableCharging(false, "saving");
+                        HSToastUtils.toastCenterShort(getContext().getString(R.string.charging_enable_toast));
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+                    }
+                });
+                dialog.show();
+            }else {
+                Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
+                intent.putExtra("type", "charging");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                HSApplication.getContext().startActivity(intent);
+            }
         }
     }
 
