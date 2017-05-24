@@ -259,4 +259,5 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
 	<string name="lucky_game_award_ad_related_title">You’ve won a prize!</string>
 	<string name="launcher_widget_lucky_title">Lucky</string>
 	<string name="lucky_game_award_empty_action">TRY AGAIN</string>
+	<string name="no_network_connection">No network connection!</string>
 </resources>
