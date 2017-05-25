@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
 import com.acb.nativeads.AcbNativeAdLoader;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
@@ -45,6 +46,7 @@ import com.ihs.panelcontainer.panel.KeyboardPanel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static android.view.Surface.ROTATION_0;
 import static android.view.View.GONE;
@@ -296,6 +298,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
+        logGoogleAdEvent("Load");
+
         acbNativeAdLoader.load(5, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
@@ -307,6 +311,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                         @Override
                         public void onAdClick(AcbAd acbAd) {
                             HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_click", "GooglePlay_Search");
+                            logGoogleAdEvent("Click");
                         }
                     });
                     gpAdAdapter.addAd(acbNativeAd);
@@ -318,6 +323,10 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
             }
         });
+    }
+
+    private void logGoogleAdEvent(String action) {
+        HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map)null, (Map)null);
     }
 
 
@@ -356,6 +365,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     public void logCustomizeBarShowed() {
         if(keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE){
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_show", "GooglePlay_Search");
+            logGoogleAdEvent("Show");
         }
     }
 }
