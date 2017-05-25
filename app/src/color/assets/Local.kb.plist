@@ -3789,6 +3789,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3811,6 +3813,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3833,6 +3837,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3856,6 +3862,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3878,6 +3886,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 				</array>
 			</dict>
@@ -3932,7 +3942,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3960,7 +3970,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3988,7 +3998,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4016,7 +4026,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4045,7 +4055,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4073,7 +4083,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4101,7 +4111,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4129,7 +4139,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4157,7 +4167,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4185,7 +4195,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4214,7 +4224,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4242,7 +4252,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4270,7 +4280,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 				</array>
 			</dict>
