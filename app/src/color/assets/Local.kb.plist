@@ -13,21 +13,27 @@
 					<key>HoursFromFirstUse</key>
 					<integer>0</integer>
 					<key>RegionException</key>
-					<array/>
+					<array>
+						<string>CN</string>
+					</array>
 				</dict>
 				<key>AdKeyboardClose</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
 					<integer>0</integer>
 					<key>RegionException</key>
-					<array/>
+					<array>
+						<string>CN</string>
+					</array>
 				</dict>
 				<key>AdBackButton</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
 					<integer>0</integer>
 					<key>RegionException</key>
-					<array/>
+					<array>
+						<string>CN</string>
+					</array>
 				</dict>
 			</dict>
 			<key>AccessUsageAlert</key>
@@ -330,6 +336,7 @@
 						<array>
 							<integer>5</integer>
 							<integer>25</integer>
+							<integer>45</integer>
 						</array>
 						<key>Show</key>
 						<true/>
@@ -496,23 +503,24 @@
 				<dict>
 					<key>CurrentContent</key>
 					<string>lucky</string>
+					<key>description</key>
+					<string>选项：lucky</string>
 				</dict>
 				<key>FetchAdInterval</key>
 				<real>15000</real>
 				<key>KeyboardEmojiTopLeftTabAd</key>
 				<dict>
 					<key>SessionIndexOfDay</key>
-					<array>
-						<integer>3</integer>
-					</array>
+					<array/>
 					<key>Show</key>
-					<true/>
+					<false/>
 				</dict>
 				<key>KeyboardFunctionBarGiftAd</key>
 				<dict>
 					<key>SessionIndexOfDay</key>
 					<array>
-						<integer>5</integer>
+						<integer>2</integer>
+						<integer>35</integer>
 					</array>
 					<key>Show</key>
 					<true/>
