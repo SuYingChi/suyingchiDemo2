@@ -6,6 +6,30 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>FeatureRestriction</key>
+			<dict>
+				<key>AdKeyboardOpen</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array/>
+				</dict>
+				<key>AdKeyboardClose</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array/>
+				</dict>
+				<key>AdBackButton</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array/>
+				</dict>
+			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
