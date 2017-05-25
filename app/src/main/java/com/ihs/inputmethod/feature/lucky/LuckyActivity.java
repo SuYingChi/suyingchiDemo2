@@ -282,6 +282,7 @@ public class LuckyActivity extends HSAppCompatActivity
                 R.raw.lucky_sound_button_click,
                 R.raw.lucky_sound_award_open,
         });
+        LuckyPreloadManager.getInstance().refreshTheme(true);
     }
 
     private void gameDelayed() {

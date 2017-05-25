@@ -6,6 +6,36 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>FeatureRestriction</key>
+			<dict>
+				<key>AdKeyboardOpen</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+				</dict>
+				<key>AdKeyboardClose</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+				</dict>
+				<key>AdBackButton</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+				</dict>
+			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -306,6 +336,7 @@
 						<array>
 							<integer>5</integer>
 							<integer>25</integer>
+							<integer>45</integer>
 						</array>
 						<key>Show</key>
 						<true/>
@@ -375,15 +406,69 @@
 				<array>
 					<dict>
 						<key>Icon</key>
-						<string>https://s3.amazonaws.com/emojidevelop/resource/Downloads/custom_theme_icon/PinkDrops.png</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/royalbattle.png</string>
+						<key>Name</key>
+						<string>RoyalBattle</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/kawaii.png</string>
+						<key>Name</key>
+						<string>Kawaii</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/galaxy.png</string>
+						<key>Name</key>
+						<string>Galaxy</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pop.png</string>
+						<key>Name</key>
+						<string>Pop</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/rosegold.png</string>
+						<key>Name</key>
+						<string>RoseGold</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/neon.png</string>
+						<key>Name</key>
+						<string>Neon</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/gold.png</string>
+						<key>Name</key>
+						<string>Gold</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/loveletter.png</string>
+						<key>Name</key>
+						<string>LoveLetter</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/drops.png</string>
+						<key>Name</key>
+						<string>Drops</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pinkdrops.png</string>
 						<key>Name</key>
 						<string>PinkDrops</string>
 					</dict>
 					<dict>
 						<key>Icon</key>
-						<string>https://s3.amazonaws.com/emojidevelop/resource/Downloads/custom_theme_icon/Kawaii.png</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pinkgold.png</string>
 						<key>Name</key>
-						<string>Kawaii</string>
+						<string>PinkGold</string>
 					</dict>
 				</array>
 				<key>SmallBoxAdCount</key>
@@ -418,23 +503,24 @@
 				<dict>
 					<key>CurrentContent</key>
 					<string>lucky</string>
+					<key>description</key>
+					<string>选项：lucky</string>
 				</dict>
 				<key>FetchAdInterval</key>
 				<real>15000</real>
 				<key>KeyboardEmojiTopLeftTabAd</key>
 				<dict>
 					<key>SessionIndexOfDay</key>
-					<array>
-						<integer>3</integer>
-					</array>
+					<array/>
 					<key>Show</key>
-					<true/>
+					<false/>
 				</dict>
 				<key>KeyboardFunctionBarGiftAd</key>
 				<dict>
 					<key>SessionIndexOfDay</key>
 					<array>
-						<integer>5</integer>
+						<integer>2</integer>
+						<integer>35</integer>
 					</array>
 					<key>Show</key>
 					<true/>
@@ -3735,6 +3821,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3757,6 +3845,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3779,6 +3869,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3802,6 +3894,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3824,6 +3918,8 @@
 						<array/>
 						<key>regionFilter</key>
 						<array/>
+						<key>uiStyle</key>
+						<string>effect_3</string>
 					</dict>
 				</array>
 			</dict>
@@ -3878,7 +3974,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3906,7 +4002,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3934,7 +4030,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3962,7 +4058,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -3991,7 +4087,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4019,7 +4115,7 @@
 						<key>regionFilter</key>
 						<array/>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4047,7 +4143,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4075,7 +4171,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4103,7 +4199,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4131,7 +4227,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4160,7 +4256,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4188,7 +4284,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4216,7 +4312,7 @@
 							<string>US</string>
 						</array>
 						<key>uiStyle</key>
-						<string>effect_4</string>
+						<string>effect_3</string>
 					</dict>
 				</array>
 			</dict>

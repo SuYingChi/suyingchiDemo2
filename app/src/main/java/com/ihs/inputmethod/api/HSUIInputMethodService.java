@@ -34,6 +34,7 @@ import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.util.Calendar;
 import java.util.List;
@@ -115,7 +116,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             if (isInputViewShowing) {
                 getKeyboardPanelMananger().onBackPressed();
                 if (!isInOwnApp()) {
-                    closeFullScreenAd.show();
+                    if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose")) {
+                        closeFullScreenAd.show();
+                    }
                 }
                 HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
             } else {
@@ -130,6 +133,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         boolean enabled = HSConfig.optBoolean(false, "Application", "InterstitialAds", "BackButton", "Show");
 
         if (!enabled) {
+            return false;
+        }
+
+        if (KCFeatureRestrictionConfig.isFeatureRestricted("AdBackButton")) {
             return false;
         }
 
@@ -295,10 +302,14 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         if (!restarting) {
             if (!isInOwnApp()) {
-                openFullScreenAd.show();
+                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardOpen")) {
+                    openFullScreenAd.show();
+                    openFullScreenAd.preLoad();
+                }
 
-                openFullScreenAd.preLoad();
-                closeFullScreenAd.preLoad();
+                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose")) {
+                    closeFullScreenAd.preLoad();
+                }
             }
         }
     }
