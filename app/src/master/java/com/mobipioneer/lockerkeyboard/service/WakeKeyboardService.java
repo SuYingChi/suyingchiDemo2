@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -37,6 +36,7 @@ import java.util.TimerTask;
  */
 
 public class WakeKeyboardService extends Service {
+    private static final int CHECKING_INTERVAL = 10 * 60 * 1000;
     Timer timer = new Timer();
     HSPreferenceHelper preferenceHelper = HSPreferenceHelper.create(this, "keyboard");
     private static final String SP_KEY_LAST_KEYBOARD_CHANGE = "lastKeyboardChange";
@@ -58,6 +58,7 @@ public class WakeKeyboardService extends Service {
     String defaultInputMethodServiceName = "";
     String defaultInputMethodPackageName = "";
     private static final int SHOW_KEY_BOARD = 1;
+    private static final int CHECK_DEFAULT_KEYBOARD = 2;
 
     Handler handler = new Handler() {
         @Override
@@ -66,6 +67,13 @@ public class WakeKeyboardService extends Service {
             switch (msg.what) {
                 case SHOW_KEY_BOARD:
                     onShowKeyboard();
+                    break;
+                case CHECK_DEFAULT_KEYBOARD:
+                    if(handler.hasMessages(CHECK_DEFAULT_KEYBOARD)){
+                        return;
+                    }
+                    checkDefaultKeyboard();
+                    handler.sendEmptyMessageDelayed(CHECK_DEFAULT_KEYBOARD,CHECKING_INTERVAL);
                     break;
             }
         }
@@ -114,65 +122,72 @@ public class WakeKeyboardService extends Service {
         if (preferenceHelper.getLong(SP_KEY_LAST_KEYBOARD_AlERT_SHOW, 0) == 0) {
             recordKeyboardShow();
         }
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
 
-                List<InputMethodInfo> enabledInputMethodList;
-                try {
-                    enabledInputMethodList = HSInputMethodListManager.getEnabledInputMethodList();
-                } catch (Exception e) {
-                    HSLog.e("获取系统服务失败");
-                    return;
-                }
+        handler.sendEmptyMessage(CHECK_DEFAULT_KEYBOARD);
 
-                List<InputMethodInfo> mInputMethodProperties = enabledInputMethodList;
-                for (int i = 0; i < mInputMethodProperties.size(); i++) {
-                    InputMethodInfo imi = mInputMethodProperties.get(i);
-                    if (imi.getId().equals(Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD))) {
-                        //imi contains the information about the keyboard you are using
-                        if (TextUtils.isEmpty(defaultInputMethodServiceName)) {
-                            defaultInputMethodServiceName = imi.getServiceName();
-                            defaultInputMethodPackageName = imi.getPackageName();
-                        } else if (!imi.getServiceName().equals(defaultInputMethodServiceName)) {
-                            if (getPackageName().equals(defaultInputMethodPackageName)) {
-                                //键盘即将被切走
-                                recordDefaultKeyboardChange();
-                            }
-                            defaultInputMethodServiceName = imi.getServiceName();
-                            defaultInputMethodPackageName = imi.getPackageName();
-
-                        }
-
-                        if (getPackageName().equals(imi.getPackageName())) {
-                            //当前键盘
-                            return;
-                        }
-                        break;
-                    }
-                }
-
-                ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(100);
-                if (runningServices != null) {
-                    for (ActivityManager.RunningServiceInfo runningService : runningServices) {
-                        String className = runningService.service.getClassName();
-                        if (className.equals(defaultInputMethodServiceName)) {
-                            if (!isEqual(runningServiceInfo, runningService) && runningService.clientCount > 1) {
-                                runningServiceInfo = runningService;
-                                handler.sendEmptyMessage(SHOW_KEY_BOARD);
-                            }
-                            break;
-                        }
-                    }
-                }
-
-            }
-        };
-
-        timer.schedule(timerTask, 0, 1000);
+//        TimerTask timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//                checkDefaultKeyboard();
+//
+//            }
+//        };
+//
+//        timer.schedule(timerTask, 0, 1000);
 
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void checkDefaultKeyboard() {
+        List<InputMethodInfo> enabledInputMethodList;
+        try {
+            enabledInputMethodList = HSInputMethodListManager.getEnabledInputMethodList();
+        } catch (Exception e) {
+            HSLog.e("获取系统服务失败");
+            return;
+        }
+
+        List<InputMethodInfo> mInputMethodProperties = enabledInputMethodList;
+        for (int i = 0; i < mInputMethodProperties.size(); i++) {
+            InputMethodInfo imi = mInputMethodProperties.get(i);
+            if (imi.getId().equals(Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD))) {
+                //imi contains the information about the keyboard you are using
+                if (TextUtils.isEmpty(defaultInputMethodServiceName)) {
+                    defaultInputMethodServiceName = imi.getServiceName();
+                    defaultInputMethodPackageName = imi.getPackageName();
+                } else if (!imi.getServiceName().equals(defaultInputMethodServiceName)) {
+                    if (getPackageName().equals(defaultInputMethodPackageName)) {
+                        //键盘即将被切走
+                        recordDefaultKeyboardChange();
+                    }
+                    defaultInputMethodServiceName = imi.getServiceName();
+                    defaultInputMethodPackageName = imi.getPackageName();
+
+                }
+
+                if (getPackageName().equals(imi.getPackageName())) {
+                    //当前键盘
+                    return;
+                }
+                break;
+            }
+        }
+
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(100);
+        if (runningServices != null) {
+            for (ActivityManager.RunningServiceInfo runningService : runningServices) {
+                String className = runningService.service.getClassName();
+                if (className.equals(defaultInputMethodServiceName)) {
+                    if (!isEqual(runningServiceInfo, runningService) && runningService.clientCount > 1) {
+                        runningServiceInfo = runningService;
+                        handler.sendEmptyMessage(SHOW_KEY_BOARD);
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     private void recordDefaultKeyboardChange() {
