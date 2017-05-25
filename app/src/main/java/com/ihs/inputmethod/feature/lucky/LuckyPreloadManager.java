@@ -217,6 +217,11 @@ public class LuckyPreloadManager {
 
 
     public HSKeyboardTheme getThemeInfo() {
+        if(themeItem == null){
+            refreshTheme(true);
+            return null;
+        }
+
         File themeIcon = new File(getDirectory(themeItem.mThemeName), ThemeView.ICON);
         File theme = new File(getDirectory(themeItem.mThemeName), ThemeView.BANNER);
         if (themeItemInfo == null || themeItemInfo.isEmpty() ||
