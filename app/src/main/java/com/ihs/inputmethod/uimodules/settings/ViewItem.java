@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -55,16 +57,21 @@ final class ViewItem {
         textView.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());
 
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
-            imageView.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                imageView.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            } else {
+                imageView.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            }
         } else {
             imageView.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
         }
         if (HSApplication.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            imageView.setPadding(80, 80, 80, 80);
+            int padding_portrait = DisplayUtils.dip2px(20);
+            imageView.setPadding(padding_portrait, padding_portrait, padding_portrait, padding_portrait);
         } else {
-            imageView.setPadding(60, 60, 60, 60);
+            int padding_land = DisplayUtils.dip2px(12);
+            imageView.setPadding(padding_land, padding_land, padding_land, padding_land);
         }
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setImageDrawable(drawable);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
