@@ -1,13 +1,17 @@
 package com.ihs.inputmethod.uimodules.settings;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
 
@@ -18,22 +22,16 @@ import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
 
 final class ViewItemBuilder {
 
-    private final static String SETTINGS_KEY_THEME = "settings_key_theme.png";
-    private final static String SETTINGS_KEY_THEME_PRESSED = "settings_key_theme_pressed.png";
+    private final static String SETTINGS_KEY_THEME = "ic_menu_cloth";
 
-    private final static String SETTINGS_KEY_MY_THEME = "settings_key_my_theme.png";
-    private final static String SETTINGS_KEY_MY_THEME_PRESSED = "settings_key_my_theme_pressed.png";
+    private final static String SETTINGS_KEY_MY_THEME = "ic_settings_key_create_theme";
 
-    private final static String SETTINGS_KEY_FONTS = "settings_key_fonts.png";
-    private final static String SETTINGS_KEY_FONTS_PRESSED = "settings_key_fonts_pressed.png";
+    private final static String SETTINGS_KEY_FONTS = "ic_settings_key_fonts";
 
-    private final static String SETTINGS_KEY_SOUND_OFF = "settings_key_sound_off.png";
-    private final static String SETTINGS_KEY_SOUND_ON = "settings_key_sound_on.png";
+    private final static String SETTINGS_KEY_SOUND_OFF = "ic_settings_key_sound_off";
+    private final static String SETTINGS_KEY_SOUND_ON = "ic_settings_key_sound_on";
 
-
-    private final static String SETTINGS_KEY_CORRECTION_OFF = "settings_key_correction_off.png";
-    private final static String SETTINGS_KEY_CORRECTION_ON = "settings_key_correction_on.png";
-
+    private final static String SETTINGS_KEY_AUTO_CORRECTION = "ic_settings_key_auto_correction";
 
     private final static String SETTINGS_KEY_CAP_OFF = "settings_key_capitalization_off.png";
     private final static String SETTINGS_KEY_CAP_ON = "settings_key_capitalization_on.png";
@@ -46,12 +44,9 @@ final class ViewItemBuilder {
     private final static String SETTINGS_KEY_SWIPE_OFF = "settings_key_swipe_off.png";
     private final static String SETTINGS_KEY_SWIPE_ON = "settings_key_swipe_on.png";
 
-    private final static String SETTINGS_KEY_ADD_LANGUAGE_OFF = "settings_key_add_language_on.png";
-    private final static String SETTINGS_KEY_ADD_LANGUAGE_ON = "settings_key_add_language_off.png";
+    private final static String SETTINGS_KEY_ADD_LANGUAGE = "nav_language_icon";
 
-
-    private final static String SETTINGS_KEY_MORE_OFF = "settings_key_more_off.png";
-    private final static String SETTINGS_KEY_MORE_ON = "settings_key_more_on.png";
+    private final static String SETTINGS_KEY_MORE_SETTING = "ic_settings_key_more_setting";
 
 
     private static final String SETTING_ON = "on";
@@ -63,26 +58,26 @@ final class ViewItemBuilder {
 
     static ViewItem getFontsItem(ViewItem.ViewItemListener viewItemListener) {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_fonts),
-                getStateListDrawable(SETTINGS_KEY_FONTS, SETTINGS_KEY_FONTS_PRESSED)
+                getStateListDrawable(SETTINGS_KEY_FONTS, SETTINGS_KEY_FONTS)
                 , viewItemListener, false);
     }
 
     static ViewItem getThemesItem(ViewItem.ViewItemListener viewItemListener) {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_themes),
-                getStateListDrawable(SETTINGS_KEY_THEME, SETTINGS_KEY_THEME_PRESSED)
+                getStateListDrawable(SETTINGS_KEY_THEME, SETTINGS_KEY_THEME)
                 , viewItemListener, false);
     }
 
     static ViewItem getMyThemeItem(ViewItem.ViewItemListener viewItemListener) {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_my_theme),
-                getStateListDrawable(SETTINGS_KEY_MY_THEME, SETTINGS_KEY_MY_THEME_PRESSED)
+                getStateListDrawable(SETTINGS_KEY_MY_THEME, SETTINGS_KEY_MY_THEME)
                 , viewItemListener, false);
     }
 
     static ViewItem getSoundsItem() {
 
         return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_sounds),
-                getStateListDrawable(SETTINGS_KEY_SOUND_OFF, SETTINGS_KEY_SOUND_ON)
+                getStateListDrawable(SETTINGS_KEY_SOUND_ON, SETTINGS_KEY_SOUND_OFF)
                 , new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
@@ -94,15 +89,15 @@ final class ViewItemBuilder {
 
             @Override
             void onItemViewInvalidate(ViewItem item) {
-                item.updateSelectedStatus(HSInputMethodSettings.getKeySoundEnabled());
+                item.updateSelectedStatus(!HSInputMethodSettings.getKeySoundEnabled());
             }
-        }, HSInputMethodSettings.getKeySoundEnabled());
+        }, !HSInputMethodSettings.getKeySoundEnabled());
 
     }
 
     private static void updateSoundsSettings(ViewItem item) {
-        item.setSelected(HSInputMethodSettings.getKeySoundEnabled());
-        if (item.isSelected) {
+        item.setSelected(!HSInputMethodSettings.getKeySoundEnabled());
+        if (!item.isSelected) {
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_ON);
         } else {
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_OFF);
@@ -112,7 +107,7 @@ final class ViewItemBuilder {
 
     static ViewItem getAutoCorrectionItem() {
         return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_correction),
-                getStateListDrawable(SETTINGS_KEY_CORRECTION_OFF, SETTINGS_KEY_CORRECTION_ON)
+                getStateListDrawable(SETTINGS_KEY_AUTO_CORRECTION, SETTINGS_KEY_AUTO_CORRECTION)
                 , new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
@@ -120,17 +115,16 @@ final class ViewItemBuilder {
                 updateAutoCorrectionSettings(item);
             }
 
-
             @Override
             void onItemViewInvalidate(ViewItem item) {
-                item.updateSelectedStatus(HSInputMethodSettings.getAutoCorrectionEnabled());
+                item.updateSelectedStatus(!HSInputMethodSettings.getAutoCorrectionEnabled());
             }
-        }, HSInputMethodSettings.getAutoCorrectionEnabled());
+        }, !HSInputMethodSettings.getAutoCorrectionEnabled());
     }
 
     private static void updateAutoCorrectionSettings(ViewItem item) {
-        item.setSelected(HSInputMethodSettings.getAutoCorrectionEnabled());
-        if (item.isSelected) {
+        item.setSelected(!HSInputMethodSettings.getAutoCorrectionEnabled());
+        if (!item.isSelected) {
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_ON);
         } else {
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_OFF);
@@ -224,7 +218,7 @@ final class ViewItemBuilder {
 
     public static ViewItem getLanguageItem(ViewItem.ViewItemListener listener) {
         return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_add_languages),
-                getStateListDrawable(SETTINGS_KEY_ADD_LANGUAGE_OFF, SETTINGS_KEY_ADD_LANGUAGE_ON)
+                getStateListDrawable(SETTINGS_KEY_ADD_LANGUAGE, SETTINGS_KEY_ADD_LANGUAGE)
                 , listener, false);
     }
 
@@ -245,24 +239,49 @@ final class ViewItemBuilder {
 
     static ViewItem getMoreSettingsItem(ViewItem.ViewItemListener listener) {
         return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_more_settings),
-                getStateListDrawable(SETTINGS_KEY_MORE_ON, SETTINGS_KEY_MORE_OFF)
+                getStateListDrawable(SETTINGS_KEY_MORE_SETTING, SETTINGS_KEY_MORE_SETTING)
                 , listener, false);
     }
 
 
     private static StateListDrawable getStateListDrawable(String normalImageName, String pressedImageName) {
         StateListDrawable stateListDrawable = new StateListDrawable();
-        Drawable defNormalDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources(normalImageName);
-        Drawable defPressedDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources(pressedImageName);
+        Drawable defNormalDrawable = getStyledDrawableFromResources(normalImageName);
+        if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
+            defNormalDrawable.setColorFilter(getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()), PorterDuff.Mode.SRC_IN);
+        } else {
+            defNormalDrawable.setColorFilter(Color.parseColor("#29A0CB"), PorterDuff.Mode.SRC_IN);
+        }
 
-        stateListDrawable.addState(new int[]{android.R.attr.state_focused}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS_PRESSED));
-        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS_PRESSED));
-        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS_PRESSED));
+        Drawable defPressedDrawable = getStyledDrawableFromResources(pressedImageName);
+        defPressedDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+        stateListDrawable.addState(new int[]{android.R.attr.state_focused}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS));
+        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS));
+        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS));
         stateListDrawable.addState(new int[]{}, HSKeyboardThemeManager.getStyledDrawable(defNormalDrawable, SETTINGS_KEY_FONTS));
 
         return stateListDrawable;
     }
 
+    private static Drawable getStyledDrawableFromResources(String resName) {
+        int resId = HSApplication.getContext().getResources().getIdentifier(resName, "drawable", HSApplication.getContext().getPackageName());
+        if(resId != 0) {
+            return HSApplication.getContext().getResources().getDrawable(resId);
+        } else {
+            HSLog.e("getStyledDrawableFromResources() called with: resName = [" + resName + "]");
+            return HSDrawableUtils.getTransparentBitmapDrawable();
+        }
+    }
+
+    private static int getDarkerColor(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv); // convert to hsv
+        // make darker
+        hsv[1] = hsv[1] + 0.1f; // more saturation
+        hsv[2] = hsv[2] - 0.1f; // less brightness
+        return Color.HSVToColor(hsv);
+    }
 
     public static void release() {
         if (adsItem != null) {
