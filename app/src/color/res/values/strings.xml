@@ -18,7 +18,6 @@
     <string name="placement_full_screen_save_custom_theme">Colorkey_A(InterstitialAds)SavingThemeFullScreenAd</string>
     <string name="placement_full_screen_trial_keyboard">Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd</string>
     <string name="placement_full_screen_open_keyboard">Colorkey_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
-    <string name="placement_full_screen_close_keyboard">Colorkey_A(InterstitialAds)CloseKeyboardFullScreenAd</string>
     <string name="ad_placement_google_play_ad">Colorkey_A(NativeAds)GooglePlayIcon</string>
 
 

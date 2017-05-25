@@ -106,7 +106,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
         openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
-        closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_close_keyboard), "Close");
+        closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Close");
     }
 
     @Override
