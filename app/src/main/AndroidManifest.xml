@@ -97,9 +97,6 @@
         <activity android:name="com.facebook.ads.AudienceNetworkActivity"
             android:noHistory="true"
             android:taskAffinity=".acb_interstitial_quiet" />
-        <activity android:name="com.facebook.FacebookActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
 
         <!-- AdMob全屏和Adx全屏 -->
         <activity android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
