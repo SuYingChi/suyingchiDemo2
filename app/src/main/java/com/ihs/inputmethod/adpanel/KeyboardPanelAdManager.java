@@ -132,5 +132,6 @@ public class KeyboardPanelAdManager {
     public static void resetKeyboardPanelAdCountData() {
         PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putInt(SP_KEYBOARD_CURRENT_EMOJI_SESSION, 0).apply();
         PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putStringSet(SP_FUNCTION_BAR_AD_SHOWED_ON_KEYBOARD_SESSIONS, new HashSet<String>()).apply();
+        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putInt(SP_KEYBOARD_INPUT_VIEW_START_COUNT, 0).apply();
     }
 }
