@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
     <color name="custom_boost_ad_subtitle">@color/ad_engine_ad_subtitle</color>
     <string name="custom_boost_alert_title">Phone Boost</string>
     <string name="custom_boost_setting_preference_key">ad_engine_custom_boost</string>
