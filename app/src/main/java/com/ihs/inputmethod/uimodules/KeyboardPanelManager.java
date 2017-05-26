@@ -24,6 +24,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
+import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -231,7 +232,14 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
+    public void showFunctionBarAd() {
+        if (KeyboardPanelAdManager.isShowFunctionBarAdConditionSatisfied()) {
+            functionBar.startFunctionBarAdAnimation();
+        }
+    }
+
     public void showEmojiPanel() {
+        KeyboardPanelAdManager.addEmojiPanelShowCount();
         keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
     }

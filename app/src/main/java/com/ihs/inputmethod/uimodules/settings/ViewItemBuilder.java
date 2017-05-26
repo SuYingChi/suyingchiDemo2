@@ -4,6 +4,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
@@ -248,13 +251,25 @@ final class ViewItemBuilder {
         StateListDrawable stateListDrawable = new StateListDrawable();
         Drawable defNormalDrawable = getStyledDrawableFromResources(normalImageName);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
-            defNormalDrawable.setColorFilter(getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()), PorterDuff.Mode.SRC_IN);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                defNormalDrawable.setColorFilter(getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()), PorterDuff.Mode.SRC_IN);
+            } else {
+                DrawableCompat.setTint(defNormalDrawable, getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()));
+            }
         } else {
-            defNormalDrawable.setColorFilter(Color.parseColor("#29A0CB"), PorterDuff.Mode.SRC_IN);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                defNormalDrawable.setColorFilter(Color.parseColor("#29A0CB"), PorterDuff.Mode.SRC_IN);
+            } else {
+                DrawableCompat.setTint(defNormalDrawable, Color.parseColor("#29A0CB"));
+            }
         }
 
         Drawable defPressedDrawable = getStyledDrawableFromResources(pressedImageName);
-        defPressedDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            defPressedDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        } else {
+            DrawableCompat.setTint(defPressedDrawable, Color.WHITE);
+        }
 
         stateListDrawable.addState(new int[]{android.R.attr.state_focused}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS));
         stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS));
@@ -267,7 +282,11 @@ final class ViewItemBuilder {
     private static Drawable getStyledDrawableFromResources(String resName) {
         int resId = HSApplication.getContext().getResources().getIdentifier(resName, "drawable", HSApplication.getContext().getPackageName());
         if(resId != 0) {
-            return HSApplication.getContext().getResources().getDrawable(resId);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return HSApplication.getContext().getResources().getDrawable(resId);
+            } else {
+                return VectorDrawableCompat.create(HSApplication.getContext().getResources(), resId, null);
+            }
         } else {
             HSLog.e("getStyledDrawableFromResources() called with: resName = [" + resName + "]");
             return HSDrawableUtils.getTransparentBitmapDrawable();
