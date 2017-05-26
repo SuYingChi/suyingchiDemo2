@@ -83,6 +83,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private View apkUpdateTip;
     private View noAds;
     private ExitAlert exitAlert;
+    private boolean isResumeOnCreate = true;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -322,7 +323,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         refreshApkUpdateViews();
 
         // Place here to get a right session id from appframework
-        showEnableChargingAlertIfNeeded();
+        if (isResumeOnCreate) {
+            showEnableChargingAlertIfNeeded();
+        }
+
+        isResumeOnCreate = false;
     }
 
     @Override
