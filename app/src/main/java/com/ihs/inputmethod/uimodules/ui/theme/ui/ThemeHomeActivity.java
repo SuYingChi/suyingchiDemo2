@@ -264,7 +264,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
-        showEnableChargingAlertIfNeeded();
         exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_exit_alert_dialog));
         onNewIntent(getIntent());
     }
@@ -321,6 +320,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         refreshApkUpdateViews();
+
+        // Place here to get a right session id from appframework
+        showEnableChargingAlertIfNeeded();
     }
 
     @Override

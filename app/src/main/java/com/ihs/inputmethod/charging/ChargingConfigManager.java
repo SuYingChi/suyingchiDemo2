@@ -205,7 +205,7 @@ public class ChargingConfigManager {
 
     private boolean shouldShowEnableChargingAlertAtThisTime() {
         final int sessionInterval = HSConfig.optInteger(3, "Application", "FeaturePrompt", "ChargerLockerAlert", "SessionInterval");
-        HSLog.i(TAG, "SessionInterval: " + sessionInterval);
+        HSLog.i(TAG, "Session id: " + HSSessionMgr.getCurrentSessionId() + ", SessionInterval: " + sessionInterval);
         if (sessionInterval > 0) {
             return HSSessionMgr.getCurrentSessionId() % (sessionInterval + 1) == 1;
         }
@@ -250,7 +250,11 @@ public class ChargingConfigManager {
         final int sessionInterval = HSConfig.optInteger(3, "Application", "FeaturePrompt", "ThemeCard", "SessionInterval");
         HSLog.i(TAG, "SessionInterval: " + sessionInterval);
         if (sessionInterval > 0) {
-            return HSSessionMgr.getCurrentSessionId() % (sessionInterval + 1) == 1;
+            if (HSSessionMgr.getCurrentSessionId() > 1) {// Skip first popup
+                return HSSessionMgr.getCurrentSessionId() % (sessionInterval + 1) == 1;
+            }
+
+            return false;
         }
 
         return true;
