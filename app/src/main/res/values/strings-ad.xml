@@ -17,6 +17,7 @@
     <string name="theme_ad_placement_theme_ad">Master_A(NativeAds)ThemeAd</string>
     <string name="ad_placement_exit_alert_dialog">Master_A(NativeAds)AppQuit</string>
     <string name="ad_placement_google_play_ad">Master_A(NativeAds)GooglePlayIcon</string>
+    <string name="ad_placement_gift_ad">Colorkey_A(NativeAds)KeyboardGiftAd</string>
 
 
 

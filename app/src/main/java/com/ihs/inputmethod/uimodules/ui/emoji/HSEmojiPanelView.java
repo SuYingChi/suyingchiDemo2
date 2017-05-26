@@ -9,10 +9,14 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.Pair;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsConstants;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
@@ -24,6 +28,8 @@ import com.ihs.inputmethod.uimodules.ui.common.BaseTabViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.HSEmojiTabAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.HSEmojiViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.model.Emoji;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
+import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +76,19 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 			List<String> tabs=new ArrayList<>();
 			tabs.addAll(emojiCategory.getTabs());
 			tabAdapter=new HSEmojiTabAdapter(tabs,this);
+			ImageView imageView = (ImageView) findViewById(R.id.emoji_ad_container);
+            if (KeyboardPanelAdManager.isShowEmojiAdConditionSatisfied()) {
+                imageView.setVisibility(View.VISIBLE);
+				imageView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+				imageView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+                        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("Keyboard_EmojiTopLeftTabAd_click", "clicked");
+						GiftInterstitialHelper.showInterstitialGiftAd(HSApplication.getContext().getString(R.string.ad_placement_gift_ad));
+					}
+				});
+            }
+
 			RecyclerView mTabHost = (RecyclerView) findViewById(R.id.image_category_tabhost);
 			mTabHost.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
 			mTabHost.setAdapter(tabAdapter);

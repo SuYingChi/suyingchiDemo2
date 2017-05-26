@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,6 +20,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
@@ -67,6 +69,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             if (Intent.ACTION_DATE_CHANGED.equals(action)) {
                 KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
                 KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
+                KeyboardPanelAdManager.resetKeyboardPanelAdCountData();
             }
         }
     };
@@ -289,6 +292,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             getKeyboardPanelMananger().showKeyboardWithMenu();
         }
         Log.e("time log", "time log service onstartInputView finished");
+        // TODO: // How to judge current keyboard id & restart from text?
+        boolean isFromText = (editorInfo.inputType & InputType.TYPE_CLASS_TEXT) > 0
+                && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) > 0
+                && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_CAP_SENTENCES) > 0;
+        if (restarting && isFromText) {
+            getKeyboardPanelMananger().showFunctionBarAd();
+        }
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -310,6 +320,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose")) {
                     closeFullScreenAd.preLoad();
                 }
+                KeyboardPanelAdManager.addInputViewStartCount();
             }
         }
     }
