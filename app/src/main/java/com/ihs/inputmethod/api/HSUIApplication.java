@@ -22,6 +22,7 @@ import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
+import com.ihs.commons.analytics.publisher.HSPublisherMgr;
 import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -143,6 +144,9 @@ public class HSUIApplication extends HSInputMethodApplication {
         registerNotificationEvent();
         homeKeyTracker = new HomeKeyTracker(this);
         LuckyActivity.installShortCut();
+
+        HSPublisherMgr.init(this);
+        recordInstallType();
     }
 
     private void registerNotificationEvent() {
@@ -251,5 +255,27 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     protected void onSessionStart() {
         HSDiverseSession.start();
+    }
+
+    private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
+    private void recordInstallType() {
+        boolean alreadyRecord = HSPreferenceHelper.getDefault().getBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, false);
+        if (!alreadyRecord) {
+            HSPublisherMgr.PublisherData data = HSPublisherMgr.getPublisherData(this);
+            if (data.isDefault()) {
+                return;
+            }
+
+            String installType;
+            if (data.getInstallMode() != HSPublisherMgr.PublisherData.InstallMode.NON_ORGANIC) {
+                installType = data.getInstallMode().name();
+            } else {
+                installType = data.getMediaSource();
+            }
+
+            HSAnalytics.logEvent("install_type", "install_type", installType);
+
+            HSPreferenceHelper.getDefault().putBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, true);
+        }
     }
 }
