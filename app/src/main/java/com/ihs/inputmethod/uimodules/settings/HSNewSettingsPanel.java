@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.settings;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -24,7 +23,6 @@ import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
@@ -113,7 +111,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GoogleAnalyticsConstants.GA_PARAM_ACTION_SETTING_FONTS_CLICKED);
             }
         }));
-        items.add(ViewItemBuilder.getSoundsItem());
+        items.add(ViewItemBuilder.getSoundsPositionItem());
         items.add(ViewItemBuilder.getAutoCorrectionItem());
         // items.add(ViewItemBuilder.getAutoCapitalizationItem());
         // items.add(ViewItemBuilder.getPredicationItem());

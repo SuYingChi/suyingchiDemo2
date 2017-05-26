@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    
+
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
     <!--新增权限-->
 
@@ -100,6 +100,9 @@
 
         <!-- AdMob全屏和Adx全屏 -->
         <activity android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.google.android.gms.ads.AdActivity"
             android:noHistory="true"
             android:taskAffinity=".acb_interstitial_quiet" />
 

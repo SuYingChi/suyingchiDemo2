@@ -329,6 +329,13 @@
 			</dict>
 			<key>NativeAds</key>
 			<dict>
+				<key>KeyboardSettingsPanelAds</key>
+				<dict>
+					<key>CurrentContent</key>
+					<string>lucky</string>
+					<key>description</key>
+					<string>选项：lucky</string>
+				</dict>
 				<key>FetchAdInterval</key>
 				<real>15000</real>
 				<key>NativeAdPosition</key>

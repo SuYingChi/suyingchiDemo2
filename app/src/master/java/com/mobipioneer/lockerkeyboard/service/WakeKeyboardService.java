@@ -69,11 +69,13 @@ public class WakeKeyboardService extends Service {
                     onShowKeyboard();
                     break;
                 case CHECK_DEFAULT_KEYBOARD:
-                    if(handler.hasMessages(CHECK_DEFAULT_KEYBOARD)){
+                    if (handler.hasMessages(CHECK_DEFAULT_KEYBOARD)) {
                         return;
                     }
+                    long l = System.currentTimeMillis();
                     checkDefaultKeyboard();
-                    handler.sendEmptyMessageDelayed(CHECK_DEFAULT_KEYBOARD,CHECKING_INTERVAL);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("WakeKeyboardUsedTime",(System.currentTimeMillis() - l));
+                    handler.sendEmptyMessageDelayed(CHECK_DEFAULT_KEYBOARD, CHECKING_INTERVAL);
                     break;
             }
         }
@@ -123,18 +125,7 @@ public class WakeKeyboardService extends Service {
             recordKeyboardShow();
         }
 
-        handler.sendEmptyMessage(CHECK_DEFAULT_KEYBOARD);
-
-//        TimerTask timerTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//
-//                checkDefaultKeyboard();
-//
-//            }
-//        };
-//
-//        timer.schedule(timerTask, 0, 1000);
+        handler.sendEmptyMessageDelayed(CHECK_DEFAULT_KEYBOARD,CHECKING_INTERVAL);
 
         return super.onStartCommand(intent, flags, startId);
     }
