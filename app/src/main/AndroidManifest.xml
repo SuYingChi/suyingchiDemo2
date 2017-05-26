@@ -102,6 +102,9 @@
         <activity android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
             android:noHistory="true"
             android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
 
         <!-- showQuietly Config End-->
 
