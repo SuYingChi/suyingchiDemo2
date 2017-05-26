@@ -6420,11 +6420,6 @@
 						<array/>
 					</dict>
 					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
 						<key>adType</key>
 						<string>admobnative</string>
 						<key>countPerLoad</key>
@@ -6451,11 +6446,6 @@
 						<array/>
 					</dict>
 					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
 						<key>adType</key>
 						<string>adxnative</string>
 						<key>countPerLoad</key>
@@ -6574,37 +6564,6 @@
 						<key>ids</key>
 						<array>
 							<string>527439780799121_651016001774831</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>avocarrotnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>9</integer>
-							</dict>
-						</dict>
-						<key>description</key>
-						<string>A5</string>
-						<key>ids</key>
-						<array>
-							<string>1f659eb0-ebf9-8ea8-8017-9d1c7750847f</string>
-							<string>135a7437-63fe-4594-ada0-7b63e2572254</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
@@ -6755,37 +6714,6 @@
 						<key>ids</key>
 						<array>
 							<string>527439780799121_651015955108169</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>avocarrotnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>19</integer>
-							</dict>
-						</dict>
-						<key>description</key>
-						<string>A1</string>
-						<key>ids</key>
-						<array>
-							<string>1f659eb0-ebf9-8ea8-8017-9d1c7750847f</string>
-							<string>e0bb6697-12c4-471f-9936-b06c8f70eb93</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>

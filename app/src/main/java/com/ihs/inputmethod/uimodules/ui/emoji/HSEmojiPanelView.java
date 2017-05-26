@@ -86,7 +86,6 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 					@Override
 					public void onClick(View v) {
 						KCAnalyticUtil.logEvent("Keyboard_EmojiTopLeftTabAd_click");
-                        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("Keyboard_EmojiTopLeftTabAd_click", "clicked");
 						GiftInterstitialHelper.showInterstitialGiftAd(HSApplication.getContext().getString(R.string.ad_placement_gift_ad));
 					}
 				});
