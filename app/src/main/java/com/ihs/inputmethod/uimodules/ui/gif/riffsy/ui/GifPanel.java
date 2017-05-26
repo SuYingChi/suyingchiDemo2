@@ -50,6 +50,7 @@ public final class GifPanel extends BasePanel {
 
     @Override
     protected void onDestroy() {
+        HSGlobalNotificationCenter.removeObserver(mImeActionObserver);
         super.onDestroy();
     }
 
