@@ -30,6 +30,7 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.HSEmojiViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.model.Emoji;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,11 +79,13 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 			tabAdapter=new HSEmojiTabAdapter(tabs,this);
 			ImageView imageView = (ImageView) findViewById(R.id.emoji_ad_container);
             if (KeyboardPanelAdManager.isShowEmojiAdConditionSatisfied()) {
+				KCAnalyticUtil.logEvent("Keyboard_EmojiTopLeftTabAd_show");
                 imageView.setVisibility(View.VISIBLE);
 				imageView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
 				imageView.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						KCAnalyticUtil.logEvent("Keyboard_EmojiTopLeftTabAd_click");
                         HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("Keyboard_EmojiTopLeftTabAd_click", "clicked");
 						GiftInterstitialHelper.showInterstitialGiftAd(HSApplication.getContext().getString(R.string.ad_placement_gift_ad));
 					}
