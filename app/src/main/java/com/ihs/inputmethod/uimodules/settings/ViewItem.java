@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -67,9 +66,15 @@ final class ViewItem {
         }
         if (HSApplication.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             int padding_portrait = DisplayUtils.dip2px(20);
+            if(name.equals("Lucky")){
+                padding_portrait = DisplayUtils.dip2px(6);
+            }
             imageView.setPadding(padding_portrait, padding_portrait, padding_portrait, padding_portrait);
         } else {
             int padding_land = DisplayUtils.dip2px(12);
+            if(name.equals("Lucky")){
+                padding_land = DisplayUtils.dip2px(3);
+            }
             imageView.setPadding(padding_land, padding_land, padding_land, padding_land);
         }
         imageView.setImageDrawable(drawable);
