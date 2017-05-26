@@ -355,7 +355,7 @@
 			<key>KeyboardEmoji</key>
 			<dict>
 				<key>HideAdTitle</key>
-				<false/>
+				<true/>
 			</dict>
 			<key>KeyboardToolBar</key>
 			<dict>
