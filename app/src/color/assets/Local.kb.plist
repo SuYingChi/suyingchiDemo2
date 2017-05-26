@@ -4279,6 +4279,30 @@
 					</dict>
 					<dict>
 						<key>adType</key>
+						<string>facebooknative</string>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<real>3.41</real>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>527439780799121_651016595108105</string>
+						</array>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
 						<string>admobnative</string>
 						<key>cpmInfo</key>
 						<dict>
