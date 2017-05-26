@@ -102,6 +102,13 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 repositories {
@@ -140,7 +147,7 @@ dependencies {
     compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdMobVistaNativeAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAppnextNativeAdapter.gm:4.1.0.gm'
-
+    compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.1.gm'
     // Interstitial Ads
     compile 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.1.1.gm'
