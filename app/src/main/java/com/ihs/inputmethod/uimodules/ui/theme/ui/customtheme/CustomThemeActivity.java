@@ -359,7 +359,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         if (pageIndex >= 0 && pageIndex < getFragmentClasses().size()) {
             if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD) {
                 if (!IAPManager.getManager().hasPurchaseNoAds()) {
-                    KCInterstitialAd.load(getString(R.string.placement_full_screen_save_custom_theme));
+                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
                 }
             }
 
@@ -619,7 +619,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         if (IAPManager.getManager().hasPurchaseNoAds()) {
             return false;
         }
-        boolean interstitialAdShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_save_custom_theme), new KCInterstitialAd.OnAdCloseListener() {
+        boolean interstitialAdShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), new KCInterstitialAd.OnAdCloseListener() {
             @Override
             public void onAdClose() {
                 showTrialKeyboard();

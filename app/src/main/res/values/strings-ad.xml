@@ -20,11 +20,6 @@
     <string name="ad_placement_exit_alert_dialog">Master_A(NativeAds)AppQuit</string>
     <string name="ad_placement_google_play_ad">Master_A(NativeAds)GooglePlayIcon</string>
     <string name="ad_placement_gift_ad">Colorkey_A(NativeAds)KeyboardGiftAd</string>
-
-
-
-
-    <string name="placement_full_screen_save_custom_theme">Master_A(InterstitialAds)TiralKeyboardFullScreenAd</string>
     <string name="placement_full_screen_trial_keyboard">Master_A(InterstitialAds)TiralKeyboardFullScreenAd</string>
     <string name="placement_full_screen_open_keyboard">Master_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
     <string name="ga_fullscreen_theme_apply_load_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_Load</string>
