@@ -49,6 +49,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME = "editor_owner_package_name";
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
     private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
+    private static final String HS_SHOW_KEYBOARD_WINDOW = "hs.inputmethod.framework.api.SHOW_INPUTMETHOD";
 
 
     private static InputConnection insideConnection = null;
@@ -74,7 +75,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
     };
     private boolean isInputViewShowing = false;
-    private String currentAppPackageName;
+    private String currentAppPackageName = "";
     private KeyboardFullScreenAd openFullScreenAd;
     private KeyboardFullScreenAd closeFullScreenAd;
     private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
@@ -87,6 +88,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 onFinishInputInside();
             } else if (eventName.equals(Constants.HS_NOTIFICATION_RESET_EDIT_INFO)) {
                 resetEditInfo();
+            }else if(eventName.equals(HS_SHOW_KEYBOARD_WINDOW)){
+                if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)){
+                    getKeyboardPanelMananger().logCustomizeBarShowed();
+                }
             }
         }
     };
@@ -106,6 +111,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_RESET_EDIT_INFO, keyboardNotificationObserver);
+        HSGlobalNotificationCenter.addObserver(HS_SHOW_KEYBOARD_WINDOW, keyboardNotificationObserver);
 
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
         openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
@@ -291,7 +297,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (insideConnection == null && restarting) {
             getKeyboardPanelMananger().showKeyboardWithMenu();
         }
-        Log.e("time log", "time log service onstartInputView finished");
+        Log.e("time log", "time log service onstartInputView finished" );
         // TODO: // How to judge current keyboard id & restart from text?
         boolean isFromText = (editorInfo.inputType & InputType.TYPE_CLASS_TEXT) > 0
                 && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) > 0
@@ -375,9 +381,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public void showWindow(boolean showInput) {
         super.showWindow(showInput);
-        if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)){
-            getKeyboardPanelMananger().logCustomizeBarShowed();
-        }
     }
 
     @Override
