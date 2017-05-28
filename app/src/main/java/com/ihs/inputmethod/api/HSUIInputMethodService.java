@@ -88,8 +88,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 onFinishInputInside();
             } else if (eventName.equals(Constants.HS_NOTIFICATION_RESET_EDIT_INFO)) {
                 resetEditInfo();
-            }else if(eventName.equals(HS_SHOW_KEYBOARD_WINDOW)){
-                if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)){
+            } else if (eventName.equals(HS_SHOW_KEYBOARD_WINDOW)) {
+                if (TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME)) {
                     getKeyboardPanelMananger().logCustomizeBarShowed();
                 }
             }
@@ -297,7 +297,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (insideConnection == null && restarting) {
             getKeyboardPanelMananger().showKeyboardWithMenu();
         }
-        Log.e("time log", "time log service onstartInputView finished" );
+        Log.e("time log", "time log service onstartInputView finished");
         // TODO: // How to judge current keyboard id & restart from text?
         boolean isFromText = (editorInfo.inputType & InputType.TYPE_CLASS_TEXT) > 0
                 && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) > 0
@@ -393,9 +393,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
-        if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
+        if (TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME)) {
             getKeyboardPanelMananger().showCustomizeBar();
-        }else{
+        } else {
             getKeyboardPanelMananger().removeCustomizeBar();
         }
     }
