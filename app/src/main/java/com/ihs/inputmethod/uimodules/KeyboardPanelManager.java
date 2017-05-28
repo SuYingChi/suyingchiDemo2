@@ -289,11 +289,14 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     private void reloadGpAd() {
-        if (gpNativeAdList == null) {
+        if (gpNativeAdList == null || gpAdAdapter == null) {
             return;
         }
 
-        keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+            keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+        }
+
         for (AcbNativeAd acbNativeAd : gpNativeAdList) {
             acbNativeAd.release();
         }
@@ -311,7 +314,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         acbNativeAdLoader.load(5, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
-                if (keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() != VISIBLE) {
+                if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() != VISIBLE) {
                     keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(View.VISIBLE);
                 }
                 for (AcbNativeAd acbNativeAd : list) {
@@ -359,19 +362,23 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             @Override
             public void onHide() {
                 acbNativeAdLoader.cancel();
-                keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+                if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+                    keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+                }
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_close", "GooglePlay_Search");
             }
         });
         customizeBarLayout.setContent(gpAdRecyclerView);
         reloadGpAd();
         if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
-            keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
+            if (keyboardPanelSwitchContainer != null) {
+                keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
+            }
         }
     }
 
     public void logCustomizeBarShowed() {
-        if(keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE){
+        if(keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE){
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_show", "GooglePlay_Search");
             logGoogleAdEvent("Show");
         }
