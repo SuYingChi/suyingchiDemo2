@@ -31,6 +31,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
     private List<SwipeLayout> mCurrentLanguageCache = new ArrayList<>();
     private List<LanguageLoadingPreference> mAvailableLanguageCache = new ArrayList<>();
     private Dialog dialog;
+    private int dialogSelectPosition = -1;
 
     @Override
     protected void onCreate(final Bundle savedState) {
@@ -81,7 +82,6 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         mCurrentLanguageCache.add(position,item);
     }
 
-
     private int findPositionToInsertInCurrentList(SwipeLayout item){
         if (mCurrentLanguageCache.size()==0){
             return 0;
@@ -96,7 +96,6 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         return index;
     }
 
-
     private int findPositionToInsertInAvailableList(LanguageLoadingPreference item){
         if (mAvailableLanguageCache.size()==0){
             return 0;
@@ -110,7 +109,6 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         }
         return index;
     }
-
 
     private void removeFromAvailableLanguage(final LanguageLoadingPreference preference) {
         mAvailableLanguagesListLayout.removeView(preference);
@@ -271,7 +269,6 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         addToCurrentLanguage(preference);
     }
 
-
     private void onLanguageDeleted(SwipeLayout language) {
         if (this.mCurrentLanguage == language) {
             setPreviousAsCurrentLanguage(language);
@@ -291,9 +288,6 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         TextView title = (TextView) (view.findViewById(R.id.title));
         title.setTextColor(getResources().getColor(R.color.alert_message));
         title.setText(language.getTitle());
-
-        TextView message = (TextView) (view.findViewById(R.id.message));
-        message.setText(getResources().getString(R.string.delete_language_description));
 
         TextView cancel = (TextView) (view.findViewById(R.id.negative_button));
         cancel.setText(getString(R.string.cancel).toUpperCase());
@@ -336,7 +330,6 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         showDialog(data,data.indexOf(language.getKBDLayout().toLowerCase(Locale.ROOT)),language);
     }
 
-    private int dialogSelectPosition = -1;
     private void showDialog(final List<String> items,final int checkedItem,final SwipeLayout language) {
 	    final List<String> copy=new ArrayList<>();
         for(int i = 0 ;i<items.size();i++){

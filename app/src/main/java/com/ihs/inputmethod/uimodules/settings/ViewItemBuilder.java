@@ -8,7 +8,6 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -259,7 +258,6 @@ final class ViewItemBuilder {
                     , new ViewItem.ViewItemListener() {
                 @Override
                 public void onItemClick(ViewItem item) {
-                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.setting_toast_ad), Toast.LENGTH_SHORT).show();
                 }
             }, false);
         }

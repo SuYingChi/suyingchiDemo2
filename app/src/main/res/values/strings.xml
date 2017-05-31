@@ -86,7 +86,6 @@
 	<string name="setting_item_swipe">Swipe</string>
 	<string name="setting_item_add_languages">Add Languages</string>
 	<string name="setting_item_more_settings">More Settings</string>
-	<string name="setting_toast_ad">show ads</string>
 
 	<!--settings panel-->
 	<string name="settings_button_sound">@string/setting_item_sounds</string>
