@@ -52,7 +52,6 @@
 	<!--language-->
 	<string name="add">ADD</string>
 	<string name="key_layout_dialog_title">26 Key Layout</string>
-	<string name="delete_language_description">Delete this language?</string>
 	<string name="current_languages">Current Languages</string>
 	<string name="available_languages">Available Languages</string>
 	<string name="switch_language_tip">To switch languages from the keyboard, press and hold the space bar.</string>
