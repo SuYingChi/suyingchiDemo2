@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.activity.IDialogHolder;
 import com.ihs.app.framework.inner.HomeKeyTracker;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 
 public class HSAppCompatActivity extends AppCompatActivity implements IDialogHolder {
 
@@ -56,6 +58,10 @@ public class HSAppCompatActivity extends AppCompatActivity implements IDialogHol
     protected void onStop() {
         super.onStop();
         HSSessionMgr.onActivityStop(this, isBackPressed);
+        if (homeKeyTracker.isHomeKeyPressed()) {
+            HSAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "home");
+        }
         homeKeyTracker.stopTracker();
     }
 

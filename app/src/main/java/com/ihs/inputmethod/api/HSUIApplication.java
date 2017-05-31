@@ -17,7 +17,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
-import com.ihs.app.framework.inner.HomeKeyTracker;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -52,7 +51,6 @@ import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_S
 public class HSUIApplication extends HSInputMethodApplication {
 
     private Intent actionService;
-    private HomeKeyTracker homeKeyTracker;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -65,7 +63,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 //                }
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
-                homeKeyTracker.startTracker();
                 IAPManager.getManager().queryOwnProductIds();
 
                 try {
@@ -88,14 +85,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 }
-                if (homeKeyTracker.isHomeKeyPressed()) {
-                    HSAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "home");
-                } else {
-                    HSAnalytics.logEvent("app_quit_way", "app_quit_way", "other");
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "other");
-                }
-                homeKeyTracker.stopTracker();
             }
         }
     };
@@ -142,7 +131,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSInputMethodService.initResourcesBeforeOnCreate();
 
         registerNotificationEvent();
-        homeKeyTracker = new HomeKeyTracker(this);
         LuckyActivity.installShortCut();
 
         HSPublisherMgr.init(this);
