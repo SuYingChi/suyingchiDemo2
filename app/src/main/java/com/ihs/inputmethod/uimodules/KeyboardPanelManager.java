@@ -306,6 +306,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
         if (acbNativeAdLoader != null) {
             acbNativeAdLoader.cancel();
+            acbNativeAdLoader = null;
         }
 
         acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
@@ -325,6 +326,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                             logGoogleAdEvent("Click");
                         }
                     });
+                    if (gpNativeAdList == null || gpAdAdapter == null) {
+                        return;
+                    }
                     gpAdAdapter.addAd(acbNativeAd);
                     gpNativeAdList.add(acbNativeAd);
                 }
@@ -342,6 +346,11 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
 
     public void showCustomizeBar() {
+
+        if(keyboardPanelSwitchContainer == null){
+            return;
+        }
+
         if(gpAdRecyclerView!=null || IAPManager.getManager().hasPurchaseNoAds()
                 || !HSConfig.optBoolean(true,"Application","KeyboardToolBar","GooglePlay","ShowAd")){
             return;
@@ -361,7 +370,10 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
             @Override
             public void onHide() {
-                acbNativeAdLoader.cancel();
+                if(acbNativeAdLoader!=null){
+                    acbNativeAdLoader.cancel();
+                    acbNativeAdLoader = null;
+                }
                 if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
                     keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
                 }
