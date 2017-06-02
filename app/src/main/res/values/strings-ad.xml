@@ -6,8 +6,6 @@
     <string name="ad_placement_cardad">Master_A(NativeAds)CardAd</string>
     <string name="ad_placement_keyboardemojiad">Master_A(NativeAds)KeyboardEmojiAd</string>
     <string name="ad_placement_keyboardsettingsad">Master_A(NativeAds)KeyboardSettingsAd</string>
-    <string name="ad_placement_themead">Master_A(NativeAds)ThemeAd</string>
-    <string name="ad_placement_themedetailad">Master_A(NativeAds)ThemeDetailAd</string>
     <string name="ad_placement_themetryad">Master_A(NativeAds)ThemeTryAd</string>
     <string name="ad_placement_uninstall">Master_A((NativeAds)Uninstall</string>
     <string name="ad_placement_customize_theme">Master_A(NativeAds)CustomizeThemeAd</string>
@@ -17,10 +15,8 @@
     <string name="ad_placement_optimization">Master_A((NativeAds)Optimization</string>
     <string name="ad_placement_charging">Master_A(NativeAds)Charging</string>
     <string name="theme_ad_placement_theme_ad">Master_A(NativeAds)ThemeAd</string>
-    <string name="ad_placement_exit_alert_dialog">Master_A(NativeAds)AppQuit</string>
     <string name="ad_placement_google_play_ad">Master_A(NativeAds)GooglePlayIcon</string>
     <string name="ad_placement_gift_ad">Colorkey_A(NativeAds)KeyboardGiftAd</string>
-    <string name="placement_full_screen_trial_keyboard">Master_A(InterstitialAds)TiralKeyboardFullScreenAd</string>
     <string name="placement_full_screen_open_keyboard">Master_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
     <string name="ga_fullscreen_theme_apply_load_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_Load</string>
     <string name="ga_fullscreen_theme_apply_show_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_Show</string>

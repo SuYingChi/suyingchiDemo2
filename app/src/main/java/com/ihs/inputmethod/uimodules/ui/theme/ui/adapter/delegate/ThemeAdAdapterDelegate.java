@@ -120,7 +120,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				}
 			});
 		} else {// Show ad
-			String nativeAd = getNativeAd(position);
+			String nativeAd = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
 			if (nativeAdViewCached.get(nativeAd) == null) {
 				View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_theme_card, null);
 				LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.theme_ad_loading, null);
@@ -160,20 +160,5 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 	@Override
 	public int getSpanSize(List<ThemeHomeModel> items, int position) {
 		return 2;
-	}
-
-	protected String getNativeAd(int itemPosition) {
-		for(Map<String, Object> item : themeAdInfos) {
-			if((int)item.get("Position") == itemPosition - 4) {
-				return (String) item.get("NativeAd");
-			}
-		}
-		for(Map<String, Object> item : themeAdInfos) {
-			if((int)item.get("Position") == 10000) {
-				return (String) item.get("NativeAd");
-			}
-		}
-
-		return null;
 	}
 }

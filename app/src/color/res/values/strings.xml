@@ -12,12 +12,8 @@
     <string name="ad_placement_cardad">Colorkey_A(NativeAds)CardAd</string>
     <string name="ad_placement_keyboardemojiad">Colorkey_A(NativeAds)KeyboardEmojiAd</string>
     <string name="ad_placement_keyboardsettingsad">Colorkey_A(NativeAds)KeyboardSettingsAd</string>
-    <string name="ad_placement_themead">Colorkey_A(NativeAds)ThemeAd</string>
-    <string name="ad_placement_themedetailad">Colorkey_A(NativeAds)ThemeDetailAd</string>
     <string name="ad_placement_themetryad">Colorkey_A(NativeAds)ThemeTryAd</string>
     <string name="ad_placement_customize_theme">Colorkey_A(NativeAds)CustomizeThemeAd</string>
-    <string name="ad_placement_exit_alert_dialog">Colorkey_A(NativeAds)QuitAlert</string>
-    <string name="placement_full_screen_trial_keyboard">Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd</string>
     <string name="placement_full_screen_open_keyboard">Colorkey_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
     <string name="ad_placement_google_play_ad">Colorkey_A(NativeAds)GooglePlayIcon</string>
 

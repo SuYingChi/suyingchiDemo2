@@ -308,7 +308,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
-        exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_exit_alert_dialog));
+        exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_themetryad));
         onNewIntent(getIntent());
     }
 
@@ -684,7 +684,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.photo_view_interstitial_ad_trigger_animation:
+            case R.id.theme_home_interstitial_ad_trigger_view:
                 if (lottieAnimationView.isAnimating()) {
                     lottieAnimationView.cancelAnimation();
                     lottieAnimationView.setProgress(0f);

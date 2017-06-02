@@ -61,6 +61,8 @@ import java.util.List;
  * Created by jixiang on 16/8/24.
  */
 public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnClickListener, CommonThemeCardAdapter.ThemeCardItemClickListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged {
+    public final static String INTENT_KEY_THEME_NAME = "themeName";
+    private static final int keyboardActivationFromDetail = 6;
     private NestedScrollView rootView;
     private View screenshotContainer;
     private ImageView keyboardThemeScreenShotImageView;
@@ -72,15 +74,27 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private RecyclerView recommendRecyclerView;
     private CommonThemeCardAdapter themeCardAdapter;
     private TrialKeyboardDialog trialKeyboardDialog;
-
     private String themeName;
     private HSKeyboardTheme.ThemeType themeType;
     private HSKeyboardTheme keyboardTheme;
     private NativeAdView nativeAdView;
-
-    public final static String INTENT_KEY_THEME_NAME = "themeName";
-
-    private static final int keyboardActivationFromDetail = 6;
+    private long currentResumeTime;
+    private INotificationObserver notificationObserver = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
+                if (hsBundle != null) {
+                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
+                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
+                    if (ThemeDetailActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
+                        showTrialKeyboardDialog(activationCode);
+                    }
+                }
+            } else if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
+                updateCurrentThemeStatus();
+            }
+        }
+    };
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -230,7 +244,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         addNativeAdView();
     }
 
-
     private void addNativeAdView() {
         if (!IAPManager.getManager().hasPurchaseNoAds()) {
             // 添加广告
@@ -243,7 +256,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 loadingView.setLayoutParams(loadingLP);
                 loadingView.setGravity(Gravity.CENTER);
                 nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
-                nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themedetailad), width, 1.9f));
+                nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themetryad), width, 1.9f));
                 CardView cardView = ViewConvertor.toCardView(nativeAdView);
                 linearLayout.addView(cardView);
                 linearLayout.setVisibility(View.GONE);
@@ -256,8 +269,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             }
         }
     }
-
-    private long currentResumeTime;
 
     @Override
     protected void onResume() {
@@ -307,7 +318,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 break;
         }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -365,7 +375,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         trialKeyboardDialog.show(this, activationCode);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -376,23 +385,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private INotificationObserver notificationObserver = new INotificationObserver() {
-        @Override
-        public void onReceive(String s, HSBundle hsBundle) {
-            if (com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
-                if (hsBundle != null) {
-                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
-                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
-                    if (ThemeDetailActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
-                        showTrialKeyboardDialog(activationCode);
-                    }
-                }
-            } else if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
-                updateCurrentThemeStatus();
-            }
-        }
-    };
 
     /**
      * 更改当前主题状态,有可能当前主题对应的主题包APK被安装或者删除了

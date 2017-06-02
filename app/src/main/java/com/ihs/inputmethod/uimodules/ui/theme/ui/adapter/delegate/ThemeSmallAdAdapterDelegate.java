@@ -61,7 +61,7 @@ public final class ThemeSmallAdAdapterDelegate extends ThemeAdAdapterDelegate {
     @Override
     protected void onBindViewHolder(@NonNull List<ThemeHomeModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
         CardView cardView = (CardView) holder.itemView;
-        String nativeAd = getNativeAd(position);
+        String nativeAd = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
         if (nativeAdViewCached.get(nativeAd) == null) {
             View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_5, null);
             LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
