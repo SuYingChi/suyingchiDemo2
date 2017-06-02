@@ -23,7 +23,6 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
@@ -36,6 +35,17 @@
                 android:foregroundGravity="center"
                 android:src="@drawable/apk_update_tip"
                 android:visibility="gone"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/photo_view_interstitial_ad_trigger_animation"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:paddingBottom="14dp"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="true" />
         </RelativeLayout>
 
         <!--android:background="#ffe92d"
@@ -72,8 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:clickable="true"
         android:background="@drawable/home_create_keyboard_bg"
+        android:clickable="true"
         android:orientation="vertical">
 
         <TextView

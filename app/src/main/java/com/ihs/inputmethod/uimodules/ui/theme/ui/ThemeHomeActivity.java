@@ -1,5 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -9,17 +12,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.acb.interstitialads.AcbInterstitialAdLoader;
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieComposition;
+import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.ihs.actiontrigger.utils.HSPermissionManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -49,8 +56,11 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.ExitAlert;
+import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
+import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import org.json.JSONObject;
@@ -60,19 +70,25 @@ import static android.view.View.GONE;
 /**
  * Created by jixiang on 16/8/17.
  */
-public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged {
+public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
+
     private static final int keyboardActivationFromHome = 11;
     private static final int keyboardActivationFromHomeWithTrial = 12;
+
+    private static final int GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME = 3;
+    private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
+
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
     private static int HANDLER_SHOW_UPDATE_DIALOG = 102;
+    private static int HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG = 103;
+
     private AppBarLayout appbarLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private FloatingActionButton fab;
     private String currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
     private TrialKeyboardDialog trialKeyboardDialog;
     private boolean isFromUsageAccessActivity;
@@ -81,9 +97,16 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private ThemeHomeActivity context = ThemeHomeActivity.this;
     private KeyboardActivationProcessor keyboardActivationProcessor;
     private View apkUpdateTip;
-    private View noAds;
     private ExitAlert exitAlert;
     private boolean isResumeOnCreate = true;
+
+    private AcbInterstitialAdLoader acbInterstitialAdLoader;
+    private LottieAnimationView lottieAnimationView;
+    private AlertDialog fullscreenAdLoadingDialog;
+    private boolean isAdTriggerLottieAnimationPlayed = false;
+    private boolean fullscreenShowed = false;
+    private int adTriggerLottieAnimationPlayedTimes = 0;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -93,6 +116,16 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 }
             } else if (msg.what == HANDLER_SHOW_UPDATE_DIALOG) {
                 checkAndShowApkUpdateAlert(false);
+            } else if (msg.what == HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG) {
+                if (!fullscreenShowed) {
+                    if (acbInterstitialAdLoader != null) {
+                        acbInterstitialAdLoader.cancel();
+                        acbInterstitialAdLoader = null;
+                    }
+                    dismissDialog(fullscreenAdLoadingDialog);
+                    fullscreenAdLoadingDialog = null;
+                    Toast.makeText(ThemeHomeActivity.this,R.string.locker_wallpaper_network_error, Toast.LENGTH_LONG).show();
+                }
             }
         }
     };
@@ -157,8 +190,18 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         String themeTitle = getResources().getString(R.string.theme_nav_theme_store);
-        toolbar.setTitle(HSLog.isDebugging() ? themeTitle + " (Debug)" : themeTitle);
+        toolbar.setTitle(themeTitle);
         setSupportActionBar(toolbar);
+
+        lottieAnimationView = (LottieAnimationView) findViewById(R.id.photo_view_interstitial_ad_trigger_animation);
+        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "photo_viewer_interstitial_ad_trigger_anim.json", new OnCompositionLoadedListener() {
+            @Override
+            public void onCompositionLoaded(LottieComposition lottieComposition) {
+                lottieAnimationView.setComposition(lottieComposition);
+                lottieAnimationView.setProgress(0f);
+            }
+        });
+        lottieAnimationView.setOnClickListener(this);
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
@@ -234,7 +277,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
 
         //界面被启动 请求 扫描权限
-        if (HSConfig.optBoolean(false,"Application","AccessUsageAlert", "enable") && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
+        if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
 
             HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
             new KCAlert.Builder(this)
@@ -328,6 +371,26 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         isResumeOnCreate = false;
+
+        if (!isAdTriggerLottieAnimationPlayed) {
+            lottieAnimationView.loop(true);
+            lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
+                /**
+                 * {@inheritDoc}
+                 *
+                 * @param animation
+                 */
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                    super.onAnimationRepeat(animation);
+                    if (++adTriggerLottieAnimationPlayedTimes >= GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME) {
+                        lottieAnimationView.cancelAnimation();
+                    }
+                }
+            });
+            isAdTriggerLottieAnimationPlayed = true;
+            lottieAnimationView.playAnimation();
+        }
     }
 
     @Override
@@ -449,7 +512,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 return true;
             } else {
                 if (currentSessionId - HSPreferenceHelper.getDefault().getInt(SP_LAST_USAGE_ALERT_SESSION_ID, 0)
-                        >= HSConfig.optInteger(0, "Application","AccessUsageAlert", "AskInterval")) {
+                        >= HSConfig.optInteger(0, "Application", "AccessUsageAlert", "AskInterval")) {
                     HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, currentSessionId);
                     return true;
                 }
@@ -607,7 +670,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     }
                 });
                 dialog.show();
-            }else {
+            } else {
                 Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
                 intent.putExtra("type", "charging");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -616,5 +679,48 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.photo_view_interstitial_ad_trigger_animation:
+                if (lottieAnimationView.isAnimating()) {
+                    lottieAnimationView.cancelAnimation();
+                    lottieAnimationView.setProgress(0f);
+                }
+                loadFullscreenAd();
+                break;
+        }
+    }
+
+
+    private void dismissDialog(Dialog dialog) {
+        if (dialog != null && dialog.isShowing() && !isFinishing()) {
+            dialog.dismiss();
+        }
+    }
+
+    private void loadFullscreenAd() {
+        if (!InterstitialGiftUtils.isNetworkAvailable(-1)){
+            Toast.makeText(this,R.string.no_network_connection, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        fullscreenShowed = false;
+        acbInterstitialAdLoader = KCInterstitialAd.loadAndShow(getString(R.string.placement_full_screen_open_keyboard), new KCInterstitialAd.OnAdShowListener() {
+            @Override
+            public void onAdShow(boolean b) {
+                fullscreenShowed = b;
+                dismissDialog(fullscreenAdLoadingDialog);
+                fullscreenAdLoadingDialog = null;
+                handler.removeMessages(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG);
+            }
+        }, null);
+
+        fullscreenAdLoadingDialog = HSAlertDialog.build(this).setView(R.layout.dialog_loading).setCancelable(false).create();
+        fullscreenAdLoadingDialog.show();
+
+        handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
     }
 }
