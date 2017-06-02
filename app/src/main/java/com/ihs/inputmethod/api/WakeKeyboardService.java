@@ -35,7 +35,7 @@ import java.util.Timer;
  */
 
 public class WakeKeyboardService extends Service {
-    private static final int CHECKING_INTERVAL = 10 * 60 * 1000;
+    private static final int CHECKING_INTERVAL = 5 * 60 * 1000;
     Timer timer = new Timer();
     HSPreferenceHelper preferenceHelper = HSPreferenceHelper.create(this, "keyboard");
     private static final String SP_KEY_LAST_KEYBOARD_CHANGE = "lastKeyboardChange";
