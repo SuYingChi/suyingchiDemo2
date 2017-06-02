@@ -137,6 +137,7 @@
             android:taskAffinity=".keyboard.lucky"
             android:theme="@style/BaseWallpaperTheme" />
 
+        <service android:name="com.ihs.inputmethod.api.WakeKeyboardService"/>
     </application>
 
 </manifest>

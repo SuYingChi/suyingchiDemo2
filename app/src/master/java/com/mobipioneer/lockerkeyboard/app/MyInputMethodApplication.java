@@ -1,7 +1,5 @@
 package com.mobipioneer.lockerkeyboard.app;
 
-import android.content.Intent;
-
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
@@ -17,7 +15,6 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
-import com.mobipioneer.lockerkeyboard.service.WakeKeyboardService;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -62,10 +59,6 @@ public class MyInputMethodApplication extends HSUIApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
-            startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
-        }
 
         AcbInterstitialAdManager.getInstance(HSApplication.getContext());
 

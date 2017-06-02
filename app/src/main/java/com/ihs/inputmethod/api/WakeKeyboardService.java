@@ -1,10 +1,9 @@
-package com.mobipioneer.lockerkeyboard.service;
+package com.ihs.inputmethod.api;
 
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -21,8 +20,8 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
-import com.mobipioneer.lockerkeyboard.SplashActivity;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -207,9 +206,8 @@ public class WakeKeyboardService extends Service {
                         @Override
                         public void onClick(View v) {
                             Context context = WakeKeyboardService.this;
-                            Intent intent = new Intent(context, SplashActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putBoolean(Constants.BUNDLE_AUTO_ENABLE_KEYBOARD, true);
+                            Intent intent = new Intent(context, ThemeHomeActivity.class);
+                            intent.putExtra(Constants.BUNDLE_AUTO_ENABLE_KEYBOARD, true);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                             HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_enable_clicked");

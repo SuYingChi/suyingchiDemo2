@@ -435,9 +435,6 @@
             </intent-filter>
         </receiver>
         <!--end of devicemonitor libs-->
-
-        <service android:name="com.mobipioneer.lockerkeyboard.service.WakeKeyboardService"/>
-
         <service
             android:name="com.smartkeyboard.emoji.app.MyInputMethodService"
             android:label="@string/english_service_label"
