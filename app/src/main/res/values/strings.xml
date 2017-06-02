@@ -25,14 +25,6 @@
 
 	<string name="alert_find_keyboard_and_switch_on">Find %1$s and switch on</string>
 
-	<string name="alert_no_network_title">No Internet connection</string>
-	<string name="alert_no_network_message">Please check your Internet connection and try again later.</string>
-	<string name="alert_ok">OK</string>
-
-	<string name="alert_no_videos_available_title">No videos available</string>
-	<string name="alert_no_videos_available_message">Please try again later.</string>
-	<string name="alert_check_unlocking">Verifying</string>
-
 	<!--main-->
 	<string name="alert_attention_messenger">RainbowKey keyboard treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
 	<string name="toast_enable_keyboard">Enable RainbowKey</string>
