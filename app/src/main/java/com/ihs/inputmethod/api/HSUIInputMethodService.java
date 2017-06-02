@@ -299,7 +299,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
         Log.e("time log", "time log service onstartInputView finished");
         // TODO: // How to judge current keyboard id & restart from text?
-        boolean isFromText = (editorInfo.inputType & InputType.TYPE_CLASS_TEXT) > 0
+        boolean isFromText = editorInfo != null && (editorInfo.inputType & InputType.TYPE_CLASS_TEXT) > 0
                 && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) > 0
                 && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_CAP_SENTENCES) > 0;
         if (restarting && isFromText) {
