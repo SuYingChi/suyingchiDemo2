@@ -190,11 +190,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         String themeTitle = getResources().getString(R.string.theme_nav_theme_store);
-        toolbar.setTitle(themeTitle);
+        toolbar.setTitle(HSLog.isDebugging() ? themeTitle + " (Debug)" : themeTitle);
         setSupportActionBar(toolbar);
 
-        lottieAnimationView = (LottieAnimationView) findViewById(R.id.photo_view_interstitial_ad_trigger_animation);
-        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "photo_viewer_interstitial_ad_trigger_anim.json", new OnCompositionLoadedListener() {
+        lottieAnimationView = (LottieAnimationView) findViewById(R.id.theme_home_interstitial_ad_trigger_view);
+        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "interstitial_ad_trigger_anim.json", new OnCompositionLoadedListener() {
             @Override
             public void onCompositionLoaded(LottieComposition lottieComposition) {
                 lottieAnimationView.setComposition(lottieComposition);
