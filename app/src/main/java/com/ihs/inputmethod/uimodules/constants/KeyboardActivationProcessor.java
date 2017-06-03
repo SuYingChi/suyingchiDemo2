@@ -244,14 +244,18 @@ public class KeyboardActivationProcessor {
         alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                onKeyboardActivationChangedListener.activeDialogCanceled();
+                if (onKeyboardActivationChangedListener != null) {
+                    onKeyboardActivationChangedListener.activeDialogCanceled();
+                }
             }
         });
 
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                onKeyboardActivationChangedListener.activeDialogDismissed();
+                if (onKeyboardActivationChangedListener != null) {
+                    onKeyboardActivationChangedListener.activeDialogDismissed();
+                }
             }
         });
         HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_alert_show");
