@@ -490,7 +490,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
         stopAutoScroll();
         handler.removeCallbacksAndMessages(null);
-        handler = null;
 
         viewPager.removeAllViews();
 
