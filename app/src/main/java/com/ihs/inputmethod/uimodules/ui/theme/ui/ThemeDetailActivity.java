@@ -372,7 +372,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(this, this);
 
         }
-        trialKeyboardDialog.show(this, activationCode);
+        trialKeyboardDialog.show(this, activationCode, true);
     }
 
     @Override

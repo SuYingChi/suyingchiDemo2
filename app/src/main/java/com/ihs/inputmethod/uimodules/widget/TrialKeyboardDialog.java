@@ -59,13 +59,12 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     private long currentResumeTime;
     private NativeAdView nativeAdView;
 
-    private TrialKeyboardDialog(Context context, Builder build, String from, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged, boolean showAdOnDismiss) {
+    private TrialKeyboardDialog(Context context, Builder build, String from, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
         super(context, R.style.TrialKeyboardDialogStyle);
         this.builder = build;
         setCancelable(true);
         this.from = from;
         this.onTrialKeyboardStateChanged = onTrialKeyboardStateChanged;
-        this.showAdOnDismiss = showAdOnDismiss;
     }
 
     public static void sendShowTrialKeyboardDialogNotification(String activityName, int activationRequestCode) {
@@ -213,7 +212,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         return nativeAdView;
     }
 
-    public void show(Activity activity, int keyboardActivationRequestCode) {
+    public void show(Activity activity, int keyboardActivationRequestCode, boolean showAdOnDismiss) {
         switch (keyboardActivationRequestCode) {
             case 10: // My Themes apply
                 HSAnalytics.logEvent("keyboard_try_viewed", "from", "appliedTheme");
@@ -231,6 +230,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 break;
         }
         activationRequestCode = keyboardActivationRequestCode;
+        this.showAdOnDismiss = showAdOnDismiss;
         checkKeyboardState(activity);
         if (showAdOnDismiss && !IAPManager.getManager().hasPurchaseNoAds()) {
             KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
@@ -344,11 +344,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         }
 
         public TrialKeyboardDialog create(Activity context, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
-            return new TrialKeyboardDialog(context, this, from, onTrialKeyboardStateChanged, false);
-        }
-
-        public TrialKeyboardDialog create(Activity context, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged, boolean showAdOnDismiss) {
-            return new TrialKeyboardDialog(context, this, from, onTrialKeyboardStateChanged, showAdOnDismiss);
+            return new TrialKeyboardDialog(context, this, from, onTrialKeyboardStateChanged);
         }
     }
 }
