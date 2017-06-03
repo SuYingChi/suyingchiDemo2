@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -38,6 +39,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.view.FlashFrameLayout;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 
@@ -127,6 +129,11 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             final RelativeLayout adContainer = new RelativeLayout(getContext());
             adContainer.setTag("NativeAd");
             addView(adContainer, params);
+            final FlashFrameLayout flashAdContainer = new FlashFrameLayout(getContext());
+            flashAdContainer.setAngle(FlashFrameLayout.MaskAngle.CW_0);
+            flashAdContainer.setDuration(1000);
+            flashAdContainer.setRepeatCount(0);
+            flashAdContainer.setAutoStart(false);
 
             final View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
             if(!showIconAd) {
@@ -139,7 +146,8 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             int adHeight =  height -  HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
             final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(hideAdTitle ?adHeight : ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
             adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-            adContainer.addView(adLoadingView,adLayoutParams);
+            adContainer.addView(flashAdContainer, adLayoutParams);
+            flashAdContainer.addView(adLoadingView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
             postDelayed(new Runnable() {
                 @Override
@@ -157,11 +165,15 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                         adView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
                             @Override
                             public void onAdLoaded(NativeAdView nativeAdView) {
-                                adContainer.removeView(adLoadingView);
+                                flashAdContainer.removeView(adLoadingView);
+                                if (!released) {
+                                    flashAdContainer.startShimmerAnimation();
+                                }
+                                adView.setOnAdLoadedListener(null);
                             }
                         });
                         adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
-                        adContainer.addView(adView, adLayoutParams);
+                        flashAdContainer.addView(adView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     }
                 }
             },500);

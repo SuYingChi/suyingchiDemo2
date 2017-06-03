@@ -13,6 +13,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.view.FlashFrameLayout;
 
 /**
  * Created by jixiang on 16/11/18.
@@ -20,7 +21,9 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 public class NativeAdHelper {
     NativeAdView nativeAdView;
+    private static FlashFrameLayout flashAdContainer;
     String adPoolName = HSApplication.getContext().getResources().getString(R.string.ad_placement_keyboardsettingsad);
+    private boolean isAdFlashAnimationPlayed = false;
 
     public NativeAdHelper() {
     }
@@ -32,6 +35,13 @@ public class NativeAdHelper {
             adView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             nativeAdView = new NativeAdView(HSApplication.getContext(), adView);
             nativeAdView.setNativeAdType(NativeAdView.NativeAdType.ICON);
+            nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                @Override
+                public void onAdLoaded(NativeAdView nativeAdView) {
+                    showAdFlashAnimationIfNecessary();
+                    nativeAdView.setOnAdLoadedListener(null);
+                }
+            });
             NativeAdParams nativeAdParams = new NativeAdParams(adPoolName);
             nativeAdView.configParams(nativeAdParams);
 
@@ -49,12 +59,28 @@ public class NativeAdHelper {
         }
     }
 
+    private void showAdFlashAnimationIfNecessary() {
+        if (!isAdFlashAnimationPlayed) {
+            showAdFlashAnimation();
+        }
+    }
+
+    public void showAdFlashAnimation() {
+        if (nativeAdView.isAdLoaded()) {
+            flashAdContainer.startShimmerAnimation();
+            isAdFlashAnimationPlayed = true;
+        } else {
+            isAdFlashAnimationPlayed = false;
+        }
+    }
+
     private static class AdView extends LinearLayout {
 
         public AdView(Context context) {
             super(context);
             View.inflate(context, R.layout.panel_settings_ad_item, this);
             findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
+            flashAdContainer = (FlashFrameLayout) findViewById(R.id.ad_container);
             TextView adTitleText = (TextView) findViewById(R.id.ad_title);
             adTitleText.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());
         }
