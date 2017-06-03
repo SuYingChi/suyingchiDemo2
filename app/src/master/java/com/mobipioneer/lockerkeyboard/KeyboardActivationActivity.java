@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.support.v7.app.AlertDialog;
 import android.view.Display;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,25 +21,24 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
-import com.ihs.keyboardutils.alerts.KCAlert;
 import com.mobipioneer.lockerkeyboard.accessbility.AccGALogger;
 import com.mobipioneer.lockerkeyboard.accessbility.AccessibilityEventListener;
 import com.mobipioneer.lockerkeyboard.accessbility.GivenSizeVideoView;
 import com.mobipioneer.lockerkeyboard.app.CustomViewDialog;
 import com.mobipioneer.lockerkeyboard.app.MainActivity;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.R.id.view_img_title;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_accessibility_guide_gotit_clicked;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_accessibility_guide_viewed;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_accessibility_setkey_screen_viewed;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_accessibility_setkey_success_page_viewed;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_alert_auto_setkey_enable_clicked;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_alert_auto_setkey_showed;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_auto_setkey_clicked;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_manual_setkey_clicked;
@@ -75,8 +75,8 @@ public class KeyboardActivationActivity extends HSActivity {
                         actIntent = new Intent();
                     }
                     actIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
-                    actIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    HSApplication.getContext().startActivity(actIntent);
+                    actIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
+                    KeyboardActivationActivity.this.startActivity(actIntent);
 
                     View coverView = HSFloatWindowManager.getInstance().getCoverView();
                     logOneTimeGA(app_setting_up_page_viewed);
@@ -88,12 +88,12 @@ public class KeyboardActivationActivity extends HSActivity {
                         ((TextView) coverView.findViewById(R.id.tv_settings_item)).setText(R.string.access_set_up_success);
                         logOneTimeGA(app_accessibility_setkey_success_page_viewed);
                     }
-
                     KeyboardActivationActivity.this.finish();
                 }
             }
         }
     };
+    private boolean alertDialogShowing;
 
     @Override
     protected void onDestroy() {
@@ -190,8 +190,8 @@ public class KeyboardActivationActivity extends HSActivity {
         shouldShowEnableDialog = true;
 
         Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivityForResult(intent, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        startActivityForResult(intent, 100);
 
         if (dialogView == null) {
             dialogView = (LinearLayout) View.inflate(getApplicationContext(), R.layout.dialog_enable_accessbility_guide, null);
@@ -260,21 +260,37 @@ public class KeyboardActivationActivity extends HSActivity {
             return;
         }
 
-        if (shouldShowEnableDialog && !HSAccessibilityService.isAvailable()) {
+        if (!alertDialogShowing && shouldShowEnableDialog && !HSAccessibilityService.isAvailable()) {
 
-            new KCAlert.Builder(this)
-                    .setTitle(getString(R.string.alert_enable_access_warn_title))
-                    .setMessage(getString(R.string.alert_enable_access_warn_content))
-                    .setTopImageResource(R.drawable.accessibility_alert_top_image)
-                    .setPositiveButton(getString(R.string.enable).toUpperCase(), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            logOneTimeGA(app_alert_auto_setkey_enable_clicked);
-                            autoSetupKeyboard();
-                        }
-                    })
-                    .setNegativeButton(getString(R.string.cancel).toUpperCase(), null)
-                    .show();
+            AlertDialog.Builder alertDialogBuilder;
+            alertDialogBuilder = new AlertDialog.Builder(this, R.style.AppCompactDialogStyle);
+            alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
+            alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content));//设置显示文本
+            alertDialogBuilder.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    logOneTimeGA(app_manual_setkey_clicked);
+                    Intent actIntent = getIntent();
+                    if (actIntent == null) {
+                        actIntent = new Intent();
+                    }
+                    actIntent.putExtra("skip", true);
+                    actIntent.setClass(HSApplication.getContext(), MainActivity.class);
+                    startActivity(actIntent);
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+            alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    alertDialogShowing = false;
+                }
+            });
+
+            alertDialogBuilder.show();
+            alertDialogShowing = true;
+
             logOneTimeGA(app_alert_auto_setkey_showed);
         }
     }

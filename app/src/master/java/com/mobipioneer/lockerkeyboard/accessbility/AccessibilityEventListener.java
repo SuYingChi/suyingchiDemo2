@@ -1,18 +1,24 @@
 package com.mobipioneer.lockerkeyboard.accessbility;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.inputmethod.InputMethodManager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.devicemonitor.accessibility.IAccEventListener;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+import static android.content.Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_permission_accessibility_allowed;
 import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.logOneTimeGA;
 
@@ -46,15 +52,24 @@ public class AccessibilityEventListener implements IAccEventListener {
         switch (modeCode) {
             case MODE_SETUP_KEYBOARD:
                 if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-                    if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
+                    boolean inputMethodEnabled = HSInputMethodListManager.isMyInputMethodEnabled();
+                    if (!inputMethodEnabled) {
                         Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_NO_HISTORY);
+                        intent.addFlags(FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT
+                                | FLAG_ACTIVITY_NEW_TASK
+                                | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP
+                                | FLAG_ACTIVITY_NO_HISTORY);
                         HSApplication.getContext().startActivity(intent);
                     }
                     if (accessibilityService == null) {
                         accessibilityService = new SetupKeyboardAccessibilityService();
                     }
                     accessibilityService.onServiceConnected();
+
+                    if(inputMethodEnabled){
+                        InputMethodManager m = (InputMethodManager) HSApplication.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        m.showInputMethodPicker();
+                    }
                 }
                 break;
         }

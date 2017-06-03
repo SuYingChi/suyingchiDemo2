@@ -630,6 +630,26 @@ public class MainActivity extends HSDeepLinkActivity {
         if (getIntent().getBooleanExtra("isInStepOne", false)) {
             isInStepOne = true;
         }
+
+        if (getIntent().getBooleanExtra("skip", false) && !isInStepOne && !HSInputMethodListManager.isMyInputMethodEnabled()) {
+
+            Intent settingIntent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+            settingIntent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(settingIntent);
+            isInStepOne = true;
+
+            ImageView imageCodeProject = new ImageView(getApplicationContext());
+            imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+            final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+            imageCodeProject.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    customViewDialog.show();
+                }
+            }, 500);
+
+        }
+
     }
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {

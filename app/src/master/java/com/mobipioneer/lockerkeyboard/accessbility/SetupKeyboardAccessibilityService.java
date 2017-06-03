@@ -1,6 +1,7 @@
 package com.mobipioneer.lockerkeyboard.accessbility;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,30 +9,33 @@ import android.database.ContentObserver;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.mobipioneer.lockerkeyboard.KeyboardActivationActivity;
-import com.mobipioneer.lockerkeyboard.app.CustomViewDialog;
 import com.mobipioneer.lockerkeyboard.app.MainActivity;
 
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+import static android.content.Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
 import static com.mobipioneer.lockerkeyboard.KeyboardActivationActivity.scaleTitleImage;
 
 
@@ -190,63 +194,62 @@ public class SetupKeyboardAccessibilityService {
     }
 
     private void retry() {
-        final View dialogView = View.inflate(context, R.layout.dialog_enable_accessbility_warn, null);
-
-
-        final CustomViewDialog warnDialog = new CustomViewDialog(context);
-        warnDialog.setContentView(dialogView);
-        warnDialog.setCanceledOnTouchOutside(true);
-
-
-        TextView tv_title = (TextView) dialogView.findViewById(R.id.alertTitle);
-        tv_title.setText(R.string.access_set_up_failed);
-
-        TextView tv_message = (TextView) dialogView.findViewById(R.id.message);
-        tv_message.setText(R.string.dialog_set_up_manual_message);
-
-        TextView tv_cancel = (TextView) dialogView.findViewById(R.id.tv_cancel);
-        tv_cancel.setText(R.string.dialog_access_setup_manual);
-        tv_cancel.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.settings_background_color));
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder alertDialogBuilder;
+        alertDialogBuilder = new AlertDialog.Builder(context, R.style.AppCompactDialogStyle);
+        alertDialogBuilder.setTitle(context.getResources().getString(R.string.access_set_up_failed));//设置标题
+        alertDialogBuilder.setMessage(context.getResources().getString(R.string.dialog_set_up_manual_message));//设置显示文本
+        alertDialogBuilder.setNegativeButton(context.getResources().getString(R.string.dialog_access_setup_manual), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_alert_setup_failed_manual_clicked");
 
                 stopSelf = true;
                 handler.removeCallbacksAndMessages(null);
                 HSFloatWindowManager.getInstance().removeAccessibilityCover();
                 Intent intent = new Intent(HSApplication.getContext(), MainActivity.class);
-                intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);
-                warnDialog.dismiss();
+                dialog.dismiss();
             }
         });
-
-        TextView tv_confirm = (TextView) dialogView.findViewById(R.id.tv_confirm);
-        tv_confirm.setText(R.string.retry);
-        tv_confirm.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_enable));
-        tv_confirm.setOnClickListener(new View.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_alert_setup_failed_retry_clicked");
-                warnDialog.dismiss();
+                dialog.dismiss();
                 onServiceConnected();
             }
         });
 
-        warnDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        alertDialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 HSFloatWindowManager.getInstance().removeAccessibilityCover();
                 Intent intent = new Intent(HSApplication.getContext(), KeyboardActivationActivity.class);
-                intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(
+                        FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP |
+                                FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 stopSelf = true;
                 handler.removeCallbacksAndMessages(null);
             }
         });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        try {
+            Window window = alertDialog.getWindow();
+            if (!(alertDialog.getContext() instanceof Activity) && window != null) {
+                window.setLayout((int) (DisplayUtils.getDisplay().getWidth() * 0.96), window.getAttributes().height);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
+                    window.setType(WindowManager.LayoutParams.TYPE_TOAST);
+                } else {
+                    window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
+                }
+            }
 
-        warnDialog.show();
+            alertDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_alert_setup_failed_show");
     }
 
