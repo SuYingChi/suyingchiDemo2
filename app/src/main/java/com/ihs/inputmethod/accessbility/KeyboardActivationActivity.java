@@ -127,7 +127,6 @@ public class KeyboardActivationActivity extends HSActivity {
                 actIntent.setAction(ACTION_MAIN_ACTIVITY);
             }
 
-            actIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             HSApplication.getContext().startActivity(actIntent);
             finish();
             return;

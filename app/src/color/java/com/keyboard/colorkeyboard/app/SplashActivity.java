@@ -27,7 +27,7 @@ public final class SplashActivity extends HSDeepLinkActivity {
             intent = new Intent();
         }
 
-//        intent.setClass(this, MainActivity.class);
+        intent.setClass(this, MainActivity.class);
         if (isAccessibilityEnabled) {
             if (!HSAccessibilityService.isAvailable()) {
                 intent.setClass(this, KeyboardActivationActivity.class);
