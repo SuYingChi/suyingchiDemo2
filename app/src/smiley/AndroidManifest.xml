@@ -322,9 +322,12 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustResize"
             tools:replace="android:theme">
+            <intent-filter>
+                <action android:name="keyboard.main" />
+            </intent-filter>
         </activity>
         <activity
-            android:name="com.mobipioneer.lockerkeyboard.KeyboardActivationActivity"
+            android:name="com.ihs.inputmethod.accessbility.KeyboardActivationActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
@@ -332,7 +335,7 @@
         </activity>
 
         <activity
-            android:name="com.mobipioneer.lockerkeyboard.KeyboardWakeUpActivity"
+            android:name="com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"

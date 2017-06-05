@@ -64,24 +64,4 @@
     <string name="dialog_msg_enable_keyboard_home_rain">Emoji Keyboard provides you with personalized keyboard themes and cute emojis.</string>
     <string name="dialog_confirm_enable_keyboard_home_rain">Activate Now</string>
 
-    <string name="tv_enable_keyboard_tip">Activate Emoji Keyboard, enjoy MORE themes!</string>
-    <string name="my_accessibility_description">真牛逼的AccessbilityService</string>
-    <string name="accessibility_service_label">Emoji Keyboard</string>
-    <string name="tv_set_up_manually">SET UP MANUALLY</string>
-    <string name="tv_1_tap_to_set_up_keyboard">Enable Emoji Keyboard</string>
-    <string name="alter_enable_access_title">Enable Emoji Keyboard</string>
-    <string name="alter_enable_access_content">To set up keyboard, please find and enable Emoji Keyboard.</string>
-    <string name="alter_enable_access_confirm">GOT IT</string>
-    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable emoji keyboard manually.</string>
-    <string name="alert_enable_access_warn_title">Enable Keyboard Manually</string>
-
-
-    <string name="access_set_up_success">Set up Successfully!</string>
-    <string name="access_set_up_failed">Failed to Set up</string>
-
-    <string name="dialog_access_setup_manual">SET UP MANUALLY</string>
-    <string name="retry">RETRY</string>
-    <string name="dialog_set_up_manual_message">Please try again or set up keyboard manually.</string>
-
-
 </resources>

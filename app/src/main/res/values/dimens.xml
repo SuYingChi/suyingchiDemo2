@@ -165,4 +165,6 @@
     <dimen name="purchase_slot_dialog_width">330dp</dimen>
     <dimen name="purchase_slot_dialog_height">400dp</dimen>
     <dimen name="purchase_slot_dialog_margin">15dp</dimen>
+
+    <dimen name="guide_bg_radius">8dp</dimen>
 </resources>

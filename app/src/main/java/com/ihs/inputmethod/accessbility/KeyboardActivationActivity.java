@@ -1,4 +1,4 @@
-package com.mobipioneer.lockerkeyboard;
+package com.ihs.inputmethod.accessbility;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,29 +25,25 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
-import com.mobipioneer.lockerkeyboard.accessbility.AccGALogger;
-import com.mobipioneer.lockerkeyboard.accessbility.AccessibilityEventListener;
-import com.mobipioneer.lockerkeyboard.accessbility.GivenSizeVideoView;
-import com.mobipioneer.lockerkeyboard.app.CustomViewDialog;
-import com.mobipioneer.lockerkeyboard.app.MainActivity;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
 import static android.view.View.GONE;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_guide_gotit_clicked;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_guide_viewed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_setkey_screen_viewed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_setkey_success_page_viewed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_alert_auto_setkey_showed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_auto_setkey_clicked;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_manual_setkey_clicked;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_setting_up_page_viewed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
+import static com.ihs.inputmethod.uimodules.R.id.bt_step_one;
 import static com.ihs.inputmethod.uimodules.R.id.view_img_title;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_accessibility_guide_gotit_clicked;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_accessibility_guide_viewed;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_accessibility_setkey_screen_viewed;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_accessibility_setkey_success_page_viewed;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_alert_auto_setkey_showed;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_auto_setkey_clicked;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_manual_setkey_clicked;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_setting_up_page_viewed;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.logOneTimeGA;
 
 
 public class KeyboardActivationActivity extends HSActivity {
-
+    public static final String ACTION_MAIN_ACTIVITY = "keyboard.main";
     private static final int GUIDE_DELAY = 300;
     private boolean shouldShowEnableDialog = false;
 
@@ -93,7 +89,7 @@ public class KeyboardActivationActivity extends HSActivity {
                         public void run() {
                             KeyboardActivationActivity.this.finish();
                         }
-                    },200);
+                    }, 200);
                 }
             }
         }
@@ -128,8 +124,7 @@ public class KeyboardActivationActivity extends HSActivity {
             if (oneTapPageViewed) {
                 actIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
             } else {
-                actIntent.setClass(HSApplication.getContext(), MainActivity.class);
-
+                actIntent.setAction(ACTION_MAIN_ACTIVITY);
             }
 
             actIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -143,25 +138,30 @@ public class KeyboardActivationActivity extends HSActivity {
         accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
         listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
 
-        View manulSetupBtn = findViewById(R.id.bt_step_two);
-        manulSetupBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_manual_normal));
-        manulSetupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logOneTimeGA(app_manual_setkey_clicked);
+//        View manulSetupBtn = findViewById(R.id.bt_step_two);
+//        manulSetupBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_manual_normal));
+//        manulSetupBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                logOneTimeGA(app_manual_setkey_clicked);
+//
+//                Intent actIntent = getIntent();
+//                if (actIntent == null) {
+//                    actIntent = new Intent();
+//                }
+//                actIntent.setClass(HSApplication.getContext(), MainActivity.class);
+//                startActivity(actIntent);
+//            }
+//        });
 
-                Intent actIntent = getIntent();
-                if (actIntent == null) {
-                    actIntent = new Intent();
-                }
-                actIntent.setClass(HSApplication.getContext(), MainActivity.class);
-                startActivity(actIntent);
-            }
-        });
 
-
-        View setupAutoBtn = findViewById(R.id.bt_step_one);
-        setupAutoBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_onetap_normal));
+        View setupAutoBtn = findViewById(bt_step_one);
+        if (findViewById(R.id.text_one) != null) {
+            setupAutoBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
+                    getResources().getDimension(R.dimen.guide_bg_radius)));
+        } else {
+            setupAutoBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_onetap_normal));
+        }
         setupAutoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -185,7 +185,9 @@ public class KeyboardActivationActivity extends HSActivity {
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeReceiver, filter);
 
-        scaleTitleImage(findViewById(view_img_title));
+        if (findViewById(view_img_title) != null) {
+            scaleTitleImage(findViewById(view_img_title));
+        }
 
         logOneTimeGA(app_accessibility_setkey_screen_viewed);
     }
@@ -272,6 +274,7 @@ public class KeyboardActivationActivity extends HSActivity {
             alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
             alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content));//设置显示文本
             alertDialogBuilder.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
+
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     logOneTimeGA(app_manual_setkey_clicked);
@@ -280,7 +283,7 @@ public class KeyboardActivationActivity extends HSActivity {
                         actIntent = new Intent();
                     }
                     actIntent.putExtra("skip", true);
-                    actIntent.setClass(HSApplication.getContext(), MainActivity.class);
+                    actIntent.setAction(ACTION_MAIN_ACTIVITY);
                     startActivity(actIntent);
                     dialog.dismiss();
                     finish();
@@ -301,6 +304,9 @@ public class KeyboardActivationActivity extends HSActivity {
     }
 
     public static void scaleTitleImage(View view) {
+        if (view == null) {
+            return;
+        }
 
         Display display = HSFloatWindowManager.getInstance().getWindowManager().getDefaultDisplay();
         int width = display.getWidth();

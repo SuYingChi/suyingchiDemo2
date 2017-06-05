@@ -11,8 +11,7 @@
         android:id="@+id/view_img_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/app_title_image" />
+        android:layout_centerHorizontal="true" />
 
 
     <LinearLayout
@@ -43,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="Setting up keyboard"
-            android:textColor="@color/white_100_percent" />
+            android:textColor="@color/white_standard" />
 
     </LinearLayout>
 

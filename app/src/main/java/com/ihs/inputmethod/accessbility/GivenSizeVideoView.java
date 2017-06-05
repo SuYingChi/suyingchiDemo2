@@ -1,4 +1,4 @@
-package com.mobipioneer.lockerkeyboard.accessbility;
+package com.ihs.inputmethod.accessbility;
 
 import android.content.Context;
 import android.util.AttributeSet;

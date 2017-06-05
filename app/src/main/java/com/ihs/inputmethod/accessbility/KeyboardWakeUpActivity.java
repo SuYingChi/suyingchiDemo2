@@ -1,4 +1,4 @@
-package com.mobipioneer.lockerkeyboard;
+package com.ihs.inputmethod.accessbility;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,7 +16,6 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
-import com.mobipioneer.lockerkeyboard.accessbility.AccessibilityEventListener;
 
 import static android.view.View.GONE;
 

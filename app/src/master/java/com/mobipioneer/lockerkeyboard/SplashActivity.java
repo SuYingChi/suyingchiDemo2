@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
+import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.mobipioneer.lockerkeyboard.app.MainActivity;
 

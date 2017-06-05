@@ -163,9 +163,7 @@ dependencies {
 //    masterCompile project(':booster')
 //    smileyCompile project(':booster')
 
-    masterCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
-    smileyCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
-
+    compile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
 
     //ihs related
     compile files('../libs/libIAP.jar')

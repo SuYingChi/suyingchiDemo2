@@ -1,4 +1,4 @@
-package com.mobipioneer.lockerkeyboard.app;
+package com.ihs.inputmethod.accessbility;
 
 import android.app.Activity;
 import android.app.Dialog;

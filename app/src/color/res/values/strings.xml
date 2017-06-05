@@ -45,4 +45,28 @@
     <string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
 
     <string name="feedback_email">private.keyboardarts@gmail.com</string>
+
+
+    <!--Accessibility-->
+    <string name="accessibility_service" translatable="false">Rainbow Keyboard</string>
+    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
+With accessibility authorization, I can help you setup keyboard directly!
+
+Note: You may receive a system reminder about authorizing, Rainbow Keyboard will NEVER collect ANY of your information."</string>
+    <string name="tv_enable_keyboard_tip">Activate Rainbow Keyboard, enjoy MORE themes!</string>
+    <string name="accessibility_service_label">Rainbow Keyboard</string>
+    <string name="tv_set_up_manually">SET UP MANUALLY</string>
+    <string name="tv_1_tap_to_set_up_keyboard">Enable Rainbow Keyboard</string>
+    <string name="alter_enable_access_title">Enable Rainbow Keyboard</string>
+    <string name="alter_enable_access_content">To set up keyboard, please find and enable Rainbow Keyboard.</string>
+    <string name="alter_enable_access_confirm">GOT IT</string>
+    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable Rainbow Keyboard manually.</string>
+    <string name="alert_enable_access_warn_title">Enable Keyboard Manually</string>
+    <string name="access_set_up_success">Set up Successfully!</string>
+    <string name="access_set_up_failed">Failed to Set up</string>
+    <string name="dialog_access_setup_manual">SET UP MANUALLY</string>
+    <string name="retry">RETRY</string>
+    <string name="dialog_set_up_manual_message">Please try again or set up keyboard manually.</string>
+
+    <!--Accessibility end-->
 </resources>

@@ -59,7 +59,7 @@
         android:orientation="vertical">
 
 
-        <com.mobipioneer.lockerkeyboard.accessbility.GivenSizeVideoView
+        <com.ihs.inputmethod.accessbility.GivenSizeVideoView
             android:id="@+id/videoview_guide"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
@@ -80,6 +80,6 @@
         android:maxLines="2"
         android:text="@string/alter_enable_access_confirm"
         android:textSize="16sp"
-        android:textColor="@color/white_100_percent" />
+        android:textColor="@color/white_standard" />
 
 </LinearLayout>

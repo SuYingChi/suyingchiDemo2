@@ -20,6 +20,8 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
+
 
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
     <!--新增权限-->
@@ -138,6 +140,56 @@
             android:theme="@style/BaseWallpaperTheme" />
 
         <service android:name="com.ihs.inputmethod.api.WakeKeyboardService"/>
+
+        <!--services for device monitor  needs to be remove-->
+        <service
+            android:name="com.ihs.devicemonitor.permanent.PermanentService"
+            tools:node="remove" />
+        <service
+            android:name="com.ihs.devicemonitor.permanent.PermanentServicePartner"
+            tools:node="remove" />
+        <service
+            android:name="com.ihs.devicemonitor.permanent.DMJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            tools:node="remove" />
+
+        <service
+            android:name="com.ihs.devicemonitor.accessibility.HSAccPartnerService"
+            android:stopWithTask="false"
+            tools:node="remove" />
+
+        <service
+            android:name="com.ihs.devicemonitor.accessibility.HSAccessibilityService"
+            android:label="@string/english_service_label"
+            tools:remove="process"
+            tools:replace="android:label">
+
+        </service>
+
+
+        <provider
+            android:name="com.ihs.devicemonitor.accessibility.AccessibilityProvider"
+            android:authorities="${applicationId}.com.ihs.devicemonitor.accessibility.AccessibilityProvider"
+            android:exported="false"
+            android:process=":clean"
+            tools:node="remove" />
+
+        <activity
+            android:name="com.ihs.inputmethod.accessbility.KeyboardActivationActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+
+        <activity
+            android:name="com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.mobipioneer.lockerkeyboard.accessbility;
+package com.ihs.inputmethod.accessbility;
 
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;

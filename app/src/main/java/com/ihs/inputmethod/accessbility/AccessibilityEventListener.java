@@ -1,10 +1,13 @@
-package com.mobipioneer.lockerkeyboard.accessbility;
+package com.ihs.inputmethod.accessbility;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.inputmethod.InputMethodManager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
@@ -17,8 +20,8 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 import static android.content.Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.app_permission_accessibility_allowed;
-import static com.mobipioneer.lockerkeyboard.accessbility.AccGALogger.logOneTimeGA;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_permission_accessibility_allowed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
 
 /**
  * Created by Arthur on 16/12/28.
@@ -51,7 +54,20 @@ public class AccessibilityEventListener implements IAccEventListener {
             case MODE_SETUP_KEYBOARD:
                 if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                     boolean inputMethodEnabled = HSInputMethodListManager.isMyInputMethodEnabled();
-                    if (!inputMethodEnabled) {
+                    if (accessibilityService == null) {
+                        accessibilityService = new SetupKeyboardAccessibilityService();
+                    }
+                    accessibilityService.onServiceConnected();
+
+                    if(inputMethodEnabled){
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                InputMethodManager m = (InputMethodManager) HSApplication.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                m.showInputMethodPicker();
+                            }
+                        },100);
+                    }else{
                         Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
                         intent.addFlags(FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT
                                 | FLAG_ACTIVITY_NEW_TASK
@@ -59,11 +75,6 @@ public class AccessibilityEventListener implements IAccEventListener {
                                 | FLAG_ACTIVITY_NO_HISTORY);
                         HSApplication.getContext().startActivity(intent);
                     }
-                    if (accessibilityService == null) {
-                        accessibilityService = new SetupKeyboardAccessibilityService();
-                    }
-                    accessibilityService.onServiceConnected();
-                    
                 }
                 break;
         }

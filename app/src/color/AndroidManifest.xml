@@ -140,7 +140,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="keyboard.main" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.keyboard.colorkeyboard.app.SplashActivity"
