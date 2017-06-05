@@ -82,8 +82,8 @@ android {
 
         color {
             applicationId = "com.keyboard.colorkeyboard"
-            versionCode 39
-            versionName "2.3.3"
+            versionCode 40
+            versionName "2.3.4"
             signingConfig signingConfigs.colorReleaseConfig
         }
 
