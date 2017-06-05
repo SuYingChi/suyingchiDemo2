@@ -20,6 +20,8 @@ import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
 
+import static android.os.Build.VERSION_CODES.JELLY_BEAN;
+
 
 /**
  * Created by chenyuanming on 22/09/2016.
@@ -81,8 +83,11 @@ final class ViewItemBuilder {
 
     static ViewItem getSoundsPositionItem() {
         String item = HSConfig.optString("sound", "Application", "NativeAds", "KeyboardSettingsPanelAds", "CurrentContent").toLowerCase();
+        if (Build.VERSION.SDK_INT < JELLY_BEAN) {
+            item = "sound";
+        }
 
-        switch (item){
+        switch (item) {
             default:
             case "sound":
                 return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_sounds),
@@ -104,12 +109,12 @@ final class ViewItemBuilder {
 
 
             case "lucky":
-                return new ViewItem("Lucky",HSApplication.getContext().getResources().getDrawable(R.drawable.ic_lucky_selector)
+                return new ViewItem("Lucky", HSApplication.getContext().getResources().getDrawable(R.drawable.ic_lucky_selector)
                         , new ViewItem.ViewItemListener() {
                     @Override
                     public void onItemClick(ViewItem item) {
                         Intent shortcutIntent = new Intent(HSApplication.getContext(), LuckyActivity.class);
-                        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
                         HSApplication.getContext().startActivity(shortcutIntent);
                     }
 
@@ -306,7 +311,7 @@ final class ViewItemBuilder {
 
     private static Drawable getStyledDrawableFromResources(String resName) {
         int resId = HSApplication.getContext().getResources().getIdentifier(resName, "drawable", HSApplication.getContext().getPackageName());
-        if(resId != 0) {
+        if (resId != 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 return HSApplication.getContext().getResources().getDrawable(resId);
             } else {

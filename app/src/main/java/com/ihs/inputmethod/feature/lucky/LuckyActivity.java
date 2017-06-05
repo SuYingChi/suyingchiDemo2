@@ -3,6 +3,7 @@ package com.ihs.inputmethod.feature.lucky;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -36,6 +37,7 @@ import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.Locale;
 
+import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static com.ihs.inputmethod.feature.common.CommonUtils.setupTransparentSystemBarsForLmp;
 
 
@@ -51,20 +53,20 @@ public class LuckyActivity extends HSAppCompatActivity
 
     /**
      * Terminology:
-     *   -----------------
-     *  |                 |
-     *  |     Banner      |
-     *  | --------------- |
-     *  |Bg/           \Bg|
-     *  | /             \ |
-     *  |/  Game Scene   \|    Game Scene = game board + targets + arm
-     *  |                 |               = [belt + border line (blue shining line at left & right)] + targets + arm
-     *  |                 |
-     *  |                 |
-     *  |                 |
-     *  | --------------- |
-     *  |  Action Button  |
-     *   -----------------
+     * -----------------
+     * |                 |
+     * |     Banner      |
+     * | --------------- |
+     * |Bg/           \Bg|
+     * | /             \ |
+     * |/  Game Scene   \|    Game Scene = game board + targets + arm
+     * |                 |               = [belt + border line (blue shining line at left & right)] + targets + arm
+     * |                 |
+     * |                 |
+     * |                 |
+     * | --------------- |
+     * |  Action Button  |
+     * -----------------
      */
 
     public static final String PREF_KEY_LUCKY_CREATED = "pref_key_lucky_created";
@@ -73,7 +75,9 @@ public class LuckyActivity extends HSAppCompatActivity
     private static final int MESSAGE_UPDATE_LIGHT = 0;
     private static final long BANNER_LIGHT_UPDATE_INTERVAL = 230;
 
-    /** Ratio = - translation Y needed / top banner height */
+    /**
+     * Ratio = - translation Y needed / top banner height
+     */
     private static final float CHANCE_COUNTER_POSITION_Y_RATIO = 0.145f;
     private static final float CHANCE_TIMER_POSITION_Y_RATIO = 0.0421f;
 
@@ -129,15 +133,19 @@ public class LuckyActivity extends HSAppCompatActivity
     private ViewState mViewState = ViewState.GAME;
 
 
-    public static void installShortCut(){
-        if(!HSPreferenceHelper.getDefault().contains(PREF_KEY_LUCKY_CREATED)){
-            HSPreferenceHelper.getDefault().putBoolean(PREF_KEY_LUCKY_CREATED,true);
-        }else{
+    public static void installShortCut() {
+        if (Build.VERSION.SDK_INT < JELLY_BEAN) {
+            return;
+        }
+
+        if (!HSPreferenceHelper.getDefault().contains(PREF_KEY_LUCKY_CREATED)) {
+            HSPreferenceHelper.getDefault().putBoolean(PREF_KEY_LUCKY_CREATED, true);
+        } else {
             return;
         }
 
         Intent shortcutIntent = new Intent(HSApplication.getContext(), LuckyActivity.class);
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         Intent addIntent = new Intent();
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Lucky");
@@ -228,7 +236,6 @@ public class LuckyActivity extends HSAppCompatActivity
     }
 
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -278,7 +285,7 @@ public class LuckyActivity extends HSAppCompatActivity
         mScene.setState(state);
         TargetInfo.init(state.getConfig());
         mState.reset();
-        mMusicPlayer.preload(this, new int[] {
+        mMusicPlayer.preload(this, new int[]{
                 R.raw.lucky_sound_button_click,
                 R.raw.lucky_sound_award_open,
         });
@@ -295,13 +302,13 @@ public class LuckyActivity extends HSAppCompatActivity
 
     @SuppressLint("HandlerLeak")
     private Handler mLightUpdater = new Handler() {
-        private final int[] VISIBILITY_ARRAY_1 = new int[] {
+        private final int[] VISIBILITY_ARRAY_1 = new int[]{
                 View.VISIBLE,
                 View.INVISIBLE,
                 View.INVISIBLE,
                 View.INVISIBLE,
         };
-        private final int[] VISIBILITY_ARRAY_2 = new int[] {
+        private final int[] VISIBILITY_ARRAY_2 = new int[]{
                 View.INVISIBLE,
                 View.INVISIBLE,
                 View.VISIBLE,
@@ -347,7 +354,7 @@ public class LuckyActivity extends HSAppCompatActivity
                     ToastUtils.showToast(mRestoreTimeString);
                     return;
                 }
-                
+
                 final TargetInfo caughtTarget = mState.performCatch();
                 mMusicPlayer.play(this, R.raw.lucky_sound_button_click);
                 mEventLogger.logCatchAction(caughtTarget);
@@ -541,7 +548,9 @@ public class LuckyActivity extends HSAppCompatActivity
     private static class EventLogger {
         private long mStartTime;
 
-        /** Flag to remove ad-click case, not counting it as user leave */
+        /**
+         * Flag to remove ad-click case, not counting it as user leave
+         */
         private boolean mAdClickedUponStop;
 
         void onAdClick() {
