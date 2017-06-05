@@ -6926,7 +6926,7 @@
 						<key>EnableAlertStyle</key>
 						<integer>0</integer>
 						<key>HoursFromFirstUse</key>
-						<integer>5</integer>
+						<integer>0</integer>
 						<key>ShowAppInfo</key>
 						<true/>
 						<key>ShowSettingIcon</key>
@@ -7004,7 +7004,7 @@
 						<key>EnableAlertStyle</key>
 						<integer>0</integer>
 						<key>HoursFromFirstUse</key>
-						<integer>5</integer>
+						<integer>0</integer>
 						<key>ShowAppInfo</key>
 						<true/>
 						<key>ShowSettingIcon</key>
