@@ -190,6 +190,69 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
 
+        <service
+            android:name="com.ihs.devicemonitor.app.topapp.HSTopAppService"
+            android:process=":work"
+            android:stopWithTask="false"
+            tools:node="remove">
+            <intent-filter>
+                <action android:name="${applicationId}.com.ihs.devicemonitor.app.topapp.HSTopAppService" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="com.ihs.devicemonitor.app.topapp.TopAppProvider"
+            android:authorities="${applicationId}.com.ihs.devicemonitor.app.topapp.TopAppProvider"
+            android:exported="false"
+            android:process=":work"
+            tools:node="remove" />
+
+        <service
+            android:name="com.ihs.devicemonitor.app.usage.monitor.UsageMonitorService"
+            android:process=":work"
+            android:stopWithTask="false"
+            tools:node="remove">
+            <intent-filter>
+                <action android:name="${applicationId}.com.ihs.devicemonitor.app.usage.monitor.UsageMonitorService" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="com.ihs.devicemonitor.app.usage.provider.AppUsageProvider"
+            android:authorities="${applicationId}.com.ihs.devicemonitor.app.usage.provider.AppUsageProvider"
+            android:exported="false"
+            android:process=":work"
+            tools:node="remove"></provider>
+
+        <receiver
+            android:name="com.ihs.devicemonitor.uninstall.UninstallReceiver"
+            android:enabled="true"
+            android:process=":native"
+            tools:node="remove">
+            <intent-filter>
+                <action android:name="com.ihs.devicemonitor.UNINSTALL_MONITOR_ACTION" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.ihs.devicemonitor.LibDMBroadcastReceiver"
+            android:enabled="true"
+            android:process=":work"
+            tools:node="remove">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="hs.app.session.SESSION_START" />
+                <action android:name="hs.app.session.SESSION_END" />
+                <action android:name="hs.commons.config.CONFIG_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <!--end of devicemonitor libs-->
+
     </application>
 
 </manifest>
