@@ -41,6 +41,7 @@
         android:visibility="visible" />
 
     <Button
+        android:textAllCaps="false"
         android:id="@+id/bt_step_one"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -50,7 +51,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:clipChildren="false"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@string/font_robot_medium"
         android:gravity="center"
         android:text="@string/tv_1_tap_to_set_up_keyboard"
         android:textColor="#2a9de8"

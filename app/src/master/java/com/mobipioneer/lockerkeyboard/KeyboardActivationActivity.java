@@ -88,7 +88,12 @@ public class KeyboardActivationActivity extends HSActivity {
                         ((TextView) coverView.findViewById(R.id.tv_settings_item)).setText(R.string.access_set_up_success);
                         logOneTimeGA(app_accessibility_setkey_success_page_viewed);
                     }
-                    KeyboardActivationActivity.this.finish();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            KeyboardActivationActivity.this.finish();
+                        }
+                    },200);
                 }
             }
         }

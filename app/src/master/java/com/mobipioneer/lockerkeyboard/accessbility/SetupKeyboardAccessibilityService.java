@@ -104,9 +104,10 @@ public class SetupKeyboardAccessibilityService {
             rootWindow = event.getSource();
         }
 
-        if (!inputMethodEnabled && HSInputMethodListManager.isMyInputMethodEnabled()) {
+
+        if(HSInputMethodListManager.isMyInputMethodEnabled() && !HSInputMethodListManager.isMyInputMethodSelected() && !inputMethodEnabled){
             inputMethodEnabled = true;
-            imeSettingState++;
+            imeSettingState = IME_STATE_ENABLED;
             InputMethodManager m = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             m.showInputMethodPicker();
             return;

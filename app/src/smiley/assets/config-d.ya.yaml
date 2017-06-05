@@ -7,7 +7,7 @@ libCommons:
       FacebookID: "1474873346171463"
       TapjoySDKKey: "xngEmwWtQly0k_AqtdONawECiQlH0ihPQFWD0LYIPuBwFQqH1SU3JkosT66A"
       FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
-      GoogleTrackerID: "UA-66666666-2"
+      GoogleTrackId: "UA-64233211-2"
   Market:
     DefaultMarket: "Google"
     Markets:

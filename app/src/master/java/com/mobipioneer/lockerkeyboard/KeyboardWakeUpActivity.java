@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
@@ -23,6 +22,8 @@ import static android.view.View.GONE;
 
 
 public class KeyboardWakeUpActivity extends HSActivity {
+
+    private BroadcastReceiver methodChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class KeyboardWakeUpActivity extends HSActivity {
 
                 final IntentFilter filter = new IntentFilter();
                 filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
-                registerReceiver(new BroadcastReceiver() {
+                methodChangeReceiver = new BroadcastReceiver() {
 
                     @Override
                     public void onReceive(Context context, Intent intent) {
@@ -76,10 +77,12 @@ public class KeyboardWakeUpActivity extends HSActivity {
                                     }
                                 }, 1000);
                                 finish();
+                                startThemeHomeActivity();
                             }
                         }
                     }
-                }, filter);
+                };
+                registerReceiver(methodChangeReceiver, filter);
                 try {
                     accessibilityEventListener.onAvailable();
                 } catch (RemoteException e) {
@@ -101,5 +104,13 @@ public class KeyboardWakeUpActivity extends HSActivity {
         startThemeHomeIntent.setClass(this, ThemeHomeActivity.class);
         startActivity(startThemeHomeIntent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(methodChangeReceiver!=null){
+            unregisterReceiver(methodChangeReceiver);
+        }
+        super.onDestroy();
     }
 }

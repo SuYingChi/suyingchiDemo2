@@ -1,12 +1,10 @@
 package com.mobipioneer.lockerkeyboard.accessbility;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.inputmethod.InputMethodManager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
@@ -65,11 +63,7 @@ public class AccessibilityEventListener implements IAccEventListener {
                         accessibilityService = new SetupKeyboardAccessibilityService();
                     }
                     accessibilityService.onServiceConnected();
-
-                    if(inputMethodEnabled){
-                        InputMethodManager m = (InputMethodManager) HSApplication.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        m.showInputMethodPicker();
-                    }
+                    
                 }
                 break;
         }
