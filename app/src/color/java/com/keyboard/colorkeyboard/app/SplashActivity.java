@@ -3,6 +3,7 @@ package com.keyboard.colorkeyboard.app;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.ihs.commons.config.HSConfig;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
