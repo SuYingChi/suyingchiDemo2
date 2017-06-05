@@ -31,6 +31,7 @@ libCommons:
   Connection:
     SigKey: "603_2"
     HashKey: "m/dN3P!}k$k#fnn[O*0(CQO:A/D_CF{m"
+  AppID: "604"
 libFramework:
   Push:
     SenderID: "587335381558"
