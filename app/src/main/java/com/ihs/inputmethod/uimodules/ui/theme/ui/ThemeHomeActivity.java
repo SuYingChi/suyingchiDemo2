@@ -695,6 +695,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     lottieAnimationView.setProgress(0f);
                 }
                 loadFullscreenAd();
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_fullscreenAds_icon_mainscreencorner_clicked");
+                HSAnalytics.logEvent("app_fullscreenAds_icon_mainscreencorner_clicked");
                 break;
         }
     }
