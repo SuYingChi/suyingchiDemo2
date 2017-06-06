@@ -109,6 +109,13 @@ public class CustomUIRateAlertUtils {
             }
         });
 
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                onNegativeButtonClick(dialog);
+            }
+        });
+
         dialog.show();
 
         HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_showed");
