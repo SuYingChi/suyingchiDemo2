@@ -1,7 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -24,9 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
-import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.LottieComposition;
-import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.ihs.actiontrigger.utils.HSPermissionManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -102,7 +97,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private boolean isResumeOnCreate = true;
 
     private AcbInterstitialAdLoader acbInterstitialAdLoader;
-    private LottieAnimationView lottieAnimationView;
+//    private LottieAnimationView lottieAnimationView;
     private AlertDialog fullscreenAdLoadingDialog;
     private boolean isAdTriggerLottieAnimationPlayed = false;
     private boolean fullscreenShowed = false;
@@ -194,15 +189,18 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         toolbar.setTitle(HSLog.isDebugging() ? themeTitle + " (Debug)" : themeTitle);
         setSupportActionBar(toolbar);
 
-        lottieAnimationView = (LottieAnimationView) findViewById(R.id.theme_home_interstitial_ad_trigger_view);
-        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "interstitial_ad_trigger_anim.json", new OnCompositionLoadedListener() {
-            @Override
-            public void onCompositionLoaded(LottieComposition lottieComposition) {
-                lottieAnimationView.setComposition(lottieComposition);
-                lottieAnimationView.setProgress(0f);
-            }
-        });
-        lottieAnimationView.setOnClickListener(this);
+//        lottieAnimationView = (LottieAnimationView) findViewById(R.id.theme_home_interstitial_ad_trigger_view);
+//        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "interstitial_ad_trigger_anim.json", new OnCompositionLoadedListener() {
+//            @Override
+//            public void onCompositionLoaded(LottieComposition lottieComposition) {
+//                lottieAnimationView.setComposition(lottieComposition);
+//                lottieAnimationView.setProgress(0f);
+//            }
+//        });
+//        lottieAnimationView.setOnClickListener(this);
+
+        findViewById(R.id.theme_home_interstitial_ad_trigger_view).setOnClickListener(this);
+
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
@@ -373,25 +371,25 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         isResumeOnCreate = false;
 
-        if (!isAdTriggerLottieAnimationPlayed) {
-            lottieAnimationView.loop(true);
-            lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
-                /**
-                 * {@inheritDoc}
-                 *
-                 * @param animation
-                 */
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                    super.onAnimationRepeat(animation);
-                    if (++adTriggerLottieAnimationPlayedTimes >= GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME) {
-                        lottieAnimationView.cancelAnimation();
-                    }
-                }
-            });
-            isAdTriggerLottieAnimationPlayed = true;
-            lottieAnimationView.playAnimation();
-        }
+//        if (!isAdTriggerLottieAnimationPlayed) {
+////            lottieAnimationView.loop(true);
+////            lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
+////                /**
+////                 * {@inheritDoc}
+////                 *
+////                 * @param animation
+////                 */
+////                @Override
+////                public void onAnimationRepeat(Animator animation) {
+////                    super.onAnimationRepeat(animation);
+////                    if (++adTriggerLottieAnimationPlayedTimes >= GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME) {
+////                        lottieAnimationView.cancelAnimation();
+////                    }
+////                }
+////            });
+//            isAdTriggerLottieAnimationPlayed = true;
+////            lottieAnimationView.playAnimation();
+//        }
     }
 
     @Override
@@ -690,10 +688,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.theme_home_interstitial_ad_trigger_view:
-                if (lottieAnimationView.isAnimating()) {
-                    lottieAnimationView.cancelAnimation();
-                    lottieAnimationView.setProgress(0f);
-                }
+//                if (lottieAnimationView.isAnimating()) {
+//                    lottieAnimationView.cancelAnimation();
+//                    lottieAnimationView.setProgress(0f);
+//                }
                 loadFullscreenAd();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_fullscreenAds_icon_mainscreencorner_clicked");
                 HSAnalytics.logEvent("app_fullscreenAds_icon_mainscreencorner_clicked");
