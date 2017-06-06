@@ -4,9 +4,6 @@
 [submodule "app/src/main/assets/themes"]
 	path = app/src/main/assets/themes
 	url = http://git.ihandysoft.com/bingroup/bin_keyboardresources_android.git
-[submodule "libs/ihs/libActionTrigger"]
-	path = libs/ihs/libActionTrigger
-	url = http://git.ihandysoft.com/bingroup/bin_foregroundserviceads_android.git
 [submodule "libs/ihs/libKeyboardUtils"]
 	path = libs/ihs/libKeyboardUtils
 	url = http://git.ihandysoft.com/bingroup/bin_keyboardutils_android.git
