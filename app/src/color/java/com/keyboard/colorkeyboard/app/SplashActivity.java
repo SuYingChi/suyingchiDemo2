@@ -10,6 +10,7 @@ import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 /**
  * Created by wenbinduan on 2016/11/8.
@@ -21,7 +22,7 @@ public final class SplashActivity extends HSDeepLinkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean isAccessibilityEnabled = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable");
+        boolean isAccessibilityEnabled = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
         Intent intent = getIntent();//携带其他页面的数据
         if (intent == null) {
             intent = new Intent();

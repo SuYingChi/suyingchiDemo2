@@ -22,6 +22,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -113,7 +114,7 @@ public class WakeKeyboardService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        boolean enable = HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable");
+        boolean enable = HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable") && !KCFeatureRestrictionConfig.isFeatureRestricted("RemindChangeKeyboard");
         if (!enable) {
             stopSelf();
         }

@@ -40,6 +40,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.util.ArrayList;
 
@@ -94,7 +95,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
 
-        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
+        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable") && !KCFeatureRestrictionConfig.isFeatureRestricted("RemindChangeKeyboard")) {
             startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
         }
 
