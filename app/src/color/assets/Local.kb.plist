@@ -6,6 +6,8 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>AutoSetKeyEnable</key>
+			<false/>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -7020,10 +7022,10 @@
 						<dict>
 							<key>BackCountOfDay</key>
 							<array>
-								<integer>30</integer>
-								<integer>60</integer>
-								<integer>90</integer>
-								<integer>150</integer>
+								<integer>2</integer>
+								<integer>10</integer>
+								<integer>20</integer>
+								<integer>50</integer>
 							</array>
 							<key>PackageNameExclude</key>
 							<array>
