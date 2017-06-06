@@ -155,9 +155,9 @@
 					<key>MinDaysFromFirstUse</key>
 					<integer>0</integer>
 					<key>MinUseCount</key>
-					<integer>2</integer>
+					<integer>0</integer>
 					<key>Probability</key>
-					<integer>100</integer>
+					<integer>0</integer>
 				</dict>
 				<key>Regional</key>
 				<array/>

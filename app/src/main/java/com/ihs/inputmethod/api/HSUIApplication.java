@@ -91,6 +91,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             @Override
             public void onResult(HSPublisherMgr.PublisherData publisherData) {
                 registerChargingService();
+                recordInstallType();
             }
         });
 
@@ -137,8 +138,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerNotificationEvent();
         LuckyActivity.installShortCut();
-
-        recordInstallType();
     }
 
     private void registerNotificationEvent() {
