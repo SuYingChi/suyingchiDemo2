@@ -138,7 +138,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         registerNotificationEvent();
         LuckyActivity.installShortCut();
 
-        HSPublisherMgr.init(this);
         recordInstallType();
     }
 
