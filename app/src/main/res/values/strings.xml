@@ -229,7 +229,7 @@
 	<!--Accessibility-->
 	<string name="accessibility_service" translatable="false">Emoji Keyboard</string>
 	<string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
-With accessibility authorization, I can help you setup keyboard directly!
+With accessibility authorization, you'll get the best typing experience on different apps!
 
 Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
 	<string name="tv_enable_keyboard_tip">Activate Emoji Keyboard, enjoy MORE themes!</string>
