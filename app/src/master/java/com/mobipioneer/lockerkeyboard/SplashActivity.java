@@ -9,6 +9,7 @@ import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.mobipioneer.lockerkeyboard.app.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
