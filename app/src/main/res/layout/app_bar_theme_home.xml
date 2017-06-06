@@ -38,11 +38,12 @@
 
 
             <ImageView
+                android:layout_centerVertical="true"
                 android:id="@+id/theme_home_interstitial_ad_trigger_view"
                 android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/functionbar_gift_ad_selector"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/actionbar_gift_ad_selector"
                 />
             <!--<com.airbnb.lottie.LottieAnimationView-->
                 <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
