@@ -50,17 +50,13 @@ import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_S
 
 public class HSUIApplication extends HSInputMethodApplication {
 
-    private Intent actionService;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-//                int currentapiVersion = android.os.Builder.VERSION.SDK_INT;
-//                if (currentapiVersion <= android.os.Builder.VERSION_CODES.JELLY_BEAN_MR1) {
-//                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-//                }
+                
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
                 IAPManager.getManager().queryOwnProductIds();
@@ -72,9 +68,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //增加action trigger 2017.4.19
 
-
+                registerChargingService();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 IAPManager.getManager().onConfigChange();
 
