@@ -69,7 +69,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                     e.printStackTrace();
                 }
 
-                registerChargingService();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 IAPManager.getManager().onConfigChange();
 
@@ -88,6 +87,12 @@ public class HSUIApplication extends HSInputMethodApplication {
     public void onCreate() {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
+        HSPublisherMgr.registerResultListener(this, new HSPublisherMgr.IPublisherListener() {
+            @Override
+            public void onResult(HSPublisherMgr.PublisherData publisherData) {
+                registerChargingService();
+            }
+        });
 
         if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
             startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
