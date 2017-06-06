@@ -1,10 +1,10 @@
 package com.ihs.inputmethod.utils;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.view.View;
 
 import com.ihs.app.alerts.HSAlertMgr;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
@@ -21,10 +21,10 @@ public class CustomUIRateAlertUtils {
     public static void initialize() {
         HSAlertMgr.setShowCustomUIForAlert(new HSAlertMgr.IShowCustomUIForAlert() {
             @Override
-            public boolean showCustomUIForAlert(String s, String s1, String s2, List<String> list, List<DialogInterface.OnClickListener> list1) {
+            public boolean showCustomUIForAlert(Activity activity, String s, String s1, String s2, List<String> list, List<DialogInterface.OnClickListener> list1) {
                 HSLog.d(TAG, "alert: " + s + ", title: " +  s1 + ", message: " + s2 + ", buttons: " + list.toString() + ", callbacks: " + list1.toString());
                 if (s.equals(HSAlertMgr.RATE_ALERT)) {
-                    showRateAlert(s1, s2, list, list1);
+                    showRateAlert(activity,s1, s2, list, list1);
                     return true;
                 }
 
@@ -85,10 +85,10 @@ public class CustomUIRateAlertUtils {
         }
     }
 
-    private static void showRateAlert(String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {
+    private static void showRateAlert(Activity activity,String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {
         updateRateAlertInfo(s1, s2, list1, list2);
 
-        final CustomUIRateAlert dialog = new CustomUIRateAlert(HSApplication.getContext());
+        final CustomUIRateAlert dialog = new CustomUIRateAlert(activity);
 
         dialog.setPositiveButtonOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +106,13 @@ public class CustomUIRateAlertUtils {
             @Override
             public void onClick(View view) {
                 onNeutralButtonClick(dialog);
+            }
+        });
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                onNegativeButtonClick(dialog);
             }
         });
 
