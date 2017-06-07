@@ -21,7 +21,6 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
-import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
@@ -41,15 +40,6 @@ import java.util.Map;
 public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>> {
 
 	protected Map<String, View> nativeAdViewCached;
-
-	protected List<Map<String, Object>> themeAdInfos;
-
-	private ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener;
-
-	private boolean shouldShowChargingEnableCard;
-
-	protected int width;
-
 	private final INotificationObserver notificationObserver = new INotificationObserver() {
 		@Override
 		public void onReceive(String s, HSBundle hsBundle) {
@@ -59,6 +49,17 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 			}
 		}
 	};
+	protected List<Map<String, Object>> themeAdInfos;
+	protected int width;
+	private ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener;
+	private boolean shouldShowChargingEnableCard;
+
+	public ThemeAdAdapterDelegate(ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener) {
+		themeAdInfos = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "ThemeAd");
+		nativeAdViewCached = new HashMap<>();
+		this.themeAdOnClickListener = themeAdOnClickListener;
+		HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
+	}
 
 	public void release() {
 		for(Map.Entry<String, View> entry : nativeAdViewCached.entrySet()) {
@@ -66,13 +67,6 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				((NativeAdView)entry.getValue()).release();
 			}
 		}
-	}
-
-	public ThemeAdAdapterDelegate(ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener) {
-		themeAdInfos = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "ThemeAd");
-		nativeAdViewCached = new HashMap<>();
-		this.themeAdOnClickListener = themeAdOnClickListener;
-		HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
 	}
 
 	@Override
@@ -120,16 +114,16 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				@Override
 				public void onClick(View v) {
 					HSToastUtils.toastCenterLong(HSApplication.getContext().getString(R.string.charging_enable_toast));
-					ChargingManagerUtil.enableCharging(false);
+					ChargingManagerUtil.enableCharging(false,"card");
 					themeAdOnClickListener.onThemeAdClick(position);
 					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_click");
 				}
 			});
 		} else {// Show ad
-			String nativeAd = getNativeAd(position);
+			String nativeAd = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
 			if (nativeAdViewCached.get(nativeAd) == null) {
-				View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
-				LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
+				View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_theme_card, null);
+				LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.theme_ad_loading, null);
 				LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f) + HSDisplayUtils.dip2px(65));
 				loadingView.setLayoutParams(loadingLP);
 				loadingView.setGravity(Gravity.CENTER);
@@ -138,7 +132,6 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				nativeAdView.setTag("nativeadview");
 				nativeAdView.configParams(new NativeAdParams(nativeAd, width, 1.9f));
 				cardView.addView(nativeAdView);
-				NativeAdViewButtonHelper.autoHighlight(nativeAdView);
 				nativeAdViewCached.put(nativeAd, nativeAdView);
 			} else {
 				ViewGroup parent = ((ViewGroup) nativeAdViewCached.get(nativeAd).getParent());
@@ -167,20 +160,5 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 	@Override
 	public int getSpanSize(List<ThemeHomeModel> items, int position) {
 		return 2;
-	}
-
-	protected String getNativeAd(int itemPosition) {
-		for(Map<String, Object> item : themeAdInfos) {
-			if((int)item.get("Position") == itemPosition - 4) {
-				return (String) item.get("NativeAd");
-			}
-		}
-		for(Map<String, Object> item : themeAdInfos) {
-			if((int)item.get("Position") == 10000) {
-				return (String) item.get("NativeAd");
-			}
-		}
-
-		return null;
 	}
 }

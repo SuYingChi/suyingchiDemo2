@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate;
 
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,9 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
 
@@ -33,12 +37,17 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 
 	private boolean themeAnalyticsEnabled;
 	private View.OnClickListener cardViewOnClickListener;
+	private int imageWidth;
+	private int imageHeight;
 
-	private DisplayImageOptions options=new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
+	private DisplayImageOptions options=new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
 
 	public ThemeCardAdapterDelegate(boolean themeAnalyticsEnabled, View.OnClickListener cardViewOnClickListener) {
 		this.themeAnalyticsEnabled = themeAnalyticsEnabled;
 		this.cardViewOnClickListener = cardViewOnClickListener;
+		Resources resources = HSApplication.getContext().getResources();
+		imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
+		imageHeight = (int) (imageWidth / 1.6f);
 	}
 
 	@Override
@@ -61,8 +70,8 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 		holder.itemView.setTag(keyboardTheme.mThemeName);
 
 		themeCardViewHolder.themeDelete.setVisibility(View.GONE);
-		
-		themeCardViewHolder.themeNewImage.setVisibility(keyboardTheme.isNewTheme()&& HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
+
+		themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
 		switch (keyboardTheme.getThemeType()) {
 			case CUSTOM:
 				themeCardViewHolder.themeName.setText(HSApplication.getContext().getString(R.string.theme_card_custom_theme_default_name));
@@ -78,7 +87,8 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 			case DOWNLOADED:
 				final String smallPreviewImgUrl = keyboardTheme.getSmallPreivewImgUrl();
 				if (smallPreviewImgUrl != null) {
-					HSImageLoader.getInstance().displayImage(smallPreviewImgUrl, themeCardViewHolder.themeRealImage, options);
+					ImageSize imageSize = new ImageSize(imageWidth,imageHeight);
+					HSImageLoader.getInstance().displayImage(smallPreviewImgUrl, new ImageViewAware(themeCardViewHolder.themeRealImage), options,imageSize,null,null);
 				}
 				themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
 				break;

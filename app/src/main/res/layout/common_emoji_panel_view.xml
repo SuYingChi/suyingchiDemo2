@@ -6,14 +6,25 @@
 	android:layout_gravity="bottom"
 	android:clipChildren="false"
 	android:orientation="vertical">
-	
-	<android.support.v7.widget.RecyclerView
-		android:layout_marginLeft="3dp"
-		android:layout_marginRight="3dp"
-		android:id="@+id/image_category_tabhost"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/config_suggestions_strip_height"
-		/>
+		android:orientation="horizontal">
+		<ImageView
+			android:layout_width="@dimen/config_suggestions_strip_height"
+			android:layout_height="@dimen/config_suggestions_strip_height"
+			android:id="@+id/emoji_ad_container"
+			android:scaleType="fitXY"
+			android:visibility="gone"
+			android:src="@drawable/tabbar_emoji_ad_selector">
+		</ImageView>
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/image_category_tabhost"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginLeft="3dp"
+			android:layout_marginRight="3dp" />
+	</LinearLayout>
 
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/emoji_keyboard_pager"

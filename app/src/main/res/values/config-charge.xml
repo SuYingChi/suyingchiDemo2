@@ -4,7 +4,9 @@
 * charge ，locker ，boost集成时需要配置到一些内容
 */
 -->
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
     <!-- 是否显示charging设置选项，默认不显示-->
     <bool name="config_boost_charge_setting_enable">true</bool>
     <!-- charging设置对应到SwitchPreference的preferenceKey,必须和启动页的开关选项用到的preferenceKey一致 -->

@@ -3,13 +3,10 @@ package com.ihs.inputmethod.api;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageInfo;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.crashlytics.android.Crashlytics;
@@ -24,6 +21,7 @@ import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
+import com.ihs.commons.analytics.publisher.HSPublisherMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -31,61 +29,56 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
-import com.ihs.inputmethod.feature.customuiratealert.CustomUIRateAlertManager;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.keyboard.core.themes.custom.KCCustomThemeManager;
+import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.notification.KCNotificationManager;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import io.fabric.sdk.android.Fabric;
 
 import static com.ihs.chargingscreen.HSChargingScreenManager.registerChargingService;
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_SET_CHARGING_TOGGLE;
-import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPENED;
-import static com.ihs.inputmethod.uimodules.ui.theme.utils.Constants.GA_APP_OPENED_CUSTOM_THEME_NUMBER;
 
 public class HSUIApplication extends HSInputMethodApplication {
 
-    private Intent actionService;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-//                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-//                if (currentapiVersion <= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-//                }
+                
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
                 IAPManager.getManager().queryOwnProductIds();
 
-                try{
+                try {
                     Intent actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
                     startService(actionService);
                     bindActionTrigger(actionService);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //增加action trigger 2017.4.19
-
 
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 IAPManager.getManager().onConfigChange();
 
                 registerChargingService();
 
-            }else if(HSNotificationConstant.HS_SESSION_END.equals(notificationName)){
+            } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
+                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
+                    KCNotificationManager.getInstance().removeNotificationEvent("Charging");
+                }
             }
         }
     };
@@ -94,6 +87,18 @@ public class HSUIApplication extends HSInputMethodApplication {
     public void onCreate() {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
+        HSPublisherMgr.registerResultListener(this, new HSPublisherMgr.IPublisherListener() {
+            @Override
+            public void onResult(HSPublisherMgr.PublisherData publisherData) {
+                registerChargingService();
+                recordInstallType();
+            }
+        });
+
+        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
+            startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
+        }
+
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
@@ -102,9 +107,9 @@ public class HSUIApplication extends HSInputMethodApplication {
         IAPManager.getManager().queryOwnProductIds();
         HSKeyboardThemeManager.init();
 
-        AcbNativeAdManager.sharedInstance();
+        AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);
 
-        CustomUIRateAlertManager.initialize();
+        CustomUIRateAlertUtils.initialize();
 
         if (!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
@@ -130,6 +135,28 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         HSInputMethodService.initResourcesBeforeOnCreate();
+
+        registerNotificationEvent();
+        LuckyActivity.installShortCut();
+    }
+
+    private void registerNotificationEvent() {
+
+        KCNotificationManager.getInstance().setNotificationResponserType(KCNotificationManager.TYPE_BROADCAST);
+        //注册notification事件
+        ArrayList<String> eventList = new ArrayList<>();
+        eventList.add("ChangeFont");
+        eventList.add("Charging");
+        eventList.add("SetPhotoAsBackground");
+        eventList.add("ChangeTheme");
+        for (String event : eventList) {
+            Intent resultIntent = new Intent(this, NotificationBroadcastReceiver.class);
+            resultIntent.putExtra("eventName", event);
+            KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
+        }
+        if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
+            KCNotificationManager.getInstance().removeNotificationEvent("Charging");
+        }
     }
 
     private void bindActionTrigger(Intent actionService) {
@@ -184,42 +211,12 @@ public class HSUIApplication extends HSInputMethodApplication {
                 break;
         }
 
-        new AcbInterstitialAdLoader(this,adPlacementName).load(1,null);
+        KCInterstitialAd.load(adPlacementName);
 
         switch (adType) {
             //full scrn ad
             case 4:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(adPlacementName + "_Load");
-                List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), adPlacementName, 1);
-                if (interstitialAds.size() > 0) {
-                    final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-                    final String finalAdPlacementName = adPlacementName;
-                    interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                        long adDisplayTime = -1;
-
-                        @Override
-                        public void onAdDisplayed() {
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_Show");
-                            adDisplayTime = System.currentTimeMillis();
-                        }
-
-                        @Override
-                        public void onAdClicked() {
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_Click");
-                        }
-
-                        @Override
-                        public void onAdClosed() {
-                            long duration = System.currentTimeMillis() - adDisplayTime;
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(finalAdPlacementName + "_DisplayTime", String.format("%fs", duration / 1000f));
-                            interstitialAd.release();
-                        }
-                    });
-                    interstitialAd.show();
-                    return true;
-                } else {
-                    return false;
-                }
+                return KCInterstitialAd.show(adPlacementName, null, true);
         }
         return false;
 
@@ -234,12 +231,12 @@ public class HSUIApplication extends HSInputMethodApplication {
             // 如果不是第一个sesstion 并且 不包含 PREF_KEY_CHARGING_NEW_USER
             if (!prefs.contains(PREF_KEY_USER_SET_CHARGING_TOGGLE)) {
                 HSLog.d("jx,未发现remote config变化 shouldOpenChargingFunction");
-                ChargingManagerUtil.enableCharging(false);
+                ChargingManagerUtil.enableCharging(false, "plist");
                 prefs.putBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, true);
             } else {
                 boolean userSetting = prefs.getBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, false);
                 if (userSetting) {
-                    ChargingManagerUtil.enableCharging(false);
+                    ChargingManagerUtil.enableCharging(false, "plist");
                 }
             }
         } else {
@@ -249,34 +246,27 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     protected void onSessionStart() {
         HSDiverseSession.start();
-        //检测是否已经有非内置的主题包已经被安装过了
-        checkIsPluginThemeInstalled();
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_APP_OPENED_CUSTOM_THEME_NUMBER, KCCustomThemeManager.getInstance().getAllCustomThemes().size());
     }
 
-    private void checkIsPluginThemeInstalled() {
-        if (HSSessionMgr.getCurrentSessionId() == 1) {
-            HSThreadUtils.execute(new Runnable() {
-                @Override
-                public void run() {
-                    List<PackageInfo> packages = HSApplication.getContext().getPackageManager().getInstalledPackages(0);
-                    //获取主题包前缀,可能有多个
-                    List<String> pluginThemePkNamePrefixList = (List<String>) HSConfig.getList("Application", "PluginTheme", "PluginThemePkNamePrefix");
-                    for (int i = 0; i < packages.size(); i++) {
-                        PackageInfo packageInfo = packages.get(i);
-                        for (String pluginThemePkNamePrefix : pluginThemePkNamePrefixList) {
-                            if (packageInfo.packageName.startsWith(pluginThemePkNamePrefix)) {
-                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_first_open_apk_exist", "true");
-                                HSAnalytics.logEvent("app_first_open_apk_exist", "true");
-                                return;
-                            }
-                        }
-                    }
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_first_open_apk_exist", "false");
-                    HSAnalytics.logEvent("app_first_open_apk_exist", "false");
-                }
-            });
+    private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
+    private void recordInstallType() {
+        boolean alreadyRecord = HSPreferenceHelper.getDefault().getBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, false);
+        if (!alreadyRecord) {
+            HSPublisherMgr.PublisherData data = HSPublisherMgr.getPublisherData(this);
+            if (data.isDefault()) {
+                return;
+            }
+
+            String installType;
+            if (data.getInstallMode() != HSPublisherMgr.PublisherData.InstallMode.NON_ORGANIC) {
+                installType = data.getInstallMode().name();
+            } else {
+                installType = data.getMediaSource();
+            }
+
+            HSAnalytics.logEvent("install_type", "install_type", installType);
+
+            HSPreferenceHelper.getDefault().putBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, true);
         }
     }
 }

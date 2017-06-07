@@ -7,50 +7,53 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by ihandysoft on 17/4/12.
- */
-
-public class KeyboardFullScreenAd extends FullScreenAd {
+public class KeyboardFullScreenAd {
+    private String placementName;
 
     public static final String SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS = "FullScreen_Ad_Loaded_On_KeyboardSession";
 
     private String occasion;
 
-    public KeyboardFullScreenAd(String placementName, final String occasion) {
-        super(placementName);
-        this.occasion = occasion;
-        INotificationObserver observer = new INotificationObserver() {
-            @Override
-            public void onReceive(String s, HSBundle hsBundle) {
-                if (KeyboardFullScreenAdSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD.equals(s)) {
-                    preLoad();
-                    if (!IAPManager.getManager().hasPurchaseNoAds()&&"Open".equals(occasion)) {
-                        show();
-                    }
-                } else {
-                    if (HSUIInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY.equals(s)) {
-                        release();
-                        HSGlobalNotificationCenter.removeObserver(this);
-                    }
-                }
-            }
-        };
-        HSGlobalNotificationCenter.addObserver(KeyboardFullScreenAdSession.NOTIFICATION_KEYBOARD_SHOW_INPUTMETHOD, observer);
-        HSGlobalNotificationCenter.addObserver(HSUIInputMethodService.HS_NOTIFICATION_SERVICE_DESTROY, observer);
+    public void preLoad() {
+        // 满足加载条件
+        if (isConditionSatisfied()) {
+            KCInterstitialAd.load(placementName);
+        }
     }
 
-    @Override
+    public boolean show() {
+        if (isConditionSatisfied()) {
+            boolean adShown = KCInterstitialAd.show(placementName, null, true);
+            if (adShown) {
+                hasFetchedAd();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public KeyboardFullScreenAd(String placementName, final String occasion) {
+        this.placementName = placementName;
+        this.occasion = occasion;
+    }
+
     protected boolean isConditionSatisfied() {
+        if (IAPManager.getManager().hasPurchaseNoAds()) {
+            return false;
+        }
+
         // 1. Plist是否显示广告
         boolean shouldShow = HSConfig.optBoolean(false, "Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "Show");
         if (!shouldShow) {
@@ -69,8 +72,7 @@ public class KeyboardFullScreenAd extends FullScreenAd {
         return false;
     }
 
-    @Override
-    protected void hasFetchedAd() {
+    private void hasFetchedAd() {
         // 1. 当前session所在组的index
         int sessionIndex = getCurrentSessionGroupIndex();
         if (sessionIndex == -1) {
@@ -91,7 +93,7 @@ public class KeyboardFullScreenAd extends FullScreenAd {
         List<Integer> showAdSessionIndexs = (List<Integer>) HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay");
         int sessionTemp = -1;
         // 4. 查找比当前session索引小的索引
-        if(showAdSessionIndexs != null) {
+        if (showAdSessionIndexs != null) {
             Collections.sort(showAdSessionIndexs);
 
             for (int sessionIndex : showAdSessionIndexs) {

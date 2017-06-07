@@ -5,20 +5,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.preference.PreferenceManager;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
-import com.ihs.app.framework.HSApplication;
+import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
+import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -30,40 +34,25 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
-import java.util.HashSet;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by xu.zhang on 11/3/15.
  */
 public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String HS_NOTIFICATION_SERVICE_DESTROY = "hs.keyboard.SERVICE_DESTROY";
-    public static final String HS_NOTIFICATION_SERVICE_START_INPUT_VIEW = "hs.keyboard.SERVICE_START_INPUT_VIEW";
     public static final String HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME = "editor_owner_package_name";
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
+    private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
+    private static final String HS_SHOW_KEYBOARD_WINDOW = "hs.inputmethod.framework.api.SHOW_INPUTMETHOD";
+
 
     private static InputConnection insideConnection = null;
-
-    private static KeyboardPanelManager getKeyboardPanelMananger() {
-        return (KeyboardPanelManager) keyboardPanelSwitcher;
-    }
-
-    private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
-        @Override
-        public void onReceive(String eventName, HSBundle notificaiton) {
-            if (eventName.equals(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE)) {
-                CustomSearchEditText customSearchEditText = (CustomSearchEditText) notificaiton.getObject(Constants.HS_NOTIFICATION_CUSTOM_SEARCH_EDIT_TEXT);
-                onStartInputInside(customSearchEditText);
-            } else if (eventName.equals(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE)) {
-                onFinishInputInside();
-            } else if (eventName.equals(Constants.HS_NOTIFICATION_RESET_EDIT_INFO)) {
-                resetEditInfo();
-            }
-        }
-    };
-
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION_CLOSE_SYSTEM_DIALOGS)) {
@@ -74,21 +63,42 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
         }
     };
-
     private final BroadcastReceiver dateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(Intent.ACTION_DATE_CHANGED.equals(action)) {
+            if (Intent.ACTION_DATE_CHANGED.equals(action)) {
                 KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
                 KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
+                KeyboardPanelAdManager.resetKeyboardPanelAdCountData();
+            }
+        }
+    };
+    private boolean isInputViewShowing = false;
+    private String currentAppPackageName = "";
+    private KeyboardFullScreenAd openFullScreenAd;
+    private KeyboardFullScreenAd closeFullScreenAd;
+    private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
+        @Override
+        public void onReceive(String eventName, HSBundle notificaiton) {
+            if (eventName.equals(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE)) {
+                CustomSearchEditText customSearchEditText = (CustomSearchEditText) notificaiton.getObject(Constants.HS_NOTIFICATION_CUSTOM_SEARCH_EDIT_TEXT);
+                onStartInputInside(customSearchEditText);
+            } else if (eventName.equals(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE)) {
+                onFinishInputInside();
+            } else if (eventName.equals(Constants.HS_NOTIFICATION_RESET_EDIT_INFO)) {
+                resetEditInfo();
+            } else if (eventName.equals(HS_SHOW_KEYBOARD_WINDOW)) {
+                if (TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME)) {
+                    getKeyboardPanelMananger().logCustomizeBarShowed();
+                }
             }
         }
     };
 
-    private KeyboardFullScreenAd openFullScreenAd;
-    private KeyboardFullScreenAd closeFullScreenAd;
-
+    private static KeyboardPanelManager getKeyboardPanelMananger() {
+        return (KeyboardPanelManager) keyboardPanelSwitcher;
+    }
 
     @Override
     public void onCreate() {
@@ -101,21 +111,123 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_RESET_EDIT_INFO, keyboardNotificationObserver);
+        HSGlobalNotificationCenter.addObserver(HS_SHOW_KEYBOARD_WINDOW, keyboardNotificationObserver);
 
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
         openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
-        closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_close_keyboard), "Close");
+        closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Close");
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            getKeyboardPanelMananger().onBackPressed();
-            if(!IAPManager.getManager().hasPurchaseNoAds()) {
-                closeFullScreenAd.show();
+
+            if (isInputViewShowing) {
+                getKeyboardPanelMananger().onBackPressed();
+                if (!isInOwnApp()) {
+                    if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose")) {
+                        closeFullScreenAd.show();
+                    }
+                }
+                HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
+            } else {
+                showBackAdIfNeeded();
             }
         }
+
         return super.onKeyDown(keyCode, event);
+    }
+
+    private boolean showBackAdIfNeeded() {
+        boolean enabled = HSConfig.optBoolean(false, "Application", "InterstitialAds", "BackButton", "Show");
+
+        if (!enabled) {
+            return false;
+        }
+
+        if (KCFeatureRestrictionConfig.isFeatureRestricted("AdBackButton")) {
+            return false;
+        }
+
+        if (isInRightAppForBackAd()) {
+            HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
+            HSPreferenceHelper prefs = HSPreferenceHelper.create(this, "BackAd");
+
+            long lastBackTimeMillis = prefs.getLong("LastBackTime", 0);
+            int backCount = prefs.getInt("BackCount", 0);
+            long currentBackTimeMillis = System.currentTimeMillis();
+
+            Calendar lastBackCalendar = Calendar.getInstance();
+            lastBackCalendar.setTimeInMillis(lastBackTimeMillis);
+
+            Calendar currentBackCalendar = Calendar.getInstance();
+            currentBackCalendar.setTimeInMillis(currentBackTimeMillis);
+
+            int hitBackCount = prefs.getInt("HitBackIndex", -1);
+
+            if (currentBackCalendar.get(Calendar.YEAR) == lastBackCalendar.get(Calendar.YEAR) &&
+                    currentBackCalendar.get(Calendar.DAY_OF_YEAR) == lastBackCalendar.get(Calendar.DAY_OF_YEAR)) {
+                backCount++;
+            } else {
+                backCount = 1;
+                hitBackCount = -1;
+                prefs.putInt("HitBackCount", hitBackCount);
+            }
+            prefs.putLong("LastBackTime", currentBackTimeMillis);
+            prefs.putInt("BackCount", backCount);
+
+            List<Integer> backCountList = (List<Integer>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "BackCountOfDay");
+            for (int targetBackCount : backCountList) {
+                if (backCount >= targetBackCount && hitBackCount < targetBackCount) {
+                    boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, true);
+                    if (adShown) {
+                        hitBackCount = backCount;
+                        prefs.putInt("HitBackIndex", hitBackCount);
+                        return true;
+                    } else {
+                        KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                    }
+                    break;
+                }
+            }
+            return false;
+        } else {
+            HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
+            return false;
+        }
+    }
+
+    private boolean isInRightAppForBackAd() {
+        if (isInOwnApp() || isInputViewShowing) {
+            return false;
+        }
+
+        if (currentAppPackageName == null) {
+            return false;
+        }
+
+        List<String> packageNameBlackList = (List<String>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "PackageNameExclude");
+        if (packageNameBlackList == null) {
+            return true;
+        }
+
+        for (String blockedPackageName : packageNameBlackList) {
+            if (currentAppPackageName.contains(blockedPackageName)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isInOwnApp() {
+        EditorInfo editorInfo = getCurrentInputEditorInfo();
+        if (editorInfo == null) {
+            return false;
+        } else if (TextUtils.equals(currentAppPackageName, getPackageName())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -176,6 +288,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public void onStartInputView(EditorInfo editorInfo, boolean restarting) {
+        isInputViewShowing = true;
         Log.e("time log", "time log service onstartInputView started");
         KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("StartInputView");
         super.onStartInputView(editorInfo, restarting);
@@ -184,14 +297,14 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (insideConnection == null && restarting) {
             getKeyboardPanelMananger().showKeyboardWithMenu();
         }
-        // Broadcast event
-        final HSBundle bundle = new HSBundle();
-        if (editorInfo != null) {
-            bundle.putString(HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME, editorInfo.packageName);
-        }
-
-//        HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_START_INPUT_VIEW, bundle);
         Log.e("time log", "time log service onstartInputView finished");
+        // TODO: // How to judge current keyboard id & restart from text?
+        boolean isFromText = editorInfo != null && (editorInfo.inputType & InputType.TYPE_CLASS_TEXT) > 0
+                && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) > 0
+                && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_CAP_SENTENCES) > 0;
+        if (restarting && isFromText) {
+            getKeyboardPanelMananger().showFunctionBarAd();
+        }
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -203,11 +316,24 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         KeyboardAnalyticsReporter.getInstance().onKeyboardSessionStart();
         KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
 
+        if (!restarting) {
+            if (!isInOwnApp()) {
+                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardOpen")) {
+                    openFullScreenAd.show();
+                    openFullScreenAd.preLoad();
+                }
+
+                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose")) {
+                    closeFullScreenAd.preLoad();
+                }
+                KeyboardPanelAdManager.addInputViewStartCount();
+            }
+        }
     }
 
     @Override
     public void onFinishInputView(final boolean finishingInput) {
-
+        isInputViewShowing = false;
         if (WebContentSearchManager.ControlStripState.PANEL_CONTROL != WebContentSearchManager.stripState) {
             HSGlobalNotificationCenter.sendNotificationOnMainThread(WebContentSearchManager.SHOW_CONTROL_PANEL_STRIP_VIEW);
         }
@@ -253,10 +379,29 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     }
 
     @Override
+    public void showWindow(boolean showInput) {
+        super.showWindow(showInput);
+    }
+
+    @Override
     public void onStartInput(EditorInfo editorInfo, boolean restarting) {
         super.onStartInput(editorInfo, restarting);
-        if(restarting){
+        if (restarting) {
             getKeyboardPanelMananger().resetKeyboardBarState();
         }
+
+        // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
+        // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
+        currentAppPackageName = editorInfo.packageName;
+        if (TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME)) {
+            getKeyboardPanelMananger().showCustomizeBar();
+        } else {
+            getKeyboardPanelMananger().removeCustomizeBar();
+        }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
     }
 }

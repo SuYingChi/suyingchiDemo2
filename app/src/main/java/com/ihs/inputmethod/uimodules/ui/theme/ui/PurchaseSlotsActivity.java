@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.reward.RewardItem;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.iap.HSIAPManager;
@@ -15,7 +14,6 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.PurchaseSlotsDialog;
-import com.ihs.inputmethod.uimodules.ui.theme.reward.RewardVideoHelper;
 
 import org.json.JSONObject;
 
@@ -23,14 +21,12 @@ import org.json.JSONObject;
  * Created by jixiang on 16/12/26.
  */
 
-public class PurchaseSlotsActivity extends HSAppCompatActivity implements RewardVideoHelper.RewardResultListener {
-    RewardVideoHelper rewardVideoHelper;
+public class PurchaseSlotsActivity extends HSAppCompatActivity  {
     private PurchaseSlotsDialog purchaseSlotDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rewardVideoHelper = new RewardVideoHelper(this, this);
 
         purchaseSlotDialog = new PurchaseSlotsDialog(this, new PurchaseSlotsDialog.OnItemClickListener() {
             @Override
@@ -40,7 +36,6 @@ public class PurchaseSlotsActivity extends HSAppCompatActivity implements Reward
 
             @Override
             public void onUnlockViaWatchVideo() {
-                rewardVideoHelper.loadAndShowVideo();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("iapalert_unlimitedslots_WatchVideoToUnlockOne_clicked");
             }
 
@@ -120,10 +115,6 @@ public class PurchaseSlotsActivity extends HSAppCompatActivity implements Reward
 
     @Override
     public void finish() {
-        if (rewardVideoHelper != null) {
-            rewardVideoHelper.destroy();
-            rewardVideoHelper = null;
-        }
         dismissDialog(purchaseSlotDialog);
         purchaseSlotDialog = null;
         super.finish();
@@ -135,14 +126,6 @@ public class PurchaseSlotsActivity extends HSAppCompatActivity implements Reward
         super.onDestroy();
     }
 
-    @Override
-    public void onRewardedSuccess() {
-        purchaseOneSlot();
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-    }
 
     private void purchaseOneSlot() {
         dismissDialog(purchaseSlotDialog);
@@ -152,31 +135,5 @@ public class PurchaseSlotsActivity extends HSAppCompatActivity implements Reward
         HSGoogleAnalyticsUtils.getInstance().logAppEvent("iapalert_unlimitedslots_WatchVideoToUnlockOne_VideoCompleted");
     }
 
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-
-    }
-
-    @Override
-    public void onRewardedVideoStartLoad() {
-        dismissDialog(purchaseSlotDialog);
-    }
-
-    @Override
-    public void onRewardedVideoStart() {
-        dismissDialog(purchaseSlotDialog);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("iapalert_unlimitedslots_WatchVideoToUnlockOne_VideoStarted");
-    }
-
-    @Override
-    public void onRewardedVideoLoadTimeout() {
-        dismissDialog(purchaseSlotDialog);
-        purchaseSlotDialog.dismiss();
-    }
-
-    @Override
-    public void onRewardedFinish() {
-        finish();
-    }
 
 }

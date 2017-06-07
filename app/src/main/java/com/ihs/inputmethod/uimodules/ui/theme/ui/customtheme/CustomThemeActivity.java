@@ -26,11 +26,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -61,6 +61,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -78,8 +79,6 @@ import static com.ihs.app.framework.HSApplication.getContext;
 
 
 public class CustomThemeActivity extends HSAppCompatActivity implements IItemClickListener, INotificationObserver {
-    public static boolean hasTrialKeyboardShownWhenThemeCreated;
-
     public static final String NOTIFICATION_SHOW_TRIAL_KEYBOARD = "hs.inputmethod.uimodules.ui.theme.ui.SHOW_TRIAL_KEYBOARD"; //显示试用键盘
     public static final String BUNDLE_KEY_BACKGROUND_NAME = "BUNDLE_KEY_BACKGROUND_NAME";
     public static final String BUNDLE_KEY_BACKGROUND_USE_CAMERA = "BUNDLE_KEY_BACKGROUND_USE_CAMERA";
@@ -87,6 +86,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
     public static final String BUNDLE_KEY_CUSTOMIZE_ENTRY = "customize_entry";
 
     public static final int keyboardActivationFromCustom = 15;
+
+    private static final int FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD = 1;
 
     private HSKeyboardThemePreview keyboardView;
     private HSMediaView mp4HSBackgroundView;
@@ -133,9 +134,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
                     loadAsync();
                 }
             }, 0);
-        }
-        if (getContext().getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
-            new AcbInterstitialAdLoader(getContext(), getResources().getString(R.string.placement_full_screen_trial_keyboard)).load(1, null);
         }
     }
 
@@ -359,6 +357,12 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
 
     public void showFragment(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < getFragmentClasses().size()) {
+            if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD) {
+                if (!IAPManager.getManager().hasPurchaseNoAds()) {
+                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                }
+            }
+
             try {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 currentFragment = getFragmentClasses().get(pageIndex).newInstance();
@@ -607,83 +611,66 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
 
     private void onNewThemeCreated() {
         if (!showInterstitialAdsAfterSaveTheme() && !showChargingEnableAlert()) {
-            showTrialKeyboard(false);
+            showTrialKeyboard();
         }
     }
 
     private boolean showInterstitialAdsAfterSaveTheme() {
-        if (IAPManager.getManager().hasPurchaseNoAds() || !getResources().getBoolean(R.bool.is_show_full_screen_ad_when_theme_created)) {
+        if (IAPManager.getManager().hasPurchaseNoAds()) {
             return false;
         }
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_load_ad));
-        List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), getContext().getResources().getString(R.string.placement_full_screen_trial_keyboard), 1);
-        if (interstitialAds.size() > 0) {
-            final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-            interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                long adDisplayTime = -1;
+        boolean interstitialAdShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), new KCInterstitialAd.OnAdCloseListener() {
+            @Override
+            public void onAdClose() {
+                showTrialKeyboard();
+            }
+        });
 
-                @Override
-                public void onAdDisplayed() {
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_show_ad));
-                    adDisplayTime = System.currentTimeMillis();
-                }
-
-                @Override
-                public void onAdClicked() {
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_click_ad));
-                }
-
-                @Override
-                public void onAdClosed() {
-                    long duration = System.currentTimeMillis() - adDisplayTime;
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_save_display_ad), String.format("%fs", duration / 1000f));
-                    interstitialAd.release();
-                    showTrialKeyboard(true);
-                }
-            });
-            interstitialAd.show();
-            hasTrialKeyboardShownWhenThemeCreated = true;
-            return true;
-        } else {
-            return false;
-        }
+        return interstitialAdShown;
     }
 
     private boolean showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_show");
-            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-            dialog.setTitle(getString(R.string.charging_alert_title));
-            dialog.setMessage(getString(R.string.charging_alert_message));
-            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-            dialog.setCancelable(true);
-            dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ChargingManagerUtil.enableCharging(false);
-                    HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
-                }
-            });
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    showTrialKeyboard(false);
-                }
-            });
-            dialog.show();
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+
+            if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
+                CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+                dialog.setTitle(getString(R.string.charging_alert_title));
+                dialog.setMessage(getString(R.string.charging_alert_message));
+                dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+                dialog.setCancelable(true);
+                dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ChargingManagerUtil.enableCharging(false, "saving");
+                        HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+                    }
+                });
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        showTrialKeyboard();
+                    }
+                });
+                dialog.show();
+            } else {
+                Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
+                intent.putExtra("type", "charging");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                HSApplication.getContext().startActivity(intent);
+            }
             return true;
         }
 
         return false;
     }
 
-    private void showTrialKeyboard(boolean hasInterstitialAdsShown) {
+    private void showTrialKeyboard() {
         setResult(RESULT_OK);
         HSBundle bundle = new HSBundle();
         bundle.putString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, ThemeHomeActivity.class.getSimpleName());
         bundle.putInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE, keyboardActivationFromCustom);
-        bundle.putBoolean(TrialKeyboardDialog.BUNDLE_KEY_HAS_TRIAL_KEYBOARD_SHOWN_WHEN_THEME_CREATED, hasInterstitialAdsShown);
         HSGlobalNotificationCenter.sendNotification(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
         if (!PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();

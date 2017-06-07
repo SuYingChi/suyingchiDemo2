@@ -56,4 +56,5 @@
     <Preference
         android:key="@string/custom_uninstall_preference_key"
         android:title="@string/custom_uninstall_alert_title" />
+
 </PreferenceScreen>

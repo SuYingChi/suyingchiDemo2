@@ -5,10 +5,14 @@
     android:layout_height="match_parent">
 
 
-    <FrameLayout
+    <com.ihs.keyboardutils.view.FlashFrameLayout
         android:id="@+id/ad_container"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/setting_panel_item_margin_top"
+        app:flash_angle="cw_0"
+        app:flash_repeat_count="0"
+        app:flash_duration="1000"
+        app:flash_auto_start="false"
         app:layout_aspectRatio="100%"
         app:layout_heightPercent="70%">
 
@@ -31,7 +35,7 @@
             android:layout_gravity="bottom|end"
             android:src="@drawable/ic_ad_label" />
 
-    </FrameLayout>
+    </com.ihs.keyboardutils.view.FlashFrameLayout>
 
 
     <TextView

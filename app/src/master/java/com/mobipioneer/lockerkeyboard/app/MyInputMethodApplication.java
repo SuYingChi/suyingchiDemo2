@@ -1,15 +1,6 @@
 package com.mobipioneer.lockerkeyboard.app;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.acb.interstitialads.AcbInterstitialAdManager;
-import com.ihs.actiontrigger.HSActionTrigger;
-import com.ihs.actiontrigger.model.ActionBean;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -23,13 +14,9 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.HSUIInputMethod;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.feature.customuiratealert.CustomUIRateAlertManager;
-import com.mobipioneer.lockerkeyboard.service.WakeKeyboardService;
+import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
-import java.util.List;
 
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_CHARGING_NEW_USER;
 
@@ -73,12 +60,9 @@ public class MyInputMethodApplication extends HSUIApplication {
     public void onCreate() {
         super.onCreate();
 
-
-        startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
-
         AcbInterstitialAdManager.getInstance(HSApplication.getContext());
 
-        CustomUIRateAlertManager.initialize();
+        CustomUIRateAlertUtils.initialize();
 
         HSGlobalNotificationCenter.addObserver(HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);

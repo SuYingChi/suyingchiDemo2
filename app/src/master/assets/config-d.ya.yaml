@@ -1,0 +1,51 @@
+libCommons:
+  RemoteConfig:
+    PlistFile: "Local.gd"
+    PlistUrl: "1https://emojidevelop.s3.amazonaws.com/apps_android/config/config-master_keyboard-1.1.1.gd"
+  Analytics:
+      FlurryKey: "9P9GRP9579XMNVDZRDDJ"
+      FacebookID: ""
+      TapjoySDKKey: ""
+      TapjoyEngagementID: ""
+      FlyerKey: ""
+      GoogleTrackId: "UA-66666666-1"
+      FlurryStoredMaxCount: 1000
+  Market:
+    DefaultMarket: "Google"
+    3rdChannel: "GP"
+    Markets:
+      Google:
+        AppPackage: "com.android.vending"
+        AppUrl: "market://details?id="
+        WebUrl: "https://play.google.com/store/apps/details?id="
+      Amazon:
+        AppPackage: "com.amazon.venezia"
+        AppUrl: "amzn://apps/android?p="
+        WebUrl: "http://www.amazon.com/gp/mas/dl/android?p=" 
+  Connection:
+    SigKey: "607_1"
+    HashKey: "NHC#{e3AnA>?XKSu;W6T7RS:,u<<No#)"
+  IPLocaleManager:
+    IPLocaleServerURL: "https://location.appcloudbox.net/prod/country"
+    IPLocaleKey: "0}Z|[t=2!,C2BM9>p#Wjot,Ra[)U>*&-"
+libChargingScreen:
+  ShowAdDelay: 3
+
+libFramework:
+  Push:
+    senderID: "485901558980"
+    SendTokenToServer: yes
+  Alerts:
+    LocalFile: "Alerts.gd"
+    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/masterboard-1.1.1-alerts.mp"
+      
+libKeyboard:
+  DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
+
+  Test:
+    Admob:
+      DeviceId: "97E64FD2DA2F839065FD467F52DD1481"
+interstitialAds: 
+  NativeAdViewType: "effect_1"
+libIAP:
+  IAPVerifyUrl: "https://dev-keyboard.appcloudbox.net:7443/keyboard/masterkey/rainbow/dailyrewards"

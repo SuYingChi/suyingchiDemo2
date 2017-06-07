@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply from: 'tasks.gradle'
 
 android {
     compileSdkVersion 25
@@ -81,8 +82,8 @@ android {
 
         color {
             applicationId = "com.keyboard.colorkeyboard"
-            versionCode 37
-            versionName "2.3.2"
+            versionCode 41
+            versionName "2.3.4"
             signingConfig signingConfigs.colorReleaseConfig
         }
 
@@ -100,6 +101,13 @@ android {
 
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 
@@ -130,16 +138,16 @@ dependencies {
 
 
     // Native Ads
-    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.1.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAltamobNativeAdapter.gm:4.1.0.gm'
-//    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.2.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAltamobNativeAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.2.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.3.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.2.gm'
-
+    compile 'com.ihandy.3rdadadapter:libAdMobVistaNativeAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAppnextNativeAdapter.gm:4.1.0.gm'
-
+    compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.1.gm'
     // Interstitial Ads
     compile 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.1.1.gm'
@@ -155,13 +163,10 @@ dependencies {
 //    masterCompile project(':booster')
 //    smileyCompile project(':booster')
 
-    masterCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
-    smileyCompile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
-
+    compile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
 
     //ihs related
     compile files('../libs/libIAP.jar')
-    compile(name: 'ihs/libCommon/libCommon', ext: 'aar')
     compile(name: 'ihs/libActionTrigger/libActionTrigger', ext: 'aar')
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')

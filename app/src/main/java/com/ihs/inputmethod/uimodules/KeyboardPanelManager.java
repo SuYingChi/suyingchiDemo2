@@ -2,40 +2,63 @@ package com.ihs.inputmethod.uimodules;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.acb.adadapter.AcbAd;
+import com.acb.adadapter.AcbNativeAd;
+import com.acb.nativeads.AcbNativeAdLoader;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSError;
+import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.framework.KeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
+import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarGPAdAdapter;
+import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static android.view.Surface.ROTATION_0;
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * Created by jixiang on 16/11/17.
  */
 
 public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseFunctionBar.OnFunctionBarItemClickListener {
+
 
     public KeyboardPanelManager() {
     }
@@ -44,6 +67,11 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private KeyboardPanelSwitchContainer keyboardPanelSwitchContainer;
     private BaseFunctionBar functionBar;
     private HSMediaView hsBackgroundVedioView;
+    private List<AcbNativeAd> gpNativeAdList = new ArrayList<>();
+    private CustomBarGPAdAdapter gpAdAdapter;
+    private AcbNativeAdLoader acbNativeAdLoader;
+    private RecyclerView gpAdRecyclerView;
+
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -106,8 +134,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
 
-//        keyboardPanelSwitchContainer.setWebHistoryView(WebContentSearchManager.getInstance().getWebSearchHistoryView());
-
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
         addOrUpdateBackgroundView();
@@ -158,14 +184,18 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     @Override
     public void onFunctionBarItemClick(View view) {
         if (view.getId() == R.id.func_setting_button) {
-            int settingButtonType = functionBar.getSettingButtonType();
+            SettingsButton settingsButton = functionBar.getSettingsButton();
+            int settingButtonType = settingsButton.getButtonType();
+
             switch (settingButtonType) {
                 case SettingsButton.SettingButtonType.MENU:
+                    settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_function_button_click");
                     break;
 
                 case SettingsButton.SettingButtonType.SETTING:
+                    settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.backToParentPanel(false);
                     break;
 
@@ -174,7 +204,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     if (keyboardPanelSwitchContainer.getCurrentPanel() == keyboardPanelSwitchContainer.getKeyboardPanel()) {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
                     } else {
-                        functionBar.setSettingButtonType(SettingsButton.SettingButtonType.BACK);
+                        functionBar.setSettingButtonType(SettingsButton.SettingButtonType.SETTING);
                     }
                     break;
             }
@@ -202,15 +232,25 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
+    public void showFunctionBarAd() {
+        if (KeyboardPanelAdManager.isShowFunctionBarAdConditionSatisfied()) {
+            functionBar.startFunctionBarAdAnimation();
+        }
+    }
+
     public void showEmojiPanel() {
-        keyboardPanelSwitchContainer.showPanel(HSEmoticonPanel.class);
+        KeyboardPanelAdManager.addEmojiPanelShowCount();
+        keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
     }
 
     public void beforeStartInputView() {
-
         if (hsBackgroundVedioView != null) {
             hsBackgroundVedioView.setHSBackground(HSKeyboardThemeManager.getCurrentThemeBackgroundPath());
+        }
+
+        if (FeatureDelayReleaseUtil.checkFeatureReadyToWork("feature_clipboard_bar", 1)) {
+            keyboardPanelSwitchContainer.showClipboardBar();
         }
     }
 
@@ -228,7 +268,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void resetKeyboardBarState() {
         if (keyboardPanelSwitchContainer != null) {
-            if(keyboardPanelSwitchContainer.getKeyboardPanel() == null) {
+            if (keyboardPanelSwitchContainer.getKeyboardPanel() == null) {
                 keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
             }
             keyboardPanelSwitchContainer.getKeyboardPanel().switchSuggestionState(0);
@@ -236,4 +276,123 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
+    public void removeCustomizeBar() {
+        if(keyboardPanelSwitchContainer!=null){
+            keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+        }
+        gpAdRecyclerView = null;
+        if (gpNativeAdList != null) {
+            for (AcbNativeAd acbNativeAd : gpNativeAdList) {
+                acbNativeAd.release();
+            }
+        }
+    }
+
+    private void reloadGpAd() {
+        if (gpNativeAdList == null || gpAdAdapter == null) {
+            return;
+        }
+
+        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+            keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+        }
+
+        for (AcbNativeAd acbNativeAd : gpNativeAdList) {
+            acbNativeAd.release();
+        }
+
+        gpNativeAdList.clear();
+        gpAdAdapter.clearAdList();
+
+        if (acbNativeAdLoader != null) {
+            acbNativeAdLoader.cancel();
+            acbNativeAdLoader = null;
+        }
+
+        acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
+        logGoogleAdEvent("Load");
+
+        acbNativeAdLoader.load(5, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
+            @Override
+            public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
+                if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() != VISIBLE) {
+                    keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(View.VISIBLE);
+                }
+                for (AcbNativeAd acbNativeAd : list) {
+                    acbNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
+                        @Override
+                        public void onAdClick(AcbAd acbAd) {
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_click", "GooglePlay_Search");
+                            logGoogleAdEvent("Click");
+                        }
+                    });
+                    if (gpNativeAdList == null || gpAdAdapter == null) {
+                        return;
+                    }
+                    gpAdAdapter.addAd(acbNativeAd);
+                    gpNativeAdList.add(acbNativeAd);
+                }
+            }
+
+            @Override
+            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+            }
+        });
+    }
+
+    private void logGoogleAdEvent(String action) {
+        HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map)null, (Map)null);
+    }
+
+
+    public void showCustomizeBar() {
+
+        if(keyboardPanelSwitchContainer == null){
+            return;
+        }
+
+        if(gpAdRecyclerView!=null || IAPManager.getManager().hasPurchaseNoAds()
+                || !HSConfig.optBoolean(true,"Application","KeyboardToolBar","GooglePlay","ShowAd")){
+            return;
+        }
+
+        gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
+        gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        gpAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
+        int padding = DisplayUtils.dip2px(8);
+        gpAdRecyclerView.setPadding(padding, 0, padding, 0);
+        gpAdAdapter = new CustomBarGPAdAdapter();
+        gpAdRecyclerView.setAdapter(gpAdAdapter);
+        GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
+        gpAdRecyclerView.setLayoutManager(layoutManager);
+        gpAdRecyclerView.setHasFixedSize(true);
+
+        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
+            @Override
+            public void onHide() {
+                if(acbNativeAdLoader!=null){
+                    acbNativeAdLoader.cancel();
+                    acbNativeAdLoader = null;
+                }
+                if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+                    keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+                }
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_close", "GooglePlay_Search");
+            }
+        });
+        customizeBarLayout.setContent(gpAdRecyclerView);
+        reloadGpAd();
+        if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
+            if (keyboardPanelSwitchContainer != null) {
+                keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
+            }
+        }
+    }
+
+    public void logCustomizeBarShowed() {
+        if(keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE){
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_show", "GooglePlay_Search");
+            logGoogleAdEvent("Show");
+        }
+    }
 }

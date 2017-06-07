@@ -23,7 +23,6 @@ public class BaseFunction extends FrameLayout {
     private final static int FUNCTION_VIEW_REAL_WIDTH = 18; // function real width 18dp
     private final static int FUNCTION_VIEW_MARGIN_LEFT = 15; //margin value,unit dp
 
-
     public BaseFunction(Context context) {
         super(context);
         this.setBackgroundDrawable(getTransparentRippleBackground());
@@ -36,7 +35,6 @@ public class BaseFunction extends FrameLayout {
         this.functionView = view;
         addView(functionView, 0);
     }
-
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -94,5 +92,4 @@ public class BaseFunction extends FrameLayout {
     public interface NewTipStatueChangeListener {
         boolean shouldShowTip();
     }
-
 }

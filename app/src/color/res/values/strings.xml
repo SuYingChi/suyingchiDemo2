@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
 
     <string name="app_name">com.keyboard.colorkeyboard</string>
     <string name="app_package_name">com.keyboard.colorkeyboard</string>
     <string name="fb_app_id">910238615719294</string>
 
     <!-- Ad placement ID -->
+    <string name="ad_placement_lucky">Colorkey_A(NativeAds)KeyboardLuckyAd</string>
     <string name="ad_placement_cardad">Colorkey_A(NativeAds)CardAd</string>
     <string name="ad_placement_keyboardemojiad">Colorkey_A(NativeAds)KeyboardEmojiAd</string>
     <string name="ad_placement_keyboardsettingsad">Colorkey_A(NativeAds)KeyboardSettingsAd</string>
-    <string name="ad_placement_themead">Colorkey_A(NativeAds)ThemeAd</string>
-    <string name="ad_placement_themedetailad">Colorkey_A(NativeAds)ThemeDetailAd</string>
     <string name="ad_placement_themetryad">Colorkey_A(NativeAds)ThemeTryAd</string>
     <string name="ad_placement_customize_theme">Colorkey_A(NativeAds)CustomizeThemeAd</string>
-    <string name="ad_placement_exit_alert_dialog">Colorkey_A(NativeAds)QuitAlert</string>
-    <string name="placement_full_screen_trial_keyboard">Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd</string>
     <string name="placement_full_screen_open_keyboard">Colorkey_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
-    <string name="placement_full_screen_close_keyboard">Colorkey_A(InterstitialAds)CloseKeyboardFullScreenAd</string>
+    <string name="ad_placement_google_play_ad">Colorkey_A(NativeAds)GooglePlayIcon</string>
+
+
 
     <string name="ga_fullscreen_theme_save_load_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Load</string>
     <string name="ga_fullscreen_theme_save_show_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Show</string>
@@ -42,4 +43,30 @@
     <string name="tip_usage_access">Find %s and switch it on.</string>
 
     <string name="theme_ad_placement_theme_ad">Colorkey_A(NativeAds)ThemeAd</string>
+
+    <string name="feedback_email">private.keyboardarts@gmail.com</string>
+
+
+    <!--Accessibility-->
+    <string name="accessibility_service" translatable="false">Rainbow Keyboard</string>
+    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
+With accessibility authorization, you'll get the best typing experience on different apps!
+
+Note: You may receive a system reminder about authorizing, Rainbow Keyboard will NEVER collect ANY of your information."</string>
+    <string name="tv_enable_keyboard_tip">Activate RainbowKey, enjoy MORE themes!</string>
+    <string name="accessibility_service_label">Rainbow Keyboard</string>
+    <string name="tv_set_up_manually">SET UP MANUALLY</string>
+    <string name="tv_1_tap_to_set_up_keyboard">Enable RainbowKey</string>
+    <string name="alter_enable_access_title">Enable RainbowKey</string>
+    <string name="alter_enable_access_content">To set up keyboard, please find and enable RainbowKey.</string>
+    <string name="alter_enable_access_confirm">GOT IT</string>
+    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable Rainbow Keyboard manually.</string>
+    <string name="alert_enable_access_warn_title">Enable Keyboard Manually</string>
+    <string name="access_set_up_success">Set up Successfully!</string>
+    <string name="access_set_up_failed">Failed to Set up</string>
+    <string name="dialog_access_setup_manual">SET UP MANUALLY</string>
+    <string name="retry">RETRY</string>
+    <string name="dialog_set_up_manual_message">Please try again or set up keyboard manually.</string>
+
+    <!--Accessibility end-->
 </resources>

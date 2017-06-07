@@ -18,7 +18,6 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.DaoHelper;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.download.GifDownloadTask;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.request.BaseRequest;
-import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.GifView;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
 
@@ -69,24 +68,22 @@ public final class GifManager {
         }
 
 
-//        final File hdGif = new File(DirectoryUtils.getHDGifDownloadFolder(), gif.id);
-        final File hdGif = new File(DirectoryUtils.getGifDownloadFolder(), gif.id);
+        File uri = DirectoryUtils.getDownloadGifUri(gif.id);
 
-        String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
-        boolean gifSupported = false;
-        for (String mime_Type : mimeTypes) {
-            if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
-                gifSupported = true;
+        if ("com.facebook.orca".equals(packageName)) { // messenger特殊处理，可以直接发送到对话列表中
+            String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
+            boolean gifSupported = false;
+            for (String mime_Type : mimeTypes) {
+                if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
+                    gifSupported = true;
+                }
+            }
+            if (gifSupported) {
+                commitGifImage(Uri.fromFile(uri), "");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "direct_send_gif");
+                return;
             }
         }
-        if (gifSupported) {
-            commitGifImage(Uri.fromFile(hdGif), "");
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "direct_send_gif");
-            return;
-        }
-
-
-        File uri = DirectoryUtils.getDownloadGifUri(gif.id);
 
         // send mode
         final Pair<Integer, String> pair = MediaShareUtils.refreshCurrentShareMode(packageName);

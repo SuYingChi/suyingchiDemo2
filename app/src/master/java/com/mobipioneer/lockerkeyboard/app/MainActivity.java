@@ -42,7 +42,6 @@ import android.widget.Toast;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -53,6 +52,7 @@ import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.permission.HSPermissionsManager;
 import com.ihs.inputmethod.api.permission.HSPermissionsUtil;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -131,7 +131,7 @@ public class MainActivity extends HSDeepLinkActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
-                if (HSInputMethod.isCurrentIMESelected()) {
+                if (HSInputMethodListManager.isMyInputMethodSelected()) {
                     if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
 
                         if (isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
@@ -179,7 +179,7 @@ public class MainActivity extends HSDeepLinkActivity {
         }
 
         onNewIntent(getIntent());
-        if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
+        if (shouldShowThemeHome() || (HSInputMethodListManager.isMyInputMethodSelected())) {
             startThemeHomeActivity();
             return;
         }
@@ -244,11 +244,11 @@ public class MainActivity extends HSDeepLinkActivity {
                     ChargingConfigManager.getManager().setUserChangeChargingToggle();
                 }
 
-                if (isSwitchOn) {
-                    ChargingManagerUtil.enableCharging(false);
-                } else {
-                    ChargingManagerUtil.disableCharging();
-                }
+//                if (isSwitchOn) {
+//                    ChargingManagerUtil.enableCharging(false);
+//                } else {
+//                    ChargingManagerUtil.disableCharging();
+//                }
             }
         });
 
@@ -530,7 +530,7 @@ public class MainActivity extends HSDeepLinkActivity {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            if (HSInputMethod.isCurrentIMEEnabled()) {
+            if (HSInputMethodListManager.isMyInputMethodEnabled()) {
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 i.putExtra("isInStepOne", true);
                 startActivity(i);
@@ -576,12 +576,12 @@ public class MainActivity extends HSDeepLinkActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!HSInputMethod.isCurrentIMEEnabled()) {
+                if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                     getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                             settingsContentObserver);
                     refreshUIState();
                 } else {
-                    if (!HSInputMethod.isCurrentIMESelected()) {
+                    if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                         if (isInStepOne) {
                             doSetpOneFinishAnimation();
                             style = CurrentUIStyle.UISTYLE_STEP_TWO;
@@ -622,7 +622,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
                 needActiveThemePkName = pkName;
 
-                if (shouldShowThemeHome() || (HSInputMethod.isCurrentIMESelected())) {
+                if (shouldShowThemeHome() || (HSInputMethodListManager.isMyInputMethodSelected())) {
                     startThemeHomeActivity();
                 }
             }
@@ -630,6 +630,26 @@ public class MainActivity extends HSDeepLinkActivity {
         if (getIntent().getBooleanExtra("isInStepOne", false)) {
             isInStepOne = true;
         }
+
+        if (getIntent().getBooleanExtra("skip", false) && !isInStepOne && !HSInputMethodListManager.isMyInputMethodEnabled()) {
+
+            Intent settingIntent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+            settingIntent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(settingIntent);
+            isInStepOne = true;
+
+            ImageView imageCodeProject = new ImageView(getApplicationContext());
+            imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+            final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+            imageCodeProject.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    customViewDialog.show();
+                }
+            }, 500);
+
+        }
+
     }
 
     private INotificationObserver sessionEventObserver = new INotificationObserver() {
@@ -698,7 +718,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private void refreshUIState() {
-        if (!HSInputMethod.isCurrentIMEEnabled()) {
+        if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
 
@@ -734,7 +754,7 @@ public class MainActivity extends HSDeepLinkActivity {
             rootView.setBackgroundColor(Color.parseColor("#2a9de8"));
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
-        } else if (!HSInputMethod.isCurrentIMESelected()) {
+        } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
 

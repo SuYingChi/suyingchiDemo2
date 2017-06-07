@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -38,6 +39,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.view.FlashFrameLayout;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 
@@ -56,19 +58,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     private Map<Class, View> btnMap = new HashMap<>();
     private Map<String, Class> panels = new HashMap<>();
     private NativeAdView adView;
-
-    public HSEmoticonActionBar(Context context) {
-        this(context, null);
-    }
-
-    public HSEmoticonActionBar(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public HSEmoticonActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
-    }
+    private boolean released;
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
@@ -80,12 +70,26 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         }
     };
 
+    public HSEmoticonActionBar(Context context) {
+        this(context, null);
+    }
+
+    public HSEmoticonActionBar(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+    public HSEmoticonActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+    }
+
     public void release() {
+        released = true;
+        HSGlobalNotificationCenter.removeObserver(notificationObserver);
         if (adView != null) {
-            HSGlobalNotificationCenter.removeObserver(notificationObserver);
             adView.release();
             adView = null;
         }
+        containerListener = null;
     }
 
     @Override
@@ -118,29 +122,61 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
 
         if(!IAPManager.getManager().hasPurchaseNoAds()) {
-            boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
-            View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
-            if(!showIconAd) {
-                adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-            }
-            View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
+            final boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
+            final boolean hideAdTitle = HSConfig.optBoolean(false,"Application", "KeyboardEmoji", "HideAdTitle");
+            final LayoutParams params = new LayoutParams(0, height, hideAdTitle?1.0f:1.6f);
+            params.gravity = Gravity.CENTER_VERTICAL;
+            final RelativeLayout adContainer = new RelativeLayout(getContext());
+            adContainer.setTag("NativeAd");
+            addView(adContainer, params);
+            final FlashFrameLayout flashAdContainer = new FlashFrameLayout(getContext());
+            flashAdContainer.setAngle(FlashFrameLayout.MaskAngle.CW_0);
+            flashAdContainer.setDuration(1000);
+            flashAdContainer.setRepeatCount(0);
+            flashAdContainer.setAutoStart(false);
+
+            final View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
             if(!showIconAd) {
                 adLoadingView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
             }
             ImageView loadingImageView = (ImageView) adLoadingView.findViewById(R.id.ad_loading_image);
             Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_gift");
             loadingImageView.setImageDrawable(drawable);
-            final NativeAdView adView = new NativeAdView(getContext(), adLayoutView, adLoadingView);
-            adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
-            adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
-            final LayoutParams params = new LayoutParams(0, height, 1.0f);
-            params.gravity = Gravity.CENTER_VERTICAL;
-            RelativeLayout adContainer = new RelativeLayout(getContext());
-            adContainer.setTag("NativeAd");
-            RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            int adHeight =  height -  HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
+            final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(hideAdTitle ?adHeight : ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
             adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-            adContainer.addView(adView, adLayoutParams);
-            addView(adContainer, params);
+            adContainer.addView(flashAdContainer, adLayoutParams);
+            flashAdContainer.addView(adLoadingView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!released) {
+                        View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
+                        if (!showIconAd) {
+                            adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
+                        }
+                        if (hideAdTitle) {
+                            adLayoutView.findViewById(R.id.ad_title).setVisibility(GONE);
+                        }
+                        adView = new NativeAdView(HSApplication.getContext(), adLayoutView, null);
+                        adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
+                        adView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                            @Override
+                            public void onAdLoaded(NativeAdView nativeAdView) {
+                                flashAdContainer.removeView(adLoadingView);
+                                if (!released) {
+                                    flashAdContainer.startShimmerAnimation();
+                                }
+                                adView.setOnAdLoadedListener(null);
+                            }
+                        });
+                        adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
+                        flashAdContainer.addView(adView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    }
+                }
+            },500);
         }
 
         alphabet_left = (TextView) findViewById(R.id.emoji_keyboard_alphabet_left);
@@ -236,7 +272,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                 keyboardActionListener.showPanel(KeyboardPanel.class);
                 keyboardActionListener.setBarVisibility(VISIBLE);
                 keyboardActionListener = null;
-                HSGlobalNotificationCenter.sendNotification(com.ihs.inputmethod.uimodules.constants.Constants.HS_NOTIFICATION_RESET_EDIT_INFO);
+//                HSGlobalNotificationCenter.sendNotification(com.ihs.inputmethod.uimodules.constants.Constants.HS_NOTIFICATION_RESET_EDIT_INFO);
             } else if (tag instanceof Integer && (Integer) tag == Constants.CODE_DELETE) {
                 HSInputMethod.deleteBackward();
             }
@@ -264,4 +300,5 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     public void setKeyboardPanelActionListener(BasePanel.OnPanelActionListener panelActionListener) {
         this.keyboardActionListener = panelActionListener;
     }
+
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="lucky_game_award_boom_description">مرات</string>
+    <string name="lucky_game_award_chances_description">تهانينا +3 مرات</string>
+    <string name="lucky_game_award_chances_receive_btn">استلام</string>
+    <string name="lucky_game_award_empty_action">حاول مرة أخرى</string>
+    <string name="lucky_game_award_no_network_description">  لا يوجد اتصال بالشبكة!</string>
+    <string name="lucky_game_award_theme_action">تثبيت</string>
+    <string name="lucky_game_award_theme_description">وجدنا نسقاً جديداً</string>
+    <string name="lucky_game_award_wallpaper_description">خلفية رائعة!</string>
+    <string name="lucky_game_award_wallpaper_action">تعيين كخلفية</string>
+    <string name="lucky_game_chance_counter">%1$s فرصة </string>
+    <string name="lucky_game_award_ad_related_title">لقد حصلت على جائزة!</string>
+    <string name="lucky_game_chance_restore_timer">المزيد من المكافآت في %1$s</string>
+</resources>

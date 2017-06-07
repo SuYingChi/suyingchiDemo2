@@ -130,6 +130,7 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 			case ThemeCardAdapterDelegate.TAG_DOWNLOAD:
 				if (keyboardTheme.getThemePkName() != null) {
 					boolean shouldDownloadThemeAPK = ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
+					setThemeNotNew(keyboardTheme);
 					if (shouldDownloadThemeAPK) {
 						Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.theme_card_downloading_tip), Toast.LENGTH_SHORT).show();
 					}
@@ -250,8 +251,6 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
 	private void setThemeNotNew(HSKeyboardTheme keyboardTheme) {
-		if(keyboardTheme.isNewTheme()) {
-			HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);
-		}
+		HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);
 	}
 }

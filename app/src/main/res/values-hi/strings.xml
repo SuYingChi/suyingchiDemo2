@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="lucky_game_award_boom_description">समय </string>
+    <string name="lucky_game_award_chances_description">मुबारक हो+3 बार</string>
+    <string name="lucky_game_award_chances_receive_btn">प्राप्‍त</string>
+    <string name="lucky_game_award_empty_action">दुबारा प्रयास करें</string>
+    <string name="lucky_game_award_no_network_description">कोई नेटवर्क कनेक्‍शन नहीं! </string>
+    <string name="no_network_connection">कोई नेटवर्क कनेक्‍शन नहीं! </string>
+    <string name="lucky_game_award_theme_action">इंस्‍टॉल करें</string>
+    <string name="lucky_game_award_theme_description">एक नई थीम मिली है! </string>
+    <string name="lucky_game_award_wallpaper_description">बहुत बढि़या वॉलपेपर!</string>
+    <string name="lucky_game_award_wallpaper_action">वॉलपेपर के तौर पर सेट करें</string>
+    <string name="lucky_game_chance_counter">मौका %1$s</string>
+    <string name="lucky_game_award_ad_related_title">आपने एक इनाम जीता है!</string>
+    <string name="lucky_game_chance_restore_timer">%1$s में अधिक पकड़ो</string>
+
+</resources>

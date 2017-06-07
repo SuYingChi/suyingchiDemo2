@@ -11,6 +11,7 @@ public final class EmojiGroup {
 
 	private final String tabName;
 	private final boolean isText;
+	private boolean hasSetDivider;
 
 	private List<Emoji> emojiList=new ArrayList<>();
 
@@ -80,12 +81,15 @@ public final class EmojiGroup {
 		return tabName != null ? tabName.hashCode() : 0;
 	}
 
-	private void addDivider(final int rowCount) {
-		if(emojiList.size()>0){
-			for(int i=0;i<rowCount;i++){
-				final Emoji divider=new Emoji("",0,isText());
-				divider.setDivider(true);
-				emojiList.add(divider);
+	private void addDividerIfNecessary(final int rowCount) {
+		if (!hasSetDivider) {
+			hasSetDivider = true;
+			if (emojiList.size() > 0) {
+				for (int i = 0; i < rowCount; i++) {
+					final Emoji divider = new Emoji("", 0, isText());
+					divider.setDivider(true);
+					emojiList.add(divider);
+				}
 			}
 		}
 	}
@@ -104,7 +108,7 @@ public final class EmojiGroup {
 				emojiList.add(empty);
 			}
 		}
-		addDivider(rowCount);
+		addDividerIfNecessary(rowCount);
 	}
 
 	private int getMinCountIndex(final int[] spanCount,final int rowCount) {
@@ -134,7 +138,7 @@ public final class EmojiGroup {
 			final Emoji empty=new Emoji("",1,isText());
 			emojiList.add(empty);
 		}
-		addDivider(rowCount);
+		addDividerIfNecessary(rowCount);
 	}
 
 }

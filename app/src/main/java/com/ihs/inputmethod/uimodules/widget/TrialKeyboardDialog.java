@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -18,80 +19,63 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
-import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
-import java.util.List;
-
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD;
-import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.hasTrialKeyboardShownWhenThemeCreated;
 
 
 public final class TrialKeyboardDialog extends Dialog implements OnClickListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener {
 
-    public interface OnTrialKeyboardStateChanged {
-
-        void onTrialKeyShow(int requestCode);
-
-        void onTrailKeyPrevented();
-
-    }
-
     public final static String BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY = "bundle_key_show_trial_keyboard_activity";
-    public final static String BUNDLE_KEY_HAS_TRIAL_KEYBOARD_SHOWN_WHEN_THEME_CREATED = "bundle_key_has_trial_keyboard_shown_when_theme_created";
-
-    public final static String BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_THEMENAME = "bundle_key_show_trial_keyboard_themename";
-
-    Build build;
+    Builder builder;
     private OnTrialKeyboardStateChanged onTrialKeyboardStateChanged;
     private boolean isSoftKeyboardOpened;
     private ViewGroup rootView;
     private String from;
     private int activationRequestCode;
-
+    private boolean showAdOnDismiss;
     private boolean onlyCloseKeyboard = true;
+    private long currentResumeTime;
+    private NativeAdView nativeAdView;
 
-
-    private TrialKeyboardDialog(Context context) {
+    private TrialKeyboardDialog(Context context, Builder build, String from, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
         super(context, R.style.TrialKeyboardDialogStyle);
-        setCancelable(true);
-    }
-
-    private TrialKeyboardDialog(Context context, Build build, String from, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
-        this(context, build, from, onTrialKeyboardStateChanged, false);
-    }
-
-    private TrialKeyboardDialog(Context context, Build build, String from, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged, boolean hasTrialKeyboardShownWhenThemeCreated) {
-        super(context, R.style.TrialKeyboardDialogStyle);
-        this.build = build;
+        this.builder = build;
         setCancelable(true);
         this.from = from;
         this.onTrialKeyboardStateChanged = onTrialKeyboardStateChanged;
-//        this.hasTrialKeyboardShownWhenThemeCreated = hasTrialKeyboardShownWhenThemeCreated;
+    }
+
+    public static void sendShowTrialKeyboardDialogNotification(String activityName, int activationRequestCode) {
+        HSBundle bundle = new HSBundle();
+        bundle.putInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE, activationRequestCode);
+        bundle.putString(BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, activityName);
+        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
     }
 
     private void checkKeyboardState(Activity activity) {
-        if (!HSInputMethod.isCurrentIMESelected()) {
+        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             KeyboardActivationProcessor keyboardActivationProcessor;
             try {
                 keyboardActivationProcessor = new KeyboardActivationProcessor(Class.forName(from), this);
@@ -103,10 +87,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
             keyboardSelected(activationRequestCode);
         }
     }
-
-    private long currentResumeTime;
-
-    private NativeAdView nativeAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,32 +114,31 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 HSLog.e("app_keyboardtest_view_show_time : " + time);
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_keyboardtest_view_show_time", String.valueOf(time));
 
-                if (from.contains("ThemeHomeActivity")) {
-                    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                    if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        boolean isRateAlertShownThisTime = false;
-                        HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-                        if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
-                            if (!HSAlertMgr.isAlertShown()) {
-                                //当前session未显示过
-                                HSLog.d("TrialKeyboardDialog", "RateAlert当前session未显示过");
-                                HSAlertMgr.showRateAlert();
-                                if (HSAlertMgr.isAlertShown()) {
-                                    //本次弹出了RateAlert
-                                    isRateAlertShownThisTime = true;
-                                    HSLog.d("TrialKeyboardDialog", "本次弹出了RateAlert");
-                                }
+                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    boolean isRateAlertShownThisTime = false;
+                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
+                    if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
+                        if (!HSAlertMgr.isAlertShown()) {
+                            //当前session未显示过
+                            HSLog.d("TrialKeyboardDialog", "RateAlert当前session未显示过");
+                            HSAlertMgr.showRateAlert();
+                            if (HSAlertMgr.isAlertShown()) {
+                                //本次弹出了RateAlert
+                                isRateAlertShownThisTime = true;
+                                HSLog.d("TrialKeyboardDialog", "本次弹出了RateAlert");
                             }
+                        }
 
-                            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
-                        } else {
-                            HSLog.e("CUSTOM_THEME_SAVE_NULL");
-                        }
-                        if (!isRateAlertShownThisTime) {
-                            showInterstitialAds();
-                        }
+                        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
+                    } else {
+                        HSLog.e("CUSTOM_THEME_SAVE_NULL");
+                    }
+                    if (!isRateAlertShownThisTime) {
+                        showInterstitialAds();
                     }
                 }
+
                 isSoftKeyboardOpened = false;
                 if (nativeAdView != null) {
 //                    nativeAdView.release();
@@ -169,60 +148,39 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     }
 
     private void showInterstitialAds() {
-        if (!CustomThemeActivity.hasTrialKeyboardShownWhenThemeCreated && getContext().getResources().getBoolean(R.bool.is_show_full_screen_ad_after_show_trial_keyboard) && !IAPManager.getManager().hasPurchaseNoAds()) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_apply_load_ad));
-            List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), getContext().getResources().getString(R.string.placement_full_screen_trial_keyboard), 1);
-            if (interstitialAds.size() > 0) {
-                final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-                interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                    long adDisplayTime = -1;
-
-                    @Override
-                    public void onAdDisplayed() {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_apply_show_ad));
-                        adDisplayTime = System.currentTimeMillis();
-                    }
-
-                    @Override
-                    public void onAdClicked() {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_apply_click_ad));
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                        long duration = System.currentTimeMillis() - adDisplayTime;
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getContext().getResources().getString(R.string.ga_fullscreen_theme_apply_display_ad), String.format("%fs", duration / 1000f));
-                        interstitialAd.release();
-                    }
-                });
-                interstitialAd.show();
-                hasTrialKeyboardShownWhenThemeCreated = false;
-            } else {
+        if (showAdOnDismiss && !IAPManager.getManager().hasPurchaseNoAds()) {
+            boolean adShown = KCInterstitialAd.show(getContext().getString(R.string.placement_full_screen_open_keyboard));
+            if (!adShown) {
                 showChargingEnableAlert();
             }
-        }else{
-            hasTrialKeyboardShownWhenThemeCreated = false;
         }
     }
 
-
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_show");
-            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-            dialog.setTitle(getContext().getString(R.string.charging_alert_title));
-            dialog.setMessage(getContext().getString(R.string.charging_alert_message));
-            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-            dialog.setCancelable(true);
-            dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ChargingManagerUtil.enableCharging(false);
-                    HSToastUtils.toastCenterShort(getContext().getString(R.string.charging_enable_toast));
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
-                }
-            });
-            dialog.show();
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+            if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
+
+                CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+                dialog.setTitle(getContext().getString(R.string.charging_alert_title));
+                dialog.setMessage(getContext().getString(R.string.charging_alert_message));
+                dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+                dialog.setCancelable(true);
+                dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ChargingManagerUtil.enableCharging(false, "saving");
+                        HSToastUtils.toastCenterShort(getContext().getString(R.string.charging_enable_toast));
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+                    }
+                });
+                dialog.show();
+            }else {
+                Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
+                intent.putExtra("type", "charging");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                HSApplication.getContext().startActivity(intent);
+            }
         }
     }
 
@@ -234,11 +192,10 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
         int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
         View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
-        if(nativeAdView == null){
+        if (nativeAdView == null) {
             nativeAdView = new NativeAdView(HSApplication.getContext(), view, null);
             nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
             final CardView cardView = ViewConvertor.toCardView(nativeAdView);
-            NativeAdViewButtonHelper.autoHighlight(nativeAdView);
 
             nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
                 @Override
@@ -255,7 +212,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         return nativeAdView;
     }
 
-    public void show(Activity activity, int keyboardActivationRequestCode) {
+    public void show(Activity activity, int keyboardActivationRequestCode, boolean showAdOnDismiss) {
         switch (keyboardActivationRequestCode) {
             case 10: // My Themes apply
                 HSAnalytics.logEvent("keyboard_try_viewed", "from", "appliedTheme");
@@ -273,8 +230,11 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 break;
         }
         activationRequestCode = keyboardActivationRequestCode;
+        this.showAdOnDismiss = showAdOnDismiss;
         checkKeyboardState(activity);
-        new AcbInterstitialAdLoader(getContext(),getContext().getResources().getString(R.string.placement_full_screen_trial_keyboard)).load(1,null);
+        if (showAdOnDismiss && !IAPManager.getManager().hasPurchaseNoAds()) {
+            KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
+        }
     }
 
     @Override
@@ -284,12 +244,12 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (build.listener != null) {
+        if (builder.listener != null) {
             if (v.getId() == R.id.dialog_cancel_button) {
-                build.listener.onNegativeButtonClick();
+                builder.listener.onNegativeButtonClick();
                 dismiss();
             } else if (v.getId() == R.id.dialog_ok_button) {
-                build.listener.onPositiveButtonClick();
+                builder.listener.onPositiveButtonClick();
                 dismiss();
             }
         }
@@ -304,39 +264,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
             onlyCloseKeyboard = true;
             super.dismiss();
         }
-    }
-
-
-    public static class Build {
-        DialogClickListener listener;
-
-        String from;
-
-        public Build(String from) {
-            this.from = from;
-        }
-
-        public TrialKeyboardDialog create(Activity context, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
-            return new TrialKeyboardDialog(context, this, from, onTrialKeyboardStateChanged);
-        }
-
-        public TrialKeyboardDialog create(Activity context, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged, boolean hasTrialKeyboardShownWhenThemeCreated) {
-            return new TrialKeyboardDialog(context, this, from, onTrialKeyboardStateChanged, hasTrialKeyboardShownWhenThemeCreated);
-        }
-    }
-
-    public interface DialogClickListener {
-        void onNegativeButtonClick();
-
-        void onPositiveButtonClick();
-    }
-
-
-    public static void sendShowTrialKeyboardDialogNotification(String activityName, int activationRequestCode) {
-        HSBundle bundle = new HSBundle();
-        bundle.putInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE, activationRequestCode);
-        bundle.putString(BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, activityName);
-        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
     }
 
     private void setLayoutListenerToRootView() {
@@ -361,7 +288,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         });
 
     }
-
 
     @Override
     public void activeDialogShowing() {
@@ -392,5 +318,33 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     @Override
     public void activeDialogDismissed() {
 
+    }
+
+    public interface OnTrialKeyboardStateChanged {
+
+        void onTrialKeyShow(int requestCode);
+
+        void onTrailKeyPrevented();
+
+    }
+
+    public interface DialogClickListener {
+        void onNegativeButtonClick();
+
+        void onPositiveButtonClick();
+    }
+
+    public static class Builder {
+        DialogClickListener listener;
+
+        String from;
+
+        public Builder(String from) {
+            this.from = from;
+        }
+
+        public TrialKeyboardDialog create(Activity context, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
+            return new TrialKeyboardDialog(context, this, from, onTrialKeyboardStateChanged);
+        }
     }
 }

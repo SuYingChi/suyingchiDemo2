@@ -25,6 +25,7 @@ public final class ThemeAdViewHolder extends RecyclerView.ViewHolder {
             if (ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY.equals(s)) {
                 if (adView != null) {
                     adView.release();
+                    adView = null;
                 }
                 HSGlobalNotificationCenter.removeObserver(notificationObserver);
             }

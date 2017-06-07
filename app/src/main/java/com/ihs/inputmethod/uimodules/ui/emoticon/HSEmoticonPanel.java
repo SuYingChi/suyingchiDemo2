@@ -33,7 +33,6 @@ public final class HSEmoticonPanel extends BasePanel {
 
 	@Override
 	public boolean onHidePanelView(int appearMode) {
-		emoticonView=null;
 		setPanelView(null);
 		return super.onHidePanelView(appearMode);
 	}
@@ -44,4 +43,8 @@ public final class HSEmoticonPanel extends BasePanel {
 		return emoticonView;
 	}
 
+	@Override
+	protected void onDestroy() {
+		emoticonView.onDestroy();
+	}
 }

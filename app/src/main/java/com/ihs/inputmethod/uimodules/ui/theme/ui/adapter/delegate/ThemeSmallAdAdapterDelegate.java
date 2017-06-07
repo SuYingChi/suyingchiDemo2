@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
@@ -62,7 +61,7 @@ public final class ThemeSmallAdAdapterDelegate extends ThemeAdAdapterDelegate {
     @Override
     protected void onBindViewHolder(@NonNull List<ThemeHomeModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
         CardView cardView = (CardView) holder.itemView;
-        String nativeAd = getNativeAd(position);
+        String nativeAd = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
         if (nativeAdViewCached.get(nativeAd) == null) {
             View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_5, null);
             LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
@@ -74,7 +73,6 @@ public final class ThemeSmallAdAdapterDelegate extends ThemeAdAdapterDelegate {
             nativeAdParams.setScaleType(ImageView.ScaleType.CENTER_CROP);
             nativeAdView.configParams(nativeAdParams);
             cardView.addView(nativeAdView);
-            NativeAdViewButtonHelper.autoHighlight(nativeAdView);
 
             nativeAdViewCached.put(nativeAd, nativeAdView);
         } else {

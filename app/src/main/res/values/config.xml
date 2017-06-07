@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
 
     <bool name="config_super_emoji_enabled">false</bool>
     <bool name="config_sticker_enabled">false</bool>
@@ -17,5 +19,6 @@
     <fraction name="config_image_page_image_size">30%p</fraction>
     <fraction name="config_image_page_image_width">33%p</fraction>
     <fraction name="config_image_page_image_height">50%p</fraction>
-
+    <!-- Lucky -->
+    <integer name="config_luckyGoButtonDownUpDuration">100</integer>
 </resources>

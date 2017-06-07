@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.feature.lucky.view.AwardViewSizeAdapter
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lucky_award_bg"
+    android:visibility="gone">
+
+    <com.ihs.inputmethod.feature.lucky.view.AwardView
+        android:id="@+id/lucky_game_award_view"
+        android:layout_width="@dimen/lucky_award_view_design_width"
+        android:layout_height="@dimen/lucky_award_view_design_height"
+        android:layout_gravity="center"/>
+</com.ihs.inputmethod.feature.lucky.view.AwardViewSizeAdapter>

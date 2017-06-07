@@ -45,9 +45,19 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
 	private List<ThemeHomeModel> themeList=new ArrayList<>();
 
-	private final static int adPosition = 6;
 	private boolean isThemeAnalyticsEnabled = false;
 	private long currentResumeTime;
+	private INotificationObserver notificationObserver = new INotificationObserver() {
+		@Override
+		public void onReceive(String s, HSBundle hsBundle) {
+			if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
+				updateThemeList();
+			}
+			else if(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+				removeAds();
+			}
+ 		}
+	};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -201,7 +211,6 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 		adapter.notifyDataSetChanged();
 	}
 
-
 	@Override
 	public void onCardClick(HSKeyboardTheme keyboardTheme) {
 		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("store_themes_preview_clicked", keyboardTheme.mThemeName);
@@ -240,20 +249,6 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 	public void onMenuAppliedClick(HSKeyboardTheme keyboardTheme) {
 
 	}
-
-	private INotificationObserver notificationObserver = new INotificationObserver() {
-		@Override
-		public void onReceive(String s, HSBundle hsBundle) {
-			if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
-				updateThemeList();
-			}
-			else if(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
-				removeAds();
-			}
- 		}
-	};
-
-
 
 	public void onResume() {
 		super.onResume();

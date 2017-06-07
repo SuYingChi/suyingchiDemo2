@@ -4,25 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    app:cardBackgroundColor="@color/white_standard"
     android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white_standard"
     app:cardCornerRadius="@dimen/common_round_corner"
     app:cardPreventCornerOverlap="false"
     >
 
-    <com.ihs.keyboardutils.view.HSGifImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/background_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:corner_radius="@dimen/common_round_corner"
-        android:scaleType="centerCrop"/>
-
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="@dimen/common_round_corner"/>
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/background_new_mark"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         app:riv_corner_radius="@dimen/common_round_corner"/>
 
     <ImageView

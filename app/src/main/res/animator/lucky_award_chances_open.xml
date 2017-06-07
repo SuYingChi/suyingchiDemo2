@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <objectAnimator
+        android:duration="280"
+        android:interpolator="@anim/decelerate_quint"
+        android:propertyName="armAlphaScaleTranslationYProgress"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="170"
+        android:interpolator="@android:interpolator/accelerate_decelerate"
+        android:propertyName="armScale"
+        android:startOffset="280"
+        android:valueFrom="1.5"
+        android:valueTo="1" />
+
+    <objectAnimator
+        android:duration="500"
+        android:interpolator="@android:interpolator/overshoot"
+        android:propertyName="bubbleAlphaScale"
+        android:startOffset="400"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="400"
+        android:interpolator="@android:interpolator/linear"
+        android:propertyName="haloAlphaScale"
+        android:startOffset="400"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="250"
+        android:propertyName="titleAndButtonsAlpha"
+        android:startOffset="550"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="500"
+        android:interpolator="@android:interpolator/overshoot"
+        android:propertyName="descriptionAlphaScale"
+        android:startOffset="500"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="400"
+        android:propertyName="starsAndLightsAlpha"
+        android:startOffset="400"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="250"
+        android:propertyName="starsAlpha"
+        android:startOffset="800"
+        android:valueFrom="1"
+        android:valueTo="0"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="250"
+        android:propertyName="starsAlpha"
+        android:startOffset="1050"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType" />
+
+    <!-- Fragments animations -->
+    <objectAnimator
+        android:duration="1500"
+        android:propertyName="fragmentAlphaTranslationYProgress1"
+        android:startOffset="700"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:repeatCount="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="1800"
+        android:propertyName="fragmentAlphaTranslationYProgress2"
+        android:startOffset="800"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:repeatCount="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="900"
+        android:propertyName="fragmentAlphaTranslationYProgress3"
+        android:startOffset="950"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:repeatCount="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="1500"
+        android:propertyName="fragmentAlphaTranslationYProgress4"
+        android:startOffset="1050"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:repeatCount="1"
+        android:valueType="floatType" />
+
+    <objectAnimator
+        android:duration="1950"
+        android:propertyName="fragmentAlphaTranslationYProgress5"
+        android:startOffset="1100"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:repeatCount="1"
+        android:valueType="floatType" />
+
+    <!-- Infinite animation below -->
+    <objectAnimator
+        android:duration="15000"
+        android:interpolator="@android:interpolator/linear"
+        android:propertyName="lightRotateDegrees"
+        android:repeatCount="infinite"
+        android:repeatMode="restart"
+        android:startOffset="800"
+        android:valueFrom="0"
+        android:valueTo="360"
+        android:valueType="floatType" />
+</set>

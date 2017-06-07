@@ -58,7 +58,5 @@
     <color name="theme_more_text_color">@color/colorAccent</color>
     <color name="white_100_percent">#ffffff</color>
 
-    <color name="selector_keyactive_onetap_normal">#ffffff</color>
-    <color name="selector_keyactive_manual_normal">#59bbfb</color>
-    <color name="selector_keyactive_enable">#0db664</color>
+
 </resources>

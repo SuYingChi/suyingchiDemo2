@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -20,11 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbInterstitialAd;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -34,13 +30,10 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSImageLoader;
-import com.ihs.inputmethod.api.utils.HSNetworkConnectionUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
-import com.ihs.inputmethod.uimodules.NativeAdViewButtonHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
@@ -50,7 +43,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
-import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
@@ -69,6 +61,8 @@ import java.util.List;
  * Created by jixiang on 16/8/24.
  */
 public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnClickListener, CommonThemeCardAdapter.ThemeCardItemClickListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged {
+    public final static String INTENT_KEY_THEME_NAME = "themeName";
+    private static final int keyboardActivationFromDetail = 6;
     private NestedScrollView rootView;
     private View screenshotContainer;
     private ImageView keyboardThemeScreenShotImageView;
@@ -80,15 +74,27 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private RecyclerView recommendRecyclerView;
     private CommonThemeCardAdapter themeCardAdapter;
     private TrialKeyboardDialog trialKeyboardDialog;
-
     private String themeName;
     private HSKeyboardTheme.ThemeType themeType;
     private HSKeyboardTheme keyboardTheme;
     private NativeAdView nativeAdView;
-
-    public final static String INTENT_KEY_THEME_NAME = "themeName";
-
-    private static final int keyboardActivationFromDetail = 6;
+    private long currentResumeTime;
+    private INotificationObserver notificationObserver = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
+                if (hsBundle != null) {
+                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
+                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
+                    if (ThemeDetailActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
+                        showTrialKeyboardDialog(activationCode);
+                    }
+                }
+            } else if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
+                updateCurrentThemeStatus();
+            }
+        }
+    };
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -136,27 +142,27 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
                                 @Override
                                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                    if(isCurrentImageUri(imageUri)) {
+                                    if (isCurrentImageUri(imageUri)) {
                                         screenshotLoading.setVisibility(View.GONE);
                                     }
                                 }
 
                                 @Override
                                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                    if(isCurrentImageUri(imageUri)) {
+                                    if (isCurrentImageUri(imageUri)) {
                                         screenshotLoading.setVisibility(View.GONE);
                                     }
                                 }
 
                                 @Override
                                 public void onLoadingCancelled(String imageUri, View view) {
-                                    if(isCurrentImageUri(imageUri)) {
+                                    if (isCurrentImageUri(imageUri)) {
                                         screenshotLoading.setVisibility(View.GONE);
                                     }
                                 }
 
-                                public boolean isCurrentImageUri(String imageUri){
-                                    if(keyboardTheme!=null && keyboardTheme.getLargePreivewImgUrl()!=null && keyboardTheme.getLargePreivewImgUrl().equals(imageUri)){
+                                public boolean isCurrentImageUri(String imageUri) {
+                                    if (keyboardTheme != null && keyboardTheme.getLargePreivewImgUrl() != null && keyboardTheme.getLargePreivewImgUrl().equals(imageUri)) {
                                         return true;
                                     }
                                     return false;
@@ -192,10 +198,10 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         if (keyboardTheme != null) {
             keyboardThemeList.remove(keyboardTheme);
         }
-        List<ThemeHomeModel> models=new ArrayList<>();
-        for(HSKeyboardTheme keyboardTheme:keyboardThemeList){
-            ThemeHomeModel model=new ThemeHomeModel();
-            model.keyboardTheme=keyboardTheme;
+        List<ThemeHomeModel> models = new ArrayList<>();
+        for (HSKeyboardTheme keyboardTheme : keyboardThemeList) {
+            ThemeHomeModel model = new ThemeHomeModel();
+            model.keyboardTheme = keyboardTheme;
             models.add(model);
         }
         return models;
@@ -231,38 +237,38 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         recommendRecyclerView = (RecyclerView) findViewById(R.id.theme_detail_recommend_recycler_view);
         recommendRecyclerView.setNestedScrollingEnabled(false);
         recommendRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        themeCardAdapter = new CommonThemeCardAdapter(this,this,false);
+        themeCardAdapter = new CommonThemeCardAdapter(this, this, false);
 //        themeCardAdapter.setThemeCardItemClickListener(this);
         recommendRecyclerView.setAdapter(themeCardAdapter);
 
         addNativeAdView();
     }
 
-
     private void addNativeAdView() {
-        if(!IAPManager.getManager().hasPurchaseNoAds()) {
+        if (!IAPManager.getManager().hasPurchaseNoAds()) {
             // 添加广告
             if (nativeAdView == null) {
-                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
-                if (HSNetworkConnectionUtils.isNetworkConnected()) {
-                    int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
-                    View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
-                    LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
-                    LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
-                    loadingView.setLayoutParams(loadingLP);
-                    loadingView.setGravity(Gravity.CENTER);
-                    nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
-                    nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themedetailad), width, 1.9f));
-                    NativeAdViewButtonHelper.autoHighlight(nativeAdView);
-                    CardView cardView = ViewConvertor.toCardView(nativeAdView);
-                    linearLayout.addView(cardView);
-                } else
-                    linearLayout.setVisibility(View.GONE);
+                final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
+                int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
+                View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
+                LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
+                LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
+                loadingView.setLayoutParams(loadingLP);
+                loadingView.setGravity(Gravity.CENTER);
+                nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
+                nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themetryad), width, 1.9f));
+                CardView cardView = ViewConvertor.toCardView(nativeAdView);
+                linearLayout.addView(cardView);
+                linearLayout.setVisibility(View.GONE);
+                nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                    @Override
+                    public void onAdLoaded(NativeAdView nativeAdView) {
+                        linearLayout.setVisibility(View.VISIBLE);
+                    }
+                });
             }
         }
     }
-
-    private long currentResumeTime;
 
     @Override
     protected void onResume() {
@@ -290,10 +296,10 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         switch (themeType) {
             case NEED_DOWNLOAD:
                 leftBtn.setText(R.string.theme_card_menu_share);
-                if(ThemeDownloadManager.getInstance().isDownloading(keyboardTheme.mThemeName)) {
+                if (ThemeDownloadManager.getInstance().isDownloading(keyboardTheme.mThemeName)) {
                     rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_downloading));
                     rightBtn.setEnabled(false);
-                }else {
+                } else {
                     rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_download));
                     rightBtn.setEnabled(true);
                 }
@@ -301,7 +307,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             case CUSTOM:
             case DOWNLOADED:
             case BUILD_IN:
-                if (themeName != null && HSKeyboardThemeManager.getCurrentTheme()!=null && themeName.equals(HSKeyboardThemeManager.getCurrentTheme().mThemeName)) {
+                if (themeName != null && HSKeyboardThemeManager.getCurrentTheme() != null && themeName.equals(HSKeyboardThemeManager.getCurrentTheme().mThemeName)) {
                     rightBtn.setText(R.string.theme_card_menu_applied);
                     rightBtn.setEnabled(false);
                 } else {
@@ -312,8 +318,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 break;
         }
     }
-
-
 
     @Override
     public void onClick(View v) {
@@ -332,7 +336,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
         String text = ((TextView) v).getText().toString();
         if (HSApplication.getContext().getString(R.string.theme_card_menu_download).equalsIgnoreCase(text)) {
-            ((TextView)v).setText(R.string.theme_card_menu_downloading);
+            ((TextView) v).setText(R.string.theme_card_menu_downloading);
             v.setEnabled(false);
             ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("themedetails_download_clicked", themeName);
@@ -345,9 +349,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_share_clicked", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_apply).equalsIgnoreCase(text)) {
-            if(keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName())) {
-                ApkUtils.startInstall(HSApplication.getContext(),Uri.fromFile(new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName))));
-            }else {
+            if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName())) {
+                ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName))));
+            } else {
                 if (HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
                     showTrialKeyboardDialog(keyboardActivationFromDetail);
                 } else {
@@ -365,68 +369,10 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     private void showTrialKeyboardDialog(int activationCode) {
         if (trialKeyboardDialog == null) {
-            trialKeyboardDialog = new TrialKeyboardDialog.Build(ThemeDetailActivity.class.getName()).create(this, this);
+            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(this, this);
 
         }
-        trialKeyboardDialog.show(this,activationCode);
-        trialKeyboardDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                showInterstitialAds();
-            }
-        });
-    }
-
-    private void showInterstitialAds() {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_load_ad));
-            List<AcbInterstitialAd> interstitialAds = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), getResources().getString(R.string.placement_full_screen_trial_keyboard), 1);
-            if (interstitialAds.size() > 0) {
-                final AcbInterstitialAd interstitialAd = interstitialAds.get(0);
-                interstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
-                    long adDisplayTime = -1;
-
-                    @Override
-                    public void onAdDisplayed() {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_show_ad));
-                        adDisplayTime = System.currentTimeMillis();
-                    }
-
-                    @Override
-                    public void onAdClicked() {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_click_ad));
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                        long duration = System.currentTimeMillis() - adDisplayTime;
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(getResources().getString(R.string.ga_fullscreen_theme_apply_display_ad), String.format("%fs", duration / 1000f));
-                        interstitialAd.release();
-                    }
-                });
-                interstitialAd.show();
-            } else {
-                showChargingEnableAlert();
-            }
-    }
-
-    private void showChargingEnableAlert() {
-        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_show");
-            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-            dialog.setTitle(getString(R.string.charging_alert_title));
-            dialog.setMessage(getString(R.string.charging_alert_message));
-            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-            dialog.setCancelable(true);
-            dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ChargingManagerUtil.enableCharging(false);
-                    HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_InterstitialRequestFailedAlert_prompt_click");
-                }
-            });
-            dialog.show();
-        }
+        trialKeyboardDialog.show(this, activationCode, true);
     }
 
     @Override
@@ -439,23 +385,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private INotificationObserver notificationObserver = new INotificationObserver() {
-        @Override
-        public void onReceive(String s, HSBundle hsBundle) {
-            if (com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
-                if (hsBundle != null) {
-                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
-                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
-                    if (ThemeDetailActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
-                        showTrialKeyboardDialog(activationCode);
-                    }
-                }
-            } else if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
-                updateCurrentThemeStatus();
-            }
-        }
-    };
 
     /**
      * 更改当前主题状态,有可能当前主题对应的主题包APK被安装或者删除了
@@ -554,7 +483,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     @Override
     public void onTrialKeyShow(int requestCode) {
         if (keyboardActivationFromDetail == requestCode || requestCode == ThemeMenuUtils.keyboardActivationFromAdapter) {
-            if (themeName != null && HSKeyboardThemeManager.getCurrentTheme()!=null && themeName.equals(HSKeyboardThemeManager.getCurrentTheme().mThemeName)) {
+            if (themeName != null && HSKeyboardThemeManager.getCurrentTheme() != null && themeName.equals(HSKeyboardThemeManager.getCurrentTheme().mThemeName)) {
                 rightBtn.setText(R.string.theme_card_menu_applied);
                 rightBtn.setEnabled(false);
             } else {
@@ -564,12 +493,12 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_apply_clicked", themeName);
         }
 
-        switch (requestCode){
+        switch (requestCode) {
             case keyboardActivationFromDetail:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed","apply");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "apply");
                 break;
             case ThemeMenuUtils.keyboardActivationFromAdapter:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed","apply");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "apply");
                 break;
         }
     }

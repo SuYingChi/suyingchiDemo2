@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.feature.lucky.view.BombView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/lucky_game_boom_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/lucky_bomb"/>
+
+    <RelativeLayout
+        android:id="@+id/lucky_game_bomb_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical|right|end"
+        android:layout_marginBottom="113dp"
+        android:layout_marginRight="33dp"
+        android:layout_marginEnd="33dp"
+        android:background="@drawable/material_compat_toolbar_bg">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/lucky_award_close"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/lucky_game_bomb_fire"
+        android:layout_width="284dp"
+        android:layout_height="183dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="7dp"
+            android:layout_marginEnd="7dp"
+            android:background="@drawable/lucky_award_boom_bright_point"/>
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical|left|start"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
+            android:background="@drawable/lucky_award_boom_bright_point"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical|right|end"
+            android:layout_marginBottom="40dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/lucky_award_boom_bright_point"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical|left|start"
+            android:layout_marginTop="43dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginStart="38dp"
+            android:background="@drawable/lucky_award_boom_bright_point"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|end|bottom"
+            android:layout_marginRight="53dp"
+            android:layout_marginEnd="53dp"
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/lucky_award_boom_bright_point"/>
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="9dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginEnd="13dp"
+            android:background="@drawable/lucky_award_boom_bright_point"/>
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="21dp"
+            android:layout_marginStart="21dp"
+            android:background="@drawable/lucky_award_boom_bright_point"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|start|bottom"
+            android:layout_marginLeft="43dp"
+            android:layout_marginStart="43dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/lucky_award_boom_bright_point"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/lucky_game_bomb_frame"
+        android:layout_width="284dp"
+        android:layout_height="183dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="70dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginStart="55dp"
+            android:background="@drawable/lucky_award_boom_fragment"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="72dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginEnd="35dp"
+            android:rotation="90"
+            android:background="@drawable/lucky_award_boom_fragment"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left|start"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:rotation="-100"
+            android:background="@drawable/lucky_award_boom_fragment"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="63dp"
+            android:layout_marginEnd="63dp"
+            android:rotation="190"
+            android:background="@drawable/lucky_award_boom_fragment"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="33dp"
+            android:layout_marginStart="33dp"
+            android:rotation="120"
+            android:background="@drawable/lucky_award_boom_fragment"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right|end"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginEnd="13dp"
+            android:rotation="-100"
+            android:background="@drawable/lucky_award_boom_fragment"/>
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/lucky_game_bomb_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:alpha="0"
+        android:background="@drawable/lucky_award_chances_centralized_light"/>
+
+    <ImageView
+        android:id="@+id/lucky_game_bomb_effect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/lucky_award_bomb_effect"/>
+
+    <ImageView
+        android:id="@+id/lucky_game_bomb_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:alpha="0"
+        android:background="@drawable/lucky_award_boom_word"/>
+
+    <TextView
+        android:id="@+id/lucky_game_bomb_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="110dp"
+        android:textSize="36sp"
+        android:text="@string/lucky_game_award_boom_description"
+        android:textStyle="bold"
+        android:textColor="#fff100"
+        android:alpha="1"/>
+
+</com.ihs.inputmethod.feature.lucky.view.BombView>
