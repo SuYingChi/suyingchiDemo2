@@ -40,6 +40,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
 
@@ -94,6 +95,13 @@ public class HSUIApplication extends HSInputMethodApplication {
                 recordInstallType();
             }
         });
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
 
         if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
             startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
