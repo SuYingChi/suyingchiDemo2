@@ -9,8 +9,8 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 
@@ -167,7 +167,7 @@ class HSVideoView extends RelativeLayout implements IMediaView {
 
     public Drawable loadDrawableFromAbsolutePath(String path){
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).build();
-        Bitmap itemBitmap = HSImageLoader.getInstance().loadImageSync("file://"+path, options);
+        Bitmap itemBitmap = ImageLoader.getInstance().loadImageSync("file://"+path, options);
         return new BitmapDrawable(itemBitmap);
     }
 }

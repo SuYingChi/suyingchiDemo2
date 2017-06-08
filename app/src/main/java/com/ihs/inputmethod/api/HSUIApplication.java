@@ -40,6 +40,8 @@ import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
@@ -88,6 +90,10 @@ public class HSUIApplication extends HSInputMethodApplication {
     public void onCreate() {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).build();
+        ImageLoader.getInstance().init(config);
+
         HSPublisherMgr.registerResultListener(this, new HSPublisherMgr.IPublisherListener() {
             @Override
             public void onResult(HSPublisherMgr.PublisherData publisherData) {

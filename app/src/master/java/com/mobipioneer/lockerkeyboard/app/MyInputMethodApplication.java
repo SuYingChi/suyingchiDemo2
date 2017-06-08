@@ -48,7 +48,6 @@ public class MyInputMethodApplication extends HSUIApplication {
     };
 
 
-
     @Override
     protected void onSessionStart() {
         super.onSessionStart();
@@ -66,11 +65,6 @@ public class MyInputMethodApplication extends HSUIApplication {
 
         HSGlobalNotificationCenter.addObserver(HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).build();
-        ImageLoader.getInstance().init(config);
-
-//        AppLockManager.init(this);
 
         isFacebookAppInstalled = HSInstallationUtils.isAppInstalled("com.facebook.katana");
         isGooglePlayInstalled = HSMarketUtils.isMarketInstalled(HSMarketUtils.GOOGLE_MARKET);

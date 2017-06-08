@@ -29,7 +29,6 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.theme.download.ApkUtils;
@@ -49,6 +48,7 @@ import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
@@ -133,7 +133,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
                 if (keyboardTheme.getLargePreivewImgUrl() != null) {
                     keyboardThemeScreenShotImageView.setImageDrawable(null);
-                    HSImageLoader.getInstance().displayImage(keyboardTheme.getLargePreivewImgUrl(), keyboardThemeScreenShotImageView, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build()
+                    ImageLoader.getInstance().displayImage(keyboardTheme.getLargePreivewImgUrl(), keyboardThemeScreenShotImageView, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build()
                             , new ImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {

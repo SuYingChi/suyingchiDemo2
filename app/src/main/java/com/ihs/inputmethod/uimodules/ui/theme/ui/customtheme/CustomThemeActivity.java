@@ -40,7 +40,6 @@ import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardThemePreview;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
-import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
@@ -70,6 +69,7 @@ import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
 import com.keyboard.core.themes.custom.elements.KCFontElement;
 import com.keyboard.core.themes.custom.elements.KCSoundElement;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,7 +174,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        HSImageLoader.getInstance().clearMemoryCache();
+        ImageLoader.getInstance().clearMemoryCache();
         AudioAndHapticFeedbackManager.getInstance().releaseSoundResource();
         HSGlobalNotificationCenter.removeObserver(this);
     }
