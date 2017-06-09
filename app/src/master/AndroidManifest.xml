@@ -450,7 +450,7 @@
             android:windowSoftInputMode="adjustResize"
             tools:replace="android:theme">
             <intent-filter>
-                <action android:name="keyboard.main" />
+                <action android:name="${applicationId}.keyboard.main" />
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

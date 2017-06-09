@@ -43,7 +43,7 @@ import static com.ihs.inputmethod.uimodules.R.id.view_img_title;
 
 
 public class KeyboardActivationActivity extends HSActivity {
-    public static final String ACTION_MAIN_ACTIVITY = "keyboard.main";
+    public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
     private static final int GUIDE_DELAY = 300;
     private boolean shouldShowEnableDialog = false;
 
@@ -108,6 +108,14 @@ public class KeyboardActivationActivity extends HSActivity {
         } catch (Exception e) {
         }
 
+        if(videoView!=null){
+            try{
+                videoView.stopPlayback();
+                videoView = null;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         super.onDestroy();
     }
 

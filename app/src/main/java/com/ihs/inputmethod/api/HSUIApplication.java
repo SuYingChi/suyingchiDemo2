@@ -103,12 +103,14 @@ public class HSUIApplication extends HSInputMethodApplication {
             }
         });
 
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
+        if(false){
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                // This process is dedicated to LeakCanary for heap analysis.
+                // You should not init your app in this process.
+                return;
+            }
+            LeakCanary.install(this);
         }
-        LeakCanary.install(this);
 
         if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable") && !KCFeatureRestrictionConfig.isFeatureRestricted("RemindChangeKeyboard")) {
             startService(new Intent(getApplicationContext(), WakeKeyboardService.class));

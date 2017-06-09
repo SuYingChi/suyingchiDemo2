@@ -151,7 +151,7 @@
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="keyboard.main" />
+                <action android:name="${applicationId}.keyboard.main" />
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
