@@ -66,7 +66,6 @@ public class AccessibilityEventListener implements IAccEventListener {
                             public void run() {
                                 InputMethodManager m = (InputMethodManager) HSApplication.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                                 m.showInputMethodPicker();
-                                AccGALogger.logOneTimeGA(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                             }
                         },100);
                     }else{
