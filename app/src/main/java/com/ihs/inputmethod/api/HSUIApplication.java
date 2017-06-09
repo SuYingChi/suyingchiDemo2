@@ -43,6 +43,7 @@ import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.util.ArrayList;
 
@@ -109,7 +110,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
         LeakCanary.install(this);
 
-        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
+        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable") && !KCFeatureRestrictionConfig.isFeatureRestricted("RemindChangeKeyboard")) {
             startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
         }
 
