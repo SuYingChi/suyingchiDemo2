@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +13,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.support.v7.app.AlertDialog;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.Display;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,6 +25,7 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -56,6 +63,8 @@ public class KeyboardActivationActivity extends HSActivity {
     private CustomViewDialog customViewDialog;
 
     private boolean skipPage = false;
+    private TextView protocolText;
+
 
     private BroadcastReceiver imeChangeReceiver = new BroadcastReceiver() {
 
@@ -192,6 +201,34 @@ public class KeyboardActivationActivity extends HSActivity {
         }
 
         logOneTimeGA(app_accessibility_setkey_screen_viewed);
+
+        initPrivacy();
+    }
+
+    private void initPrivacy() {
+        protocolText = (TextView) findViewById(R.id.privacy_policy_text);
+        String serviceKeyText = getString(R.string.text_terms_of_service);
+        String policyKeyText = getString(R.string.text_privacy_policy);
+        String policyText = getResources().getString(R.string.privacy_policy, serviceKeyText, policyKeyText);
+        SpannableString ss = new SpannableString(policyText);
+        ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//                ds.setUnderlineText(true);
+            }
+        }, policyText.indexOf(serviceKeyText), policyText.indexOf(serviceKeyText) + serviceKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//                ds.setUnderlineText(true);
+            }
+        }, policyText.indexOf(policyKeyText), policyText.indexOf(policyKeyText) + policyKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        protocolText.setText(ss);
+        protocolText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 
