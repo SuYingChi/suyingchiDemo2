@@ -115,18 +115,14 @@ public class KeyboardActivationActivity extends HSActivity {
         boolean oneTapPageViewed = AccGALogger.isOneTapPageViewed();
         if (oneTapPageViewed || Build.VERSION.SDK_INT < 17) {
             skipPage = true;
-            Intent actIntent = getIntent();
-            if (actIntent == null) {
-                actIntent = new Intent();
-            }
-
+            Intent actIntent = new Intent();
+            actIntent.putExtras(getIntent());
             if (oneTapPageViewed) {
                 actIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
             } else {
                 actIntent.setAction(ACTION_MAIN_ACTIVITY);
             }
-
-            HSApplication.getContext().startActivity(actIntent);
+            startActivity(actIntent);
             finish();
             return;
         }
@@ -276,10 +272,8 @@ public class KeyboardActivationActivity extends HSActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     logOneTimeGA(app_manual_setkey_clicked);
-                    Intent actIntent = getIntent();
-                    if (actIntent == null) {
-                        actIntent = new Intent();
-                    }
+                    Intent actIntent = new Intent();
+                    actIntent.putExtras(getIntent());
                     actIntent.putExtra("skip", true);
                     actIntent.setAction(ACTION_MAIN_ACTIVITY);
                     startActivity(actIntent);
