@@ -25,6 +25,7 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.mobipioneer.lockerkeyboard.utils.Constants;
 
 import java.util.List;
 
@@ -108,6 +109,7 @@ public class SetupKeyboardAccessibilityService {
             imeSettingState = IME_STATE_ENABLED;
             InputMethodManager m = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             m.showInputMethodPicker();
+            AccGALogger.logOneTimeGA(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
             return;
         }
 
@@ -291,6 +293,7 @@ public class SetupKeyboardAccessibilityService {
                     public void run() {
                         InputMethodManager m = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                         m.showInputMethodPicker();
+                        AccGALogger.logOneTimeGA(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                     }
                 }, 1);
 
@@ -371,6 +374,7 @@ public class SetupKeyboardAccessibilityService {
                             public void run() {
                                 InputMethodManager m = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                                 m.showInputMethodPicker();
+                                AccGALogger.logOneTimeGA(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                             }
                         }, 10);
 

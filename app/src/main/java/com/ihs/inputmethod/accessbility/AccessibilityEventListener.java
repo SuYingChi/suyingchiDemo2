@@ -13,6 +13,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.devicemonitor.accessibility.IAccEventListener;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
+import com.mobipioneer.lockerkeyboard.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
@@ -65,6 +66,7 @@ public class AccessibilityEventListener implements IAccEventListener {
                             public void run() {
                                 InputMethodManager m = (InputMethodManager) HSApplication.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                                 m.showInputMethodPicker();
+                                AccGALogger.logOneTimeGA(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                             }
                         },100);
                     }else{

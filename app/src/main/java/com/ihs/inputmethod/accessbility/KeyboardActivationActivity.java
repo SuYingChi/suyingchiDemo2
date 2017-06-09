@@ -25,6 +25,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
+import com.mobipioneer.lockerkeyboard.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.view.View.GONE;
@@ -83,6 +84,7 @@ public class KeyboardActivationActivity extends HSActivity {
                         ((TextView) coverView.findViewById(R.id.tv_settings_item)).setText(R.string.access_set_up_success);
                         logOneTimeGA(app_accessibility_setkey_success_page_viewed);
                     }
+                    AccGALogger.logOneTimeGA(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
