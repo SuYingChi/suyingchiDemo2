@@ -115,6 +115,7 @@ public class MainActivity extends HSDeepLinkActivity {
     ;
 
     boolean isInStepOne;
+    boolean clickStepOne;
     // is phone dev
     boolean isPhoneDev = true;
     boolean isChargingShowEver = false;
@@ -613,6 +614,11 @@ public class MainActivity extends HSDeepLinkActivity {
             }
         });
 
+        if(clickStepOne){
+            bt_step_one.performClick();
+            clickStepOne = false;
+        }
+
     }
 
     @Override
@@ -636,20 +642,22 @@ public class MainActivity extends HSDeepLinkActivity {
 
         if (getIntent().getBooleanExtra("skip", false) && !isInStepOne && !HSInputMethodListManager.isMyInputMethodEnabled()) {
 
-            Intent settingIntent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-            settingIntent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(settingIntent);
-            isInStepOne = true;
+            clickStepOne = true;
 
-            ImageView imageCodeProject = new ImageView(getApplicationContext());
-            imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-            final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-            imageCodeProject.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    customViewDialog.show();
-                }
-            }, 500);
+//            Intent settingIntent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+//            settingIntent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
+//            startActivity(settingIntent);
+//            isInStepOne = true;
+//
+//            ImageView imageCodeProject = new ImageView(getApplicationContext());
+//            imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+//            final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+//            imageCodeProject.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    customViewDialog.show();
+//                }
+//            }, 500);
 
         }
 

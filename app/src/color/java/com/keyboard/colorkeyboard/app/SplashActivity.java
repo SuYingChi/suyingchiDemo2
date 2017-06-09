@@ -3,14 +3,12 @@ package com.keyboard.colorkeyboard.app;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.ihs.commons.config.HSConfig;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 /**
  * Created by wenbinduan on 2016/11/8.
@@ -22,7 +20,7 @@ public final class SplashActivity extends HSDeepLinkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        boolean isAccessibilityEnabled = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
+        boolean isAccessibilityEnabled = true;//HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
 
         Intent intent = getIntent();//携带其他页面的数据
         if (intent == null) {
