@@ -25,7 +25,7 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.mobipioneer.lockerkeyboard.utils.Constants;
+import com.ihs.inputmethod.utils.Constants;
 
 import java.util.List;
 

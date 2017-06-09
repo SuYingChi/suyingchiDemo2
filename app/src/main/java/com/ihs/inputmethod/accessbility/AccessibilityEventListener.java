@@ -13,7 +13,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.devicemonitor.accessibility.IAccEventListener;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
-import com.mobipioneer.lockerkeyboard.utils.Constants;
+import com.ihs.inputmethod.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;

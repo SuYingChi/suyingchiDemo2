@@ -90,8 +90,8 @@ public class DeleteKeyOnTouchListener implements View.OnTouchListener {
         //// TODO: 16/12/9 cjx 这里最后有一个true参数？
         mKeyboardActionListener.onCodeInput(Constants.CODE_DELETE,
                 Constants.NOT_A_COORDINATE, Constants.NOT_A_COORDINATE, false);
-//		mKeyboardActionListener.onCodeInput(Constants.CODE_DELETE,
-//				Constants.NOT_A_COORDINATE, Constants.NOT_A_COORDINATE, false, /* isKeyRepeat */true);
+//		mKeyboardActionListener.onCodeInput(MasterConstants.CODE_DELETE,
+//				MasterConstants.NOT_A_COORDINATE, MasterConstants.NOT_A_COORDINATE, false, /* isKeyRepeat */true);
         mKeyboardActionListener.onReleaseKey(
                 Constants.CODE_DELETE, false /* withSliding */);
         ++mRepeatCount;

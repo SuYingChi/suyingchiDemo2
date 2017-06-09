@@ -44,7 +44,7 @@ import com.ihs.inputmethod.framework.RichInputMethodManager;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.MoreLanguageActivity2;
-import com.mobipioneer.lockerkeyboard.utils.Constants;
+import com.mobipioneer.lockerkeyboard.utils.MasterConstants;
 
 import java.util.List;
 
@@ -223,8 +223,8 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
                         isSettingChargingClicked = true;
                         ChargingConfigManager.getManager().setUserChangeChargingToggle();
                         String switchOn = isSwitchOn ? "true" : "false";
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, switchOn);
-                        HSAnalytics.logEvent(Constants.GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, "switchOn", switchOn);
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(MasterConstants.GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, switchOn);
+                        HSAnalytics.logEvent(MasterConstants.GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, "switchOn", switchOn);
                     }
 
                     if (isSwitchOn) {

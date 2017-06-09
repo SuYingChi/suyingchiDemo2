@@ -44,7 +44,7 @@ import com.mobipioneer.lockerkeyboard.ads.FacebookNativeAdsManager;
 import com.mobipioneer.lockerkeyboard.ads.HomeKeyWatcher;
 import com.mobipioneer.lockerkeyboard.ads.NativeAdUtils;
 import com.mobipioneer.lockerkeyboard.app.MyInputMethodApplication;
-import com.mobipioneer.lockerkeyboard.utils.Constants;
+import com.mobipioneer.lockerkeyboard.utils.MasterConstants;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
@@ -197,7 +197,7 @@ public class NativeAdsHelper {
 
         if (!HSNetworkConnectionUtils.isNetworkConnected()) {
             nativeAdContainer.removeAllViews();
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_NO_REQUEST, "network");
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_NO_REQUEST, "network");
             return;
         }
 
@@ -209,14 +209,14 @@ public class NativeAdsHelper {
 
         if ((!MyInputMethodApplication.isGooglePlayInstalled() && adLoadMode == 0)) {
             nativeAdContainer.removeAllViews();
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_NO_REQUEST, "play");
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_NO_REQUEST, "play");
             return;
         }
 
 
         if ((!MyInputMethodApplication.isFacebookAppInstalled() && adLoadMode != 1)) {
             nativeAdContainer.removeAllViews();
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_NO_REQUEST, "facebook");
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_NO_REQUEST, "facebook");
             return;
         }
 

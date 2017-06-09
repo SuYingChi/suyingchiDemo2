@@ -13,7 +13,7 @@ import com.ihs.panelcontainer.BasePanel;
 import com.mobipioneer.inputmethod.panels.settings.widget.CloseButton;
 import com.mobipioneer.lockerkeyboard.MasterKeyboardPluginManager;
 import com.mobipioneer.lockerkeyboard.utils.ActivityUtils;
-import com.mobipioneer.lockerkeyboard.utils.Constants;
+import com.mobipioneer.lockerkeyboard.utils.MasterConstants;
 
 
 /**
@@ -77,7 +77,7 @@ public class ViewItemBuilder {
                     }
                 });
 //                KeyboardPluginManager.getInstance().showPanel(HSApplication.getContext().getString(R.string.panel_fonts));
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_FONTS_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_FONTS_CLICKED);
             }
         });
     }
@@ -96,7 +96,7 @@ public class ViewItemBuilder {
                     }
                 });
 //                KeyboardPluginManager.getInstance().showPanel(HSApplication.getContext().getString(R.string.panel_theme));
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_THEMES_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_THEMES_CLICKED);
             }
         });
     }
@@ -126,9 +126,9 @@ public class ViewItemBuilder {
     private static void updateSoundsSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getKeySoundEnabled());
         if (item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_ON);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_OFF);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_OFF);
         }
     }
 
@@ -154,9 +154,9 @@ public class ViewItemBuilder {
     private static void updateAutoCorrectionSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getAutoCorrectionEnabled());
         if (item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_ON);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_OFF);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_OFF);
         }
     }
 
@@ -182,9 +182,9 @@ public class ViewItemBuilder {
     private static void updateAutoCapitalizationSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getAutoCapitalizationEnabled());
         if (item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_ON);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_OFF);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_OFF);
         }
     }
 
@@ -210,9 +210,9 @@ public class ViewItemBuilder {
     private static void updatePredicationSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getWordPredictionEnabled());
         if (item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_ON);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_OFF);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_OFF);
         }
     }
 
@@ -238,9 +238,9 @@ public class ViewItemBuilder {
     private static void updateSwipeSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getGestureTypingEnabled());
         if (item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_ON);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_OFF);
+            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_OFF);
         }
     }
 
@@ -279,7 +279,7 @@ public class ViewItemBuilder {
             @Override
             public void onItemClick(ViewItem item) {
                 ActivityUtils.showMoreSettingsActivity();
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_MORE_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_PARAM_ACTION_SETTING_MORE_CLICKED);
             }
         });
     }

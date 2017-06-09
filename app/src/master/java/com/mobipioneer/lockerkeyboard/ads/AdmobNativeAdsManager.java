@@ -14,7 +14,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.mobipioneer.lockerkeyboard.app.MyInputMethodApplication;
-import com.mobipioneer.lockerkeyboard.utils.Constants;
+import com.mobipioneer.lockerkeyboard.utils.MasterConstants;
 
 /**
  * Created by xu.zhang on 12/10/15.
@@ -157,7 +157,7 @@ public class AdmobNativeAdsManager {
     private void logAdLoad() {
         switch (adsOwner) {
             case AdsConstants.ADS_OWNER_SETTINGS:
-                logEvent(Constants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_LOAD);
+                logEvent(MasterConstants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_LOAD);
                 break;
 
             default:
@@ -168,7 +168,7 @@ public class AdmobNativeAdsManager {
     private void logAdAlertClick() {
         switch (adsOwner) {
             case AdsConstants.ADS_OWNER_SETTINGS:
-                logEvent(Constants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_ALERT_CLICKED);
+                logEvent(MasterConstants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_ALERT_CLICKED);
                 break;
 
             default:
@@ -179,7 +179,7 @@ public class AdmobNativeAdsManager {
     public void logAdClick() {
         switch (adsOwner) {
             case AdsConstants.ADS_OWNER_SETTINGS:
-                logEvent(Constants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_CLICKED);
+                logEvent(MasterConstants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_CLICKED);
                 break;
 
             default:
@@ -190,7 +190,7 @@ public class AdmobNativeAdsManager {
     private void logAdRequest() {
         switch (adsOwner) {
             case AdsConstants.ADS_OWNER_SETTINGS:
-                logEvent(Constants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_REQUEST);
+                logEvent(MasterConstants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_REQUEST);
                 break;
 
             default:
@@ -201,7 +201,7 @@ public class AdmobNativeAdsManager {
     private void logAdShow(final String label) {
         switch (adsOwner) {
             case AdsConstants.ADS_OWNER_SETTINGS:
-                logEvent(Constants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_SHOW, label);
+                logEvent(MasterConstants.GA_PARAM_ACTION_KEYBOARD_SETTINGS_AD_SHOW, label);
                 break;
 
             default:
