@@ -34,6 +34,7 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
+import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
@@ -125,7 +126,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             if (isInputViewShowing) {
                 getKeyboardPanelMananger().onBackPressed();
                 if (!isInOwnApp()) {
-                    if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose")) {
+                    if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !IAPManager.getManager().hasPurchaseNoAds()) {
                         closeFullScreenAd.show();
                     }
                 }
@@ -142,6 +143,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         boolean enabled = HSConfig.optBoolean(false, "Application", "InterstitialAds", "BackButton", "Show");
 
         if (!enabled) {
+            return false;
+        }
+
+        if (IAPManager.getManager().hasPurchaseNoAds()) {
             return false;
         }
 
@@ -318,12 +323,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         if (!restarting) {
             if (!isInOwnApp()) {
-                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardOpen")) {
+                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardOpen") && !IAPManager.getManager().hasPurchaseNoAds()) {
                     openFullScreenAd.show();
                     openFullScreenAd.preLoad();
                 }
 
-                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose")) {
+                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !IAPManager.getManager().hasPurchaseNoAds()) {
                     closeFullScreenAd.preLoad();
                 }
                 KeyboardPanelAdManager.addInputViewStartCount();
