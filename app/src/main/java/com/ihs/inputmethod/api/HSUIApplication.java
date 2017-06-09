@@ -1,8 +1,13 @@
 package com.ihs.inputmethod.api;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -29,6 +34,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
@@ -37,9 +43,12 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.keyboard.common.LauncherActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
@@ -92,7 +101,9 @@ public class HSUIApplication extends HSInputMethodApplication {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).build();
+        int memoryCacheSize = (int)Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
         ImageLoader.getInstance().init(config);
 
         HSPublisherMgr.registerResultListener(this, new HSPublisherMgr.IPublisherListener() {
@@ -155,6 +166,28 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerNotificationEvent();
         LuckyActivity.installShortCut();
+
+
+
+        // 添加桌面入口
+        if (getCurrentLaunchInfo().launchId == 1) {
+            addShortcut();
+        }
+
+        // 更新应用在应用列表中的显示或隐藏
+        updateLauncherActivityEnabledState();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
+        intentFilter.addAction(HSConfig.HS_NOTIFICATION_CONFIG_CHANGED);
+
+        // 输入法变化时或RemoteConfig变化时，更新应用在应用列表中的显示或隐藏
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                updateLauncherActivityEnabledState();
+            }
+        }, intentFilter);
     }
 
     private void registerNotificationEvent() {
@@ -285,5 +318,52 @@ public class HSUIApplication extends HSInputMethodApplication {
 
             HSPreferenceHelper.getDefault().putBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, true);
         }
+    }
+
+    private void updateLauncherActivityEnabledState() {
+        boolean enabledInRemoteConfig = !KCFeatureRestrictionConfig.isFeatureRestricted("HideApp");
+        boolean isKeyboardSelected = HSInputMethodListManager.isMyInputMethodSelected();
+
+        int status;
+        if (enabledInRemoteConfig && isKeyboardSelected) {
+            status = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        } else {
+            status = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+        }
+
+        PackageManager manager = getPackageManager();
+
+        ComponentName name = new ComponentName(getPackageName(),
+                LauncherActivity.class.getName());
+        int oldStatus = manager.getComponentEnabledSetting(name);
+        if (status != oldStatus) {
+            manager.setComponentEnabledSetting(name, status, PackageManager.DONT_KILL_APP);
+        }
+    }
+
+    private void addShortcut() {
+        ActivityInfo splashActivity = CommonUtils.querySplashActivity(this);
+
+        if (splashActivity == null) {
+            return;
+        }
+
+        CharSequence label = getApplicationInfo().loadLabel(getPackageManager());
+        int iconRes = getApplicationInfo().icon;
+
+        Intent shortcutIntent = new Intent();
+        shortcutIntent.setComponent(new ComponentName(getPackageName(), splashActivity.name));
+        int flags = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
+        shortcutIntent.addFlags(flags);
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+
+        Intent addIntent = new Intent();
+        addIntent.putExtra("duplicate", false);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, label);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource
+                .fromContext(getApplicationContext(), iconRes));
+        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        getApplicationContext().sendBroadcast(addIntent);
     }
 }
