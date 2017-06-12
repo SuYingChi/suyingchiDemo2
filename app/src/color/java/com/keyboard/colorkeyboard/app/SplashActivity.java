@@ -3,12 +3,14 @@ package com.keyboard.colorkeyboard.app;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.ihs.commons.config.HSConfig;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 /**
  * Created by wenbinduan on 2016/11/8.
