@@ -15,8 +15,6 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_CHARGING_NEW_USER;
 
@@ -58,7 +56,14 @@ public class MyInputMethodApplication extends HSUIApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        /**
+         * 不要在这里加东西
+         */
+    }
 
+    @Override
+    protected void onMainProcessApplicationCreate() {
+        super.onMainProcessApplicationCreate();
         AcbInterstitialAdManager.getInstance(HSApplication.getContext());
 
         CustomUIRateAlertUtils.initialize();
@@ -68,10 +73,7 @@ public class MyInputMethodApplication extends HSUIApplication {
 
         isFacebookAppInstalled = HSInstallationUtils.isAppInstalled("com.facebook.katana");
         isGooglePlayInstalled = HSMarketUtils.isMarketInstalled(HSMarketUtils.GOOGLE_MARKET);
-
     }
-
-
 
     @Override
     public void onTerminate() {

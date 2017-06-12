@@ -264,4 +264,12 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="launcher_widget_lucky_title">Lucky</string>
     <string name="lucky_game_award_empty_action">TRY AGAIN</string>
     <string name="no_network_connection">No network connection!</string>
+
+
+    <string name="locker_switcher">locker_screen_enabled</string>
+    <string name="enable_locker_detail">Open camera directly from lock screen and never miss a shot again. Contains sponsored contents.</string>
+    <string name="screen_locker_enable_alert_toast">Screen Locker Enabled</string>
+    <!--guide-->
+    <string name="guide_open_camera">Slide to open camera quickly</string>
+    <string name="guide_open_control_centre">Slide to open Control Centre</string>
 </resources>

@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -150,6 +151,31 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     return true;
                 }
             });
+
+
+            if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_MUTED) {
+                getPreferenceScreen().removePreference(findPreference("Locker"));
+            } else {
+                SwitchPreference lockerSwitcher = (SwitchPreference) findPreference(getString(R.string.locker_switcher));
+                int lockerEnableStates = LockerSettings.getLockerEnableStates();
+                switch (lockerEnableStates) {
+                    case LockerSettings.LOCKER_DEFAULT_DISABLED:
+                        lockerSwitcher.setChecked(false);
+                        break;
+                    case LockerSettings.LOCKER_DEFAULT_ACTIVE:
+                        lockerSwitcher.setChecked(true);
+                        break;
+                }
+
+                lockerSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        LockerSettings.setLockerEnabled((Boolean) newValue,"setting");
+                        return true;
+                    }
+                });
+            }
+
         }
 
         @Override

@@ -10,10 +10,12 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
+import com.artw.lockscreen.ScreenLockerManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.actiontrigger.HSActionTrigger;
 import com.ihs.actiontrigger.model.ActionBean;
@@ -52,7 +54,6 @@ import com.keyboard.common.LauncherActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.util.ArrayList;
 
@@ -101,6 +102,24 @@ public class HSUIApplication extends HSInputMethodApplication {
         Log.e("time log", "time log application oncreated started");
         super.onCreate();
 
+        /**
+         * !!注意，application下不要初始化东西，需要初始化的请放在 onMainProcessApplicationCreate
+         */
+        String packageName = getPackageName();
+        String processName = getProcessName();
+        if (TextUtils.equals(processName, packageName)) {
+            onMainProcessApplicationCreate();
+        } else {
+            String processSuffix = processName.replace(packageName + ":", "");
+            onRemoteProcessApplicationCreate(processSuffix);
+        }
+    }
+
+    protected void onRemoteProcessApplicationCreate(String processSuffix) {
+
+    }
+
+    protected void onMainProcessApplicationCreate() {
         int memoryCacheSize = (int)Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
@@ -188,6 +207,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                 updateLauncherActivityEnabledState();
             }
         }, intentFilter);
+
+        ScreenLockerManager.init();
     }
 
     private void registerNotificationEvent() {
