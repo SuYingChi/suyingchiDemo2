@@ -36,6 +36,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -55,6 +56,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -180,8 +183,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         registerNotificationEvent();
         LuckyActivity.installShortCut();
 
-
-
         // 添加桌面入口
         if (getCurrentLaunchInfo().launchId == 1) {
             addShortcut();
@@ -203,6 +204,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, intentFilter);
 
         ScreenLockerManager.init();
+        initIAP();
     }
 
     private void registerNotificationEvent() {
@@ -380,5 +382,14 @@ public class HSUIApplication extends HSInputMethodApplication {
                 .fromContext(getApplicationContext(), iconRes));
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         getApplicationContext().sendBroadcast(addIntent);
+    }
+
+    private void initIAP() {
+        List<String> inAppNonConsumableSkuList = null;
+        String removeAdsId = HSConfig.optString("", "Application", "RemoveAds", "iapID");
+        if (!TextUtils.isEmpty(removeAdsId)) {
+            inAppNonConsumableSkuList = Collections.singletonList(removeAdsId);
+        }
+        HSIAPManager.getInstance().init(null, inAppNonConsumableSkuList);
     }
 }
