@@ -271,8 +271,15 @@
 			</dict>
 			<key>FeatureRestriction</key>
 			<dict>
+				<key>HideApp</key>
+				<dict>
+					<key>Enabled</key>
+					<false/>
+				</dict>
 				<key>AdBackButton</key>
 				<dict>
+					<key>TimeZoneException</key>
+					<array/>
 					<key>HoursFromFirstUse</key>
 					<integer>5</integer>
 					<key>RegionException</key>
@@ -282,6 +289,8 @@
 				</dict>
 				<key>AdKeyboardClose</key>
 				<dict>
+					<key>TimeZoneException</key>
+					<array/>
 					<key>HoursFromFirstUse</key>
 					<integer>3</integer>
 					<key>RegionException</key>
@@ -291,6 +300,8 @@
 				</dict>
 				<key>AdKeyboardOpen</key>
 				<dict>
+					<key>TimeZoneException</key>
+					<array/>
 					<key>HoursFromFirstUse</key>
 					<integer>3</integer>
 					<key>RegionException</key>
