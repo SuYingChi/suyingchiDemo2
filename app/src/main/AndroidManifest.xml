@@ -60,13 +60,6 @@
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".ui.theme.ui.PurchaseSlotsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/PurchaseDialogActivityStyle"
-            android:windowSoftInputMode="stateUnchanged|adjustNothing" />
 
         <!-- showQuietly Config Start -->
         <!-- AppLovin全屏 -->

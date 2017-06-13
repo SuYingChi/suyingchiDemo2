@@ -34,9 +34,9 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.util.Calendar;
@@ -126,7 +126,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             if (isInputViewShowing) {
                 getKeyboardPanelMananger().onBackPressed();
                 if (!isInOwnApp()) {
-                    if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !IAPManager.getManager().hasPurchaseNoAds()) {
+                    if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                         closeFullScreenAd.show();
                     }
                 }
@@ -146,7 +146,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             return false;
         }
 
-        if (IAPManager.getManager().hasPurchaseNoAds()) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
 
@@ -323,12 +323,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         if (!restarting) {
             if (!isInOwnApp()) {
-                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardOpen") && !IAPManager.getManager().hasPurchaseNoAds()) {
+                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardOpen") && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                     openFullScreenAd.show();
                     openFullScreenAd.preLoad();
                 }
 
-                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !IAPManager.getManager().hasPurchaseNoAds()) {
+                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                     closeFullScreenAd.preLoad();
                 }
                 KeyboardPanelAdManager.addInputViewStartCount();

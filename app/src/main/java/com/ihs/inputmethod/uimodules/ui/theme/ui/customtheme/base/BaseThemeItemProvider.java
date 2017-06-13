@@ -22,9 +22,9 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -157,13 +157,12 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                     if (holder.downloadingProgressListener != null) {
                         onItemDownloadSucceeded(holder, item);
                     } else {
-                        showPurchaseAlertIfNeeded(item);
                         selectItem(holder, baseElement);
                         fragment.refreshKeyboardView();
                     }
                 }
 
-            }, delayAfterDownloadComplete, IAPManager.getManager().hasPurchaseNoAds());
+            }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
             setNotNew(holder, baseElement);
             if (!hasDownloadThemeContent) {
                 startDownloadContent(holder, item);
@@ -206,17 +205,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         if (!hasDownloadThemeContent) {
             startDownloadContent(holder, item);
         } else {
-            showPurchaseAlertIfNeeded(item);
             selectItem(holder, baseElement);
             fragment.refreshKeyboardView();
-        }
-    }
-
-    private void showPurchaseAlertIfNeeded(I item) {
-        if (!IAPManager.getManager().isOwnProduct((KCBaseElement) item)) {
-            fragment.showPromptPurchaseView((KCBaseElement) item);
-        } else {
-            fragment.showPromptPurchaseView(null);
         }
     }
 
@@ -270,19 +260,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
-
-            //备注 2017.04.14 取消iap弹窗 liuyu1需求
-            //check is need show lock
-            if (!IAPManager.getManager().isOwnProduct(item)) {
-                //locked view
-                Drawable locked = getLockedDrawable();
-                if (locked != null) {
-                    holder.mLockedImageView.setImageDrawable(locked);
-                }
-                holder.mLockedImageView.setVisibility(View.VISIBLE);
-            } else {
-                holder.mLockedImageView.setVisibility(View.INVISIBLE);
-            }
+            holder.mLockedImageView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -496,7 +474,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             public void run() {
 //                holder.mProgressView.setVisibility(View.INVISIBLE);
                 if (fragment.getCustomThemeData() != null && fragment.getCustomThemeData().isElementChecked(item)) {
-                    showPurchaseAlertIfNeeded(item);
                     selectItem(holder, (KCBaseElement) item);
                     fragment.refreshKeyboardView();
                 } else {

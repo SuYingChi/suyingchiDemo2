@@ -4,7 +4,7 @@ import android.preference.PreferenceManager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -39,7 +39,7 @@ public class KeyboardPanelAdManager {
     }
 
     public static boolean isShowEmojiAdConditionSatisfied() {
-        if (IAPManager.getManager().hasPurchaseNoAds()) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
 
@@ -88,7 +88,7 @@ public class KeyboardPanelAdManager {
     }
 
     public static boolean isShowFunctionBarAdConditionSatisfied() {
-        if (IAPManager.getManager().hasPurchaseNoAds()) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
 

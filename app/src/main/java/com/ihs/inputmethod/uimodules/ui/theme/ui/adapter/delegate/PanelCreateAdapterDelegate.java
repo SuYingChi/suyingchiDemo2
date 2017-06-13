@@ -19,7 +19,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemePanelModel;
@@ -111,7 +110,7 @@ public final class PanelCreateAdapterDelegate extends AdapterDelegate<List<Theme
 					Bundle bundle = new Bundle();
 					String customEntry = "keyboard_create";
 					bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-					IAPManager.getManager().startCustomThemeActivityIfSlotAvailable(null, bundle);
+					CustomThemeActivity.startCustomThemeActivity(bundle);
 				}
 				HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_create_clicked");
 			}

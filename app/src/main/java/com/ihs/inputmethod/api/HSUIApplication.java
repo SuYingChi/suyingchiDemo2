@@ -44,7 +44,6 @@ import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
@@ -73,7 +72,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
-                IAPManager.getManager().queryOwnProductIds();
 
                 try {
                     Intent actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
@@ -84,8 +82,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 }
 
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
-                IAPManager.getManager().onConfigChange();
-
                 registerChargingService();
 
             } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
@@ -150,8 +146,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
 
-        //IAPManager.getManager().init()内部也会监听Session Start，由于存储监听集合的数据结构是List，因此确保HSUIApplication先接收SessionStart事件
-        IAPManager.getManager().queryOwnProductIds();
         HSKeyboardThemeManager.init();
 
         AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);

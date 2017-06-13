@@ -18,7 +18,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.animator.AlphaInAnimator;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem.CategoryItem;
@@ -37,6 +36,8 @@ import java.util.Map;
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
+
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 
 /**
@@ -96,7 +97,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HSGlobalNotificationCenter.addObserver(IAPManager.NOTIFICATION_IAP_PURCHASE_SUCCESS, this);
+        HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, this);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_CUSTOM_THEME_PREVIEW_DOWNLOAD_FINISHED, this);
     }
 
@@ -212,7 +213,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
 
     @Override
     public void onDestroy() {
-        HSGlobalNotificationCenter.removeObserver(IAPManager.NOTIFICATION_IAP_PURCHASE_SUCCESS, this);
+        HSGlobalNotificationCenter.removeObserver(NOTIFICATION_REMOVEADS_PURCHASED, this);
         HSGlobalNotificationCenter.removeObserver(this);
         super.onDestroy();
     }
@@ -225,7 +226,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
      */
     @Override
     public void onReceive(String s, HSBundle hsBundle) {
-        if (IAPManager.NOTIFICATION_IAP_PURCHASE_SUCCESS.equals(s)) {
+        if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
             notifyDataSetChange();
         } else if (HSKeyboardThemeManager.HS_NOTIFICATION_CUSTOM_THEME_PREVIEW_DOWNLOAD_FINISHED.equals(s)) {
 //            Object object = hsBundle.getObject(KCCustomThemeManager.CUSTOM_THEME_PREVIEW_DOWNLOAD_KEY);
@@ -273,12 +274,6 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
                 }
             }
         });
-    }
-
-    public <I extends KCBaseElement> void showPromptPurchaseView(I item) {
-        if (getCustomThemeActivity() != null) {
-            getCustomThemeActivity().showPromptPurchaseView(item);
-        }
     }
 
     @NonNull

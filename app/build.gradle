@@ -156,6 +156,7 @@ dependencies {
 
     //////////////////////  Ads Configuration end ////////////////////////
 
+    compile "com.ihandy.iap:iap.gm:4.0.+"
 
     compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile 'com.ihandy.thirdparty:tapjoyconnectlibrary:11.10'
@@ -166,10 +167,9 @@ dependencies {
     compile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
     
     //ihs related
-    compile files('../libs/libIAP.jar')
     compile(name: 'ihs/libActionTrigger/libActionTrigger', ext: 'aar')
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
-    compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
+    compile(name: 'ihs/libKeyboardUtils/keyboardutils-release2', ext: 'aar')
     compile(name: 'libcharging', ext: 'aar')
 
     //android supports

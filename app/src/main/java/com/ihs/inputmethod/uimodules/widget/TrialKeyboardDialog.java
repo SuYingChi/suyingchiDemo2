@@ -36,9 +36,9 @@ import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
@@ -148,7 +148,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     }
 
     private void showInterstitialAds() {
-        if (showAdOnDismiss && !IAPManager.getManager().hasPurchaseNoAds()) {
+        if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             boolean adShown = KCInterstitialAd.show(getContext().getString(R.string.placement_full_screen_open_keyboard));
             if (!adShown) {
                 showChargingEnableAlert();
@@ -232,7 +232,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         activationRequestCode = keyboardActivationRequestCode;
         this.showAdOnDismiss = showAdOnDismiss;
         checkKeyboardState(activity);
-        if (showAdOnDismiss && !IAPManager.getManager().hasPurchaseNoAds()) {
+        if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
         }
     }
@@ -270,7 +270,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         final View rootView = findViewById(R.id.root_view);
 
 
-        if (!IAPManager.getManager().hasPurchaseNoAds()) {
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             nativeAdView = addNativeAdView();
         }
 

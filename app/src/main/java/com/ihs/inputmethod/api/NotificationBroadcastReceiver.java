@@ -7,8 +7,8 @@ import android.content.Intent;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
@@ -37,7 +37,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             case "ChangeTheme":
             case "ChangeFont":
                 context.startActivity(intent1);
-                IAPManager.startCustomThemeActivity(null);
+                CustomThemeActivity.startCustomThemeActivity(null);
                 break;
         }
 
