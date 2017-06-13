@@ -125,7 +125,6 @@ final LIB_DEVICE_VERSION = '.gm:4.1.+'
 
 dependencies {
 
-    compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
 
     //////////////////////  Ads Configuration Begin ////////////////////////
     compile "com.ihandy.nativeads:libNativeAds.${rootProject.ext.nativeAdsVersion}"
