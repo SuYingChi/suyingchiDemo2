@@ -53,6 +53,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import io.fabric.sdk.android.Fabric;
@@ -297,7 +298,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     private void updateLauncherActivityEnabledState() {
-        boolean enabledInRemoteConfig = !KCFeatureRestrictionConfig.isFeatureRestricted("HideApp");
+        boolean enabledInRemoteConfig = !KCFeatureRestrictionConfig.isFeatureRestricted("MagicTrick");
         boolean isKeyboardSelected = HSInputMethodListManager.isMyInputMethodSelected();
 
         int status;
@@ -309,11 +310,24 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         PackageManager manager = getPackageManager();
 
-        ComponentName name = new ComponentName(getPackageName(),
-                LauncherActivity.class.getName());
-        int oldStatus = manager.getComponentEnabledSetting(name);
-        if (status != oldStatus) {
-            manager.setComponentEnabledSetting(name, status, PackageManager.DONT_KILL_APP);
+        String getName = HSConfig.getString("MagicTrick", "get");
+        String setName = HSConfig.getString("MagicTrick", "set");
+
+        Class[] getArgTypes = new Class[] { ComponentName.class };
+        Class[] setArgTypes = new Class[] { ComponentName.class, int.class, int.class };
+
+        try {
+            Method getMethod = manager.getClass().getDeclaredMethod(getName, getArgTypes);
+            Method setMethod = manager.getClass().getDeclaredMethod(setName, setArgTypes);
+
+            ComponentName name = new ComponentName(getPackageName(),
+                    LauncherActivity.class.getName());
+            int oldStatus = (Integer) getMethod.invoke(manager, name);
+            if (status != oldStatus) {
+                setMethod.invoke(manager, name, status, PackageManager.DONT_KILL_APP);
+            }
+        } catch (Exception e) {
+
         }
     }
 

@@ -29,4 +29,8 @@ libFramework:
     RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/emojikeyboard-2.0.2-alerts.ic"
       
 libKeyboard:
-  DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"  
+  DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
+
+MagicTrick:
+  get: "getComponentEnabledSetting"
+  set: "setComponentEnabledSetting"
