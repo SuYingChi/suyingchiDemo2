@@ -5,20 +5,17 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.acb.interstitialads.AcbInterstitialAdManager;
+import com.acb.irrelevant.AcbIrrelevantAdsManager;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.crashlytics.android.Crashlytics;
-import com.ihs.actiontrigger.HSActionTrigger;
-import com.ihs.actiontrigger.model.ActionBean;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -47,7 +44,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
-import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.LauncherActivity;
@@ -74,15 +70,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
                 IAPManager.getManager().queryOwnProductIds();
-
-                try {
-                    Intent actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
-                    startService(actionService);
-                    bindActionTrigger(actionService);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 IAPManager.getManager().onConfigChange();
 
@@ -186,8 +173,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         registerNotificationEvent();
         LuckyActivity.installShortCut();
 
-
-
         // 添加桌面入口
         if (getCurrentLaunchInfo().launchId == 1) {
             addShortcut();
@@ -209,6 +194,9 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, intentFilter);
 
         ScreenLockerManager.init();
+        recordInstallType();
+
+        AcbIrrelevantAdsManager.init(this);
     }
 
     private void registerNotificationEvent() {
@@ -228,69 +216,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
             KCNotificationManager.getInstance().removeNotificationEvent("Charging");
         }
-    }
-
-    private void bindActionTrigger(Intent actionService) {
-        bindService(actionService, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                HSActionTrigger.ActionBinder binder = (HSActionTrigger.ActionBinder) service;
-                binder.setOnActionTriggeredListener(new HSActionTrigger.OnActionTriggeredListener() {
-                    @Override
-                    public boolean onAction(ActionBean actionBean) {
-                        return handleAction(actionBean);
-                    }
-                });
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        }, BIND_AUTO_CREATE);
-    }
-
-
-    private boolean handleAction(ActionBean actionBean) {
-        //ActionType: 0对应TypeBoostHalfScreen; 1对应BoostHalfScreen; 2对应TypeBoostFullScreen;
-        // 3对应BoostFullScreen; 4对应AdFullScreen; 5对应AdNotification; 6对应PopUpAlert; 7对应SetKey
-        final int adType = actionBean.getActionType();
-
-        //ActionData: TypeBoostHalfScreen：0对应xx,1对应xx; BoostHalfScreen：0对应Boost,
-        // 1对应InputSecurityCheck; TypeBoostFullScreen:0对应xx ; BoostFullScreen:0对应Optimize
-        final int adData = actionBean.getActionData();
-
-
-        String eventType = actionBean.getEventType();
-        HSLog.e(adType + "adType  " + adData + " ------ liuyu yao kan de");
-        String adPlacementName = "";
-        switch (eventType) {
-            case HSActionTrigger.EVENT_KEY_APPOPEN:
-                adPlacementName = getString(R.string.placement_full_screen_at_app_open);
-                break;
-            case HSActionTrigger.EVENT_KEY_APPQUIT:
-                adPlacementName = getString(R.string.placement_full_screen_at_app_quit);
-                break;
-            case HSActionTrigger.EVENT_KEY_PHONELIGHT:
-                adPlacementName = getString(R.string.placement_full_screen_at_phone_wake);
-                break;
-            case HSActionTrigger.EVENT_KEY_PHONEUNLOCK:
-                adPlacementName = getString(R.string.placement_full_screen_at_phone_unlock);
-                break;
-            case HSActionTrigger.EVENT_KEY_APPUNINSTALL:
-                adPlacementName = getString(R.string.placement_full_screen_at_app_uninstall);
-                break;
-        }
-
-        KCInterstitialAd.load(adPlacementName);
-
-        switch (adType) {
-            //full scrn ad
-            case 4:
-                return KCInterstitialAd.show(adPlacementName, null, true);
-        }
-        return false;
-
     }
 
     /**

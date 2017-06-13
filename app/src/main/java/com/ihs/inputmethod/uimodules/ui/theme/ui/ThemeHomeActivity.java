@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
-import com.ihs.actiontrigger.utils.HSPermissionManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
@@ -45,6 +44,7 @@ import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
@@ -276,7 +276,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
 
         //界面被启动 请求 扫描权限
-        if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
+        if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !PermissionUtils.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
 
             HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
             new KCAlert.Builder(this)
@@ -286,10 +286,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     .setPositiveButton(getString(R.string.dialog_agree).toUpperCase(), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !HSPermissionManager.isUsageAccessGranted()) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
                                 isFromUsageAccessActivity = true;
                             }
-                            HSPermissionManager.enableUsageAccessPermission();
+                            PermissionUtils.enableUsageAccessPermission();
                             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
                         }
                     })
@@ -357,7 +357,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
-            if (HSPermissionManager.isUsageAccessGranted()) {
+            if (PermissionUtils.isUsageAccessGranted()) {
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("permission_usage_access");
             }
         }

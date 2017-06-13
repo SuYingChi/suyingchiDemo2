@@ -153,6 +153,9 @@ dependencies {
     compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdFBInterstitialAdapter.gm:4.1.0.gm'
 
+    // irrelevantads
+    compile 'com.ihandy.irrelevantads:libIrrelevantAds.gm:4.0.0.gm'
+
     //////////////////////  Ads Configuration end ////////////////////////
 
 
@@ -162,11 +165,8 @@ dependencies {
 //    masterCompile project(':booster')
 //    smileyCompile project(':booster')
 
-    compile(name: 'ihs/libDeviceMonitor/libdevicemonitor', ext: 'aar')
-    
     //ihs related
     compile files('../libs/libIAP.jar')
-    compile(name: 'ihs/libActionTrigger/libActionTrigger', ext: 'aar')
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
     compile(name: 'libcharging', ext: 'aar')

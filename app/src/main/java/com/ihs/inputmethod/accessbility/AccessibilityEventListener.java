@@ -9,9 +9,10 @@ import android.provider.Settings;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.inputmethod.InputMethodManager;
 
+import com.acb.appmonitor.libaccessibilityservice.IAccEventListener;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.devicemonitor.accessibility.IAccEventListener;
+//import com.ihs.devicemonitor.accessibility.IAccEventListener;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.utils.Constants;
 
