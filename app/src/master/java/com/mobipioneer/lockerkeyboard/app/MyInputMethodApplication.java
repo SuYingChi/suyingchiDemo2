@@ -1,5 +1,7 @@
 package com.mobipioneer.lockerkeyboard.app;
 
+import android.app.Activity;
+
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
@@ -15,6 +17,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
+import com.mobipioneer.lockerkeyboard.SplashActivity;
 
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_CHARGING_NEW_USER;
 
@@ -24,6 +27,15 @@ public class MyInputMethodApplication extends HSUIApplication {
     private static boolean isFacebookAppInstalled = false;
     private static boolean isGooglePlayInstalled = false;
 
+    @Override
+    protected Class<? extends Activity> getMainActivityClass() {
+        return MainActivity.class;
+    }
+
+    @Override
+    protected Class<? extends Activity> getSplashActivityClass() {
+        return SplashActivity.class;
+    }
 
     protected INotificationObserver sessionEventObserver = new INotificationObserver() {
 

@@ -31,9 +31,5 @@
     <style name="MD_ProgressBar" parent="Widget.MaterialProgressBar.ProgressBar">
         <item name="android:progressDrawable">@color/white_text_color</item>
     </style>
-    <style name="SplashTheme" parent="AppTheme.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash</item>
-        <item name="android:windowFullscreen">true</item>
-    </style>
 
 </resources>

@@ -1,10 +1,6 @@
 package com.ihs.inputmethod.utils;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -12,7 +8,6 @@ import android.support.annotation.NonNull;
 import com.ihs.app.framework.HSApplication;
 
 import java.security.MessageDigest;
-import java.util.List;
 
 public class CommonUtils {
 
@@ -66,23 +61,5 @@ public class CommonUtils {
 
     private static boolean isTypeMatchAndConnected(@NonNull NetworkInfo networkInfo, int type) {
         return (type == -1 || networkInfo.getType() == type) && networkInfo.isConnected();
-    }
-
-    public static ActivityInfo querySplashActivity(Context context) {
-        PackageManager manager = context.getPackageManager();
-
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.setPackage(context.getPackageName());
-
-        List<ResolveInfo> infos =  manager.queryIntentActivities(mainIntent, 0);
-
-        for (ResolveInfo info : infos) {
-            // TODO: This is not an correct way to do this and should be corrected.
-            if (info.activityInfo.name.contains("SplashActivity")) {
-                return info.activityInfo;
-            }
-        }
-
-        return null;
     }
 }

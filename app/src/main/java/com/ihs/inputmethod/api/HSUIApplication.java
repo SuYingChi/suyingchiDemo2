@@ -1,11 +1,11 @@
 package com.ihs.inputmethod.api;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -33,6 +33,9 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
+import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -42,7 +45,6 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
@@ -60,13 +62,40 @@ import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_S
 
 public class HSUIApplication extends HSInputMethodApplication {
 
+    protected Class<? extends Activity> getMainActivityClass() {
+        return null;
+    }
+
+    protected Class<? extends Activity> getSplashActivityClass() {
+        return null;
+    }
+
+    final public void startActivityAfterSplash(Activity splashActivity) {
+        boolean isAccessibilityEnabled = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
+        // 携带其他页面的数据
+        Intent intent = splashActivity.getIntent();
+        if (intent == null) {
+            intent = new Intent();
+        }
+
+        intent.setClass(this, getMainActivityClass());
+        if (isAccessibilityEnabled) {
+            if (!HSAccessibilityService.isAvailable()) {
+                intent.setClass(this, KeyboardActivationActivity.class);
+            } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
+                intent.setClass(this, KeyboardWakeUpActivity.class);
+            }
+        }
+        startActivity(intent);
+    }
+
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-                
+
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
                 IAPManager.getManager().queryOwnProductIds();
@@ -107,7 +136,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onMainProcessApplicationCreate() {
-        int memoryCacheSize = (int)Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
+        int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
         ImageLoader.getInstance().init(config);
@@ -120,7 +149,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             }
         });
 
-        if(false){
+        if (false) {
             if (LeakCanary.isInAnalyzerProcess(this)) {
                 // This process is dedicated to LeakCanary for heap analysis.
                 // You should not init your app in this process.
@@ -245,6 +274,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
+
     private void recordInstallType() {
         boolean alreadyRecord = HSPreferenceHelper.getDefault().getBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, false);
         if (!alreadyRecord) {
@@ -288,9 +318,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     private void addShortcut() {
-        ActivityInfo splashActivity = CommonUtils.querySplashActivity(this);
-
-        if (splashActivity == null) {
+        if (getSplashActivityClass() == null) {
             return;
         }
 
@@ -298,7 +326,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         int iconRes = getApplicationInfo().icon;
 
         Intent shortcutIntent = new Intent();
-        shortcutIntent.setComponent(new ComponentName(getPackageName(), splashActivity.name));
+        shortcutIntent.setComponent(new ComponentName(getPackageName(), getSplashActivityClass().getName()));
         int flags = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
         shortcutIntent.addFlags(flags);
         shortcutIntent.setAction(Intent.ACTION_MAIN);
