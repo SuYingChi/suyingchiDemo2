@@ -41,8 +41,10 @@ libFramework:
     RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/alerts/colorkeyboard-2.3.4-alerts.kb"
 
 libIAP:
-  IAPVerifyUrl: "https://karainbow.appcloudbox.net/keyboard/rainbow/receipt/verify"
-
+  Verify:
+    ByServer:
+      AppID: "603"
+      Url: "https://karainbow.appcloudbox.net/keyboard/rainbow/receipt/verify"
 
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
