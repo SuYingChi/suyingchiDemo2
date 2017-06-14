@@ -354,7 +354,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
         if(gpAdRecyclerView!=null || IAPManager.getManager().hasPurchaseNoAds()
                 || !HSConfig.optBoolean(true,"Application","KeyboardToolBar","GooglePlay","ShowAd")
-                || KCFeatureRestrictionConfig.isFeatureRestricted("KeyboardToolBar")){
+                || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")){
             return;
         }
 

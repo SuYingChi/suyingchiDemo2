@@ -87,6 +87,11 @@
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
+				<key>AdGooglePlayIcon</key>
+				<dict>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
 				<key>AdKeyboardClose</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
@@ -106,11 +111,6 @@
 					<array>
 						<string>CN</string>
 					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>KeyboardToolBar</key>
-				<dict>
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
