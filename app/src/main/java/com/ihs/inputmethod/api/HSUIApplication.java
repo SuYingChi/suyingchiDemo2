@@ -48,6 +48,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.LauncherActivity;
@@ -391,5 +392,6 @@ public class HSUIApplication extends HSInputMethodApplication {
             inAppNonConsumableSkuList = Collections.singletonList(removeAdsId);
         }
         HSIAPManager.getInstance().init(null, inAppNonConsumableSkuList);
+        RemoveAdsManager.getInstance().setNeedsServerVerification(true);
     }
 }
