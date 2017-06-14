@@ -132,6 +132,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 }
                 HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
             } else {
+                if (isInRightAppForBackAd()) {
+                    HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
+                } else {
+                    HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
+                }
+
                 showBackAdIfNeeded();
             }
         }
@@ -155,7 +161,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
 
         if (isInRightAppForBackAd()) {
-            HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
             HSPreferenceHelper prefs = HSPreferenceHelper.create(this, "BackAd");
 
             long lastBackTimeMillis = prefs.getLong("LastBackTime", 0);
@@ -197,7 +202,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
             return false;
         } else {
-            HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
             return false;
         }
     }
