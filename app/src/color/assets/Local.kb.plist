@@ -79,7 +79,7 @@
 				<key>MagicTrick</key>
 				<dict>
 					<key>Always</key>
-					<false/>
+					<true/>
 				</dict>
 				<key>AdBackButton</key>
 				<dict>
