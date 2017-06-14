@@ -4897,6 +4897,38 @@
 				<integer>0</integer>
 			</dict>
 		</dict>
+		<key>irrelevantAds</key>
+		<dict>
+			<key>eventAds</key>
+			<dict>
+				<key>generalConfig</key>
+				<dict>
+					<key>minShowIntervalMinute</key>
+					<integer>180</integer>
+				</dict>
+				<key>phoneUnlockAds</key>
+				<dict>
+					<key>hoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>maxShowCountPerDay</key>
+					<integer>0</integer>
+					<key>maxShowDelay</key>
+					<integer>2</integer>
+					<key>minShowDelay</key>
+					<integer>0</integer>
+					<key>minShowIntervalMinute</key>
+					<integer>180</integer>
+					<key>placementName</key>
+					<string>Colorkey_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
+					<key>regionException</key>
+					<array/>
+					<key>regionFilter</key>
+					<array/>
+					<key>showProbability</key>
+					<integer>0</integer>
+				</dict>
+			</dict>
+		</dict>
 		<key>nativeAds</key>
 		<dict>
 			<key>Colorkey_A(NativeAds)ApplyingItem</key>
