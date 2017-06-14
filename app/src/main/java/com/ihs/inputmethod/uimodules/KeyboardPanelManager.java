@@ -41,6 +41,7 @@ import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarGPAdAdapter;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -352,7 +353,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         if(gpAdRecyclerView!=null || IAPManager.getManager().hasPurchaseNoAds()
-                || !HSConfig.optBoolean(true,"Application","KeyboardToolBar","GooglePlay","ShowAd")){
+                || !HSConfig.optBoolean(true,"Application","KeyboardToolBar","GooglePlay","ShowAd")
+                || KCFeatureRestrictionConfig.isFeatureRestricted("KeyboardToolBar")){
             return;
         }
 
