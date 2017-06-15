@@ -170,15 +170,21 @@ public class KeyboardActivationActivity extends HSActivity {
 //            }
 //        });
 
-        WindowManager wm = this.getWindowManager();
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int screenWidth = size.x;
-        final int screenHeight = size.y;
 
-        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
-        getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
+
+        if (findViewById(view_img_title) != null) {
+            scaleTitleImage(findViewById(view_img_title));
+        }else{
+            WindowManager wm = this.getWindowManager();
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int screenWidth = size.x;
+            final int screenHeight = size.y;
+            Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
+            getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
+        }
+
 
         View setupAutoBtn = findViewById(bt_step_one);
         if (findViewById(R.id.text_one) != null) {
@@ -210,9 +216,7 @@ public class KeyboardActivationActivity extends HSActivity {
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeReceiver, filter);
 
-        if (findViewById(view_img_title) != null) {
-            scaleTitleImage(findViewById(view_img_title));
-        }
+
 
         logOneTimeGA(app_accessibility_setkey_screen_viewed);
 
