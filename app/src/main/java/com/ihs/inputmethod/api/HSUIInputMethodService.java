@@ -181,7 +181,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             } else {
                 backCount = 1;
                 hitBackCount = -1;
-                prefs.putInt("HitBackCount", hitBackCount);
+                prefs.putInt("HitBackIndex", hitBackCount);
             }
             prefs.putLong("LastBackTime", currentBackTimeMillis);
             prefs.putInt("BackCount", backCount);
