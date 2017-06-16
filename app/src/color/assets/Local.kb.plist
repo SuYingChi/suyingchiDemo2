@@ -561,7 +561,7 @@
 				<key>PrivacyPolicy</key>
 				<string>http://www.rainbowkey.com/privacypolicy.html</string>
 				<key>TermsOfService</key>
-				<string>http://rainbowkey.com/terms.html</string>
+				<string>http://www.rainbowkey.com/terms.html</string>
 			</dict>
 			<key>RemindChangeKeyboard</key>
 			<dict>

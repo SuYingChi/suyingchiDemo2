@@ -237,6 +237,7 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="alter_enable_access_content">To set up keyboard, please find and enable Emoji Keyboard.</string>
     <string name="alter_enable_access_confirm">GOT IT</string>
     <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable emoji keyboard manually.</string>
+    <string name="alert_enable_access_warn_confirm">SET UP MANUALLY</string>
     <string name="alert_enable_access_warn_title">Enable Keyboard Manually</string>
     <string name="access_set_up_success">Set up Successfully!</string>
     <string name="access_set_up_failed">Failed to Set up</string>
