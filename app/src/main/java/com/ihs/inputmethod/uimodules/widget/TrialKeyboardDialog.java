@@ -32,7 +32,6 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
@@ -170,7 +169,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false, "saving");
-                        HSToastUtils.toastCenterShort(getContext().getString(R.string.charging_enable_toast));
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });

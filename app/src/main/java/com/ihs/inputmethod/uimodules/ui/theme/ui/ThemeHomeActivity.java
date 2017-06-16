@@ -668,7 +668,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false, "alert");
-                        HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });

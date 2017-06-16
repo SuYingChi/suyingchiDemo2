@@ -643,7 +643,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false, "saving");
-                        HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });

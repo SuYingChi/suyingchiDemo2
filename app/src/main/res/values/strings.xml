@@ -220,8 +220,7 @@
 
     <string name="charging_alert_title">Smart Charging</string>
     <string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains sponsored contents.</string>
-    <string name="charging_enable_toast">Smart Charging Enabled</string>
-
+  
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
     <!--Accessibility-->

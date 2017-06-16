@@ -19,7 +19,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -113,7 +112,6 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 			cardView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					HSToastUtils.toastCenterLong(HSApplication.getContext().getString(R.string.charging_enable_toast));
 					ChargingManagerUtil.enableCharging(false,"card");
 					themeAdOnClickListener.onThemeAdClick(position);
 					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_click");
