@@ -22,7 +22,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
-import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -69,8 +68,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (Intent.ACTION_DATE_CHANGED.equals(action)) {
-                KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
-                KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
                 KeyboardPanelAdManager.resetKeyboardPanelAdCountData();
             }
         }
@@ -105,7 +102,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public void onCreate() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
         super.onCreate();
-        KeyboardFullScreenAdSession.getInstance();
         registerReceiver(this.dateReceiver, new IntentFilter(Intent.ACTION_DATE_CHANGED));
         registerReceiver(this.receiver, new IntentFilter(ACTION_CLOSE_SYSTEM_DIALOGS));
 
