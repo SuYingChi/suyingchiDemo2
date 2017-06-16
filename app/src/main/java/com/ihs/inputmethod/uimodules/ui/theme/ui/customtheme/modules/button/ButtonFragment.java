@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.button;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsProvider;
@@ -22,6 +23,12 @@ import java.util.List;
  */
 
 public class ButtonFragment extends BaseThemeFragment {
+    @Override
+    public void onResume() {
+        super.onResume();
+        HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_EFFECT); // 清除对应元素new mark
+    }
+
     @Override
     protected ThemePageItem initiateThemePageItem() {
 
