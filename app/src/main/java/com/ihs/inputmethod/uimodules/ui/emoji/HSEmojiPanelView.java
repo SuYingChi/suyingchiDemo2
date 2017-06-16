@@ -204,8 +204,12 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 			}
 			StaggeredGridLayoutManager layoutManager= (StaggeredGridLayoutManager) emojiView.getLayoutManager();
 			int[] into=new int[getResources().getInteger(R.integer.config_emoji_row_count)];
-			layoutManager.findFirstVisibleItemPositions(into);
-			final String tab=emojiCategory.getTabNameForPosition(into[0]);
+			layoutManager.findFirstCompletelyVisibleItemPositions(into);
+			String tab = emojiCategory.getTabNameForPosition(into[0]);
+			if (emojiCategory.getSortEmoji().get(into[0]).isDivider()) {
+				int emojiRow = getResources().getInteger(R.integer.config_emoji_row_count);
+				tab = emojiCategory.getTabNameForPosition(into[0] + emojiRow);
+			}
 			if(!tab.equals(emojiCategory.getCurrentTabName())){
 				emojiCategory.setCurrentTabName(tab);
 				tabAdapter.setTabSelected(tab);
