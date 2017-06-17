@@ -45,7 +45,7 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 	private HSEmojiViewAdapter emojiAdapter;
 
     private final EmojiCategory emojiCategory;
-
+    private KeyboardPanelAdManager keyboardPanelAdManager;
 
 	public HSEmojiPanelView(Context context) {
 		this(context,null);
@@ -67,7 +67,7 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 				+ res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
 				- res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
 		setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-
+		keyboardPanelAdManager = new KeyboardPanelAdManager("EmojiTopLeftTabAd");
 	}
 
 	@Override
@@ -78,9 +78,10 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 			tabs.addAll(emojiCategory.getTabs());
 			tabAdapter=new HSEmojiTabAdapter(tabs,this);
 			ImageView imageView = (ImageView) findViewById(R.id.emoji_ad_container);
-            if (KeyboardPanelAdManager.isShowEmojiAdConditionSatisfied()) {
+            if (keyboardPanelAdManager.isShowAdConditionSatisfied()) {
 				KCAnalyticUtil.logEvent("Keyboard_EmojiTopLeftTabAd_show");
                 imageView.setVisibility(View.VISIBLE);
+				keyboardPanelAdManager.hasShowedAd();
 				imageView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
 				imageView.setOnClickListener(new OnClickListener() {
 					@Override

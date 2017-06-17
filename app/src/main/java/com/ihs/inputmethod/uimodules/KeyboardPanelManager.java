@@ -72,7 +72,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private CustomBarGPAdAdapter gpAdAdapter;
     private AcbNativeAdLoader acbNativeAdLoader;
     private RecyclerView gpAdRecyclerView;
-
+    private KeyboardPanelAdManager keyboardPanelAdManager;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -134,6 +134,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         hsBackgroundVedioView.init();
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
+        keyboardPanelAdManager = new KeyboardPanelAdManager("FunctionBarGiftAd");
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
@@ -234,13 +235,14 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void showFunctionBarAd() {
-        if (KeyboardPanelAdManager.isShowFunctionBarAdConditionSatisfied()) {
-            functionBar.startFunctionBarAdAnimation();
+        if (keyboardPanelAdManager.isShowAdConditionSatisfied()) {
+            if (functionBar.startFunctionBarAdAnimation()) {
+                keyboardPanelAdManager.hasShowedAd();
+            }
         }
     }
 
     public void showEmojiPanel() {
-        KeyboardPanelAdManager.addEmojiPanelShowCount();
         keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
     }

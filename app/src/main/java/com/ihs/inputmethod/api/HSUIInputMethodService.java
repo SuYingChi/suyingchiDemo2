@@ -63,15 +63,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
         }
     };
-    private final BroadcastReceiver dateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (Intent.ACTION_DATE_CHANGED.equals(action)) {
-                KeyboardPanelAdManager.resetKeyboardPanelAdCountData();
-            }
-        }
-    };
     private boolean isInputViewShowing = false;
     private String currentAppPackageName = "";
     private KeyboardFullScreenAd openFullScreenAd;
@@ -102,7 +93,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public void onCreate() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
         super.onCreate();
-        registerReceiver(this.dateReceiver, new IntentFilter(Intent.ACTION_DATE_CHANGED));
         registerReceiver(this.receiver, new IntentFilter(ACTION_CLOSE_SYSTEM_DIALOGS));
 
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE, keyboardNotificationObserver);
@@ -331,7 +321,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !IAPManager.getManager().hasPurchaseNoAds()) {
                     closeFullScreenAd.preLoad();
                 }
-                KeyboardPanelAdManager.addInputViewStartCount();
             }
         }
     }
@@ -357,7 +346,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         WebContentSearchManager.getInstance().storeHistory();
 
         unregisterReceiver(this.receiver);
-        unregisterReceiver(this.dateReceiver);
         super.onDestroy();
         getKeyboardPanelMananger().onInputViewDestroy();
         HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_DESTROY);
