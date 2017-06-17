@@ -46,12 +46,9 @@
         android:summary="@string/enable_charging_detail"
         android:title="Fast Charger" />
 
-    <PreferenceCategory
-        android:key="Locker"
-        android:title="Screen Locker">
+
         <SwitchPreference
             android:key="@string/locker_switcher"
             android:summary="@string/enable_locker_detail"
             android:title="Camera Shortcut" />
-    </PreferenceCategory>
 </PreferenceScreen>

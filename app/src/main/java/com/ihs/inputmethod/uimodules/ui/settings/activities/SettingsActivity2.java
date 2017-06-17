@@ -152,11 +152,11 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                 }
             });
 
-
+            String locker = getString(R.string.locker_switcher);
             if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_MUTED) {
-                getPreferenceScreen().removePreference(findPreference("Locker"));
+                getPreferenceScreen().removePreference(findPreference(locker));
             } else {
-                SwitchPreference lockerSwitcher = (SwitchPreference) findPreference(getString(R.string.locker_switcher));
+                SwitchPreference lockerSwitcher = (SwitchPreference) findPreference(locker);
                 int lockerEnableStates = LockerSettings.getLockerEnableStates();
                 switch (lockerEnableStates) {
                     case LockerSettings.LOCKER_DEFAULT_DISABLED:
