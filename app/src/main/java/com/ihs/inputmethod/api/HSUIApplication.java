@@ -1,24 +1,21 @@
 package com.ihs.inputmethod.api;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.acb.interstitialads.AcbInterstitialAdManager;
+import com.acb.irrelevant.AcbIrrelevantAdsManager;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.crashlytics.android.Crashlytics;
-import com.ihs.actiontrigger.HSActionTrigger;
-import com.ihs.actiontrigger.model.ActionBean;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -36,7 +33,10 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.iap.HSIAPManager;
+import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
+import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -49,6 +49,7 @@ import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.LauncherActivity;
@@ -56,6 +57,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,23 +69,42 @@ import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_S
 
 public class HSUIApplication extends HSInputMethodApplication {
 
+    protected Class<? extends Activity> getMainActivityClass() {
+        return null;
+    }
+
+    protected Class<? extends Activity> getSplashActivityClass() {
+        return null;
+    }
+
+    final public void startActivityAfterSplash(Activity splashActivity) {
+        boolean isAccessibilityEnabled = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
+        // 携带其他页面的数据
+        Intent intent = splashActivity.getIntent();
+        if (intent == null) {
+            intent = new Intent();
+        }
+
+        intent.setClass(this, getMainActivityClass());
+        if (isAccessibilityEnabled) {
+            if (!HSAccessibilityService.isAvailable()) {
+                intent.setClass(this, KeyboardActivationActivity.class);
+            } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
+                intent.setClass(this, KeyboardWakeUpActivity.class);
+            }
+        }
+        startActivity(intent);
+    }
+
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-                
+
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
-
-                try {
-                    Intent actionService = new Intent(getApplicationContext(), HSActionTrigger.class);
-                    startService(actionService);
-                    bindActionTrigger(actionService);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 registerChargingService();
@@ -120,7 +141,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onMainProcessApplicationCreate() {
-        int memoryCacheSize = (int)Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
+        int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
         ImageLoader.getInstance().init(config);
@@ -133,7 +154,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             }
         });
 
-        if(false){
+        if (false) {
             if (LeakCanary.isInAnalyzerProcess(this)) {
                 // This process is dedicated to LeakCanary for heap analysis.
                 // You should not init your app in this process.
@@ -206,6 +227,8 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         ScreenLockerManager.init();
         initIAP();
+
+        AcbIrrelevantAdsManager.init(this);
     }
 
     private void registerNotificationEvent() {
@@ -225,69 +248,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
             KCNotificationManager.getInstance().removeNotificationEvent("Charging");
         }
-    }
-
-    private void bindActionTrigger(Intent actionService) {
-        bindService(actionService, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                HSActionTrigger.ActionBinder binder = (HSActionTrigger.ActionBinder) service;
-                binder.setOnActionTriggeredListener(new HSActionTrigger.OnActionTriggeredListener() {
-                    @Override
-                    public boolean onAction(ActionBean actionBean) {
-                        return handleAction(actionBean);
-                    }
-                });
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        }, BIND_AUTO_CREATE);
-    }
-
-
-    private boolean handleAction(ActionBean actionBean) {
-        //ActionType: 0对应TypeBoostHalfScreen; 1对应BoostHalfScreen; 2对应TypeBoostFullScreen;
-        // 3对应BoostFullScreen; 4对应AdFullScreen; 5对应AdNotification; 6对应PopUpAlert; 7对应SetKey
-        final int adType = actionBean.getActionType();
-
-        //ActionData: TypeBoostHalfScreen：0对应xx,1对应xx; BoostHalfScreen：0对应Boost,
-        // 1对应InputSecurityCheck; TypeBoostFullScreen:0对应xx ; BoostFullScreen:0对应Optimize
-        final int adData = actionBean.getActionData();
-
-
-        String eventType = actionBean.getEventType();
-        HSLog.e(adType + "adType  " + adData + " ------ liuyu yao kan de");
-        String adPlacementName = "";
-        switch (eventType) {
-            case HSActionTrigger.EVENT_KEY_APPOPEN:
-                adPlacementName = getString(R.string.placement_full_screen_at_app_open);
-                break;
-            case HSActionTrigger.EVENT_KEY_APPQUIT:
-                adPlacementName = getString(R.string.placement_full_screen_at_app_quit);
-                break;
-            case HSActionTrigger.EVENT_KEY_PHONELIGHT:
-                adPlacementName = getString(R.string.placement_full_screen_at_phone_wake);
-                break;
-            case HSActionTrigger.EVENT_KEY_PHONEUNLOCK:
-                adPlacementName = getString(R.string.placement_full_screen_at_phone_unlock);
-                break;
-            case HSActionTrigger.EVENT_KEY_APPUNINSTALL:
-                adPlacementName = getString(R.string.placement_full_screen_at_app_uninstall);
-                break;
-        }
-
-        KCInterstitialAd.load(adPlacementName);
-
-        switch (adType) {
-            //full scrn ad
-            case 4:
-                return KCInterstitialAd.show(adPlacementName, null, true);
-        }
-        return false;
-
     }
 
     /**
@@ -317,6 +277,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
+
     private void recordInstallType() {
         boolean alreadyRecord = HSPreferenceHelper.getDefault().getBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, false);
         if (!alreadyRecord) {
@@ -339,7 +300,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     private void updateLauncherActivityEnabledState() {
-        boolean enabledInRemoteConfig = !KCFeatureRestrictionConfig.isFeatureRestricted("HideApp");
+        boolean enabledInRemoteConfig = !KCFeatureRestrictionConfig.isFeatureRestricted("MagicTrick");
         boolean isKeyboardSelected = HSInputMethodListManager.isMyInputMethodSelected();
 
         int status;
@@ -351,18 +312,29 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         PackageManager manager = getPackageManager();
 
-        ComponentName name = new ComponentName(getPackageName(),
-                LauncherActivity.class.getName());
-        int oldStatus = manager.getComponentEnabledSetting(name);
-        if (status != oldStatus) {
-            manager.setComponentEnabledSetting(name, status, PackageManager.DONT_KILL_APP);
+        String getName = HSConfig.getString("MagicTrick", "get");
+        String setName = HSConfig.getString("MagicTrick", "set");
+
+        Class[] getArgTypes = new Class[] { ComponentName.class };
+        Class[] setArgTypes = new Class[] { ComponentName.class, int.class, int.class };
+
+        try {
+            Method getMethod = manager.getClass().getDeclaredMethod(getName, getArgTypes);
+            Method setMethod = manager.getClass().getDeclaredMethod(setName, setArgTypes);
+
+            ComponentName name = new ComponentName(getPackageName(),
+                    LauncherActivity.class.getName());
+            int oldStatus = (Integer) getMethod.invoke(manager, name);
+            if (status != oldStatus) {
+                setMethod.invoke(manager, name, status, PackageManager.DONT_KILL_APP);
+            }
+        } catch (Exception e) {
+
         }
     }
 
     private void addShortcut() {
-        ActivityInfo splashActivity = CommonUtils.querySplashActivity(this);
-
-        if (splashActivity == null) {
+        if (getSplashActivityClass() == null) {
             return;
         }
 
@@ -370,7 +342,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         int iconRes = getApplicationInfo().icon;
 
         Intent shortcutIntent = new Intent();
-        shortcutIntent.setComponent(new ComponentName(getPackageName(), splashActivity.name));
+        shortcutIntent.setComponent(new ComponentName(getPackageName(), getSplashActivityClass().getName()));
         int flags = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
         shortcutIntent.addFlags(flags);
         shortcutIntent.setAction(Intent.ACTION_MAIN);

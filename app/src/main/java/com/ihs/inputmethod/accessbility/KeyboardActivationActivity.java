@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -20,6 +23,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +33,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
+import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
@@ -166,6 +171,21 @@ public class KeyboardActivationActivity extends HSActivity {
 //        });
 
 
+
+        if (findViewById(view_img_title) != null) {
+            scaleTitleImage(findViewById(view_img_title));
+        }else{
+            WindowManager wm = this.getWindowManager();
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int screenWidth = size.x;
+            final int screenHeight = size.y;
+            Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
+            getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
+        }
+
+
         View setupAutoBtn = findViewById(bt_step_one);
         if (findViewById(R.id.text_one) != null) {
             setupAutoBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
@@ -196,9 +216,7 @@ public class KeyboardActivationActivity extends HSActivity {
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeReceiver, filter);
 
-        if (findViewById(view_img_title) != null) {
-            scaleTitleImage(findViewById(view_img_title));
-        }
+
 
         logOneTimeGA(app_accessibility_setkey_screen_viewed);
 
@@ -312,7 +330,7 @@ public class KeyboardActivationActivity extends HSActivity {
             alertDialogBuilder = new AlertDialog.Builder(this, R.style.AppCompactDialogStyle);
             alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
             alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content));//设置显示文本
-            alertDialogBuilder.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setPositiveButton(getString(R.string.alert_enable_access_warn_confirm), new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

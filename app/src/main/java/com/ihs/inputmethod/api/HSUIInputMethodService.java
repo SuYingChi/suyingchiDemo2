@@ -22,7 +22,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
-import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAdSession;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -64,17 +63,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
         }
     };
-    private final BroadcastReceiver dateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (Intent.ACTION_DATE_CHANGED.equals(action)) {
-                KeyboardFullScreenAdSession.resetKeyboardFullScreenAdSessionIndex();
-                KeyboardFullScreenAd.resetKeyboardFullScreenAdSessions();
-                KeyboardPanelAdManager.resetKeyboardPanelAdCountData();
-            }
-        }
-    };
     private boolean isInputViewShowing = false;
     private String currentAppPackageName = "";
     private KeyboardFullScreenAd openFullScreenAd;
@@ -105,8 +93,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public void onCreate() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
         super.onCreate();
-        KeyboardFullScreenAdSession.getInstance();
-        registerReceiver(this.dateReceiver, new IntentFilter(Intent.ACTION_DATE_CHANGED));
         registerReceiver(this.receiver, new IntentFilter(ACTION_CLOSE_SYSTEM_DIALOGS));
 
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE, keyboardNotificationObserver);
@@ -132,6 +118,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 }
                 HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
             } else {
+                if (isInRightAppForBackAd()) {
+                    HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
+                } else {
+                    HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
+                }
+
                 showBackAdIfNeeded();
             }
         }
@@ -155,7 +147,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
 
         if (isInRightAppForBackAd()) {
-            HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
             HSPreferenceHelper prefs = HSPreferenceHelper.create(this, "BackAd");
 
             long lastBackTimeMillis = prefs.getLong("LastBackTime", 0);
@@ -176,7 +167,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             } else {
                 backCount = 1;
                 hitBackCount = -1;
-                prefs.putInt("HitBackCount", hitBackCount);
+                prefs.putInt("HitBackIndex", hitBackCount);
             }
             prefs.putLong("LastBackTime", currentBackTimeMillis);
             prefs.putInt("BackCount", backCount);
@@ -197,7 +188,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
             return false;
         } else {
-            HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
             return false;
         }
     }
@@ -331,7 +321,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                     closeFullScreenAd.preLoad();
                 }
-                KeyboardPanelAdManager.addInputViewStartCount();
             }
         }
     }
@@ -357,7 +346,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         WebContentSearchManager.getInstance().storeHistory();
 
         unregisterReceiver(this.receiver);
-        unregisterReceiver(this.dateReceiver);
         super.onDestroy();
         getKeyboardPanelMananger().onInputViewDestroy();
         HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_DESTROY);

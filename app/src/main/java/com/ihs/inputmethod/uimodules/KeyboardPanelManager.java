@@ -41,6 +41,7 @@ import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -71,7 +72,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private CustomBarGPAdAdapter gpAdAdapter;
     private AcbNativeAdLoader acbNativeAdLoader;
     private RecyclerView gpAdRecyclerView;
-
+    private KeyboardPanelAdManager keyboardPanelAdManager;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -133,6 +134,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         hsBackgroundVedioView.init();
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
+        keyboardPanelAdManager = new KeyboardPanelAdManager("FunctionBarGiftAd");
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
@@ -233,13 +235,14 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void showFunctionBarAd() {
-        if (KeyboardPanelAdManager.isShowFunctionBarAdConditionSatisfied()) {
-            functionBar.startFunctionBarAdAnimation();
+        if (keyboardPanelAdManager.isShowAdConditionSatisfied()) {
+            if (functionBar.startFunctionBarAdAnimation()) {
+                keyboardPanelAdManager.hasShowedAd();
+            }
         }
     }
 
     public void showEmojiPanel() {
-        KeyboardPanelAdManager.addEmojiPanelShowCount();
         keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
     }
@@ -352,7 +355,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         if(gpAdRecyclerView!=null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
-                || !HSConfig.optBoolean(true,"Application","KeyboardToolBar","GooglePlay","ShowAd")){
+                || !HSConfig.optBoolean(true,"Application","KeyboardToolBar","GooglePlay","ShowAd")
+                || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")){
             return;
         }
 

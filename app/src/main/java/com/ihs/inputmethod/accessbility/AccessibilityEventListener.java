@@ -9,11 +9,10 @@ import android.provider.Settings;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.inputmethod.InputMethodManager;
 
+import com.acb.appmonitor.libaccessibilityservice.IAccEventListener;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.devicemonitor.accessibility.IAccEventListener;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
-import com.ihs.inputmethod.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
@@ -23,6 +22,8 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 import static android.content.Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_permission_accessibility_allowed;
 import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
+
+//import com.ihs.devicemonitor.accessibility.IAccEventListener;
 
 /**
  * Created by Arthur on 16/12/28.
@@ -67,7 +68,7 @@ public class AccessibilityEventListener implements IAccEventListener {
                                 InputMethodManager m = (InputMethodManager) HSApplication.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                                 m.showInputMethodPicker();
                             }
-                        },100);
+                        },200);
                     }else{
                         Intent intent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
                         intent.addFlags(FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT

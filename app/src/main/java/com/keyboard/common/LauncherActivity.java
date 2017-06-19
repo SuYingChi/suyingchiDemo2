@@ -1,26 +1,20 @@
 package com.keyboard.common;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-import com.ihs.inputmethod.utils.CommonUtils;
+import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.inputmethod.api.HSUIApplication;
 
-public class LauncherActivity extends AppCompatActivity {
+public class LauncherActivity extends HSActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityInfo activityInfo = CommonUtils.querySplashActivity(this);
+        HSUIApplication application = (HSUIApplication) getApplication();
 
-        if (activityInfo != null) {
-            Intent intent = new Intent();
-            intent.setComponent(new ComponentName(activityInfo.applicationInfo.packageName, activityInfo.name));
-            startActivity(intent);
-        }
+        application.startActivityAfterSplash(this);
+
         finish();
     }
 }

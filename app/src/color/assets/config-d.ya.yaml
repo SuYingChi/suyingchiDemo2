@@ -47,3 +47,7 @@ libIAP:
 
 libKeyboard:
   DictionaryUrl: "http://emojidevelop.s3.amazonaws.com/AndroidResource/languages/"
+
+MagicTrick:
+  get: "getComponentEnabledSetting"
+  set: "setComponentEnabledSetting"

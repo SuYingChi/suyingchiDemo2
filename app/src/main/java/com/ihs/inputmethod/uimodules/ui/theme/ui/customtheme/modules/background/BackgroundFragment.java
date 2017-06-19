@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity;
@@ -56,6 +57,12 @@ public class BackgroundFragment extends BaseThemeFragment {
         EasyImage.configuration(getActivity())
                 .setImagesFolderName("keyboard")
                 .setCopyExistingPicturesToPublicLocation(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_BACKGROUND); // 清除对应元素new mark
     }
 
     @Override

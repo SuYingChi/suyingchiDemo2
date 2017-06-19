@@ -114,10 +114,10 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         this.onFunctionBarClickListener = onFunctionBarClickListener;
     }
 
-    public void startFunctionBarAdAnimation() {
+    public boolean startFunctionBarAdAnimation() {
         KCAnalyticUtil.logEvent("FunctionBarGiftAd_show");
         if (isAdAnimating || imageView.getVisibility() == View.VISIBLE) {
-            return;
+            return false;
         }
         int screenWidth;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -153,7 +153,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
             }
         });
         animator.setDuration(500).start();
-        KeyboardPanelAdManager.hasShowedFunctionBarAd();
+        return true;
     }
 
     @Override

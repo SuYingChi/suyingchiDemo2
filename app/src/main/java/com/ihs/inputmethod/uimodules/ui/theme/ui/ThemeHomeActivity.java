@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
-import com.ihs.actiontrigger.utils.HSPermissionManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
@@ -38,11 +37,14 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
@@ -246,7 +248,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
 
         //界面被启动 请求 扫描权限
-        if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
+        if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !PermissionUtils.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
 
             HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
             new KCAlert.Builder(this)
@@ -256,10 +258,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     .setPositiveButton(getString(R.string.dialog_agree).toUpperCase(), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !HSPermissionManager.isUsageAccessGranted()) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
                                 isFromUsageAccessActivity = true;
                             }
-                            HSPermissionManager.enableUsageAccessPermission();
+                            PermissionUtils.enableUsageAccessPermission();
                             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
                         }
                     })
@@ -327,12 +329,13 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
-            if (HSPermissionManager.isUsageAccessGranted()) {
+            if (PermissionUtils.isUsageAccessGranted()) {
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("permission_usage_access");
             }
         }
 
         refreshApkUpdateViews();
+        HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
 
         // Place here to get a right session id from appframework
         if (isResumeOnCreate) {
@@ -637,7 +640,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false, "alert");
-                        HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });
