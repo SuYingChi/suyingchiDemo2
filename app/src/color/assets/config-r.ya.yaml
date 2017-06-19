@@ -1,7 +1,7 @@
 libCommons:
   RemoteConfig:
     PlistFile: "Local.kb"
-    PlistUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/configs/config-colorkeyboard-2.3.4.kb"
+    PlistUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/configs/config-colorkeyboard-2.3.5.kb"
   Analytics:
       FlurryKey: "GTJN395TKWN6T8T6YKC3"
       FacebookID: "910238615719294"
@@ -38,7 +38,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.kb"
-    RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/alerts/colorkeyboard-2.3.4-alerts.kb"
+    RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/alerts/colorkeyboard-2.3.5-alerts.kb"
 
 libIAP:
   IAPVerifyUrl: "https://karainbow.appcloudbox.net/keyboard/rainbow/receipt/verify"
