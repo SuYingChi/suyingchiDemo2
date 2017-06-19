@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,7 +21,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
@@ -38,7 +38,6 @@ import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -149,44 +148,30 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (isInRightAppForBackAd()) {
             HSPreferenceHelper prefs = HSPreferenceHelper.create(this, "BackAd");
 
-            long lastBackTimeMillis = prefs.getLong("LastBackTime", 0);
-            int backCount = prefs.getInt("BackCount", 0);
-            long currentBackTimeMillis = System.currentTimeMillis();
-
-            Calendar lastBackCalendar = Calendar.getInstance();
-            lastBackCalendar.setTimeInMillis(lastBackTimeMillis);
-
-            Calendar currentBackCalendar = Calendar.getInstance();
-            currentBackCalendar.setTimeInMillis(currentBackTimeMillis);
-
-            int hitBackCount = prefs.getInt("HitBackIndex", -1);
-
-            if (currentBackCalendar.get(Calendar.YEAR) == lastBackCalendar.get(Calendar.YEAR) &&
-                    currentBackCalendar.get(Calendar.DAY_OF_YEAR) == lastBackCalendar.get(Calendar.DAY_OF_YEAR)) {
-                backCount++;
-            } else {
-                backCount = 1;
-                hitBackCount = -1;
-                prefs.putInt("HitBackIndex", hitBackCount);
+            long lastBackAdShowTimeMillis = prefs.getLong("LastBackAdShowTime", 0);
+            long currentTimeMillis = System.currentTimeMillis();
+            long backAdShowCountOfDay = prefs.getLong("BackAdShowCountOfDay", 0);
+            if (!DateUtils.isToday(lastBackAdShowTimeMillis)) {
+                backAdShowCountOfDay = 0;
+                prefs.putLong("BackAdShowCountOfDay", 0);
             }
-            prefs.putLong("LastBackTime", currentBackTimeMillis);
-            prefs.putInt("BackCount", backCount);
 
-            List<Integer> backCountList = (List<Integer>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "BackCountOfDay");
-            for (int targetBackCount : backCountList) {
-                if (backCount >= targetBackCount && hitBackCount < targetBackCount) {
-                    boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, true);
-                    if (adShown) {
-                        hitBackCount = backCount;
-                        prefs.putInt("HitBackIndex", hitBackCount);
-                        return true;
-                    } else {
-                        KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
-                    }
-                    break;
+            float minIntervalByHour = HSConfig.optFloat(0, "Application", "InterstitialAds", "BackButton", "MinIntervalByHour");
+            int maxCountPerDay = HSConfig.optInteger(0, "Application", "InterstitialAds", "BackButton", "MaxCountPerDay");
+
+            if (currentTimeMillis - lastBackAdShowTimeMillis >= minIntervalByHour * 3600 * 1000 && backAdShowCountOfDay < maxCountPerDay) {
+                boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, true);
+                if (adShown) {
+                    backAdShowCountOfDay ++;
+                    prefs.putLong("BackAdShowCountOfDay", backAdShowCountOfDay);
+                    return true;
+                } else {
+                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                    return false;
                 }
+            } else {
+                return false;
             }
-            return false;
         } else {
             return false;
         }
