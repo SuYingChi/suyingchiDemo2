@@ -141,7 +141,6 @@
     <uses-permission android:name="com.lge.launcher.permission.WRITE_SETTINGS" /> 
     <uses-permission android:name="com.thunderst.launcher.permission.READ_SETTINGS" /> 
     <uses-permission android:name="com.thunderst.launcher.permission.WRITE_SETTINGS" /> 
-    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" /> 
     <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
      
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" /><!--写入Google 地图数据-->
