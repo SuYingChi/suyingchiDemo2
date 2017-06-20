@@ -164,6 +164,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 if (adShown) {
                     backAdShowCountOfDay ++;
                     prefs.putLong("BackAdShowCountOfDay", backAdShowCountOfDay);
+                    prefs.putLong("LastBackAdShowTime", currentTimeMillis);
                     return true;
                 } else {
                     KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
