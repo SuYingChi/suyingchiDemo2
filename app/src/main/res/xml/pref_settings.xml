@@ -50,5 +50,5 @@
         <SwitchPreference
             android:key="@string/locker_switcher"
             android:summary="@string/enable_locker_detail"
-            android:title="Camera Shortcut" />
+            android:title="Screen Locker" />
 </PreferenceScreen>
