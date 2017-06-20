@@ -168,7 +168,7 @@ dependencies {
 
     //ihs related
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
-    compile(name: 'ihs/libKeyboardUtils/keyboardutils-release3', ext: 'aar')
+    compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
     compile(name: 'libcharging', ext: 'aar')
 
     //android supports
