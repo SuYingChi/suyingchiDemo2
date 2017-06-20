@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
@@ -35,6 +36,11 @@ public class KeyboardFullScreenAd {
 
     public boolean show() {
         if (isConditionSatisfied()) {
+            if (isExactTriggerSession()) {
+                String eventName = "Spring_Trigger_" + occasion + "Keyboard";
+                HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", eventName, "keyboard", null, null, null);
+            }
+
             boolean adShown = KCInterstitialAd.show(placementName, null, true);
             if (adShown) {
                 hasFetchedAd();
@@ -52,8 +58,31 @@ public class KeyboardFullScreenAd {
         this.occasion = occasion;
         this.prefs = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
     }
+    
+    private boolean isExactTriggerSession() {
+        int sessionIndex = (int) KCKeyboardSession.getCurrentSessionIndexOfDay();
+        List<Integer> targetSessionIndexList = toIntegerList(HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay"));
+        if (targetSessionIndexList.contains(sessionIndex)) {
+            return true;
+        }
 
-    protected boolean isConditionSatisfied() {
+        return false;
+    }
+
+    private static List<Integer> toIntegerList(List<?> objectList) {
+        List<Integer> integerList = new ArrayList<>();
+        for (Object object : objectList) {
+            if (object instanceof Integer) {
+                integerList.add((Integer) object);
+            } else if (object instanceof String) {
+                integerList.add(Integer.valueOf((String) object));
+            }
+        }
+        return integerList;
+    }
+
+
+    private boolean isConditionSatisfied() {
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
@@ -63,7 +92,7 @@ public class KeyboardFullScreenAd {
             return false;
         }
 
-        int sessionIndex = (int)KCKeyboardSession.getCurrentSessionIndexOfDay();
+        int sessionIndex = (int) KCKeyboardSession.getCurrentSessionIndexOfDay();
 
         long hitTime = prefs.getLong(PREF_KEY_PREFIX_AD_HIT_TIME + occasion, 0);
         long hitIndex;
@@ -73,15 +102,7 @@ public class KeyboardFullScreenAd {
             hitIndex = -1;
         }
 
-        List<Object> targetSessionIndexObjectList = (List<Object>) HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay");
-        List<Integer> targetSessionIndexList = new ArrayList<>();
-        for (Object targetSessionIndexObject : targetSessionIndexObjectList) {
-            if (targetSessionIndexObject instanceof Integer) {
-                targetSessionIndexList.add((Integer) targetSessionIndexObject);
-            } else if (targetSessionIndexObject instanceof String) {
-                targetSessionIndexList.add(Integer.valueOf((String) targetSessionIndexObject));
-            }
-        }
+        List<Integer> targetSessionIndexList = toIntegerList(HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay"));
         Collections.sort(targetSessionIndexList);
 
         for (int targetSessionIndex : targetSessionIndexList) {
