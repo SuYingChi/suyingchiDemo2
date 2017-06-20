@@ -40,7 +40,10 @@ libFramework:
     RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/colorkeyboard-2.3.5-alerts.kb"
 
 libIAP:
-  IAPVerifyUrl: "https://dev-keyboard.appcloudbox.net:7443/keyboard/rainbowkey/receipt/verify"
+  Verify:
+    ByServer:
+      AppID: "603"
+      Url: "https://dev-keyboard.appcloudbox.net:7443/keyboard/rainbowkey/receipt/verify"
 
 libKeyboard:
   DictionaryUrl: "http://emojidevelop.s3.amazonaws.com/AndroidResource/languages/"

@@ -22,11 +22,10 @@ import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.viewpagerindicator.IconPageIndicator;
@@ -34,6 +33,7 @@ import com.viewpagerindicator.IconPageIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 import static com.ihs.panelcontainer.KeyboardPanelSwitchContainer.MODE_BACK_PARENT;
 
 
@@ -63,7 +63,7 @@ public class HSNewSettingsPanel extends BasePanel {
             IconPageIndicator iconIndicator = (IconPageIndicator) view.findViewById(R.id.iconIndicator);
 
             settingsViewPager.setItems(prepareItems());
-            if (!IAPManager.getManager().hasPurchaseNoAds()) {
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 nativeAdHelper = new NativeAdHelper();
                 nativeAdHelper.createAd();
             }
@@ -75,7 +75,7 @@ public class HSNewSettingsPanel extends BasePanel {
             settingPanelView = view;
         }
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
         return settingPanelView;
     }
 
@@ -101,7 +101,7 @@ public class HSNewSettingsPanel extends BasePanel {
                 Bundle bundle = new Bundle();
                 String customEntry = "keyboard";
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                IAPManager.startCustomThemeActivity(bundle);
+                CustomThemeActivity.startCustomThemeActivity(bundle);
             }
         }));
         items.add(ViewItemBuilder.getFontsItem(new ViewItem.ViewItemListener() {
@@ -145,7 +145,7 @@ public class HSNewSettingsPanel extends BasePanel {
             }
         }));
 
-        if (!IAPManager.getManager().hasPurchaseNoAds()) {
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             items.add(ViewItemBuilder.getAdsItem());
         }
 
@@ -176,7 +176,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     }
                 }
             }
-            if(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+            if(NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 settingsViewPager.removeAds();
             }
         }
@@ -248,7 +248,9 @@ public class HSNewSettingsPanel extends BasePanel {
 
     @Override
     protected boolean onShowPanelView(int appearMode) {
-        nativeAdHelper.showAdFlashAnimation();
+        if (nativeAdHelper != null) {
+            nativeAdHelper.showAdFlashAnimation();
+        }
         return true;
     }
 

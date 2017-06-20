@@ -60,13 +60,6 @@
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".ui.theme.ui.PurchaseSlotsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/PurchaseDialogActivityStyle"
-            android:windowSoftInputMode="stateUnchanged|adjustNothing" />
 
         <!--防止全屏和程序外广告声明冲突-->
         <activity android:name="com.acb.interstitialads.NativeInterstitial.AcbNativeInterstitalQuietActivity"

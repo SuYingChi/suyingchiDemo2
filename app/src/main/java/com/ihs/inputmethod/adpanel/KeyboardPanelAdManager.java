@@ -6,7 +6,7 @@ import android.text.format.DateUtils;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.keyboard.core.session.KCKeyboardSession;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class KeyboardPanelAdManager {
     }
 
     public boolean isShowAdConditionSatisfied() {
-        if (IAPManager.getManager().hasPurchaseNoAds()) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
 

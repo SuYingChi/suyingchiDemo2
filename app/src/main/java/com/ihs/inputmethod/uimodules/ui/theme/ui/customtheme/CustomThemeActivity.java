@@ -36,6 +36,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardThemePreview;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -47,9 +48,6 @@ import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.HSThemePromptPurchaseView;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.HSThemePromptPurchaseView.IItemClickListener;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background.BackgroundFragment;
@@ -61,6 +59,7 @@ import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -78,7 +77,7 @@ import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 import static com.ihs.app.framework.HSApplication.getContext;
 
 
-public class CustomThemeActivity extends HSAppCompatActivity implements IItemClickListener, INotificationObserver {
+public class CustomThemeActivity extends HSAppCompatActivity implements INotificationObserver {
     public static final String NOTIFICATION_SHOW_TRIAL_KEYBOARD = "hs.inputmethod.uimodules.ui.theme.ui.SHOW_TRIAL_KEYBOARD"; //显示试用键盘
     public static final String BUNDLE_KEY_BACKGROUND_NAME = "BUNDLE_KEY_BACKGROUND_NAME";
     public static final String BUNDLE_KEY_BACKGROUND_USE_CAMERA = "BUNDLE_KEY_BACKGROUND_USE_CAMERA";
@@ -92,7 +91,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
     private HSKeyboardThemePreview keyboardView;
     private HSMediaView mp4HSBackgroundView;
     private HSCommonHeaderView headerView;
-    private HSThemePromptPurchaseView themePromptPurchaseView;
     private ViewGroup rootView;
     private MaterialDialog savingDialog;
     private BaseThemeFragment currentFragment;
@@ -177,15 +175,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         ImageLoader.getInstance().clearMemoryCache();
         AudioAndHapticFeedbackManager.getInstance().releaseSoundResource();
         HSGlobalNotificationCenter.removeObserver(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (themePromptPurchaseView != null && themePromptPurchaseView.getVisibility() == View.VISIBLE) {
-            themePromptPurchaseView.setVisibility(View.GONE);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     private boolean initThemeResource() {
@@ -295,22 +284,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
         refreshKeyboardView();
     }
 
-    /**
-     * purchaseView close button click
-     */
-    @Override
-    public void onCloseButtonClick() {
-        showPromptPurchaseView(null);
-    }
-
-    private View.OnClickListener promptPurchaseViewClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            showPromptPurchaseView(null);
-        }
-    };
-
     private Drawable getPromptPurchaseViewBackground(KCBaseElement item) {
         if (item instanceof KCButtonStyleElement) {
             return KCElementResourseHelper.getButtonStyleBackgroundDrawable(customThemeData.getBackgroundMainColor());
@@ -320,27 +293,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             return KCElementResourseHelper.getFontBackgroundDrawable();
         }
         return null;
-    }
-
-    public void showPromptPurchaseView(KCBaseElement item) {
-        if (themePromptPurchaseView == null) {
-            themePromptPurchaseView = new HSThemePromptPurchaseView(this);
-            themePromptPurchaseView.setOnClickListener(promptPurchaseViewClickListener);
-            themePromptPurchaseView.addProductPurchaseListener(this);
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            layoutParams.setMargins(0, 0, 0, HSResourceUtils.getDefaultKeyboardHeight(getResources()));
-            themePromptPurchaseView.setLayoutParams(layoutParams);
-            rootView.addView(themePromptPurchaseView);
-        }
-
-        if (item != null) {
-            themePromptPurchaseView.setVisibility(View.VISIBLE);
-            themePromptPurchaseView.setIconBackground(getPromptPurchaseViewBackground(item));
-            themePromptPurchaseView.setIcon(item);
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_iapalert_custom_unlock_showed");
-        } else if (themePromptPurchaseView.getVisibility() != View.GONE) {
-            themePromptPurchaseView.setVisibility(View.GONE);
-        }
     }
 
     private boolean isLastPage() {
@@ -358,7 +310,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
     public void showFragment(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < getFragmentClasses().size()) {
             if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD) {
-                if (!IAPManager.getManager().hasPurchaseNoAds()) {
+                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                     KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
                 }
             }
@@ -420,29 +372,16 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
 
             @Override
             public void onRightClick(View view) {
-                if (commonPurchaseStateCheck()) {
-                    logGAEventForNextAction(currentPageIndex);//最后一个页面需要同时记录next和save
-                    if (isLastPage()) {
-                        //最后一页，保存
-                        saveTheme();
-                    } else {
-                        currentPageIndex++;
-                        showFragment(currentPageIndex);
-                    }
+                logGAEventForNextAction(currentPageIndex);//最后一个页面需要同时记录next和save
+                if (isLastPage()) {
+                    //最后一页，保存
+                    saveTheme();
+                } else {
+                    currentPageIndex++;
+                    showFragment(currentPageIndex);
                 }
-
             }
         });
-    }
-
-    private boolean commonPurchaseStateCheck() {
-        for (Object item : currentFragment.getChosenItems()) {
-            if (item != null && !IAPManager.getManager().isOwnProduct((KCBaseElement) item)) {
-                showPromptPurchaseView((KCBaseElement) item);
-                return false;
-            }
-        }
-        return true;
     }
 
     private void logGAEventForNextAction(int currentPage) {
@@ -616,7 +555,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
     }
 
     private boolean showInterstitialAdsAfterSaveTheme() {
-        if (IAPManager.getManager().hasPurchaseNoAds()) {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
         boolean interstitialAdShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), new KCInterstitialAd.OnAdCloseListener() {
@@ -705,5 +644,27 @@ public class CustomThemeActivity extends HSAppCompatActivity implements IItemCli
             HSToastUtils.toastCenterLong(getResources().getString(R.string.theme_create_custom_theme_failed));
             finish();
         }
+    }
+
+    public static void startCustomThemeActivity(final Bundle bundle) {
+        HSInputMethod.hideWindow();
+        String currentAppName = HSInputMethod.getCurrentHostAppPackageName();
+        String myPkName = HSApplication.getContext().getPackageName();
+        int delay = 0;
+        if (myPkName != null && myPkName.equals(currentAppName)) { //延迟100ms，让试用键盘可以有足够时间消失掉
+            delay = 100;
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                final Intent intent = new Intent();
+                intent.setClass(HSApplication.getContext(), com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.class);
+                if (bundle != null) {
+                    intent.putExtras(bundle);
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                HSApplication.getContext().startActivity(intent);
+            }
+        }, delay);
     }
 }

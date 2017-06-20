@@ -23,12 +23,12 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.decoration.BackgroundItemDecoration;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.view.View.GONE;
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
  * Created by wenbinduan on 2016/12/22.
@@ -110,7 +111,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 } else if (ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY.equals(s)) {
                     release();
                     HSGlobalNotificationCenter.removeObserver(notificationObserver);
-                } else if(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+                } else if(NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                     Iterator<Object> iterator = backgrounds.iterator();
                     while (iterator.hasNext()) {
                         Object obj = iterator.next();
@@ -135,7 +136,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             portraitScreenWidth = widthPixels < heightPixels ? widthPixels : heightPixels;
             HSGlobalNotificationCenter.addObserver(KCCustomThemeManager.NOTIFICATION_KEY_CUSTOM_THEME_ELEMENT_CHANGED, notificationObserver);
             HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
-            HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+            HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
         }
 
         public void release() {
@@ -167,7 +168,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 backgrounds.add(kcBackgroundElement);
             }
 
-            if (!IAPManager.getManager().hasPurchaseNoAds()) {
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 // 插入广告信息
                 List<Map<String, Object>> nativeAdInfoList = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "HomeBackgroundAd");
                 List<NativeAdInfo> nativeAdInfos = new ArrayList<>();
@@ -231,7 +232,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         String customEntry = "store_camera";
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_CAMERA, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                        IAPManager.getManager().startCustomThemeActivityIfSlotAvailable(activity, bundle);
+                        CustomThemeActivity.startCustomThemeActivity(bundle);
                         HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("shortcut_customize_background_clicked", "camera");
                         HSAnalytics.logEvent("shortcut_customize_background_clicked", "camera");
                     }
@@ -247,7 +248,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         String customEntry = "store_album";
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_GALLERY, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                        IAPManager.getManager().startCustomThemeActivityIfSlotAvailable(activity, bundle);
+                        CustomThemeActivity.startCustomThemeActivity(bundle);
                         HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("shortcut_customize_background_clicked", "album");
                         HSAnalytics.logEvent("shortcut_customize_background_clicked", "album");
                     }
@@ -296,7 +297,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             String backgroundItemName = background.getName();
                             bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
                             bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                            IAPManager.getManager().startCustomThemeActivityIfSlotAvailable(activity, bundle);
+                            CustomThemeActivity.startCustomThemeActivity(bundle);
                             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("shortcut_customize_background_clicked", background.getName());
                             HSAnalytics.logEvent("shortcut_customize_background_clicked", background.getName());
                         }

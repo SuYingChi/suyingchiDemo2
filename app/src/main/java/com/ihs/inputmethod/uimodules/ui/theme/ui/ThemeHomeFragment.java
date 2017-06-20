@@ -19,11 +19,11 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.ThemeHomeAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.ArrayList;
@@ -37,7 +37,6 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
 	public final static String NOTIFICATION_THEME_HOME_DESTROY="ThemeHomeFragment.destroy";
 	public final static String NOTIFICATION_THEME_HOME_STOP="ThemeHomeFragment.stop";
-	public final static String NOTIFICATION_REMOVEADS_PURCHASED=HSConfig.getString("Application", "RemoveAds", "iapID");
 
 	private RecyclerView recyclerView;
 	private ThemeHomeAdapter adapter;
@@ -53,7 +52,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 			if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
 				updateThemeList();
 			}
-			else if(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+			else if(RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
 				removeAds();
 			}
  		}
@@ -70,7 +69,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 		recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_theme_home, container, false);
 		initView();
 		HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
-		HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+		HSGlobalNotificationCenter.addObserver(RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
 		return recyclerView;
 	}
 
@@ -106,7 +105,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 				Bundle bundle = new Bundle();
 				String customEntry = "store_more";
 				bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-				IAPManager.getManager().startCustomThemeActivityIfSlotAvailable(getActivity(),bundle);
+				CustomThemeActivity.startCustomThemeActivity(bundle);
 			}
 		};
 		themeHomeModelList.add(backgroundTitle);
@@ -156,7 +155,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 		}
 
 
-		if(!IAPManager.getManager().hasPurchaseNoAds()) {
+		if(!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
 			// 获取所有远端配置广告的位置, 并按照position排序
 			List<Integer> positions = new ArrayList<>();
 			List<Map<String, Object>> themeAdInfos = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "ThemeAd");

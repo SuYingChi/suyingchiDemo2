@@ -34,6 +34,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -44,7 +45,10 @@ import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
+import com.ihs.inputmethod.utils.CommonUtils;
+import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
@@ -55,6 +59,8 @@ import com.squareup.leakcanary.LeakCanary;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -99,10 +105,8 @@ public class HSUIApplication extends HSInputMethodApplication {
 
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
-                IAPManager.getManager().queryOwnProductIds();
-            } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
-                IAPManager.getManager().onConfigChange();
 
+            } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 registerChargingService();
 
             } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
@@ -167,8 +171,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
 
-        //IAPManager.getManager().init()内部也会监听Session Start，由于存储监听集合的数据结构是List，因此确保HSUIApplication先接收SessionStart事件
-        IAPManager.getManager().queryOwnProductIds();
         HSKeyboardThemeManager.init();
 
         AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);
@@ -224,7 +226,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, intentFilter);
 
         ScreenLockerManager.init();
-        recordInstallType();
+        initIAP();
 
         AcbIrrelevantAdsManager.init(this);
     }
@@ -353,5 +355,15 @@ public class HSUIApplication extends HSInputMethodApplication {
                 .fromContext(getApplicationContext(), iconRes));
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         getApplicationContext().sendBroadcast(addIntent);
+    }
+
+    private void initIAP() {
+        List<String> inAppNonConsumableSkuList = null;
+        String removeAdsId = HSConfig.optString("", "Application", "RemoveAds", "iapID");
+        if (!TextUtils.isEmpty(removeAdsId)) {
+            inAppNonConsumableSkuList = Collections.singletonList(removeAdsId);
+        }
+        HSIAPManager.getInstance().init(null, inAppNonConsumableSkuList);
+        RemoveAdsManager.getInstance().setNeedsServerVerification(true);
     }
 }
