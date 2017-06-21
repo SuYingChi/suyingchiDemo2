@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.acb.expressads.AcbExpressAdManager;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.acb.irrelevant.AcbIrrelevantAdsManager;
 import com.acb.nativeads.AcbNativeAdManager;
@@ -45,11 +46,8 @@ import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
-import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.LauncherActivity;
@@ -173,8 +171,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSKeyboardThemeManager.init();
 
-        AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);
-
         CustomUIRateAlertUtils.initialize();
 
         if (!HSLog.isDebugging()) {
@@ -186,7 +182,10 @@ public class HSUIApplication extends HSInputMethodApplication {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
         }
 
-        AcbInterstitialAdManager.getInstance(this);
+        AcbInterstitialAdManager.getInstance().init(this);
+        AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);
+        AcbIrrelevantAdsManager.init(this);
+        AcbExpressAdManager.getInstance().init(this);
 
         HSChargingScreenManager.init(true, "Charging Master", getResources().getString(R.string.ad_placement_charging), new HSChargingScreenManager.IChargingScreenListener() {
             @Override
@@ -227,8 +226,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         ScreenLockerManager.init();
         initIAP();
-
-        AcbIrrelevantAdsManager.init(this);
     }
 
     private void registerNotificationEvent() {

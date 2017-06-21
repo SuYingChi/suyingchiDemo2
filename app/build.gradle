@@ -124,20 +124,16 @@ repositories {
 final LIB_DEVICE_VERSION = '.gm:4.1.+'
 
 dependencies {
+    // App Framework
+    compile "com.ihandy.appframework:libAppframework.gm:4.2.5.gm"
 
+    // Ads
+    compile "com.ihandy.nativeads:libNativeAds.gm:4.2.0.gm"
+    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.2.0.gm"
+    compile 'com.ihandy.expressads:libExpressAds.gm:4.0.0.gm'
+    compile 'com.ihandy.irrelevantads:libIrrelevantAds.gm:4.0.0.gm'
 
-    //////////////////////  Ads Configuration Begin ////////////////////////
-    compile "com.ihandy.nativeads:libNativeAds.${rootProject.ext.nativeAdsVersion}"
-    compile "com.ihandy.interstitialads:InterstitialAds.${rootProject.ext.interstitialAdsVersion}"
-
-
-    compile "com.google.android.gms:play-services-ads:${rootProject.ext.gmsVersion}"
-    compile "com.google.android.gms:play-services-basement:${rootProject.ext.gmsVersion}"
-    compile "com.google.android.gms:play-services-location:${rootProject.ext.gmsVersion}"
-    compile "com.google.android.gms:play-services-analytics:${rootProject.ext.gmsVersion}"
-    compile "com.google.android.gms:play-services-gcm:${rootProject.ext.gmsVersion}"
-
-    // Native Ads
+    // Native Ad Adapters
     compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.1.gm'
@@ -145,47 +141,45 @@ dependencies {
     compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.3.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.2.gm'
-    compile 'com.ihandy.3rdadadapter:libAdMobVistaNativeAdapter.gm:4.1.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAppnextNativeAdapter.gm:4.1.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.1.gm'
-    // Interstitial Ads
+    compile 'com.ihandy.3rdadadapter:libAdFlurryNativeAdapter.beta:4.1.0.beta02'
+
+    // Interstitial Ad Adapters
     compile 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.1.0.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.1.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdFBInterstitialAdapter.gm:4.1.0.gm'
 
-    // irrelevantads
-    compile 'com.ihandy.irrelevantads:libIrrelevantAds.gm:4.0.0.gm'
+    // Express Ad Adapters
+    compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.2.gm'
 
-    //////////////////////  Ads Configuration end ////////////////////////
+    // Google Play Services
+    compile "com.google.android.gms:play-services-ads:10.2.6"
+    compile "com.google.android.gms:play-services-basement:10.2.6"
+    compile "com.google.android.gms:play-services-location:10.2.6"
+    compile "com.google.android.gms:play-services-analytics:10.2.6"
+    compile "com.google.android.gms:play-services-gcm:10.2.6"
+    compile "com.google.firebase:firebase-appindexing:10.2.6"
 
-    compile "com.ihandy.iap:iap.gm:4.0.+"
+    // Android Support
+    compile "com.android.support:support-v4:25.3.1"
+    compile "com.android.support:recyclerview-v7:25.3.1"
+    compile "com.android.support:percent:25.3.1"
+    compile "com.android.support:appcompat-v7:25.3.1"
+    compile "com.android.support:design:25.3.1"
+    compile "com.android.support:cardview-v7:25.3.1"
+    compile "com.android.support:support-v13:25.3.1"
+    compile 'com.android.support:multidex:1.0.1'
 
-    compile "com.ihandy.appframework:libAppframework.${rootProject.ext.frameworkVersion}"
     compile 'com.ihandy.thirdparty:tapjoyconnectlibrary:11.10'
 
-//    masterCompile project(':booster')
-//    smileyCompile project(':booster')
+    compile "com.ihandy.iap:iap.gm:4.0.+"
 
     //ihs related
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
     compile(name: 'libcharging', ext: 'aar')
 
-    //android supports
-    compile "com.android.support:support-v4:${rootProject.ext.supportVersion}"
-    compile "com.android.support:recyclerview-v7:${rootProject.ext.supportVersion}"
-    compile "com.android.support:percent:${rootProject.ext.supportVersion}"
-    compile "com.android.support:appcompat-v7:${rootProject.ext.supportVersion}"
-    compile "com.android.support:design:${rootProject.ext.supportVersion}"
-    compile "com.android.support:cardview-v7:${rootProject.ext.supportVersion}"
-    compile "com.android.support:support-v13:${rootProject.ext.supportVersion}"
-    compile 'com.android.support:multidex:1.0.1'
-
     //facebook
     compile "com.facebook.shimmer:shimmer:0.1.0@aar"
-
-    //google
-    compile "com.google.firebase:firebase-appindexing:${rootProject.ext.gmsVersion}"
 
     //3rd party
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'
@@ -193,7 +187,6 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.afollestad.material-dialogs:core:0.9.0.1'
-    compile 'com.mcxiaoke.viewpagerindicator:library:2.4.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }

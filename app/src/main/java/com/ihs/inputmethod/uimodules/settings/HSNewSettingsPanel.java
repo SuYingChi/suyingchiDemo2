@@ -28,7 +28,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
-import com.viewpagerindicator.IconPageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,15 +59,11 @@ public class HSNewSettingsPanel extends BasePanel {
         if (settingPanelView == null) {
             View view = View.inflate(getContext(), R.layout.panel_settings, null);
             settingsViewPager = (SettingsViewPager) view.findViewById(R.id.settingsViewPager);
-            IconPageIndicator iconIndicator = (IconPageIndicator) view.findViewById(R.id.iconIndicator);
 
             settingsViewPager.setItems(prepareItems());
             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 nativeAdHelper = new NativeAdHelper();
                 nativeAdHelper.createAd();
-            }
-            if (settingsViewPager.getPageCount() >= 2) {
-                iconIndicator.setViewPager(settingsViewPager);
             }
 
             view.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());

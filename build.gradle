@@ -18,16 +18,6 @@ plugins {
 }
 //////////////////iHandy Maven configuration end//////////////////
 allprojects {
-    //////////////////iHandy Maven configuration begin//////////////////
-    ext {
-        frameworkVersion = "gm:4.2.4.gm"
-        interstitialAdsVersion = "gm:4.1.4.gm"
-        nativeAdsVersion = "gm:4.1.7.gm"
-        supportVersion = "25.3.0"
-        facebookSdkVersion = "4.20.0"
-        gmsVersion = "10.2.1"
-    }
-    //////////////////iHandy Maven configuration end//////////////////
 
     repositories {
         //////////////////iHandy Maven configuration begin//////////////////
@@ -54,21 +44,6 @@ allprojects {
             }
         }
 
-        configurations.all {
-            resolutionStrategy {
-
-                eachDependency { DependencyResolveDetails details ->
-                    def requested = details.requested
-                    if (requested.group == 'com.android.support') {
-                        if (!requested.name.startsWith("multidex")) {
-                            details.useVersion '25.3.0'
-                        }
-                    }
-                }
-            }
-
-
-        }
         //////////////////iHandy Maven configuration end//////////////////
 
         jcenter()

@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.viewpagerindicator.IconPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,21 +102,12 @@ public class SettingsViewPager extends ViewPager {
         setItems(this.items);
     }
 
-    public static class SettingsPagerAdapter extends PagerAdapter implements IconPagerAdapter {
+    public static class SettingsPagerAdapter extends PagerAdapter {
 
         List<View> views;
 
         public SettingsPagerAdapter(List<View> views) {
             this.views = views;
-        }
-
-        @Override
-        public int getIconResId(int index) {
-            String drawableName = "settings_indicator_selector";
-            if (!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
-                drawableName += "_light";
-            }
-            return HSApplication.getContext().getResources().getIdentifier(drawableName, "drawable", HSApplication.getContext().getPackageName());
         }
 
         @Override
