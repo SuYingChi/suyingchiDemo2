@@ -33,6 +33,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
@@ -171,7 +172,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 //        });
 //        lottieAnimationView.setOnClickListener(this);
 
-        findViewById(R.id.theme_home_interstitial_ad_trigger_view).setOnClickListener(this);
+
+        View adTriggerView = findViewById(R.id.theme_home_interstitial_ad_trigger_view);
+        if(RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
+            adTriggerView.setVisibility(View.GONE);
+        }else {
+            adTriggerView.setVisibility(View.VISIBLE);
+            adTriggerView.setOnClickListener(this);
+        }
 
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
