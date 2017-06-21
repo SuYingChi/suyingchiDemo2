@@ -2,7 +2,6 @@ package com.mobipioneer.lockerkeyboard.app;
 
 import android.app.Activity;
 
-import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -76,7 +75,6 @@ public class MyInputMethodApplication extends HSUIApplication {
     @Override
     protected void onMainProcessApplicationCreate() {
         super.onMainProcessApplicationCreate();
-        AcbInterstitialAdManager.getInstance(HSApplication.getContext());
 
         CustomUIRateAlertUtils.initialize();
 
