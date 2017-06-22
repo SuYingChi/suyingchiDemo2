@@ -411,7 +411,9 @@ public class MainActivity extends HSDeepLinkActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        customViewDialog.show();
+                        if (!MainActivity.this.isFinishing()) {
+                            customViewDialog.show();
+                        }
                     }
                 }, 500);
 
