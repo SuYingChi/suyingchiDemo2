@@ -14,6 +14,7 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.panelcontainer.BasePanel;
+import com.mobipioneer.lockerkeyboard.utils.MasterConstants;
 
 /**
  * Created by chenyuanming on 12/10/2016.
@@ -82,7 +83,7 @@ public class SettingsButton extends ActionButton {
         if (panelView != null) {
             if (isSelected) {
                 expandOrCollapse(panelView, true, animDuration);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(com.mobipioneer.lockerkeyboard.utils.Constants.GA_APP_KEYBOARD_SETTINGS_CLICK);
+                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(MasterConstants.GA_APP_KEYBOARD_SETTINGS_CLICK);
             } else {
                 expandOrCollapse(panelView, false, animDuration);
             }

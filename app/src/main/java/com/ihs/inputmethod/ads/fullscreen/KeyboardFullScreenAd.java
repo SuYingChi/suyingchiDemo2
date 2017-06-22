@@ -1,27 +1,31 @@
 package com.ihs.inputmethod.ads.fullscreen;
 
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
-import com.ihs.inputmethod.api.HSUIInputMethodService;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.keyboard.core.session.KCKeyboardSession;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class KeyboardFullScreenAd {
     private String placementName;
 
     public static final String SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS = "FullScreen_Ad_Loaded_On_KeyboardSession";
 
+    public static final String PREF_KEY_PREFIX_AD_HIT_SESSION_INDEX = "AD_HIT_SESSION_INDEX_";
+    public static final String PREF_KEY_PREFIX_AD_HIT_TIME = "AD_HIT_TIME_";
+
     private String occasion;
+
+    private SharedPreferences prefs;
 
     public void preLoad() {
         // 满足加载条件
@@ -32,6 +36,11 @@ public class KeyboardFullScreenAd {
 
     public boolean show() {
         if (isConditionSatisfied()) {
+            if (isExactTriggerSession()) {
+                String eventName = "Spring_Trigger_" + occasion + "Keyboard";
+                HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", eventName, "keyboard", null, null, null);
+            }
+
             boolean adShown = KCInterstitialAd.show(placementName, null, true);
             if (adShown) {
                 hasFetchedAd();
@@ -47,65 +56,70 @@ public class KeyboardFullScreenAd {
     public KeyboardFullScreenAd(String placementName, final String occasion) {
         this.placementName = placementName;
         this.occasion = occasion;
+        this.prefs = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
+    }
+    
+    private boolean isExactTriggerSession() {
+        int sessionIndex = (int) KCKeyboardSession.getCurrentSessionIndexOfDay();
+        List<Integer> targetSessionIndexList = toIntegerList(HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay"));
+        if (targetSessionIndexList.contains(sessionIndex)) {
+            return true;
+        }
+
+        return false;
     }
 
-    protected boolean isConditionSatisfied() {
-        if (IAPManager.getManager().hasPurchaseNoAds()) {
+    private static List<Integer> toIntegerList(List<?> objectList) {
+        List<Integer> integerList = new ArrayList<>();
+        for (Object object : objectList) {
+            if (object instanceof Integer) {
+                integerList.add((Integer) object);
+            } else if (object instanceof String) {
+                integerList.add(Integer.valueOf((String) object));
+            }
+        }
+        return integerList;
+    }
+
+
+    private boolean isConditionSatisfied() {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
 
-        // 1. Plist是否显示广告
         boolean shouldShow = HSConfig.optBoolean(false, "Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "Show");
         if (!shouldShow) {
             return false;
         }
-        // 2. 当前session所在组的index
-        int sessionIndex = getCurrentSessionGroupIndex();
-        if (sessionIndex == -1) {
-            return false;
+
+        int sessionIndex = (int) KCKeyboardSession.getCurrentSessionIndexOfDay();
+
+        long hitTime = prefs.getLong(PREF_KEY_PREFIX_AD_HIT_TIME + occasion, 0);
+        long hitIndex;
+        if (DateUtils.isToday(hitTime)) {
+            hitIndex = prefs.getLong(PREF_KEY_PREFIX_AD_HIT_SESSION_INDEX + occasion, -1);
+        } else {
+            hitIndex = -1;
         }
-        // 3. 如果当前session所在组的index已经加载过广告了，则return false， 反之，return true
-        Set<String> sessions = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getStringSet(SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS, new HashSet<String>());
-        if (!sessions.contains(sessionIndex + "")) {
-            return true;
+
+        List<Integer> targetSessionIndexList = toIntegerList(HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay"));
+        Collections.sort(targetSessionIndexList);
+
+        for (int targetSessionIndex : targetSessionIndexList) {
+            if (sessionIndex >= targetSessionIndex && hitIndex < targetSessionIndex) {
+                return true;
+            }
         }
+
         return false;
     }
 
     private void hasFetchedAd() {
-        // 1. 当前session所在组的index
-        int sessionIndex = getCurrentSessionGroupIndex();
-        if (sessionIndex == -1) {
-            return;
-        }
-        // 2. 当前已经显示过广告的组的index
-        Set<String> sessions = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getStringSet(SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS, new HashSet<String>());
+        long hitIndex = KCKeyboardSession.getCurrentSessionIndexOfDay();
+        long hitTime = System.currentTimeMillis();
 
-        // 3. 添加到sharepreference
-        sessions.add("" + sessionIndex);
-        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putStringSet(SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS, sessions).apply();
-    }
+        prefs.edit().putLong(PREF_KEY_PREFIX_AD_HIT_SESSION_INDEX + occasion, hitIndex).apply();
+        prefs.edit().putLong(PREF_KEY_PREFIX_AD_HIT_TIME + occasion, hitTime).apply();
 
-    private int getCurrentSessionGroupIndex() {
-        // 1. 获取当前session索引
-        int currentSessionIndex = KeyboardFullScreenAdSession.getKeyboardFullScreenAdSessionIndex();
-        // 3. 获取plist允许弹出广告的session列表
-        List<Integer> showAdSessionIndexs = (List<Integer>) HSConfig.getList("Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "SessionIndexOfDay");
-        int sessionTemp = -1;
-        // 4. 查找比当前session索引小的索引
-        if (showAdSessionIndexs != null) {
-            Collections.sort(showAdSessionIndexs);
-
-            for (int sessionIndex : showAdSessionIndexs) {
-                if (currentSessionIndex >= sessionIndex) {
-                    sessionTemp = sessionIndex;
-                }
-            }
-        }
-        return sessionTemp;
-    }
-
-    public static void resetKeyboardFullScreenAdSessions() {
-        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putStringSet(KeyboardFullScreenAd.SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS, new HashSet<String>()).apply();
     }
 }

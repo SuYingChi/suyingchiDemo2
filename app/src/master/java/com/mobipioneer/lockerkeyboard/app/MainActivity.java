@@ -61,13 +61,16 @@ import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.utils.Constants;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.mobipioneer.lockerkeyboard.utils.ActivityUtils;
-import com.mobipioneer.lockerkeyboard.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
+import static com.mobipioneer.lockerkeyboard.utils.MasterConstants.GA_PARAM_ACTION_APP_APPLOCKER_CLICKED;
+import static com.mobipioneer.lockerkeyboard.utils.MasterConstants.GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED;
+import static com.mobipioneer.lockerkeyboard.utils.MasterConstants.GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED;
 
 public class MainActivity extends HSDeepLinkActivity {
 
@@ -112,6 +115,7 @@ public class MainActivity extends HSDeepLinkActivity {
     ;
 
     boolean isInStepOne;
+    boolean clickStepOne;
     // is phone dev
     boolean isPhoneDev = true;
     boolean isChargingShowEver = false;
@@ -410,8 +414,8 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public void onClick(View v) {
 //                AppLockMgr.startLocker(getApplicationContext());
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_APPLOCKER_CLICKED);
-                HSAnalytics.logEvent(Constants.GA_PARAM_ACTION_APP_APPLOCKER_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_APPLOCKER_CLICKED);
+                HSAnalytics.logEvent(GA_PARAM_ACTION_APP_APPLOCKER_CLICKED);
             }
         });
 
@@ -436,8 +440,8 @@ public class MainActivity extends HSDeepLinkActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
         boolean homeShowed = sp.getBoolean(HOME_HAS_SHOW_PRE_KEY, false);
         if (!homeShowed) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED);
-            HSAnalytics.logEvent(Constants.GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED);
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED);
+            HSAnalytics.logEvent(GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED);
             sp.edit().putBoolean(HOME_HAS_SHOW_PRE_KEY, true).commit();
         }
     }
@@ -610,6 +614,11 @@ public class MainActivity extends HSDeepLinkActivity {
             }
         });
 
+        if(clickStepOne){
+            bt_step_one.performClick();
+            clickStepOne = false;
+        }
+
     }
 
     @Override
@@ -633,20 +642,22 @@ public class MainActivity extends HSDeepLinkActivity {
 
         if (getIntent().getBooleanExtra("skip", false) && !isInStepOne && !HSInputMethodListManager.isMyInputMethodEnabled()) {
 
-            Intent settingIntent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-            settingIntent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(settingIntent);
-            isInStepOne = true;
+            clickStepOne = true;
 
-            ImageView imageCodeProject = new ImageView(getApplicationContext());
-            imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-            final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-            imageCodeProject.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    customViewDialog.show();
-                }
-            }, 500);
+//            Intent settingIntent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+//            settingIntent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
+//            startActivity(settingIntent);
+//            isInStepOne = true;
+//
+//            ImageView imageCodeProject = new ImageView(getApplicationContext());
+//            imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+//            final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+//            imageCodeProject.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    customViewDialog.show();
+//                }
+//            }, 500);
 
         }
 
@@ -1086,8 +1097,8 @@ public class MainActivity extends HSDeepLinkActivity {
 
             boolean chargingScreenEnabled = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean(getString(R.string.config_charge_switchpreference_key), false);
             String isSelected = chargingScreenEnabled ? "true" : "false";
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED, isSelected);
-            HSAnalytics.logEvent(Constants.GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED, "selected", isSelected);
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED, isSelected);
+            HSAnalytics.logEvent(GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED, "selected", isSelected);
         }
     }
 

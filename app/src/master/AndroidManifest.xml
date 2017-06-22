@@ -141,7 +141,6 @@
     <uses-permission android:name="com.lge.launcher.permission.WRITE_SETTINGS" /> 
     <uses-permission android:name="com.thunderst.launcher.permission.READ_SETTINGS" /> 
     <uses-permission android:name="com.thunderst.launcher.permission.WRITE_SETTINGS" /> 
-    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN" /> 
     <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
      
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" /><!--写入Google 地图数据-->
@@ -168,6 +167,14 @@
     <!-- Google Play licence check -->
     <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
     <!-- Other：-->
+
+    <!-- required permission by libIrrelevantAds -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -407,11 +414,10 @@
             android:name="com.mobipioneer.lockerkeyboard.SplashActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -450,23 +456,9 @@
             android:windowSoftInputMode="adjustResize"
             tools:replace="android:theme">
             <intent-filter>
-                <action android:name="keyboard.main" />
+                <action android:name="${applicationId}.keyboard.main" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.ihs.inputmethod.accessbility.KeyboardActivationActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-
-        <activity
-            android:name="com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
         </activity>
 
 

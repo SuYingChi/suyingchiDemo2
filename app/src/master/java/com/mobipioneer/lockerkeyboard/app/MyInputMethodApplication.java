@@ -1,6 +1,7 @@
 package com.mobipioneer.lockerkeyboard.app;
 
-import com.acb.interstitialads.AcbInterstitialAdManager;
+import android.app.Activity;
+
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
@@ -15,8 +16,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.mobipioneer.lockerkeyboard.SplashActivity;
 
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_CHARGING_NEW_USER;
 
@@ -26,6 +26,15 @@ public class MyInputMethodApplication extends HSUIApplication {
     private static boolean isFacebookAppInstalled = false;
     private static boolean isGooglePlayInstalled = false;
 
+    @Override
+    protected Class<? extends Activity> getMainActivityClass() {
+        return MainActivity.class;
+    }
+
+    @Override
+    protected Class<? extends Activity> getSplashActivityClass() {
+        return SplashActivity.class;
+    }
 
     protected INotificationObserver sessionEventObserver = new INotificationObserver() {
 
@@ -48,7 +57,6 @@ public class MyInputMethodApplication extends HSUIApplication {
     };
 
 
-
     @Override
     protected void onSessionStart() {
         super.onSessionStart();
@@ -59,25 +67,23 @@ public class MyInputMethodApplication extends HSUIApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        /**
+         * 不要在这里加东西
+         */
+    }
 
-        AcbInterstitialAdManager.getInstance(HSApplication.getContext());
+    @Override
+    protected void onMainProcessApplicationCreate() {
+        super.onMainProcessApplicationCreate();
 
         CustomUIRateAlertUtils.initialize();
 
         HSGlobalNotificationCenter.addObserver(HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK, sessionEventObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, sessionEventObserver);
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).build();
-        ImageLoader.getInstance().init(config);
-
-//        AppLockManager.init(this);
-
         isFacebookAppInstalled = HSInstallationUtils.isAppInstalled("com.facebook.katana");
         isGooglePlayInstalled = HSMarketUtils.isMarketInstalled(HSMarketUtils.GOOGLE_MARKET);
-
     }
-
-
 
     @Override
     public void onTerminate() {

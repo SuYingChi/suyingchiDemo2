@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -12,16 +16,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.support.v7.app.AlertDialog;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
+import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
@@ -42,7 +54,7 @@ import static com.ihs.inputmethod.uimodules.R.id.view_img_title;
 
 
 public class KeyboardActivationActivity extends HSActivity {
-    public static final String ACTION_MAIN_ACTIVITY = "keyboard.main";
+    public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
     private static final int GUIDE_DELAY = 300;
     private boolean shouldShowEnableDialog = false;
 
@@ -56,6 +68,8 @@ public class KeyboardActivationActivity extends HSActivity {
     private CustomViewDialog customViewDialog;
 
     private boolean skipPage = false;
+    private TextView protocolText;
+
 
     private BroadcastReceiver imeChangeReceiver = new BroadcastReceiver() {
 
@@ -106,6 +120,14 @@ public class KeyboardActivationActivity extends HSActivity {
         } catch (Exception e) {
         }
 
+        if(videoView!=null){
+            try{
+                videoView.stopPlayback();
+                videoView = null;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         super.onDestroy();
     }
 
@@ -115,18 +137,14 @@ public class KeyboardActivationActivity extends HSActivity {
         boolean oneTapPageViewed = AccGALogger.isOneTapPageViewed();
         if (oneTapPageViewed || Build.VERSION.SDK_INT < 17) {
             skipPage = true;
-            Intent actIntent = getIntent();
-            if (actIntent == null) {
-                actIntent = new Intent();
-            }
-
+            Intent actIntent = new Intent();
+            actIntent.putExtras(getIntent());
             if (oneTapPageViewed) {
                 actIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
             } else {
                 actIntent.setAction(ACTION_MAIN_ACTIVITY);
             }
-
-            HSApplication.getContext().startActivity(actIntent);
+            startActivity(actIntent);
             finish();
             return;
         }
@@ -151,6 +169,21 @@ public class KeyboardActivationActivity extends HSActivity {
 //                startActivity(actIntent);
 //            }
 //        });
+
+
+
+        if (findViewById(view_img_title) != null) {
+            scaleTitleImage(findViewById(view_img_title));
+        }else{
+            WindowManager wm = this.getWindowManager();
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int screenWidth = size.x;
+            final int screenHeight = size.y;
+            Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
+            getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
+        }
 
 
         View setupAutoBtn = findViewById(bt_step_one);
@@ -183,11 +216,37 @@ public class KeyboardActivationActivity extends HSActivity {
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeReceiver, filter);
 
-        if (findViewById(view_img_title) != null) {
-            scaleTitleImage(findViewById(view_img_title));
-        }
+
 
         logOneTimeGA(app_accessibility_setkey_screen_viewed);
+
+        initPrivacy();
+    }
+
+    private void initPrivacy() {
+        protocolText = (TextView) findViewById(R.id.privacy_policy_text);
+        String serviceKeyText = getString(R.string.text_terms_of_service);
+        String policyKeyText = getString(R.string.text_privacy_policy);
+        String policyText = getResources().getString(R.string.privacy_policy, serviceKeyText, policyKeyText);
+        SpannableString ss = new SpannableString(policyText);
+        ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//                ds.setUnderlineText(true);
+            }
+        }, policyText.indexOf(serviceKeyText), policyText.indexOf(serviceKeyText) + serviceKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//                ds.setUnderlineText(true);
+            }
+        }, policyText.indexOf(policyKeyText), policyText.indexOf(policyKeyText) + policyKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        protocolText.setText(ss);
+        protocolText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 
@@ -271,15 +330,13 @@ public class KeyboardActivationActivity extends HSActivity {
             alertDialogBuilder = new AlertDialog.Builder(this, R.style.AppCompactDialogStyle);
             alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
             alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content));//设置显示文本
-            alertDialogBuilder.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setPositiveButton(getString(R.string.alert_enable_access_warn_confirm), new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     logOneTimeGA(app_manual_setkey_clicked);
-                    Intent actIntent = getIntent();
-                    if (actIntent == null) {
-                        actIntent = new Intent();
-                    }
+                    Intent actIntent = new Intent();
+                    actIntent.putExtras(getIntent());
                     actIntent.putExtra("skip", true);
                     actIntent.setAction(ACTION_MAIN_ACTIVITY);
                     startActivity(actIntent);

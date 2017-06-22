@@ -11,12 +11,12 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
-import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
@@ -88,7 +88,7 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 				final String smallPreviewImgUrl = keyboardTheme.getSmallPreivewImgUrl();
 				if (smallPreviewImgUrl != null) {
 					ImageSize imageSize = new ImageSize(imageWidth,imageHeight);
-					HSImageLoader.getInstance().displayImage(smallPreviewImgUrl, new ImageViewAware(themeCardViewHolder.themeRealImage), options,imageSize,null,null);
+					ImageLoader.getInstance().displayImage(smallPreviewImgUrl, new ImageViewAware(themeCardViewHolder.themeRealImage), options,imageSize,null,null);
 				}
 				themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
 				break;

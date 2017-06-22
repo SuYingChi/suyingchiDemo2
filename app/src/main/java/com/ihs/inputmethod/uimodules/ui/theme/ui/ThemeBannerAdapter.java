@@ -23,15 +23,15 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
  * Created by jixiang on 16/8/22.
@@ -114,7 +116,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     }
 
     public void startToFetchNativeAd() {
-        if (!IAPManager.getManager().hasPurchaseNoAds()) {
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             if (adCardView == null) {
                 View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
                 nativeAdView = new NativeAdView(HSApplication.getContext(), view);
@@ -157,7 +159,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                 recycle();
             } else if (ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP.equals(s)) {
                 stopAutoScroll();
-            } else if (ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+            } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 // removeNativeAdView();
             }
 
@@ -336,7 +338,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
     }
 
     private int getInitItem() {
@@ -397,7 +399,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             if (keyboardTheme.getThemeBannerImgUrl() != null) {
                 imageView.setImageResource(R.drawable.image_placeholder);
                 ImageSize imageSize = new ImageSize(bannerWidth,bannerHeight);
-                HSImageLoader.getInstance().displayImage(keyboardTheme.getThemeBannerImgUrl(), new ImageViewAware(imageView), displayImageOptions,imageSize,null,null);
+                ImageLoader.getInstance().displayImage(keyboardTheme.getThemeBannerImgUrl(), new ImageViewAware(imageView), displayImageOptions,imageSize,null,null);
 
             }
 

@@ -19,7 +19,6 @@ import com.ihs.panelcontainer.BasePanel;
 import com.mobipioneer.inputmethod.panels.settings.model.ViewItem;
 import com.mobipioneer.inputmethod.panels.settings.model.ViewItemBuilder;
 import com.mobipioneer.inputmethod.panels.settings.widget.SettingsViewPager;
-import com.viewpagerindicator.IconPageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,72 +44,12 @@ public class HSSettingsPanel extends BasePanel {
 
     @Override
     public View onCreatePanelView() {
-
-//        LinearLayout linearLayout = new LinearLayout(getContext());
-//        linearLayout.setOrientation(LinearLayout.VERTICAL);
-//
-//
-//        SettingsViewPager pager = new SettingsViewPager(getContext());
-//        List<ViewItem> items = prepareItems();
-//        pager.setItems(items);
-//
-//        NativeAdsHelper.getHelper().onCreateAdView();
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
-//        layoutParams.weight = 1;
-//        pager.setLayoutParams(layoutParams);
-//        linearLayout.addView(pager);
-//
-//        IconPageIndicator iconPageIndicator = new IconPageIndicator(getContext());
-//        iconPageIndicator.setViewPager(pager);
-//        LinearLayout.LayoutParams indicatorLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        indicatorLayoutParams.topMargin = 15;
-//        indicatorLayoutParams.bottomMargin = 15;
-//        iconPageIndicator.setLayoutParams(indicatorLayoutParams);
-//        linearLayout.addView(iconPageIndicator);
-//
-//
-//        linearLayout.setBackgroundColor(Color.LTGRAY);
-//
-//        return linearLayout;
-
-
-//        FrameLayout frameLayout = new FrameLayout(getContext());
-//
-//        SettingsViewPager pager = new SettingsViewPager(getContext());
-//        List<ViewItem> items = prepareItems();
-//        pager.setItems(items);
-//
-//        NativeAdsHelper.getHelper().onCreateAdView();
-//        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
-//        layoutParams.height = ResourceUtils.getDefaultKeyboardHeight(getContext().getResources());
-//        pager.setLayoutParams(layoutParams);
-//        frameLayout.addView(pager);
-//
-//        IconPageIndicator iconPageIndicator = new IconPageIndicator(getContext());
-//        iconPageIndicator.setViewPager(pager);
-//        FrameLayout.LayoutParams indicatorLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        indicatorLayoutParams.topMargin = 15;
-//        indicatorLayoutParams.bottomMargin = 15;
-//        indicatorLayoutParams.gravity = Gravity.BOTTOM;
-//        iconPageIndicator.setLayoutParams(indicatorLayoutParams);
-//        frameLayout.addView(iconPageIndicator);
-//
-//
-//        frameLayout.setBackgroundColor(Color.LTGRAY);
-//
-//        return frameLayout;
-
         View view = View.inflate(getContext(), R.layout.panel_settings, null);
         SettingsViewPager settingsViewPager = (SettingsViewPager) view.findViewById(R.id.settingsViewPager);
-        IconPageIndicator iconIndicator = (IconPageIndicator) view.findViewById(R.id.iconIndicator);
-
 
         List<ViewItem> items = prepareItems();
         settingsViewPager.setItems(items);
         NativeAdsHelper.getHelper().onCreateAdView();
-
-        iconIndicator.setViewPager(settingsViewPager);
-
 
         view.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
         return view;

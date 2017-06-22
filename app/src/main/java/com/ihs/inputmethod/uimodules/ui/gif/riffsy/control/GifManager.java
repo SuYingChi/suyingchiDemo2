@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.support.v13.view.inputmethod.EditorInfoCompat;
 import android.support.v13.view.inputmethod.InputConnectionCompat;
 import android.support.v13.view.inputmethod.InputContentInfoCompat;
-import android.util.Pair;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
@@ -22,6 +21,7 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
 
 import java.io.File;
+import java.util.Map;
 
 public final class GifManager {
 
@@ -70,7 +70,11 @@ public final class GifManager {
 
         File uri = DirectoryUtils.getDownloadGifUri(gif.id);
 
-        if ("com.facebook.orca".equals(packageName)) { // messenger特殊处理，可以直接发送到对话列表中
+        final Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);
+        final boolean canSendDirectly = (Boolean) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_SEND_DIRECTLY);
+
+        // 可以直接发送到对话列表中
+        if (canSendDirectly) {
             String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
             boolean gifSupported = false;
             for (String mime_Type : mimeTypes) {
@@ -85,11 +89,8 @@ public final class GifManager {
             }
         }
 
-        // send mode
-        final Pair<Integer, String> pair = MediaShareUtils.refreshCurrentShareMode(packageName);
-
-        final int mode = pair.first;
-        final String format = pair.second;
+        final int mode = (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE);
+        final String format = (String) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_FORMAT);
         final String mimeType;
 
         if (format.equals(MediaShareUtils.IMAGE_SHARE_FORMAT_MP4)) {

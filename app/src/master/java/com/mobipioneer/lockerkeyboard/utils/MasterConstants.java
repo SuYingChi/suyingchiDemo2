@@ -3,13 +3,7 @@ package com.mobipioneer.lockerkeyboard.utils;
 /**
  * Created by xu.zhang on 10/31/15.
  */
-public class Constants {
-    public static final String GA_PARAM_ACTION_APP_STEP_ONE_CLICKED = "app_step_one_clicked";
-    public static final String GA_PARAM_ACTION_APP_STEP_ONE_ENABLED = "app_step_one_enabled";
-    public static final String GA_PARAM_ACTION_APP_STEP_TWO_CLICKED = "app_step_two_clicked";
-    public static final String GA_PARAM_ACTION_APP_STEP_TWO_ENABLED = "app_step_two_enabled";
-    public static final String GA_PARAM_ACTION_APP_SETTINGS_CLICKED = "app_settings_clicked";
-    public static final String GA_PARAM_ACTION_APP_LANGUAGES_CLICKED = "app_languages_clicked";
+public class MasterConstants {
     public static final String GA_PARAM_ACTION_APP_APPLOCKER_CLICKED = "app_applocker_clicked";
     public static final String GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED = "app_home_firsttime_showed";
     public static final String GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED = "app_home_charger_selected";

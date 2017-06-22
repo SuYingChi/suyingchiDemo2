@@ -12,6 +12,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="UiModuleThemeTitleTextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -117,6 +122,9 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowShowWallpaper">true</item>
         <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="NoPreviewTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
     </style>
 
 

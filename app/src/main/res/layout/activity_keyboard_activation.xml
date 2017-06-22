@@ -1,5 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:latin="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -45,9 +46,9 @@
         android:id="@+id/bt_step_one"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_above="@+id/bt_step_two"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
+        app:layout_marginBottomPercent="10%"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:clipChildren="false"
@@ -58,4 +59,16 @@
         android:textSize="16sp"
         android:textStyle="normal" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/privacy_policy_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ccffffff"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:textSize="13sp"
+        />
+
+</android.support.percent.PercentRelativeLayout>

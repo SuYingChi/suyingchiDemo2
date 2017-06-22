@@ -1,15 +1,11 @@
-package com.keyboard.colorkeyboard.app;
+package com.keyboard.common;
 
 import android.os.Bundle;
 
-import com.ihs.inputmethod.api.HSDeepLinkActivity;
+import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.inputmethod.api.HSUIApplication;
 
-/**
- * Created by wenbinduan on 2016/11/8.
- */
-
-public final class SplashActivity extends HSDeepLinkActivity {
+public class LauncherActivity extends HSActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

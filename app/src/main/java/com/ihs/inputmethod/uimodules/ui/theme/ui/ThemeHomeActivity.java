@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
-import com.ihs.actiontrigger.utils.HSPermissionManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
@@ -40,13 +39,14 @@ import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
@@ -55,13 +55,13 @@ import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
-import org.json.JSONObject;
-
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
  * Created by jixiang on 16/8/17.
@@ -126,36 +126,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
     };
 
-    private HSIAPManager.HSIAPListener removeAdsListener = new HSIAPManager.HSIAPListener() {
-        @Override
-        public void onPurchaseSucceeded(String productId) {
-            HSLog.d("onIAPProductPurchaseSucceeded:productId:" + productId);
-        }
-
-        @Override
-        public void onPurchaseFailed(String productId, int errorCode) {
-            HSLog.d("onIAPProductPurchaseFailed:productId:" + productId + ",errorCode:" + errorCode);
-            HSIAPManager.getInstance().removeListener(this);
-        }
-
-        @Override
-        public void onVerifySucceeded(String productId, JSONObject jsonObject) {
-            HSLog.d("onIAPProductVerifySucceeded:productId:" + productId);
-            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.purchase_success), Toast.LENGTH_LONG).show();
-            IAPManager.getManager().onVerifySuccessed(productId, jsonObject);
-            HSIAPManager.getInstance().removeListener(this);
-            HSGlobalNotificationCenter.sendNotification(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED);
-            navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
-        }
-
-        @Override
-        public void onVerifyFailed(String productId, int errorCode) {
-            HSLog.d("onVerifyFailed:errorCode:" + errorCode);
-            IAPManager.getManager().onVerifyFailed(productId, errorCode);
-            HSIAPManager.getInstance().removeListener(this);
-            HSGlobalNotificationCenter.sendNotification(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED);
-        }
-    };
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
@@ -168,6 +138,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                         showTrialKeyboardDialog(activationCode);
                     }
                 }
+            } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+                Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.purchase_success), Toast.LENGTH_LONG).show();
+                navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
             }
         }
     };
@@ -199,7 +172,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 //        });
 //        lottieAnimationView.setOnClickListener(this);
 
-        findViewById(R.id.theme_home_interstitial_ad_trigger_view).setOnClickListener(this);
+
+        View adTriggerView = findViewById(R.id.theme_home_interstitial_ad_trigger_view);
+        if(RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
+            adTriggerView.setVisibility(View.GONE);
+        }else {
+            adTriggerView.setVisibility(View.VISIBLE);
+            adTriggerView.setOnClickListener(this);
+        }
 
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
@@ -223,7 +203,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 Bundle bundle = new Bundle();
                 String customEntry = THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store_float_button" : "mytheme_float_button";
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                IAPManager.getManager().startCustomThemeActivityIfSlotAvailable(ThemeHomeActivity.this, bundle);
+                CustomThemeActivity.startCustomThemeActivity(bundle);
 
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("customize_entry_clicked", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
                 HSAnalytics.logEvent("customize_entry_clicked", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
@@ -271,12 +251,12 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // init update function
         navigationView.getMenu().findItem(R.id.nav_update).setVisible(ApkUtils.isUpdateEnabled());
-        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(getResources().getBoolean(R.bool.show_remove_ads_menu) && !IAPManager.getManager().hasPurchaseNoAds());
+        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(getResources().getBoolean(R.bool.show_remove_ads_menu) && !RemoveAdsManager.getInstance().isRemoveAdsPurchased());
         apkUpdateTip = findViewById(R.id.apk_update_tip);
 
 
         //界面被启动 请求 扫描权限
-        if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !HSPermissionManager.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
+        if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !PermissionUtils.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
 
             HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
             new KCAlert.Builder(this)
@@ -286,10 +266,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     .setPositiveButton(getString(R.string.dialog_agree).toUpperCase(), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !HSPermissionManager.isUsageAccessGranted()) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
                                 isFromUsageAccessActivity = true;
                             }
-                            HSPermissionManager.enableUsageAccessPermission();
+                            PermissionUtils.enableUsageAccessPermission();
                             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
                         }
                     })
@@ -357,12 +337,13 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
-            if (HSPermissionManager.isUsageAccessGranted()) {
+            if (PermissionUtils.isUsageAccessGranted()) {
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("permission_usage_access");
             }
         }
 
         refreshApkUpdateViews();
+        HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
 
         // Place here to get a right session id from appframework
         if (isResumeOnCreate) {
@@ -463,9 +444,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 }
             });
         } else if (id == R.id.nav_no_ads) {
-            HSIAPManager.getInstance().addListener(removeAdsListener);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("removeAds_clicked");
-            IAPManager.getManager().purchaseNoAds();
+            RemoveAdsManager.getInstance().purchaseRemoveAds();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -646,7 +626,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     @Override
     public void onBackPressed() {
-        exitAlert.setShowAd(!IAPManager.getManager().hasPurchaseNoAds());
+        exitAlert.setShowAd(!RemoveAdsManager.getInstance().isRemoveAdsPurchased());
         if (!exitAlert.show()) {
             HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "back");
@@ -668,7 +648,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false, "alert");
-                        HSToastUtils.toastCenterShort(getString(R.string.charging_enable_toast));
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });
@@ -728,4 +707,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
     }
+
+
 }

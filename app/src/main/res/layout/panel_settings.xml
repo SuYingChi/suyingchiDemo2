@@ -6,20 +6,12 @@
     android:clickable="true"
     android:orientation="vertical">
 
-
-    <com.viewpagerindicator.IconPageIndicator
-        android:id="@+id/iconIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="5dp" />
-
     <com.ihs.inputmethod.uimodules.settings.SettingsViewPager
         android:id="@+id/settingsViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/iconIndicator"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
         app:layout_marginTopPercent="5%" />
 
 </android.support.percent.PercentRelativeLayout>

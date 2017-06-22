@@ -21,7 +21,6 @@
             android:id="@+id/custom_theme_item_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:corner_radius="@dimen/common_round_corner"
             android:scaleType="centerCrop"/>
 
 

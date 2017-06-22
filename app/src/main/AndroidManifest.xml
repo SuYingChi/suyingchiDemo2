@@ -5,7 +5,7 @@
 
     <uses-sdk tools:overrideLibrary="com.facebook,com.facebook.shimmer,android.support.customtabs,com.facebook.ads,com.google.android.gms,com.mopub.mobileads.banner,com.mopub.mobileads.base,com.mopub.mobileads.native_static" />
 
-    <!--permission add same with kika.2017.4.26 liuyu-->
+    <!-- permission add same with kika.2017.4.26 liuyu -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -21,11 +21,16 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
-
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
-    <!--新增权限-->
-
+    <!-- permission add for calling feature.2017.6.21 by yulu -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 新增权限 -->
     <application>
         <activity
             android:name=".ui.theme.ui.ThemeHomeActivity"
@@ -55,62 +60,26 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />\
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
-            android:name="com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity"
+            android:name=".ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <activity
-            android:name=".ui.theme.ui.PurchaseSlotsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/PurchaseDialogActivityStyle"
-            android:windowSoftInputMode="stateUnchanged|adjustNothing" />
+        <!--防止全屏和程序外广告声明冲突-->
+        <activity android:name="com.acb.interstitialads.NativeInterstitial.AcbNativeInterstitalQuietActivity"
+            android:taskAffinity=".acb_screen_value"
+            android:noHistory="true"
+            tools:replace="android:taskAffinity" />
 
+        <activity android:name="com.acb.adadapter.QuietInterstial.BackgroundActivity"
+            android:taskAffinity=".acb_screen_value"
+            android:noHistory="true"
+            tools:replace="android:taskAffinity" />
 
-
-        <!-- showQuietly Config Start-->
-        <!-- AppLovin全屏 -->
-        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-        <activity android:name="com.acb.adadapter.ApplovinInterstitialAdapter.AcbAppLovinInterstitialActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-
-        <!-- Avocarrot全屏 -->
-        <activity android:name="com.avocarrot.androidsdk.VideoActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-        <activity android:name="com.avocarrot.androidsdk.RedirectActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-
-        <!-- Facebook全屏 -->
-        <activity android:name="com.facebook.CustomTabMainActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-        <activity android:name="com.facebook.ads.AudienceNetworkActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-
-        <!-- AdMob全屏和Adx全屏 -->
-        <activity android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet" />
-
-        <!-- showQuietly Config End-->
-
-        <!-- 给applovin配置sdk key，注意，master keyboard需要另外的key-->
+        <!-- 给applovin配置sdk key，注意，master keyboard需要另外的key -->
         <meta-data
             android:name="applovin.sdk.key"
             android:value="@string/applovin_sdk_key" />
@@ -120,138 +89,63 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:taskAffinity=".acb_interstitial_quiet"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
 
-        <receiver android:name="com.ihs.inputmethod.api.NotificationBroadcastReceiver" android:enabled="true">
+        <receiver
+            android:name="com.ihs.inputmethod.api.NotificationBroadcastReceiver"
+            android:enabled="true">
             <intent-filter>
-                <action android:name="com.ihs.intent.notification" >
-                </action>
+                <action android:name="com.ihs.intent.notification"></action>
             </intent-filter>
         </receiver>
 
         <activity
-            android:exported="true"
             android:name="com.ihs.inputmethod.feature.lucky.LuckyActivity"
             android:excludeFromRecents="true"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:taskAffinity=".keyboard.lucky"
             android:theme="@style/BaseWallpaperTheme" />
 
-        <service android:name="com.ihs.inputmethod.api.WakeKeyboardService"/>
-
-        <!--services for device monitor  needs to be remove-->
-        <service
-            android:name="com.ihs.devicemonitor.permanent.PermanentService"
-            tools:node="remove" />
-        <service
-            android:name="com.ihs.devicemonitor.permanent.PermanentServicePartner"
-            tools:node="remove" />
-        <service
-            android:name="com.ihs.devicemonitor.permanent.DMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            tools:node="remove" />
-
-        <service
-            android:name="com.ihs.devicemonitor.accessibility.HSAccPartnerService"
-            android:stopWithTask="false"
-            tools:node="remove" />
+        <service android:name="com.ihs.inputmethod.api.WakeKeyboardService" />
 
         <service
             android:name="com.ihs.devicemonitor.accessibility.HSAccessibilityService"
             android:label="@string/english_service_label"
             tools:remove="process"
             tools:replace="android:label">
-
         </service>
-
-
-        <provider
-            android:name="com.ihs.devicemonitor.accessibility.AccessibilityProvider"
-            android:authorities="${applicationId}.com.ihs.devicemonitor.accessibility.AccessibilityProvider"
-            android:exported="false"
-            android:process=":clean"
-            tools:node="remove" />
 
         <activity
             android:name="com.ihs.inputmethod.accessbility.KeyboardActivationActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-
+            android:theme="@style/NoPreviewTheme"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
+            android:theme="@style/NoPreviewTheme"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name="com.keyboard.common.LauncherActivity"
+            android:noHistory="true"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="keyboard|keyboardHidden|mcc|mnc|navigation|orientation|uiMode"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
-        <service
-            android:name="com.ihs.devicemonitor.app.topapp.HSTopAppService"
-            android:process=":work"
-            android:stopWithTask="false"
-            tools:node="remove">
-            <intent-filter>
-                <action android:name="${applicationId}.com.ihs.devicemonitor.app.topapp.HSTopAppService" />
-            </intent-filter>
-        </service>
-
-        <provider
-            android:name="com.ihs.devicemonitor.app.topapp.TopAppProvider"
-            android:authorities="${applicationId}.com.ihs.devicemonitor.app.topapp.TopAppProvider"
-            android:exported="false"
-            android:process=":work"
-            tools:node="remove" />
-
-        <service
-            android:name="com.ihs.devicemonitor.app.usage.monitor.UsageMonitorService"
-            android:process=":work"
-            android:stopWithTask="false"
-            tools:node="remove">
-            <intent-filter>
-                <action android:name="${applicationId}.com.ihs.devicemonitor.app.usage.monitor.UsageMonitorService" />
-            </intent-filter>
-        </service>
-
-        <provider
-            android:name="com.ihs.devicemonitor.app.usage.provider.AppUsageProvider"
-            android:authorities="${applicationId}.com.ihs.devicemonitor.app.usage.provider.AppUsageProvider"
-            android:exported="false"
-            android:process=":work"
-            tools:node="remove"></provider>
-
-        <receiver
-            android:name="com.ihs.devicemonitor.uninstall.UninstallReceiver"
-            android:enabled="true"
-            android:process=":native"
-            tools:node="remove">
-            <intent-filter>
-                <action android:name="com.ihs.devicemonitor.UNINSTALL_MONITOR_ACTION" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="com.ihs.devicemonitor.LibDMBroadcastReceiver"
-            android:enabled="true"
-            android:process=":work"
-            tools:node="remove">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="hs.app.session.SESSION_START" />
-                <action android:name="hs.app.session.SESSION_END" />
-                <action android:name="hs.commons.config.CONFIG_CHANGED" />
-            </intent-filter>
-        </receiver>
-        <!--end of devicemonitor libs-->
 
     </application>
 

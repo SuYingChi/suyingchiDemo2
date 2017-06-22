@@ -37,4 +37,7 @@
     <string name="placement_full_screen_at_app_uninstall">Master_A(InterstitialAds)AppUninstallFullScreenAd</string>
 
     <string name="ad_placement_lucky">Master_A(NativeAds)KeyboardLuckyAd</string>
+
+    <string name="ad_placement_locker">Master_A(NativeAds)Fuse</string>
+
 </resources>

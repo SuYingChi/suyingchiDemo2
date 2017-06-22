@@ -1,7 +1,7 @@
 libCommons:
   RemoteConfig:
     PlistFile: "Local.kb"
-    PlistUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/configs/config-colorkeyboard-2.3.4.kb"
+    PlistUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/configs/config-colorkeyboard-2.3.5.kb"
   Analytics:
       FlurryKey: "GTJN395TKWN6T8T6YKC3"
       FacebookID: "910238615719294"
@@ -31,18 +31,24 @@ libCommons:
   Connection:
     SigKey: "603_2"
     HashKey: "m/dN3P!}k$k#fnn[O*0(CQO:A/D_CF{m"
-  AppID: "604"
+  AppID: "603"
 libFramework:
   Push:
     SenderID: "587335381558"
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.kb"
-    RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/alerts/colorkeyboard-2.3.4-alerts.kb"
+    RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/alerts/colorkeyboard-2.3.5-alerts.kb"
 
 libIAP:
-  IAPVerifyUrl: "https://karainbow.appcloudbox.net/keyboard/rainbow/receipt/verify"
-
+  Verify:
+    ByServer:
+      AppID: "603"
+      Url: "https://karainbow.appcloudbox.net/keyboard/rainbow/receipt/verify"
 
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
+
+MagicTrick:
+  get: "getComponentEnabledSetting"
+  set: "setComponentEnabledSetting"

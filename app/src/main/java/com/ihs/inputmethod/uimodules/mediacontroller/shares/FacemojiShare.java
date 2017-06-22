@@ -25,12 +25,12 @@ public abstract class FacemojiShare {
 
 //    protected String getMimeType() throws Exception {
 //        String mimeType = null;
-//        if (Constants.MEDIA_FORMAT_GIF.equals(format)) {
-//            mimeType = Constants.MIME_IMAGE;
+//        if (MasterConstants.MEDIA_FORMAT_GIF.equals(format)) {
+//            mimeType = MasterConstants.MIME_IMAGE;
 //            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.KEYBOARD_FACEMOJI_SEND_TYPE, format);
 //
-//        } else if(Constants.MEDIA_FORMAT_MP4.equals(format)){
-//            mimeType = Constants.MIME_MP4;
+//        } else if(MasterConstants.MEDIA_FORMAT_MP4.equals(format)){
+//            mimeType = MasterConstants.MIME_MP4;
 //            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.KEYBOARD_FACEMOJI_SEND_TYPE, format);
 //        }
 //        if(mimeType != null) {

@@ -35,8 +35,7 @@ import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.ihs.keyboardutils.view.FlashFrameLayout;
@@ -45,6 +44,8 @@ import com.ihs.panelcontainer.panel.KeyboardPanel;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
  * Created by wenbinduan on 2016/11/21.
@@ -63,7 +64,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+            if(NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 View adContainer = findViewWithTag("NativeAd");
                 removeView(adContainer);
             }
@@ -79,7 +80,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     }
     public HSEmoticonActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
     }
 
     public void release() {
@@ -121,7 +122,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         }
 
 
-        if(!IAPManager.getManager().hasPurchaseNoAds()) {
+        if(!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             final boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
             final boolean hideAdTitle = HSConfig.optBoolean(false,"Application", "KeyboardEmoji", "HideAdTitle");
             final LayoutParams params = new LayoutParams(0, height, hideAdTitle?1.0f:1.6f);
@@ -272,7 +273,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                 keyboardActionListener.showPanel(KeyboardPanel.class);
                 keyboardActionListener.setBarVisibility(VISIBLE);
                 keyboardActionListener = null;
-//                HSGlobalNotificationCenter.sendNotification(com.ihs.inputmethod.uimodules.constants.Constants.HS_NOTIFICATION_RESET_EDIT_INFO);
+//                HSGlobalNotificationCenter.sendNotification(com.ihs.inputmethod.uimodules.constants.MasterConstants.HS_NOTIFICATION_RESET_EDIT_INFO);
             } else if (tag instanceof Integer && (Integer) tag == Constants.CODE_DELETE) {
                 HSInputMethod.deleteBackward();
             }

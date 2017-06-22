@@ -29,7 +29,6 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.api.utils.HSImageLoader;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.theme.download.ApkUtils;
@@ -38,17 +37,18 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.ui.theme.iap.IAPManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
@@ -133,7 +133,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
                 if (keyboardTheme.getLargePreivewImgUrl() != null) {
                     keyboardThemeScreenShotImageView.setImageDrawable(null);
-                    HSImageLoader.getInstance().displayImage(keyboardTheme.getLargePreivewImgUrl(), keyboardThemeScreenShotImageView, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build()
+                    ImageLoader.getInstance().displayImage(keyboardTheme.getLargePreivewImgUrl(), keyboardThemeScreenShotImageView, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build()
                             , new ImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
@@ -245,7 +245,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     }
 
     private void addNativeAdView() {
-        if (!IAPManager.getManager().hasPurchaseNoAds()) {
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             // 添加广告
             if (nativeAdView == null) {
                 final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);

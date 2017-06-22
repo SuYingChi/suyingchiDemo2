@@ -44,4 +44,6 @@
     <string name="theme_ad_placement_theme_ad">Smiley_A(NativeAds)ThemeAd</string>
     <string name="ad_placement_lucky">Smiley_A(NativeAds)KeyboardLuckyAd</string>
 
+    <string name="ad_placement_locker">Smiley_A(NativeAds)Fuse</string>
+
 </resources>
