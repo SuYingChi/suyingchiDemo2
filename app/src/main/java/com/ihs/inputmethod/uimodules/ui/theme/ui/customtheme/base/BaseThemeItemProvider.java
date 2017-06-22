@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -22,7 +24,6 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.view.HSGifImageView;
@@ -41,54 +42,15 @@ import me.drakeet.multitype.ItemViewProvider;
  */
 
 public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThemeItemProvider.BaseItemHolder, F extends BaseThemeFragment> extends ItemViewProvider<Object, BaseThemeItemProvider.BaseItemHolder> {
-    protected F fragment;
-
-
     public Handler handler = new Handler(Looper.getMainLooper());
     public BaseItemHolder lastCheckedHolder;
     public Object lastCheckedItem;
+    protected F fragment;
+    private boolean hasDefaultItemSelectStateSet = false;
 
     public BaseThemeItemProvider(F fragment) {
         this.fragment = fragment;
         handler = new Handler(Looper.getMainLooper());
-    }
-
-    private boolean hasDefaultItemSelectStateSet = false;
-
-    public static class BaseItemHolder extends RecyclerView.ViewHolder {
-
-        interface OnDownloadingProgressListener {
-            void onUpdate(int percent);
-
-            void onDownloadSucceeded();
-
-            void onDownloadFailed();
-        }
-
-        public HSGifImageView mContentImageView;
-        public RoundedImageView mCheckImageView;
-        public RoundedImageView mBackgroundImageView;
-        public RoundedImageView mLockedImageView;
-        public RoundedImageView mNewMarkImageView;
-        public RoundedImageView mPlaceholderView;
-        //        public SectorProgressView mProgressView;
-        public View itemView;
-        public OnDownloadingProgressListener downloadingProgressListener;
-
-        public BaseItemHolder(@NonNull View itemView) {
-            super(itemView);
-            this.itemView = itemView;
-
-            mContentImageView = (HSGifImageView) itemView.findViewById(R.id.custom_theme_item_content);
-            mCheckImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_check_bg);
-            mBackgroundImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_bg);
-            mLockedImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_locked);
-            mNewMarkImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
-            mPlaceholderView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
-//            mProgressView = (SectorProgressView) itemView.findViewById(R.id.custom_theme_item_progress);
-
-            mPlaceholderView.setCornerRadius(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.custom_theme_background_item_corners_radius));
-        }
     }
 
     @NonNull
@@ -99,7 +61,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     @Override
     protected void onBindViewHolder(@NonNull final BaseItemHolder holder, @NonNull final Object item) {
-        adjustLayoutForDevice88(holder, (KCBaseElement) item);
+//        adjustLayoutForDevice88(holder, (KCBaseElement) item);
         setItemTouchListener(holder, (I) item);
         setItemDrawable(holder, (KCBaseElement) item);
         setNewOrLockedState(holder, (KCBaseElement) item);
@@ -111,7 +73,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected void adjustLayoutForDevice88(@NonNull BaseItemHolder holder, KCBaseElement item) {
         holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
     }
-
 
     protected void onItemClicked(final V holder, final I item, String adPlacementName) {
         if (holder == lastCheckedHolder) {
@@ -220,7 +181,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             Drawable checked = getChosedBackgroundDrawable();//item.getChosedBackgroundDrawable();
             holder.mCheckImageView.setImageDrawable(checked);
             holder.mCheckImageView.setVisibility(View.VISIBLE);
-            holder.mLockedImageView.setVisibility(View.INVISIBLE);
             lastCheckedHolder = holder;
             lastCheckedItem = item;
         }
@@ -260,7 +220,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
-            holder.mLockedImageView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -318,31 +277,25 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     }
 
-    protected void setItemDrawable(@NonNull BaseItemHolder holder, @NonNull Object item) {
+    protected void setItemDrawable(@NonNull final BaseItemHolder holder, @NonNull final Object item) {
         //content
-        Drawable drawable = ((KCBaseElement) item).getPreview();
-        //如果icon不存在，则下载
-        if (drawable != null) {
-            //content view
-            holder.mPlaceholderView.setVisibility(View.INVISIBLE);
-            holder.mContentImageView.setImageDrawable(drawable);
-        } else {
-            holder.mPlaceholderView.setVisibility(View.VISIBLE);
-            holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
-            holder.mLockedImageView.setVisibility(View.INVISIBLE);
-            holder.mContentImageView.setImageDrawable(drawable);
-            downloadPreview(holder, (KCBaseElement) item);
-        }
+        new LoadPreviewTask((KCBaseElement) item, new loadPreviewResultListener() {
+            @Override
+            public void onLoadResult(Drawable drawable) {
+                //如果icon不存在，则下载
+                if (drawable != null) {
+                    //content view
+                    holder.mPlaceholderView.setVisibility(View.GONE);
+                    holder.mContentImageView.setImageDrawable(drawable);
+                } else {
+                    holder.mPlaceholderView.setVisibility(View.VISIBLE);
+                    holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
+                    holder.mContentImageView.setImageDrawable(drawable);
+                    downloadPreview(holder, (KCBaseElement) item);
+                }
+            }
+        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
-
-//    private boolean isCustomBackgroundType(HSCustomThemeItemBase item) {
-//        return (item instanceof HSCustomThemeItemBackground)
-//                && (((HSCustomThemeItemBackground) item).getCustomizedSource() == CAMERA
-//                || ((HSCustomThemeItemBackground) item).getCustomizedSource() == PHOTO_ALBUM
-//        );
-//    }
-
 
     /**
      * 下载预览图
@@ -378,7 +331,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         }, true /* isPreview */);
     }
 
-
     private boolean isNewItem(KCBaseElement item) {
         boolean isNewTheme = item.isNew();
         if (isNewTheme) {
@@ -387,12 +339,19 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         return isNewTheme;
     }
 
-
     private void startDownloadContent(BaseItemHolder holder, I item) {
 //        holder.mProgressView.setVisibility(View.VISIBLE);
 //        setLayoutParams(holder.mContentImageView, holder.mProgressView);
         downloadContent(holder, item);
     }
+
+
+//    private boolean isCustomBackgroundType(HSCustomThemeItemBase item) {
+//        return (item instanceof HSCustomThemeItemBackground)
+//                && (((HSCustomThemeItemBackground) item).getCustomizedSource() == CAMERA
+//                || ((HSCustomThemeItemBackground) item).getCustomizedSource() == PHOTO_ALBUM
+//        );
+//    }
 
     protected void setLayoutParams(final HSGifImageView mContentImageView, final View view) {
         handler.post(new Runnable() {
@@ -405,7 +364,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         });
     }
-
 
     private void setNotNew(V holder, KCBaseElement item) {
         if (item.isNew()) {
@@ -492,7 +450,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         }
     }
 
-
     protected void setItemTouchListener(@NonNull final BaseItemHolder holder, @NonNull final I item) {
         holder.itemView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -576,5 +533,62 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         smallScale.setFillAfter(true);
         smallScale.setDuration(0);
         view.startAnimation(smallScale);
+    }
+
+
+    public interface loadPreviewResultListener {
+        void onLoadResult(Drawable drawable);
+    }
+
+    public static class BaseItemHolder extends RecyclerView.ViewHolder {
+
+        public HSGifImageView mContentImageView;
+        public ImageView mCheckImageView;
+        public ImageView mBackgroundImageView;
+        public ImageView mNewMarkImageView;
+        public ImageView mPlaceholderView;
+        //        public SectorProgressView mProgressView;
+        public View itemView;
+        public OnDownloadingProgressListener downloadingProgressListener;
+        public BaseItemHolder(@NonNull View itemView) {
+            super(itemView);
+            this.itemView = itemView;
+
+            mContentImageView = (HSGifImageView) itemView.findViewById(R.id.custom_theme_item_content);
+            mCheckImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_check_bg);
+            mBackgroundImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_bg);
+            mNewMarkImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
+            mPlaceholderView = (ImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
+
+        }
+
+        interface OnDownloadingProgressListener {
+            void onUpdate(int percent);
+
+            void onDownloadSucceeded();
+
+            void onDownloadFailed();
+        }
+    }
+
+    public static class LoadPreviewTask extends AsyncTask<Void,Void,Drawable>{
+        loadPreviewResultListener loadPreviewResultListener;
+        KCBaseElement item;
+        public LoadPreviewTask(KCBaseElement item,BaseThemeItemProvider.loadPreviewResultListener loadPreviewResultListener) {
+            this.item = item;
+            this.loadPreviewResultListener = loadPreviewResultListener;
+        }
+
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            return item.getPreview();
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            if (loadPreviewResultListener != null){
+                loadPreviewResultListener.onLoadResult(drawable);
+            }
+        }
     }
 }
