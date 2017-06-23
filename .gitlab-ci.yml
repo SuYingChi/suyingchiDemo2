@@ -8,12 +8,21 @@ build_job:
   - git submodule update --init
   - ./gradlew assemble
   - ./gradlew app:dependencies > app/build/outputs/build-dependencies.txt
+  - cd app/ziptool/
+  - ./build_apk_color.sh
+  - ./build_apk_master.sh
+  - ./build_apk_smiley.sh
   artifacts:
     paths:
-    - app/build/outputs/apk/
+    - app/build/outputs/apk/*.apk
     - app/build/outputs/mapping/*/*/mapping.txt
+    - app/build/outputs/apk/*/*-release_signed_7zip_aligned.apk
+    - app/build/outputs/apk/*/resource_mapping_app-*-release.txt
     - app/build/outputs/build-dependencies.txt
     expire_in: 1 week
+  only:
+    - develop
+    - master
   tags:
   - camera
 
