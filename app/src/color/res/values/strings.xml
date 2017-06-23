@@ -18,7 +18,7 @@
     <string name="ad_placement_google_play_ad">Colorkey_A(NativeAds)GooglePlayIcon</string>
 
     <string name="ad_placement_locker">Colorkey_A(NativeAds)Fuse</string>
-
+    <string name="ad_placement_keyboard_banner">Colorkey_A(NativeAds)KeyboardBanner</string>
 
     <string name="ga_fullscreen_theme_save_load_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Load</string>
     <string name="ga_fullscreen_theme_save_show_ad">InterstitialAd_Colorkey_A(InterstitialAds)TrialKeyboardFullScreenAd_Show</string>

@@ -77,7 +77,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             } else if (eventName.equals(Constants.HS_NOTIFICATION_RESET_EDIT_INFO)) {
                 resetEditInfo();
             } else if (eventName.equals(HS_SHOW_KEYBOARD_WINDOW)) {
-                if (TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME)) {
+                if (inPlayStore()) {
                     getKeyboardPanelMananger().logCustomizeBarShowed();
                 }
             }
@@ -372,11 +372,32 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
-        if (TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME)) {
-            getKeyboardPanelMananger().showCustomizeBar();
+        if (inPlayStore()) {
+            getKeyboardPanelMananger().showGoogleAdBar();
         } else {
+            getKeyboardPanelMananger().removeGoogleAdBar();
+        }
+
+
+    }
+
+    @Override
+    public void onKeyboardWindowShow() {
+        super.onKeyboardWindowShow();
+        if (!inPlayStore()) {
+            getKeyboardPanelMananger().showBannerAdBar();
+        }
+    }
+
+    @Override
+    public void onKeyboardWindowHide() {
+        if (!inPlayStore()) {
             getKeyboardPanelMananger().removeCustomizeBar();
         }
+    }
+
+    private boolean inPlayStore() {
+        return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME);
     }
 
     @Override
