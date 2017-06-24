@@ -4,10 +4,6 @@ import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 
-/**
- * Created by Arthur on 16/10/11.
- */
-
 public class HSAppLockerUtils {
     private static final String SP_ENABLE_LOCKER = "SP_ENABLE_LOCKER";
 

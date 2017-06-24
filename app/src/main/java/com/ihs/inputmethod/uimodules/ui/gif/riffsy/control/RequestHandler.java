@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.gif.riffsy.control;
 
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.connection.httplib.HttpRequest.Method;
-import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.TagItem;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.request.BaseRequest;
@@ -16,6 +15,8 @@ import org.json.JSONArray;
 import java.util.List;
 
 public final class RequestHandler {
+	private static final int REQUEST_CONNECT_TIMEOUT = 10000;
+	private static final int REQUEST_READ_TIMEOUT = 30000;
 
     static void handleRequest(final BaseRequest request) {
        AsyncThreadPools.execute(new Runnable() {
@@ -61,8 +62,8 @@ public final class RequestHandler {
 		        conn.setRequestParams(request.getParams());
 	        }
 
-            conn.setConnectTimeout(Constants.REQUEST_CONNECT_TIMEOUT);
-            conn.setReadTimeout(Constants.REQUEST_READ_TIMEOUT);
+            conn.setConnectTimeout(REQUEST_CONNECT_TIMEOUT);
+            conn.setReadTimeout(REQUEST_READ_TIMEOUT);
 	        conn.startSync();
             if (conn.isSucceeded()) {
 	            JSONArray response=null;

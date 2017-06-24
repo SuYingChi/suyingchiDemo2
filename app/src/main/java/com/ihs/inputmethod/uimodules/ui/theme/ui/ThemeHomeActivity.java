@@ -33,19 +33,16 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
-import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
@@ -56,6 +53,7 @@ import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
@@ -68,6 +66,8 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
  */
 public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
+    public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
+
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
@@ -97,7 +97,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private boolean isResumeOnCreate = true;
 
     private AcbInterstitialAdLoader acbInterstitialAdLoader;
-//    private LottieAnimationView lottieAnimationView;
+    //    private LottieAnimationView lottieAnimationView;
     private AlertDialog fullscreenAdLoadingDialog;
     private boolean isAdTriggerLottieAnimationPlayed = false;
     private boolean fullscreenShowed = false;
@@ -120,7 +120,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     }
                     dismissDialog(fullscreenAdLoadingDialog);
                     fullscreenAdLoadingDialog = null;
-                    Toast.makeText(ThemeHomeActivity.this,R.string.locker_wallpaper_network_error, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ThemeHomeActivity.this, R.string.locker_wallpaper_network_error, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -174,9 +174,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
 
         View adTriggerView = findViewById(R.id.theme_home_interstitial_ad_trigger_view);
-        if(RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             adTriggerView.setVisibility(View.GONE);
-        }else {
+        } else {
             adTriggerView.setVisibility(View.VISIBLE);
             adTriggerView.setOnClickListener(this);
         }
@@ -193,7 +193,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
             }
         });
-        if (getIntent() != null && getIntent().getBooleanExtra(com.ihs.inputmethod.uimodules.constants.Constants.BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
+        if (getIntent() != null && getIntent().getBooleanExtra(BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
             keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
         }
         findViewById(R.id.home_create_theme_layout).setOnClickListener(new View.OnClickListener() {
@@ -686,8 +686,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     }
 
     private void loadFullscreenAd() {
-        if (!InterstitialGiftUtils.isNetworkAvailable(-1)){
-            Toast.makeText(this,R.string.no_network_connection, Toast.LENGTH_LONG).show();
+        if (!InterstitialGiftUtils.isNetworkAvailable(-1)) {
+            Toast.makeText(this, R.string.no_network_connection, Toast.LENGTH_LONG).show();
             return;
         }
 

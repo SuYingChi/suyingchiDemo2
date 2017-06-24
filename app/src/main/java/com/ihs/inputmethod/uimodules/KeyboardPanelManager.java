@@ -54,10 +54,6 @@ import static android.view.Surface.ROTATION_0;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-/**
- * Created by jixiang on 16/11/17.
- */
-
 public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseFunctionBar.OnFunctionBarItemClickListener {
 
 
