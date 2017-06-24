@@ -150,7 +150,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             if (backgroundDrawable == null) {
                 backgroundDrawable = new ColorDrawable(Color.BLACK);
             }
-            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Applying...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Downloading...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
 
                 @Override
                 public void onDismiss(boolean success) {
