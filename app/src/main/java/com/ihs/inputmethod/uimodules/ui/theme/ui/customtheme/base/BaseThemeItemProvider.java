@@ -182,10 +182,11 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                         //// TODO: 17/4/14 applying failed ;
                     }
                 };
+                adLoadingView.showInDialog();
             } else {
-                adLoadingView.startFakeLoading();
+                selectItem(holder, baseElement);
+                fragment.refreshKeyboardView();
             }
-            adLoadingView.showInDialog();
         }
     }
 
