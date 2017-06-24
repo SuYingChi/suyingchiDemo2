@@ -61,6 +61,7 @@ import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.utils.Constants;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.mobipioneer.lockerkeyboard.utils.ActivityUtils;
 
