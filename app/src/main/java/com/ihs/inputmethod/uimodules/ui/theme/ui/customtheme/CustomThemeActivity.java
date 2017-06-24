@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -154,7 +155,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setBackgroundDrawable(null);
+        getWindow().setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         setContentView(R.layout.activity_custom_theme);
         customThemeData = KCCustomThemeManager.getInstance().newCustomThemeData();
 

@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -11,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,17 +23,17 @@ import com.ihs.inputmethod.uimodules.R;
  */
 public class HSCommonHeaderView extends RelativeLayout {
 
-    private TextView textCancel;
-    private TextView textOK;
+    Drawable buttonCancelLeftDrawable = null;
+    Drawable buttonOKRightDrawable = null;
+    Handler handler = new Handler(Looper.getMainLooper());
+    private Button textCancel;
+    private Button textOK;
     private TextView textHead;
-
     private String titleCancel;
     private String titleOK;
     private String titleHead;
     private boolean backButtonVisible;
     private boolean nextButtonVisible;
-    Drawable buttonCancelLeftDrawable = null;
-    Drawable buttonOKRightDrawable = null;
 
     public HSCommonHeaderView(Context context) {
         this(context, null);
@@ -59,12 +59,12 @@ public class HSCommonHeaderView extends RelativeLayout {
         if (textHead != null) {
             return;
         }
-        textCancel = (TextView) findViewById(R.id.custom_theme_title_cancel);
+        textCancel = (Button) findViewById(R.id.custom_theme_title_cancel);
         textHead = (TextView) findViewById(R.id.custom_theme_title_title);
-        textOK = (TextView) findViewById(R.id.custom_theme_title_ok);
-        textCancel.setAllCaps(false);
-        textHead.setAllCaps(false);
-        textOK.setAllCaps(false);
+        textOK = (Button) findViewById(R.id.custom_theme_title_ok);
+//        textCancel.setAllCaps(false);
+//        textHead.setAllCaps(false);
+//        textOK.setAllCaps(false);
     }
 
     private void updateTitle() {
@@ -89,19 +89,19 @@ public class HSCommonHeaderView extends RelativeLayout {
         if (textCancel == null) {
             return;
         }
-        if (backButtonVisible) {
-            textCancel.setCompoundDrawablesWithIntrinsicBounds(getButtonCancelLeftDrawable(), null, null, null);
-            textCancel.setCompoundDrawablePadding(10);
-        } else {
-            textCancel.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        }
-
-        if (nextButtonVisible) {
-            textOK.setCompoundDrawablesWithIntrinsicBounds(null, null, getButtonOKRightDrawable(), null);
-            textOK.setCompoundDrawablePadding(10);
-        } else {
-            textOK.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        }
+//        if (backButtonVisible) {
+//            textCancel.setCompoundDrawablesWithIntrinsicBounds(getButtonCancelLeftDrawable(), null, null, null);
+//            textCancel.setCompoundDrawablePadding(10);
+//        } else {
+//            textCancel.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+//        }
+//
+//        if (nextButtonVisible) {
+//            textOK.setCompoundDrawablesWithIntrinsicBounds(null, null, getButtonOKRightDrawable(), null);
+//            textOK.setCompoundDrawablePadding(10);
+//        } else {
+//            textOK.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+//        }
     }
 
     public void setOnNavigationClickListener(final OnNavigationClickListener onNavigationClickListener) {
@@ -123,14 +123,6 @@ public class HSCommonHeaderView extends RelativeLayout {
         });
     }
 
-    public interface OnNavigationClickListener {
-        void onLeftClick(View view);
-
-        void onRightClick(View view);
-    }
-
-    Handler handler = new Handler(Looper.getMainLooper());
-
     public void setHeaderNextEnable(final boolean enable) {
         if (textOK != null) {
             handler.post(new Runnable() {
@@ -140,20 +132,20 @@ public class HSCommonHeaderView extends RelativeLayout {
                     // TODO: chenyuanming 26/12/2016
                     // 本来可以通过stateListDrawable.addState(new int[]{-android.R.attr.state_enabled},disabledArrowNextBitmapDrawable);方式设置,
                     // 但是负的state值在Device128上面设置无效
-                    if (nextButtonVisible) {
-                        if (enable) {
-                            textOK.setCompoundDrawablesWithIntrinsicBounds(null, null, getButtonOKRightDrawable(), null);
-                        } else {
-                            Bitmap nextBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.navigationbar_arrow_next);
-                            int arrowNextWidth = (int) (nextBitmap.getWidth() * 0.6);
-                            int arrowNextHeight = (int) (nextBitmap.getHeight() * 0.6) + 6;
-
-                            Bitmap arrowNextBitmap = Bitmap.createScaledBitmap(nextBitmap, arrowNextWidth, arrowNextHeight, true);
-                            Drawable disabledArrowNextBitmapDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), arrowNextBitmap);
-                            disabledArrowNextBitmapDrawable.setColorFilter(getContext().getResources().getColor(R.color.light_button_disabled), Mode.SRC_IN);
-                            textOK.setCompoundDrawablesWithIntrinsicBounds(null, null, disabledArrowNextBitmapDrawable, null);
-                        }
-                    }
+//                    if (nextButtonVisible) {
+//                        if (enable) {
+//                            textOK.setCompoundDrawablesWithIntrinsicBounds(null, null, getButtonOKRightDrawable(), null);
+//                        } else {
+//                            Bitmap nextBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.navigationbar_arrow_next);
+//                            int arrowNextWidth = (int) (nextBitmap.getWidth() * 0.6);
+//                            int arrowNextHeight = (int) (nextBitmap.getHeight() * 0.6) + 6;
+//
+//                            Bitmap arrowNextBitmap = Bitmap.createScaledBitmap(nextBitmap, arrowNextWidth, arrowNextHeight, true);
+//                            Drawable disabledArrowNextBitmapDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), arrowNextBitmap);
+//                            disabledArrowNextBitmapDrawable.setColorFilter(getContext().getResources().getColor(R.color.light_button_disabled), Mode.SRC_IN);
+//                            textOK.setCompoundDrawablesWithIntrinsicBounds(null, null, disabledArrowNextBitmapDrawable, null);
+//                        }
+//                    }
                 }
             });
         }
@@ -208,5 +200,11 @@ public class HSCommonHeaderView extends RelativeLayout {
             buttonCancelLeftDrawable = stateListDrawable;
         }
         return buttonCancelLeftDrawable;
+    }
+
+    public interface OnNavigationClickListener {
+        void onLeftClick(View view);
+
+        void onRightClick(View view);
     }
 }
