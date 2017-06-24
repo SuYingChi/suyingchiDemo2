@@ -65,7 +65,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="9dp"
+            android:layout_marginRight="41dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/charging_ad_button_bg"
@@ -79,16 +79,6 @@
             android:textColor="#ffffff"
             android:textSize="14sp"
             android:textStyle="normal" />
-
-
-        <ImageView
-            android:id="@+id/iv_close_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/banner_ad_close_button" />
-
 
     </LinearLayout>
 
