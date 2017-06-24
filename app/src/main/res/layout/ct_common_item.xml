@@ -1,58 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/custom_theme_item_margin"
+    android:gravity="center">
 
-    <FrameLayout
+    <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        android:id="@+id/custom_theme_item_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/custom_theme_item_margin"
-        android:gravity="center">
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true" />
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
-            android:id="@+id/custom_theme_item_bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:adjustViewBounds="true" />
-
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
-            android:id="@+id/custom_theme_item_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+    <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        android:id="@+id/custom_theme_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
-            android:id="@+id/custom_theme_item_check_bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:adjustViewBounds="true"
-            android:visibility="invisible" />
+    <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        android:id="@+id/custom_theme_item_check_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:visibility="invisible" />
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
-            android:id="@+id/custom_theme_item_locked"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:adjustViewBounds="true" />
+    <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        android:id="@+id/custom_theme_item_locked"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true" />
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
-            android:id="@+id/custom_theme_item_new_mark"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:adjustViewBounds="true" />
+    <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        android:id="@+id/custom_theme_item_new_mark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true" />
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
-            android:id="@+id/custom_theme_item_placeholder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:adjustViewBounds="true"
-            android:background="@color/custom_theme_preview_placeholder"
-            android:visibility="gone" />
-    </FrameLayout>
-</LinearLayout>
+    <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        android:id="@+id/custom_theme_item_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:background="@color/custom_theme_preview_placeholder"
+        android:visibility="gone" />
+</FrameLayout>
