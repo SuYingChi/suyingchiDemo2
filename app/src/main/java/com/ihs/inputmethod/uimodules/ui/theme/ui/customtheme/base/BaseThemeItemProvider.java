@@ -542,7 +542,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     public static class BaseItemHolder extends RecyclerView.ViewHolder {
 
-        public HSGifImageView mContentImageView;
+        public HSGifImageView mGifView;
+        public ImageView mContentImageView;
         public ImageView mCheckImageView;
         public ImageView mBackgroundImageView;
         public ImageView mNewMarkImageView;
@@ -554,7 +555,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             super(itemView);
             this.itemView = itemView;
 
-            mContentImageView = (HSGifImageView) itemView.findViewById(R.id.custom_theme_item_content);
+            mGifView = (HSGifImageView) itemView.findViewById(R.id.custom_theme_item_gif_content);
+            mContentImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_content);
             mCheckImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_check_bg);
             mBackgroundImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_bg);
             mNewMarkImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);

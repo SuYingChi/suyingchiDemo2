@@ -9,21 +9,22 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/custom_theme_item_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:adjustViewBounds="true" />
+            android:adjustViewBounds="true"
+            app:riv_corner_radius="@dimen/common_round_corner" />
 
-        <com.ihs.keyboardutils.view.HSGifImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/custom_theme_item_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"/>
 
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/custom_theme_item_check_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,21 +32,21 @@
             android:adjustViewBounds="true"
             android:visibility="invisible" />
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/custom_theme_item_locked"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true" />
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/custom_theme_item_new_mark"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true" />
 
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/custom_theme_item_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,15 +54,5 @@
             android:adjustViewBounds="true"
             android:background="@color/custom_theme_preview_placeholder"
             android:visibility="gone" />
-
-        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.SectorProgressView
-            android:id="@+id/custom_theme_item_progress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:adjustViewBounds="true"
-            android:visibility="gone"
-            app:spv_bg_color="#88000000"
-            app:spv_gap_width_of_radius_percent="15" />
     </FrameLayout>
 </LinearLayout>
