@@ -27,7 +27,7 @@
     <string name="alert_attention_messenger">RainbowKey keyboard treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
     <string name="toast_enable_keyboard">Enable RainbowKey</string>
     <string name="toast_select_keyboard">Select RainbowKey</string>
-    <string name="privacy_policy">By installing, you are agreeing to our %1$s\n and %2$s</string>
+    <string name="keyboard_guide_privacy_policy">By installing, you are agreeing to our %1$s\n and %2$s</string>
     <string name="text_terms_of_service">Terms of Service</string>
     <string name="text_privacy_policy">Privacy Policy</string>
 

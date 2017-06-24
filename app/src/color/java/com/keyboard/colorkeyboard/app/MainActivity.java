@@ -201,7 +201,7 @@ public class MainActivity extends HSDeepLinkActivity {
         protocolText = (TextView) findViewById(R.id.privacy_policy_text);
         String serviceKeyText = getString(R.string.text_terms_of_service);
         String policyKeyText = getString(R.string.text_privacy_policy);
-        String policyText = getResources().getString(R.string.privacy_policy, serviceKeyText, policyKeyText);
+        String policyText = getResources().getString(R.string.keyboard_guide_privacy_policy, serviceKeyText, policyKeyText);
         SpannableString ss = new SpannableString(policyText);
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
             @Override
@@ -411,7 +411,9 @@ public class MainActivity extends HSDeepLinkActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        customViewDialog.show();
+                        if (!MainActivity.this.isFinishing()) {
+                            customViewDialog.show();
+                        }
                     }
                 }, 500);
 
