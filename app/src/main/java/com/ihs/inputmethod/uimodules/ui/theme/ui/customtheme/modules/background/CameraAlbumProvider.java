@@ -105,10 +105,10 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
     @NonNull
     @Override
     protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        BaseItemHolder holder = super.onCreateViewHolder(inflater, parent);
-
+        BaseItemHolder holder = new BaseItemHolder(inflater.inflate(R.layout.ct_item_camera_or_gallery, null));
+        int margin = holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin);
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) * 2;
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - margin * 2;
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,width);
         holder.itemView.setLayoutParams(layoutParams);
         return holder;
@@ -138,19 +138,20 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
     @Override
     protected void setItemDrawable(@NonNull BaseItemHolder holder, @NonNull Object item) {
         //content
-        Drawable drawable = holder.itemView.getResources().getDrawable((Integer) item);
-        //如果icon不存在，则下载
-        if (drawable != null) {
-            //content view
-            holder.mPlaceholderView.setVisibility(View.INVISIBLE);
-            holder.mContentImageView.setImageDrawable(drawable);
-        } /*else {
-            holder.mPlaceholderView.setVisibility(View.VISIBLE);
-            holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
-            holder.mLockedImageView.setVisibility(View.INVISIBLE);
-            holder.mContentImageView.setImageDrawable(drawable);
-            downloadPreview(holder, item);
-        }*/
+//        Drawable drawable = holder.itemView.getResources().getDrawable((Integer) item);
+//        //如果icon不存在，则下载
+//        if (drawable != null) {
+//            //content view
+//            holder.mPlaceholderView.setVisibility(View.INVISIBLE);
+//            holder.mContentImageView.setImageDrawable(drawable);
+//        } /*else {
+//            holder.mPlaceholderView.setVisibility(View.VISIBLE);
+//            holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
+//            holder.mLockedImageView.setVisibility(View.INVISIBLE);
+//            holder.mContentImageView.setImageDrawable(drawable);
+//            downloadPreview(holder, item);
+//        }*/
+        holder.mContentImageView.setImageResource((Integer) item);
     }
 
 //    @Override

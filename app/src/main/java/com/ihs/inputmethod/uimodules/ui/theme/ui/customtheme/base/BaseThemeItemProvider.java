@@ -56,7 +56,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     @NonNull
     @Override
     protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new BaseItemHolder(inflater.inflate(R.layout.ct_item_background, null));
+        return new BaseItemHolder(inflater.inflate(R.layout.ct_common_item, null));
     }
 
     @Override

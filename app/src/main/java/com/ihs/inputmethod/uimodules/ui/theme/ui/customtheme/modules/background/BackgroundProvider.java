@@ -73,10 +73,11 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
     @NonNull
     @Override
     protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        BaseItemHolder holder = super.onCreateViewHolder(inflater, parent);
+        BaseItemHolder holder = new BaseItemHolder(inflater.inflate(R.layout.ct_item_background, null));
 
+        int margin = holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin);
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) * 2;
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - margin * 2;
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,width);
         holder.itemView.setLayoutParams(layoutParams);
         return holder;

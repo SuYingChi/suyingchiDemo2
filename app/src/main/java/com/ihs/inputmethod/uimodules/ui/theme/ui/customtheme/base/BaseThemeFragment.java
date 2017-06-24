@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -21,10 +20,8 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.animator.AlphaInAnimator;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem.CategoryItem;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.common.Category;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.common.CategoryItemViewProvider;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
@@ -182,12 +179,6 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         int gap = (int) HSApplication.getContext().getResources().getDimension(R.dimen.custom_theme_item_margin);
         recyclerView.addItemDecoration(new BaseItemDecoration(gap, gap));
         recyclerView.setAdapter(adapter);
-
-        if (Build.VERSION.SDK_INT >= 19) { //4.4以上加动画 TODO:改用DeviceEvaluator类来判断，性能好的机器才加动画
-            AlphaInAnimator animator = new AlphaInAnimator();
-            animator.setAddDuration(80);
-            recyclerView.setItemAnimator(animator);
-        }
         recyclerView.setPadding(0, 0, 0, HSResourceUtils.getDefaultKeyboardHeight(getResources()));
         loadData();
     }
@@ -196,9 +187,9 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<CategoryItem<?>> categories = getPageItem().categories;
+                List<ThemePageItem.CategoryItem<?>> categories = getPageItem().categories;
                 if (categories != null) {
-                    for (final CategoryItem<?> category : categories) {
+                    for (final ThemePageItem.CategoryItem<?> category : categories) {
                         adapter.register(category.itemClazz, category.provider);
                         Category category1 = new Category(category.categoryName);
                         if (!data.contains(category1)) {
@@ -206,7 +197,8 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
                         }
                         data.addAll(category.data);
                     }
-                    loadItem();
+                    items.addAll(data);
+                    adapter.notifyDataSetChanged();
                 }
             }
         }, 1);
