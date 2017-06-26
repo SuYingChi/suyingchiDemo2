@@ -66,6 +66,28 @@ import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_S
 
 public class HSUIApplication extends HSInputMethodApplication {
 
+    private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
+    private INotificationObserver notificationObserver = new INotificationObserver() {
+
+        @Override
+        public void onReceive(String notificationName, HSBundle bundle) {
+            if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
+
+                HSAlertMgr.delayRateAlert();
+                onSessionStart();
+
+            } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
+                registerChargingService();
+
+            } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
+                ChargingPrefsUtil.getInstance().setChargingForFirstSession();
+                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
+                    KCNotificationManager.getInstance().removeNotificationEvent("Charging");
+                }
+            }
+        }
+    };
+
     protected Class<? extends Activity> getMainActivityClass() {
         return null;
     }
@@ -90,30 +112,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
             }
         }
-        startActivity(intent);
+        splashActivity.startActivity(intent);
     }
-
-
-    private INotificationObserver notificationObserver = new INotificationObserver() {
-
-        @Override
-        public void onReceive(String notificationName, HSBundle bundle) {
-            if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-
-                HSAlertMgr.delayRateAlert();
-                onSessionStart();
-
-            } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
-                registerChargingService();
-
-            } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
-                ChargingPrefsUtil.getInstance().setChargingForFirstSession();
-                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
-                    KCNotificationManager.getInstance().removeNotificationEvent("Charging");
-                }
-            }
-        }
-    };
 
     @Override
     public void onCreate() {
@@ -271,8 +271,6 @@ public class HSUIApplication extends HSInputMethodApplication {
     protected void onSessionStart() {
         HSDiverseSession.start();
     }
-
-    private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
 
     private void recordInstallType() {
         boolean alreadyRecord = HSPreferenceHelper.getDefault().getBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, false);
