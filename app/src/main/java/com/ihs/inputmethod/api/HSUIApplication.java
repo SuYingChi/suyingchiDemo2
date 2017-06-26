@@ -84,6 +84,9 @@ public class HSUIApplication extends HSInputMethodApplication {
                 if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 }
+            } else if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(notificationName)) {
+                registerChargingService();
+                recordInstallType();
             }
         }
     };
@@ -143,14 +146,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
         ImageLoader.getInstance().init(config);
 
-        HSPublisherMgr.registerResultListener(this, new HSPublisherMgr.IPublisherListener() {
-            @Override
-            public void onResult(HSPublisherMgr.PublisherData publisherData) {
-                registerChargingService();
-                recordInstallType();
-            }
-        });
-
         if (false) {
             if (LeakCanary.isInAnalyzerProcess(this)) {
                 // This process is dedicated to LeakCanary for heap analysis.
@@ -167,6 +162,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_APPSFLYER_RESULT, notificationObserver);
 
         HSKeyboardThemeManager.init();
 
