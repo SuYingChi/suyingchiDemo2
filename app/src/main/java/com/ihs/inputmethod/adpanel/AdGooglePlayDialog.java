@@ -15,9 +15,9 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.view.RoundedCornerLayout;
 
 /**
  * Created by yanxia on 2017/6/26.
@@ -25,8 +25,8 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 public class AdGooglePlayDialog extends Dialog {
     private static final int AD_DELAY = 1000;
-    private ProgressBar progressBar;
-    private FrameLayout frameLayoutAdContainer;
+    private FrameLayout progressBarContainer;
+    private RoundedCornerLayout frameLayoutAdContainer;
     private NativeAdView nativeAdView;
     private Handler handler = new Handler();
 
@@ -42,7 +42,6 @@ public class AdGooglePlayDialog extends Dialog {
     }
 
     private void init() {
-        HSLog.d("xiayan init");
         setCanceledOnTouchOutside(true);
     }
 
@@ -58,10 +57,9 @@ public class AdGooglePlayDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HSLog.d("xiayan onCreate");
         setContentView(R.layout.google_play_dialog_ad);
-        progressBar = (ProgressBar) findViewById(R.id.google_play_ad_progress_bar);
-        frameLayoutAdContainer = (FrameLayout) findViewById(R.id.google_play_ad_container);
+        progressBarContainer = (FrameLayout) findViewById(R.id.google_play_ad_progress_bar_container);
+        frameLayoutAdContainer = (RoundedCornerLayout) findViewById(R.id.google_play_ad_container);
     }
 
     /**
@@ -70,17 +68,15 @@ public class AdGooglePlayDialog extends Dialog {
     @Override
     protected void onStart() {
         super.onStart();
-        HSLog.d("xiayan onStart");
-        progressBar.setVisibility(View.VISIBLE);
+        progressBarContainer.setVisibility(View.VISIBLE);
         frameLayoutAdContainer.setVisibility(View.GONE);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressBar.setVisibility(View.GONE);
+                progressBarContainer.setVisibility(View.GONE);
                 if (nativeAdView.getParent() != null) {
                     ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
                 }
-                HSLog.d("xiayan width = " + nativeAdView.getWidth() + " height = " + nativeAdView.getHeight());
                 frameLayoutAdContainer.addView(nativeAdView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 frameLayoutAdContainer.setVisibility(View.VISIBLE);
             }
@@ -95,7 +91,6 @@ public class AdGooglePlayDialog extends Dialog {
      */
     @Override
     public void show() {
-        HSLog.d("xiayan show");
         try {
             Window window = getWindow();
             if (!(getContext() instanceof Activity) && window != null) {
