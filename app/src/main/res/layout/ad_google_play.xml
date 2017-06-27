@@ -21,11 +21,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|left"
             android:background="#0f9d58"
+            android:fontFamily="sans-serif-medium"
             android:paddingBottom="3.7dp"
             android:paddingLeft="3.7dp"
             android:paddingRight="4.7dp"
             android:paddingTop="4.7dp"
-            android:text="Apps you may like"
+            android:text="Apps You Might Like"
             android:textColor="@android:color/white" />
 
         <FrameLayout
@@ -41,74 +42,73 @@
         android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
-        <com.acb.adadapter.ContainerView.AcbNativeAdIconView
-            android:id="@+id/ad_icon"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:maxHeight="20dp"
-            android:maxWidth="20dp"
-            android:src="@mipmap/ad_engine_app_icon"
-            app:riv_corner_radius="2dp" />
+        <com.ihs.keyboardutils.view.RoundedCornerLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rcl_corner_radius="2dp">
 
-        <RelativeLayout
+            <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+                android:id="@+id/ad_icon"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:maxHeight="20dp"
+                android:maxWidth="20dp"
+                android:src="@mipmap/ad_engine_app_icon"
+                app:riv_corner_radius="2dp" />
+
+            <ImageView
+                android:id="@+id/ad_small_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:src="@drawable/ad_small_icon" />
+        </com.ihs.keyboardutils.view.RoundedCornerLayout>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/ad_icon"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/ad_title_ll"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/ad_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/ad_small_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ad_small_icon" />
-
-                <TextView
-                    android:id="@+id/ad_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:layout_marginLeft="5dp"
-                    android:fontFamily="sans-serif"
-                    android:singleLine="true"
-                    android:text="title"
-                    android:textColor="@android:color/black"
-                    android:textSize="22sp"
-                    android:textStyle="normal" />
-            </LinearLayout>
+                android:layout_marginRight="16dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:singleLine="true"
+                android:text="title"
+                android:textColor="@android:color/black"
+                android:textSize="22sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/ad_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ad_title_ll"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif"
                 android:maxLines="3"
                 android:text="subTitle"
-                android:textColor="@android:color/black"
+                android:textColor="#b31e1e1e"
                 android:textSize="12sp"
                 android:textStyle="normal" />
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/ad_call_to_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="14dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/ad_google_play_dialog_button_bg_selector"
         android:ellipsize="end"
