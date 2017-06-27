@@ -2,6 +2,7 @@ package com.ihs.inputmethod.adpanel;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -26,8 +27,8 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
 
     private void initNativeAdView() {
         int width = getNativeAdViewWidth();
-        HSLog.d("xiayan width = " + width);
         View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_google_play, null);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         nativeAdView = new NativeAdView(HSApplication.getContext(), view);
         nativeAdView.configParams(new NativeAdParams(adPlacement, width, 1.9f));
         nativeAdView.setOnAdLoadedListener(this);
@@ -47,13 +48,16 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
     }
 
     public void cancel() {
-        nativeAdView.setOnAdLoadedListener(null);
+        if (nativeAdView != null) {
+            nativeAdView.setOnAdLoadedListener(null);
+        }
         nativeAdView = null;
         adGooglePlayDialog = null;
     }
 
     @Override
     public void onAdLoaded(NativeAdView nativeAdView) {
+        HSLog.d("xiayan onAdLoaded");
         initAndShowDialog();
     }
 }

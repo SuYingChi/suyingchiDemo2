@@ -65,6 +65,29 @@ public class AdGooglePlayDialog extends Dialog {
     }
 
     /**
+     * Called when the dialog is starting.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        HSLog.d("xiayan onStart");
+        progressBar.setVisibility(View.VISIBLE);
+        frameLayoutAdContainer.setVisibility(View.GONE);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+                if (nativeAdView.getParent() != null) {
+                    ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
+                }
+                HSLog.d("xiayan width = " + nativeAdView.getWidth() + " height = " + nativeAdView.getHeight());
+                frameLayoutAdContainer.addView(nativeAdView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                frameLayoutAdContainer.setVisibility(View.VISIBLE);
+            }
+        }, AD_DELAY);
+    }
+
+    /**
      * Start the dialog and display it on screen.  The window is placed in the
      * application layer and opaque.  Note that you should not override this
      * method to do initialization when the dialog is shown, instead implement
@@ -83,16 +106,6 @@ public class AdGooglePlayDialog extends Dialog {
                 }
             }
             super.show();
-            progressBar.setVisibility(View.VISIBLE);
-            frameLayoutAdContainer.setVisibility(View.GONE);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setVisibility(View.GONE);
-                    frameLayoutAdContainer.addView(nativeAdView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    frameLayoutAdContainer.setVisibility(View.VISIBLE);
-                }
-            }, AD_DELAY);
         } catch (Exception e) {
             e.printStackTrace();
         }
