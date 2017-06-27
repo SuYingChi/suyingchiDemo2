@@ -15,12 +15,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.adpanel.KeyboardGooglePlayAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
@@ -64,6 +66,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     private String currentAppPackageName = "";
     private KeyboardFullScreenAd openFullScreenAd;
     private KeyboardFullScreenAd closeFullScreenAd;
+    private KeyboardGooglePlayAdManager keyboardGooglePlayAdManager;
     private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
@@ -97,6 +100,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
         openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
         closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Close");
+        keyboardGooglePlayAdManager = new KeyboardGooglePlayAdManager(HSApplication.getContext().getString(R.string.ad_placement_themetryad));
     }
 
     @Override
@@ -364,6 +368,14 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             getKeyboardPanelMananger().resetKeyboardBarState();
         }
 
+        if (!currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
+                && !currentAppPackageName.equals("com.keyboard.colorkeyboard")
+                && editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
+            keyboardGooglePlayAdManager.loadAdAndShow();
+        } else if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
+                && !editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
+            keyboardGooglePlayAdManager.cancel();
+        }
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
