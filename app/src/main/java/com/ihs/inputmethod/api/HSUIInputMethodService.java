@@ -371,7 +371,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (!currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
                 && !currentAppPackageName.equals("com.keyboard.colorkeyboard")
                 && editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
-            keyboardGooglePlayAdManager.loadAdAndShow();
+            keyboardGooglePlayAdManager.loadAndShowAd();
         } else if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
                 && !editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
             keyboardGooglePlayAdManager.cancel();

@@ -23,45 +23,46 @@
             android:background="#0f9d58"
             android:text="Apps you may like"
             android:textColor="@android:color/white" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="5">
 
         <FrameLayout
-            android:layout_width="0dp"
+            android:id="@+id/ad_choice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="top|right" />
+    </FrameLayout>
 
-            <com.acb.adadapter.ContainerView.AcbNativeAdIconView
-                android:id="@+id/ad_icon"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_gravity="center"
-                android:maxHeight="20dp"
-                android:maxWidth="20dp"
-                android:src="@mipmap/ad_engine_app_icon"
-                app:riv_corner_radius="2dp" />
-        </FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+            android:id="@+id/ad_icon"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:maxHeight="20dp"
+            android:maxWidth="20dp"
+            android:src="@mipmap/ad_engine_app_icon"
+            app:riv_corner_radius="2dp" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="4"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/ad_icon"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/ad_title"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:text="title"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
@@ -70,17 +71,17 @@
             <TextView
                 android:id="@+id/ad_subtitle"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif"
-                android:maxLines="4"
+                android:maxLines="3"
                 android:text="subTitle"
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
                 android:textStyle="normal" />
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/ad_call_to_action"
@@ -94,8 +95,10 @@
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
+        android:paddingTop="10dp"
         android:text="download"
         android:textAllCaps="true"
         android:textColor="#ffffff"

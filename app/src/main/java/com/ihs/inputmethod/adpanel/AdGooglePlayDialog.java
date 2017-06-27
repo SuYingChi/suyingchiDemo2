@@ -4,23 +4,35 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 /**
  * Created by yanxia on 2017/6/26.
  */
 
 public class AdGooglePlayDialog extends Dialog {
+    private static final int AD_DELAY = 1000;
+    private ProgressBar progressBar;
+    private FrameLayout frameLayoutAdContainer;
+    private NativeAdView nativeAdView;
+    private Handler handler = new Handler();
 
-    public AdGooglePlayDialog(@NonNull Context context) {
-        super(context, R.style.Theme_AppCompat_Light_Dialog);
+    public AdGooglePlayDialog(@NonNull Context context, NativeAdView nativeAdView) {
+        super(context, R.style.DesignDialog);
+        this.nativeAdView = nativeAdView;
         init();
     }
 
@@ -30,6 +42,7 @@ public class AdGooglePlayDialog extends Dialog {
     }
 
     private void init() {
+        HSLog.d("xiayan init");
         setCanceledOnTouchOutside(true);
     }
 
@@ -45,6 +58,10 @@ public class AdGooglePlayDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        HSLog.d("xiayan onCreate");
+        setContentView(R.layout.google_play_dialog_ad);
+        progressBar = (ProgressBar) findViewById(R.id.google_play_ad_progress_bar);
+        frameLayoutAdContainer = (FrameLayout) findViewById(R.id.google_play_ad_container);
     }
 
     /**
@@ -55,10 +72,10 @@ public class AdGooglePlayDialog extends Dialog {
      */
     @Override
     public void show() {
+        HSLog.d("xiayan show");
         try {
             Window window = getWindow();
             if (!(getContext() instanceof Activity) && window != null) {
-                window.setLayout((int) (DisplayUtils.getDisplay().getWidth() * 0.96), window.getAttributes().height);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
                     window.setType(WindowManager.LayoutParams.TYPE_TOAST);
                 } else {
@@ -66,8 +83,32 @@ public class AdGooglePlayDialog extends Dialog {
                 }
             }
             super.show();
+            progressBar.setVisibility(View.VISIBLE);
+            frameLayoutAdContainer.setVisibility(View.GONE);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.GONE);
+                    frameLayoutAdContainer.addView(nativeAdView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    frameLayoutAdContainer.setVisibility(View.VISIBLE);
+                }
+            }, AD_DELAY);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Called to tell you that you're stopping.
+     */
+    @Override
+    protected void onStop() {
+        frameLayoutAdContainer.removeAllViews();
+        if (nativeAdView != null) {
+            nativeAdView.release();
+        }
+        handler.removeCallbacksAndMessages(null);
+        super.onStop();
+    }
+
 }
