@@ -285,20 +285,14 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public void removeGoogleAdBar() {
-        if (keyboardPanelSwitchContainer != null) {
-            keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
-        }
+    public void removeCustomizeBar(){
+        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
         gpAdRecyclerView = null;
         if (gpNativeAdList != null) {
             for (AcbNativeAd acbNativeAd : gpNativeAdList) {
                 acbNativeAd.release();
             }
         }
-    }
-
-    public void removeCustomizeBar(){
-        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
     }
 
     private void reloadGpAd() {
@@ -419,11 +413,15 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (bannerAdSessionList == null || bannerAdSessionList.size() < 1) {
             return;
         }
-//        if (!bannerAdSessionList.contains((int)KCKeyboardSession.getCurrentSessionIndexOfDay())
-//                || KCFeatureRestrictionConfig.isFeatureRestricted("KeyboardBannerAd")) {
-//            HSLog.e("cannt show banner ad");
-//            return;
-//        }
+
+        boolean show = HSConfig.optBoolean(false,"Application", "NativeAds", "KeyboardBannerAd", "Show");
+
+
+        if (!show || !bannerAdSessionList.contains((int) KCKeyboardSession.getCurrentSessionIndexOfDay())
+                || KCFeatureRestrictionConfig.isFeatureRestricted("KeyboardBannerAd")) {
+            HSLog.e("cannt show banner ad");
+            return;
+        }
         HSLog.e("showing banner ad");
         keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
         keyboardPanelSwitchContainer.setCustomizeBar(new KeyboardBannerAdLayout(HSApplication.getContext(), new KeyboardBannerAdLayout.OnCustomizeBarListener() {

@@ -162,7 +162,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             if (currentTimeMillis - lastBackAdShowTimeMillis >= minIntervalByHour * 3600 * 1000 && backAdShowCountOfDay < maxCountPerDay) {
                 boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, true);
                 if (adShown) {
-                    backAdShowCountOfDay ++;
+                    backAdShowCountOfDay++;
                     prefs.putLong("BackAdShowCountOfDay", backAdShowCountOfDay);
                     prefs.putLong("LastBackAdShowTime", currentTimeMillis);
                     return true;
@@ -374,11 +374,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         currentAppPackageName = editorInfo.packageName;
         if (inPlayStore()) {
             getKeyboardPanelMananger().showGoogleAdBar();
-        } else {
-            getKeyboardPanelMananger().removeGoogleAdBar();
         }
-
-
     }
 
     @Override
@@ -391,9 +387,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public void onKeyboardWindowHide() {
-        if (!inPlayStore()) {
-            getKeyboardPanelMananger().removeCustomizeBar();
-        }
+        getKeyboardPanelMananger().removeCustomizeBar();
     }
 
     private boolean inPlayStore() {

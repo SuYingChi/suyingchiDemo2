@@ -56,7 +56,7 @@ public class KeyboardBannerAdLayout extends FrameLayout {
                 nativeAdView.release();
             }
         });
-        LayoutParams closeParams = new LayoutParams(HSDisplayUtils.dip2px(24), HSDisplayUtils.dip2px(24));
+        LayoutParams closeParams = new LayoutParams(HSDisplayUtils.dip2px(20), HSDisplayUtils.dip2px(20));
         closeParams.setMargins(0,0,HSDisplayUtils.dip2px(8),0);
         closeParams.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
         addView(closeBtn,closeParams);
