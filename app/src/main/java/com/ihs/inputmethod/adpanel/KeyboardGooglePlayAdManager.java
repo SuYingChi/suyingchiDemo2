@@ -16,7 +16,7 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
  * Created by xiayan on 2017/6/25.
  */
 
-public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListener {
+public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListener, NativeAdView.OnAdClickedListener {
     private String adPlacement;
     private NativeAdView nativeAdView;
     private AdGooglePlayDialog adGooglePlayDialog;
@@ -32,6 +32,7 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
         nativeAdView = new NativeAdView(HSApplication.getContext(), view);
         nativeAdView.configParams(new NativeAdParams(adPlacement, width, 1.9f));
         nativeAdView.setOnAdLoadedListener(this);
+        nativeAdView.setOnAdClickedListener(this);
     }
 
     private void initAndShowDialog() {
@@ -50,6 +51,7 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
     public void cancel() {
         if (nativeAdView != null) {
             nativeAdView.setOnAdLoadedListener(null);
+            nativeAdView.setOnAdClickedListener(null);
         }
         nativeAdView = null;
         adGooglePlayDialog = null;
@@ -59,5 +61,12 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
     public void onAdLoaded(NativeAdView nativeAdView) {
         HSLog.d("xiayan onAdLoaded");
         initAndShowDialog();
+    }
+
+    @Override
+    public void onAdClicked(NativeAdView nativeAdView) {
+        if (adGooglePlayDialog != null && adGooglePlayDialog.isShowing()) {
+            adGooglePlayDialog.dismiss();
+        }
     }
 }
