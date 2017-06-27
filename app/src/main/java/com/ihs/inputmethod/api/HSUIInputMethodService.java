@@ -111,6 +111,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                     }
                 }
                 HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
+                if (!HSConfig.optBoolean(false, "Application", "DisableFlurryTest")) {
+                    HSAnalytics.logEvent("Spring_Trigger_keyboard");
+                }
             } else {
                 if (isInRightAppForBackAd()) {
                     HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
@@ -157,7 +160,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             if (currentTimeMillis - lastBackAdShowTimeMillis >= minIntervalByHour * 3600 * 1000 && backAdShowCountOfDay < maxCountPerDay) {
                 boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, true);
                 if (adShown) {
-                    backAdShowCountOfDay ++;
+                    backAdShowCountOfDay++;
                     prefs.putLong("BackAdShowCountOfDay", backAdShowCountOfDay);
                     prefs.putLong("LastBackAdShowTime", currentTimeMillis);
                     return true;
@@ -378,4 +381,34 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
     }
+
+
+    private boolean isFirstKeyboardWindowShow = true;
+    private boolean isFlurryStarted = false;
+
+    @Override
+    public void onKeyboardWindowShow() {
+        super.onKeyboardWindowShow();
+
+        if (!HSConfig.optBoolean(false, "Application", "DisableFlurryTest")) {
+            // 第一次不开启Flurry，防止Crash同时RemoteConfig取不到
+            if (isFirstKeyboardWindowShow) {
+                isFirstKeyboardWindowShow = false;
+            } else {
+                HSAnalytics.startFlurry();
+                isFlurryStarted = true;
+            }
+        }
+    }
+
+    @Override
+    public void onKeyboardWindowHide() {
+        super.onKeyboardWindowHide();
+
+        if (isFlurryStarted) {
+            HSAnalytics.stopFlurry();
+            isFlurryStarted = false;
+        }
+    }
+
 }
