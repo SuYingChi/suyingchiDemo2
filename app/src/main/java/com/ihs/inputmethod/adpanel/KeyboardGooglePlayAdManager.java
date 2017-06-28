@@ -6,9 +6,11 @@ import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 
 /**
@@ -43,8 +45,13 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
         return (int) (DisplayUtils.getScreenWidthPixels() * 0.9);
     }
 
-    public void loadAndShowAd() {
-        initNativeAdView();
+    public boolean loadAndShowAdIfConditionSatisfied() {
+        if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayNative") && HSConfig.optBoolean(false, "Application", "NativeAds", "GooglePlayNativeAd", "ShowAd")) {
+            initNativeAdView();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void cancel() {
