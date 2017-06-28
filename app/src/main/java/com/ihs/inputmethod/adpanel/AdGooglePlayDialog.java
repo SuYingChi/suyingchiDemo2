@@ -23,7 +23,7 @@ import com.ihs.keyboardutils.view.RoundedCornerLayout;
  */
 
 public class AdGooglePlayDialog extends Dialog {
-    private static final int AD_DELAY = 1000;
+    private static final int AD_DELAY = 2000;
     private FrameLayout progressBarContainer;
     private RoundedCornerLayout frameLayoutAdContainer;
     private NativeAdView nativeAdView;

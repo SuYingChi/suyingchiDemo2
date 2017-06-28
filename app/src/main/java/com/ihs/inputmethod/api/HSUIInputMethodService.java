@@ -370,11 +370,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         if (editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
                 && !currentAppPackageName.equals(this.getPackageName())
-                && !currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
-            keyboardGooglePlayAdManager.loadAndShowAd();
+                && !currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 进入Google Play
+            if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayNative")) {
+                keyboardGooglePlayAdManager.loadAndShowAd();
+            }
         } else if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
                 && !editorInfo.packageName.equals(this.getPackageName())
-                && !editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
+                && !editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 离开Google Play
             keyboardGooglePlayAdManager.cancel();
         }
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
