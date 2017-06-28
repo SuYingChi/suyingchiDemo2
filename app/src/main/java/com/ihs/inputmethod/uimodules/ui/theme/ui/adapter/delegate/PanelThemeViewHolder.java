@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
 
 /**
  * Created by wenbinduan on 2017/1/4.
@@ -13,13 +12,15 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
 
 public final class PanelThemeViewHolder extends RecyclerView.ViewHolder {
 
-	RoundedImageView content;
+	View contentContainer;
+	ImageView content;
 	ImageView check;
 	ImageView delete;
 
 	public PanelThemeViewHolder(View itemView) {
 		super(itemView);
-		content=(RoundedImageView) itemView.findViewById(R.id.theme_preview);
+		contentContainer=itemView.findViewById(R.id.theme_preview_container);
+		content=(ImageView) itemView.findViewById(R.id.theme_preview);
 		check=(ImageView) itemView.findViewById(R.id.theme_check);
 		delete=(ImageView) itemView.findViewById(R.id.theme_delete);
 	}

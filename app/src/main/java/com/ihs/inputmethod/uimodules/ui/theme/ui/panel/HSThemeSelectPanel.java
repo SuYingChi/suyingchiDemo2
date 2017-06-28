@@ -33,24 +33,32 @@ import java.util.List;
 
 public final class HSThemeSelectPanel extends BasePanel {
 
-	public HSThemeSelectPanel() {
-	}
-
 	private FrameLayout panelView;
 	private NewThemePromptView newThemePromptView;
 	private HSThemeSelectRecycler recycler;
 	private ThemePanelAdapter panelAdapter;
 	private List<ThemePanelModel> panelModels;
-
 	private int createThemeItemPosition = -1;
 	private int moreThemeItemPosition = -1;
-
 	private ThemePanelModel customTitle;
 	private ThemePanelModel defaultTitle;
 	private ThemePanelModel create;
 	private ThemePanelModel more;
-
 	private boolean isCustomThemeInEditMode=false;
+	private INotificationObserver notificationObserver = new INotificationObserver() {
+		@Override
+		public void onReceive(String eventName, HSBundle hsBundle) {
+			if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(eventName)) {
+				if (panelAdapter != null) {
+					reloadThemeItems();
+					panelAdapter.notifyDataSetChanged();
+				}
+			}
+		}
+	};
+
+	public HSThemeSelectPanel() {
+	}
 
 	@Override
 	public View onCreatePanelView() {
@@ -108,26 +116,32 @@ public final class HSThemeSelectPanel extends BasePanel {
 		});
 		recycler.setLayoutManager(gridLayoutManager);
 
+		recycler.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			@Override
+			public void onGlobalLayout() {
+				if (recycler.getMeasuredWidth() > 0 && recycler.getMeasuredHeight() > 0) {
+					recycler.setAdapter(panelAdapter);
+					recycler.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							final int currentShowTipType = HSThemeNewTipController.getInstance().getCurrentShowTipType();
+							if (getBundle() != null && getBundle().getBoolean(HSNewSettingsPanel.BUNDLE_KEY_SHOW_TIP) && currentShowTipType != HSThemeNewTipController.ThemeTipType.NEW_TIP_NONE) {
+								showTipView(currentShowTipType);
+							}
+						}
+					},500);
+					recycler.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				}
+			}
+		});
 
-		recycler.setAdapter(panelAdapter);
+
 		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		panelView.addView(recycler, layoutParams);
 
 		HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
 		return panelView;
 	}
-
-	private INotificationObserver notificationObserver = new INotificationObserver() {
-		@Override
-		public void onReceive(String eventName, HSBundle hsBundle) {
-			if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(eventName)) {
-				if (panelAdapter != null) {
-					reloadThemeItems();
-					panelAdapter.notifyDataSetChanged();
-				}
-			}
-		}
-	};
 
 	public void reloadThemeItems() {
 		panelModels.clear();
@@ -221,26 +235,7 @@ public final class HSThemeSelectPanel extends BasePanel {
 		return result;
 	}
 
-	private void showNewTipIfNeed() {
-		panelAdapter.notifyItemChanged(createThemeItemPosition);
-		final int currentShowTipType = HSThemeNewTipController.getInstance().getCurrentShowTipType();
-		if (getBundle() != null && getBundle().getBoolean(HSNewSettingsPanel.BUNDLE_KEY_SHOW_TIP) && currentShowTipType != HSThemeNewTipController.ThemeTipType.NEW_TIP_NONE) {
-			recycler.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-				@Override
-				public void onGlobalLayout() {
-					showTipView(currentShowTipType);
-					recycler.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-				}
-			});
-		}
-	}
-
 	private void showTipView(int currentShowTipType) {
-		if (newThemePromptView == null) {
-			newThemePromptView = new NewThemePromptView(HSApplication.getContext(), this);
-			FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-			panelView.addView(newThemePromptView, layoutParams);
-		}
 		int tipViewUpViewPosition = 0;
 		String tipMessage = "";
 		switch (currentShowTipType) {
@@ -278,6 +273,11 @@ public final class HSThemeSelectPanel extends BasePanel {
 				) {
 			return;
 		}
+		if (newThemePromptView == null) {
+			newThemePromptView = new NewThemePromptView(HSApplication.getContext(), this);
+			FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			panelView.addView(newThemePromptView, layoutParams);
+		}
 		newThemePromptView.setPromptText(tipMessage);
 		newThemePromptView.prepareShowBelow(recycler, tipViewUpViewPosition);
 		HSThemeNewTipController.getInstance().setTypeViewed(currentShowTipType);
@@ -285,7 +285,6 @@ public final class HSThemeSelectPanel extends BasePanel {
 
 	@Override
 	protected boolean onShowPanelView(int appearMode) {
-		showNewTipIfNeed();
 		return super.onShowPanelView(appearMode);
 	}
 
