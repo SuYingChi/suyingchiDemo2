@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.sticker;
+package com.ihs.inputmethod.uimodules.ui.stickerdeprecated;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;

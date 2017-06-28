@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.sticker;
+package com.ihs.inputmethod.uimodules.ui.stickerdeprecated;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -28,7 +28,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
-import com.ihs.inputmethod.uimodules.ui.sticker.bean.BaseStickerItem;
+import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.bean.BaseStickerItem;
 
 public class StickerPalettesView extends LinearLayout implements OnTabChangeListener, ViewPager.OnPageChangeListener,
 		StickerPageGridView.OnStickerClickListener,View.OnClickListener {

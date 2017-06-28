@@ -272,4 +272,10 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <!--guide-->
     <string name="guide_open_camera">Slide to open camera quickly</string>
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
+
+	<!-- sticker download documents-->
+	<string name="sticker_download_button">DOWNLOAD</string>
+	<string name="sticker_downloading_label">Downloading</string>
+	<string name="sticker_downloading_successful">Download Successfully</string>
+	<string name="sticker_downloading_guide">Download for free now!</string>
 </resources>

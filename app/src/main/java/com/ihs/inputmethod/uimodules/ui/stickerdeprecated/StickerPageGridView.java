@@ -1,11 +1,11 @@
-package com.ihs.inputmethod.uimodules.ui.sticker;
+package com.ihs.inputmethod.uimodules.ui.stickerdeprecated;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
 import com.ihs.inputmethod.R;
-import com.ihs.inputmethod.uimodules.ui.sticker.bean.BaseStickerItem;
+import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.bean.BaseStickerItem;
 
 
 public final class StickerPageGridView extends GridView {

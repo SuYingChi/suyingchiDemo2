@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.sticker;
+package com.ihs.inputmethod.uimodules.ui.stickerdeprecated;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.sticker.bean.BaseStickerItem;
+import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.bean.BaseStickerItem;
 
 import java.util.ArrayList;
 import java.util.List;

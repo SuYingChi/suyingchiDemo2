@@ -118,4 +118,7 @@
 
     <color name="guide_bg_normal_color">#3c96fa</color>
     <color name="guide_bg_disable_color">#88000000</color>
+
+    <color name="sticker_download_button_color">#2cbcff</color>
+    <color name="sticker_download_button_pressed_color">#2396cc</color>
 </resources>

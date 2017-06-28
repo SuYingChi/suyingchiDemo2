@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.sticker;
+package com.ihs.inputmethod.uimodules.ui.stickerdeprecated;
 
 import android.content.Context;
 import android.net.Uri;
@@ -14,7 +14,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareChannel;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
-import com.ihs.inputmethod.uimodules.ui.sticker.bean.BaseStickerItem;
+import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.bean.BaseStickerItem;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.api.utils.HSPictureUtils;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;

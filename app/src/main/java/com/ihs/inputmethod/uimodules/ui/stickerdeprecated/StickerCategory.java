@@ -1,10 +1,10 @@
-package com.ihs.inputmethod.uimodules.ui.sticker;
+package com.ihs.inputmethod.uimodules.ui.stickerdeprecated;
 
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.Pair;
 
-import com.ihs.inputmethod.uimodules.ui.sticker.bean.BaseStickerItem;
+import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.bean.BaseStickerItem;
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
 
 import java.util.ArrayList;

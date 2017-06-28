@@ -129,10 +129,10 @@
 			<dict>
 				<key>BackButton</key>
 				<dict>
-					<key>MinIntervalByHour</key>
-					<integer>1</integer>
 					<key>MaxCountPerDay</key>
 					<integer>4</integer>
+					<key>MinIntervalByHour</key>
+					<integer>1</integer>
 					<key>PackageNameExclude</key>
 					<array>
 						<string>android</string>
@@ -680,7 +680,57 @@
 				<string>http://cdn.api-alliance.com/keyboardarts/adaptxt/3.1.1</string>
 				<key>RemoteContentDownloadURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
+				<key>StickerDownloadBaseURL</key>
+				<string>https://s3.amazonaws.com/emojidevelop/AndroidResource/download/stickers/</string>
 			</dict>
+			<key>StickerBackground</key>
+			<array>
+				<dict>
+					<key>backgroundColor</key>
+					<string>#ffffff</string>
+					<key>packageName</key>
+					<string>com.google.android.talk</string>
+				</dict>
+				<dict>
+					<key>backgroundColor</key>
+					<string>com.snapchat.android</string>
+					<key>packageName</key>
+					<string>#ffffff</string>
+				</dict>
+				<dict>
+					<key>backgroundColor</key>
+					<string>#e1ffc7</string>
+					<key>packageName</key>
+					<string>com.whatsapp</string>
+				</dict>
+			</array>
+			<key>StickerGroupList</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>emoji_modified</string>
+					<key>showName</key>
+					<string>Big Emoji</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Love</string>
+					<key>showName</key>
+					<string>Big Love</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>YellowSmile3</string>
+					<key>showName</key>
+					<string>Big Yellow</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>BlueSmile</string>
+					<key>showName</key>
+					<string>Big Blue</string>
+				</dict>
+			</array>
 			<key>ThemeContents</key>
 			<dict>
 				<key>BannerList</key>
@@ -3305,7 +3355,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.8</real>
+								<real>0.80000000000000004</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -4585,7 +4635,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.7</real>
+								<real>3.7000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5102,7 +5152,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.97</real>
+								<real>0.96999999999999997</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5130,7 +5180,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.53</real>
+								<real>0.53000000000000003</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5187,7 +5237,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.89</real>
+								<real>4.8899999999999997</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5215,7 +5265,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.62</real>
+								<real>1.6200000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5272,7 +5322,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.9399999999999999</real>
+								<real>0.93999999999999995</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5300,7 +5350,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.3</real>
+								<real>0.29999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5328,7 +5378,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.2</real>
+								<real>0.20000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5359,7 +5409,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7203,7 +7253,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.33</real>
+								<real>1.3300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7240,7 +7290,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.2</real>
+								<real>0.20000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7313,7 +7363,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.26</real>
+								<real>3.2599999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7456,7 +7506,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7493,7 +7543,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7534,14 +7584,40 @@
 			<dict>
 				<key>Application</key>
 				<dict>
+					<key>ChargeLocker</key>
+					<dict>
+						<key>Alert</key>
+						<dict>
+							<key>AdText</key>
+							<string>(contains ads)</string>
+							<key>Body</key>
+							<string>Enable battery protection to speed up the phone charging by 50%</string>
+							<key>Button</key>
+							<string>OK</string>
+							<key>Title</key>
+							<string>Battery Protection</string>
+						</dict>
+						<key>EnableAlertStyle</key>
+						<integer>0</integer>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+						<key>ShowAppInfo</key>
+						<true/>
+						<key>ShowSettingIcon</key>
+						<true/>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+						<key>state</key>
+						<integer>2</integer>
+					</dict>
 					<key>InterstitialAds</key>
 					<dict>
 						<key>BackButton</key>
 						<dict>
-							<key>MinIntervalByHour</key>
-							<integer>1</integer>
 							<key>MaxCountPerDay</key>
 							<integer>4</integer>
+							<key>MinIntervalByHour</key>
+							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
 								<string>android</string>
@@ -7571,32 +7647,6 @@
 								<false/>
 							</dict>
 						</dict>
-					</dict>
-					<key>ChargeLocker</key>
-					<dict>
-						<key>Alert</key>
-						<dict>
-							<key>AdText</key>
-							<string>(contains ads)</string>
-							<key>Body</key>
-							<string>Enable battery protection to speed up the phone charging by 50%</string>
-							<key>Button</key>
-							<string>OK</string>
-							<key>Title</key>
-							<string>Battery Protection</string>
-						</dict>
-						<key>EnableAlertStyle</key>
-						<integer>0</integer>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
-						<key>ShowAppInfo</key>
-						<true/>
-						<key>ShowSettingIcon</key>
-						<true/>
-						<key>StateDescription</key>
-						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
-						<key>state</key>
-						<integer>2</integer>
 					</dict>
 					<key>Locker</key>
 					<dict>
@@ -7793,14 +7843,40 @@
 			<dict>
 				<key>Application</key>
 				<dict>
+					<key>ChargeLocker</key>
+					<dict>
+						<key>Alert</key>
+						<dict>
+							<key>AdText</key>
+							<string>(contains ads)</string>
+							<key>Body</key>
+							<string>Enable battery protection to speed up the phone charging by 50%</string>
+							<key>Button</key>
+							<string>OK</string>
+							<key>Title</key>
+							<string>Battery Protection</string>
+						</dict>
+						<key>EnableAlertStyle</key>
+						<integer>0</integer>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+						<key>ShowAppInfo</key>
+						<true/>
+						<key>ShowSettingIcon</key>
+						<true/>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+						<key>state</key>
+						<integer>2</integer>
+					</dict>
 					<key>InterstitialAds</key>
 					<dict>
 						<key>BackButton</key>
 						<dict>
-							<key>MinIntervalByHour</key>
-							<integer>1</integer>
 							<key>MaxCountPerDay</key>
 							<integer>4</integer>
+							<key>MinIntervalByHour</key>
+							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
 								<string>android</string>
@@ -7830,32 +7906,6 @@
 								<false/>
 							</dict>
 						</dict>
-					</dict>
-					<key>ChargeLocker</key>
-					<dict>
-						<key>Alert</key>
-						<dict>
-							<key>AdText</key>
-							<string>(contains ads)</string>
-							<key>Body</key>
-							<string>Enable battery protection to speed up the phone charging by 50%</string>
-							<key>Button</key>
-							<string>OK</string>
-							<key>Title</key>
-							<string>Battery Protection</string>
-						</dict>
-						<key>EnableAlertStyle</key>
-						<integer>0</integer>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
-						<key>ShowAppInfo</key>
-						<true/>
-						<key>ShowSettingIcon</key>
-						<true/>
-						<key>StateDescription</key>
-						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
-						<key>state</key>
-						<integer>2</integer>
 					</dict>
 					<key>Locker</key>
 					<dict>

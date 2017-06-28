@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.sticker.bean;
+package com.ihs.inputmethod.uimodules.ui.stickerdeprecated.bean;
 
 /**
  * Created by dsapphire on 15/11/27.

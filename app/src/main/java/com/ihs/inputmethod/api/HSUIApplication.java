@@ -44,6 +44,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -78,7 +79,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 registerChargingService();
-
+                StickerDataManager.getInstance().onConfigChange();
             } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
                 ChargingPrefsUtil.getInstance().setChargingForFirstSession();
                 if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
