@@ -416,19 +416,12 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
         boolean show = HSConfig.optBoolean(false,"Application", "NativeAds", "KeyboardBannerAd", "Show");
 
-
         if (!show || !bannerAdSessionList.contains((int) KCKeyboardSession.getCurrentSessionIndexOfDay())
                 || KCFeatureRestrictionConfig.isFeatureRestricted("KeyboardBannerAd")) {
             HSLog.e("cannt show banner ad");
             return;
         }
-        HSLog.e("showing banner ad");
         keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
-        keyboardPanelSwitchContainer.setCustomizeBar(new KeyboardBannerAdLayout(HSApplication.getContext(), new KeyboardBannerAdLayout.OnCustomizeBarListener() {
-            @Override
-            public void onHide() {
-
-            }
-        }));
+        keyboardPanelSwitchContainer.setCustomizeBar(new KeyboardBannerAdLayout(HSApplication.getContext()));
     }
 }
