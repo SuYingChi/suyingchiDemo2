@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/google_play_ad_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
+            android:id="@+id/ad_cover_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:background="#0f9d58"
+            android:fontFamily="sans-serif-medium"
+            android:paddingBottom="3.7dp"
+            android:paddingLeft="3.7dp"
+            android:paddingRight="4.7dp"
+            android:paddingTop="4.7dp"
+            android:text="Apps You Might Like"
+            android:textColor="@android:color/white" />
+
+        <FrameLayout
+            android:id="@+id/ad_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <com.ihs.keyboardutils.view.RoundedCornerLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rcl_corner_radius="2dp">
+
+            <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+                android:id="@+id/ad_icon"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:maxHeight="20dp"
+                android:maxWidth="20dp"
+                android:src="@mipmap/ad_engine_app_icon"
+                app:riv_corner_radius="2dp" />
+
+            <ImageView
+                android:id="@+id/ad_small_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:src="@drawable/ad_small_icon" />
+        </com.ihs.keyboardutils.view.RoundedCornerLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ad_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:singleLine="true"
+                android:text="title"
+                android:textColor="@android:color/black"
+                android:textSize="22sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/ad_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:maxLines="3"
+                android:text="subTitle"
+                android:textColor="#b31e1e1e"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/ad_call_to_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ad_google_play_dialog_button_bg_selector"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
+        android:paddingTop="10dp"
+        android:text="download"
+        android:textAllCaps="true"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+</LinearLayout>
