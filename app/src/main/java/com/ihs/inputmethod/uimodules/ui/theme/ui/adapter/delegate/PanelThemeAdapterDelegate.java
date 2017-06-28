@@ -28,10 +28,26 @@ import java.util.List;
 
 public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemePanelModel>> {
 
-	private int spanCount;
+	private int viewHeight;
+	private int viewWidth;
+    private int selectedHeight;
+    private int selectedWidth;
+    private int contentContainerHeight;
+    private int contentContainerWidth;
 
 	public PanelThemeAdapterDelegate(int spanCount) {
-		this.spanCount = spanCount;
+        float width1 = 280, width2 = 260, height1 = 150, height2 = 130;
+        DisplayMetrics displayMetrics = HSApplication.getContext().getResources().getDisplayMetrics();
+        final int viewWidth = displayMetrics.widthPixels / spanCount;
+
+		this.viewWidth= viewWidth;
+		this.viewHeight= (int) (viewWidth * height1 / width1);
+
+		selectedWidth = viewWidth;
+		selectedHeight = (int) (viewWidth * height1 / width1);
+
+		contentContainerWidth = (int) (selectedWidth * width2 / width1);
+		contentContainerHeight = (int) (selectedHeight * height2 / height1);
 	}
 
 	@Override
@@ -45,26 +61,17 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 	protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
 		PanelThemeViewHolder viewHolder = new PanelThemeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_panel_theme, parent, false));
 
-		RecyclerView.LayoutParams lp= (RecyclerView.LayoutParams) viewHolder.itemView.getLayoutParams();
+		ViewGroup.LayoutParams itemLayoutParam = viewHolder.itemView.getLayoutParams();
+		itemLayoutParam.width = viewWidth;
+		itemLayoutParam.height = viewHeight;
 
-		float width1 = 280, width2 = 260, height1 = 150, height2 = 130;
-		DisplayMetrics displayMetrics = viewHolder.itemView.getContext().getResources().getDisplayMetrics();
-		final int viewWidth = displayMetrics.widthPixels / spanCount;
-
-		lp.width=viewWidth;
-		lp.height= (int) (viewWidth * height1 / width1);
-		viewHolder.itemView.setLayoutParams(lp);
-
-		viewHolder.check.measure(-1, -1);
 		ViewGroup.LayoutParams layoutParams = viewHolder.check.getLayoutParams();
-		layoutParams.width = viewWidth;
-		layoutParams.height = (int) (viewWidth * height1 / width1);
-		viewHolder.check.setLayoutParams(layoutParams);
+        layoutParams.width = selectedWidth;
+        layoutParams.height = selectedHeight;
 
-		ViewGroup.LayoutParams params = viewHolder.content.getLayoutParams();
-		params.width = (int) (layoutParams.width * width2 / width1);
-		params.height = (int) (layoutParams.height * height2 / height1);
-		viewHolder.contentContainer.setLayoutParams(params);
+		ViewGroup.LayoutParams containerLayoutParams = viewHolder.contentContainer.getLayoutParams();
+        containerLayoutParams.width = contentContainerWidth;
+        containerLayoutParams.height = contentContainerHeight;
 
 		return viewHolder;
 	}
@@ -74,7 +81,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 		final PanelThemeViewHolder viewHolder = (PanelThemeViewHolder) holder;
 		final ThemePanelModel model = items.get(position);
 
-		HSKeyboardThemeManager.getThemePreviewPanelDrawable(model.themeName, new ImageLoadingListener() {
+		HSKeyboardThemeManager.getThemePreviewPanelDrawable(model.themeName,contentContainerWidth,contentContainerHeight, new ImageLoadingListener() {
 			@Override
 			public void onLoadingStarted(String imageUri, View view) {
 				viewHolder.content.setImageDrawable(null);

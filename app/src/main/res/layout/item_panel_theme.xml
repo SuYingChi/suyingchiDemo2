@@ -9,17 +9,16 @@
         android:id="@+id/theme_preview_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:foreground="@drawable/panel_theme_fg">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/theme_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            app:riv_corner_radius="5dp"
-           />
+            app:riv_corner_radius="5dp" />
 
     </FrameLayout>
 
