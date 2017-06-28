@@ -9,13 +9,13 @@
     <FrameLayout
         android:id="@+id/google_play_ad_progress_bar_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:background="@android:color/white">
 
         <ProgressBar
             android:id="@+id/google_play_ad_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center" />
     </FrameLayout>
 

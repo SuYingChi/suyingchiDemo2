@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
@@ -59,7 +58,6 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
 
     @Override
     public void onAdLoaded(NativeAdView nativeAdView) {
-        HSLog.d("xiayan onAdLoaded");
         initAndShowDialog();
     }
 

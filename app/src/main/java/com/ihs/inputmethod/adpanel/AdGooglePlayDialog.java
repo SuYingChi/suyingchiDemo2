@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
@@ -42,7 +41,7 @@ public class AdGooglePlayDialog extends Dialog {
     }
 
     private void init() {
-        setCanceledOnTouchOutside(true);
+        setCanceledOnTouchOutside(false);
     }
 
     /**
@@ -68,6 +67,7 @@ public class AdGooglePlayDialog extends Dialog {
     @Override
     protected void onStart() {
         super.onStart();
+        setCanceledOnTouchOutside(false);
         progressBarContainer.setVisibility(View.VISIBLE);
         frameLayoutAdContainer.setVisibility(View.GONE);
         handler.postDelayed(new Runnable() {
@@ -79,6 +79,7 @@ public class AdGooglePlayDialog extends Dialog {
                 }
                 frameLayoutAdContainer.addView(nativeAdView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 frameLayoutAdContainer.setVisibility(View.VISIBLE);
+                setCanceledOnTouchOutside(true);
             }
         }, AD_DELAY);
     }
