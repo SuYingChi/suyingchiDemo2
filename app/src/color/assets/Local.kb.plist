@@ -92,6 +92,15 @@
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
+				<key>AdGooglePlayNative</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array/>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
 				<key>AdKeyboardClose</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
@@ -493,6 +502,11 @@
 			<dict>
 				<key>FetchAdInterval</key>
 				<real>15000</real>
+				<key>GooglePlayNativeAd</key>
+				<dict>
+					<key>ShowAd</key>
+					<true/>
+				</dict>
 				<key>KeyboardEmojiTopLeftTabAd</key>
 				<dict>
 					<key>SessionIndexOfDay</key>
