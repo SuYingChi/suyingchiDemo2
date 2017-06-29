@@ -3,7 +3,9 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +24,13 @@ import java.io.File;
  */
 
 public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElement, BaseThemeItemProvider.BaseItemHolder, BackgroundFragment> {
+    private Drawable choosingDrawable;
+    private Drawable newMarkDrawable;
+    private boolean hasDefaultItemSelectStateSet = false;
 
     public BackgroundProvider(BackgroundFragment fragment) {
         super(fragment);
     }
-
-    private boolean hasDefaultItemSelectStateSet = false;
 
     protected void addCustomData(KCBaseElement item) {
         fragment.addChosenItem(item);
@@ -37,17 +40,24 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
 
     @Override
     protected Drawable getChosedBackgroundDrawable() {
-        return KCElementResourseHelper.getBackgroundChosedBackgroundDrawable();
+        if (choosingDrawable == null) {
+            choosingDrawable = KCElementResourseHelper.getBackgroundChosedBackgroundDrawable();
+        }
+        return choosingDrawable;
     }
 
     @Override
     protected Drawable getLockedDrawable() {
         return KCElementResourseHelper.getBackgroundLockedDrawable();
+
     }
 
     @Override
     protected Drawable getNewMarkDrawable() {
-        return KCElementResourseHelper.getBackgroundNewMarkDrawable();
+        if (newMarkDrawable == null) {
+            newMarkDrawable = KCElementResourseHelper.getBackgroundNewMarkDrawable();
+        }
+        return newMarkDrawable;
     }
 
     @Override
@@ -60,16 +70,22 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
         }
     }
 
+    @NonNull
+    @Override
+    protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        BaseItemHolder holder = new BaseItemHolder(inflater.inflate(R.layout.ct_item_background, null));
+
+        int margin = holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin);
+        DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - margin * 2;
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,width);
+        holder.itemView.setLayoutParams(layoutParams);
+        return holder;
+    }
+
     @Override
     protected void onBindViewHolder(@NonNull BaseItemHolder holder, @NonNull Object item) {
         super.onBindViewHolder(holder, item);
-        ViewGroup.LayoutParams layoutParams = holder.mContentImageView.getLayoutParams();
-        DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) * 2 - 2;
-
-        layoutParams.height = width;
-        layoutParams.width = width;
-
         updateItemSelection(holder, item);
     }
 
@@ -89,10 +105,16 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
 
     @Override
     protected void setItemDrawable(@NonNull BaseItemHolder holder, @NonNull Object item) {
-        super.setItemDrawable(holder, item);
         KCBackgroundElement backgroundElement = (KCBackgroundElement) item;
         if (backgroundElement.hasLocalGifPreview()) {
-            holder.mContentImageView.setImageURI(Uri.fromFile(new File(backgroundElement.getGifPreview())));
+            holder.mGifView.setVisibility(View.VISIBLE);
+            holder.mContentImageView.setImageDrawable(null);
+            holder.mGifView.setImageURI(Uri.fromFile(new File(backgroundElement.getGifPreview())));
+        }else {
+            super.setItemDrawable(holder, item);
+            holder.mContentImageView.setVisibility(View.VISIBLE);
+            holder.mGifView.setImageDrawable(null);
+            holder.mGifView.setVisibility(View.GONE);
         }
     }
 

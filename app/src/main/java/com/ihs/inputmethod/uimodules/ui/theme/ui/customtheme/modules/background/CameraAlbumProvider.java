@@ -2,12 +2,14 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
@@ -55,7 +57,6 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
         } else {
             holder.mCheckImageView.setVisibility(View.INVISIBLE);
         }
-        holder.mLockedImageView.setVisibility(View.INVISIBLE);
     }
 
     protected void adjustLayoutForDevice88(@NonNull BaseItemHolder holder, Integer item) {
@@ -101,16 +102,26 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
         });
     }
 
+    @NonNull
+    @Override
+    protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        BaseItemHolder holder = new BaseItemHolder(inflater.inflate(R.layout.ct_item_camera_or_gallery, null));
+        int margin = holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin);
+        DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - margin * 2;
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,width);
+        holder.itemView.setLayoutParams(layoutParams);
+        return holder;
+    }
+
     @Override
     protected void onBindViewHolder(@NonNull BaseItemHolder holder, @NonNull Object item) {
-        adjustLayoutForDevice88(holder, (Integer) item);
+//        adjustLayoutForDevice88(holder, (Integer) item);
         setItemTouchListener(holder, (Integer) item);
         setItemDrawable(holder, item);
         setItemBackground(holder, (Integer) item);
 
-        ViewGroup.LayoutParams layoutParams = holder.mContentImageView.getLayoutParams();
-        layoutParams.height = HSResourceUtils.getDefaultKeyboardWidth(holder.itemView.getResources()) / fragment.SPAN_COUNT - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) * 2 - 2;
-        layoutParams.width = layoutParams.height;
+
 
         BackgroundFragment.EntryMode mode = fragment.getEntryMode();
         if (mode == BackgroundFragment.EntryMode.Camera && !hasDefaultItemSelectStateSet) {
@@ -127,19 +138,20 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
     @Override
     protected void setItemDrawable(@NonNull BaseItemHolder holder, @NonNull Object item) {
         //content
-        Drawable drawable = holder.itemView.getResources().getDrawable((Integer) item);
-        //如果icon不存在，则下载
-        if (drawable != null) {
-            //content view
-            holder.mPlaceholderView.setVisibility(View.INVISIBLE);
-            holder.mContentImageView.setImageDrawable(drawable);
-        } /*else {
-            holder.mPlaceholderView.setVisibility(View.VISIBLE);
-            holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
-            holder.mLockedImageView.setVisibility(View.INVISIBLE);
-            holder.mContentImageView.setImageDrawable(drawable);
-            downloadPreview(holder, item);
-        }*/
+//        Drawable drawable = holder.itemView.getResources().getDrawable((Integer) item);
+//        //如果icon不存在，则下载
+//        if (drawable != null) {
+//            //content view
+//            holder.mPlaceholderView.setVisibility(View.INVISIBLE);
+//            holder.mContentImageView.setImageDrawable(drawable);
+//        } /*else {
+//            holder.mPlaceholderView.setVisibility(View.VISIBLE);
+//            holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
+//            holder.mLockedImageView.setVisibility(View.INVISIBLE);
+//            holder.mContentImageView.setImageDrawable(drawable);
+//            downloadPreview(holder, item);
+//        }*/
+        holder.mContentImageView.setImageResource((Integer) item);
     }
 
 //    @Override

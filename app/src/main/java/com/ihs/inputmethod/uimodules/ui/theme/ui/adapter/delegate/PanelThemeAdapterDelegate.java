@@ -1,14 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -24,9 +16,9 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemePanelModel;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
-import com.makeramen.roundedimageview.RoundedDrawable;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -36,10 +28,26 @@ import java.util.List;
 
 public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemePanelModel>> {
 
-	private int spanCount;
+	private int viewHeight;
+	private int viewWidth;
+    private int selectedHeight;
+    private int selectedWidth;
+    private int contentContainerHeight;
+    private int contentContainerWidth;
 
 	public PanelThemeAdapterDelegate(int spanCount) {
-		this.spanCount = spanCount;
+        float width1 = 280, width2 = 260, height1 = 150, height2 = 130;
+        DisplayMetrics displayMetrics = HSApplication.getContext().getResources().getDisplayMetrics();
+        final int viewWidth = displayMetrics.widthPixels / spanCount;
+
+		this.viewWidth= viewWidth;
+		this.viewHeight= (int) (viewWidth * height1 / width1);
+
+		selectedWidth = viewWidth;
+		selectedHeight = (int) (viewWidth * height1 / width1);
+
+		contentContainerWidth = (int) (selectedWidth * width2 / width1);
+		contentContainerHeight = (int) (selectedHeight * height2 / height1);
 	}
 
 	@Override
@@ -51,7 +59,21 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 	@NonNull
 	@Override
 	protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-		return new PanelThemeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_panel_theme, parent, false));
+		PanelThemeViewHolder viewHolder = new PanelThemeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_panel_theme, parent, false));
+
+		ViewGroup.LayoutParams itemLayoutParam = viewHolder.itemView.getLayoutParams();
+		itemLayoutParam.width = viewWidth;
+		itemLayoutParam.height = viewHeight;
+
+		ViewGroup.LayoutParams layoutParams = viewHolder.check.getLayoutParams();
+        layoutParams.width = selectedWidth;
+        layoutParams.height = selectedHeight;
+
+		ViewGroup.LayoutParams containerLayoutParams = viewHolder.contentContainer.getLayoutParams();
+        containerLayoutParams.width = contentContainerWidth;
+        containerLayoutParams.height = contentContainerHeight;
+
+		return viewHolder;
 	}
 
 	@Override
@@ -59,38 +81,34 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 		final PanelThemeViewHolder viewHolder = (PanelThemeViewHolder) holder;
 		final ThemePanelModel model = items.get(position);
 
-		Drawable previewDrawable = HSKeyboardThemeManager.getThemePreviewPanelDrawable(model.themeName);
-		viewHolder.content.setImageDrawable(getPreviewStateListDrawable(viewHolder.content,previewDrawable));
-		viewHolder.check.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(model.themeName) ? View.VISIBLE : View.GONE);
+		HSKeyboardThemeManager.getThemePreviewPanelDrawable(model.themeName,contentContainerWidth,contentContainerHeight, new ImageLoadingListener() {
+			@Override
+			public void onLoadingStarted(String imageUri, View view) {
+				viewHolder.content.setImageDrawable(null);
+				viewHolder.delete.setVisibility(View.GONE);
+			}
 
-		viewHolder.delete.setVisibility(View.GONE);
+			@Override
+			public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 
-		if (model.isCustomTheme&&model.isCustomThemeInEditMode) {
-			viewHolder.delete.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(model.themeName) ? View.GONE : View.VISIBLE);
-		}
+			}
 
-		RecyclerView.LayoutParams lp= (RecyclerView.LayoutParams) viewHolder.itemView.getLayoutParams();
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				viewHolder.content.setImageBitmap(loadedImage);
+				viewHolder.check.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(model.themeName) ? View.VISIBLE : View.GONE);
+				if (model.isCustomTheme&&model.isCustomThemeInEditMode) {
+					viewHolder.delete.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(model.themeName) ? View.GONE : View.VISIBLE);
+				}
+			}
 
-		float width1 = 280, width2 = 260, height1 = 150, height2 = 130;
-		DisplayMetrics displayMetrics = viewHolder.itemView.getContext().getResources().getDisplayMetrics();
-		final int viewWidth = displayMetrics.widthPixels / spanCount;
+			@Override
+			public void onLoadingCancelled(String imageUri, View view) {
 
-		lp.width=viewWidth;
-		lp.height= (int) (viewWidth * height1 / width1);
-		viewHolder.itemView.setLayoutParams(lp);
+			}
+		});
 
-		viewHolder.check.measure(-1, -1);
-		ViewGroup.LayoutParams layoutParams = viewHolder.check.getLayoutParams();
-		layoutParams.width = viewWidth;
-		layoutParams.height = (int) (viewWidth * height1 / width1);
-		viewHolder.check.setLayoutParams(layoutParams);
-
-		ViewGroup.LayoutParams params = viewHolder.content.getLayoutParams();
-		params.width = (int) (layoutParams.width * width2 / width1);
-		params.height = (int) (layoutParams.height * height2 / height1);
-		viewHolder.content.setLayoutParams(params);
-
-		viewHolder.content.setOnClickListener(new View.OnClickListener() {
+		viewHolder.contentContainer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (model.isCustomTheme && model.isCustomThemeInEditMode) {
@@ -121,31 +139,4 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 		}
 	}
 
-	private Drawable getPreviewStateListDrawable(RoundedImageView content, Drawable drawable) {
-		// Make rounded default drawable
-		Drawable defaultDrawable = RoundedDrawable.fromDrawable(drawable);
-		content.updateAttrs(defaultDrawable);
-
-		// Make pressed drawable
-		Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-		Bitmap pressedBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(pressedBitmap);
-		Paint paint = new Paint();
-		paint.setColorFilter(new PorterDuffColorFilter(Color.parseColor("#ff666666"), PorterDuff.Mode.MULTIPLY));
-		canvas.drawBitmap(bitmap, 0, 0, paint);
-		Drawable pressedDrawable = new BitmapDrawable(pressedBitmap);
-
-		// Make rounded pressed drawable
-		pressedDrawable = RoundedDrawable.fromDrawable(pressedDrawable);
-		content.updateAttrs(pressedDrawable);
-
-		// Make state list drawable
-		StateListDrawable stateListDrawable = new StateListDrawable();
-		stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedDrawable);
-		stateListDrawable.addState(new int[]{android.R.attr.state_focused}, pressedDrawable);
-		stateListDrawable.addState(new int[]{android.R.attr.state_selected}, pressedDrawable);
-		stateListDrawable.addState(new int[]{}, defaultDrawable);
-
-		return stateListDrawable;
-	}
 }

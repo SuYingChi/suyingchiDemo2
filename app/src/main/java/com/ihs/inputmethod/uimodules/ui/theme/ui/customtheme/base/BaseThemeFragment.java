@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -11,18 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.animator.AlphaInAnimator;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem.CategoryItem;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.common.Category;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.common.CategoryItemViewProvider;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 
@@ -46,13 +48,21 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
 
 public abstract class BaseThemeFragment extends Fragment implements INotificationObserver {
     public static final int SPAN_COUNT = 6;
+    protected Handler handler = new Handler();
     RecyclerView recyclerView;
-    private MultiTypeAdapter adapter;
-    private AlphaInAnimator animator;
     Items items;
+    KCCustomThemeData customThemeData;
+    private MultiTypeAdapter adapter;
+    Runnable dataChangeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            notifyAdapterOnMainThread();
+        }
+    };
     private ThemePageItem pageItem;
     private Map<String, Object> chosedItems = new HashMap<>();
-
+    private List data = new ArrayList();
+    private int index = 0;
 
     public BaseThemeFragment() {
     }
@@ -125,14 +135,12 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         return pageItem;
     }
 
-    KCCustomThemeData customThemeData;
+    public KCCustomThemeData getCustomThemeData() {
+        return customThemeData;
+    }
 
     public void setCustomThemeData(KCCustomThemeData customThemeData) {
         this.customThemeData = customThemeData;
-    }
-
-    public KCCustomThemeData getCustomThemeData() {
-        return customThemeData;
     }
 
     public void addChosenItem(KCBaseElement item) {
@@ -149,11 +157,10 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         return items == null ? 0 : items.size();
     }
 
-    protected Handler handler = new Handler();
-
     private void initRecyclerView(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
 
+        HSLog.d("initRecyclerView");
         items = new Items();
         adapter = new MultiTypeAdapter(items);
         adapter.register(Category.class, new CategoryItemViewProvider());
@@ -169,23 +176,20 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         };
         layoutManager.setSpanSizeLookup(spanSizeLookup);
         recyclerView.setLayoutManager(layoutManager);
+        int gap = (int) HSApplication.getContext().getResources().getDimension(R.dimen.custom_theme_item_margin);
+        recyclerView.addItemDecoration(new BaseItemDecoration(gap, gap));
         recyclerView.setAdapter(adapter);
-        animator = new AlphaInAnimator();
-        animator.setAddDuration(80);
-        recyclerView.setItemAnimator(animator);
         recyclerView.setPadding(0, 0, 0, HSResourceUtils.getDefaultKeyboardHeight(getResources()));
         loadData();
     }
-
-    private List data = new ArrayList();
 
     private void loadData() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<CategoryItem<?>> categories = getPageItem().categories;
+                List<ThemePageItem.CategoryItem<?>> categories = getPageItem().categories;
                 if (categories != null) {
-                    for (final CategoryItem<?> category : categories) {
+                    for (final ThemePageItem.CategoryItem<?> category : categories) {
                         adapter.register(category.itemClazz, category.provider);
                         Category category1 = new Category(category.categoryName);
                         if (!data.contains(category1)) {
@@ -193,14 +197,12 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
                         }
                         data.addAll(category.data);
                     }
-                    loadItem();
+                    items.addAll(data);
+                    adapter.notifyDataSetChanged();
                 }
             }
         }, 1);
     }
-
-
-    private int index = 0;
 
     private void loadItem() {
         if (index < data.size()) {
@@ -237,7 +239,6 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         }
     }
 
-
     /**
      * IAP购买成功之后会收到通知,需要刷新数据，子类自己重写，
      */
@@ -245,20 +246,12 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         notifyAdapterOnMainThread();
     }
 
-
     /**
      * 自定义主题的预览图(背景和字体)下载完收到通知，子类自己重写，
      */
     protected void notifyCustomThemePreviewDownloadFinished(KCBaseElement item) {
         notifyAdapterOnMainThread();
     }
-
-    Runnable dataChangeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            notifyAdapterOnMainThread();
-        }
-    };
 
     public void notifyAdapterOnMainThread() {
         handler.post(new Runnable() {
@@ -406,4 +399,20 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         };
     }
 
+
+    public static class BaseItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int rowGap;
+        private int columnGap;
+
+        public BaseItemDecoration(int rowGap, int columnGap) {
+            this.rowGap = CompatUtils.updateGapValueAccordingVersion(rowGap);
+            this.columnGap = CompatUtils.updateGapValueAccordingVersion(columnGap);
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.set(columnGap, rowGap, columnGap, rowGap);
+        }
+    }
 }

@@ -87,26 +87,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     public static final int keyboardActivationFromCustom = 15;
 
     private static final int FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD = 1;
-
-    private HSKeyboardThemePreview keyboardView;
-    private HSMediaView mp4HSBackgroundView;
-    private HSCommonHeaderView headerView;
-    private ViewGroup rootView;
-    private MaterialDialog savingDialog;
-    private BaseThemeFragment currentFragment;
-
-    private KCCustomThemeData customThemeData;
-    private KCBackgroundElement defaultBackgroundElement;
-
-    private boolean shouldUseCamera;
-    private boolean shouldUseGallery;
-
-    private Handler handler = new Handler();
-
-    private int currentPageIndex;
-    private boolean isThemeSaving;
-    private boolean isActive;
-
     private static List<Class<? extends BaseThemeFragment>> fragmentClasses = new ArrayList<>();
 
     static {
@@ -116,10 +96,66 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         fragmentClasses.add(SoundFragment.class);
     }
 
+    private HSKeyboardThemePreview keyboardView;
+    private HSMediaView mp4HSBackgroundView;
+    private HSCommonHeaderView headerView;
+    private ViewGroup rootView;
+    private MaterialDialog savingDialog;
+    private BaseThemeFragment currentFragment;
+    private KCCustomThemeData customThemeData;
+    private KCBackgroundElement defaultBackgroundElement;
+    private boolean shouldUseCamera;
+    private boolean shouldUseGallery;
+    private Handler handler = new Handler();
+    private int currentPageIndex;
+    private boolean isThemeSaving;
+    private boolean isActive;
+    private View tip;
+    private ContentObserver volumeOb = new ContentObserver(handler) {
+        @Override
+        public boolean deliverSelfNotifications() {
+            return false;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            updateTipViewVisibility();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            updateTipViewVisibility();
+        }
+    };
+
+    public static void startCustomThemeActivity(final Bundle bundle) {
+        HSInputMethod.hideWindow();
+        String currentAppName = HSInputMethod.getCurrentHostAppPackageName();
+        String myPkName = HSApplication.getContext().getPackageName();
+        int delay = 0;
+        if (myPkName != null && myPkName.equals(currentAppName)) { //延迟100ms，让试用键盘可以有足够时间消失掉
+            delay = 100;
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                final Intent intent = new Intent();
+                intent.setClass(HSApplication.getContext(), com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.class);
+                if (bundle != null) {
+                    intent.putExtras(bundle);
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                HSApplication.getContext().startActivity(intent);
+            }
+        }, delay);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         setContentView(R.layout.activity_custom_theme);
         customThemeData = KCCustomThemeManager.getInstance().newCustomThemeData();
 
@@ -152,13 +188,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         isActive = true;
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
         HSKeyboardThemeManager.setPreviewCustomTheme(false);
     }
-
 
     @Override
     protected void onStop() {
@@ -220,12 +254,10 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         return true;
     }
 
-
     private void initView() {
         rootView = (ViewGroup) findViewById(R.id.root_view);
         headerView = (HSCommonHeaderView) findViewById(R.id.custom_theme_head_common);
     }
-
 
     private HSKeyboardThemePreview getKeyboardView() {
         return keyboardView;
@@ -261,27 +293,9 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             return;
         }
 
-        float height = HSResourceUtils.getDefaultKeyboardHeight(getResources());
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.addRule(ALIGN_PARENT_BOTTOM);
-        params.height = (int) height;
 
-        RelativeLayout keyboardFrameLayout = (RelativeLayout) View.inflate(getContext(), R.layout.layout_theme_preview, null);
-        keyboardFrameLayout.setLayoutParams(params);
-        mp4HSBackgroundView = (HSMediaView) keyboardFrameLayout.findViewById(R.id.keyboard_bg);
-        Drawable backgroundDrawable = new BitmapDrawable(BitmapFactory.decodeFile(defaultBackgroundElement.getKeyboardImageContentPath()));
-        mp4HSBackgroundView.init();
-        mp4HSBackgroundView.setHSBackground(backgroundDrawable);
-        keyboardView = (HSKeyboardThemePreview) keyboardFrameLayout.findViewById(R.id.keyboard_view);
-        keyboardView.setCustomThemeData(customThemeData);
-        keyboardView.loadKeyboard();
-
-        rootView.addView(keyboardFrameLayout);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(keyboardFrameLayout, "translationY", height, 0);
-        animator.setDuration(500);
-        animator.start();
-        refreshKeyboardView();
+        new ShowKeyboardTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private Drawable getPromptPurchaseViewBackground(KCBaseElement item) {
@@ -426,26 +440,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         HSGoogleAnalyticsUtils.getInstance().logAppEvent(action, label);
     }
 
-    private View tip;
-    private ContentObserver volumeOb = new ContentObserver(handler) {
-        @Override
-        public boolean deliverSelfNotifications() {
-            return false;
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            super.onChange(selfChange);
-            updateTipViewVisibility();
-        }
-
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            super.onChange(selfChange, uri);
-            updateTipViewVisibility();
-        }
-    };
-
     private void updateTipViewVisibility() {
         if (currentFragment instanceof SoundFragment) {
             final AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -507,44 +501,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     public void onReceive(String s, HSBundle hsBundle) {
         if (KCCustomThemeManager.NOTIFICATION_CUSTOM_THEME_CONTENT_DOWNLOAD_FINISHED.equals(s)) {
             refreshKeyboardView();
-        }
-    }
-
-
-    protected class SaveThemeChangesTask extends AsyncTask<Bitmap, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(Bitmap... params) {
-            if (params != null && params.length > 0) {
-                String themeName = KCCustomThemeManager.getInstance().generateCustomTheme(customThemeData);
-                if (themeName != null) {
-                    return themeName;// HSKeyboardThemeManager.saveCustomTheme(params[0], HSKeyboardThemeManager.getCustomThemeData());
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String name) {
-            if (!TextUtils.isEmpty(name)) {
-                KCCustomThemeManager.getInstance().addCustomTheme(name);
-                HSKeyboardThemeManager.setPreviewCustomTheme(false);
-                HSLog.e("custome ximu +" + name);
-                HSKeyboardThemeManager.setKeyboardTheme(name);
-                onNewThemeCreated();
-
-            } else {
-                setResult(RESULT_CANCELED);
-                HSLog.e("generate custom theme failed.");
-            }
-            if (savingDialog.isShowing() && !isFinishing()) {
-                savingDialog.dismiss();
-            }
-            finish();
         }
     }
 
@@ -615,7 +571,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         }
     }
 
-
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -646,25 +601,78 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         }
     }
 
-    public static void startCustomThemeActivity(final Bundle bundle) {
-        HSInputMethod.hideWindow();
-        String currentAppName = HSInputMethod.getCurrentHostAppPackageName();
-        String myPkName = HSApplication.getContext().getPackageName();
-        int delay = 0;
-        if (myPkName != null && myPkName.equals(currentAppName)) { //延迟100ms，让试用键盘可以有足够时间消失掉
-            delay = 100;
+    public class ShowKeyboardTask extends AsyncTask<Void,Void,Drawable>{
+
+        private RelativeLayout keyboardFrameLayout;
+        private float height;
+        @Override
+        protected void onPreExecute() {
+            height = HSResourceUtils.getDefaultKeyboardHeight(getResources());
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.addRule(ALIGN_PARENT_BOTTOM);
+            params.height = (int) height;
+
+            keyboardFrameLayout = (RelativeLayout) View.inflate(getContext(), R.layout.layout_theme_preview, null);
+            keyboardFrameLayout.setLayoutParams(params);
+            mp4HSBackgroundView = (HSMediaView) keyboardFrameLayout.findViewById(R.id.keyboard_bg);
+            mp4HSBackgroundView.init();
+
+            keyboardView = (HSKeyboardThemePreview) keyboardFrameLayout.findViewById(R.id.keyboard_view);
+            keyboardView.setCustomThemeData(customThemeData);
         }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final Intent intent = new Intent();
-                intent.setClass(HSApplication.getContext(), com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.class);
-                if (bundle != null) {
-                    intent.putExtras(bundle);
+
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            Drawable backgroundDrawable = new BitmapDrawable(BitmapFactory.decodeFile(defaultBackgroundElement.getKeyboardImageContentPath()));
+            keyboardView.loadKeyboard();
+            return backgroundDrawable;
+        }
+
+        @Override
+        protected void onPostExecute(Drawable backgroundDrawable) {
+            mp4HSBackgroundView.setHSBackground(backgroundDrawable);
+            rootView.addView(keyboardFrameLayout);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(keyboardFrameLayout, "translationY", height, 0);
+            animator.setDuration(500);
+            animator.start();
+            refreshKeyboardView();
+        }
+    }
+
+    protected class SaveThemeChangesTask extends AsyncTask<Bitmap, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Bitmap... params) {
+            if (params != null && params.length > 0) {
+                String themeName = KCCustomThemeManager.getInstance().generateCustomTheme(customThemeData);
+                if (themeName != null) {
+                    return themeName;// HSKeyboardThemeManager.saveCustomTheme(params[0], HSKeyboardThemeManager.getCustomThemeData());
                 }
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                HSApplication.getContext().startActivity(intent);
             }
-        }, delay);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String name) {
+            if (!TextUtils.isEmpty(name)) {
+                KCCustomThemeManager.getInstance().addCustomTheme(name);
+                HSKeyboardThemeManager.setPreviewCustomTheme(false);
+                HSLog.e("custome ximu +" + name);
+                HSKeyboardThemeManager.setKeyboardTheme(name);
+                onNewThemeCreated();
+
+            } else {
+                setResult(RESULT_CANCELED);
+                HSLog.e("generate custom theme failed.");
+            }
+            if (savingDialog.isShowing() && !isFinishing()) {
+                savingDialog.dismiss();
+            }
+            finish();
+        }
     }
 }

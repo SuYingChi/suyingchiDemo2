@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCCustomThemeHelper;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -22,8 +23,24 @@ import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
 
 public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElement, BaseThemeItemProvider.BaseItemHolder, ButtonFragment> {
 
+    private int mainColor = -1;
+    private Drawable backgroundDrawable;
+    private Drawable darkBackgroundDrawable;
+    private Drawable lockedDrawable;
+    private Drawable chosedBackgroundDrawable;
     public ButtonStyleProvider(ButtonFragment fragment) {
         super(fragment);
+    }
+
+    public static Drawable getButtonStyleBackgroundDrawable(int backgroundMainColor) {
+        Bitmap bitmap = KCCustomThemeHelper.getLocalCustomElementBitmap(KCButtonStyleElement.class, "keyboard_custom_theme_button_style_bg.png");
+        if (bitmap != null) {
+            BitmapDrawable drawable = new BitmapDrawable(bitmap);
+            drawable.setColorFilter(backgroundMainColor, PorterDuff.Mode.SRC_IN);
+            return drawable;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -36,7 +53,7 @@ public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElem
     protected void onBindViewHolder(@NonNull BaseItemHolder holder, @NonNull Object item) {
         super.onBindViewHolder(holder, item);
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / fragment.SPAN_COUNT;
+        int width = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / fragment.SPAN_COUNT -  holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) *2;
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, width);
         layoutParams.gravity = Gravity.CENTER;
         holder.itemView.setLayoutParams(layoutParams);
@@ -52,12 +69,6 @@ public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElem
             }
         }
     }
-
-    private int mainColor = -1;
-    private Drawable backgroundDrawable;
-    private Drawable darkBackgroundDrawable;
-    private Drawable lockedDrawable;
-    private Drawable chosedBackgroundDrawable;
 
     @Override
     protected Drawable getChosedBackgroundDrawable() {
@@ -96,15 +107,5 @@ public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElem
             darkBackgroundDrawable = KCElementResourseHelper.getButtonStyleDarkerBackgroundDrawable(mainColor);
         }
         return darkBackgroundDrawable;
-    }
-    public static Drawable getButtonStyleBackgroundDrawable(int backgroundMainColor) {
-        Bitmap bitmap = KCCustomThemeHelper.getLocalCustomElementBitmap(KCButtonStyleElement.class, "keyboard_custom_theme_button_style_bg.png");
-        if (bitmap != null) {
-            BitmapDrawable drawable = new BitmapDrawable(bitmap);
-            drawable.setColorFilter(backgroundMainColor, PorterDuff.Mode.SRC_IN);
-            return drawable;
-        } else {
-            return null;
-        }
     }
 }
