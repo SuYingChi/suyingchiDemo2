@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.widget.bannerad;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
@@ -36,7 +36,8 @@ public class KeyboardBannerAdLayout extends FrameLayout {
         setBackgroundColor(Color.WHITE);
         nativeAdView = new NativeAdView(HSApplication.getContext(), containerView);
         final ImageView closeBtn = new ImageView(getContext());
-        closeBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.banner_ad_close_button));
+        VectorDrawableCompat closeDrawable = VectorDrawableCompat.create(getResources(), R.drawable.banner_ad_close_button, null);
+        closeBtn.setBackgroundDrawable(closeDrawable);
         closeBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
