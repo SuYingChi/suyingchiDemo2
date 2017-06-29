@@ -183,14 +183,8 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                             if (totalSize > 0) {
                                 final float percent = (float) received * 100 / totalSize;
                                 if (received >= totalSize) {
-                                    try {
-                                        // 下载成功 先解压好下载的zip
-                                        HSZipUtils.unzip(new File(stickerCategoryZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
-                                        StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
-                                    } catch (ZipException e) {
-                                        e.printStackTrace();
-                                    }
                                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroup.getStickerGroupName());
+                                    unzipStickerGroup(stickerCategoryZipFilePath, stickerGroup);
                                 }
                                 handler.post(new Runnable() {
                                     @Override
@@ -210,6 +204,17 @@ public class StickerViewPagerAdapter extends PagerAdapter {
         } else {
             container.addView(firstView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return firstView;
+        }
+    }
+
+    private void unzipStickerGroup(String stickerCategoryZipFilePath, StickerGroup stickerGroup) {
+        try {
+            // 下载成功 先解压好下载的zip
+            HSZipUtils.unzip(new File(stickerCategoryZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
+            StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
+        } catch (ZipException e) {
+            e.printStackTrace();
+            unzipStickerGroup(stickerCategoryZipFilePath, stickerGroup);
         }
     }
 }

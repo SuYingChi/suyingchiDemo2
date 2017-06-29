@@ -82,6 +82,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         if (!StickerDataManager.getInstance().isStickersReady()) {
             HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
+            HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_CHANGE_NOTIFICATION, observer);
         }
     }
 
