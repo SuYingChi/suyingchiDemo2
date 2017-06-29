@@ -49,7 +49,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
     private static final String HS_SHOW_KEYBOARD_WINDOW = "hs.inputmethod.framework.api.SHOW_INPUTMETHOD";
     public static final String HS_NOTIFICATION_START_INPUT_INSIDE_CUSTOM_SEARCH_EDIT_TEXT = "CustomSearchEditText";
-
+    private boolean isFirstKeyboardWindowShow = true;
+    private boolean isFlurryStarted = false;
 
     private InputConnection insideConnection = null;
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -393,29 +394,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }else {
             getKeyboardPanelMananger().showGoogleAdBar();
         }
-    }
-
-    @Override
-    public void onKeyboardWindowHide() {
-        getKeyboardPanelMananger().removeCustomizeBar();
-    }
-
-    private boolean inPlayStore() {
-        return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME);
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-
-    private boolean isFirstKeyboardWindowShow = true;
-    private boolean isFlurryStarted = false;
-
-    @Override
-    public void onKeyboardWindowShow() {
-        super.onKeyboardWindowShow();
 
         if (!HSConfig.optBoolean(false, "Application", "DisableFlurryTest")) {
             // 第一次不开启Flurry，防止Crash同时RemoteConfig取不到
@@ -430,12 +408,24 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public void onKeyboardWindowHide() {
-        super.onKeyboardWindowHide();
+        getKeyboardPanelMananger().removeCustomizeBar();
 
         if (isFlurryStarted) {
             HSAnalytics.stopFlurry();
             isFlurryStarted = false;
         }
     }
+
+    private boolean inPlayStore() {
+        return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+
+
 
 }
