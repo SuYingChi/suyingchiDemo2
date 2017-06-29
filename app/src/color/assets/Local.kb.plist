@@ -713,6 +713,8 @@
 			</array>
 			<key>Server</key>
 			<dict>
+				<key>EmojiSuggestionBaseURL</key>
+				<string>https://s3.amazonaws.com/emojidevelop/apps_android/EmojiSuggesion</string>
 				<key>LanguageBaseURL</key>
 				<string>http://cdn.api-alliance.com/keyboardarts/adaptxt/3.1.1</string>
 				<key>RemoteContentDownloadURL</key>
