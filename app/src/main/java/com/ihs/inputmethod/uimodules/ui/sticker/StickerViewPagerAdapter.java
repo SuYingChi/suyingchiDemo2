@@ -21,8 +21,10 @@ import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
@@ -39,6 +41,11 @@ public class StickerViewPagerAdapter extends PagerAdapter {
     private View firstView;
     private List<StickerGroup> needDownloadStickerGroupList;
     private LayoutInflater inflater;
+    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+            .cacheInMemory(true)
+            .showImageOnFail(null)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .cacheOnDisk(true).build();
 
     public StickerViewPagerAdapter(View firstView) {
         inflater = LayoutInflater.from(HSApplication.getContext());
@@ -109,7 +116,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
             final ImageView sticker_download_preview = (ImageView) stickerDownloadView.findViewById(R.id.sticker_download_preview_image);
             final TextView stickerDownloadShowName = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_show_name);
             stickerDownloadShowName.setText(stickerGroup.getDownloadDisplayName());
-            ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupDownloadPreviewImageUri(), new ImageViewAware(sticker_download_preview), new ImageLoadingListener() {
+            ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupDownloadPreviewImageUri(), new ImageViewAware(sticker_download_preview), displayImageOptions, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
                     int padding = HSDisplayUtils.dip2px(40);
