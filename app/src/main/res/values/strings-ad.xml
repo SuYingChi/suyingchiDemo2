@@ -40,4 +40,5 @@
 
     <string name="ad_placement_locker">Master_A(NativeAds)Fuse</string>
 
+    <string name="ad_placement_keyboard_banner">Master_A(NativeAds)KeyboardBanner</string>
 </resources>
