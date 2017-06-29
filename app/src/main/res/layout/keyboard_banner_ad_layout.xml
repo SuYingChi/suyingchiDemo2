@@ -7,6 +7,8 @@
     >
 
     <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_toRightOf="@id/ad_choice"
         android:layout_toEndOf="@id/ad_choice"
         android:layout_width="match_parent"
@@ -18,10 +20,8 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="6dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginTop="6dp"
             android:maxHeight="25dp"
             android:maxWidth="25dp"
             android:scaleType="centerCrop"

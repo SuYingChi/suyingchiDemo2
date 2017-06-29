@@ -79,9 +79,11 @@
 				<key>KeyboardBannerAd</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
-					<integer>0</integer>
+					<integer>5</integer>
 					<key>RegionException</key>
-					<array/>
+					<array>
+						<string>CN</string>
+					</array>
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
@@ -104,9 +106,11 @@
 				<key>AdGooglePlayNative</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
-					<integer>0</integer>
+					<integer>24</integer>
 					<key>RegionException</key>
-					<array/>
+					<array>
+						<string>CN</string>
+					</array>
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
@@ -527,10 +531,8 @@
 				<dict>
 					<key>SessionIndexOfDay</key>
 					<array>
-						<integer>1</integer>
-						<integer>0</integer>
-						<integer>2</integer>
-						<integer>5</integer>
+						<integer>10</integer>
+						<integer>20</integer>
 					</array>
 					<key>Show</key>
 					<true/>
@@ -3390,7 +3392,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.80000000000000004</real>
+								<real>0.8</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -4670,7 +4672,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.7000000000000002</real>
+								<real>3.7</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5683,7 +5685,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.96999999999999997</real>
+								<real>0.97</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5711,7 +5713,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.53000000000000003</real>
+								<real>0.53</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5768,7 +5770,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.8899999999999997</real>
+								<real>4.89</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5796,7 +5798,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.6200000000000001</real>
+								<real>1.62</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5853,7 +5855,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.93999999999999995</real>
+								<real>0.9399999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5881,7 +5883,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.29999999999999999</real>
+								<real>0.3</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5909,7 +5911,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.20000000000000001</real>
+								<real>0.2</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5940,7 +5942,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.10000000000000001</real>
+								<real>0.1</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7784,7 +7786,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.3300000000000001</real>
+								<real>1.33</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7821,7 +7823,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.20000000000000001</real>
+								<real>0.2</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7894,7 +7896,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.2599999999999998</real>
+								<real>3.26</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8037,7 +8039,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.10000000000000001</real>
+								<real>0.1</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8074,7 +8076,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.10000000000000001</real>
+								<real>0.1</real>
 							</dict>
 						</dict>
 						<key>ids</key>

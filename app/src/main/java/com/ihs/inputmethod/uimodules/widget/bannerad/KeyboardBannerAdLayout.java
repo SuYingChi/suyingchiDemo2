@@ -37,7 +37,7 @@ public class KeyboardBannerAdLayout extends FrameLayout {
         nativeAdView = new NativeAdView(HSApplication.getContext(), containerView);
         final ImageView closeBtn = new ImageView(getContext());
         VectorDrawableCompat closeDrawable = VectorDrawableCompat.create(getResources(), R.drawable.banner_ad_close_button, null);
-        closeBtn.setBackgroundDrawable(closeDrawable);
+        closeBtn.setImageDrawable(closeDrawable);
         closeBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,9 +45,12 @@ public class KeyboardBannerAdLayout extends FrameLayout {
                 nativeAdView.release();
             }
         });
-        LayoutParams closeParams = new LayoutParams(HSDisplayUtils.dip2px(20), HSDisplayUtils.dip2px(20));
-        closeParams.setMargins(0,0,HSDisplayUtils.dip2px(8),0);
+        closeBtn.setScaleType(ImageView.ScaleType.FIT_XY);
+        LayoutParams closeParams = new LayoutParams(HSDisplayUtils.dip2px(26), HSDisplayUtils.dip2px(26));
+        closeParams.setMargins(0,0,HSDisplayUtils.dip2px(6),0);
         closeParams.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
+        int padding = HSDisplayUtils.dip2px(3);
+        closeBtn.setPadding(padding,padding,padding,padding);
         closeBtn.setVisibility(GONE);
 
         NativeAdParams nativeAdParams = new NativeAdParams(getContext().getResources().getString(R.string.ad_placement_keyboard_banner));

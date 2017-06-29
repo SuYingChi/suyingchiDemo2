@@ -27,7 +27,7 @@
             android:paddingLeft="3.7dp"
             android:paddingRight="4.7dp"
             android:paddingTop="4.7dp"
-            android:text="Apps You Might Like"
+            android:text="Recommended For You"
             android:textColor="@android:color/white" />
 
         <FrameLayout
