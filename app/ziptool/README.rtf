@@ -1,0 +1,64 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\fnil\fcharset134 STHeitiSC-Light;\f1\fswiss\fcharset0 Helvetica;\f2\fnil\fcharset0 Tahoma;
+}
+{\colortbl;\red255\green255\blue255;\red87\green96\blue106;}
+{\*\expandedcolortbl;;\csgenericrgb\c34118\c37647\c41569;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww19220\viewh15640\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+######################################\
+#											   #\
+# \'d7\'a2\'d2\'e2\'a3\'ba\'b4\'f2\'b0\'fc\'c7\'b0\'c7\'eb\'c8\'b7\'c8\'cfshell\'bd\'c5\'b1\'be\'d6\'d0\'b0\'fc\'c3\'fb\'ba\'cd\'c7\'a9\'c3\'fb\'d0\'c5\'cf\'a2\'ca\'c7\'b7\'f1\'d5\'fd\'c8\'b7   #\
+#											   #\
+######################################\
+\
+\'d2\'bb\'a1\'a2\'c4\'bf\'c2\'bc\'bd\'e1\'b9\'b9\
+\
+1.AndroidResGuard.jar\'a1\'aa\'a1\'aa\'b4\'f2\'b0\'fc\'b9\'a4\'be\'df\'a1\'a3\
+\
+2.config.xml\'a1\'aa\'a1\'aa\'c5\'e4\'d6\'c3\'ce\'c4\'bc\'fe\'a3\'ac\'b0\'fc\'c0\'a8\'b0\'d7\'c3\'fb\'b5\'a5\'a3\'ac7zip\'d6\'d8\'d1\'b9\'cb\'f5\'b5\'c8\'a1\'a3\
+\
+3.build_apk_xxx.sh\'a1\'aa\'a1\'aa\'c3\'fc\'c1\'ee\'d6\'b4\'d0\'d0\'bd\'c5\'b1\'be\'a3\'ac\'c3\'bf\'b8\'f6\'b2\'fa\'c6\'b7\'a3\'a8flavor\'a3\'a9\'d3\'d0\'d2\'bb\'b8\'f6\'a1\'a3\
+\
+4.README.rtf\'a1\'aa\'a1\'aa\'bd\'e9\'c9\'dc\'ce\'c4\'b5\'b5\'a1\'a3\
+\
+\'b6\'fe\'a1\'a2\'b4\'f2\'b0\'fc\'c1\'f7\'b3\'cc
+\f1 \
+
+\f0 \
+1.\'b4\'f2\'bf\'aa\'c3\'fc\'c1\'ee\'d0\'d0\'d6\'d5\'b6\'cb\'a3\'accd\'bd\'f8\'c8\'eb\'b5\'bd\'b1\'be\'c4\'bf\'c2\'bc\'a3\'ac\'d4\'d9\'b4\'d3\'b1\'be\'c4\'bf\'c2\'bc\'cf\'c2\'bf\'bd\'b1\'b4build_apk_flavorname.sh\'b5\'bd\'d6\'d5\'b6\'cb\'b2\'a2\'b0\'b4\'bb\'d8\'b3\'b5\'bc\'fc\'d6\'b4\'d0\'d0\'a1\'a3\
+\
+2.7zip\'d6\'d8\'d1\'b9\'cb\'f5\'a3\'a8\'bf\'c9\'d1\'a1\'a3\'a9\'a3\'ba\
+\
+	\'a3\'a81\'a3\'a9\'b0\'b2\'d7\'b07zip(\'c8\'e7\'b9\'fb\'d2\'d1\'b0\'b2\'d7\'b0\'d6\'b1\'bd\'d3\'cc\'f8\'b5\'bd\'b5\'da\'b6\'fe\'b2\'bd)\
+\
+			1\'a3\'a9\'b0\'b2\'d7\'b0homebrew(\'c8\'e7\'b9\'fb\'d2\'d1\'b0\'b2\'d7\'b0\'d6\'b1\'bd\'d3\'cc\'f8\'b5\'bd\'b5\'da\'b6\'fe\'b2\'bd)\
+\
+			\'d6\'d5\'b6\'cb\'ca\'e4\'c8\'eb
+\f2\fs28 \expnd0\expndtw0\kerning0
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\'94
+\f0 \'b2\'a2\'d6\'b4\'d0\'d0\'a1\'a3\
+\
+
+\fs24 \kerning1\expnd0\expndtw0 			2\'a3\'a9\'b0\'b2\'d7\'b07zip\
+\
+			\'d6\'d5\'b6\'cb\'ca\'e4\'c8\'eb
+\f1\fs32 \cf2 \expnd0\expndtw0\kerning0
+brew install p7zip
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \'b2\'a2\'d6\'b4\'d0\'d0\'a1\'a3\
+\
+	\'a3\'a82\'a3\'a9\'d0\'de\'b8\'c4config.xml\'ce\'c4\'bc\'fe\'a3\'ac\'b4\'f2\'bf\'aa7zip\'bf\'aa\'b9\'d8\'a1\'a3\
+\
+	\'a3\'a83\'a3\'a9\'c9\'e8\'d6\'c3zipalign\'a3\'a8\'bf\'c9\'d1\'a1\'a3\'a9\
+\
+		\'b8\'c3\'bf\'c9\'d6\'b4\'d0\'d0\'ce\'c4\'bc\'fe\'ce\'bb\'d3\'daandroid sdk build-tools \'d6\'d0\'a1\'a3\
+\
+		\'b7\'bd\'b7\'a8\'d2\'bb\'a3\'ba\'c9\'e8\'d6\'c3\'bb\'b7\'be\'b3\'b1\'e4\'c1\'bf\
+\
+		\'b7\'bd\'b7\'a8\'b6\'fe\'a3\'ba\'d4\'da\'c3\'fc\'c1\'ee\'bd\'c5\'b1\'be\'d6\'d0\'cd\'a8\'b9\'fd\'b2\'ce\'ca\'fd\'c9\'e8\'d6\'c3\'a3\'ac\'d4\'da\'c3\'fc\'c1\'ee\'d0\'d0\'ce\'b2\'b2\'bf\'d7\'b7\'bc\'d3 -zipalign sdk\'c4\'bf\'c2\'bc/build-tools/sdk version/zipalign\
+\
+	\'a3\'a84\'a3\'a9\'d6\'b4\'d0\'d0\'c9\'cf\'c3\'e6\'b2\'bd\'d6\'e84\'bc\'b4\'bf\'c9\'a1\'a3\
+\
+3.\'c8\'ce\'ce\'f1\'d6\'b4\'d0\'d0\'cd\'ea\'b3\'c9\'ba\'f3\'a3\'ac\'d4\'daapp/build/outputs/apk/\'ce\'c4\'bc\'fe\'bc\'d0\'cf\'c2\'a3\'ac\'bf\'c9\'d2\'d4\'d5\'d2\'b5\'bd<flavorname>-zip\'b5\'c4\'ce\'c4\'bc\'fe\'bc\'d0\'a1\'a3\'cf\'c2\'c3\'e6\'d3\'d0\'d1\'b9\'cb\'f5\'ba\'f3\'b5\'c4apk\'ce\'c4\'bc\'fe\'ba\'cdmapping\'ce\'c4\'bc\'fe\'a1\'a3\
+}

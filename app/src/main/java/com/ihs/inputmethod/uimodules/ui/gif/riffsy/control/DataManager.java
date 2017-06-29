@@ -7,7 +7,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
-import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.DaoHelper;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.request.BaseRequest;
@@ -19,14 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Created by dsapphire on 16/1/22.
- */
 public final class DataManager {
 
     private static final int RECENT_SIZE = 50;
     private static DataManager instance;
-//    public static final String HS_NOTIFICATION_SWITCH_LANGUAGE = "DataManager_SWITCH_LANGUAGE";
 
     private ConcurrentHashMap<String, ArrayList<GifItem>> tabData = new ConcurrentHashMap<>();
     private HashMap<String, ArrayList<GifItem>> tagData = new HashMap<>();
@@ -39,9 +34,6 @@ public final class DataManager {
         public void onReceive(String s, HSBundle hsBundle) {
             if (HSInputMethod.HS_NOTIFICATION_HIDE_WINDOW.equals(s)) {
                 saveUserDataToDB();
-            }
-            if (Constants.HS_NOTIFICATION_SERVICE_DESTROY.equals(s)) {
-                HSGlobalNotificationCenter.removeObserver(savingRecent);
             }
         }
     };
@@ -82,7 +74,6 @@ public final class DataManager {
             init();
         }
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_HIDE_WINDOW, instance.savingRecent);
-        HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_SERVICE_DESTROY, instance.savingRecent);
         return instance;
     }
 

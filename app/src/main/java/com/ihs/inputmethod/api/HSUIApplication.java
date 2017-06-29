@@ -42,7 +42,6 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
-import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
@@ -66,6 +65,31 @@ import static com.ihs.chargingscreen.HSChargingScreenManager.registerChargingSer
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_SET_CHARGING_TOGGLE;
 
 public class HSUIApplication extends HSInputMethodApplication {
+
+    private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
+    private INotificationObserver notificationObserver = new INotificationObserver() {
+
+        @Override
+        public void onReceive(String notificationName, HSBundle bundle) {
+            if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
+
+                HSAlertMgr.delayRateAlert();
+                onSessionStart();
+
+            } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
+                registerChargingService();
+
+            } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
+                ChargingPrefsUtil.getInstance().setChargingForFirstSession();
+                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
+                    KCNotificationManager.getInstance().removeNotificationEvent("Charging");
+                }
+            } else if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(notificationName)) {
+                registerChargingService();
+                recordInstallType();
+            }
+        }
+    };
 
     protected Class<? extends Activity> getMainActivityClass() {
         return null;
@@ -91,30 +115,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
             }
         }
-        startActivity(intent);
+        splashActivity.startActivity(intent);
     }
-
-
-    private INotificationObserver notificationObserver = new INotificationObserver() {
-
-        @Override
-        public void onReceive(String notificationName, HSBundle bundle) {
-            if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-
-                HSAlertMgr.delayRateAlert();
-                onSessionStart();
-
-            } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
-                registerChargingService();
-
-            } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
-                ChargingPrefsUtil.getInstance().setChargingForFirstSession();
-                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
-                    KCNotificationManager.getInstance().removeNotificationEvent("Charging");
-                }
-            }
-        }
-    };
 
     @Override
     public void onCreate() {
@@ -144,14 +146,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
         ImageLoader.getInstance().init(config);
 
-        HSPublisherMgr.registerResultListener(this, new HSPublisherMgr.IPublisherListener() {
-            @Override
-            public void onResult(HSPublisherMgr.PublisherData publisherData) {
-                registerChargingService();
-                recordInstallType();
-            }
-        });
-
         if (false) {
             if (LeakCanary.isInAnalyzerProcess(this)) {
                 // This process is dedicated to LeakCanary for heap analysis.
@@ -168,6 +162,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_APPSFLYER_RESULT, notificationObserver);
 
         HSKeyboardThemeManager.init();
 
@@ -202,7 +197,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSInputMethodService.initResourcesBeforeOnCreate();
 
         registerNotificationEvent();
-        LuckyActivity.installShortCut();
+//        LuckyActivity.installShortCut();
 
         // 添加桌面入口
         if (getCurrentLaunchInfo().launchId == 1) {
@@ -272,8 +267,6 @@ public class HSUIApplication extends HSInputMethodApplication {
     protected void onSessionStart() {
         HSDiverseSession.start();
     }
-
-    private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
 
     private void recordInstallType() {
         boolean alreadyRecord = HSPreferenceHelper.getDefault().getBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, false);

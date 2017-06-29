@@ -19,7 +19,6 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
@@ -208,7 +207,7 @@ public class WakeKeyboardService extends Service {
                         public void onClick(View v) {
                             Context context = WakeKeyboardService.this;
                             Intent intent = new Intent(context, ThemeHomeActivity.class);
-                            intent.putExtra(Constants.BUNDLE_AUTO_ENABLE_KEYBOARD, true);
+                            intent.putExtra(ThemeHomeActivity.BUNDLE_AUTO_ENABLE_KEYBOARD, true);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                             HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_enable_clicked");

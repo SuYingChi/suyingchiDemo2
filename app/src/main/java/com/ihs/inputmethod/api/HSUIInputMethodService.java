@@ -31,7 +31,6 @@ import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
@@ -44,14 +43,13 @@ import java.util.List;
  * Created by xu.zhang on 11/3/15.
  */
 public abstract class HSUIInputMethodService extends HSInputMethodService {
-    public static final String HS_NOTIFICATION_SERVICE_DESTROY = "hs.keyboard.SERVICE_DESTROY";
-    public static final String HS_NOTIFICATION_PARAM_EDITOR_OWNER_PACKAGE_NAME = "editor_owner_package_name";
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
     private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
     private static final String HS_SHOW_KEYBOARD_WINDOW = "hs.inputmethod.framework.api.SHOW_INPUTMETHOD";
+    public static final String HS_NOTIFICATION_START_INPUT_INSIDE_CUSTOM_SEARCH_EDIT_TEXT = "CustomSearchEditText";
 
 
-    private static InputConnection insideConnection = null;
+    private InputConnection insideConnection = null;
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION_CLOSE_SYSTEM_DIALOGS)) {
@@ -70,12 +68,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
             if (eventName.equals(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE)) {
-                CustomSearchEditText customSearchEditText = (CustomSearchEditText) notificaiton.getObject(Constants.HS_NOTIFICATION_CUSTOM_SEARCH_EDIT_TEXT);
+                CustomSearchEditText customSearchEditText = (CustomSearchEditText) notificaiton.getObject(HS_NOTIFICATION_START_INPUT_INSIDE_CUSTOM_SEARCH_EDIT_TEXT);
                 onStartInputInside(customSearchEditText);
             } else if (eventName.equals(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE)) {
                 onFinishInputInside();
-            } else if (eventName.equals(Constants.HS_NOTIFICATION_RESET_EDIT_INFO)) {
-                resetEditInfo();
             } else if (eventName.equals(HS_SHOW_KEYBOARD_WINDOW)) {
                 if (TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME)) {
                     getKeyboardPanelMananger().logCustomizeBarShowed();
@@ -96,7 +92,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE, keyboardNotificationObserver);
-        HSGlobalNotificationCenter.addObserver(Constants.HS_NOTIFICATION_RESET_EDIT_INFO, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(HS_SHOW_KEYBOARD_WINDOW, keyboardNotificationObserver);
 
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
@@ -116,6 +111,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                     }
                 }
                 HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
+                if (!HSConfig.optBoolean(false, "Application", "DisableFlurryTest")) {
+                    HSAnalytics.logEvent("Spring_Trigger_keyboard");
+                }
             } else {
                 if (isInRightAppForBackAd()) {
                     HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
@@ -162,7 +160,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             if (currentTimeMillis - lastBackAdShowTimeMillis >= minIntervalByHour * 3600 * 1000 && backAdShowCountOfDay < maxCountPerDay) {
                 boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, true);
                 if (adShown) {
-                    backAdShowCountOfDay ++;
+                    backAdShowCountOfDay++;
                     prefs.putLong("BackAdShowCountOfDay", backAdShowCountOfDay);
                     prefs.putLong("LastBackAdShowTime", currentTimeMillis);
                     return true;
@@ -334,7 +332,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         unregisterReceiver(this.receiver);
         super.onDestroy();
         getKeyboardPanelMananger().onInputViewDestroy();
-        HSGlobalNotificationCenter.sendNotification(HS_NOTIFICATION_SERVICE_DESTROY);
+        HSGlobalNotificationCenter.removeObserver(keyboardNotificationObserver);
     }
 
     @Override
@@ -383,4 +381,34 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         return super.onStartCommand(intent, flags, startId);
     }
+
+
+    private boolean isFirstKeyboardWindowShow = true;
+    private boolean isFlurryStarted = false;
+
+    @Override
+    public void onKeyboardWindowShow() {
+        super.onKeyboardWindowShow();
+
+        if (!HSConfig.optBoolean(false, "Application", "DisableFlurryTest")) {
+            // 第一次不开启Flurry，防止Crash同时RemoteConfig取不到
+            if (isFirstKeyboardWindowShow) {
+                isFirstKeyboardWindowShow = false;
+            } else {
+                HSAnalytics.startFlurry();
+                isFlurryStarted = true;
+            }
+        }
+    }
+
+    @Override
+    public void onKeyboardWindowHide() {
+        super.onKeyboardWindowHide();
+
+        if (isFlurryStarted) {
+            HSAnalytics.stopFlurry();
+            isFlurryStarted = false;
+        }
+    }
+
 }

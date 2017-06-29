@@ -1689,6 +1689,24 @@
 				<array>
 					<dict>
 						<key>apkUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Jelly.apk</string>
+						<key>bannerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Jelly.jpg</string>
+						<key>largePreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Jelly.jpg</string>
+						<key>mediumPreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Jelly.jpg</string>
+						<key>showName</key>
+						<string>Jelly</string>
+						<key>showNewMark</key>
+						<true/>
+						<key>themePkName</key>
+						<string>com.keyboard.theme.jelly</string>
+						<key>zipName</key>
+						<string>Jelly</string>
+					</dict>
+					<dict>
+						<key>apkUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/FireDemon.apk</string>
 						<key>bannerImgUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/FireDemon.jpg</string>
@@ -1740,24 +1758,6 @@
 						<string>com.keyboard.theme.bluejeans</string>
 						<key>zipName</key>
 						<string>BlueJeans</string>
-					</dict>
-					<dict>
-						<key>apkUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/CaliforniaSummer.apk</string>
-						<key>bannerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/CaliforniaSummer.jpg</string>
-						<key>largePreviewUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/CaliforniaSummer.jpg</string>
-						<key>mediumPreviewUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/CaliforniaSummer.jpg</string>
-						<key>showName</key>
-						<string>California Summer</string>
-						<key>showNewMark</key>
-						<true/>
-						<key>themePkName</key>
-						<string>com.keyboard.theme.californiasummer</string>
-						<key>zipName</key>
-						<string>CaliforniaSummer</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -1843,6 +1843,22 @@
 					</dict>
 					<dict>
 						<key>apkUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/CaliforniaSummer.apk</string>
+						<key>bannerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/CaliforniaSummer.jpg</string>
+						<key>largePreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/CaliforniaSummer.jpg</string>
+						<key>mediumPreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/CaliforniaSummer.jpg</string>
+						<key>showName</key>
+						<string>California Summer</string>
+						<key>themePkName</key>
+						<string>com.keyboard.theme.californiasummer</string>
+						<key>zipName</key>
+						<string>CaliforniaSummer</string>
+					</dict>
+					<dict>
+						<key>apkUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/PinkDrops.apk</string>
 						<key>bannerImgUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/PinkDrops.jpg</string>
@@ -1867,7 +1883,7 @@
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/ForTheHorde.jpg</string>
 						<key>showName</key>
-						<string>For The orde</string>
+						<string>For The Horde</string>
 						<key>themePkName</key>
 						<string>com.keyboard.theme.forthehorde</string>
 						<key>zipName</key>
@@ -4376,7 +4392,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>9</integer>
+								<integer>18</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4403,7 +4419,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>10</integer>
+								<integer>20</integer>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -4431,7 +4447,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>6</integer>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>description</key>

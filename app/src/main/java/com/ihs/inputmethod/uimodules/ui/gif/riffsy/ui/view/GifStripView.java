@@ -24,13 +24,13 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.Constants;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.emojisearch.ESEmojiLoader;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.emojisearch.EmojiSearchView;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
@@ -223,8 +223,9 @@ public final class GifStripView extends FrameLayout implements EmojiSearchView.O
 	}
 
 	private void notifyStartInputInside(CustomSearchEditText customSearchEditText) {
+		// TODO: should call some method instead of sending a notification
 		final HSBundle bundle = new HSBundle();
-		bundle.putObject(Constants.HS_NOTIFICATION_CUSTOM_SEARCH_EDIT_TEXT, customSearchEditText);
+		bundle.putObject(HSUIInputMethodService.HS_NOTIFICATION_START_INPUT_INSIDE_CUSTOM_SEARCH_EDIT_TEXT, customSearchEditText);
 		HSGlobalNotificationCenter.sendNotification(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE,bundle);
 	}
 

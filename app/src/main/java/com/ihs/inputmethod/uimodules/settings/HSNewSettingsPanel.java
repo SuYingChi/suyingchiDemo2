@@ -86,7 +86,7 @@ public class HSNewSettingsPanel extends BasePanel {
 
                 item.hideNewMark();
                 ((BaseFunctionBar) panelActionListener.getBarView()).hideNewMark();
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GoogleAnalyticsConstants.GA_PARAM_ACTION_SETTING_THEMES_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_themes_clicked");
             }
         });
         items.add(themeItem);
@@ -103,7 +103,7 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 getPanelActionListener().showChildPanel(HSFontSelectPanel.class, null);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GoogleAnalyticsConstants.GA_PARAM_ACTION_SETTING_FONTS_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_fonts_clicked");
             }
         }));
         items.add(ViewItemBuilder.getSoundsPositionItem());
@@ -122,7 +122,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         HSUIInputMethod.launchMoreLanguageActivity();
                     }
                 }, 100);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GoogleAnalyticsConstants.GA_PARAM_ACTION_SETTING_ADD_LANGUAGE_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_addlanguage_clicked");
             }
         }));
         items.add(ViewItemBuilder.getMoreSettingsItem(new ViewItem.ViewItemListener() {
