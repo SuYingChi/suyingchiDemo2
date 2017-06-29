@@ -76,17 +76,6 @@
 			</dict>
 			<key>FeatureRestriction</key>
 			<dict>
-				<key>KeyboardBannerAd</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
 				<key>AdBackButton</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
@@ -129,6 +118,17 @@
 				<dict>
 					<key>HoursFromFirstUse</key>
 					<integer>3</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>KeyboardBannerAd</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
 					<key>RegionException</key>
 					<array>
 						<string>CN</string>
@@ -520,13 +520,6 @@
 					<key>ShowAd</key>
 					<true/>
 				</dict>
-				<key>KeyboardEmojiTopLeftTabAd</key>
-				<dict>
-					<key>SessionIndexOfDay</key>
-					<array/>
-					<key>Show</key>
-					<false/>
-				</dict>
 				<key>KeyboardBannerAd</key>
 				<dict>
 					<key>SessionIndexOfDay</key>
@@ -536,6 +529,13 @@
 					</array>
 					<key>Show</key>
 					<true/>
+				</dict>
+				<key>KeyboardEmojiTopLeftTabAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array/>
+					<key>Show</key>
+					<false/>
 				</dict>
 				<key>KeyboardFunctionBarGiftAd</key>
 				<dict>
@@ -732,9 +732,9 @@
 				</dict>
 				<dict>
 					<key>backgroundColor</key>
-					<string>com.snapchat.android</string>
-					<key>packageName</key>
 					<string>#ffffff</string>
+					<key>packageName</key>
+					<string>com.snapchat.android</string>
 				</dict>
 				<dict>
 					<key>backgroundColor</key>
@@ -3394,7 +3394,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.8</real>
+								<real>0.80000000000000004</real>
 							</dict>
 						</dict>
 						<key>description</key>
@@ -4674,7 +4674,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.7</real>
+								<real>3.7000000000000002</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5143,502 +5143,6 @@
 		</dict>
 		<key>nativeAds</key>
 		<dict>
-			<key>Colorkey_A(NativeAds)KeyboardBanner</key>
-			<dict>
-				<key>deDuplicate</key>
-				<false/>
-				<key>packageFilter</key>
-				<true/>
-				<key>parallelCount</key>
-				<integer>0</integer>
-				<key>parallelList</key>
-				<array/>
-				<key>serialList</key>
-				<array>
-					<dict>
-						<key>adType</key>
-						<string>facebooknative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>15</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>527439780799121_665119633697801</string>
-						</array>
-						<key>Label</key>
-						<string>A1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>14</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-8621759356895416/8009347721</string>
-						</array>
-						<key>Label</key>
-						<string>A1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>13</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/8961959880</string>
-						</array>
-						<key>Label</key>
-						<string>A1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>avocarrotnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>12</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>1f659eb0-ebf9-8ea8-8017-9d1c7750847f</string>
-							<string>70ed7716-6ea4-414e-976e-c7e9403bc899</string>
-						</array>
-						<key>Label</key>
-						<string>A1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>facebooknative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>11</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>527439780799121_665119750364456</string>
-						</array>
-						<key>Label</key>
-						<string>B1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>mopubnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>10</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>49cf3d66abd74d17b337a436b85defb3</string>
-						</array>
-						<key>Label</key>
-						<string>A1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>9</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-8621759356895416/9957212330</string>
-						</array>
-						<key>Label</key>
-						<string>B1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>mopubnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>8</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>195594f00d164547aaedc16d2116304a</string>
-						</array>
-						<key>Label</key>
-						<string>B1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>7</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/1438693081</string>
-						</array>
-						<key>Label</key>
-						<string>B1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>6</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-8621759356895416/3565283700</string>
-						</array>
-						<key>Label</key>
-						<string>C1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>5</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/2915426281</string>
-						</array>
-						<key>Label</key>
-						<string>C1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>facebooknative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>5</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>527439780799121_665119853697779</string>
-						</array>
-						<key>Label</key>
-						<string>A5</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>4</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-8621759356895416/6696265418</string>
-						</array>
-						<key>Label</key>
-						<string>A5</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>3</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/4392159483</string>
-						</array>
-						<key>Label</key>
-						<string>A5</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>avocarrotnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>2</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>1f659eb0-ebf9-8ea8-8017-9d1c7750847f</string>
-							<string>cce53d24-d7f0-4c90-9d31-0051a3944181</string>
-						</array>
-						<key>Label</key>
-						<string>A5</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>mopubnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>1</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>d10dba501ad9436d933ea7732e05fa5f</string>
-						</array>
-						<key>Label</key>
-						<string>A5</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-				</array>
-			</dict>
 			<key>Colorkey_A(NativeAds)ApplyingItem</key>
 			<dict>
 				<key>deDuplicate</key>
@@ -5687,7 +5191,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.97</real>
+								<real>0.96999999999999997</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5715,7 +5219,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.53</real>
+								<real>0.53000000000000003</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5772,7 +5276,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>4.89</real>
+								<real>4.8899999999999997</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5800,7 +5304,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.62</real>
+								<real>1.6200000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5857,7 +5361,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.9399999999999999</real>
+								<real>0.93999999999999995</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5885,7 +5389,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.3</real>
+								<real>0.29999999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5913,7 +5417,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.2</real>
+								<real>0.20000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5944,7 +5448,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6783,6 +6287,502 @@
 				</array>
 				<key>serialList</key>
 				<array/>
+			</dict>
+			<key>Colorkey_A(NativeAds)KeyboardBanner</key>
+			<dict>
+				<key>deDuplicate</key>
+				<false/>
+				<key>packageFilter</key>
+				<true/>
+				<key>parallelCount</key>
+				<integer>0</integer>
+				<key>parallelList</key>
+				<array/>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>Label</key>
+						<string>A1</string>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>527439780799121_665119633697801</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A1</string>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>14</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/8009347721</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A1</string>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/8961959880</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A1</string>
+						<key>adType</key>
+						<string>avocarrotnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>12</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1f659eb0-ebf9-8ea8-8017-9d1c7750847f</string>
+							<string>70ed7716-6ea4-414e-976e-c7e9403bc899</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>B1</string>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>11</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>527439780799121_665119750364456</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A1</string>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>10</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>49cf3d66abd74d17b337a436b85defb3</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>B1</string>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>9</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/9957212330</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>B1</string>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>8</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>195594f00d164547aaedc16d2116304a</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>B1</string>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>7</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/1438693081</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>C1</string>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>6</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/3565283700</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>C1</string>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/2915426281</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A5</string>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>527439780799121_665119853697779</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A5</string>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>4</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/6696265418</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A5</string>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/4392159483</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A5</string>
+						<key>adType</key>
+						<string>avocarrotnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>2</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1f659eb0-ebf9-8ea8-8017-9d1c7750847f</string>
+							<string>cce53d24-d7f0-4c90-9d31-0051a3944181</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>Label</key>
+						<string>A5</string>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>1</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>d10dba501ad9436d933ea7732e05fa5f</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+				</array>
 			</dict>
 			<key>Colorkey_A(NativeAds)KeyboardEmojiAd</key>
 			<dict>
@@ -7788,7 +7788,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>1.33</real>
+								<real>1.3300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7825,7 +7825,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.2</real>
+								<real>0.20000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7898,7 +7898,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3.26</real>
+								<real>3.2599999999999998</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8041,7 +8041,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8078,7 +8078,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
