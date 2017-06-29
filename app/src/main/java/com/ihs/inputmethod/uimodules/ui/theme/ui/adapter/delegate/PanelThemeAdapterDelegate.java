@@ -81,7 +81,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 		final PanelThemeViewHolder viewHolder = (PanelThemeViewHolder) holder;
 		final ThemePanelModel model = items.get(position);
 
-		HSKeyboardThemeManager.getThemePreviewPanelDrawable(model.themeName,contentContainerWidth,contentContainerHeight, new ImageLoadingListener() {
+		HSKeyboardThemeManager.loadThemePreviewPanelDrawable(model.themeName,contentContainerWidth,contentContainerHeight, new ImageLoadingListener() {
 			@Override
 			public void onLoadingStarted(String imageUri, View view) {
 				viewHolder.content.setImageDrawable(null);
