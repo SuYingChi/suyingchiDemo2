@@ -207,14 +207,13 @@ public class StickerViewPagerAdapter extends PagerAdapter {
         }
     }
 
-    private void unzipStickerGroup(String stickerCategoryZipFilePath, StickerGroup stickerGroup) {
+    private void unzipStickerGroup(String stickerGroupZipFilePath, StickerGroup stickerGroup) {
         try {
             // 下载成功 先解压好下载的zip
-            HSZipUtils.unzip(new File(stickerCategoryZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
+            HSZipUtils.unzip(new File(stickerGroupZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
             StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
         } catch (ZipException e) {
             e.printStackTrace();
-            unzipStickerGroup(stickerCategoryZipFilePath, stickerGroup);
         }
     }
 }

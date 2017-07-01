@@ -40,9 +40,16 @@ public class StickerGroup {
         this.isInternalStickerGroup = isStickerExistInAssets(stickerGroupName);
         this.stickerGroupName = stickerGroupName;
 
-        StringBuilder stickerPreviewImageUri = new StringBuilder(getStickerDownloadBaseUrl())
-                .append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_TAB_IMAGE_SUFFIX);
-        this.stickerGroupPreviewImageUri = stickerPreviewImageUri.toString();
+        StringBuilder stickerPreviewImageUri;
+        if (isInternalStickerGroup) {
+            stickerPreviewImageUri = new StringBuilder(ASSETS_STICKER_FILE_NAME)
+                    .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_TAB_IMAGE_SUFFIX);
+            this.stickerGroupPreviewImageUri = ImageLoaderURIUtils.transformURI(stickerPreviewImageUri.toString(), ImageLoaderURIUtils.Type.Assets);
+        } else {
+            stickerPreviewImageUri = new StringBuilder(getStickerDownloadBaseUrl())
+                    .append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_TAB_IMAGE_SUFFIX);
+            this.stickerGroupPreviewImageUri = stickerPreviewImageUri.toString();
+        }
 
         StringBuilder stickerDownloadPreviewUri = new StringBuilder(getStickerDownloadBaseUrl())
                 .append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_DOWNLOAD_IMAGE_SUFFIX);
