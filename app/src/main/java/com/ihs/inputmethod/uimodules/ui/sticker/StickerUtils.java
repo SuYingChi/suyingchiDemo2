@@ -22,6 +22,8 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
@@ -101,8 +103,8 @@ public class StickerUtils {
 
     public static void share(final Sticker sticker, final String packageName) {
         if (!DirectoryUtils.isSDCardEnabled()) {
-            HSInputMethod.inputText(sticker.getStickerRemoteUri());
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "link");
+            HSToastUtils.toastCenterShort(HSApplication.getContext().getString(R.string.sticker_share_toast));
+            //HSInputMethod.inputText(sticker.getStickerRemoteUri());
             return;
         }
 
@@ -142,8 +144,8 @@ public class StickerUtils {
                     MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetExternalFilePath)), mimeType, packageName);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "intent");
                 } catch (Exception e) {
-                    HSInputMethod.inputText(sticker.getStickerRemoteUri());
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "link");
+                    HSToastUtils.toastCenterShort(HSApplication.getContext().getString(R.string.sticker_share_toast));
+                    //HSInputMethod.inputText(sticker.getStickerRemoteUri());
                 }
                 break;
             // save to gallery
@@ -153,12 +155,12 @@ public class StickerUtils {
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "export");
                 break;
             case MediaShareUtils.IMAGE_SHARE_MODE_LINK:
-                HSInputMethod.inputText(sticker.getStickerRemoteUri());
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "link");
+                HSToastUtils.toastCenterShort(HSApplication.getContext().getString(R.string.sticker_share_toast));
+                //HSInputMethod.inputText(sticker.getStickerRemoteUri());
                 break;
             default:
-                HSInputMethod.inputText(sticker.getStickerRemoteUri());
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "link");
+                HSToastUtils.toastCenterShort(HSApplication.getContext().getString(R.string.sticker_share_toast));
+                //HSInputMethod.inputText(sticker.getStickerRemoteUri());
         }
     }
 
