@@ -93,4 +93,13 @@ public class StickerDataManager {
             return stickerGroups;
         }
     }
+
+    public boolean isStickerGroupDownloaded(String name){
+        for (StickerGroup stickerGroup : getStickerGroupList()) {
+            if (stickerGroup.getStickerGroupName().equals(name)) {
+                return stickerGroup.isStickerGroupDownloaded();
+            }
+        }
+        return false;
+    }
 }

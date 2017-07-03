@@ -9,7 +9,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 /**
@@ -30,7 +29,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         switch (intent.getStringExtra("eventName")) {
             case "Charging":
                 ChargingManagerUtil.enableCharging(true,"notification");
-                KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 HSToastUtils.toastBottomShort("Fast Charging Enabled");
                 break;
             case "SetPhotoAsBackground":
