@@ -732,9 +732,9 @@
 				</dict>
 				<dict>
 					<key>backgroundColor</key>
-					<string>com.snapchat.android</string>
-					<key>packageName</key>
 					<string>#ffffff</string>
+					<key>packageName</key>
+					<string>com.snapchat.android</string>
 				</dict>
 				<dict>
 					<key>backgroundColor</key>
