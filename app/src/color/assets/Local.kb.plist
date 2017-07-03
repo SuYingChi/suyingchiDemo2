@@ -747,27 +747,9 @@
 			<array>
 				<dict>
 					<key>name</key>
-					<string>emoji_modified</string>
-					<key>showName</key>
-					<string>Big Emoji</string>
-				</dict>
-				<dict>
-					<key>name</key>
-					<string>Love</string>
-					<key>showName</key>
-					<string>Big Love</string>
-				</dict>
-				<dict>
-					<key>name</key>
 					<string>YellowSmile3</string>
 					<key>showName</key>
 					<string>Big Yellow</string>
-				</dict>
-				<dict>
-					<key>name</key>
-					<string>BlueSmile</string>
-					<key>showName</key>
-					<string>Big Blue</string>
 				</dict>
 			</array>
 			<key>ThemeContents</key>
