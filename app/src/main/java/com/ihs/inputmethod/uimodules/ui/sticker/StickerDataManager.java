@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.utils.HSLog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +39,7 @@ public class StickerDataManager {
     }
 
     public void onConfigChange() {
+        HSLog.d("xy, load sticker after config change");
         loadStickersAsync();
     }
 

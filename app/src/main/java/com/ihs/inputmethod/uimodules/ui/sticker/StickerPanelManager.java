@@ -121,7 +121,7 @@ public class StickerPanelManager {
     }
 
     String getDefaultTab() {
-        final List<StickerGroup> stickerGroups = StickerDataManager.getInstance().getStickerGroupList();
+        final List<StickerGroup> stickerGroups = getSortedStickerGroup();
         if (stickerGroups.size() >= 1) {
             return stickerGroups.get(0).getStickerGroupName();
         }

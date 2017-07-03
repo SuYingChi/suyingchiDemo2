@@ -80,10 +80,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                 + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
                 - res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-        if (!StickerDataManager.getInstance().isStickersReady()) {
-            HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
-            HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_CHANGE_NOTIFICATION, observer);
-        }
+        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
+        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_CHANGE_NOTIFICATION, observer);
     }
 
     @Override
@@ -205,7 +203,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
     void onDataLoaded() {
         stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());
-        stickerTabAdapter.setCurrentTab(stickerPanelManager.getCurrentTabName(), stickerPanelManager.getDefaultTab());
+        stickerTabAdapter.setCurrentTab(stickerPanelManager.getDefaultTab(), stickerPanelManager.getDefaultTab());
     }
 
     public void saveRecent() {
