@@ -150,6 +150,8 @@ dependencies {
 
     // Express Ad Adapters
     compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.2.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdxExpressAdapter.gm:4.0.0.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:4.0.0.gm'
 
     // Google Play Services
     compile "com.google.android.gms:play-services-ads:10.2.6"
