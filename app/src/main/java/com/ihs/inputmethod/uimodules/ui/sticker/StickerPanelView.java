@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -92,7 +93,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameList());
             stickerTabAdapter = new StickerTabAdapter(stickerNameList, this);
             RecyclerView stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
-            stickerTabRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
+            stickerTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             stickerTabRecyclerView.setAdapter(stickerTabAdapter);
         }
 

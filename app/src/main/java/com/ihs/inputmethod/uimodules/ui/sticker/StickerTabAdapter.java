@@ -12,6 +12,8 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
 
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
+            .showImageOnLoading(R.drawable.ic_sticker_loading_image)
             .showImageOnFail(null)
             .imageScaleType(ImageScaleType.EXACTLY)
             .cacheOnDisk(true).build();
@@ -50,7 +53,7 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
                         .append(tabName).append("/").append(tabName).append(StickerUtils.STICKER_TAB_IMAGE_SUFFIX);
                 stickerPreviewImageUriStr = stickerPreviewImageUri.toString();
             }
-            ImageLoader.getInstance().displayImage(stickerPreviewImageUriStr, stickerTabImageView, displayImageOptions, new ImageLoadingListener() {
+            ImageLoader.getInstance().displayImage(stickerPreviewImageUriStr, new ImageViewAware(stickerTabImageView), displayImageOptions, new ImageSize(60, 60), new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
 
@@ -74,7 +77,7 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
                 public void onLoadingCancelled(String imageUri, View view) {
 
                 }
-            });
+            }, null);
         }
     }
 
