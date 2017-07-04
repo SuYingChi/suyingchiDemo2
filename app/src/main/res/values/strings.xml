@@ -278,5 +278,5 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
 	<string name="sticker_downloading_label">Downloading</string>
 	<string name="sticker_downloading_successful">Download Successfully</string>
 	<string name="sticker_downloading_guide">Download for free now!</string>
-    <string name="sticker_share_toast">Share Sticker In Wrong Environment!</string>
+    <string name="sticker_share_toast">The app does not support stickers.</string>
 </resources>

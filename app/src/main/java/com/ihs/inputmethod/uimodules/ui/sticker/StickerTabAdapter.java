@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -42,8 +43,6 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
         Drawable tabDrawable = getTabView(tabName);
         if (tabDrawable == null) {
             ImageView stickerTabImageView = (ImageView) holder.itemView.findViewById(R.id.tab_icon_iv);
-            int padding = HSDisplayUtils.dip2px(10);
-            stickerTabImageView.setPadding(padding, padding, padding, padding);
             StickerGroup stickerGroup = StickerUtils.getStickerGroupByName(tabName);
             String stickerPreviewImageUriStr;
             if (stickerGroup != null) {
@@ -53,10 +52,14 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
                         .append(tabName).append("/").append(tabName).append(StickerUtils.STICKER_TAB_IMAGE_SUFFIX);
                 stickerPreviewImageUriStr = stickerPreviewImageUri.toString();
             }
-            ImageLoader.getInstance().displayImage(stickerPreviewImageUriStr, new ImageViewAware(stickerTabImageView), displayImageOptions, new ImageSize(60, 60), new ImageLoadingListener() {
+            RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            lp.width = HSDisplayUtils.dip2px(35);
+            int imageWidth = HSDisplayUtils.dip2px(30);
+            ImageLoader.getInstance().displayImage(stickerPreviewImageUriStr, new ImageViewAware(stickerTabImageView), displayImageOptions, new ImageSize(imageWidth, imageWidth), new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
-
+                    int padding = HSDisplayUtils.dip2px(8);
+                    view.setPadding(padding, padding, padding, padding);
                 }
 
                 @Override
@@ -66,6 +69,8 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    int padding = HSDisplayUtils.dip2px(6);
+                    view.setPadding(padding, padding, padding, padding);
                     if (tabName.equals(currentTab)) {
                         view.setAlpha(1.0f);
                     } else {
@@ -78,6 +83,7 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
 
                 }
             }, null);
+            holder.itemView.setLayoutParams(lp);
         }
     }
 
