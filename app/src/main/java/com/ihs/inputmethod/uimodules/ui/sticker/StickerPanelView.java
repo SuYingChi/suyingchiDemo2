@@ -36,6 +36,7 @@ import java.util.List;
 
 public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter.OnTabChangeListener, StickerPageAdapter.OnStickerClickListener {
 
+    private RecyclerView stickerTabRecyclerView;
     private StickerTabAdapter stickerTabAdapter; // sticker 顶部 tab bar
     private RecyclerView stickerMainPagerRecyclerView; // sticker 主要显示部分
     private StickerPageAdapter stickerMainRecyclerViewAdapter; // sticker 主要显示部分 adapter
@@ -92,7 +93,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerNameList = new ArrayList<>();
             stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameList());
             stickerTabAdapter = new StickerTabAdapter(stickerNameList, this);
-            RecyclerView stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
+            stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
             stickerTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             stickerTabRecyclerView.setAdapter(stickerTabAdapter);
         }
@@ -122,9 +123,11 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             @Override
             public void onPageSelected(int position) {
                 if (position != 0) { // 下载页之间的滑动
+                    stickerTabRecyclerView.getLayoutManager().scrollToPosition(position + 1);
                     final String stickerGroupName = stickerPanelManager.getNeedDownloadStickerGroupList().get(position - 1).getStickerGroupName();
                     stickerTabAdapter.setTabSelected(stickerGroupName);
                 } else { //从下载页面滑到首页，先滑动到下载好的最后一项
+                    stickerTabRecyclerView.getLayoutManager().scrollToPosition(0);
                     String lastDownloadedStickerTabName = stickerPanelManager.getLastDownloadedTabName();
                     stickerTabAdapter.setTabSelected(lastDownloadedStickerTabName);
                     Pair<Integer, Integer> positionPair = stickerPanelManager.getLastShownItemPositionForTab(lastDownloadedStickerTabName);
