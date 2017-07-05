@@ -41,13 +41,6 @@
         android:visibility="invisible" />
 
     <ImageView
-        android:id="@+id/custom_theme_item_new_mark"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:adjustViewBounds="true" />
-
-    <ImageView
         android:id="@+id/custom_theme_item_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,4 +48,11 @@
         android:adjustViewBounds="true"
         android:background="@color/custom_theme_preview_placeholder"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/custom_theme_item_new_mark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true" />
 </FrameLayout>

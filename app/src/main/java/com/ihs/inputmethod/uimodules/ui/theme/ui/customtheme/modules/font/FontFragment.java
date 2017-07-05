@@ -24,7 +24,7 @@ public class FontFragment extends BaseThemeFragment {
     @Override
     public void onResume() {
         super.onResume();
-        HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_FONT); // 清除对应元素new mark
+        HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_FONT); // 清除对应元素new mark
     }
 
     @Override

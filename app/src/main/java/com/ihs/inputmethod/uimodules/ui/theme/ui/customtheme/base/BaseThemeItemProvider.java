@@ -64,7 +64,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 //        adjustLayoutForDevice88(holder, (KCBaseElement) item);
         setItemTouchListener(holder, (I) item);
         setItemDrawable(holder, (KCBaseElement) item);
-        setNewOrLockedState(holder, (KCBaseElement) item);
+        setNewState(holder, (KCBaseElement) item);
         updateItemSelection((V) holder, (KCBaseElement) item);
         setItemBackground(holder, (KCBaseElement) item);
 
@@ -176,7 +176,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         if (holder != lastCheckedHolder) {
             if (lastCheckedHolder != null) {
                 lastCheckedHolder.mCheckImageView.setVisibility(View.INVISIBLE);
-                setNewOrLockedState(lastCheckedHolder, (KCBaseElement) lastCheckedItem);
+                setNewState(lastCheckedHolder, (KCBaseElement) lastCheckedItem);
             }
 
             Drawable checked = getChosedBackgroundDrawable();//item.getChosedBackgroundDrawable();
@@ -211,9 +211,9 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         return HSDrawableUtils.getTransparentBitmapDrawable();
     }
 
-    private void setNewOrLockedState(@NonNull BaseItemHolder holder, @NonNull KCBaseElement item) {
+    private void setNewState(@NonNull BaseItemHolder holder, @NonNull KCBaseElement item) {
         //new mark view
-        if (isNewItem(item)) {
+        if (item.isNew()) {
             Drawable newMarkDrawable = getNewMarkDrawable();
             if (newMarkDrawable != null) {
                 holder.mNewMarkImageView.setImageDrawable(newMarkDrawable);
@@ -241,7 +241,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 //设置默认选中项(刚进来的时候，和remote正在下载滑动过程当前item被复用的情况，此时holder已经赋值过了)
                 if (lastCheckedHolder != null) {
                     lastCheckedHolder.mCheckImageView.setVisibility(View.INVISIBLE);
-                    setNewOrLockedState(lastCheckedHolder, (KCBaseElement) lastCheckedItem);
+                    setNewState(lastCheckedHolder, (KCBaseElement) lastCheckedItem);
                 }
                 Drawable checked = getChosedBackgroundDrawable();
                 holder.mCheckImageView.setImageDrawable(checked);
@@ -319,7 +319,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                         @Override
                         public void run() {
                             setItemDrawable(holder, item);
-                            setNewOrLockedState(holder, item);
+                            setNewState(holder, item);
                         }
                     });
                 }
@@ -332,13 +332,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         }, true /* isPreview */);
     }
 
-    private boolean isNewItem(KCBaseElement item) {
-        boolean isNewTheme = item.isNew();
-        if (isNewTheme) {
-            isNewTheme = HSThemeNewTipController.getInstance().isCustomThemeElementNew(item);
-        }
-        return isNewTheme;
-    }
 
     private void startDownloadContent(BaseItemHolder holder, I item) {
 //        holder.mProgressView.setVisibility(View.VISIBLE);
@@ -369,7 +362,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     private void setNotNew(V holder, KCBaseElement item) {
         if (item.isNew()) {
             holder.mNewMarkImageView.setImageDrawable(null);
-            HSThemeNewTipController.getInstance().setCustomThemeElementNotNew(item);
+            HSThemeNewTipController.getInstance().setElementNotNew(item);
+            item.setNew(false);
         }
     }
 

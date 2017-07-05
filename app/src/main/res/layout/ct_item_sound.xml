@@ -5,6 +5,16 @@
     android:layout_margin="@dimen/custom_theme_item_margin"
     android:gravity="center">
 
+
+    <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+        android:id="@+id/custom_theme_item_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:background="@color/custom_theme_preview_placeholder"
+        android:visibility="gone" />
+
     <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
         android:id="@+id/custom_theme_item_bg"
         android:layout_width="match_parent"
@@ -34,14 +44,6 @@
         android:layout_centerInParent="true"
         android:adjustViewBounds="true" />
 
-    <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
-        android:id="@+id/custom_theme_item_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:adjustViewBounds="true"
-        android:background="@color/custom_theme_preview_placeholder"
-        android:visibility="gone" />
 
     <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
         android:id="@+id/custom_theme_item_new_mark"

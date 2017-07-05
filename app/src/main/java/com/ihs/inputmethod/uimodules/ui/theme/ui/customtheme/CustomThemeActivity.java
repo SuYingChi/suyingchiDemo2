@@ -218,7 +218,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 //        if (!HSKeyboardThemeManager.initCustomThemeResource()) {
 //            return false;
 //        }
-        KCCustomThemeManager.getInstance();
+//        KCCustomThemeManager.getInstance();
 
         /**
          * Init custom theme preview

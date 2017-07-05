@@ -271,7 +271,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundContent.setImageDrawable(customThemeItemBase.getPreview());
                         }
 
-                        if (isNewItem(customThemeItemBase)) {
+                        if (customThemeItemBase.isNew()) {
                             Drawable newMarkDrawable = KCElementResourseHelper.getBackgroundNewMarkDrawable();
                             if (newMarkDrawable != null) {
                                 holder.backgroundNewMark.setImageDrawable(newMarkDrawable);
@@ -399,17 +399,10 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             return position;
         }
 
-        private boolean isNewItem(KCBaseElement item) {
-            boolean isNewTheme = item.isNew();
-            if (isNewTheme) {
-                isNewTheme = HSThemeNewTipController.getInstance().isCustomThemeElementNew(item);
-            }
-            return isNewTheme;
-        }
-
         private void setNotNew(KCBaseElement item) {
             if (item.isNew()) {
-                HSThemeNewTipController.getInstance().setCustomThemeElementNotNew(item);
+                item.setNew(false);
+                HSThemeNewTipController.getInstance().setElementNotNew(item);
             }
         }
 

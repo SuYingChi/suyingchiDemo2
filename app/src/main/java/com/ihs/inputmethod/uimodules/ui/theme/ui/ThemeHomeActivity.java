@@ -55,7 +55,6 @@ import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
-import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
@@ -154,7 +153,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // Init custom theme res in case we fail before
         //HSKeyboardThemeManager.initCustomThemeResource();
-        KCCustomThemeManager.getInstance();
+//        KCCustomThemeManager.getInstance();
 
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -343,7 +342,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         refreshApkUpdateViews();
-        HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
+        HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
 
         // Place here to get a right session id from appframework
         if (isResumeOnCreate) {
