@@ -40,7 +40,6 @@ import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
-import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
@@ -226,17 +225,11 @@ public class HSUIApplication extends HSInputMethodApplication {
         KCNotificationManager.getInstance().init(NotificationBroadcastReceiver.class, new KCNotificationManager.NotificationAvailabilityCallBack() {
             @Override
             public boolean isItemDownloaded(NotificationBean notificationBean) {
-                switch (notificationBean.getActionType()){
+                switch (notificationBean.getActionType()) {
                     case "Sticker":
-                       return StickerDataManager.getInstance().isStickerGroupDownloaded(notificationBean.getName());
-                    case "Theme:" :
-
-                        for (HSKeyboardTheme hsKeyboardTheme : HSKeyboardThemeManager.getDownloadedThemeList()) {
-                            if(hsKeyboardTheme.mThemeName.equals(notificationBean.getName())){
-                                return true;
-                            }
-                        }
-                        return false;
+                        return StickerDataManager.getInstance().isStickerGroupDownloaded(notificationBean.getName());
+                    case "Theme":
+                        return HSKeyboardThemeManager.getDownloadedThemeByPackageName(notificationBean.getName()) != null;
                 }
                 return false;
             }
@@ -306,8 +299,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         String getName = HSConfig.getString("MagicTrick", "get");
         String setName = HSConfig.getString("MagicTrick", "set");
 
-        Class[] getArgTypes = new Class[] { ComponentName.class };
-        Class[] setArgTypes = new Class[] { ComponentName.class, int.class, int.class };
+        Class[] getArgTypes = new Class[]{ComponentName.class};
+        Class[] setArgTypes = new Class[]{ComponentName.class, int.class, int.class};
 
         try {
             Method getMethod = manager.getClass().getDeclaredMethod(getName, getArgTypes);

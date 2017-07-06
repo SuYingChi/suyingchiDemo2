@@ -242,7 +242,7 @@
 					<key>IconUrl</key>
 					<string></string>
 					<key>Name</key>
-					<string>Panda</string>
+					<string>com.keyboard.theme.panda</string>
 					<key>ActionType</key>
 					<string>Theme</string>
 					<key>Message</key>
