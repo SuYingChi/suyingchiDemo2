@@ -40,6 +40,7 @@ import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
@@ -228,6 +229,14 @@ public class HSUIApplication extends HSInputMethodApplication {
                 switch (notificationBean.getActionType()){
                     case "Sticker":
                        return StickerDataManager.getInstance().isStickerGroupDownloaded(notificationBean.getName());
+                    case "Theme:" :
+
+                        for (HSKeyboardTheme hsKeyboardTheme : HSKeyboardThemeManager.getDownloadedThemeList()) {
+                            if(hsKeyboardTheme.mThemeName.equals(notificationBean.getName())){
+                                return true;
+                            }
+                        }
+                        return false;
                 }
                 return false;
             }

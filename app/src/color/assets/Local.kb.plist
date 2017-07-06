@@ -187,41 +187,116 @@
 				<key>HideAdTitle</key>
 				<true/>
 			</dict>
+			<key>LocalNotificationsPushTime</key>
+			<array>
+				<integer>12</integer>
+				<real>16.5</real>
+			</array>
+			<key>LocalNotifications</key>
+			<array>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
+					<key>IconUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>Name</key>
+					<string>s1</string>
+					<key>ActionType</key>
+					<string>sticker</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string>stickers1</string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>theme</string>
+					<key>ActionType</key>
+					<string>CustomizedTheme</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string>自定义皮肤</string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string>Panda</string>
+					<key>ActionType</key>
+					<string>Theme</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string>指定皮肤</string>
+				</dict>
+				<dict>
+					<key>StyleType</key>
+					<integer>0</integer>
+					<key>BgUrl</key>
+					<string></string>
+					<key>IconUrl</key>
+					<string></string>
+					<key>Name</key>
+					<string></string>
+					<key>ActionType</key>
+					<string>Locker</string>
+					<key>Message</key>
+					<array>
+						<string>Check it NOW！</string>
+						<string>Used by 5 million people</string>
+						<string>Dress up and make up! </string>
+					</array>
+					<key>Title</key>
+					<string>Locker</string>
+				</dict>
+				<dict>
+					<key>Name</key>
+					<string></string>
+					<key>ActionType</key>
+					<string>Charging</string>
+					<key>Interval</key>
+					<integer>1</integer>
+					<key>MaxShowCount</key>
+					<integer>1</integer>
+					<key>Message</key>
+					<string>Enable smart charging to prevent overcharging efficiently.</string>
+					<key>Priority</key>
+					<integer>1</integer>
+					<key>Title</key>
+					<string>Enable Smart Charging</string>
+				</dict>
+			</array>
 			<key>KeyboardToolBar</key>
 			<dict>
 				<key>GooglePlay</key>
 				<dict>
 					<key>ShowAd</key>
 					<true/>
-				</dict>
-			</dict>
-			<key>LocalNotifications</key>
-			<dict>
-				<key>ChangeTheme</key>
-				<dict>
-					<key>Interval</key>
-					<integer>3</integer>
-					<key>MaxShowCount</key>
-					<integer>5</integer>
-					<key>Message</key>
-					<string>Time to decorate your own keyboard!</string>
-					<key>Priority</key>
-					<integer>1</integer>
-					<key>Title</key>
-					<string>Got new pictures?</string>
-				</dict>
-				<key>Charging</key>
-				<dict>
-					<key>Interval</key>
-					<integer>3</integer>
-					<key>MaxShowCount</key>
-					<integer>3</integer>
-					<key>Message</key>
-					<string>Enable smart charging to prevent overcharging efficiently.</string>
-					<key>Priority</key>
-					<integer>2</integer>
-					<key>Title</key>
-					<string>Enable Smart Charging</string>
 				</dict>
 			</dict>
 			<key>Locker</key>
