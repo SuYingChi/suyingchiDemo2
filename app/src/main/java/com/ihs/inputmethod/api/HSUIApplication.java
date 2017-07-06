@@ -13,7 +13,6 @@ import android.util.Log;
 
 import com.acb.expressads.AcbExpressAdManager;
 import com.acb.interstitialads.AcbInterstitialAdManager;
-import com.acb.irrelevant.AcbIrrelevantAdsManager;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.crashlytics.android.Crashlytics;
@@ -180,7 +179,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         AcbInterstitialAdManager.getInstance().init(this);
         AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);
-        AcbIrrelevantAdsManager.init(this);
         AcbExpressAdManager.getInstance().init(this);
 
         HSChargingScreenManager.init(true, "Charging Master", getResources().getString(R.string.ad_placement_charging), new HSChargingScreenManager.IChargingScreenListener() {

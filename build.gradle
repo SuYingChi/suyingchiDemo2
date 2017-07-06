@@ -16,6 +16,11 @@ buildscript {
 plugins {
     id 'nu.studer.credentials' version '1.0.1'  // 用于在本地加密存储用户密码
 }
+configurations.all {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, "seconds"
+    }
+}
 //////////////////iHandy Maven configuration end//////////////////
 allprojects {
 
