@@ -34,6 +34,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
@@ -220,6 +221,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         ScreenLockerManager.init();
         initIAP();
+        NotificationManager.getInstance();
     }
 
     private void registerNotificationEvent() {
