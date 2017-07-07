@@ -201,5 +201,8 @@ dependencies {
 
     compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
     compile "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
+    compile 'com.annimon:stream:1.1.7'
+    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
+
 }
 
