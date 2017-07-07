@@ -6338,6 +6338,11 @@
 				<key>serialList</key>
 				<array>
 					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
 						<key>adType</key>
 						<string>Adxnative</string>
 						<key>countPerLoad</key>
@@ -6374,6 +6379,11 @@
 						<string></string>
 					</dict>
 					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
 						<key>adType</key>
 						<string>Admobnative</string>
 						<key>countPerLoad</key>
@@ -6447,6 +6457,11 @@
 						<string></string>
 					</dict>
 					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
 						<key>adType</key>
 						<string>Adxnative</string>
 						<key>countPerLoad</key>
@@ -6483,6 +6498,11 @@
 						<string></string>
 					</dict>
 					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
 						<key>adType</key>
 						<string>Admobnative</string>
 						<key>countPerLoad</key>
@@ -6519,6 +6539,11 @@
 						<string></string>
 					</dict>
 					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
 						<key>adType</key>
 						<string>Admobnative</string>
 						<key>countPerLoad</key>
@@ -6555,6 +6580,11 @@
 						<string></string>
 					</dict>
 					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
 						<key>adType</key>
 						<string>Adxnative</string>
 						<key>countPerLoad</key>
@@ -6591,6 +6621,11 @@
 						<string></string>
 					</dict>
 					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
 						<key>adType</key>
 						<string>Admobnative</string>
 						<key>countPerLoad</key>
