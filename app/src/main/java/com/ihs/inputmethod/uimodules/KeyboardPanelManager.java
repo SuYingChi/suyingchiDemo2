@@ -349,7 +349,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
 
     public void showGoogleAdBar() {
-
         if (keyboardPanelSwitchContainer == null) {
             return;
         }
@@ -405,6 +404,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (keyboardPanelSwitchContainer == null) {
             return;
         }
+        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
 
         if (bannerAdSessionList == null || bannerAdSessionList.size() < 1) {
             return;
