@@ -62,7 +62,7 @@
                         android:src="@drawable/lucky_banner_light_red"
                         app:aspectRatioOverride="1.922"/>
 
-                    <com.ihs.inputmethod.feature.common.TypefacedTextView
+                    <com.ihs.feature.common.TypefacedTextView
                         android:id="@+id/lucky_game_chance_counter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                         tools:ignore="SpUsage"
                         tools:text="Chance: 009"/>
 
-                    <com.ihs.inputmethod.feature.common.TypefacedTextView
+                    <com.ihs.feature.common.TypefacedTextView
                         android:id="@+id/lucky_game_chance_restore_timer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
