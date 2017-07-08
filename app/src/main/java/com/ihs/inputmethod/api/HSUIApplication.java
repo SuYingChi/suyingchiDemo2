@@ -146,9 +146,8 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onMainProcessApplicationCreate() {
-        BoostPlusActivity.initBoost();
-        CpuCoolerScanActivity.initBoost();
-        BatteryActivity.initBattery();
+
+
 
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
@@ -179,6 +178,10 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         if (!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
+        }else {
+            BoostPlusActivity.initBoost();
+            CpuCoolerScanActivity.initBoost();
+            BatteryActivity.initBattery();
         }
         Log.e("time log", "time log application oncreated finished");
 
