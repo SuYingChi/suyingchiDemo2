@@ -34,6 +34,9 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
@@ -142,6 +145,10 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onMainProcessApplicationCreate() {
+        BoostPlusActivity.initBoost();
+        CpuCoolerScanActivity.initBoost();
+        BatteryActivity.initBattery();
+
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
