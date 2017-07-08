@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,6 +35,10 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
@@ -141,6 +146,9 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onMainProcessApplicationCreate() {
+
+
+
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
@@ -170,6 +178,10 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         if (!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
+        }else {
+            BoostPlusActivity.initBoost();
+            CpuCoolerScanActivity.initBoost();
+            BatteryActivity.initBattery();
         }
         Log.e("time log", "time log application oncreated finished");
 
@@ -220,6 +232,10 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         ScreenLockerManager.init();
         initIAP();
+
+        if(Build.VERSION.SDK_INT >= 16){
+            NotificationManager.getInstance();
+        }
     }
 
     private void registerNotificationEvent() {

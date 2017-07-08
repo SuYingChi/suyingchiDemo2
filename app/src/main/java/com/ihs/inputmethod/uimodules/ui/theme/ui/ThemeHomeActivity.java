@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -53,6 +54,8 @@ import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.keyboardutils.permission.PermissionFloatWindow;
+import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 
@@ -268,7 +271,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
                                 isFromUsageAccessActivity = true;
                             }
-                            PermissionUtils.enableUsageAccessPermission();
+                            enableUsageAccessPermission();
                             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
                         }
                     })
@@ -288,6 +291,19 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_themetryad));
         onNewIntent(getIntent());
+    }
+
+    private void enableUsageAccessPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            }
+            HSApplication.getContext().startActivity(intent);
+            PermissionFloatWindow.getInstance().createPermissionTip(PermissionTip.TYPE_TEXT_USAGE);
+        }
     }
 
     @Override

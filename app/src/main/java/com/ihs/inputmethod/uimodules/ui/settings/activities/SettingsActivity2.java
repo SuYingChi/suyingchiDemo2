@@ -40,6 +40,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
 
@@ -114,6 +115,24 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             setEnabledLanguage();
             setCharging();
+
+          SwitchPreference boostPreference = (SwitchPreference) findPreference(getResources().getString(R.string.boost_notification_key));
+            if(Build.VERSION.SDK_INT <  16){
+                getPreferenceScreen().removePreference(boostPreference);
+            }else{
+                boostPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        boolean isSwitchOn = (boolean) newValue;
+                        if (isSwitchOn) {
+                            KCAnalyticUtil.logEvent("phoneboost_enabled");
+                        }else{
+                            KCAnalyticUtil.logEvent("phoneboost_disabled");
+                        }
+                        return true;
+                    }
+                });
+            }
         }
 
         private void setCharging() {
