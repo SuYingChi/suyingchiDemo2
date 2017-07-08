@@ -117,18 +117,22 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             setCharging();
 
           SwitchPreference boostPreference = (SwitchPreference) findPreference(getResources().getString(R.string.boost_notification_key));
-            boostPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    boolean isSwitchOn = (boolean) newValue;
-                    if (isSwitchOn) {
-                        KCAnalyticUtil.logEvent("phoneboost_enabled");
-                    }else{
-                        KCAnalyticUtil.logEvent("phoneboost_disabled");
+            if(Build.VERSION.SDK_INT <  16){
+                getPreferenceScreen().removePreference(boostPreference);
+            }else{
+                boostPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        boolean isSwitchOn = (boolean) newValue;
+                        if (isSwitchOn) {
+                            KCAnalyticUtil.logEvent("phoneboost_enabled");
+                        }else{
+                            KCAnalyticUtil.logEvent("phoneboost_disabled");
+                        }
+                        return true;
                     }
-                    return true;
-                }
-            });
+                });
+            }
         }
 
         private void setCharging() {

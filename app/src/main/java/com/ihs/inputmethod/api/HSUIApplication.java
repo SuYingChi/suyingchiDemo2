@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -228,7 +229,10 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         ScreenLockerManager.init();
         initIAP();
-        NotificationManager.getInstance();
+
+        if(Build.VERSION.SDK_INT >= 16){
+            NotificationManager.getInstance();
+        }
     }
 
     private void registerNotificationEvent() {
