@@ -26,6 +26,9 @@
         tools:node="remove"
         />
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"
+        tools:node="remove"/>
+
 
 
     <permission
