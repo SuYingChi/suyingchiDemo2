@@ -195,100 +195,59 @@
 			<key>LocalNotifications</key>
 			<array>
 				<dict>
-					<key>StyleType</key>
-					<integer>0</integer>
-					<key>BgUrl</key>
-					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
+					<key>ActionType</key>
+					<string>Charging</string>
 					<key>IconUrl</key>
 					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-					<key>Name</key>
-					<string>s1</string>
-					<key>ActionType</key>
-					<string>sticker</string>
 					<key>Message</key>
 					<array>
-						<string>Check it NOW！</string>
-						<string>Used by 5 million people</string>
-						<string>Dress up and make up! </string>
+						<string>Enable smart charging to prevent overcharging efficiently.</string>
 					</array>
 					<key>Title</key>
-					<string>stickers1</string>
+					<string>Enable Smart Charging</string>
 				</dict>
 				<dict>
-					<key>StyleType</key>
-					<integer>0</integer>
-					<key>BgUrl</key>
-					<string></string>
-					<key>IconUrl</key>
-					<string></string>
-					<key>Name</key>
-					<string>theme</string>
 					<key>ActionType</key>
 					<string>CustomizedTheme</string>
+					<key>IconUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
 					<key>Message</key>
 					<array>
-						<string>Check it NOW！</string>
-						<string>Used by 5 million people</string>
-						<string>Dress up and make up! </string>
+						<string>Nice photo! Would you like to set it as background? </string>
 					</array>
 					<key>Title</key>
-					<string>自定义皮肤</string>
+					<string>Got new pictures?</string>
+					<key>Name</key>
+					<string>name1</string>
 				</dict>
 				<dict>
-					<key>StyleType</key>
-					<integer>0</integer>
-					<key>BgUrl</key>
-					<string></string>
+					<key>ActionType</key>
+					<string>CustomizedTheme</string>
 					<key>IconUrl</key>
-					<string></string>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>Message</key>
+					<array>
+						<string>Wanna have a new look? 😎✨ Come and create new keyboard &gt;&gt;</string>
+					</array>
+					<key>Title</key>
+					<string>Dress your keyboard!</string>
+					<key>Name</key>
+					<string>name2</string>
+				</dict>
+				<dict>
+					<key>IconUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
 					<key>Name</key>
 					<string>com.keyboard.theme.panda</string>
 					<key>ActionType</key>
 					<string>Theme</string>
 					<key>Message</key>
 					<array>
-						<string>Check it NOW！</string>
-						<string>Used by 5 million people</string>
-						<string>Dress up and make up! </string>
+						<string>Guess you like Panda？Come and design your keyboard!</string>
+						<string>Decorate your keyboard with exclusive Panda!</string>
 					</array>
 					<key>Title</key>
-					<string>指定皮肤</string>
-				</dict>
-				<dict>
-					<key>StyleType</key>
-					<integer>0</integer>
-					<key>BgUrl</key>
-					<string></string>
-					<key>IconUrl</key>
-					<string></string>
-					<key>Name</key>
-					<string></string>
-					<key>ActionType</key>
-					<string>Locker</string>
-					<key>Message</key>
-					<array>
-						<string>Check it NOW！</string>
-						<string>Used by 5 million people</string>
-						<string>Dress up and make up! </string>
-					</array>
-					<key>Title</key>
-					<string>Locker</string>
-				</dict>
-				<dict>
-					<key>Name</key>
-					<string></string>
-					<key>ActionType</key>
-					<string>Charging</string>
-					<key>Interval</key>
-					<integer>1</integer>
-					<key>MaxShowCount</key>
-					<integer>1</integer>
-					<key>Message</key>
-					<string>Enable smart charging to prevent overcharging efficiently.</string>
-					<key>Priority</key>
-					<integer>1</integer>
-					<key>Title</key>
-					<string>Enable Smart Charging</string>
+					<string>New theme Panda available!</string>
 				</dict>
 			</array>
 			<key>KeyboardToolBar</key>
