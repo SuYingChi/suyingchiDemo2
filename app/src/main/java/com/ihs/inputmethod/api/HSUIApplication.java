@@ -54,6 +54,7 @@ import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.LauncherActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -154,7 +155,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
         ImageLoader.getInstance().init(config);
 
-        if (false) {
+        if (true) {
             if (LeakCanary.isInAnalyzerProcess(this)) {
                 // This process is dedicated to LeakCanary for heap analysis.
                 // You should not init your app in this process.
@@ -236,6 +237,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         if(Build.VERSION.SDK_INT >= 16){
             NotificationManager.getInstance();
         }
+        ActivityLifecycleMonitor.startMonitor(this);
     }
 
     private void registerNotificationEvent() {
