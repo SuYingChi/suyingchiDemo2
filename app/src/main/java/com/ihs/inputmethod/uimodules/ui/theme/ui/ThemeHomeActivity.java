@@ -50,7 +50,6 @@ import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
-import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -95,7 +94,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private ThemeHomeActivity context = ThemeHomeActivity.this;
     private KeyboardActivationProcessor keyboardActivationProcessor;
     private View apkUpdateTip;
-    private ExitAlert exitAlert;
     private boolean isResumeOnCreate = true;
 
     private AcbInterstitialAdLoader acbInterstitialAdLoader;
@@ -289,7 +287,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
-        exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_themetryad));
         onNewIntent(getIntent());
     }
 
@@ -637,16 +634,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        exitAlert.setShowAd(!RemoveAdsManager.getInstance().isRemoveAdsPurchased());
-        if (!exitAlert.show()) {
-            HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "back");
-            super.onBackPressed();
-        }
     }
 
     private boolean showEnableChargingAlertIfNeeded() {
