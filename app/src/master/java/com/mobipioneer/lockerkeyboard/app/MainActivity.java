@@ -25,7 +25,6 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -41,11 +40,7 @@ import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
@@ -57,20 +52,15 @@ import com.ihs.inputmethod.api.permission.HSPermissionsManager;
 import com.ihs.inputmethod.api.permission.HSPermissionsUtil;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.utils.Constants;
 import com.ihs.keyboardutils.alerts.KCAlert;
-import com.mobipioneer.lockerkeyboard.utils.ActivityUtils;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
-import static com.mobipioneer.lockerkeyboard.utils.MasterConstants.GA_PARAM_ACTION_APP_APPLOCKER_CLICKED;
-import static com.mobipioneer.lockerkeyboard.utils.MasterConstants.GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED;
-import static com.mobipioneer.lockerkeyboard.utils.MasterConstants.GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED;
 
 public class MainActivity extends HSDeepLinkActivity {
 
@@ -110,7 +100,6 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView img_choose_one;
     private ImageView img_choose_two;
     private EditText edit_text_test;
-    private ToggleButton fastChargeToggle;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
     ;
 
@@ -118,8 +107,6 @@ public class MainActivity extends HSDeepLinkActivity {
     boolean clickStepOne;
     // is phone dev
     boolean isPhoneDev = true;
-    boolean isChargingShowEver = false;
-    private final static String CHARGING_HAS_SHOW_PRE_KEY = "charging_has_show_pre_key";
     private final static String HOME_HAS_SHOW_PRE_KEY = "home_has_show_pre_key";
 
     CurrentUIStyle style;
@@ -151,13 +138,10 @@ public class MainActivity extends HSDeepLinkActivity {
 
                     MainActivity.this.doSetpTwoFinishAnimation();
                     style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
-                    setHasChargingShow();
                 }
             }
         }
     };
-
-    private boolean isSettingChargingClicked;//是否点击过charging的设置
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,23 +222,6 @@ public class MainActivity extends HSDeepLinkActivity {
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
         img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
-        fastChargeToggle = (ToggleButton) findViewById(R.id.fast_charge_toggle);
-        isSettingChargingClicked = ChargingConfigManager.getManager().isUserSetChargingToggle();
-        fastChargeToggle.setToggleSwitchListener(new ToggleButton.IToggleButtonSwitchListener() {
-            @Override
-            public void onToggleSwitch(boolean isSwitchOn) {
-                if (!isSettingChargingClicked) {//记录用户设置过charing选项
-                    isSettingChargingClicked = true;
-                    ChargingConfigManager.getManager().setUserChangeChargingToggle();
-                }
-
-//                if (isSwitchOn) {
-//                    ChargingManagerUtil.enableCharging(false);
-//                } else {
-//                    ChargingManagerUtil.disableCharging();
-//                }
-            }
-        });
 
         logHomeShowEvent();
 
@@ -267,86 +234,6 @@ public class MainActivity extends HSDeepLinkActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeRecevier, filter);
-
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
-
-        if (false && getResources().getBoolean(R.bool.isTablet)) {
-            Display display = getWindowManager().getDefaultDisplay();
-            int width = display.getWidth();
-            int button_width = (int) (width * 0.5);
-
-            int step_button_width = (int) (button_width * 1.1);
-
-            float ratio_button_guide_one = ((float) getResources().getDrawable(R.drawable.app_button_guide_one_bg).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_one_bg).getIntrinsicWidth());
-            float ratio_button_guide_two = ((float) getResources().getDrawable(R.drawable.app_button_guide_two_bg).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_two_bg).getIntrinsicWidth());
-            float ratio_img_enter = ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_enter).getIntrinsicWidth());
-            float ratio_img_choose = ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_button_guide_choose).getIntrinsicWidth());
-
-            RelativeLayout.LayoutParams step_one_relativeParamsInParent = new RelativeLayout.LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_one));
-            bt_step_one.setLayoutParams(step_one_relativeParamsInParent);
-
-            RelativeLayout.LayoutParams step_one_relativeParamsInParent2 = new RelativeLayout.LayoutParams(step_button_width, (int) (step_button_width * ratio_button_guide_two));
-            step_one_relativeParamsInParent2.topMargin = (int) (step_button_width * 0.07);
-            bt_step_two.setLayoutParams(step_one_relativeParamsInParent2);
-
-            ViewGroup.LayoutParams fastChargeToggleLayoutParams = fastChargeToggle.getLayoutParams();
-            fastChargeToggleLayoutParams.width = step_button_width;
-
-            RelativeLayout.LayoutParams step_one_relativeParams = new RelativeLayout.LayoutParams(-1, -2);
-            step_one_relativeParams.topMargin = (int) (step_button_width * 0.070);
-            bt_step_one_content_view.setLayoutParams(step_one_relativeParams);
-
-            RelativeLayout.LayoutParams step_one_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
-            step_one_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            step_one_relativeParams2.leftMargin = (int) (step_button_width * 0.17);
-            text_one.setLayoutParams(step_one_relativeParams2);
-
-            RelativeLayout.LayoutParams step_one_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
-                    (int) (step_button_width * 0.035 * ratio_img_enter));
-            step_one_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
-            img_enter_one.setLayoutParams(step_one_relativeParams3);
-
-            RelativeLayout.LayoutParams step_one_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
-                    (int) (step_button_width * 0.094 * ratio_img_choose));
-            step_one_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_one_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
-            img_choose_one.setLayoutParams(step_one_relativeParams4);
-
-            RelativeLayout.LayoutParams step_two_relativeParams = new RelativeLayout.LayoutParams(-1, -2);
-            step_two_relativeParams.topMargin = (int) (step_button_width * 0.070);
-            bt_step_two_content_view.setLayoutParams(step_two_relativeParams);
-
-            RelativeLayout.LayoutParams step_two_relativeParams2 = new RelativeLayout.LayoutParams(-2, -2);
-            step_two_relativeParams2.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-            step_two_relativeParams2.leftMargin = (int) (step_button_width * 0.17);
-            text_two.setLayoutParams(step_two_relativeParams2);
-
-            RelativeLayout.LayoutParams step_two_relativeParams3 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.035),
-                    (int) (step_button_width * 0.035 * ratio_img_enter));
-            step_two_relativeParams3.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams3.leftMargin = (int) (step_button_width * 0.9);
-            img_enter_two.setLayoutParams(step_two_relativeParams3);
-
-            RelativeLayout.LayoutParams step_two_relativeParams4 = new RelativeLayout.LayoutParams((int) (step_button_width * 0.094),
-                    (int) (step_button_width * 0.094 * ratio_img_choose));
-            step_two_relativeParams4.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            step_two_relativeParams4.leftMargin = (int) (step_button_width * 0.87);
-            img_choose_two.setLayoutParams(step_two_relativeParams4);
-        } else {
-            fastChargeToggle.post(new Runnable() {
-                @Override
-                public void run() {
-                    fastChargeToggle.getLayoutParams().width = bt_step_one.getWidth();
-                }
-            });
-        }
 
         bt_step_one.setOnClickListener(new OnClickListener() {
             @Override
@@ -366,8 +253,6 @@ public class MainActivity extends HSDeepLinkActivity {
                 m.showInputMethodPicker();
                 Toast toast = Toast.makeText(MainActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
                 toast.show();
-                //                MainActivity.this.doSetpTwoFinishAnimation();
-
 
                 if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
 
@@ -395,7 +280,7 @@ public class MainActivity extends HSDeepLinkActivity {
         bt_settings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtils.showMoreSettingsActivity();
+                HSUIInputMethod.launchSettingsActivity();
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_SETTINGS_CLICKED);
                 HSAnalytics.logEvent(Constants.GA_PARAM_ACTION_APP_SETTINGS_CLICKED);
             }
@@ -414,8 +299,8 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public void onClick(View v) {
 //                AppLockMgr.startLocker(getApplicationContext());
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_APPLOCKER_CLICKED);
-                HSAnalytics.logEvent(GA_PARAM_ACTION_APP_APPLOCKER_CLICKED);
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_applocker_clicked");
+                HSAnalytics.logEvent("app_applocker_clicked");
             }
         });
 
@@ -440,26 +325,10 @@ public class MainActivity extends HSDeepLinkActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
         boolean homeShowed = sp.getBoolean(HOME_HAS_SHOW_PRE_KEY, false);
         if (!homeShowed) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED);
-            HSAnalytics.logEvent(GA_PARAM_ACTION_APP_HOME_FIRSTTIME_SHOWED);
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_home_firsttime_showed");
+            HSAnalytics.logEvent("app_home_firsttime_showed");
             sp.edit().putBoolean(HOME_HAS_SHOW_PRE_KEY, true).commit();
         }
-    }
-
-    /**
-     * 设置是否显示charging的勾选框
-     */
-    private void jdugeShowChargingSelectedBox() {
-        //未显示过Charging提示才能出现
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
-        isChargingShowEver = sp.getBoolean(CHARGING_HAS_SHOW_PRE_KEY, false);
-//        if (ChargingConfigManager.getManager().enableChargingFunction() && !isChargingShowEver && style != CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL) {
-        fastChargeToggle.setVisibility(View.INVISIBLE);
-        // set charge status
-        fastChargeToggle.refreshSwitchState();
-//        } else {
-//            fastChargeToggle.setVisibility(View.INVISIBLE);
-//        }
     }
 
     /**
@@ -575,8 +444,6 @@ public class MainActivity extends HSDeepLinkActivity {
 //            }
         }
 
-        jdugeShowChargingSelectedBox();
-
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -663,17 +530,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
     }
 
-    private INotificationObserver sessionEventObserver = new INotificationObserver() {
-
-        @Override
-        public void onReceive(String notificationName, HSBundle bundle) {
-            if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
-                HSLog.d("jx onSession end");
-                setHasChargingShow();
-            }
-        }
-    };
-
     @Override
     protected void onStop() {
 
@@ -703,8 +559,6 @@ public class MainActivity extends HSDeepLinkActivity {
         } catch (IllegalArgumentException ex) {
             HSLog.e("content observer not registered yet");
         }
-
-        HSGlobalNotificationCenter.removeObserver(HSNotificationConstant.HS_SESSION_END, sessionEventObserver);
     }
 
     private void scaleTitleImage() {
@@ -741,9 +595,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
             bt_step_one.setVisibility(View.VISIBLE);
             bt_step_two.setVisibility(View.VISIBLE);
-            if (!isChargingShowEver) {
-                fastChargeToggle.setVisibility(View.VISIBLE);
-            }
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
             bt_step_one.setClickable(true);
@@ -777,9 +628,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
             bt_step_one.setVisibility(View.VISIBLE);
             bt_step_two.setVisibility(View.VISIBLE);
-            if (!isChargingShowEver) {
-                fastChargeToggle.setVisibility(View.VISIBLE);
-            }
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
 
@@ -1086,22 +934,6 @@ public class MainActivity extends HSDeepLinkActivity {
         });
         img_choose_two.startAnimation(scaleAnimation);
     }
-
-    /**
-     * 设置charging已经显示过
-     */
-    private void setHasChargingShow() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
-        if (!sp.getBoolean(CHARGING_HAS_SHOW_PRE_KEY, false)) {
-            sp.edit().putBoolean(CHARGING_HAS_SHOW_PRE_KEY, true).commit();
-
-            boolean chargingScreenEnabled = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean(getString(R.string.config_charge_switchpreference_key), false);
-            String isSelected = chargingScreenEnabled ? "true" : "false";
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED, isSelected);
-            HSAnalytics.logEvent(GA_PARAM_ACTION_APP_HOME_CHARGING_SELECTED, "selected", isSelected);
-        }
-    }
-
 
     private boolean isEventRecorded(String pref_name) {
         return mPrefs.getBoolean(pref_name, false);
