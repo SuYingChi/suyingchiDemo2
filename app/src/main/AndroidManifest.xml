@@ -45,16 +45,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".widgets.HSAppWidgetProvider">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_provider" />
-        </receiver>
-
         <activity
             android:name=".ui.theme.ui.customtheme.CustomThemeActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
