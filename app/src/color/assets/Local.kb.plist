@@ -424,7 +424,7 @@
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
-				<key>AdBackButton</key>
+				<key>BoostNotification</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
 					<integer>5</integer>
