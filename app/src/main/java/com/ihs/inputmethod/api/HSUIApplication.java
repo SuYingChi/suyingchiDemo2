@@ -86,7 +86,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 registerChargingService();
                 StickerDataManager.getInstance().onConfigChange();
             } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
-                ChargingPrefsUtil.getInstance().setChargingForFirstSession();
                 if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 }

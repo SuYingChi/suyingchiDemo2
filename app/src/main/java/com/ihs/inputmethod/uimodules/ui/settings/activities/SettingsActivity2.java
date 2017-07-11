@@ -41,8 +41,11 @@ import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.ihs.keyboardutils.utils.PublisherUtils;
 
 import java.util.List;
+
+import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_disable;
 
 public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
     private static final String GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED = "app_setting_charging_firsttime_clicked";
@@ -116,17 +119,17 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             setEnabledLanguage();
             setCharging();
 
-          SwitchPreference boostPreference = (SwitchPreference) findPreference(getResources().getString(R.string.boost_notification_key));
-            if(Build.VERSION.SDK_INT <  16){
+            SwitchPreference boostPreference = (SwitchPreference) findPreference(getResources().getString(R.string.boost_notification_key));
+            if (Build.VERSION.SDK_INT < 16) {
                 getPreferenceScreen().removePreference(boostPreference);
-            }else{
+            } else {
                 boostPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         boolean isSwitchOn = (boolean) newValue;
                         if (isSwitchOn) {
                             KCAnalyticUtil.logEvent("phoneboost_enabled");
-                        }else{
+                        } else {
                             KCAnalyticUtil.logEvent("phoneboost_disabled");
                         }
                         return true;
@@ -163,9 +166,10 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     }
 
                     if (isSwitchOn) {
-                        ChargingManagerUtil.enableCharging(false,"setting");
+                        ChargingManagerUtil.enableCharging(false, "setting");
                     } else {
-                        ChargingManagerUtil.disableCharging("setting");
+                        ChargingManagerUtil.disableCharging();
+                        KCAnalyticUtil.logEvent(app_chargingLocker_disable, "activity", PublisherUtils.getInstallType());
                     }
                     return true;
                 }
@@ -189,7 +193,10 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                 lockerSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        LockerSettings.setLockerEnabled((Boolean) newValue,"setting");
+                        LockerSettings.setLockerEnabled((Boolean) newValue, "setting");
+                        if (!((Boolean) newValue)) {
+                            LockerSettings.recordLockerDisableOnce("settings");
+                        }
                         return true;
                     }
                 });
