@@ -230,7 +230,7 @@ public final class EmojiSettingsActivity2 extends AppCompatPreferenceActivity {
                     if (isSwitchOn) {
                         ChargingManagerUtil.enableCharging(false,"setting");
                     } else {
-                        ChargingManagerUtil.disableCharging("setting");
+                        ChargingManagerUtil.disableCharging();
                     }
                     return true;
                 }
