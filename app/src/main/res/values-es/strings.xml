@@ -192,10 +192,6 @@
     <string name="new_click_sound_tip">Nuevo sonido de teclas</string>
     <string name="new_theme_tip">Nuevos temas disponibles</string>
 
-    <!--deep link-->
-    <string name="deeplink_key_word">RainbowKey – Da color a tu teclado con temas personalizados, GIFs y fuentes.</string>
-    <string name="deeplink_description">Rainbow Keyboard description</string>
-
     <!--apk update-->
     <string name="apk_update_to_date_tip">You are up to date</string>
     <string name="apk_update_alert_title">Descarga la última versión</string>

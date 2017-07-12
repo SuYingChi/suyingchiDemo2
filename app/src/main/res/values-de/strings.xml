@@ -192,10 +192,6 @@
     <string name="new_click_sound_tip">Neuer Klickton</string>
     <string name="new_theme_tip">Neue Designs sind verfügbar</string>
 
-    <!--deep link-->
-    <string name="deeplink_key_word">RainbowKey – Bring mit personalisierten Designs, GIFs und Schriftarten Farbe in deine Tastatur.</string>
-    <string name="deeplink_description">Rainbow Keyboard description</string>
-
     <!--apk update-->
     <string name="apk_update_to_date_tip">Du bist auf dem neusten Stand</string>
     <string name="apk_update_alert_title">Neuste Version herunterladen</string>

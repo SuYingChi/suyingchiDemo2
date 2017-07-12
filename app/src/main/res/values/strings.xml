@@ -192,10 +192,6 @@
     <string name="new_click_sound_tip">New click sound available</string>
     <string name="new_theme_tip">New themes available</string>
 
-    <!--deep link-->
-    <string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
-    <string name="deeplink_description">Rainbow Keyboard description</string>
-
     <!--apk update-->
     <string name="apk_update_to_date_tip">You are up to date</string>
     <string name="apk_update_alert_title">Download Latest Version</string>

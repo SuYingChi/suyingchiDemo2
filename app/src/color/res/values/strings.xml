@@ -4,7 +4,6 @@
     tools:ignore="MissingTranslation">
 
     <string name="app_name">RainbowKey</string>
-    <string name="app_package_name">com.keyboard.colorkeyboard</string>
     <string name="fb_app_id">910238615719294</string>
 
     <!-- Ad placement ID -->
@@ -72,4 +71,8 @@ Note: You may receive a system reminder about authorizing, RainbowKey will NEVER
     <string name="dialog_set_up_manual_message">Please try again or set up keyboard manually.</string>
 
     <!--Accessibility end-->
+
+    <!--deep link-->
+    <string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
+    <string name="deeplink_description">Rainbow Keyboard description</string>
 </resources>

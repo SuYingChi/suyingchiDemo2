@@ -2,8 +2,7 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation">
-    <string name="app_name">com.masterkeyboard.emoji</string>
-    <string name="app_package_name">com.masterkeyboard.emoji</string>
+    <string name="app_name">EmojiKey</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_idle">Emoji Keyboard</string>
     <string name="alert_attention_title">Attention !</string>
@@ -48,10 +47,6 @@
 
     <string name="tip_usage_access">Find %s. Switch it on to enable Apps with usage access.</string>
 
-    <string name="deeplink_site">rainbowkey.com</string>
-    <string name="deeplink_site_full">http://rainbowkey.com</string>
-    <string name="deeplink_key_word">Rainbow keyboard key word</string>
-    <string name="deeplink_description">Rainbow Keyboard description</string>
     <string name="taskAffinity_interstitial_ads">com.interstitial.ads</string>
     <string name="keyboard_theme_white" translatable="false">White</string>
 
@@ -64,4 +59,7 @@
     <string name="dialog_msg_enable_keyboard_home_rain">Emoji Keyboard provides you with personalized keyboard themes and cute emojis.</string>
     <string name="dialog_confirm_enable_keyboard_home_rain">Activate Now</string>
 
+    <!--deep link-->
+    <string name="deeplink_key_word">EmojiKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
+    <string name="deeplink_description">Emoji Keyboard description</string>
 </resources>
