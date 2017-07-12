@@ -33,6 +33,7 @@ import android.view.inputmethod.InputMethodSubtype;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
@@ -41,11 +42,8 @@ import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
-import com.ihs.keyboardutils.utils.PublisherUtils;
 
 import java.util.List;
-
-import static com.ihs.chargingscreen.utils.ChargingAnalytics.app_chargingLocker_disable;
 
 public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
     private static final String GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED = "app_setting_charging_firsttime_clicked";
@@ -169,7 +167,7 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                         ChargingManagerUtil.enableCharging(false, "setting");
                     } else {
                         ChargingManagerUtil.disableCharging();
-                        KCAnalyticUtil.logEvent(app_chargingLocker_disable, "activity", PublisherUtils.getInstallType());
+                        ChargingAnalytics.getInstance().recordChargingDisableOnce();
                     }
                     return true;
                 }
@@ -195,7 +193,7 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         LockerSettings.setLockerEnabled((Boolean) newValue, "setting");
                         if (!((Boolean) newValue)) {
-                            LockerSettings.recordLockerDisableOnce("settings");
+                            LockerSettings.recordLockerDisableOnce();
                         }
                         return true;
                     }
