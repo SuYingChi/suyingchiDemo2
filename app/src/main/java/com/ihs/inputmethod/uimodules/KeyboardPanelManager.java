@@ -282,12 +282,16 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void removeCustomizeBar(){
-        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+            keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+        }
         gpAdRecyclerView = null;
         if (gpNativeAdList != null) {
             for (AcbNativeAd acbNativeAd : gpNativeAdList) {
                 acbNativeAd.release();
             }
+            gpNativeAdList.clear();
+            gpAdAdapter.clearAdList();
         }
     }
 
