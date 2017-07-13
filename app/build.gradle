@@ -127,7 +127,6 @@ final LIB_DEVICE_VERSION = '.gm:4.2.0.gm'
 dependencies {
     // App Framework
     compile "com.ihandy.appframework:libAppframework.gm:4.3.1.gm"
-    compile "com.ihandy.appmonitor:libTopAppMonitor.gm:4.1.0.gm"
 
     // Ads
     compile "com.ihandy.nativeads:libNativeAds.gm:4.2.1.gm"
