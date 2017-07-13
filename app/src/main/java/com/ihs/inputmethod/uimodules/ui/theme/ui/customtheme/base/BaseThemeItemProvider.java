@@ -1,13 +1,19 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +38,12 @@ import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonShapeElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
+import com.keyboard.core.themes.custom.elements.KCTextColorElement;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 
@@ -46,11 +58,18 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     public BaseItemHolder lastCheckedHolder;
     public Object lastCheckedItem;
     protected F fragment;
+    DisplayImageOptions options;
     private boolean hasDefaultItemSelectStateSet = false;
 
     public BaseThemeItemProvider(F fragment) {
         this.fragment = fragment;
         handler = new Handler(Looper.getMainLooper());
+
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        int screenDensity = HSApplication.getContext().getResources().getDisplayMetrics().densityDpi;
+        opts.inDensity = Build.VERSION.SDK_INT >= 16 ? DisplayMetrics.DENSITY_XXHIGH : DisplayMetrics.DENSITY_XHIGH;
+        opts.inTargetDensity = screenDensity;
+        new DisplayImageOptions.Builder().decodingOptions(opts).cacheInMemory(true).build();
     }
 
     @NonNull
@@ -278,24 +297,43 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     }
 
-    protected void setItemDrawable(@NonNull final BaseItemHolder holder, @NonNull final Object item) {
-        //content
-        new LoadPreviewTask((KCBaseElement) item, new loadPreviewResultListener() {
+    protected void setItemDrawable(@NonNull final BaseItemHolder holder, @NonNull final Object obj) {
+        final KCBaseElement item = (KCBaseElement) obj;
+
+        ImageLoader.getInstance().loadImage(ImageDownloader.Scheme.FILE.wrap(item.getLocalPreviewPath()),options, new ImageLoadingListener() {
             @Override
-            public void onLoadResult(Drawable drawable) {
-                //如果icon不存在，则下载
-                if (drawable != null) {
+            public void onLoadingStarted(String imageUri, View view) {
+                holder.mPlaceholderView.setVisibility(View.VISIBLE);
+                holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                holder.mContentImageView.setImageDrawable(null);
+                downloadPreview(holder, item);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                holder.mPlaceholderView.setVisibility(View.GONE);
+                if (item instanceof KCTextColorElement){
+                    if (loadedImage != null) {
+                        BitmapDrawable bitmapDrawable = new BitmapDrawable(loadedImage);
+                        BitmapDrawable drawable = (BitmapDrawable) bitmapDrawable.getConstantState().newDrawable().mutate();
+                        drawable.setColorFilter(((KCTextColorElement)item).getColor(), PorterDuff.Mode.SRC_IN);
+                        holder.mContentImageView.setImageDrawable(drawable);
+                    }
+                }else {
                     //content view
-                    holder.mPlaceholderView.setVisibility(View.GONE);
-                    holder.mContentImageView.setImageDrawable(drawable);
-                } else {
-                    holder.mPlaceholderView.setVisibility(View.VISIBLE);
-                    holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
-                    holder.mContentImageView.setImageDrawable(drawable);
-                    downloadPreview(holder, (KCBaseElement) item);
+                    holder.mContentImageView.setImageBitmap(loadedImage);
                 }
             }
-        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+
+            }
+        });
     }
 
     /**

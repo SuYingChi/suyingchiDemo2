@@ -137,29 +137,8 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
 
     @Override
     protected void setItemDrawable(@NonNull BaseItemHolder holder, @NonNull Object item) {
-        //content
-//        Drawable drawable = holder.itemView.getResources().getDrawable((Integer) item);
-//        //如果icon不存在，则下载
-//        if (drawable != null) {
-//            //content view
-//            holder.mPlaceholderView.setVisibility(View.INVISIBLE);
-//            holder.mContentImageView.setImageDrawable(drawable);
-//        } /*else {
-//            holder.mPlaceholderView.setVisibility(View.VISIBLE);
-//            holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
-//            holder.mLockedImageView.setVisibility(View.INVISIBLE);
-//            holder.mContentImageView.setImageDrawable(drawable);
-//            downloadPreview(holder, item);
-//        }*/
         holder.mContentImageView.setImageResource((Integer) item);
     }
-
-//    @Override
-//    protected boolean isCustomThemeItemSelected(KCBaseElement item) {
-//        BackgroundFragment.EntryMode mode = fragment.getEntryMode();
-//        return mode == BackgroundFragment.EntryMode.Gallery;
-//    }
-
 
     @Override
     protected Drawable getChosedBackgroundDrawable() {
