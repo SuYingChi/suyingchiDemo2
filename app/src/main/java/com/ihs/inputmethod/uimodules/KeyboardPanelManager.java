@@ -291,7 +291,10 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 acbNativeAd.release();
             }
             gpNativeAdList.clear();
-            gpAdAdapter.clearAdList();
+
+            if (gpAdAdapter != null) {
+                gpAdAdapter.clearAdList();
+            }
         }
     }
 
