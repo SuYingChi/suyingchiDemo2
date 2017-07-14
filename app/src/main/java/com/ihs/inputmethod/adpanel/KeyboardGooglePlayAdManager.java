@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
@@ -18,6 +19,7 @@ import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
  */
 
 public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListener, NativeAdView.OnAdClickedListener {
+    private static final String PREF_AD_SHOW_TIME = "pref_ad_show_time";
     private String adPlacement;
     private NativeAdView nativeAdView;
     private AdGooglePlayDialog adGooglePlayDialog;
@@ -39,6 +41,15 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
     private void initAndShowDialog() {
         adGooglePlayDialog = new AdGooglePlayDialog(HSApplication.getContext(), nativeAdView);
         adGooglePlayDialog.show();
+        HSPreferenceHelper.getDefault().putLong(PREF_AD_SHOW_TIME, System.currentTimeMillis());
+    }
+
+    private boolean isShowedFixedTimeBefore() { // 是否在一定时间之前展示过广告
+        Long lastTime = HSPreferenceHelper.getDefault().getLong(PREF_AD_SHOW_TIME, 0L);
+        if (System.currentTimeMillis() > lastTime + (long) (24 * 3600 * 1000)) {
+            return false;
+        }
+        return true;
     }
 
     private int getNativeAdViewWidth() {
@@ -46,7 +57,9 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
     }
 
     public boolean loadAndShowAdIfConditionSatisfied() {
-        if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayNative") && HSConfig.optBoolean(false, "Application", "NativeAds", "GooglePlayNativeAd", "ShowAd")) {
+        if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayNative")
+                && HSConfig.optBoolean(false, "Application", "NativeAds", "GooglePlayNativeAd", "ShowAd")
+                && !isShowedFixedTimeBefore()) {
             initNativeAdView();
             return true;
         } else {
