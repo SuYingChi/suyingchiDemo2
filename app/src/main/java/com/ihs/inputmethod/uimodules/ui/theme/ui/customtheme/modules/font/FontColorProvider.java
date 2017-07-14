@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
@@ -13,12 +15,15 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemP
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCTextColorElement;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 /**
  * Created by chenyuanming on 31/10/2016.
  */
 
 public class FontColorProvider extends BaseThemeItemProvider<KCTextColorElement, BaseThemeItemProvider.BaseItemHolder, FontFragment> {
+    private Drawable fontDrawable;
     public FontColorProvider(FontFragment fragment) {
         super(fragment);
     }
@@ -45,5 +50,16 @@ public class FontColorProvider extends BaseThemeItemProvider<KCTextColorElement,
     @Override
     protected Drawable getChosedBackgroundDrawable() {
         return KCElementResourseHelper.getTextColorChosedBackgroundDrawable();
+    }
+
+    protected void setItemDrawable(@NonNull final BaseItemHolder holder, @NonNull final Object obj) {
+        final KCBaseElement item = (KCBaseElement) obj;
+        if (fontDrawable == null){
+            fontDrawable = new BitmapDrawable(ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(item.getLocalPreviewPath())));
+        }
+        BitmapDrawable drawable = (BitmapDrawable) fontDrawable.getConstantState().newDrawable().mutate();
+        drawable.setColorFilter(((KCTextColorElement)item).getColor(), PorterDuff.Mode.SRC_IN);
+        holder.mContentImageView.setImageDrawable(drawable);
+
     }
 }

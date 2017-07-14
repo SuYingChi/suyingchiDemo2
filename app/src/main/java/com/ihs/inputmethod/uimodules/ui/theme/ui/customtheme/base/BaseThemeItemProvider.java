@@ -3,8 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -38,7 +36,6 @@ import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonShapeElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
-import com.keyboard.core.themes.custom.elements.KCTextColorElement;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -316,17 +313,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 holder.mPlaceholderView.setVisibility(View.GONE);
-                if (item instanceof KCTextColorElement){
-                    if (loadedImage != null) {
-                        BitmapDrawable bitmapDrawable = new BitmapDrawable(loadedImage);
-                        BitmapDrawable drawable = (BitmapDrawable) bitmapDrawable.getConstantState().newDrawable().mutate();
-                        drawable.setColorFilter(((KCTextColorElement)item).getColor(), PorterDuff.Mode.SRC_IN);
-                        holder.mContentImageView.setImageDrawable(drawable);
-                    }
-                }else {
-                    //content view
-                    holder.mContentImageView.setImageBitmap(loadedImage);
-                }
+                holder.mContentImageView.setImageBitmap(loadedImage);
             }
 
             @Override
