@@ -12,8 +12,8 @@ import com.ihs.keyboardutils.configfile.KCParser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +35,7 @@ public class StickerGroup {
     private static final String STICKER_DOWNLOAD_IMAGE_SUFFIX = "-preview.png";
     private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
     private static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
+    private static final String STICKER_CONFIG_FILE_SUFFIX = "/contents.json";
 
     public StickerGroup(final String stickerGroupName) {
         this.isInternalStickerGroup = isStickerExistInAssets(stickerGroupName);
@@ -90,9 +91,9 @@ public class StickerGroup {
         try {
             if (isInternalStickerGroup) { //从assets里读取
                 AssetManager assetManager = HSApplication.getContext().getAssets();
-                kcMap = KCParser.parseMap(assetManager.open(ASSETS_STICKER_FILE_NAME + "/" + stickerGroupName + "/contents.json"));
+                kcMap = KCParser.parseMap(assetManager.open(ASSETS_STICKER_FILE_NAME + "/" + stickerGroupName + STICKER_CONFIG_FILE_SUFFIX));
             } else if (isStickerGroupDownloaded()) {
-                kcMap = KCParser.parseMap(new FileInputStream(getStickerFolderPath(stickerGroupName) + "/contents.json"));
+                kcMap = KCParser.parseMap(new FileInputStream(getStickerFolderPath(stickerGroupName) + STICKER_CONFIG_FILE_SUFFIX));
             }
             return kcMap;
         } catch (IOException e) {
@@ -114,13 +115,14 @@ public class StickerGroup {
     }
 
     private boolean isStickerExistInAssets(String stickerGroupName) {
-        List<String> contents = new ArrayList<>();
         try {
-            contents = Arrays.asList(HSApplication.getContext().getAssets().list(ASSETS_STICKER_FILE_NAME));
+            InputStream open = HSApplication.getContext().getAssets().open(ASSETS_STICKER_FILE_NAME + "/" + stickerGroupName + STICKER_CONFIG_FILE_SUFFIX);
+            open.close();
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return contents.contains(stickerGroupName);
+        return false;
     }
 
     public String getStickerGroupName() {
