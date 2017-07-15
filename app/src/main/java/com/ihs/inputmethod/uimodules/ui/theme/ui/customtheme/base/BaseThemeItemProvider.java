@@ -66,7 +66,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         int screenDensity = HSApplication.getContext().getResources().getDisplayMetrics().densityDpi;
         opts.inDensity = Build.VERSION.SDK_INT >= 16 ? DisplayMetrics.DENSITY_XXHIGH : DisplayMetrics.DENSITY_XHIGH;
         opts.inTargetDensity = screenDensity;
-        new DisplayImageOptions.Builder().decodingOptions(opts).cacheInMemory(true).build();
+        options = new DisplayImageOptions.Builder().decodingOptions(opts).cacheInMemory(true).build();
     }
 
     @NonNull
