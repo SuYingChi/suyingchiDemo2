@@ -115,7 +115,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         } else {
             final KCBaseElement baseElement = (KCBaseElement) item;
 
-            final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
             boolean hasDownloadThemeContent = baseElement.hasLocalContent();
 
             int delayAfterDownloadComplete = 1000;
@@ -127,21 +126,24 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             if (backgroundDrawable == null) {
                 backgroundDrawable = new ColorDrawable(Color.BLACK);
             }
-            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Downloading...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
 
-                @Override
-                public void onDismiss(boolean success) {
-                    if (holder.downloadingProgressListener != null) {
-                        onItemDownloadSucceeded(holder, item);
-                    } else {
-                        selectItem(holder, baseElement);
-                        fragment.refreshKeyboardView();
-                    }
-                }
-
-            }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
             setNotNew(holder, baseElement);
             if (!hasDownloadThemeContent) {
+                final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
+                adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Downloading...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+
+                    @Override
+                    public void onDismiss(boolean success) {
+                        if (holder.downloadingProgressListener != null) {
+                            onItemDownloadSucceeded(holder, item);
+                        } else {
+                            selectItem(holder, baseElement);
+                            fragment.refreshKeyboardView();
+                        }
+                    }
+
+                }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
+
                 startDownloadContent(holder, item);
                 holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
                     @Override
