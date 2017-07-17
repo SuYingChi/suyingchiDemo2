@@ -45,6 +45,5 @@
     <string name="ad_placement_lucky">Smiley_A(NativeAds)KeyboardLuckyAd</string>
     <string name="ad_placement_locker">Smiley_A(NativeAds)Fuse</string>
     <string name="ad_placement_google_play_dialog_ad">Smiley_A(NativeAds)GooglePlayNative</string>
-    <string name="ad_placement_boostdone">Smiley_A((NativeAds)BoostDone</string>
     <string name="ad_placement_keyboard_banner">Smiley_A(NativeAds)KeyboardBanner</string>
 </resources>
