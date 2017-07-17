@@ -168,7 +168,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false, "saving");
+                        ChargingManagerUtil.enableCharging(false);
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });

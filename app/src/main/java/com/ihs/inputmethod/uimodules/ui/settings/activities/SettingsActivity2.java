@@ -164,7 +164,7 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     }
 
                     if (isSwitchOn) {
-                        ChargingManagerUtil.enableCharging(false, "setting");
+                        ChargingManagerUtil.enableCharging(false);
                     } else {
                         ChargingManagerUtil.disableCharging();
                         ChargingAnalytics.getInstance().recordChargingDisableOnce();
@@ -191,7 +191,7 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                 lockerSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        LockerSettings.setLockerEnabled((Boolean) newValue, "setting");
+                        LockerSettings.setLockerEnabled((Boolean) newValue);
                         if (!((Boolean) newValue)) {
                             LockerSettings.recordLockerDisableOnce();
                         }

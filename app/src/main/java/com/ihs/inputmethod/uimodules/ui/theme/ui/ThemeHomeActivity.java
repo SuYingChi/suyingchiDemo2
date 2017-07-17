@@ -649,7 +649,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false, "alert");
+                        ChargingManagerUtil.enableCharging(false);
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });

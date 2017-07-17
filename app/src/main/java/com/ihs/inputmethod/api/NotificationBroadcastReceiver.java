@@ -29,7 +29,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         KCAnalyticUtil.logEvent("notification_click",intent.getStringExtra("eventName"));
         switch (intent.getStringExtra("eventName")) {
             case "Charging":
-                ChargingManagerUtil.enableCharging(true,"notification");
+                ChargingManagerUtil.enableCharging(true);
                 KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 HSToastUtils.toastBottomShort("Fast Charging Enabled");
                 break;

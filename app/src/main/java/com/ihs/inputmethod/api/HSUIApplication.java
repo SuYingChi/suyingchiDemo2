@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -67,7 +66,6 @@ import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
-import static com.ihs.chargingscreen.HSChargingScreenManager.registerChargingService;
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_SET_CHARGING_TOGGLE;
 
 public class HSUIApplication extends HSInputMethodApplication {
@@ -81,16 +79,14 @@ public class HSUIApplication extends HSInputMethodApplication {
 
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
-
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
-                registerChargingService();
                 StickerDataManager.getInstance().onConfigChange();
             } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
                 if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 }
             } else if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(notificationName)) {
-                registerChargingService();
+                HSGlobalNotificationCenter.sendNotification(HSNotificationConstant.HS_CONFIG_CHANGED);
                 recordInstallType();
             }
         }
@@ -193,14 +189,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);
         AcbExpressAdManager.getInstance().init(this);
 
-        HSChargingScreenManager.init(true, "Charging Master", getResources().getString(R.string.ad_placement_charging), new HSChargingScreenManager.IChargingScreenListener() {
-            @Override
-            public void onClosedByChargingPage() {
-                PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit()
-                        .putBoolean(getString(R.string.config_charge_switchpreference_key), false).apply();
-                HSChargingScreenManager.getInstance().stop();
-            }
-        });
+        HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
 
         setChargingFunctionStatus();
 
@@ -267,12 +256,12 @@ public class HSUIApplication extends HSInputMethodApplication {
             // 如果不是第一个sesstion 并且 不包含 PREF_KEY_CHARGING_NEW_USER
             if (!prefs.contains(PREF_KEY_USER_SET_CHARGING_TOGGLE)) {
                 HSLog.d("jx,未发现remote config变化 shouldOpenChargingFunction");
-                ChargingManagerUtil.enableCharging(false, "plist");
+                ChargingManagerUtil.enableCharging(false);
                 prefs.putBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, true);
             } else {
                 boolean userSetting = prefs.getBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, false);
                 if (userSetting) {
-                    ChargingManagerUtil.enableCharging(false, "plist");
+                    ChargingManagerUtil.enableCharging(false);
                 }
             }
         } else {

@@ -537,7 +537,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false, "saving");
+                        ChargingManagerUtil.enableCharging(false);
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });
