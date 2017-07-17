@@ -41,6 +41,9 @@
     <string name="placement_full_screen_at_phone_wake">Colorkey_A(InterstitialAds)PhoneWakeFullScreenAd</string>
     <string name="placement_full_screen_at_app_uninstall">Colorkey_A(InterstitialAds)AppUninstallFullScreenAd</string>
 
+    <string name="ad_placement_google_play_dialog_ad">Colorkey_A(NativeAds)GooglePlayNative</string>
+    <string name="ad_placement_gift_ad">Colorkey_A(NativeAds)KeyboardGiftAd</string>
+
     <string name="taskAffinity_interstitial_ads">com.interstitial.ads</string>
     <string name="tip_usage_access">Find %s and switch it on.</string>
 
