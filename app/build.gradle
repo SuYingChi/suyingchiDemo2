@@ -120,6 +120,14 @@ repositories {
     flatDir {
         dirs 'libs', 'libs/bin_chargingscreen_android'
     }
+
+}
+
+configurations.all {
+    resolutionStrategy {
+        //强制设置libAdAdmobInterstitialAdapter版本，解决当前广告依赖问题，当版本Interstitial版本更新之后，需要去掉这个设置
+        force 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.1.1.gm'
+    }
 }
 
 final LIB_DEVICE_VERSION = '.gm:4.2.0.gm'
