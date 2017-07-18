@@ -82,7 +82,7 @@ android {
 
         color {
             applicationId = "com.keyboard.colorkeyboard"
-            versionCode 47
+            versionCode 48
             versionName "2.3.7"
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             signingConfig signingConfigs.colorReleaseConfig
