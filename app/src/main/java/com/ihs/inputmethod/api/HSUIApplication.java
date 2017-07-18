@@ -37,6 +37,7 @@ import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
@@ -197,7 +198,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
 
         AcbInterstitialAdManager.getInstance().init(this);
-        AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);
+        AcbNativeAdManager.sharedInstance().init(this);
         AcbExpressAdManager.getInstance().init(this);
 
         HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
@@ -235,8 +236,34 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         if(Build.VERSION.SDK_INT >= 16){
             NotificationManager.getInstance();
+            if (NotificationCondition.isNotificationEnabled() && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
+            }
         }
         ActivityLifecycleMonitor.startMonitor(this);
+        activeAdPlacements();
+    }
+
+    private void activeAdPlacements() {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return;
+        }
+        // 全屏插页广告
+        AcbInterstitialAdManager.getInstance().activePlacementInProcess(getString(R.string.placement_full_screen_open_keyboard));
+
+        // Native广告
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_cardad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboardemojiad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboardsettingsad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_themetryad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_customize_theme));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.theme_ad_placement_theme_ad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_google_play_ad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_gift_ad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_google_play_dialog_ad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_applying));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_lucky));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboard_banner));
     }
 
     private void registerNotificationEvent() {

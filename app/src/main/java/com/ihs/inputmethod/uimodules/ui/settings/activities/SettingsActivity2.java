@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 
+import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -41,6 +42,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
@@ -126,8 +128,12 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         boolean isSwitchOn = (boolean) newValue;
                         if (isSwitchOn) {
+                            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                                AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
+                            }
                             KCAnalyticUtil.logEvent("phoneboost_enabled");
                         } else {
+                            AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(getString(R.string.ad_placement_result_page));
                             KCAnalyticUtil.logEvent("phoneboost_disabled");
                         }
                         return true;

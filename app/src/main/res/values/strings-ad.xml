@@ -18,7 +18,6 @@
     <string name="ad_placement_google_play_ad">Master_A(NativeAds)GooglePlayIcon</string>
     <string name="ad_placement_gift_ad">Master_A(NativeAds)KeyboardGiftAd</string>
     <string name="ad_placement_google_play_dialog_ad">Master_A(NativeAds)GooglePlayNative</string>
-    <string name="placement_full_screen_open_keyboard">Master_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
     <string name="ga_fullscreen_theme_apply_load_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_Load</string>
     <string name="ga_fullscreen_theme_apply_show_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_Show</string>
     <string name="ga_fullscreen_theme_apply_click_ad">NativeAd_Master_A(NativeAds)ThemeApplyFullScreenAd_Click</string>
@@ -31,6 +30,7 @@
 
     <string name="ad_placement_applying">Master_A(NativeAds)ApplyingItem</string>
 
+    <string name="placement_full_screen_open_keyboard">Master_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
     <string name="placement_full_screen_at_app_open">Master_A(InterstitialAds)AppOpenedFullScreenAd</string>
     <string name="placement_full_screen_at_phone_unlock">Master_A(InterstitialAds)PhoneUnlockFullScreenAd</string>
     <string name="placement_full_screen_at_app_quit">Master_A(InterstitialAds)AppQuitFullScreenAd</string>
