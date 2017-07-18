@@ -136,12 +136,12 @@ dependencies {
     compile 'com.ihandy.expressads:libExpressAds.gm:4.2.0.gm'
 
     // Native Ad Adapters
-    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.2.gm'
-    compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.3.gm'
-    compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.3.gm'
+    compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.4.gm'
+    compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdAltamobNativeAdapter.gm:4.1.1.gm'
-    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.3.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.4.gm'
+    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.4.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.6.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.3.gm'
     compile 'com.ihandy.3rdadadapter:libAdFlurryNativeAdapter.gm:4.1.0.gm'
 
@@ -151,7 +151,7 @@ dependencies {
     compile 'com.ihandy.3rdadadapter:libAdFBInterstitialAdapter.gm:4.1.4.gm'
 
     // Express Ad Adapters
-    compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.2.gm'
+    compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.3.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdxExpressAdapter.gm:4.0.1.gm'
     compile 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:4.0.1.gm'
 
