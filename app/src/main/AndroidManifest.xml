@@ -74,14 +74,6 @@
             android:name="applovin.sdk.key"
             android:value="@string/applovin_sdk_key" />
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:noHistory="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            tools:replace="android:theme" />
-
         <receiver
             android:name="com.ihs.inputmethod.api.NotificationBroadcastReceiver"
             android:enabled="true">
@@ -146,6 +138,47 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- ShowQuietly Config End -->
+        <!-- AppLovin全屏 -->
+        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.acb.adadapter.ApplovinInterstitialAdapter.AcbAppLovinInterstitialActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+
+        <!-- Avocarrot全屏 -->
+        <activity android:name="com.avocarrot.androidsdk.VideoActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.avocarrot.androidsdk.RedirectActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+
+        <!-- Facebook全屏 -->
+        <activity android:name="com.facebook.FacebookActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.facebook.CustomTabMainActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.facebook.ads.AudienceNetworkActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+
+        <!-- AdMob全屏和Adx全屏 -->
+        <activity android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:noHistory="true"
+            android:taskAffinity=".acb_interstitial_quiet" />
+
+        <!-- ShowQuietly Config End -->
 
     </application>
 
