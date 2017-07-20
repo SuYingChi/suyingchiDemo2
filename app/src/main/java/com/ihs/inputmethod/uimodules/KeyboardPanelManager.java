@@ -427,4 +427,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
         keyboardPanelSwitchContainer.setCustomizeBar(new KeyboardBannerAdLayout(HSApplication.getContext()));
     }
+
+    public KeyboardPanelSwitchContainer getKeyboardPanelSwitchContainer() {
+        return keyboardPanelSwitchContainer;
+    }
 }

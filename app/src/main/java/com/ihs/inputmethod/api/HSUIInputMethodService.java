@@ -83,7 +83,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
     };
 
-    private static KeyboardPanelManager getKeyboardPanelMananger() {
+    public static KeyboardPanelManager getKeyboardPanelMananger() {
         return (KeyboardPanelManager) keyboardPanelSwitcher;
     }
 

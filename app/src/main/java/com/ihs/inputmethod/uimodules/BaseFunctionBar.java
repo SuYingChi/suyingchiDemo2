@@ -25,13 +25,13 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
+import com.ihs.inputmethod.uimodules.softgame.SoftGameButton;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
@@ -100,6 +100,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         this.setBackgroundDrawable(getTransparentRippleBackground());
 
         functionLayout.addView(clothView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
         imageView = new ImageView(getContext());
         imageView.setImageResource(R.drawable.functionbar_gift_ad_selector);
         imageView.setVisibility(View.INVISIBLE);
@@ -107,6 +108,13 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         imageView.setOnClickListener(this);
         imageView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
         functionLayout.addView(imageView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
+
+        RelativeLayout rightLayout = new RelativeLayout(getContext());
+        SoftGameButton softGameButton = new SoftGameButton(getContext());
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        rightLayout.addView(softGameButton, layoutParams);
+        functionLayout.addView(rightLayout, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
 

@@ -205,5 +205,6 @@ dependencies {
     compile 'com.annimon:stream:1.1.7'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
     compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
+    compile (name: 'softgamesSDK-0.3.0-arm', ext: 'aar')
 }
 
