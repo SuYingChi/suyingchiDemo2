@@ -48,6 +48,7 @@ import java.util.List;
 public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
     private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
+    private static final String GOOGLE_SEARCH_BAR_PACKAGE_NAME = "com.google.android.googlequicksearchbox";
     private static final String HS_SHOW_KEYBOARD_WINDOW = "hs.inputmethod.framework.api.SHOW_INPUTMETHOD";
     public static final String HS_NOTIFICATION_START_INPUT_INSIDE_CUSTOM_SEARCH_EDIT_TEXT = "CustomSearchEditText";
 
@@ -76,7 +77,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             } else if (eventName.equals(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE)) {
                 onFinishInputInside();
             } else if (eventName.equals(HS_SHOW_KEYBOARD_WINDOW)) {
-                if (inPlayStore()) {
+                if (showGoogleAD()) {
                     getKeyboardPanelMananger().logCustomizeBarShowed();
                 }
             }
@@ -385,23 +386,23 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public void onKeyboardWindowShow() {
         super.onKeyboardWindowShow();
-        if (!inPlayStore()) {
-            getKeyboardPanelMananger().showBannerAdBar();
-        }else {
+        if (showGoogleAD()) {
             getKeyboardPanelMananger().showGoogleAdBar();
+        } else {
+            getKeyboardPanelMananger().showBannerAdBar();
         }
     }
+
 
     @Override
     public void onKeyboardWindowHide() {
-        if(!inPlayStore()){
+        if (!showGoogleAD()) {
             getKeyboardPanelMananger().removeCustomizeBar();
         }
-
     }
 
-    private boolean inPlayStore() {
-        return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME);
+    private boolean showGoogleAD() {
+        return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME) || TextUtils.equals(currentAppPackageName, GOOGLE_SEARCH_BAR_PACKAGE_NAME);
     }
 
     @Override
