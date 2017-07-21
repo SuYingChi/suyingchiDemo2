@@ -1,39 +1,43 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.panelcontainer.BasePanel;
-import com.ihs.panelcontainer.panel.KeyboardPanel;
 
-public class StickerPanel extends BasePanel {
+public final class StickerPanel extends BasePanel {
 
-	private StickerPalettesView view;
-	@Override
-	public View onCreatePanelView() {
-		//init sticker
-		StickerManager.init();
+    private StickerPanelView stickerPanelView;
 
-		LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		view = (StickerPalettesView) inflater.inflate(R.layout.joy_sticker_palettes_view, null);
-		view.setOnStickerAlphabetKeyClickListener(new StickerPalettesView.OnStickerAlphabetKeyClickListener() {
-			@Override
-			public void onAlphabetClick() {
-				panelActionListener.showPanel(KeyboardPanel.class);
-				HSInputMethod.backToAlphabetKeyboardFromOtherView();
-			}
-		});
-		return view;
-	}
+    public StickerPanel() {
+        super();
+    }
 
+    @Override
+    public View onCreatePanelView() {
+        stickerPanelView = (StickerPanelView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.common_sticker_panel_view, null, false);
+        setPanelView(stickerPanelView);
+        return stickerPanelView;
+    }
 
-	@Override
-	protected boolean onShowPanelView(int appearMode) {
-		view.startStickerPalettes();
-		return false;
-	}
+    @Override
+    protected boolean onHidePanelView(int appearMode) {
+        stickerPanelView.saveRecent();
+        return super.onHidePanelView(appearMode);
+    }
+
+    @Override
+    protected boolean onShowPanelView(int appearMode) {
+        stickerPanelView.showPanelView();
+        return super.onShowPanelView(appearMode);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stickerPanelView.removeNotification();
+        stickerPanelView.saveRecent();
+        super.onDestroy();
+    }
 }

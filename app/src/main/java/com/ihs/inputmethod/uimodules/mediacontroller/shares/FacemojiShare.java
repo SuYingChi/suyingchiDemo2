@@ -22,23 +22,4 @@ public abstract class FacemojiShare {
         }
         throw new Exception("unsupport the format");
     }
-
-//    protected String getMimeType() throws Exception {
-//        String mimeType = null;
-//        if (MasterConstants.MEDIA_FORMAT_GIF.equals(format)) {
-//            mimeType = MasterConstants.MIME_IMAGE;
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.KEYBOARD_FACEMOJI_SEND_TYPE, format);
-//
-//        } else if(MasterConstants.MEDIA_FORMAT_MP4.equals(format)){
-//            mimeType = MasterConstants.MIME_MP4;
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(GAConstants.KEYBOARD_FACEMOJI_SEND_TYPE, format);
-//        }
-//        if(mimeType != null) {
-//            return mimeType;
-//        }
-//        else{
-//            throw new Exception("unsupport the mime type");
-//        }
-//
-//    }
 }

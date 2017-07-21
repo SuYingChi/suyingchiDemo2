@@ -30,9 +30,11 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 
+import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
@@ -40,6 +42,8 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
 
@@ -114,6 +118,28 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             setEnabledLanguage();
             setCharging();
+
+            SwitchPreference boostPreference = (SwitchPreference) findPreference(getResources().getString(R.string.boost_notification_key));
+            if (Build.VERSION.SDK_INT < 16) {
+                getPreferenceScreen().removePreference(boostPreference);
+            } else {
+                boostPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        boolean isSwitchOn = (boolean) newValue;
+                        if (isSwitchOn) {
+                            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                                AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
+                            }
+                            KCAnalyticUtil.logEvent("phoneboost_enabled");
+                        } else {
+                            AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(getString(R.string.ad_placement_result_page));
+                            KCAnalyticUtil.logEvent("phoneboost_disabled");
+                        }
+                        return true;
+                    }
+                });
+            }
         }
 
         private void setCharging() {
@@ -144,9 +170,10 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     }
 
                     if (isSwitchOn) {
-                        ChargingManagerUtil.enableCharging(false,"setting");
+                        ChargingManagerUtil.enableCharging(false);
                     } else {
-                        ChargingManagerUtil.disableCharging("setting");
+                        ChargingManagerUtil.disableCharging();
+                        ChargingAnalytics.getInstance().recordChargingDisableOnce();
                     }
                     return true;
                 }
@@ -170,7 +197,10 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                 lockerSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        LockerSettings.setLockerEnabled((Boolean) newValue,"setting");
+                        LockerSettings.setLockerEnabled((Boolean) newValue);
+                        if (!((Boolean) newValue)) {
+                            LockerSettings.recordLockerDisableOnce();
+                        }
                         return true;
                     }
                 });

@@ -7,13 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.preference.PreferenceManager;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.acb.expressads.AcbExpressAdManager;
 import com.acb.interstitialads.AcbInterstitialAdManager;
-import com.acb.irrelevant.AcbIrrelevantAdsManager;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.crashlytics.android.Crashlytics;
@@ -35,6 +34,11 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
+import com.ihs.feature.notification.NotificationCondition;
+import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
@@ -44,11 +48,13 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.LauncherActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -61,31 +67,37 @@ import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
-import static com.ihs.chargingscreen.HSChargingScreenManager.registerChargingService;
 import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_SET_CHARGING_TOGGLE;
 
 public class HSUIApplication extends HSInputMethodApplication {
 
     private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
+
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
         public void onReceive(String notificationName, HSBundle bundle) {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
-
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
-
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
-                registerChargingService();
-
+                StickerDataManager.getInstance().onConfigChange();
             } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
-                ChargingPrefsUtil.getInstance().setChargingForFirstSession();
                 if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
                     KCNotificationManager.getInstance().removeNotificationEvent("Charging");
                 }
-            } else if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(notificationName)) {
-                registerChargingService();
+            }
+        }
+    };
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(intent.getAction())) {
+                Intent configChangedIntent = new Intent(HSNotificationConstant.HS_CONFIG_CHANGED);
+                configChangedIntent.setPackage(HSApplication.getContext().getPackageName());
+                HSUIApplication.this.sendBroadcast(configChangedIntent, HSNotificationConstant.getSecurityPermission(HSApplication.getContext()));
+
                 recordInstallType();
             }
         }
@@ -141,6 +153,9 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onMainProcessApplicationCreate() {
+
+
+
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();
@@ -162,7 +177,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_APPSFLYER_RESULT, notificationObserver);
+
+        registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
         HSKeyboardThemeManager.init();
 
@@ -170,6 +186,10 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         if (!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
+        }else {
+            BoostPlusActivity.initBoost();
+            CpuCoolerScanActivity.initBoost();
+            BatteryActivity.initBattery();
         }
         Log.e("time log", "time log application oncreated finished");
 
@@ -178,18 +198,10 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
 
         AcbInterstitialAdManager.getInstance().init(this);
-        AcbNativeAdManager.sharedInstance().initSingleProcessMode(this);
-        AcbIrrelevantAdsManager.init(this);
+        AcbNativeAdManager.sharedInstance().init(this);
         AcbExpressAdManager.getInstance().init(this);
 
-        HSChargingScreenManager.init(true, "Charging Master", getResources().getString(R.string.ad_placement_charging), new HSChargingScreenManager.IChargingScreenListener() {
-            @Override
-            public void onClosedByChargingPage() {
-                PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit()
-                        .putBoolean(getString(R.string.config_charge_switchpreference_key), false).apply();
-                HSChargingScreenManager.getInstance().stop();
-            }
-        });
+        HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
 
         setChargingFunctionStatus();
 
@@ -221,6 +233,37 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         ScreenLockerManager.init();
         initIAP();
+
+        if(Build.VERSION.SDK_INT >= 16){
+            NotificationManager.getInstance();
+            if (NotificationCondition.isNotificationEnabled() && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
+            }
+        }
+        ActivityLifecycleMonitor.startMonitor(this);
+        activeAdPlacements();
+    }
+
+    private void activeAdPlacements() {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return;
+        }
+        // 全屏插页广告
+        AcbInterstitialAdManager.getInstance().activePlacementInProcess(getString(R.string.placement_full_screen_open_keyboard));
+
+        // Native广告
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_cardad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboardemojiad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboardsettingsad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_themetryad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_customize_theme));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.theme_ad_placement_theme_ad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_google_play_ad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_gift_ad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_google_play_dialog_ad));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_applying));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_lucky));
+        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboard_banner));
     }
 
     private void registerNotificationEvent() {
@@ -251,12 +294,12 @@ public class HSUIApplication extends HSInputMethodApplication {
             // 如果不是第一个sesstion 并且 不包含 PREF_KEY_CHARGING_NEW_USER
             if (!prefs.contains(PREF_KEY_USER_SET_CHARGING_TOGGLE)) {
                 HSLog.d("jx,未发现remote config变化 shouldOpenChargingFunction");
-                ChargingManagerUtil.enableCharging(false, "plist");
+                ChargingManagerUtil.enableCharging(false);
                 prefs.putBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, true);
             } else {
                 boolean userSetting = prefs.getBoolean(PREF_KEY_USER_SET_CHARGING_TOGGLE, false);
                 if (userSetting) {
-                    ChargingManagerUtil.enableCharging(false, "plist");
+                    ChargingManagerUtil.enableCharging(false);
                 }
             }
         } else {

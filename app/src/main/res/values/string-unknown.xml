@@ -3,8 +3,6 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	tools:ignore="MissingTranslation">
 
-	<string name="app_package_name">com.joykeyboard.gif</string>
-
 	<string name="toast_enable_keyboard_1">1</string>
 	<string name="toast_enable_keyboard_2">2</string>
 

@@ -24,6 +24,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -36,6 +37,7 @@ import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.widget.bannerad.KeyboardBannerAdLayout;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarGPAdAdapter;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
@@ -45,6 +47,7 @@ import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
+import com.keyboard.core.session.KCKeyboardSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +72,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private AcbNativeAdLoader acbNativeAdLoader;
     private RecyclerView gpAdRecyclerView;
     private KeyboardPanelAdManager keyboardPanelAdManager;
+    private List<Integer> bannerAdSessionList;
+
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -120,6 +125,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public View onCreateInputView(View keyboardPanelView) {
         onInputViewDestroy();
+        bannerAdSessionList = (List<Integer>) HSConfig.getList("Application", "NativeAds", "KeyboardBannerAd", "SessionIndexOfDay");
         keyboardPanelSwitchContainer = new KeyboardPanelSwitchContainer();
         //todo 改为东哥backgroundView
 //        keyboardPanelSwitchContainer.setThemeBackground(HSKeyboardThemeManager.getKeyboardBackgroundDrawable());
@@ -275,14 +281,19 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public void removeCustomizeBar() {
-        if(keyboardPanelSwitchContainer!=null){
+    public void removeCustomizeBar(){
+        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
             keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
         }
         gpAdRecyclerView = null;
         if (gpNativeAdList != null) {
             for (AcbNativeAd acbNativeAd : gpNativeAdList) {
                 acbNativeAd.release();
+            }
+            gpNativeAdList.clear();
+
+            if (gpAdAdapter != null) {
+                gpAdAdapter.clearAdList();
             }
         }
     }
@@ -340,19 +351,18 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     private void logGoogleAdEvent(String action) {
-        HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map)null, (Map)null);
+        HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map) null, (Map) null);
     }
 
 
-    public void showCustomizeBar() {
-
-        if(keyboardPanelSwitchContainer == null){
+    public void showGoogleAdBar() {
+        if (keyboardPanelSwitchContainer == null) {
             return;
         }
 
-        if(gpAdRecyclerView!=null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
-                || !HSConfig.optBoolean(true,"Application","KeyboardToolBar","GooglePlay","ShowAd")
-                || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")){
+        if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
+                || !HSConfig.optBoolean(true, "Application", "KeyboardToolBar", "GooglePlay", "ShowAd")
+                || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")) {
             return;
         }
 
@@ -370,7 +380,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
             @Override
             public void onHide() {
-                if(acbNativeAdLoader!=null){
+                if (acbNativeAdLoader != null) {
                     acbNativeAdLoader.cancel();
                     acbNativeAdLoader = null;
                 }
@@ -384,15 +394,37 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         reloadGpAd();
         if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
             if (keyboardPanelSwitchContainer != null) {
+                keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
                 keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
             }
         }
     }
 
     public void logCustomizeBarShowed() {
-        if(keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE){
+        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE) {
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_show", "GooglePlay_Search");
             logGoogleAdEvent("Show");
         }
+    }
+
+    public void showBannerAdBar() {
+        if (keyboardPanelSwitchContainer == null) {
+            return;
+        }
+        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+
+        if (bannerAdSessionList == null || bannerAdSessionList.size() < 1) {
+            return;
+        }
+
+        boolean show = HSConfig.optBoolean(false,"Application", "NativeAds", "KeyboardBannerAd", "Show");
+
+        if (!show || !bannerAdSessionList.contains((int) KCKeyboardSession.getCurrentSessionIndexOfDay())
+                || KCFeatureRestrictionConfig.isFeatureRestricted("KeyboardBannerAd")) {
+            HSLog.e("cannt show banner ad");
+            return;
+        }
+        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+        keyboardPanelSwitchContainer.setCustomizeBar(new KeyboardBannerAdLayout(HSApplication.getContext()));
     }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
@@ -32,16 +33,14 @@ public final class SoundProvider extends BaseThemeItemProvider<KCSoundElement, B
 	@NonNull
 	@Override
 	protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-		BaseItemHolder v= super.onCreateViewHolder(inflater, parent);
-//		v.mProgressView.setDrawCircle(true);
-		return v;
+		return new BaseItemHolder(inflater.inflate(R.layout.ct_item_sound, null));
 	}
 
 	@Override
 	protected void onBindViewHolder(@NonNull BaseItemHolder holder, @NonNull Object item) {
 		super.onBindViewHolder(holder, item);
 		DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-		int height = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / fragment.SPAN_COUNT;
+		int height = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / fragment.SPAN_COUNT  -  holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) *2;
 		int width = height;
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
 		layoutParams.gravity = Gravity.CENTER;

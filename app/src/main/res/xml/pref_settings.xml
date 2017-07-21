@@ -47,8 +47,14 @@
         android:title="Fast Charger" />
 
 
-        <SwitchPreference
-            android:key="@string/locker_switcher"
-            android:summary="@string/enable_locker_detail"
-            android:title="Screen Locker" />
+    <SwitchPreference
+        android:key="@string/locker_switcher"
+        android:summary="@string/enable_locker_detail"
+        android:title="Screen Locker" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/boost_notification_key"
+        android:summary="@string/boost_noti_setting_desc"
+        android:title="@string/boost_noti_setting_title" />
 </PreferenceScreen>

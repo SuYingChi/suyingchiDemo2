@@ -34,6 +34,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanel;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
@@ -98,14 +99,15 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         super.onFinishInflate();
         final String[] panelNames = {
                 "emoji",
+                "sticker",
                 "gif",
                 "text"
         };
         final Class[] panelClassNames = {
                 HSEmojiPanel.class,
+                StickerPanel.class,
                 GifPanel.class,
                 HSTextPanel.class
-
         };
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
         for (int i = 0; i < panelNames.length; i++) {
@@ -273,7 +275,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                 keyboardActionListener.showPanel(KeyboardPanel.class);
                 keyboardActionListener.setBarVisibility(VISIBLE);
                 keyboardActionListener = null;
-//                HSGlobalNotificationCenter.sendNotification(com.ihs.inputmethod.uimodules.constants.MasterConstants.HS_NOTIFICATION_RESET_EDIT_INFO);
             } else if (tag instanceof Integer && (Integer) tag == Constants.CODE_DELETE) {
                 HSInputMethod.deleteBackward();
             }

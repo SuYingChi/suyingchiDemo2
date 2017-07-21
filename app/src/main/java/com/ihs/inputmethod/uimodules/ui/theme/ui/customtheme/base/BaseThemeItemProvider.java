@@ -1,12 +1,17 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -22,7 +28,6 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.view.HSGifImageView;
@@ -31,6 +36,11 @@ import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonShapeElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 
@@ -41,68 +51,36 @@ import me.drakeet.multitype.ItemViewProvider;
  */
 
 public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThemeItemProvider.BaseItemHolder, F extends BaseThemeFragment> extends ItemViewProvider<Object, BaseThemeItemProvider.BaseItemHolder> {
-    protected F fragment;
-
-
     public Handler handler = new Handler(Looper.getMainLooper());
     public BaseItemHolder lastCheckedHolder;
     public Object lastCheckedItem;
+    protected F fragment;
+    DisplayImageOptions options;
+    private boolean hasDefaultItemSelectStateSet = false;
 
     public BaseThemeItemProvider(F fragment) {
         this.fragment = fragment;
         handler = new Handler(Looper.getMainLooper());
-    }
 
-    private boolean hasDefaultItemSelectStateSet = false;
-
-    public static class BaseItemHolder extends RecyclerView.ViewHolder {
-
-        interface OnDownloadingProgressListener {
-            void onUpdate(int percent);
-
-            void onDownloadSucceeded();
-
-            void onDownloadFailed();
-        }
-
-        public HSGifImageView mContentImageView;
-        public RoundedImageView mCheckImageView;
-        public RoundedImageView mBackgroundImageView;
-        public RoundedImageView mLockedImageView;
-        public RoundedImageView mNewMarkImageView;
-        public RoundedImageView mPlaceholderView;
-        //        public SectorProgressView mProgressView;
-        public View itemView;
-        public OnDownloadingProgressListener downloadingProgressListener;
-
-        public BaseItemHolder(@NonNull View itemView) {
-            super(itemView);
-            this.itemView = itemView;
-
-            mContentImageView = (HSGifImageView) itemView.findViewById(R.id.custom_theme_item_content);
-            mCheckImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_check_bg);
-            mBackgroundImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_bg);
-            mLockedImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_locked);
-            mNewMarkImageView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
-            mPlaceholderView = (RoundedImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
-//            mProgressView = (SectorProgressView) itemView.findViewById(R.id.custom_theme_item_progress);
-
-            mPlaceholderView.setCornerRadius(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.custom_theme_background_item_corners_radius));
-        }
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        int screenDensity = HSApplication.getContext().getResources().getDisplayMetrics().densityDpi;
+        opts.inDensity = Build.VERSION.SDK_INT >= 16 ? DisplayMetrics.DENSITY_XXHIGH : DisplayMetrics.DENSITY_XHIGH;
+        opts.inTargetDensity = screenDensity;
+        options = new DisplayImageOptions.Builder().decodingOptions(opts).cacheInMemory(true).build();
     }
 
     @NonNull
     @Override
     protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new BaseItemHolder(inflater.inflate(R.layout.ct_item_background, null));
+        return new BaseItemHolder(inflater.inflate(R.layout.ct_common_item, null));
     }
 
     @Override
     protected void onBindViewHolder(@NonNull final BaseItemHolder holder, @NonNull final Object item) {
-        adjustLayoutForDevice88(holder, (KCBaseElement) item);
+//        adjustLayoutForDevice88(holder, (KCBaseElement) item);
         setItemTouchListener(holder, (I) item);
         setItemDrawable(holder, (KCBaseElement) item);
-        setNewOrLockedState(holder, (KCBaseElement) item);
+        setNewState(holder, (KCBaseElement) item);
         updateItemSelection((V) holder, (KCBaseElement) item);
         setItemBackground(holder, (KCBaseElement) item);
 
@@ -111,7 +89,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected void adjustLayoutForDevice88(@NonNull BaseItemHolder holder, KCBaseElement item) {
         holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
     }
-
 
     protected void onItemClicked(final V holder, final I item, String adPlacementName) {
         if (holder == lastCheckedHolder) {
@@ -138,7 +115,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         } else {
             final KCBaseElement baseElement = (KCBaseElement) item;
 
-            final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
             boolean hasDownloadThemeContent = baseElement.hasLocalContent();
 
             int delayAfterDownloadComplete = 1000;
@@ -150,21 +126,24 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             if (backgroundDrawable == null) {
                 backgroundDrawable = new ColorDrawable(Color.BLACK);
             }
-            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Downloading...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
 
-                @Override
-                public void onDismiss(boolean success) {
-                    if (holder.downloadingProgressListener != null) {
-                        onItemDownloadSucceeded(holder, item);
-                    } else {
-                        selectItem(holder, baseElement);
-                        fragment.refreshKeyboardView();
-                    }
-                }
-
-            }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
             setNotNew(holder, baseElement);
             if (!hasDownloadThemeContent) {
+                final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
+                adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Downloading...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+
+                    @Override
+                    public void onDismiss(boolean success) {
+                        if (holder.downloadingProgressListener != null) {
+                            onItemDownloadSucceeded(holder, item);
+                        } else {
+                            selectItem(holder, baseElement);
+                            fragment.refreshKeyboardView();
+                        }
+                    }
+
+                }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
+
                 startDownloadContent(holder, item);
                 holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
                     @Override
@@ -215,13 +194,12 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         if (holder != lastCheckedHolder) {
             if (lastCheckedHolder != null) {
                 lastCheckedHolder.mCheckImageView.setVisibility(View.INVISIBLE);
-                setNewOrLockedState(lastCheckedHolder, (KCBaseElement) lastCheckedItem);
+                setNewState(lastCheckedHolder, (KCBaseElement) lastCheckedItem);
             }
 
             Drawable checked = getChosedBackgroundDrawable();//item.getChosedBackgroundDrawable();
             holder.mCheckImageView.setImageDrawable(checked);
             holder.mCheckImageView.setVisibility(View.VISIBLE);
-            holder.mLockedImageView.setVisibility(View.INVISIBLE);
             lastCheckedHolder = holder;
             lastCheckedItem = item;
         }
@@ -251,9 +229,9 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         return HSDrawableUtils.getTransparentBitmapDrawable();
     }
 
-    private void setNewOrLockedState(@NonNull BaseItemHolder holder, @NonNull KCBaseElement item) {
+    private void setNewState(@NonNull BaseItemHolder holder, @NonNull KCBaseElement item) {
         //new mark view
-        if (isNewItem(item)) {
+        if (item.isNew()) {
             Drawable newMarkDrawable = getNewMarkDrawable();
             if (newMarkDrawable != null) {
                 holder.mNewMarkImageView.setImageDrawable(newMarkDrawable);
@@ -261,7 +239,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
-            holder.mLockedImageView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -282,7 +259,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 //设置默认选中项(刚进来的时候，和remote正在下载滑动过程当前item被复用的情况，此时holder已经赋值过了)
                 if (lastCheckedHolder != null) {
                     lastCheckedHolder.mCheckImageView.setVisibility(View.INVISIBLE);
-                    setNewOrLockedState(lastCheckedHolder, (KCBaseElement) lastCheckedItem);
+                    setNewState(lastCheckedHolder, (KCBaseElement) lastCheckedItem);
                 }
                 Drawable checked = getChosedBackgroundDrawable();
                 holder.mCheckImageView.setImageDrawable(checked);
@@ -319,31 +296,34 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     }
 
-    protected void setItemDrawable(@NonNull BaseItemHolder holder, @NonNull Object item) {
-        //content
-        Drawable drawable = ((KCBaseElement) item).getPreview();
-        //如果icon不存在，则下载
-        if (drawable != null) {
-            //content view
-            holder.mPlaceholderView.setVisibility(View.INVISIBLE);
-            holder.mContentImageView.setImageDrawable(drawable);
-        } else {
-            holder.mPlaceholderView.setVisibility(View.VISIBLE);
-            holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
-            holder.mLockedImageView.setVisibility(View.INVISIBLE);
-            holder.mContentImageView.setImageDrawable(drawable);
-            downloadPreview(holder, (KCBaseElement) item);
-        }
+    protected void setItemDrawable(@NonNull final BaseItemHolder holder, @NonNull final Object obj) {
+        final KCBaseElement item = (KCBaseElement) obj;
+
+        ImageLoader.getInstance().loadImage(ImageDownloader.Scheme.FILE.wrap(item.getLocalPreviewPath()),options, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                holder.mPlaceholderView.setVisibility(View.VISIBLE);
+                holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                holder.mContentImageView.setImageDrawable(null);
+                downloadPreview(holder, item);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                holder.mPlaceholderView.setVisibility(View.GONE);
+                holder.mContentImageView.setImageBitmap(loadedImage);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+
+            }
+        });
     }
-
-
-//    private boolean isCustomBackgroundType(HSCustomThemeItemBase item) {
-//        return (item instanceof HSCustomThemeItemBackground)
-//                && (((HSCustomThemeItemBackground) item).getCustomizedSource() == CAMERA
-//                || ((HSCustomThemeItemBackground) item).getCustomizedSource() == PHOTO_ALBUM
-//        );
-//    }
-
 
     /**
      * 下载预览图
@@ -366,7 +346,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                         @Override
                         public void run() {
                             setItemDrawable(holder, item);
-                            setNewOrLockedState(holder, item);
+                            setNewState(holder, item);
                         }
                     });
                 }
@@ -380,20 +360,19 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     }
 
 
-    private boolean isNewItem(KCBaseElement item) {
-        boolean isNewTheme = item.isNew();
-        if (isNewTheme) {
-            isNewTheme = HSThemeNewTipController.getInstance().isCustomThemeElementNew(item);
-        }
-        return isNewTheme;
-    }
-
-
     private void startDownloadContent(BaseItemHolder holder, I item) {
 //        holder.mProgressView.setVisibility(View.VISIBLE);
 //        setLayoutParams(holder.mContentImageView, holder.mProgressView);
         downloadContent(holder, item);
     }
+
+
+//    private boolean isCustomBackgroundType(HSCustomThemeItemBase item) {
+//        return (item instanceof HSCustomThemeItemBackground)
+//                && (((HSCustomThemeItemBackground) item).getCustomizedSource() == CAMERA
+//                || ((HSCustomThemeItemBackground) item).getCustomizedSource() == PHOTO_ALBUM
+//        );
+//    }
 
     protected void setLayoutParams(final HSGifImageView mContentImageView, final View view) {
         handler.post(new Runnable() {
@@ -407,11 +386,11 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         });
     }
 
-
     private void setNotNew(V holder, KCBaseElement item) {
         if (item.isNew()) {
             holder.mNewMarkImageView.setImageDrawable(null);
-            HSThemeNewTipController.getInstance().setCustomThemeElementNotNew(item);
+            HSThemeNewTipController.getInstance().setElementNotNew(item);
+            item.setNew(false);
         }
     }
 
@@ -492,7 +471,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             fragment.notifyAdapterOnMainThread();
         }
     }
-
 
     protected void setItemTouchListener(@NonNull final BaseItemHolder holder, @NonNull final I item) {
         holder.itemView.setOnTouchListener(new View.OnTouchListener() {
@@ -577,5 +555,64 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         smallScale.setFillAfter(true);
         smallScale.setDuration(0);
         view.startAnimation(smallScale);
+    }
+
+
+    public interface loadPreviewResultListener {
+        void onLoadResult(Drawable drawable);
+    }
+
+    public static class BaseItemHolder extends RecyclerView.ViewHolder {
+
+        public HSGifImageView mGifView;
+        public ImageView mContentImageView;
+        public ImageView mCheckImageView;
+        public ImageView mBackgroundImageView;
+        public ImageView mNewMarkImageView;
+        public ImageView mPlaceholderView;
+        //        public SectorProgressView mProgressView;
+        public View itemView;
+        public OnDownloadingProgressListener downloadingProgressListener;
+        public BaseItemHolder(@NonNull View itemView) {
+            super(itemView);
+            this.itemView = itemView;
+
+            mGifView = (HSGifImageView) itemView.findViewById(R.id.custom_theme_item_gif_content);
+            mContentImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_content);
+            mCheckImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_check_bg);
+            mBackgroundImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_bg);
+            mNewMarkImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
+            mPlaceholderView = (ImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
+
+        }
+
+        interface OnDownloadingProgressListener {
+            void onUpdate(int percent);
+
+            void onDownloadSucceeded();
+
+            void onDownloadFailed();
+        }
+    }
+
+    public static class LoadPreviewTask extends AsyncTask<Void,Void,Drawable>{
+        loadPreviewResultListener loadPreviewResultListener;
+        KCBaseElement item;
+        public LoadPreviewTask(KCBaseElement item,BaseThemeItemProvider.loadPreviewResultListener loadPreviewResultListener) {
+            this.item = item;
+            this.loadPreviewResultListener = loadPreviewResultListener;
+        }
+
+        @Override
+        protected Drawable doInBackground(Void... params) {
+            return item.getPreview();
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            if (loadPreviewResultListener != null){
+                loadPreviewResultListener.onLoadResult(drawable);
+            }
+        }
     }
 }

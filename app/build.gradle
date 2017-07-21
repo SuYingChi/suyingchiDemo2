@@ -82,8 +82,9 @@ android {
 
         color {
             applicationId = "com.keyboard.colorkeyboard"
-            versionCode 44
-            versionName "2.3.6"
+            versionCode 50
+            versionName "2.3.7"
+            manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             signingConfig signingConfigs.colorReleaseConfig
         }
 
@@ -119,37 +120,40 @@ repositories {
     flatDir {
         dirs 'libs', 'libs/bin_chargingscreen_android'
     }
+
 }
 
-final LIB_DEVICE_VERSION = '.gm:4.1.+'
+
+final LIB_DEVICE_VERSION = '.gm:4.2.0.gm'
 
 dependencies {
     // App Framework
-    compile "com.ihandy.appframework:libAppframework.gm:4.3.0.gm"
+    compile "com.ihandy.appframework:libAppframework.gm:4.3.1.gm"
 
     // Ads
-    compile "com.ihandy.nativeads:libNativeAds.gm:4.2.0.gm"
-    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.2.0.gm"
-    compile 'com.ihandy.expressads:libExpressAds.gm:4.0.0.gm'
-    compile 'com.ihandy.irrelevantads:libIrrelevantAds.gm:4.0.0.gm'
+    compile "com.ihandy.nativeads:libNativeAds.gm:4.3.0.gm"
+    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.3.0.gm"
+    compile 'com.ihandy.expressads:libExpressAds.gm:4.2.0.gm'
 
     // Native Ad Adapters
-    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.2.gm'
-    compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.1.gm'
-    compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.3.gm'
+    compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.1.4.gm'
+    compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.1.2.gm'
     compile 'com.ihandy.3rdadadapter:libAdAltamobNativeAdapter.gm:4.1.1.gm'
-    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.2.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.3.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.2.gm'
-    compile 'com.ihandy.3rdadadapter:libAdFlurryNativeAdapter.beta:4.1.0.beta02'
+    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.1.4.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.1.6.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.1.3.gm'
+    compile 'com.ihandy.3rdadadapter:libAdFlurryNativeAdapter.gm:4.1.0.gm'
 
     // Interstitial Ad Adapters
-    compile 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.1.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.1.1.gm'
-    compile 'com.ihandy.3rdadadapter:libAdFBInterstitialAdapter.gm:4.1.0.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.1.3.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.1.4.gm'
+    compile 'com.ihandy.3rdadadapter:libAdFBInterstitialAdapter.gm:4.1.4.gm'
 
     // Express Ad Adapters
-    compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.2.gm'
+    compile 'com.ihandy.3rdadadapter:libAdMopubExpressAdapter.gm:4.0.3.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdxExpressAdapter.gm:4.0.1.gm'
+    compile 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:4.0.1.gm'
 
     // Google Play Services
     compile "com.google.android.gms:play-services-ads:10.2.6"
@@ -196,5 +200,12 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+
+    compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
+    compile "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
+    compile "com.ihandy.device:device-accessibility-task$LIB_DEVICE_VERSION"
+    compile 'com.annimon:stream:1.1.7'
+    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
+    compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
 }
 

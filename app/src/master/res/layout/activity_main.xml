@@ -70,10 +70,10 @@
         android:id="@+id/bt_step_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fast_charge_toggle"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="117dp"
         android:background="@drawable/guide_button_two_selector"
         android:clipChildren="false">
 
@@ -127,20 +127,6 @@
         android:layout_marginBottom="10dp"
         android:textSize="13sp"
         />
-
-    <com.mobipioneer.lockerkeyboard.app.ToggleButton
-        android:id="@+id/fast_charge_toggle"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="60dp"
-        latin:button_switch_defaultValue="false"
-        latin:button_switch_preferencekey="@string/config_charge_switchpreference_key"
-        latin:button_switch_tip="Accelerate charging speed by 25%."
-        latin:button_switch_title="Enable Fast Charger" />
 
     <LinearLayout
         android:id="@+id/settings_view"

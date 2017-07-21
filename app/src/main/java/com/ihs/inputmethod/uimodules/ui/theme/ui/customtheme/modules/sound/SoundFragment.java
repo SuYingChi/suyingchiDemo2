@@ -20,12 +20,6 @@ import java.util.List;
 
 public final class SoundFragment extends BaseThemeFragment {
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_SOUND); // 清除对应元素new mark
-	}
-
 	private int [] colors={
 			0xffff5534,
 			0xfffec107,
@@ -34,6 +28,12 @@ public final class SoundFragment extends BaseThemeFragment {
 			0xff5a6fee,
 			0xffa646cc,
 	};
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_SOUND); // 清除对应元素new mark
+	}
 
 	@Override
 	protected ThemePageItem initiateThemePageItem() {

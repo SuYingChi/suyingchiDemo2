@@ -10,10 +10,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.inputmethod.uimodules.R;
 
-/**
- * Created by wenbinduan on 2016/11/7.
- */
-
 public class HSDeepLinkActivity extends HSActivity {
 
 	private GoogleApiClient mClient;
