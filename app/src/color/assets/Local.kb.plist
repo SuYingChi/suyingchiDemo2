@@ -189,8 +189,14 @@
 			</dict>
 			<key>LocalNotificationsPushTime</key>
 			<array>
+				<integer>8</integer>
+				<integer>9</integer>
+				<integer>10</integer>
+				<integer>11</integer>
 				<integer>12</integer>
-				<real>16.5</real>
+				<integer>13</integer>
+				<integer>14</integer>
+				<integer>15</integer>
 			</array>
 			<key>LocalNotifications</key>
 			<array>
@@ -199,6 +205,8 @@
 					<string>Charging</string>
 					<key>IconUrl</key>
 					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
 					<key>Message</key>
 					<array>
 						<string>Enable smart charging to prevent overcharging efficiently.</string>
@@ -211,6 +219,8 @@
 					<string>CustomizedTheme</string>
 					<key>IconUrl</key>
 					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
 					<key>Message</key>
 					<array>
 						<string>Nice photo! Would you like to set it as background? </string>
@@ -225,6 +235,8 @@
 					<string>CustomizedTheme</string>
 					<key>IconUrl</key>
 					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
 					<key>Message</key>
 					<array>
 						<string>Wanna have a new look? 😎✨ Come and create new keyboard &gt;&gt;</string>
@@ -236,6 +248,8 @@
 				</dict>
 				<dict>
 					<key>IconUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>BgUrl</key>
 					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
 					<key>Name</key>
 					<string>com.keyboard.theme.panda</string>

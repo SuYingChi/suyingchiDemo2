@@ -233,7 +233,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 }
                 return false;
             }
-        });
+        },false);
     }
 
     /**
