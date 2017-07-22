@@ -74,7 +74,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
     private static final int keyboardActivationFromHome = 11;
-    private static final int keyboardActivationFromHomeWithTrial = 12;
+    public static final int keyboardActivationFromHomeWithTrial = 12;
 
     private static final int GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME = 3;
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
