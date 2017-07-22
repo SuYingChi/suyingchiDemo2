@@ -671,10 +671,9 @@
 					<array>
 						<string>android</string>
 						<string>facebook</string>
-						<string>com.whatsapp</string>
 					</array>
 					<key>Show</key>
-					<false/>
+					<true/>
 				</dict>
 				<key>KeyboardAds</key>
 				<dict>
@@ -687,7 +686,7 @@
 							<integer>45</integer>
 						</array>
 						<key>Show</key>
-						<true/>
+						<false/>
 					</dict>
 					<key>KeyboardOpen</key>
 					<dict>
@@ -696,7 +695,7 @@
 							<integer>15</integer>
 						</array>
 						<key>Show</key>
-						<true/>
+						<false/>
 					</dict>
 				</dict>
 			</dict>
@@ -712,7 +711,7 @@
 				<key>GooglePlayNativeAd</key>
 				<dict>
 					<key>ShowAd</key>
-					<true/>
+					<false/>
 				</dict>
 				<key>KeyboardBannerAd</key>
 				<dict>
@@ -1263,6 +1262,27 @@
 					<string>YellowSmile3</string>
 					<key>showName</key>
 					<string>Big Yellow</string>
+				</dict>
+			</array>
+			<key>StickerBackground</key>
+			<array>
+				<dict>
+					<key>backgroundColor</key>
+					<string>#ffffff</string>
+					<key>packageName</key>
+					<string>com.google.android.talk</string>
+				</dict>
+				<dict>
+					<key>backgroundColor</key>
+					<string>#ffffff</string>
+					<key>packageName</key>
+					<string>com.snapchat.android</string>
+				</dict>
+				<dict>
+					<key>backgroundColor</key>
+					<string>#e1ffc7</string>
+					<key>packageName</key>
+					<string>com.whatsapp</string>
 				</dict>
 			</array>
 			<key>ThemeContents</key>
