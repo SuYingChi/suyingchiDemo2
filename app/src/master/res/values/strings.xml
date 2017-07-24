@@ -30,7 +30,6 @@
     <string name="settings_button_swipe">Swipe</string>
     <string name="settings_button_more_settings">More Settings</string>
     <string name="settings_button_add_language">Add Language</string>
-    <string name="fb_app_id">1651195371844917</string>
     <string name="emoji_search_hint">Search GIFs by text or emoji </string>
 
     <!-- Config for difference activity name -->
