@@ -107,6 +107,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
     protected void setItemDrawable(@NonNull BaseItemHolder holder, @NonNull Object item) {
         KCBackgroundElement backgroundElement = (KCBackgroundElement) item;
         if (backgroundElement.hasLocalGifPreview()) {
+            holder.mPlaceholderView.setVisibility(View.GONE);
             holder.mGifView.setVisibility(View.VISIBLE);
             holder.mContentImageView.setImageDrawable(null);
             holder.mGifView.setImageURI(Uri.fromFile(new File(backgroundElement.getGifPreview())));
