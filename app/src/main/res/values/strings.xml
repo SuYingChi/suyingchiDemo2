@@ -279,4 +279,6 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="foreground_download_failed">Download failed</string>
     <string name="boost_noti_setting_desc" >Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
     <string name="boost_noti_setting_title" >Phone Boost</string>
+    <string name="setting_key_call_assistant">setting_key_call_assistant</string>
+    <string name="setting_call_assistant_title">Screen Flash for Calls</string>
 </resources>

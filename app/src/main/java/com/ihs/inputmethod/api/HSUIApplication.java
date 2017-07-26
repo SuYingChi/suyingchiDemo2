@@ -11,6 +11,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.acb.call.AcbCallManager;
 import com.acb.expressads.AcbExpressAdManager;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
@@ -246,6 +247,13 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
         ActivityLifecycleMonitor.startMonitor(this);
         activeAdPlacements();
+
+        AcbCallManager.initWithDefaultFactory(getResources().getString(R.string.ad_placement_call_assist), new AcbCallManager.OnFeatureRestrictCallBack() {
+            @Override
+            public boolean isFeatureRestrict() {
+                return !KCFeatureRestrictionConfig.isFeatureRestricted("AdCallAssistant");
+            }
+        });
     }
 
     private void activeAdPlacements() {

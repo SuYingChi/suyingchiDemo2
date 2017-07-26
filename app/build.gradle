@@ -207,5 +207,12 @@ dependencies {
     compile 'com.annimon:stream:1.1.7'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
     compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
+
+    //callassistant
+    compile (name: 'ihs/libCallAssistant/libcallassistant', ext: 'aar')
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //----
+
 }
 

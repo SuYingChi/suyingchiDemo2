@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 
+import com.acb.call.InCallThemePreviewActivity;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
@@ -118,7 +119,24 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             setHasOptionsMenu(true);
             setEnabledLanguage();
             setCharging();
+            setLocker();
+            setBoost();
+            setCallAssistant();
+        }
 
+        private void setCallAssistant() {
+            Preference preference = findPreference(getResources().getString(R.string.setting_key_call_assistant));
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent(getActivity(), InCallThemePreviewActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+            });
+        }
+
+        private void setBoost() {
             SwitchPreference boostPreference = (SwitchPreference) findPreference(getResources().getString(R.string.boost_notification_key));
             if (Build.VERSION.SDK_INT < 16) {
                 getPreferenceScreen().removePreference(boostPreference);
@@ -135,6 +153,35 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                         } else {
                             AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(getString(R.string.ad_placement_result_page));
                             KCAnalyticUtil.logEvent("phoneboost_disabled");
+                        }
+                        return true;
+                    }
+                });
+            }
+        }
+
+        private void setLocker() {
+            String locker = getString(R.string.locker_switcher);
+            if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_MUTED) {
+                getPreferenceScreen().removePreference(findPreference(locker));
+            } else {
+                SwitchPreference lockerSwitcher = (SwitchPreference) findPreference(locker);
+                int lockerEnableStates = LockerSettings.getLockerEnableStates();
+                switch (lockerEnableStates) {
+                    case LockerSettings.LOCKER_DEFAULT_DISABLED:
+                        lockerSwitcher.setChecked(false);
+                        break;
+                    case LockerSettings.LOCKER_DEFAULT_ACTIVE:
+                        lockerSwitcher.setChecked(true);
+                        break;
+                }
+
+                lockerSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        LockerSettings.setLockerEnabled((Boolean) newValue);
+                        if (!((Boolean) newValue)) {
+                            LockerSettings.recordLockerDisableOnce();
                         }
                         return true;
                     }
@@ -178,34 +225,6 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     return true;
                 }
             });
-
-            String locker = getString(R.string.locker_switcher);
-            if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_MUTED) {
-                getPreferenceScreen().removePreference(findPreference(locker));
-            } else {
-                SwitchPreference lockerSwitcher = (SwitchPreference) findPreference(locker);
-                int lockerEnableStates = LockerSettings.getLockerEnableStates();
-                switch (lockerEnableStates) {
-                    case LockerSettings.LOCKER_DEFAULT_DISABLED:
-                        lockerSwitcher.setChecked(false);
-                        break;
-                    case LockerSettings.LOCKER_DEFAULT_ACTIVE:
-                        lockerSwitcher.setChecked(true);
-                        break;
-                }
-
-                lockerSwitcher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        LockerSettings.setLockerEnabled((Boolean) newValue);
-                        if (!((Boolean) newValue)) {
-                            LockerSettings.recordLockerDisableOnce();
-                        }
-                        return true;
-                    }
-                });
-            }
-
         }
 
         @Override
