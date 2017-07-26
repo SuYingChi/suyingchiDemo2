@@ -479,7 +479,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     @Override
                     public void keyboardSelected(int requestCode) {
                         if (requestCode == activationCode) {
-                            if (LockerSettings.isLockerEnableShowSatisfied()) {
+                            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing() ) {
                                 LockerEnableDialog dialog = new LockerEnableDialog(ThemeHomeActivity.this, R.style.LockerEnableDialogTheme);
                                 dialog.show();
                                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
