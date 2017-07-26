@@ -77,7 +77,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             } else if (eventName.equals(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE)) {
                 onFinishInputInside();
             } else if (eventName.equals(HS_SHOW_KEYBOARD_WINDOW)) {
-                if (showGoogleAD()) {
+                if (shouldShowGoogleAD()) {
                     getKeyboardPanelMananger().logCustomizeBarShowed();
                 }
             }
@@ -373,6 +373,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 && !currentAppPackageName.equals(this.getPackageName())
                 && !currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 进入Google Play
             keyboardGooglePlayAdManager.loadAndShowAdIfConditionSatisfied();
+            getKeyboardPanelMananger().showGoogleAdBar();
         } else if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
                 && !editorInfo.packageName.equals(this.getPackageName())
                 && !editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 离开Google Play
@@ -386,7 +387,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public void onKeyboardWindowShow() {
         super.onKeyboardWindowShow();
-        if (showGoogleAD()) {
+        if (shouldShowGoogleAD()) {
             getKeyboardPanelMananger().showGoogleAdBar();
         } else {
             getKeyboardPanelMananger().showBannerAdBar();
@@ -396,12 +397,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public void onKeyboardWindowHide() {
-        if (!showGoogleAD()) {
+        if (!shouldShowGoogleAD()) {
             getKeyboardPanelMananger().removeCustomizeBar();
         }
     }
 
-    private boolean showGoogleAD() {
+    private boolean shouldShowGoogleAD() {
         return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME) || TextUtils.equals(currentAppPackageName, GOOGLE_SEARCH_BAR_PACKAGE_NAME);
     }
 
