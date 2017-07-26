@@ -56,6 +56,7 @@ import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.LauncherActivity;
+import com.keyboard.core.themes.ThemeDirManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
@@ -185,6 +186,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
         HSKeyboardThemeManager.init();
+        ThemeDirManager.moveCustomAssetsToFileIfNecessary();
 
         CustomUIRateAlertUtils.initialize();
 
