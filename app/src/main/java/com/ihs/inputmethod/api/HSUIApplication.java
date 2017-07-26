@@ -247,7 +247,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbCallManager.initWithDefaultFactory(getResources().getString(R.string.ad_placement_call_assist), new AcbCallManager.OnFeatureRestrictCallBack() {
             @Override
             public boolean isFeatureRestrict() {
-                return KCFeatureRestrictionConfig.isFeatureRestricted("AdCallAssistant");
+                return !KCFeatureRestrictionConfig.isFeatureRestricted("AdCallAssistant");
             }
         });
     }

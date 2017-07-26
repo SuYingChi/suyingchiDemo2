@@ -35,15 +35,6 @@
 				<key>Enable</key>
 				<true/>
 			</dict>
-			<key>HateEmail</key>
-			<dict>
-				<key>EmailAddress</key>
-				<string>flashlight.contact.if@gmail.com</string>
-				<key>EmailContents</key>
-				<string></string>
-				<key>EmailTitle</key>
-				<string></string>
-			</dict>
 			<key>FeaturesGuide</key>
 			<dict>
 				<key>GuideAlertShowOnClose</key>
