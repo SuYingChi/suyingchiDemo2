@@ -26,7 +26,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.ic"
-    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/emojikeyboard-2.0.2-alerts.ic"
+    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/emojikeyboard-2.0.3-alerts.ic"
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
