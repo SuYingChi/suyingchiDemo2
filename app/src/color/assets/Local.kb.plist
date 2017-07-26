@@ -446,6 +446,17 @@
 			</dict>
 			<key>FeatureRestriction</key>
 			<dict>
+				<key>AdCallAssistant</key>
+				<dict>
+					<key>TimeZoneException</key>
+					<array/>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+				</dict>
 				<key>AdBackButton</key>
 				<dict>
 					<key>HoursFromFirstUse</key>

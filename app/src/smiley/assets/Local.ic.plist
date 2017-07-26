@@ -642,6 +642,17 @@
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
+				<key>AdCallAssistant</key>
+				<dict>
+					<key>TimeZoneException</key>
+					<array/>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+				</dict>
 				<key>AdGooglePlayIcon</key>
 				<dict>
 					<key>TimeZoneException</key>
