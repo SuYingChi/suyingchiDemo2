@@ -6,6 +6,60 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>ScreenFlash</key>
+			<dict>
+				<key>CallAssistant</key>
+				<dict>
+					<key>AutoRefresh</key>
+					<dict>
+						<key>enable</key>
+						<false/>
+						<key>interval</key>
+						<integer>10</integer>
+					</dict>
+					<key>OpenWhenScreenFlashTurnOn</key>
+					<true/>
+					<key>ShowAds</key>
+					<true/>
+					<key>ShowWhenIncomingCall</key>
+					<true/>
+					<key>ShowWhenIncomingFailedCall</key>
+					<true/>
+					<key>ShowWhenOutgoingCall</key>
+					<true/>
+				</dict>
+				<key>DefaultSwitch</key>
+				<false/>
+				<key>DefaultTheme</key>
+				<string>1</string>
+				<key>Enable</key>
+				<true/>
+			</dict>
+			<key>FeaturesGuide</key>
+			<dict>
+				<key>ScreenFlashGuide</key>
+				<dict>
+					<key>GuideAlertOpenSettings</key>
+					<true/>
+					<key>GuideAlertShow</key>
+					<true/>
+					<key>GuideAlertShowInterval</key>
+					<integer>0</integer>
+					<key>GuideAlertShowTime</key>
+					<integer>100</integer>
+					<key>OutsideAppGuide</key>
+					<dict>
+						<key>GuideScreenFlash</key>
+						<true/>
+						<key>Interval</key>
+						<integer>6</integer>
+						<key>ShowTime</key>
+						<integer>3</integer>
+					</dict>
+				</dict>
+				<key>ShowBladeFlash</key>
+				<true/>
+			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -743,6 +797,8 @@
 			</dict>
 			<key>Locker</key>
 			<dict>
+				<key>EnableDialogMaxShowCount</key>
+				<integer>5</integer>
 				<key>Ads</key>
 				<dict>
 					<key>MinCountToShowAds</key>

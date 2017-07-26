@@ -13,7 +13,7 @@
 					<key>AutoRefresh</key>
 					<dict>
 						<key>enable</key>
-						<true/>
+						<false/>
 						<key>interval</key>
 						<integer>10</integer>
 					</dict>
@@ -37,10 +37,6 @@
 			</dict>
 			<key>FeaturesGuide</key>
 			<dict>
-				<key>GuideAlertShowOnClose</key>
-				<false/>
-				<key>GuideSettingRedPointShow</key>
-				<true/>
 				<key>ScreenFlashGuide</key>
 				<dict>
 					<key>GuideAlertOpenSettings</key>
@@ -48,13 +44,9 @@
 					<key>GuideAlertShow</key>
 					<true/>
 					<key>GuideAlertShowInterval</key>
-					<integer>1</integer>
+					<integer>0</integer>
 					<key>GuideAlertShowTime</key>
-					<integer>3</integer>
-					<key>GuideSettingNewShow</key>
-					<true/>
-					<key>GuideSettingToastShow</key>
-					<false/>
+					<integer>100</integer>
 					<key>OutsideAppGuide</key>
 					<dict>
 						<key>GuideScreenFlash</key>
@@ -615,6 +607,8 @@
 			</dict>
 			<key>Locker</key>
 			<dict>
+				<key>EnableDialogMaxShowCount</key>
+				<integer>5</integer>
 				<key>Ads</key>
 				<dict>
 					<key>MinCountToShowAds</key>
