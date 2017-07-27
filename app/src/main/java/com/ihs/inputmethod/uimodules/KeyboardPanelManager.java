@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
+import com.acb.nativeads.AcbNativeAdAnalytics;
 import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -303,6 +304,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     private void reloadGpAd() {
+        Log.d("GooglePlayCam", "reloading ad");
         if (gpNativeAdList == null || gpAdAdapter == null) {
             return;
         }
@@ -323,8 +325,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             acbNativeAdLoader = null;
         }
 
-
-
+        Log.d("GooglePlayCam", "adLoader");
         acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
         logGoogleAdEvent("Load");
 
@@ -357,6 +358,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
                     Random randomizer = new Random();
                     Map<String, Object> item = cameraAdInfoList.get(randomizer.nextInt(cameraAdInfoList.size()));
+                    Log.d("cam", (String) item.get("icon"));
                     gpAdAdapter.addCameraInfo(item);
                 }
             }
@@ -370,15 +372,21 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
 
     public void showGoogleAdBar() {
+        Log.d("GooglePlayCam", "showGoogleIconAdBegin");
+
         if (keyboardPanelSwitchContainer == null) {
             return;
         }
+
+        Log.d("GooglePlayCam", "keyboardPanelCon");
 
         if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
                 || !HSConfig.optBoolean(true, "Application", "KeyboardToolBar", "GooglePlay", "ShowAd")
                 || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")) {
             return;
         }
+
+        Log.d("GooglePlayCam", "showGoogleIconAd");
 
         gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
         gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);

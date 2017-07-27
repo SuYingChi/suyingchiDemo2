@@ -18,7 +18,9 @@ import com.acb.adadapter.AcbNativeAd;
 import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
 import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
 import com.acb.nativeads.AcbNativeAdAnalytics;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -63,8 +65,6 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
         cameraIcon = (String) cameraInfo.get("icon");
         cameraName = (String) cameraInfo.get("name");
         cameraInserted = true;
-
-        notifyItemInserted(getItemCount()-1);
     }
 
     public void clearAdList() {
@@ -119,8 +119,7 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("Cam", String.valueOf(position*10+getItemCount()));
-        if(position == getItemCount()-1 && cameraIcon != null) {
+        if( cameraInserted && (position == getItemCount()-1)) {
             return TYPE_CAM;
         }
         return TYPE_AD;
@@ -157,6 +156,8 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String camAdPlacement = context.getResources().getString(R.string.ad_placement_google_play_ad);
+                    HSAnalytics.logEvent("GooglePlayIcon_camera_cilcked", new String[]{camAdPlacement, String.valueOf(true)}); // log camera click event
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse("market://details?id=" + cameraPackageName));
