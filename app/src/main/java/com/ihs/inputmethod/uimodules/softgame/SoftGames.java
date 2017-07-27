@@ -11,34 +11,38 @@ import softgames.de.softgamesapilib.SoftgamesSearchConfig;
 
 /**
  * Created by liuzhongtao on 17/7/17.
- *
  */
 
 public class SoftGames {
     private static final String partnerId = "pub-13352-13691";
 
-    public static void loadGamesInfoHot() {
+    public static void loadPopularGames() {
         final SoftgamesSearchConfig sgConfig = new SoftgamesSearchConfig(partnerId);
         sgConfig.setSortByPopularity(true);
-        loadGamesInfo(sgConfig);
+        sgConfig.setLimit(5);
+        SoftgamesSDK.loadGamesInfo(sgConfig, new GameLoadedCallback() {
+            @Override
+            public void onGamesLoaded(JSONObject[] jsonObjects) {
+                for (JSONObject jsonObject : jsonObjects) {
+                    HSLog.d("loadPopularGames: " + jsonObject.toString());
+                }
+            }
+        });
     }
 
-    private static void loadGamesInfo(SoftgamesSearchConfig sgConfig) {
+    private static void loadGamesInfo() {
+        final SoftgamesSearchConfig sgConfig = new SoftgamesSearchConfig(partnerId);
         sgConfig.setLimit(10);
         sgConfig.addCustomField("title");
-        sgConfig.addCustomField("teaserBig");
-        sgConfig.addCustomField("thumb");
-        sgConfig.addCustomField("type");
+        sgConfig.addCustomField("thumbBig");
         sgConfig.setLocale("en");
 
         //look for games!
         SoftgamesSDK.loadGamesInfo(sgConfig, new GameLoadedCallback() {
             @Override
             public void onGamesLoaded(JSONObject[] jsonObjects) {
-                String json = "";
-                HSLog.d("onGamesLoaded: ");
                 for (JSONObject jsonObject : jsonObjects) {
-                    HSLog.d(jsonObject.toString());
+                    HSLog.d("loadGamesInfo: " + jsonObject.toString());
                 }
             }
         });
