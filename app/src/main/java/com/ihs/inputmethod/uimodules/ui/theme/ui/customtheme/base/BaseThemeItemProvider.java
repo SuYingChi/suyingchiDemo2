@@ -129,7 +129,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
             setNotNew(holder, baseElement);
             if (!hasDownloadThemeContent) {
-                final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
+                final AdLoadingView adLoadingView = new AdLoadingView(fragment.getActivity());
                 adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Downloading...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
 
                     @Override
