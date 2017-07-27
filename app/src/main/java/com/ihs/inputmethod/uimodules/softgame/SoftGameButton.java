@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.uimodules.NewTipLayout;
@@ -50,7 +51,8 @@ public class SoftGameButton extends NewTipLayout {
 
     private void initView() {
         buttonIcon = new ImageView(getContext());
-        buttonIcon.setImageResource(R.drawable.float_button_tips_svg);
+        //buttonIcon.setImageResource(R.drawable.float_button_tips_svg);
+        buttonIcon.setImageDrawable(VectorCompat.createVectorDrawable(getContext(), R.drawable.float_button_tips_svg));
 
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
