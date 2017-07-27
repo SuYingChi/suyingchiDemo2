@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ihs.app.framework.HSApplication;
@@ -60,6 +61,7 @@ import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.keyboard.core.themes.ThemeDirManager;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -131,6 +133,10 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     };
 
     public static void startCustomThemeActivity(final Bundle bundle) {
+        if (!ThemeDirManager.moveCustomAssetsToFileIfNecessary()) {
+            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.theme_create_custom_theme_failed), Toast.LENGTH_SHORT).show();
+            return;
+        }
         HSInputMethod.hideWindow();
         String currentAppName = HSInputMethod.getCurrentHostAppPackageName();
         String myPkName = HSApplication.getContext().getPackageName();

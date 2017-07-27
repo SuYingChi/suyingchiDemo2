@@ -55,7 +55,7 @@ public class FontColorProvider extends BaseThemeItemProvider<KCTextColorElement,
     protected void setItemDrawable(@NonNull final BaseItemHolder holder, @NonNull final Object obj) {
         final KCBaseElement item = (KCBaseElement) obj;
         if (fontDrawable == null){
-            fontDrawable = new BitmapDrawable(ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(item.getLocalPreviewPath())));
+            fontDrawable = new BitmapDrawable(ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.DRAWABLE.wrap("" + R.drawable.keyboard_custom_theme_font_color_pattern)));
         }
         BitmapDrawable drawable = (BitmapDrawable) fontDrawable.getConstantState().newDrawable().mutate();
         drawable.setColorFilter(((KCTextColorElement)item).getColor(), PorterDuff.Mode.SRC_IN);
