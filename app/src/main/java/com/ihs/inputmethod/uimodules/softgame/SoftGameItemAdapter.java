@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -20,7 +23,7 @@ import java.util.List;
  * Created by yanxia on 2017/7/27.
  */
 
-public class SoftGameItemAdapter extends RecyclerView.Adapter<SoftGameItemAdapter.SoftGameItemViewHolder> {
+public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     public interface OnSoftGameItemClickListener {
         public void OnSoftGameItemClick(SoftGameDisplayItem softGameDisplayItem);
@@ -33,35 +36,50 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<SoftGameItemAdapte
             .cacheOnDisk(true).build();
     private List<SoftGameDisplayItem> softGameDisplayItemList;
     private OnSoftGameItemClickListener softGameItemClickListener;
+    private NativeAdView nativeAdView;
 
 
-    public SoftGameItemAdapter(List<SoftGameDisplayItem> softGameDisplayItemList, OnSoftGameItemClickListener softGameItemClickListener) {
+    public SoftGameItemAdapter(List<SoftGameDisplayItem> softGameDisplayItemList, OnSoftGameItemClickListener softGameItemClickListener, NativeAdView nativeAdView) {
         this.softGameDisplayItemList = softGameDisplayItemList;
         this.softGameItemClickListener = softGameItemClickListener;
+        this.nativeAdView = nativeAdView;
     }
 
     @Override
-    public SoftGameItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new SoftGameItemViewHolder(LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.soft_game_item_view, parent, false));
-    }
-
-    @Override
-    public void onBindViewHolder(SoftGameItemViewHolder holder, int position) {
-        if (softGameDisplayItemList.isEmpty()) {
-            return;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewHolder viewHolder = null;
+        if (viewType == SoftGameDisplayItem.TYPE_AD) {
+            viewHolder = new ViewHolder(nativeAdView) {
+            };
+        } else if (viewType == SoftGameDisplayItem.TYPE_GAME) {
+            viewHolder = new SoftGameItemViewHolder(LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.soft_game_item_view, parent, false));
         }
-        final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(position);
-        ImageLoader.getInstance().displayImage(softGameDisplayItem.getJsonObject().optString("thumbBig"), new ImageViewAware(holder.softGameThumbnail), displayImageOptions);
-        holder.softGameTitle.setText(softGameDisplayItem.getJsonObject().optString("title"));
-        holder.softGameType.setText(softGameDisplayItem.getJsonObject().optString("type"));
-        holder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (softGameItemClickListener != null) {
-                    softGameItemClickListener.OnSoftGameItemClick(softGameDisplayItem);
-                }
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        int itemViewType = getItemViewType(position);
+        if (itemViewType == SoftGameDisplayItem.TYPE_AD) {
+            HSLog.d("xiayan onBindViewHolder item is Ad.");
+        } else {
+            final SoftGameItemViewHolder softGameItemViewHolder = (SoftGameItemViewHolder) holder;
+            if (softGameDisplayItemList.isEmpty()) {
+                return;
             }
-        });
+            final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(position - 1);
+            ImageLoader.getInstance().displayImage(softGameDisplayItem.getJsonObject().optString("thumbBig"), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
+            softGameItemViewHolder.softGameTitle.setText(softGameDisplayItem.getJsonObject().optString("title"));
+            softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getJsonObject().optString("type"));
+            softGameItemViewHolder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (softGameItemClickListener != null) {
+                        softGameItemClickListener.OnSoftGameItemClick(softGameDisplayItem);
+                    }
+                }
+            });
+        }
     }
 
     public void refreshData(List<SoftGameDisplayItem> softGameDisplayItemList) {
@@ -71,10 +89,31 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<SoftGameItemAdapte
 
     @Override
     public int getItemCount() {
-        return SoftGameDisplayActivity.SOFT_GAME_LOAD_COUNT;
+        return SoftGameDisplayActivity.SOFT_GAME_LOAD_COUNT + 1;
     }
 
-    class SoftGameItemViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Return the view type of the item at <code>position</code> for the purposes
+     * of view recycling.
+     * <p>
+     * <p>The default implementation of this method returns 0, making the assumption of
+     * a single view type for the adapter. Unlike ListView adapters, types need not
+     * be contiguous. Consider using id resources to uniquely identify item view types.
+     *
+     * @param position position to query
+     * @return integer value identifying the type of the view needed to represent the item at
+     * <code>position</code>. Type codes need not be contiguous.
+     */
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return SoftGameDisplayItem.TYPE_AD;
+        } else {
+            return SoftGameDisplayItem.TYPE_GAME;
+        }
+    }
+
+    class SoftGameItemViewHolder extends ViewHolder {
         ImageView softGameThumbnail;
         TextView softGameTitle;
         TextView softGameType;

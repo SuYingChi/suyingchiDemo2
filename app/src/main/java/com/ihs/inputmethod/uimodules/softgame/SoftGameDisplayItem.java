@@ -12,9 +12,12 @@ public class SoftGameDisplayItem {
     private JSONObject jsonObject;
     private int type;
 
-    public SoftGameDisplayItem(JSONObject jsonObject, int type) {
-        this.jsonObject = jsonObject;
+    public SoftGameDisplayItem(int type) {
         this.type = type;
+    }
+
+    public void setJsonObject(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
     }
 
     public JSONObject getJsonObject() {
