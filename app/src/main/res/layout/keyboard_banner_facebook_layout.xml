@@ -3,7 +3,12 @@
     android:id="@+id/rl_root"
     android:layout_width="match_parent"
     android:layout_height="68dp"
-    android:background="@drawable/bg_facebook_ad">
+    android:background="@color/black_primary">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_facebook_ad" />
 
     <ImageView
         android:layout_width="20dp"
@@ -11,10 +16,10 @@
         android:background="@drawable/ic_facebook_ad" />
 
     <LinearLayout
-        android:paddingBottom="4dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:paddingBottom="4dp">
 
         <com.acb.adadapter.ContainerView.AcbNativeAdIconView
             android:id="@+id/ad_icon"
@@ -61,22 +66,22 @@
 
 
         <TextView
-            android:layout_marginTop="3dp"
-            android:paddingBottom="12dp"
-            android:paddingRight="-12dp"
-            android:gravity="center"
             android:id="@+id/ad_call_to_action"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="3dp"
             android:background="@drawable/selector_facebook_ad_button_bg"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
-            android:maxLength="20"
+            android:gravity="center"
             android:maxEms="8"
+            android:maxLength="20"
             android:maxLines="2"
+            android:paddingBottom="12dp"
+            android:paddingRight="-12dp"
             android:text="download \n now"
             android:textAllCaps="true"
             android:textColor="#ffffff"

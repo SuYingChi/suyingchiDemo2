@@ -67,7 +67,8 @@ public class KeyboardBannerAdLayout extends FrameLayout {
                     nativeAd = list.get(0);
 
                     RelativeLayout containerView;
-                    if (nativeAd.getVendor().name().toLowerCase().contains("facebook")) {
+                    boolean inFaceBook = nativeAd.getVendor().name().toLowerCase().contains("facebook");
+                    if (inFaceBook) {
                         containerView = (RelativeLayout) inflate(getContext(), R.layout.keyboard_banner_facebook_layout, null);
                     } else {
                         containerView = (RelativeLayout) inflate(getContext(), R.layout.keyboard_banner_ad_layout, null);
@@ -89,8 +90,13 @@ public class KeyboardBannerAdLayout extends FrameLayout {
                         containerView.findViewById(R.id.ad_subtitle).setVisibility(GONE);
                     }
 
-                    addView(acbNativeAdContainerView, ViewGroup.LayoutParams.MATCH_PARENT, HSDisplayUtils.dip2px(68));
+                    if (inFaceBook) {
+                        addView(acbNativeAdContainerView, ViewGroup.LayoutParams.MATCH_PARENT, HSDisplayUtils.dip2px(68));
+                    } else {
+                        addView(acbNativeAdContainerView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    }
                     closeBtn.setVisibility(VISIBLE);
+                    closeBtn.bringToFront();
                 }
             }
 
