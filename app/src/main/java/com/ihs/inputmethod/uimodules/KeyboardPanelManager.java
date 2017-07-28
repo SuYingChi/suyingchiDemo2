@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.FrameLayout;
 
 import com.acb.adadapter.AcbAd;
 import com.acb.adadapter.AcbNativeAd;
-import com.acb.nativeads.AcbNativeAdAnalytics;
 import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -54,7 +52,6 @@ import com.keyboard.core.session.KCKeyboardSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 
 import static android.view.Surface.ROTATION_0;
@@ -78,6 +75,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private KeyboardPanelAdManager keyboardPanelAdManager;
     private List<Integer> bannerAdSessionList;
     private List<Map<String, Object>> cameraAdInfoList;
+    private Random random = new Random();
 
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
@@ -354,9 +352,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 if(HSConfig.optBoolean(false, "Application", "KeyboardToolBar", "GooglePlay", "ShowCameraAd")) {
                     cameraAdInfoList = (List<Map<String, Object>>)HSConfig.getList("Application", "KeyboardToolBar", "GooglePlay", "CameraAd");
 
-                    Random randomizer = new Random();
-                    Map<String, Object> item = cameraAdInfoList.get(randomizer.nextInt(cameraAdInfoList.size()));
-                    Log.d("cam", (String) item.get("icon"));
+                    Map<String, Object> item = cameraAdInfoList.get(random.nextInt(cameraAdInfoList.size()));
                     gpAdAdapter.addCameraInfo(item);
                 }
             }

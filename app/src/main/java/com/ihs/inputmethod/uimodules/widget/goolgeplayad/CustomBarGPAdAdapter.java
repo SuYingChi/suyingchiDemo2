@@ -1,9 +1,7 @@
 package com.ihs.inputmethod.uimodules.widget.goolgeplayad;
 
-import android.content.ActivityNotFoundException;
+
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +16,7 @@ import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
 import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -28,6 +27,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 
 
 /**
@@ -49,7 +49,7 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
 
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .displayer(new RoundedBitmapDisplayer(HSDisplayUtils.dip2px(2)))
-            .cacheInMemory(true).cacheOnDisk(true)
+            .cacheInMemory(false).cacheOnDisk(true)
             .build();
 
      public void addAd(AcbNativeAd ad) {
@@ -74,11 +74,15 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_AD) {
             return new MyViewHolder(new FrameLayout(context));
+        } else if (viewType == TYPE_CAM) {
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
+            View itemView = layoutInflater.inflate(R.layout.customize_bar_gp_cam, parent, false);
+            RecyclerView.ViewHolder camViewHolder = new CamViewHolder(itemView);
+            return camViewHolder;
+        } else {
+            return null;
         }
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View itemView = layoutInflater.inflate(R.layout.customize_bar_gp_cam, parent, false);
-        RecyclerView.ViewHolder camViewHolder = new CamViewHolder(itemView);
-        return camViewHolder;
+
     }
 
     @Override
@@ -131,10 +135,8 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
         return adList.size();
     }
 
-    private class MyViewHolder extends RecyclerView.ViewHolder
-    {
-        MyViewHolder(View view)
-        {
+    private class MyViewHolder extends RecyclerView.ViewHolder {
+        MyViewHolder(View view) {
             super(view);
         }
     }
@@ -153,17 +155,8 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String camAdPlacement = context.getResources().getString(R.string.ad_placement_google_play_ad);
-                    HSAnalytics.logEvent("GooglePlayIcon_camera_cilcked", new String[]{camAdPlacement, String.valueOf(true)}); // log camera click event
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + cameraPackageName));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    try {
-                        context.startActivity(intent);
-                    } catch (ActivityNotFoundException var7) {
-                        var7.printStackTrace();
-                    }
+                    HSAnalytics.logEvent("GooglePlayIcon_camera_clicked"); // log camera click event
+                    HSMarketUtils.browseAPP("Google", cameraPackageName);
                 }
             });
         }
