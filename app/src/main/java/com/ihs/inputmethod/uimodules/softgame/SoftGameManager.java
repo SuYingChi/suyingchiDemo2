@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
+import android.text.TextUtils;
+
 import com.ihs.commons.utils.HSLog;
 
 import org.json.JSONObject;
@@ -13,7 +15,7 @@ import softgames.de.softgamesapilib.SoftgamesSearchConfig;
  * Created by liuzhongtao on 17/7/17.
  */
 
-public class SoftGames {
+public class SoftGameManager {
     private static final String partnerId = "pub-13352-13691";
 
     public static void loadPopularGames() {
@@ -24,17 +26,18 @@ public class SoftGames {
             @Override
             public void onGamesLoaded(JSONObject[] jsonObjects) {
                 for (JSONObject jsonObject : jsonObjects) {
-                    HSLog.d("loadPopularGames: " + jsonObject.toString());
+                    HSLog.d("loadPopularGames title :" + jsonObject.optString("title") + " type: " + jsonObject.optString("type") + " thumbBig: " + jsonObject.optString("thumbBig"));
                 }
             }
         });
     }
 
-    private static void loadGamesInfo() {
+    public static void loadGamesInfo() {
         final SoftgamesSearchConfig sgConfig = new SoftgamesSearchConfig(partnerId);
         sgConfig.setLimit(10);
         sgConfig.addCustomField("title");
         sgConfig.addCustomField("thumbBig");
+        sgConfig.addCustomField("created_at");
         sgConfig.setLocale("en");
 
         //look for games!

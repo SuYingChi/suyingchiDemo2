@@ -63,6 +63,7 @@ public class SoftGameButton extends FrameLayout {
             public void onClick(View view) {
                 //跳转到详情页
                 showNewTip();
+                SoftGameDisplayHelper.DisplaySoftGames(getContext().getString(R.string.ad_placement_themetryad));
             }
         });
     }
