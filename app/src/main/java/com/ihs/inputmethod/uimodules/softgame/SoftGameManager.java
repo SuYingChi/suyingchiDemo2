@@ -1,7 +1,5 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
-import android.text.TextUtils;
-
 import com.ihs.commons.utils.HSLog;
 
 import org.json.JSONObject;
@@ -17,6 +15,10 @@ import softgames.de.softgamesapilib.SoftgamesSearchConfig;
 
 public class SoftGameManager {
     private static final String partnerId = "pub-13352-13691";
+
+    public static String getPartnerId() {
+        return partnerId;
+    }
 
     public static void loadPopularGames() {
         final SoftgamesSearchConfig sgConfig = new SoftgamesSearchConfig(partnerId);

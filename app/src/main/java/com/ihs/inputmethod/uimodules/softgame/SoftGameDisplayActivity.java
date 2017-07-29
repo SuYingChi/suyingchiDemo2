@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.*;
@@ -31,13 +32,13 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
 
     public static final String SOFT_GAME_PLACEMENT_MESSAGE = "soft_game_placement_msg";
     public static final int SOFT_GAME_LOAD_COUNT = 50;
-    private static final String partnerId = "pub-13352-13691";
 
     private ArrayList<SoftGameDisplayItem> softGameDisplayItemArrayList = new ArrayList<>();
 
     private RecyclerView recyclerView;
     private SoftGameItemAdapter softGameItemAdapter;
     private NativeAdView nativeAdView;
+    private String placementName;
 
     private Handler handler = new Handler();
 
@@ -45,6 +46,8 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soft_game_display);
+        Intent intent = getIntent();
+        placementName = intent.getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
 
         recyclerView = (RecyclerView) findViewById(R.id.soft_game_main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -53,7 +56,7 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
         recyclerView.setAdapter(softGameItemAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        final SoftgamesSearchConfig sgConfig = new SoftgamesSearchConfig(partnerId);
+        final SoftgamesSearchConfig sgConfig = new SoftgamesSearchConfig(SoftGameManager.getPartnerId());
         sgConfig.setSortByPopularity(true);
         sgConfig.setLimit(SOFT_GAME_LOAD_COUNT);
         SoftgamesSDK.loadGamesInfo(sgConfig, new GameLoadedCallback() {
@@ -84,7 +87,7 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
             loadingView.setLayoutParams(loadingLP);
             loadingView.setGravity(Gravity.CENTER);
             nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
-            nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themetryad), width, 1.9f));
+            nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
         }
     }
 
@@ -100,7 +103,7 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
 
     @Override
     public void OnSoftGameItemClick(SoftGameDisplayItem softGameDisplayItem) {
-        SoftgamesSDK.openGame(softGameDisplayItem.getJsonObject(), SoftGameDisplayActivity.this, partnerId, new GameEventHandler() {
+        SoftgamesSDK.openGame(softGameDisplayItem.getJsonObject(), SoftGameDisplayActivity.this, SoftGameManager.getPartnerId(), new GameEventHandler() {
             @Override
             public void levelFinished(int i, float v) {
 
