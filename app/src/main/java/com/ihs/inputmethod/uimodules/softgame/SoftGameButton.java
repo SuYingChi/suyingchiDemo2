@@ -51,7 +51,9 @@ public class SoftGameButton extends FrameLayout {
 
     private void initView() {
         buttonIcon = new ImageView(getContext());
-        buttonIcon.setImageDrawable(VectorCompat.createVectorDrawable(getContext(), R.drawable.float_button_tips_svg));
+        int padding = HSDisplayUtils.dip2px(4);
+        buttonIcon.setPadding(padding, padding, padding, padding);
+        buttonIcon.setImageDrawable(VectorCompat.createVectorDrawable(getContext(), R.drawable.soft_game_button_icon));
 
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
@@ -62,7 +64,7 @@ public class SoftGameButton extends FrameLayout {
             @Override
             public void onClick(View view) {
                 //跳转到详情页
-                showNewTip();
+                showNewMark();
                 SoftGameDisplayHelper.DisplaySoftGames(getContext().getString(R.string.ad_placement_themetryad));
             }
         });
@@ -82,7 +84,7 @@ public class SoftGameButton extends FrameLayout {
         HSUIInputMethodService.getKeyboardPanelMananger().getKeyboardPanelSwitchContainer().addView(newGameTip, lp);
     }
 
-    public void showNewTip() {
+    public void showNewMark() {
         if (newTipDotView == null) {
             newTipDotView = new View(HSApplication.getContext());
             GradientDrawable redPointDrawable = new GradientDrawable();
@@ -93,13 +95,15 @@ public class SoftGameButton extends FrameLayout {
             int width = HSDisplayUtils.dip2px(7);
             int height = HSDisplayUtils.dip2px(7);
             LayoutParams layoutParams = new LayoutParams(width, height);
-            layoutParams.setMargins(DisplayUtils.dip2px(18), 0, 0, 0);
+            layoutParams.rightMargin = HSDisplayUtils.dip2px(4);
+            layoutParams.topMargin = HSDisplayUtils.dip2px(4);
+            layoutParams.gravity = Gravity.TOP | Gravity.END;
             newTipDotView.setLayoutParams(layoutParams);
             addView(newTipDotView);
         }
     }
 
-    public void hideNewTip() {
+    public void hideNewMark() {
         if (newTipDotView != null) {
             removeView(newTipDotView);
             newTipDotView.setVisibility(GONE);
