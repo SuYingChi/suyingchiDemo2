@@ -15,6 +15,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdParams;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 
@@ -48,10 +49,13 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
         setContentView(R.layout.activity_soft_game_display);
         Intent intent = getIntent();
         placementName = intent.getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
+        HSLog.d("xiayan placement name = " + placementName);
 
         recyclerView = (RecyclerView) findViewById(R.id.soft_game_main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.VERTICAL, false));
-        initNativeAdView();
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            initNativeAdView();
+        }
         softGameItemAdapter = new SoftGameItemAdapter(softGameDisplayItemArrayList, this, nativeAdView);
         recyclerView.setAdapter(softGameItemAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -79,16 +83,15 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
     }
 
     private void initNativeAdView() {
-        if (nativeAdView == null) {
-            View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_theme_card, null);
-            LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
-            int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
-            LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
-            loadingView.setLayoutParams(loadingLP);
-            loadingView.setGravity(Gravity.CENTER);
-            nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
-            nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
-        }
+        View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_theme_card, null);
+        LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
+        int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
+        LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
+        loadingView.setLayoutParams(loadingLP);
+        loadingView.setGravity(Gravity.CENTER);
+        nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
+        nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
+        softGameDisplayItemArrayList.add(new SoftGameDisplayItem(SoftGameDisplayItem.TYPE_AD));
     }
 
     @Override

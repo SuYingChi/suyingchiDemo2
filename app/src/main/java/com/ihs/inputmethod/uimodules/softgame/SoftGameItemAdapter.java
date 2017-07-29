@@ -64,10 +64,10 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             HSLog.d("xiayan onBindViewHolder item is Ad.");
         } else {
             final SoftGameItemViewHolder softGameItemViewHolder = (SoftGameItemViewHolder) holder;
-            if (softGameDisplayItemList.isEmpty()) {
+            if (position >= softGameDisplayItemList.size()) {
                 return;
             }
-            final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(position - 1);
+            final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(position);
             ImageLoader.getInstance().displayImage(softGameDisplayItem.getJsonObject().optString("thumbBig"), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
             softGameItemViewHolder.softGameTitle.setText(softGameDisplayItem.getJsonObject().optString("title"));
             softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getJsonObject().optString("type"));
@@ -89,7 +89,13 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return SoftGameDisplayActivity.SOFT_GAME_LOAD_COUNT + 1;
+        int adCount = 0;
+        for (SoftGameDisplayItem softGameDisplayItem : softGameDisplayItemList) {
+            if (softGameDisplayItem.getType() == SoftGameDisplayItem.TYPE_AD) {
+                adCount++;
+            }
+        }
+        return SoftGameDisplayActivity.SOFT_GAME_LOAD_COUNT + adCount;
     }
 
     /**
@@ -106,10 +112,14 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
      */
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return SoftGameDisplayItem.TYPE_AD;
-        } else {
+        if (softGameDisplayItemList.isEmpty()) {
             return SoftGameDisplayItem.TYPE_GAME;
+        } else {
+            if (softGameDisplayItemList.size() > position) {
+                return softGameDisplayItemList.get(position).getType();
+            } else {
+                return SoftGameDisplayItem.TYPE_GAME;
+            }
         }
     }
 
