@@ -6,60 +6,6 @@
 	<dict>
 		<key>Application</key>
 		<dict>
-			<key>ScreenFlash</key>
-			<dict>
-				<key>CallAssistant</key>
-				<dict>
-					<key>AutoRefresh</key>
-					<dict>
-						<key>enable</key>
-						<false/>
-						<key>interval</key>
-						<integer>10</integer>
-					</dict>
-					<key>OpenWhenScreenFlashTurnOn</key>
-					<true/>
-					<key>ShowAds</key>
-					<true/>
-					<key>ShowWhenIncomingCall</key>
-					<true/>
-					<key>ShowWhenIncomingFailedCall</key>
-					<true/>
-					<key>ShowWhenOutgoingCall</key>
-					<true/>
-				</dict>
-				<key>DefaultSwitch</key>
-				<false/>
-				<key>DefaultTheme</key>
-				<string>1</string>
-				<key>Enable</key>
-				<true/>
-			</dict>
-			<key>FeaturesGuide</key>
-			<dict>
-				<key>ScreenFlashGuide</key>
-				<dict>
-					<key>GuideAlertOpenSettings</key>
-					<true/>
-					<key>GuideAlertShow</key>
-					<true/>
-					<key>GuideAlertShowInterval</key>
-					<integer>0</integer>
-					<key>GuideAlertShowTime</key>
-					<integer>100</integer>
-					<key>OutsideAppGuide</key>
-					<dict>
-						<key>GuideScreenFlash</key>
-						<true/>
-						<key>Interval</key>
-						<integer>6</integer>
-						<key>ShowTime</key>
-						<integer>3</integer>
-					</dict>
-				</dict>
-				<key>ShowBladeFlash</key>
-				<true/>
-			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -446,18 +392,18 @@
 			</dict>
 			<key>FeatureRestriction</key>
 			<dict>
-				<key>AdCallAssistant</key>
+				<key>AdBackButton</key>
 				<dict>
-					<key>TimeZoneException</key>
-					<array/>
 					<key>HoursFromFirstUse</key>
 					<integer>5</integer>
 					<key>RegionException</key>
 					<array>
 						<string>CN</string>
 					</array>
+					<key>TimeZoneException</key>
+					<array/>
 				</dict>
-				<key>AdBackButton</key>
+				<key>AdCallAssistant</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
 					<integer>5</integer>
@@ -534,6 +480,31 @@
 					<true/>
 				</dict>
 			</dict>
+			<key>FeaturesGuide</key>
+			<dict>
+				<key>ScreenFlashGuide</key>
+				<dict>
+					<key>GuideAlertOpenSettings</key>
+					<true/>
+					<key>GuideAlertShow</key>
+					<true/>
+					<key>GuideAlertShowInterval</key>
+					<integer>0</integer>
+					<key>GuideAlertShowTime</key>
+					<integer>100</integer>
+					<key>OutsideAppGuide</key>
+					<dict>
+						<key>GuideScreenFlash</key>
+						<true/>
+						<key>Interval</key>
+						<integer>6</integer>
+						<key>ShowTime</key>
+						<integer>3</integer>
+					</dict>
+				</dict>
+				<key>ShowBladeFlash</key>
+				<true/>
+			</dict>
 			<key>GifConfig</key>
 			<dict>
 				<key>UpdateIntervalInHour</key>
@@ -583,7 +554,20 @@
 			<dict>
 				<key>GooglePlay</key>
 				<dict>
+					<key>CameraAd</key>
+					<array>
+						<dict>
+							<key>PackageName</key>
+							<string>com.camera.beautycam</string>
+							<key>icon</key>
+							<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+							<key>name</key>
+							<string>Beauty Cam - Selfie Editor</string>
+						</dict>
+					</array>
 					<key>ShowAd</key>
+					<true/>
+					<key>ShowCameraAd</key>
 					<true/>
 				</dict>
 			</dict>
@@ -618,8 +602,6 @@
 			</dict>
 			<key>Locker</key>
 			<dict>
-				<key>EnableDialogMaxShowCount</key>
-				<integer>5</integer>
 				<key>Ads</key>
 				<dict>
 					<key>MinCountToShowAds</key>
@@ -656,6 +638,8 @@
 				</array>
 				<key>EnableAlertStyle</key>
 				<integer>1</integer>
+				<key>EnableDialogMaxShowCount</key>
+				<integer>5</integer>
 				<key>HoursFromFirstUse</key>
 				<integer>0</integer>
 				<key>Wallpapers</key>
@@ -1021,6 +1005,35 @@
 			</dict>
 			<key>RiffsyKey</key>
 			<string>ZJY5JD88TACB</string>
+			<key>ScreenFlash</key>
+			<dict>
+				<key>CallAssistant</key>
+				<dict>
+					<key>AutoRefresh</key>
+					<dict>
+						<key>enable</key>
+						<false/>
+						<key>interval</key>
+						<integer>10</integer>
+					</dict>
+					<key>OpenWhenScreenFlashTurnOn</key>
+					<true/>
+					<key>ShowAds</key>
+					<true/>
+					<key>ShowWhenIncomingCall</key>
+					<true/>
+					<key>ShowWhenIncomingFailedCall</key>
+					<true/>
+					<key>ShowWhenOutgoingCall</key>
+					<true/>
+				</dict>
+				<key>DefaultSwitch</key>
+				<false/>
+				<key>DefaultTheme</key>
+				<string>1</string>
+				<key>Enable</key>
+				<true/>
+			</dict>
 			<key>SearchEngine</key>
 			<dict>
 				<key>url</key>
@@ -5987,7 +6000,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.1</real>
+								<real>0.10000000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
