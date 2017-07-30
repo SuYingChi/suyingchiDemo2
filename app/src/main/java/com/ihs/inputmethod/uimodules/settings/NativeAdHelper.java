@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.settings;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +25,7 @@ public class NativeAdHelper {
     private static FlashFrameLayout flashAdContainer;
     String adPoolName = HSApplication.getContext().getResources().getString(R.string.ad_placement_keyboardsettingsad);
     private boolean isAdFlashAnimationPlayed = false;
+    private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
 
     public NativeAdHelper() {
     }
@@ -35,13 +37,6 @@ public class NativeAdHelper {
             adView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             nativeAdView = new NativeAdView(HSApplication.getContext(), adView);
             nativeAdView.setNativeAdType(NativeAdView.NativeAdType.ICON);
-            nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
-                @Override
-                public void onAdLoaded(NativeAdView nativeAdView) {
-                    showAdFlashAnimationIfNecessary();
-                    nativeAdView.setOnAdLoadedListener(null);
-                }
-            });
             NativeAdParams nativeAdParams = new NativeAdParams(adPoolName);
             nativeAdView.configParams(nativeAdParams);
 
@@ -49,14 +44,32 @@ public class NativeAdHelper {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
             ViewItemBuilder.getAdsItem().viewContainer.addView(nativeAdView, layoutParams);
+            nativeAdView.getViewTreeObserver().addOnGlobalLayoutListener(getLayoutListener());
         }
     }
 
     public void releaseAd() {
         if (nativeAdView != null) {
+            nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
             nativeAdView.release();
             nativeAdView = null;
         }
+    }
+
+    private ViewTreeObserver.OnGlobalLayoutListener getLayoutListener() {
+        if (mGlobalLayoutListener == null) {
+            mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    showAdFlashAnimationIfNecessary();
+                }
+            };
+        }
+        return mGlobalLayoutListener;
+    }
+
+    public void setAdFlashAnimationPlayed(boolean adFlashAnimationPlayed) {
+        isAdFlashAnimationPlayed = adFlashAnimationPlayed;
     }
 
     private void showAdFlashAnimationIfNecessary() {
@@ -65,7 +78,7 @@ public class NativeAdHelper {
         }
     }
 
-    public void showAdFlashAnimation() {
+    private void showAdFlashAnimation() {
         if (nativeAdView.isAdLoaded()) {
             flashAdContainer.startShimmerAnimation();
             isAdFlashAnimationPlayed = true;
