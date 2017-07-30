@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.settings;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +25,7 @@ public class NativeAdHelper {
     private static FlashFrameLayout flashAdContainer;
     String adPoolName = HSApplication.getContext().getResources().getString(R.string.ad_placement_keyboardsettingsad);
     private boolean isAdFlashAnimationPlayed = false;
+    private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
 
     public NativeAdHelper() {
     }
@@ -36,27 +38,38 @@ public class NativeAdHelper {
             nativeAdView = new KCNativeAdView(HSApplication.getContext());
             nativeAdView.setAdLayoutView(adView);
             nativeAdView.setNativeAdType(KCNativeAdView.NativeAdType.ICON);
-            nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
-                @Override
-                public void onAdLoaded(KCNativeAdView nativeAdView) {
-                    showAdFlashAnimationIfNecessary();
-                    nativeAdView.setOnAdLoadedListener(null);
-                }
-            });
 
             nativeAdView.load(adPoolName);
             ViewItemBuilder.getAdsItem().viewContainer.removeAllViews();
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
             ViewItemBuilder.getAdsItem().viewContainer.addView(nativeAdView, layoutParams);
+            nativeAdView.getViewTreeObserver().addOnGlobalLayoutListener(getLayoutListener());
         }
     }
 
     public void releaseAd() {
         if (nativeAdView != null) {
+            nativeAdView.getViewTreeObserver().removeGlobalOnLayoutListener(mGlobalLayoutListener);
             nativeAdView.release();
             nativeAdView = null;
         }
+    }
+
+    private ViewTreeObserver.OnGlobalLayoutListener getLayoutListener() {
+        if (mGlobalLayoutListener == null) {
+            mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    showAdFlashAnimationIfNecessary();
+                }
+            };
+        }
+        return mGlobalLayoutListener;
+    }
+
+    public void setAdFlashAnimationPlayed(boolean adFlashAnimationPlayed) {
+        isAdFlashAnimationPlayed = adFlashAnimationPlayed;
     }
 
     private void showAdFlashAnimationIfNecessary() {
@@ -65,7 +78,7 @@ public class NativeAdHelper {
         }
     }
 
-    public void showAdFlashAnimation() {
+    private void showAdFlashAnimation() {
         if (nativeAdView.isAdLoaded()) {
             flashAdContainer.startShimmerAnimation();
             isAdFlashAnimationPlayed = true;
