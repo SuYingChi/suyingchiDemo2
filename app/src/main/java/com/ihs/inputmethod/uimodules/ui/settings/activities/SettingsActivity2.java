@@ -17,6 +17,7 @@
 package com.ihs.inputmethod.uimodules.ui.settings.activities;
 
 import android.annotation.TargetApi;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
+import android.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodInfo;
@@ -79,6 +81,15 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
         }
     }
 
+    public void setupActionBar(String title) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(title);
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -101,7 +112,8 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
      */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
-                || GeneralPreferenceFragment.class.getName().equals(fragmentName);
+                || GeneralPreferenceFragment.class.getName().equals(fragmentName)
+                   || GeneralMorePreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -110,18 +122,109 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
-        private boolean isSettingChargingClicked;//是否点击过charging的设置
-
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_settings);
             setHasOptionsMenu(true);
+            setMore();
             setEnabledLanguage();
+        }
+
+        private void setMore() {
+            Preference preference = findPreference(getResources().getString(R.string.setting_key_more));
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(android.R.id.content, new GeneralMorePreferenceFragment());
+                    fragmentTransaction.addToBackStack(null).commit();
+                    return true;
+                }
+            });
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                getActivity().finish();
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+        private void setEnabledLanguage() {
+            StringBuilder languageSb = new StringBuilder();
+            final InputMethodInfo imi = HSInputMethod.getInputMethodInfoOfThisIme();
+            List<InputMethodSubtype> enabledList = HSImeSubtypeManager.getInputMethodSubtypeList(true);
+            CharSequence subtypeLabel;
+            for (int i = 0; i < enabledList.size(); i++) {
+                subtypeLabel = enabledList.get(i).getDisplayName(HSApplication.getContext(), imi.getPackageName(), imi.getServiceInfo().applicationInfo);
+                if (i < enabledList.size() - 1) {
+                    languageSb.append(subtypeLabel).append(", ");
+                } else {
+                    languageSb.append(subtypeLabel);
+                    if (i > 0) {
+                        languageSb.append(".");
+                    }
+                }
+            }
+            Preference languagePreference = findPreference("choose_language");
+            languagePreference.setSummary(languageSb.toString());
+            languagePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), MoreLanguageActivity2.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    return true;
+                }
+            });
+        }
+    }
+
+    /**
+     * This fragment shows general preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class GeneralMorePreferenceFragment extends PreferenceFragment {
+        private boolean isSettingChargingClicked;//是否点击过charging的设置
+
+        public GeneralMorePreferenceFragment() {
+            super();
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_settings_more);
+            setHasOptionsMenu(true);
             setCharging();
             setLocker();
             setBoost();
             setCallAssistant();
+            ((SettingsActivity2)getActivity()).setupActionBar(getString(R.string.setting_item_more_settings));
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            ((SettingsActivity2)getActivity()).setupActionBar(getString(R.string.settings));
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    getActivity().onBackPressed();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
         }
 
         private void setCallAssistant() {
@@ -222,46 +325,6 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                         ChargingManagerUtil.disableCharging();
                         ChargingAnalytics.getInstance().recordChargingDisableOnce();
                     }
-                    return true;
-                }
-            });
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                getActivity().finish();
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-
-        private void setEnabledLanguage() {
-            StringBuilder languageSb = new StringBuilder();
-            final InputMethodInfo imi = HSInputMethod.getInputMethodInfoOfThisIme();
-            List<InputMethodSubtype> enabledList = HSImeSubtypeManager.getInputMethodSubtypeList(true);
-            CharSequence subtypeLabel;
-            for (int i = 0; i < enabledList.size(); i++) {
-                subtypeLabel = enabledList.get(i).getDisplayName(HSApplication.getContext(), imi.getPackageName(), imi.getServiceInfo().applicationInfo);
-                if (i < enabledList.size() - 1) {
-                    languageSb.append(subtypeLabel).append(", ");
-                } else {
-                    languageSb.append(subtypeLabel);
-                    if (i > 0) {
-                        languageSb.append(".");
-                    }
-                }
-            }
-            Preference languagePreference = findPreference("choose_language");
-            languagePreference.setSummary(languageSb.toString());
-            languagePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), MoreLanguageActivity2.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                     return true;
                 }
             });
