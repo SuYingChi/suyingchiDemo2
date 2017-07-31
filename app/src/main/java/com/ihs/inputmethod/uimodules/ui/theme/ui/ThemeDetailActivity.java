@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.artw.lockscreen.LockerEnableDialog;
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -367,12 +370,51 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         }
     }
 
-    private void showTrialKeyboardDialog(int activationCode) {
-        if (trialKeyboardDialog == null) {
-            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(this, this);
+    private void showTrialKeyboardDialog(final int activationCode) {
+        final KeyboardActivationProcessor processor =
+                new KeyboardActivationProcessor(ThemeDetailActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
+                    @Override
+                    public void activeDialogShowing() {
 
-        }
-        trialKeyboardDialog.show(this, activationCode, true);
+                    }
+
+                    @Override
+                    public void keyboardSelected(int requestCode) {
+                        if (requestCode == activationCode) {
+                            if (LockerSettings.isLockerEnableShowSatisfied()) {
+                                LockerEnableDialog dialog = new LockerEnableDialog(ThemeDetailActivity.this, R.style.LockerEnableDialogTheme);
+                                dialog.show();
+                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        if (trialKeyboardDialog == null) {
+                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(ThemeDetailActivity.this, ThemeDetailActivity.this);
+
+                                        }
+                                        trialKeyboardDialog.show(ThemeDetailActivity.this, activationCode, true);
+                                    }
+                                });
+                            } else {
+                                if (trialKeyboardDialog == null) {
+                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(ThemeDetailActivity.this, ThemeDetailActivity.this);
+
+                                }
+                                trialKeyboardDialog.show(ThemeDetailActivity.this, activationCode, true);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void activeDialogCanceled() {
+
+                    }
+
+                    @Override
+                    public void activeDialogDismissed() {
+
+                    }
+                });
+        processor.activateKeyboard(ThemeDetailActivity.this, true, activationCode);
     }
 
     @Override

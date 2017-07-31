@@ -32,23 +32,19 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class BackgroundFragment extends BaseThemeFragment {
+    static final int CROPPER_IMAGE_REQUEST_CODE = 102;
     private final static int TYPE_OPEN_CAMERA = 1000;
     private final static int TYPE_OPEN_GALLERY = 1001;
-
-    public enum EntryMode {
-        Default,
-        Camera,
-        Gallery
-    }
-
+    int lastTakePicType = -1;
     private EntryMode entryMode;
-
-    public void setEntryMode(EntryMode entryMode) {
-        this.entryMode = entryMode;
-    }
+    private OnSelectCallback callback;
 
     public EntryMode getEntryMode() {
         return entryMode;
+    }
+
+    public void setEntryMode(EntryMode entryMode) {
+        this.entryMode = entryMode;
     }
 
     @Override
@@ -62,7 +58,7 @@ public class BackgroundFragment extends BaseThemeFragment {
     @Override
     public void onResume() {
         super.onResume();
-        HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_BACKGROUND); // 清除对应元素new mark
+        HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_BACKGROUND); // 清除对应元素new mark
     }
 
     @Override
@@ -87,10 +83,6 @@ public class BackgroundFragment extends BaseThemeFragment {
         }
         this.callback = callback;
     }
-
-    int lastTakePicType = -1;
-    private OnSelectCallback callback;
-    static final int CROPPER_IMAGE_REQUEST_CODE = 102;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -158,6 +150,12 @@ public class BackgroundFragment extends BaseThemeFragment {
         String oldCropperImagePath = getCustomThemeData().getCustomizedBackgroundImagePath();
         openBackgroundCropperIntent.putExtra(CustomThemeBackgroundCropperActivity.OldCropperImagePath, oldCropperImagePath == null ? "" : oldCropperImagePath);
         startActivityForResult(openBackgroundCropperIntent, CROPPER_IMAGE_REQUEST_CODE);
+    }
+
+    public enum EntryMode {
+        Default,
+        Camera,
+        Gallery
     }
 
 

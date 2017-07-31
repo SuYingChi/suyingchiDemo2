@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/ad_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/setting_panel_item_margin_top">
+
+        <ImageView
+            android:id="@+id/ad_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:id="@+id/ad_call_to_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_ad_label" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/ad_title"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/setting_panel_item_text_margin_top"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:fontFamily="@string/font_robot_regular"
+        android:text="ad_ttle"
+        android:textSize="10sp"
+        android:textColor="@android:color/black"
+        />
+
+
+</LinearLayout>

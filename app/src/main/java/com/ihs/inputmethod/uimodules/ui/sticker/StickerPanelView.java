@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -35,6 +36,7 @@ import java.util.List;
 
 public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter.OnTabChangeListener, StickerPageAdapter.OnStickerClickListener {
 
+    private RecyclerView stickerTabRecyclerView;
     private StickerTabAdapter stickerTabAdapter; // sticker 顶部 tab bar
     private RecyclerView stickerMainPagerRecyclerView; // sticker 主要显示部分
     private StickerPageAdapter stickerMainRecyclerViewAdapter; // sticker 主要显示部分 adapter
@@ -80,10 +82,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                 + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
                 - res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-        if (!StickerDataManager.getInstance().isStickersReady()) {
-            HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
-            HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_CHANGE_NOTIFICATION, observer);
-        }
+        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
+        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_CHANGE_NOTIFICATION, observer);
     }
 
     @Override
@@ -93,8 +93,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerNameList = new ArrayList<>();
             stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameList());
             stickerTabAdapter = new StickerTabAdapter(stickerNameList, this);
-            RecyclerView stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
-            stickerTabRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
+            stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
+            stickerTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             stickerTabRecyclerView.setAdapter(stickerTabAdapter);
         }
 
@@ -123,9 +123,11 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             @Override
             public void onPageSelected(int position) {
                 if (position != 0) { // 下载页之间的滑动
+                    stickerTabRecyclerView.getLayoutManager().scrollToPosition(position + 1);
                     final String stickerGroupName = stickerPanelManager.getNeedDownloadStickerGroupList().get(position - 1).getStickerGroupName();
                     stickerTabAdapter.setTabSelected(stickerGroupName);
                 } else { //从下载页面滑到首页，先滑动到下载好的最后一项
+                    stickerTabRecyclerView.getLayoutManager().scrollToPosition(0);
                     String lastDownloadedStickerTabName = stickerPanelManager.getLastDownloadedTabName();
                     stickerTabAdapter.setTabSelected(lastDownloadedStickerTabName);
                     Pair<Integer, Integer> positionPair = stickerPanelManager.getLastShownItemPositionForTab(lastDownloadedStickerTabName);
@@ -185,7 +187,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             HSLog.e("wrong sticker!");
             return;
         }
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_icon_name: " + sticker.getStickerGroupName(), sticker.getStickerName());
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_input ", sticker.getStickerName());
+        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_input_tab ", sticker.getStickerGroupName());
         stickerPanelManager.pendingRecentSticker(sticker);
         String currentPackageName = HSInputMethod.getCurrentHostAppPackageName();
         StickerUtils.share(sticker, currentPackageName);
@@ -205,7 +208,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
     void onDataLoaded() {
         stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());
-        stickerTabAdapter.setCurrentTab(stickerPanelManager.getCurrentTabName(), stickerPanelManager.getDefaultTab());
+        stickerTabAdapter.setCurrentTab(stickerPanelManager.getDefaultTab(), stickerPanelManager.getDefaultTab());
     }
 
     public void saveRecent() {

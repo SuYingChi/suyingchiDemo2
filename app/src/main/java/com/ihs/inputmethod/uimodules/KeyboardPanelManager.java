@@ -52,6 +52,7 @@ import com.keyboard.core.session.KCKeyboardSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static android.view.Surface.ROTATION_0;
 import static android.view.View.GONE;
@@ -73,6 +74,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private RecyclerView gpAdRecyclerView;
     private KeyboardPanelAdManager keyboardPanelAdManager;
     private List<Integer> bannerAdSessionList;
+    private List<Map<String, Object>> cameraAdInfoList;
+    private Random random = new Random();
 
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
@@ -282,11 +285,18 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void removeCustomizeBar(){
-        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+            keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+        }
         gpAdRecyclerView = null;
         if (gpNativeAdList != null) {
             for (AcbNativeAd acbNativeAd : gpNativeAdList) {
                 acbNativeAd.release();
+            }
+            gpNativeAdList.clear();
+
+            if (gpAdAdapter != null) {
+                gpAdAdapter.clearAdList();
             }
         }
     }
@@ -315,7 +325,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
         logGoogleAdEvent("Load");
 
-        acbNativeAdLoader.load(5, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
+        acbNativeAdLoader.load(4, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
                 if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() != VISIBLE) {
@@ -339,8 +349,15 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
             @Override
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+                if(HSConfig.optBoolean(false, "Application", "KeyboardToolBar", "GooglePlay", "ShowCameraAd")) {
+                    cameraAdInfoList = (List<Map<String, Object>>)HSConfig.getList("Application", "KeyboardToolBar", "GooglePlay", "CameraAd");
+
+                    Map<String, Object> item = cameraAdInfoList.get(random.nextInt(cameraAdInfoList.size()));
+                    gpAdAdapter.addCameraInfo(item);
+                }
             }
         });
+
     }
 
     private void logGoogleAdEvent(String action) {
@@ -349,7 +366,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
 
     public void showGoogleAdBar() {
-
         if (keyboardPanelSwitchContainer == null) {
             return;
         }
@@ -405,6 +421,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (keyboardPanelSwitchContainer == null) {
             return;
         }
+        keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
 
         if (bannerAdSessionList == null || bannerAdSessionList.size() < 1) {
             return;

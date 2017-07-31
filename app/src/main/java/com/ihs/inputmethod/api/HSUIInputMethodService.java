@@ -25,6 +25,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.adpanel.KeyboardGooglePlayAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
@@ -47,10 +48,9 @@ import java.util.List;
 public abstract class HSUIInputMethodService extends HSInputMethodService {
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
     private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
+    private static final String GOOGLE_SEARCH_BAR_PACKAGE_NAME = "com.google.android.googlequicksearchbox";
     private static final String HS_SHOW_KEYBOARD_WINDOW = "hs.inputmethod.framework.api.SHOW_INPUTMETHOD";
     public static final String HS_NOTIFICATION_START_INPUT_INSIDE_CUSTOM_SEARCH_EDIT_TEXT = "CustomSearchEditText";
-    private boolean isFirstKeyboardWindowShow = true;
-    private boolean isFlurryStarted = false;
 
     private InputConnection insideConnection = null;
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -77,7 +77,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             } else if (eventName.equals(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE)) {
                 onFinishInputInside();
             } else if (eventName.equals(HS_SHOW_KEYBOARD_WINDOW)) {
-                if (inPlayStore()) {
+                if (shouldShowGoogleAD()) {
                     getKeyboardPanelMananger().logCustomizeBarShowed();
                 }
             }
@@ -101,7 +101,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
         openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
         closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Close");
-        keyboardGooglePlayAdManager = new KeyboardGooglePlayAdManager(HSApplication.getContext().getString(R.string.ad_placement_themetryad));
+        keyboardGooglePlayAdManager = new KeyboardGooglePlayAdManager(HSApplication.getContext().getString(R.string.ad_placement_google_play_dialog_ad));
     }
 
     @Override
@@ -116,9 +116,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                     }
                 }
                 HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
-                if (!HSConfig.optBoolean(false, "Application", "DisableFlurryTest")) {
-                    HSAnalytics.logEvent("Spring_Trigger_keyboard");
-                }
             } else {
                 if (isInRightAppForBackAd()) {
                     HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
@@ -376,6 +373,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 && !currentAppPackageName.equals(this.getPackageName())
                 && !currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 进入Google Play
             keyboardGooglePlayAdManager.loadAndShowAdIfConditionSatisfied();
+            getKeyboardPanelMananger().showGoogleAdBar();
         } else if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
                 && !editorInfo.packageName.equals(this.getPackageName())
                 && !editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 离开Google Play
@@ -389,35 +387,23 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public void onKeyboardWindowShow() {
         super.onKeyboardWindowShow();
-        if (!inPlayStore()) {
-            getKeyboardPanelMananger().showBannerAdBar();
-        }else {
+        if (shouldShowGoogleAD()) {
             getKeyboardPanelMananger().showGoogleAdBar();
-        }
-
-        if (!HSConfig.optBoolean(false, "Application", "DisableFlurryTest")) {
-            // 第一次不开启Flurry，防止Crash同时RemoteConfig取不到
-            if (isFirstKeyboardWindowShow) {
-                isFirstKeyboardWindowShow = false;
-            } else {
-                HSAnalytics.startFlurry();
-                isFlurryStarted = true;
-            }
+        } else {
+            getKeyboardPanelMananger().showBannerAdBar();
         }
     }
+
 
     @Override
     public void onKeyboardWindowHide() {
-        getKeyboardPanelMananger().removeCustomizeBar();
-
-        if (isFlurryStarted) {
-            HSAnalytics.stopFlurry();
-            isFlurryStarted = false;
+        if (!shouldShowGoogleAD()) {
+            getKeyboardPanelMananger().removeCustomizeBar();
         }
     }
 
-    private boolean inPlayStore() {
-        return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME);
+    private boolean shouldShowGoogleAD() {
+        return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME) || TextUtils.equals(currentAppPackageName, GOOGLE_SEARCH_BAR_PACKAGE_NAME);
     }
 
     @Override
@@ -425,7 +411,21 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    @Override
+    public void onCodeInput(int codePoint, int x, int y, boolean isKeyRepeat) {
+        try {
+            if (codePoint == '\n' && currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(this.getCurrentInputConnection().getTextBeforeCursor(100, 0));
+                sb.append(this.getCurrentInputConnection().getTextAfterCursor(100, 0));
+                String text = sb.toString();
+                HSLog.d("Key enter pressed in google play.");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_googleplay_search_content", text);
+            }
+        } catch (Exception e) {
+            HSLog.d("Failed to log key enter in google play.");
+        }
 
-
-
+        super.onCodeInput(codePoint, x, y, isKeyRepeat);
+    }
 }

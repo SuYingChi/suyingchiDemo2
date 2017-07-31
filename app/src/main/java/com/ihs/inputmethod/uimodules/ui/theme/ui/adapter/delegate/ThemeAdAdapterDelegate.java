@@ -112,7 +112,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 			cardView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					ChargingManagerUtil.enableCharging(false,"card");
+					ChargingManagerUtil.enableCharging(false);
 					themeAdOnClickListener.onThemeAdClick(position);
 					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_click");
 				}

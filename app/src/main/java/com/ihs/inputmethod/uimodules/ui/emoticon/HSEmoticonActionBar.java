@@ -275,7 +275,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                 keyboardActionListener.showPanel(KeyboardPanel.class);
                 keyboardActionListener.setBarVisibility(VISIBLE);
                 keyboardActionListener = null;
-//                HSGlobalNotificationCenter.sendNotification(com.ihs.inputmethod.uimodules.constants.MasterConstants.HS_NOTIFICATION_RESET_EDIT_INFO);
             } else if (tag instanceof Integer && (Integer) tag == Constants.CODE_DELETE) {
                 HSInputMethod.deleteBackward();
             }

@@ -33,9 +33,7 @@ public final class SoundProvider extends BaseThemeItemProvider<KCSoundElement, B
 	@NonNull
 	@Override
 	protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-		BaseItemHolder v= super.onCreateViewHolder(inflater, parent);
-//		v.mProgressView.setDrawCircle(true);
-		return v;
+		return new BaseItemHolder(inflater.inflate(R.layout.ct_item_sound, null));
 	}
 
 	@Override

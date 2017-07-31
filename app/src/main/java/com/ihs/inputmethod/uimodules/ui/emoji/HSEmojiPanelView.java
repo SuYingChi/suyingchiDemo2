@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
@@ -142,6 +143,7 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 		HSInputMethod.inputText(key.getLabel());
 
 		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(HSGoogleAnalyticsConstants.GA_PARAM_ACTION_EMOJI_INPUT, key.getLabel());
+		HSAnalytics.logEvent("emoji_input", "Value", key.getLabel());
 	}
 
 	public void showPanelView() {

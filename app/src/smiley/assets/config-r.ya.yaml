@@ -1,7 +1,7 @@
 libCommons:
   RemoteConfig:
     PlistFile: "Local.ic"
-    PlistUrl: "http://cdn.emoji.mobi/androidemojikeyboard/configs/config-emojikeyboard-2.0.2.ic"
+    PlistUrl: "http://cdn.emoji.mobi/androidemojikeyboard/configs/config-emojikeyboard-2.0.3.ic"
   Analytics:
       FlurryKey: "FC2GWXDVFTZHFK7KX6KV"
       FacebookID: "1474873346171463"
@@ -32,7 +32,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.ic"
-    RemoteUrl: "http://cdn.emoji.mobi/androidemojikeyboard/alerts/emojikeyboard-2.0.2-alerts.ic"
+    RemoteUrl: "http://cdn.emoji.mobi/androidemojikeyboard/alerts/emojikeyboard-2.0.3-alerts.ic"
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"

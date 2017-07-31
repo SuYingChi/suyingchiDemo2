@@ -280,7 +280,7 @@ public final class HSThemeSelectPanel extends BasePanel {
 		}
 		newThemePromptView.setPromptText(tipMessage);
 		newThemePromptView.prepareShowBelow(recycler, tipViewUpViewPosition);
-		HSThemeNewTipController.getInstance().setTypeViewed(currentShowTipType);
+		HSThemeNewTipController.getInstance().clearNewTip();
 	}
 
 	@Override

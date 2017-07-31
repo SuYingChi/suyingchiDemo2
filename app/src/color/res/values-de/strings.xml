@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--deep link-->
+    <string name="deeplink_key_word">RainbowKey - Bring mit personalisierten Designs, GIFs und Schriftarten Farbe in deine Tastatur.</string>
+    <string name="deeplink_description">Rainbow Keyboard description</string>
+</resources>

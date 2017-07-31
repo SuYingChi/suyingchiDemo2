@@ -16,6 +16,8 @@ import com.keyboard.core.themes.custom.KCCustomThemeHelper;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 /**
  * Created by chenyuanming on 31/10/2016.
@@ -33,7 +35,7 @@ public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElem
     }
 
     public static Drawable getButtonStyleBackgroundDrawable(int backgroundMainColor) {
-        Bitmap bitmap = KCCustomThemeHelper.getLocalCustomElementBitmap(KCButtonStyleElement.class, "keyboard_custom_theme_button_style_bg.png");
+        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.DRAWABLE.wrap("" + R.drawable.keyboard_custom_theme_button_style_bg));
         if (bitmap != null) {
             BitmapDrawable drawable = new BitmapDrawable(bitmap);
             drawable.setColorFilter(backgroundMainColor, PorterDuff.Mode.SRC_IN);

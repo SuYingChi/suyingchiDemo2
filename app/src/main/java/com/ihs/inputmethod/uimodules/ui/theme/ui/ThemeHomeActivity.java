@@ -3,12 +3,14 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
+import com.artw.lockscreen.LockerEnableDialog;
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
@@ -49,13 +53,13 @@ import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
-import com.ihs.keyboardutils.alerts.ExitAlert;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.ihs.keyboardutils.permission.PermissionFloatWindow;
+import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
-import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
@@ -73,7 +77,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
     private static final int keyboardActivationFromHome = 11;
-    private static final int keyboardActivationFromHomeWithTrial = 12;
+    public static final int keyboardActivationFromHomeWithTrial = 12;
 
     private static final int GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME = 3;
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
@@ -93,7 +97,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private ThemeHomeActivity context = ThemeHomeActivity.this;
     private KeyboardActivationProcessor keyboardActivationProcessor;
     private View apkUpdateTip;
-    private ExitAlert exitAlert;
     private boolean isResumeOnCreate = true;
 
     private AcbInterstitialAdLoader acbInterstitialAdLoader;
@@ -154,7 +157,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // Init custom theme res in case we fail before
         //HSKeyboardThemeManager.initCustomThemeResource();
-        KCCustomThemeManager.getInstance();
+//        KCCustomThemeManager.getInstance();
 
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -269,7 +272,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
                                 isFromUsageAccessActivity = true;
                             }
-                            PermissionUtils.enableUsageAccessPermission();
+                            enableUsageAccessPermission();
                             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
                         }
                     })
@@ -287,8 +290,20 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
-        exitAlert = new ExitAlert(ThemeHomeActivity.this, getString(R.string.ad_placement_themetryad));
         onNewIntent(getIntent());
+    }
+
+    private void enableUsageAccessPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            }
+            HSApplication.getContext().startActivity(intent);
+            PermissionFloatWindow.getInstance().createPermissionTip(PermissionTip.TYPE_TEXT_USAGE);
+        }
     }
 
     @Override
@@ -343,7 +358,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         refreshApkUpdateViews();
-        HSThemeNewTipController.getInstance().setTypeAllRead(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
+        HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
 
         // Place here to get a right session id from appframework
         if (isResumeOnCreate) {
@@ -453,15 +468,57 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
-    private void showTrialKeyboardDialog(int activationCode) {
-        if (trialKeyboardDialog == null) {
-            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, this);
-        }
-        if (activationCode == keyboardActivationFromCustom) {
-            trialKeyboardDialog.show(this, activationCode, false);
-        } else {
-            trialKeyboardDialog.show(this, activationCode, true);
-        }
+    private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
+        final KeyboardActivationProcessor processor =
+                new KeyboardActivationProcessor(ThemeHomeActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
+                    @Override
+                    public void activeDialogShowing() {
+
+                    }
+
+                    @Override
+                    public void keyboardSelected(int requestCode) {
+                        if (requestCode == activationCode) {
+                            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing() ) {
+                                LockerEnableDialog dialog = new LockerEnableDialog(ThemeHomeActivity.this, R.style.LockerEnableDialogTheme);
+                                dialog.show();
+                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        if (trialKeyboardDialog == null) {
+                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
+                                        }
+                                        if (activationCode == keyboardActivationFromCustom) {
+                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
+                                        } else {
+                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
+                                        }
+                                    }
+                                });
+                            } else {
+                                if (trialKeyboardDialog == null) {
+                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
+                                }
+                                if (activationCode == keyboardActivationFromCustom) {
+                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
+                                } else {
+                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void activeDialogCanceled() {
+
+                    }
+
+                    @Override
+                    public void activeDialogDismissed() {
+
+                    }
+                });
+        processor.activateKeyboard(ThemeHomeActivity.this, true, activationCode);
     }
 
     @Override
@@ -624,16 +681,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        exitAlert.setShowAd(!RemoveAdsManager.getInstance().isRemoveAdsPurchased());
-        if (!exitAlert.show()) {
-            HSAnalytics.logEvent("app_quit_way", "app_quit_way", "back");
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_quit_way", "back");
-            super.onBackPressed();
-        }
-    }
-
     private boolean showEnableChargingAlertIfNeeded() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
@@ -647,7 +694,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false, "alert");
+                        ChargingManagerUtil.enableCharging(false);
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });

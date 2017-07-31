@@ -1,9 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +10,9 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
-import com.ihs.commons.connection.HSHttpConnection;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -28,16 +20,13 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.io.File;
 import java.util.List;
-import java.util.zip.ZipException;
 
 /**
  * Created by yanxia on 2017/6/8.
  */
 
 public class StickerViewPagerAdapter extends PagerAdapter {
-    private Handler handler = new Handler();
     private View firstView;
     private List<StickerGroup> needDownloadStickerGroupList;
     private LayoutInflater inflater;
@@ -138,7 +127,6 @@ public class StickerViewPagerAdapter extends PagerAdapter {
 
                 }
             });
-            final String stickerCategoryZipFilePath = StickerUtils.getStickerRootFolderPath() + "/" + stickerGroup.getStickerGroupName() + StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
             TextView downloadButton = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_button);
             downloadButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -147,56 +135,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                         return;
                     }
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
-                    final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
-                    Resources resources = HSApplication.getContext().getResources();
-                    Drawable thumbnailDrawable = sticker_download_preview.getDrawable();
-                    adLoadingView.configParams(null, thumbnailDrawable != null ? thumbnailDrawable : resources.getDrawable(R.drawable.ic_sticker_loading_image),
-                            resources.getString(R.string.sticker_downloading_label),
-                            resources.getString(R.string.sticker_downloading_successful),
-                            resources.getString(R.string.ad_placement_lucky),
-                            new AdLoadingView.OnAdBufferingListener() {
-                                @Override
-                                public void onDismiss(boolean downloadSuccess) {
-                                    if (downloadSuccess) {
-                                        if (stickerGroup.isStickerGroupDownloaded()) {
-                                            HSLog.d("sticker " + stickerGroup.getStickerGroupName() + " download succeed");
-                                        } else {
-                                            HSLog.e("sticker " + stickerGroup.getStickerGroupName() + " download error!");
-                                        }
-                                    } else {
-                                        // 没下载成功
-                                        HSHttpConnection connection = (HSHttpConnection) adLoadingView.getTag();
-                                        if (connection != null) {
-                                            connection.cancel();
-                                            HSFileUtils.delete(new File(stickerCategoryZipFilePath));
-                                        }
-                                    }
-                                }
-                            }, 2000, false);
-                    adLoadingView.showInDialog();
-
-                    HSHttpConnection connection = new HSHttpConnection(stickerGroup.getStickerGroupDownloadUri());
-                    connection.setDownloadFile(HSFileUtils.createNewFile(stickerCategoryZipFilePath));
-                    connection.setDataReceivedListener(new HSHttpConnection.OnDataReceivedListener() {
-                        @Override
-                        public void onDataReceived(HSHttpConnection hsHttpConnection, byte[] bytes, long received, long totalSize) {
-                            if (totalSize > 0) {
-                                final float percent = (float) received * 100 / totalSize;
-                                if (received >= totalSize) {
-                                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroup.getStickerGroupName());
-                                    unzipStickerGroup(stickerCategoryZipFilePath, stickerGroup);
-                                }
-                                handler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        adLoadingView.updateProgressPercent((int) percent);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    connection.startAsync();
-                    adLoadingView.setTag(connection);
+                    StickerDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroup, sticker_download_preview.getDrawable(), null);
                 }
             });
             container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -204,17 +143,6 @@ public class StickerViewPagerAdapter extends PagerAdapter {
         } else {
             container.addView(firstView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return firstView;
-        }
-    }
-
-    private void unzipStickerGroup(String stickerCategoryZipFilePath, StickerGroup stickerGroup) {
-        try {
-            // 下载成功 先解压好下载的zip
-            HSZipUtils.unzip(new File(stickerCategoryZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
-            StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
-        } catch (ZipException e) {
-            e.printStackTrace();
-            unzipStickerGroup(stickerCategoryZipFilePath, stickerGroup);
         }
     }
 }

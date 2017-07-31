@@ -35,6 +35,9 @@ import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -168,7 +171,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false, "saving");
+                        ChargingManagerUtil.enableCharging(false);
                         HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                     }
                 });
@@ -212,15 +215,15 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     public void show(Activity activity, int keyboardActivationRequestCode, boolean showAdOnDismiss) {
         switch (keyboardActivationRequestCode) {
-            case 10: // My Themes apply
+            case ThemeMenuUtils.keyboardActivationFromAdapter: // My Themes apply
                 HSAnalytics.logEvent("keyboard_try_viewed", "from", "appliedTheme");
                 HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "appliedTheme", null, null, null);
                 break;
-            case 12: // 新安装皮肤
+            case ThemeHomeActivity.keyboardActivationFromHomeWithTrial: // 新安装皮肤
                 HSAnalytics.logEvent("keyboard_try_viewed", "from", "externalTheme");
                 HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "externalTheme", null, null, null);
                 break;
-            case 15: // 自定义皮肤
+            case CustomThemeActivity.keyboardActivationFromCustom: // 自定义皮肤
                 HSAnalytics.logEvent("keyboard_try_viewed", "from", "customizedTheme");
                 HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "customizedTheme", null, null, null);
                 break;

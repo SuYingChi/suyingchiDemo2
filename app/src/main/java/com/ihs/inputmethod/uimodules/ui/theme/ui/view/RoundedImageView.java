@@ -44,7 +44,6 @@ import com.makeramen.roundedimageview.RoundedDrawable;
 @SuppressWarnings("UnusedDeclaration")
 public class RoundedImageView extends ImageView {
 
-    // MasterConstants for tile mode attributes
     private static final int TILE_MODE_UNDEFINED = -2;
     private static final int TILE_MODE_CLAMP = 0;
     private static final int TILE_MODE_REPEAT = 1;

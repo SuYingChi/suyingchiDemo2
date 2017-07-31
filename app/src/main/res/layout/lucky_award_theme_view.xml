@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.ihs.inputmethod.feature.common.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/lucky_game_theme_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:textStyle="bold"
             tools:text="Rlash Royale" />
 
-        <com.ihs.inputmethod.feature.common.TypefacedTextView
+        <com.ihs.feature.common.TypefacedTextView
             android:visibility="gone"
             android:id="@+id/lucky_game_theme_body"
             android:layout_width="280dp"

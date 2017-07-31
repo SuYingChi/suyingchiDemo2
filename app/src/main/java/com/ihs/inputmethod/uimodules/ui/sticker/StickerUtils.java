@@ -15,16 +15,18 @@ import android.support.v13.view.inputmethod.InputConnectionCompat;
 import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,6 +66,14 @@ public class StickerUtils {
         return HSConfig.getString("Application", "Server", "StickerDownloadBaseURL");
     }
 
+    private static String getStickerAssetsPath(Sticker sticker) {
+        return ASSETS_STICKER_FILE_PATH + "/" + sticker.getStickerGroupName() + "/" + sticker.getStickerName() + STICKER_IMAGE_PNG_SUFFIX;
+    }
+
+    private static String getStickerFilePath(Sticker sticker) {
+        return getStickerFolderPath(sticker.getStickerGroupName()) + "/" + sticker.getStickerName() + STICKER_IMAGE_PNG_SUFFIX;
+    }
+
     private static Map<String, List<String>> cachedDirectoryContents = new HashMap<>();
 
     private static boolean isFileInAssets(String directory, String file) {
@@ -101,8 +111,8 @@ public class StickerUtils {
 
     public static void share(final Sticker sticker, final String packageName) {
         if (!DirectoryUtils.isSDCardEnabled()) {
-            HSInputMethod.inputText(sticker.getStickerRemoteUri());
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "link");
+            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
+            //HSInputMethod.inputText(sticker.getStickerRemoteUri());
             return;
         }
 
@@ -122,8 +132,7 @@ public class StickerUtils {
                 }
             }
             if (pngSupported) {
-                copyStickerFileToSDCard(sticker, targetExternalFilePath);
-                addDifferentBackgroundForSticker(targetExternalFilePath, packageName, targetExternalFilePath);
+                addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
                 File uri = new File(targetExternalFilePath);
                 commitPNGImage(Uri.fromFile(uri), "");
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_png");
@@ -136,14 +145,13 @@ public class StickerUtils {
         switch (mode) {
             // image
             case MediaShareUtils.IMAGE_SHARE_MODE_INTENT:
-                copyStickerFileToSDCard(sticker, targetExternalFilePath);
-                addDifferentBackgroundForSticker(targetExternalFilePath, packageName, targetExternalFilePath);
+                addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
                 try {
                     MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetExternalFilePath)), mimeType, packageName);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "intent");
                 } catch (Exception e) {
-                    HSInputMethod.inputText(sticker.getStickerRemoteUri());
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "link");
+                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
+                    //HSInputMethod.inputText(sticker.getStickerRemoteUri());
                 }
                 break;
             // save to gallery
@@ -153,12 +161,12 @@ public class StickerUtils {
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "export");
                 break;
             case MediaShareUtils.IMAGE_SHARE_MODE_LINK:
-                HSInputMethod.inputText(sticker.getStickerRemoteUri());
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "link");
+                Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
+                //HSInputMethod.inputText(sticker.getStickerRemoteUri());
                 break;
             default:
-                HSInputMethod.inputText(sticker.getStickerRemoteUri());
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "link");
+                Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
+                //HSInputMethod.inputText(sticker.getStickerRemoteUri());
         }
     }
 
@@ -177,7 +185,7 @@ public class StickerUtils {
     private static void copyStickerFileToSDCard(Sticker sticker, String destinationPath) {
         if (sticker.getStickerUri().startsWith("assets:")) {
             AssetManager assetManager = HSApplication.getContext().getAssets();
-            String stickerAssetPath = StickerUtils.ASSETS_STICKER_FILE_PATH + "/" + sticker.getStickerGroupName() + "/" + sticker.getStickerName() + StickerUtils.STICKER_IMAGE_PNG_SUFFIX;
+            String stickerAssetPath = getStickerAssetsPath(sticker);
             try {
                 InputStream inputStream = assetManager.open(stickerAssetPath);
                 HSFileUtils.copyFile(inputStream, new File(destinationPath));
@@ -185,23 +193,41 @@ public class StickerUtils {
                 e.printStackTrace();
             }
         } else if (sticker.getStickerUri().startsWith("file:")) {
-            String stickerDownloadedPath = StickerUtils.getStickerFolderPath(sticker.getStickerGroupName()) + "/" + sticker.getStickerName() + StickerUtils.STICKER_IMAGE_PNG_SUFFIX;
+            String stickerDownloadedPath = getStickerFilePath(sticker);
             HSFileUtils.copyFile(new File(stickerDownloadedPath), new File(destinationPath));
         }
     }
 
-    private static void addDifferentBackgroundForSticker(String stickerFilePath, String packageName, String outputFilePath) {
+    private static void addDifferentBackgroundForSticker(Sticker sticker, String packageName, String outputFilePath) {
         FileOutputStream out = null;
         BitmapFactory.Options option = new BitmapFactory.Options();
         option.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(stickerFilePath, option); // 获取PNG图片的宽高信息
+        // 获取PNG图片的宽高信息
+        if (sticker.getStickerUri().startsWith("assets:")) {
+            String stickerAssetPath = getStickerAssetsPath(sticker);
+            InputStream inputStream = null;
+            try {
+                inputStream = HSApplication.getContext().getAssets().open(stickerAssetPath);
+                BitmapFactory.decodeStream(inputStream, null, option);
+            } catch (IOException e) {
+                e.printStackTrace();
+                copyStickerFileToSDCard(sticker, outputFilePath);
+                return;
+            }
+        } else if (sticker.getStickerUri().startsWith("file:")) {
+            String stickerDownloadedPath = getStickerFilePath(sticker);
+            BitmapFactory.decodeFile(stickerDownloadedPath, option);
+        }
         int height = option.outHeight;
         int width = option.outWidth;
+
         int backgroundWidth = (int) (height * STICKER_BACKGROUND_ASPECT_RATIO); // 背景宽度
         Bitmap backgroundBitmap = createBitmapAndGcIfNecessary(backgroundWidth, height); //创建背景图
-        option.inJustDecodeBounds = false;
-        //  TODO: 在decodeFile中为 option.outHeight 以及 option.outWidth 设置具体数值没有效果，故创建两次bitmap, option.inSampleSize 类型为int, 无法达到需求
-        Bitmap stickerShareBitmapTemp = BitmapFactory.decodeFile(stickerFilePath, option);
+        Bitmap stickerShareBitmapTemp = ImageLoader.getInstance().loadImageSync(sticker.getStickerUri());
+        if (stickerShareBitmapTemp == null) {
+            copyStickerFileToSDCard(sticker, outputFilePath);
+            return;
+        }
         Bitmap stickerShareBitmap = Bitmap.createScaledBitmap(stickerShareBitmapTemp, (int) (width * STICKER_ZOOM_RATIO), (int) (height * STICKER_ZOOM_RATIO), true);
         Canvas canvas = new Canvas(backgroundBitmap);
 
@@ -220,6 +246,7 @@ public class StickerUtils {
             backgroundBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
         } catch (Exception e) {
             e.printStackTrace();
+            copyStickerFileToSDCard(sticker, outputFilePath);
         } finally {
             try {
                 if (out != null) {

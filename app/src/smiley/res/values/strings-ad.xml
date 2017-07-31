@@ -18,7 +18,7 @@
     <string name="ad_placement_charging">Smiley_A(NativeAds)Charging</string>
     <string name="ad_placement_exit_alert_dialog">Smiley_A(NativeAds)QuitAlert</string>
     <string name="ad_placement_google_play_ad">Smiley_A(NativeAds)GooglePlayIcon</string>
-
+    <string name="ad_placement_gift_ad">Smiley_A(NativeAds)KeyboardGiftAd</string>
 
     <string name="placement_full_screen_trial_keyboard">Smiley_A(InterstitialAds)TrialKeyboardFullScreenAd</string>
     <string name="placement_full_screen_open_keyboard">Smiley_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
@@ -43,7 +43,10 @@
 
     <string name="theme_ad_placement_theme_ad">Smiley_A(NativeAds)ThemeAd</string>
     <string name="ad_placement_lucky">Smiley_A(NativeAds)KeyboardLuckyAd</string>
-
     <string name="ad_placement_locker">Smiley_A(NativeAds)Fuse</string>
+    <string name="ad_placement_google_play_dialog_ad">Smiley_A(NativeAds)GooglePlayNative</string>
+    <string name="ad_placement_keyboard_banner">Smiley_A(NativeAds)KeyboardBanner</string>
 
+    <string name="ad_placement_result_page">Smiley_A(NativeAds)BoostDone</string>
+    <string name="ad_placement_call_assist">Smiley_A(NativeAds)ThemeTryAd</string>
 </resources>
