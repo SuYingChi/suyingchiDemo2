@@ -25,7 +25,6 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.analytics.publisher.HSPublisherMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
@@ -84,10 +83,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 onSessionStart();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
-            } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
-                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
-                    KCNotificationManager.getInstance().removeNotificationEvent("Charging");
-                }
             }
         }
     };
@@ -182,7 +177,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
 
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 

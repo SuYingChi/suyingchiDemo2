@@ -6,6 +6,72 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>LocalNotifications</key>
+			<array>
+				<dict>
+					<key>ActionType</key>
+					<string>Charging</string>
+					<key>IconUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
+					<key>Message</key>
+					<array>
+						<string>Enable smart charging to prevent overcharging efficiently.</string>
+					</array>
+					<key>Title</key>
+					<string>Enable Smart Charging</string>
+				</dict>
+				<dict>
+					<key>ActionType</key>
+					<string>CustomizedTheme</string>
+					<key>IconUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
+					<key>Message</key>
+					<array>
+						<string>Nice photo! Would you like to set it as background? </string>
+					</array>
+					<key>Title</key>
+					<string>Got new pictures?</string>
+					<key>Name</key>
+					<string>name1</string>
+				</dict>
+				<dict>
+					<key>ActionType</key>
+					<string>CustomizedTheme</string>
+					<key>IconUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/bg/Sakura.png</string>
+					<key>Message</key>
+					<array>
+						<string>Wanna have a new look? 😎✨ Come and create new keyboard &gt;&gt;</string>
+					</array>
+					<key>Title</key>
+					<string>Dress your keyboard!</string>
+					<key>Name</key>
+					<string>name2</string>
+				</dict>
+				<dict>
+					<key>IconUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>BgUrl</key>
+					<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+					<key>Name</key>
+					<string>com.keyboard.theme.panda</string>
+					<key>ActionType</key>
+					<string>Theme</string>
+					<key>Message</key>
+					<array>
+						<string>Guess you like Panda？Come and design your keyboard!</string>
+						<string>Decorate your keyboard with exclusive Panda!</string>
+					</array>
+					<key>Title</key>
+					<string>New theme Panda available!</string>
+				</dict>
+			</array>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -569,35 +635,6 @@
 					<true/>
 					<key>ShowCameraAd</key>
 					<true/>
-				</dict>
-			</dict>
-			<key>LocalNotifications</key>
-			<dict>
-				<key>ChangeTheme</key>
-				<dict>
-					<key>Interval</key>
-					<integer>3</integer>
-					<key>MaxShowCount</key>
-					<integer>5</integer>
-					<key>Message</key>
-					<string>Time to decorate your own keyboard!</string>
-					<key>Priority</key>
-					<integer>1</integer>
-					<key>Title</key>
-					<string>Got new pictures?</string>
-				</dict>
-				<key>Charging</key>
-				<dict>
-					<key>Interval</key>
-					<integer>3</integer>
-					<key>MaxShowCount</key>
-					<integer>3</integer>
-					<key>Message</key>
-					<string>Enable smart charging to prevent overcharging efficiently.</string>
-					<key>Priority</key>
-					<integer>2</integer>
-					<key>Title</key>
-					<string>Enable Smart Charging</string>
 				</dict>
 			</dict>
 			<key>Locker</key>
@@ -6000,7 +6037,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>0.10000000000000001</real>
+								<real>0.1</real>
 							</dict>
 						</dict>
 						<key>ids</key>
