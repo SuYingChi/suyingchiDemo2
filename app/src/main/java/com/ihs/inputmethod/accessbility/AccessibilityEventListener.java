@@ -10,7 +10,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.inputmethod.InputMethodManager;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.device.accessibility.service.IAccEventListener;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 
@@ -47,7 +46,6 @@ public class AccessibilityEventListener implements IAccEventListener {
     @Override
     public void onAvailable() throws RemoteException {
 
-        HSLog.e("accessbility enabled" + this.toString());
         logOneTimeGA(app_permission_accessibility_allowed);
 
         switch (modeCode) {

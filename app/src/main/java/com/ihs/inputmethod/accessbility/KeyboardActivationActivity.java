@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -51,6 +52,7 @@ import static com.ihs.inputmethod.accessbility.AccGALogger.app_setting_up_page_v
 import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
 import static com.ihs.inputmethod.uimodules.R.id.bt_step_one;
 import static com.ihs.inputmethod.uimodules.R.id.view_img_title;
+import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
 
 
 public class KeyboardActivationActivity extends HSActivity {
@@ -120,11 +122,11 @@ public class KeyboardActivationActivity extends HSActivity {
         } catch (Exception e) {
         }
 
-        if(videoView!=null){
-            try{
+        if (videoView != null) {
+            try {
                 videoView.stopPlayback();
                 videoView = null;
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -135,7 +137,7 @@ public class KeyboardActivationActivity extends HSActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean oneTapPageViewed = AccGALogger.isOneTapPageViewed();
-        if (oneTapPageViewed || Build.VERSION.SDK_INT < 17) {
+        if (oneTapPageViewed || Build.VERSION.SDK_INT < 17 || HSPreferenceHelper.getDefault().contains(PREF_THEME_HOME_SHOWED)) {
             skipPage = true;
             Intent actIntent = new Intent();
             actIntent.putExtras(getIntent());
@@ -171,10 +173,9 @@ public class KeyboardActivationActivity extends HSActivity {
 //        });
 
 
-
         if (findViewById(view_img_title) != null) {
             scaleTitleImage(findViewById(view_img_title));
-        }else{
+        } else {
             WindowManager wm = this.getWindowManager();
             Display display = wm.getDefaultDisplay();
             Point size = new Point();
@@ -215,7 +216,6 @@ public class KeyboardActivationActivity extends HSActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeReceiver, filter);
-
 
 
         logOneTimeGA(app_accessibility_setkey_screen_viewed);
