@@ -61,16 +61,16 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         int itemViewType = getItemViewType(position);
         if (itemViewType == SoftGameDisplayItem.TYPE_AD) {
-            HSLog.d("xiayan onBindViewHolder item is Ad.");
+            HSLog.d("current item is Ad.");
         } else {
             final SoftGameItemViewHolder softGameItemViewHolder = (SoftGameItemViewHolder) holder;
             if (position >= softGameDisplayItemList.size()) {
                 return;
             }
             final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(position);
-            ImageLoader.getInstance().displayImage(softGameDisplayItem.getJsonObject().optString("thumbBig"), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
-            softGameItemViewHolder.softGameTitle.setText(softGameDisplayItem.getJsonObject().optString("title"));
-            softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getJsonObject().optString("type"));
+            ImageLoader.getInstance().displayImage(softGameDisplayItem.getThumbBig(), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
+            softGameItemViewHolder.softGameTitle.setText(softGameDisplayItem.getTitle());
+            softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getTypeText());
             softGameItemViewHolder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.feature.common.VectorCompat;
@@ -32,7 +33,6 @@ import static android.widget.RelativeLayout.ALIGN_PARENT_RIGHT;
 public class SoftGameButton extends FrameLayout {
     private ImageView buttonIcon;
     private View newTipDotView; //小红点
-    private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
 
     public SoftGameButton(@NonNull Context context) {
         super(context);
@@ -64,7 +64,7 @@ public class SoftGameButton extends FrameLayout {
             @Override
             public void onClick(View view) {
                 //跳转到详情页
-                showNewMark();
+                HSAnalytics.logEvent("keyboard_game_clicked");
                 SoftGameDisplayHelper.DisplaySoftGames(getContext().getString(R.string.ad_placement_themetryad));
             }
         });

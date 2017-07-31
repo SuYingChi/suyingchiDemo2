@@ -1,5 +1,8 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
+
+import android.text.TextUtils;
+
 import org.json.JSONObject;
 
 /**
@@ -26,5 +29,34 @@ public class SoftGameDisplayItem {
 
     public int getType() {
         return type;
+    }
+
+    public String getThumbBig() {
+        if (jsonObject == null) {
+            return "";
+        } else {
+            return jsonObject.optString("thumbBig");
+        }
+    }
+
+    public String getTitle() {
+        if (jsonObject == null) {
+            return "";
+        } else {
+            String title = jsonObject.optString("title");
+            if (TextUtils.isEmpty(title)) {
+                return jsonObject.optString("project");
+            } else {
+                return jsonObject.optString("title");
+            }
+        }
+    }
+
+    public String getTypeText() {
+        if (jsonObject == null) {
+            return "";
+        } else {
+            return jsonObject.optString("type");
+        }
     }
 }

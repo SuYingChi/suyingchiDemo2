@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -23,7 +24,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import softgames.de.softgamesapilib.GameEventHandler;
 import softgames.de.softgamesapilib.GameLoadedCallback;
 import softgames.de.softgamesapilib.SoftgamesSDK;
 import softgames.de.softgamesapilib.SoftgamesSearchConfig;
@@ -46,10 +46,10 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Hot Games");
         setContentView(R.layout.activity_soft_game_display);
         Intent intent = getIntent();
         placementName = intent.getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
-        HSLog.d("xiayan placement name = " + placementName);
 
         recyclerView = (RecyclerView) findViewById(R.id.soft_game_main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -106,26 +106,7 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
 
     @Override
     public void OnSoftGameItemClick(SoftGameDisplayItem softGameDisplayItem) {
-        SoftgamesSDK.openGame(softGameDisplayItem.getJsonObject(), SoftGameDisplayActivity.this, SoftGameManager.getPartnerId(), new GameEventHandler() {
-            @Override
-            public void levelFinished(int i, float v) {
-
-            }
-
-            @Override
-            public void levelUp(int i, float v) {
-
-            }
-
-            @Override
-            public void gameOver(int i, float v) {
-
-            }
-
-            @Override
-            public void levelStarted(int i) {
-
-            }
-        });
+        HSAnalytics.logEvent("game_play_clicked", "game_play_clicked", softGameDisplayItem.getTitle());
+        SoftgamesSDK.openGame(softGameDisplayItem.getJsonObject(), SoftGameDisplayActivity.this, SoftGameManager.getPartnerId(), null);
     }
 }
