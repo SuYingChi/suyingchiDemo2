@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -39,6 +41,7 @@ import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -83,6 +86,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
         }
     };
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     private static KeyboardPanelManager getKeyboardPanelMananger() {
         return (KeyboardPanelManager) keyboardPanelSwitcher;
@@ -392,6 +396,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         } else {
             getKeyboardPanelMananger().showBannerAdBar();
         }
+
+        // Stop clearing image loader cache
+        handler.removeCallbacks(clearImageLoaderCacheRunnable);
     }
 
 
@@ -400,11 +407,26 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         if (!shouldShowGoogleAD()) {
             getKeyboardPanelMananger().removeCustomizeBar();
         }
+
+        // Start clearing image loader cache
+        handler.postDelayed(clearImageLoaderCacheRunnable, HSApplication.isDebugging ? 5 * 1000 : 5 * 60 * 1000);
     }
 
     private boolean shouldShowGoogleAD() {
         return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME) || TextUtils.equals(currentAppPackageName, GOOGLE_SEARCH_BAR_PACKAGE_NAME);
     }
+
+    private static Runnable clearImageLoaderCacheRunnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                ImageLoader.getInstance().clearMemoryCache();
+                System.gc();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
