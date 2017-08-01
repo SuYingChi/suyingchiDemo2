@@ -51,7 +51,7 @@ public class SoftGameButton extends FrameLayout {
 
     private void initView() {
         buttonIcon = new ImageView(getContext());
-        int padding = HSDisplayUtils.dip2px(4);
+        int padding = HSDisplayUtils.dip2px(6);
         buttonIcon.setPadding(padding, padding, padding, padding);
         buttonIcon.setImageDrawable(VectorCompat.createVectorDrawable(getContext(), R.drawable.soft_game_button_icon));
 

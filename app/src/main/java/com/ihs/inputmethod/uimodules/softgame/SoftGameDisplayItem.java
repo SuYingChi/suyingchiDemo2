@@ -10,25 +10,14 @@ import org.json.JSONObject;
  */
 
 public class SoftGameDisplayItem {
-    public static final int TYPE_GAME = 0;
-    public static final int TYPE_AD = 1;
     private JSONObject jsonObject;
-    private int type;
 
-    public SoftGameDisplayItem(int type) {
-        this.type = type;
-    }
-
-    public void setJsonObject(JSONObject jsonObject) {
+    public SoftGameDisplayItem(JSONObject jsonObject) {
         this.jsonObject = jsonObject;
     }
 
     public JSONObject getJsonObject() {
         return jsonObject;
-    }
-
-    public int getType() {
-        return type;
     }
 
     public String getThumbBig() {

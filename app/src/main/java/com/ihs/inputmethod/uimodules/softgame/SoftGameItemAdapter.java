@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,7 +38,8 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<SoftGameDisplayItem> softGameDisplayItemList;
     private OnSoftGameItemClickListener softGameItemClickListener;
     private NativeAdView nativeAdView;
-
+    private static final int TYPE_GAME = 0;
+    private static final int TYPE_AD = 1;
 
     public SoftGameItemAdapter(List<SoftGameDisplayItem> softGameDisplayItemList, OnSoftGameItemClickListener softGameItemClickListener, NativeAdView nativeAdView) {
         this.softGameDisplayItemList = softGameDisplayItemList;
@@ -48,10 +50,10 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = null;
-        if (viewType == SoftGameDisplayItem.TYPE_AD) {
+        if (viewType == TYPE_AD) {
             viewHolder = new ViewHolder(nativeAdView) {
             };
-        } else if (viewType == SoftGameDisplayItem.TYPE_GAME) {
+        } else if (viewType == TYPE_GAME) {
             viewHolder = new SoftGameItemViewHolder(LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.soft_game_item_view, parent, false));
         }
         return viewHolder;
@@ -60,12 +62,15 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         int itemViewType = getItemViewType(position);
-        if (itemViewType == SoftGameDisplayItem.TYPE_AD) {
+        if (itemViewType == TYPE_AD) {
             HSLog.d("current item is Ad.");
         } else {
             final SoftGameItemViewHolder softGameItemViewHolder = (SoftGameItemViewHolder) holder;
-            if (position >= softGameDisplayItemList.size()) {
+            if (softGameDisplayItemList.isEmpty()) {
                 return;
+            }
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                position--;
             }
             final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(position);
             ImageLoader.getInstance().displayImage(softGameDisplayItem.getThumbBig(), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
@@ -89,37 +94,23 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public int getItemCount() {
-        int adCount = 0;
-        for (SoftGameDisplayItem softGameDisplayItem : softGameDisplayItemList) {
-            if (softGameDisplayItem.getType() == SoftGameDisplayItem.TYPE_AD) {
-                adCount++;
-            }
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return softGameDisplayItemList.size() + 1;
+        } else {
+            return softGameDisplayItemList.size();
         }
-        return SoftGameDisplayActivity.SOFT_GAME_LOAD_COUNT + adCount;
     }
 
-    /**
-     * Return the view type of the item at <code>position</code> for the purposes
-     * of view recycling.
-     * <p>
-     * <p>The default implementation of this method returns 0, making the assumption of
-     * a single view type for the adapter. Unlike ListView adapters, types need not
-     * be contiguous. Consider using id resources to uniquely identify item view types.
-     *
-     * @param position position to query
-     * @return integer value identifying the type of the view needed to represent the item at
-     * <code>position</code>. Type codes need not be contiguous.
-     */
     @Override
     public int getItemViewType(int position) {
-        if (softGameDisplayItemList.isEmpty()) {
-            return SoftGameDisplayItem.TYPE_GAME;
-        } else {
-            if (softGameDisplayItemList.size() > position) {
-                return softGameDisplayItemList.get(position).getType();
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            if (position == 0) {
+                return TYPE_AD;
             } else {
-                return SoftGameDisplayItem.TYPE_GAME;
+                return TYPE_GAME;
             }
+        } else {
+            return TYPE_GAME;
         }
     }
 

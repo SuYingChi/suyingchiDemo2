@@ -22,6 +22,7 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import softgames.de.softgamesapilib.GameLoadedCallback;
@@ -63,21 +64,25 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
         final SoftgamesSearchConfig sgConfig = new SoftgamesSearchConfig(SoftGameManager.getPartnerId());
         sgConfig.setSortByPopularity(true);
         sgConfig.setLimit(SOFT_GAME_LOAD_COUNT);
+
+        final WeakReference<SoftGameDisplayActivity> weakThis = new WeakReference<>(this);
         SoftgamesSDK.loadGamesInfo(sgConfig, new GameLoadedCallback() {
             @Override
             public void onGamesLoaded(JSONObject[] jsonObjects) {
                 for (JSONObject jsonObject : jsonObjects) {
-                    HSLog.d("loadPopularGames: " + jsonObject.toString());
-                    SoftGameDisplayItem softGameDisplayItem = new SoftGameDisplayItem(SoftGameDisplayItem.TYPE_GAME);
-                    softGameDisplayItem.setJsonObject(jsonObject);
-                    softGameDisplayItemArrayList.add(softGameDisplayItem);
-                }
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        softGameItemAdapter.refreshData(softGameDisplayItemArrayList);
+                    SoftGameDisplayItem softGameDisplayItem = new SoftGameDisplayItem(jsonObject);
+                    if (weakThis.get() != null) {
+                        weakThis.get().softGameDisplayItemArrayList.add(softGameDisplayItem);
                     }
-                });
+                }
+                if (weakThis.get().handler != null) {
+                    weakThis.get().handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            softGameItemAdapter.refreshData(softGameDisplayItemArrayList);
+                        }
+                    });
+                }
             }
         });
     }
@@ -91,7 +96,6 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
         loadingView.setGravity(Gravity.CENTER);
         nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
         nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
-        softGameDisplayItemArrayList.add(new SoftGameDisplayItem(SoftGameDisplayItem.TYPE_AD));
     }
 
     @Override
