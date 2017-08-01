@@ -41,7 +41,7 @@ public class SoftGameDisplayItem {
         }
     }
 
-    public String getTypeText() {
+    public String getType() {
         if (jsonObject == null) {
             return "";
         } else {

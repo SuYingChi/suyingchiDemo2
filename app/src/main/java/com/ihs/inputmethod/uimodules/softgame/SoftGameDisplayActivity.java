@@ -69,17 +69,22 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
         SoftgamesSDK.loadGamesInfo(sgConfig, new GameLoadedCallback() {
             @Override
             public void onGamesLoaded(JSONObject[] jsonObjects) {
+                HSLog.d("softGames loaded.");
+                SoftGameDisplayActivity activity = weakThis.get();
+                if (activity == null) {
+                    return;
+                }
                 for (JSONObject jsonObject : jsonObjects) {
                     SoftGameDisplayItem softGameDisplayItem = new SoftGameDisplayItem(jsonObject);
-                    if (weakThis.get() != null) {
-                        weakThis.get().softGameDisplayItemArrayList.add(softGameDisplayItem);
-                    }
+                    activity.softGameDisplayItemArrayList.add(softGameDisplayItem);
                 }
-                if (weakThis.get().handler != null) {
-                    weakThis.get().handler.post(new Runnable() {
+                if (activity.handler != null) {
+                    activity.handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            softGameItemAdapter.refreshData(softGameDisplayItemArrayList);
+                            if (weakThis.get() != null) {
+                                weakThis.get().softGameItemAdapter.refreshData(softGameDisplayItemArrayList);
+                            }
                         }
                     });
                 }

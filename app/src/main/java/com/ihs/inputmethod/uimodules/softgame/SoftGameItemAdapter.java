@@ -66,16 +66,15 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             HSLog.d("current item is Ad.");
         } else {
             final SoftGameItemViewHolder softGameItemViewHolder = (SoftGameItemViewHolder) holder;
-            if (softGameDisplayItemList.isEmpty()) {
-                return;
-            }
+
+            int index = position;
             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-                position--;
+                index = position - 1;
             }
-            final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(position);
+            final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(index);
             ImageLoader.getInstance().displayImage(softGameDisplayItem.getThumbBig(), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
             softGameItemViewHolder.softGameTitle.setText(softGameDisplayItem.getTitle());
-            softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getTypeText());
+            softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getType());
             softGameItemViewHolder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
