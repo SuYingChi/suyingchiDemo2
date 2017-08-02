@@ -656,7 +656,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 protocolText.setVisibility(View.VISIBLE);
             }
         });
-        set.setDuration(500).start();
+        set.setDuration(1000).start();
     }
 
     private void doHideAnimation() {
