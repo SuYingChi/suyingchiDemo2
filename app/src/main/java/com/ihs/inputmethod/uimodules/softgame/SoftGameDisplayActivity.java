@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -40,6 +41,7 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
     private RecyclerView recyclerView;
     private SoftGameItemAdapter softGameItemAdapter;
     private NativeAdView nativeAdView;
+    private ProgressBar progressBar;
     private String placementName;
 
     private Handler handler = new Handler();
@@ -52,6 +54,7 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
         Intent intent = getIntent();
         placementName = intent.getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
 
+        progressBar = (ProgressBar) findViewById(R.id.soft_game_progress_bar);
         recyclerView = (RecyclerView) findViewById(R.id.soft_game_main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.VERTICAL, false));
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
@@ -83,6 +86,7 @@ public class SoftGameDisplayActivity extends HSAppCompatActivity implements Soft
                         @Override
                         public void run() {
                             if (weakThis.get() != null) {
+                                weakThis.get().progressBar.setVisibility(View.GONE);
                                 weakThis.get().softGameItemAdapter.refreshData(softGameDisplayItemArrayList);
                             }
                         }
