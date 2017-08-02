@@ -1,19 +1,21 @@
 package com.keyboard.colorkeyboard.app;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,6 +45,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieComposition;
+import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -53,7 +58,6 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
@@ -90,7 +94,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private View rootView;
     private SharedPreferences mPrefs;
-    private View view_logo_img;
     private View bt_step_one;
     private View bt_step_two;
     private TextView protocolText;
@@ -105,6 +108,8 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView img_choose_two;
     private EditText edit_text_test;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
+    private LottieAnimationView flashLottieAnimationView;
+    private boolean isFlashLottieAnimationPlayed;
 
     private boolean isInStepOne;
     private boolean clickStepOne;
@@ -148,14 +153,6 @@ public class MainActivity extends HSDeepLinkActivity {
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
-        if (shouldShowThemeHome() || (HSInputMethodListManager.isMyInputMethodSelected())) {
-            startThemeHomeActivity();
-            return;
-        }
-
-        //main 出现过一次之后就不再出现
-        HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
-
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         HSApplication.HSLaunchInfo firstLaunchInfo = HSApplication.getFirstLaunchInfo();
@@ -174,11 +171,34 @@ public class MainActivity extends HSDeepLinkActivity {
         int screenWidth = size.x;
         final int screenHeight = size.y;
 
-        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.app_bg)).getBitmap();
-        getWindow().setBackgroundDrawable(new BitmapDrawable(HSBitmapScaleUtils.centerCrop(bitmap, screenWidth, screenHeight)));
+        flashLottieAnimationView = (LottieAnimationView) this.findViewById(R.id.flash_lottie_animation);
+        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "interstitial_ad_trigger_anim.json", new OnCompositionLoadedListener() {
+            @Override
+            public void onCompositionLoaded(LottieComposition lottieComposition) {
+                flashLottieAnimationView.setComposition(lottieComposition);
+                flashLottieAnimationView.setProgress(0f);
+            }
+        });
+        flashLottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
 
-        view_logo_img = this.findViewById(R.id.view_logo_img);
-        img_rainbow = (ImageView) this.findViewById(R.id.view_logo_img);
+            @Override
+            public void onAnimationStart(Animator animation) {
+                isFlashLottieAnimationPlayed = true;
+                super.onAnimationStart(animation);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (shouldShowThemeHome()) {
+                    startThemeHomeActivity();
+                } else {
+                    // 开始渐变动画
+                    playSelectButtonAnimation();
+                }
+                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
+            }
+        });
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
         img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
@@ -206,7 +226,7 @@ public class MainActivity extends HSDeepLinkActivity {
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setColor(Color.BLACK);
                 ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 //                ds.setUnderlineText(true);
             }
@@ -214,7 +234,7 @@ public class MainActivity extends HSDeepLinkActivity {
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.setColor(getResources().getColor(R.color.white_standard));
+                ds.setColor(Color.BLACK);
                 ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 //                ds.setUnderlineText(true);
             }
@@ -256,11 +276,6 @@ public class MainActivity extends HSDeepLinkActivity {
             p1.setTextSize(getResources().getDimension(R.dimen.main_logo_title_textsize));
             Rect result = new Rect();
             p1.getTextBounds("RainBowKey", 0, "RainBowKey".length(), result);
-            int textHeight = (int) (result.height() * 0.8f);
-            LinearLayout.LayoutParams logImgLayoutParams = (LinearLayout.LayoutParams) view_logo_img.getLayoutParams();
-            logImgLayoutParams.height = textHeight;
-            logImgLayoutParams.width = (int) (textHeight / ratio_log_img);
-            logImgLayoutParams.topMargin = 0;
         } else {
             stepOneLayoutParams.width = (int) (screenWidth * 0.75f);
             stepTwoLayoutParams.width = (int) (screenWidth * 0.75f);
@@ -474,6 +489,9 @@ public class MainActivity extends HSDeepLinkActivity {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (!isFlashLottieAnimationPlayed) {
+                    flashLottieAnimationView.playAnimation();
+                }
                 if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                     getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                             settingsContentObserver);
@@ -516,6 +534,10 @@ public class MainActivity extends HSDeepLinkActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edit_text_test.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
+        if (flashLottieAnimationView.isAnimating()) {
+            flashLottieAnimationView.cancelAnimation();
+            flashLottieAnimationView.setProgress(0f);
+        }
     }
 
     @Override
@@ -542,8 +564,6 @@ public class MainActivity extends HSDeepLinkActivity {
             edit_text_test.setFocusable(false);
             edit_text_test.setFocusableInTouchMode(false);
 
-            bt_step_one.setVisibility(View.VISIBLE);
-            bt_step_two.setVisibility(View.VISIBLE);
             bt_design_theme.setVisibility(View.INVISIBLE);
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
@@ -571,8 +591,6 @@ public class MainActivity extends HSDeepLinkActivity {
             edit_text_test.setFocusable(false);
             edit_text_test.setFocusableInTouchMode(false);
 
-            bt_step_one.setVisibility(View.VISIBLE);
-            bt_step_two.setVisibility(View.VISIBLE);
             bt_design_theme.setVisibility(View.INVISIBLE);
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
@@ -598,36 +616,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
             style = CurrentUIStyle.UISTYLE_STEP_TWO;
 
-        } else {
-            startThemeHomeActivity();
-            return;
-
-//            edit_text_test.setAlpha(1);
-//            edit_text_test.setFocusable(true);
-//            edit_text_test.setFocusableInTouchMode(true);
-//            edit_text_test.requestFocus();
-//            //             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-//
-//            edit_text_test.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(edit_text_test, InputMethodManager.SHOW_IMPLICIT);
-//                }
-//            },100);
-//            edit_text_test.postDelayed(
-//            rootView.setBackgroundColor(getResources().getColor(R.color.bg_translucent_black));
-//            if (style == CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL || style == CurrentUIStyle.UISTYLE_STEP_THREE_TEST)
-//                return;
-//            //scaleTitleImage();
-//            bt_step_one.setVisibility(View.GONE);
-//            bt_step_two.setVisibility(View.GONE);
-//            bt_design_theme.setVisibility(View.VISIBLE);
-//            bt_settings.setVisibility(View.VISIBLE);
-//            bt_languages.setVisibility(View.VISIBLE);
-//            bt_design_theme.setAlpha(1);
-//            bt_settings.setAlpha(1);
-//            bt_languages.setAlpha(1);
-//            style = CurrentUIStyle.UISTYLE_STEP_THREE_NORMAL;
         }
     }
 
@@ -650,6 +638,25 @@ public class MainActivity extends HSDeepLinkActivity {
         }
         startActivity(startThemeHomeIntent);
         finish();
+    }
+
+    private void playSelectButtonAnimation() {
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(bt_step_one, "alpha", 0f, 1.0f),
+                ObjectAnimator.ofFloat(bt_step_two, "alpha", 0f, 1.0f),
+                ObjectAnimator.ofFloat(protocolText, "alpha", 0f, 1.0f)
+        );
+        set.addListener(new AnimatorListenerAdapter() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                bt_step_one.setVisibility(View.VISIBLE);
+                bt_step_two.setVisibility(View.VISIBLE);
+                protocolText.setVisibility(View.VISIBLE);
+            }
+        });
+        set.setDuration(500).start();
     }
 
     private void doHideAnimation() {
