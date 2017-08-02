@@ -6,6 +6,60 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>ScreenFlash</key>
+			<dict>
+				<key>CallAssistant</key>
+				<dict>
+					<key>AutoRefresh</key>
+					<dict>
+						<key>enable</key>
+						<false/>
+						<key>interval</key>
+						<integer>10</integer>
+					</dict>
+					<key>OpenWhenScreenFlashTurnOn</key>
+					<true/>
+					<key>ShowAds</key>
+					<true/>
+					<key>ShowWhenIncomingCall</key>
+					<true/>
+					<key>ShowWhenIncomingFailedCall</key>
+					<true/>
+					<key>ShowWhenOutgoingCall</key>
+					<true/>
+				</dict>
+				<key>DefaultSwitch</key>
+				<false/>
+				<key>DefaultTheme</key>
+				<string>1</string>
+				<key>Enable</key>
+				<true/>
+			</dict>
+			<key>FeaturesGuide</key>
+			<dict>
+				<key>ScreenFlashGuide</key>
+				<dict>
+					<key>GuideAlertOpenSettings</key>
+					<true/>
+					<key>GuideAlertShow</key>
+					<true/>
+					<key>GuideAlertShowInterval</key>
+					<integer>0</integer>
+					<key>GuideAlertShowTime</key>
+					<integer>100</integer>
+					<key>OutsideAppGuide</key>
+					<dict>
+						<key>GuideScreenFlash</key>
+						<true/>
+						<key>Interval</key>
+						<integer>6</integer>
+						<key>ShowTime</key>
+						<integer>3</integer>
+					</dict>
+				</dict>
+				<key>ShowBladeFlash</key>
+				<true/>
+			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -198,6 +252,8 @@
 					<false/>
 				</dict>
 			</dict>
+			<key>AutoSetKeyEnable</key>
+			<false/>
 			<key>BoostPlus</key>
 			<dict>
 				<key>AccCleanTimeoutSeconds</key>
@@ -514,8 +570,6 @@
 					<integer>30</integer>
 				</dict>
 			</dict>
-			<key>AutoSetKeyEnable</key>
-			<false/>
 			<key>ChargeLocker</key>
 			<dict>
 				<key>Alert</key>
@@ -553,20 +607,13 @@
 			</dict>
 			<key>ExitAlert</key>
 			<dict>
-				<key>style</key>
-				<integer>2</integer>
 				<key>Enable</key>
 				<false/>
+				<key>style</key>
+				<integer>2</integer>
 			</dict>
 			<key>FeaturePrompt</key>
 			<dict>
-				<key>ThemeCard</key>
-				<dict>
-					<key>MaxShowCount</key>
-					<integer>5</integer>
-					<key>SessionInterval</key>
-					<integer>2</integer>
-				</dict>
 				<key>ChargerLockerAlert</key>
 				<dict>
 					<key>MaxShowCount</key>
@@ -574,11 +621,13 @@
 					<key>SessionInterval</key>
 					<integer>1</integer>
 				</dict>
-			</dict>
-			<key>GifConfig</key>
-			<dict>
-				<key>UpdateIntervalInHour</key>
-				<string>2</string>
+				<key>ThemeCard</key>
+				<dict>
+					<key>MaxShowCount</key>
+					<integer>5</integer>
+					<key>SessionInterval</key>
+					<integer>2</integer>
+				</dict>
 			</dict>
 			<key>FeatureRestriction</key>
 			<dict>
@@ -659,6 +708,11 @@
 					<true/>
 				</dict>
 			</dict>
+			<key>GifConfig</key>
+			<dict>
+				<key>UpdateIntervalInHour</key>
+				<string>2</string>
+			</dict>
 			<key>InterstitialAds</key>
 			<dict>
 				<key>BackButton</key>
@@ -671,10 +725,9 @@
 					<array>
 						<string>android</string>
 						<string>facebook</string>
-						<string>com.whatsapp</string>
 					</array>
 					<key>Show</key>
-					<false/>
+					<true/>
 				</dict>
 				<key>KeyboardAds</key>
 				<dict>
@@ -687,7 +740,7 @@
 							<integer>45</integer>
 						</array>
 						<key>Show</key>
-						<true/>
+						<false/>
 					</dict>
 					<key>KeyboardOpen</key>
 					<dict>
@@ -696,92 +749,13 @@
 							<integer>15</integer>
 						</array>
 						<key>Show</key>
-						<true/>
+						<false/>
 					</dict>
 				</dict>
 			</dict>
 			<key>KeyboardEmoji</key>
 			<dict>
 				<key>HideAdTitle</key>
-				<true/>
-			</dict>
-			<key>NativeAds</key>
-			<dict>
-				<key>FetchAdInterval</key>
-				<real>15000</real>
-				<key>GooglePlayNativeAd</key>
-				<dict>
-					<key>ShowAd</key>
-					<true/>
-				</dict>
-				<key>KeyboardBannerAd</key>
-				<dict>
-					<key>SessionIndexOfDay</key>
-					<array>
-						<integer>10</integer>
-						<integer>20</integer>
-					</array>
-					<key>Show</key>
-					<true/>
-				</dict>
-				<key>KeyboardEmojiTopLeftTabAd</key>
-				<dict>
-					<key>SessionIndexOfDay</key>
-					<array/>
-					<key>Show</key>
-					<false/>
-				</dict>
-				<key>KeyboardFunctionBarGiftAd</key>
-				<dict>
-					<key>SessionIndexOfDay</key>
-					<array>
-						<integer>2</integer>
-						<integer>15</integer>
-						<integer>30</integer>
-						<integer>40</integer>
-					</array>
-					<key>Show</key>
-					<true/>
-				</dict>
-				<key>KeyboardSettingsPanelAds</key>
-				<dict>
-					<key>CurrentContent</key>
-					<string>lucky</string>
-					<key>description</key>
-					<string>选项：lucky</string>
-				</dict>
-				<key>NativeAdPosition</key>
-				<dict>
-					<key>HomeBackgroundAd</key>
-					<array>
-						<dict>
-							<key>NativeAd</key>
-							<string>Colorkey_A(NativeAds)ShortcutAd</string>
-							<key>Position</key>
-							<integer>2</integer>
-						</dict>
-					</array>
-					<key>ThemeAd</key>
-					<array>
-						<dict>
-							<key>NativeAd</key>
-							<string>Colorkey_A(NativeAds)ThemeAd</string>
-							<key>Position</key>
-							<integer>2</integer>
-							<key>Span</key>
-							<integer>2</integer>
-						</dict>
-					</array>
-				</dict>
-				<key>ShowIconAd</key>
-				<true/>
-				<key>isShowMainPageCardNativeAds</key>
-				<true/>
-				<key>isShowMainThemeNativeAds</key>
-				<true/>
-				<key>isShowThemeDetailNativeAds</key>
-				<true/>
-				<key>isShowThemeTryNativeAds</key>
 				<true/>
 			</dict>
 			<key>KeyboardToolBar</key>
@@ -823,6 +797,8 @@
 			</dict>
 			<key>Locker</key>
 			<dict>
+				<key>EnableDialogMaxShowCount</key>
+				<integer>5</integer>
 				<key>Ads</key>
 				<dict>
 					<key>MinCountToShowAds</key>
@@ -1108,6 +1084,88 @@
 					<integer>75</integer>
 				</dict>
 			</dict>
+			<key>NativeAds</key>
+			<dict>
+				<key>FetchAdInterval</key>
+				<real>15000</real>
+				<key>GooglePlayNativeAd</key>
+				<dict>
+					<key>ShowAd</key>
+					<false/>
+				</dict>
+				<key>KeyboardBannerAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array>
+						<integer>2</integer>
+						<integer>6</integer>
+						<integer>10</integer>
+						<integer>20</integer>
+					</array>
+					<key>Show</key>
+					<true/>
+				</dict>
+				<key>KeyboardEmojiTopLeftTabAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array/>
+					<key>Show</key>
+					<false/>
+				</dict>
+				<key>KeyboardFunctionBarGiftAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array>
+						<integer>2</integer>
+						<integer>5</integer>
+						<integer>15</integer>
+						<integer>30</integer>
+						<integer>40</integer>
+					</array>
+					<key>Show</key>
+					<true/>
+				</dict>
+				<key>KeyboardSettingsPanelAds</key>
+				<dict>
+					<key>CurrentContent</key>
+					<string>lucky</string>
+					<key>description</key>
+					<string>选项：lucky</string>
+				</dict>
+				<key>NativeAdPosition</key>
+				<dict>
+					<key>HomeBackgroundAd</key>
+					<array>
+						<dict>
+							<key>NativeAd</key>
+							<string>Colorkey_A(NativeAds)ShortcutAd</string>
+							<key>Position</key>
+							<integer>2</integer>
+						</dict>
+					</array>
+					<key>ThemeAd</key>
+					<array>
+						<dict>
+							<key>NativeAd</key>
+							<string>Colorkey_A(NativeAds)ThemeAd</string>
+							<key>Position</key>
+							<integer>2</integer>
+							<key>Span</key>
+							<integer>2</integer>
+						</dict>
+					</array>
+				</dict>
+				<key>ShowIconAd</key>
+				<true/>
+				<key>isShowMainPageCardNativeAds</key>
+				<true/>
+				<key>isShowMainThemeNativeAds</key>
+				<true/>
+				<key>isShowThemeDetailNativeAds</key>
+				<true/>
+				<key>isShowThemeTryNativeAds</key>
+				<true/>
+			</dict>
 			<key>Policy</key>
 			<dict>
 				<key>PrivacyPolicy</key>
@@ -1217,15 +1275,36 @@
 			</array>
 			<key>Server</key>
 			<dict>
-				<key>LanguageBaseURL</key>
-				<string>http://cdn.api-alliance.com/keyboardarts/adaptxt/3.1.1</string>
 				<key>EmojiSuggestionBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/emoji_suggestion</string>
+				<key>LanguageBaseURL</key>
+				<string>http://cdn.api-alliance.com/keyboardarts/adaptxt/3.1.1</string>
 				<key>RemoteContentDownloadURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
 				<key>StickerDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers/</string>
 			</dict>
+			<key>StickerBackground</key>
+			<array>
+				<dict>
+					<key>backgroundColor</key>
+					<string>#ffffff</string>
+					<key>packageName</key>
+					<string>com.google.android.talk</string>
+				</dict>
+				<dict>
+					<key>backgroundColor</key>
+					<string>#ffffff</string>
+					<key>packageName</key>
+					<string>com.snapchat.android</string>
+				</dict>
+				<dict>
+					<key>backgroundColor</key>
+					<string>#e1ffc7</string>
+					<key>packageName</key>
+					<string>com.whatsapp</string>
+				</dict>
+			</array>
 			<key>StickerGroupList</key>
 			<array>
 				<dict>
@@ -3415,6 +3494,16 @@
 					</dict>
 					<dict>
 						<key>largePreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
+						<key>showName</key>
+						<string>System White</string>
+						<key>themeDesc</key>
+						<string>No color will ever be brighter than white.</string>
+						<key>zipName</key>
+						<string>White</string>
+					</dict>
+					<dict>
+						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Classic.jpg</string>
 						<key>showName</key>
 						<string>Classic</string>
@@ -3450,16 +3539,6 @@
 						<string>Addicted to black.</string>
 						<key>zipName</key>
 						<string>Dark</string>
-					</dict>
-					<dict>
-						<key>largePreviewUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
-						<key>showName</key>
-						<string>System White</string>
-						<key>themeDesc</key>
-						<string>No color will ever be brighter than white.</string>
-						<key>zipName</key>
-						<string>White</string>
 					</dict>
 				</array>
 				<key>unlimited_theme_slots</key>
@@ -3691,6 +3770,375 @@
 				<integer>5</integer>
 				<key>placementid</key>
 				<string>2038</string>
+			</dict>
+		</dict>
+		<key>irrelevantAds</key>
+		<dict>
+			<key>eventAds</key>
+			<dict>
+				<key>generalConfig</key>
+				<dict>
+					<key>minShowIntervalMinute</key>
+					<integer>180</integer>
+				</dict>
+				<key>phoneUnlockAds</key>
+				<dict>
+					<key>hoursFromFirstUse</key>
+					<integer>6</integer>
+					<key>maxShowCountPerDay</key>
+					<integer>0</integer>
+					<key>maxShowDelay</key>
+					<integer>10</integer>
+					<key>minShowDelay</key>
+					<integer>1</integer>
+					<key>minShowIntervalMinute</key>
+					<integer>120</integer>
+					<key>placementName</key>
+					<string>Smiley_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
+					<key>regionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>regionFilter</key>
+					<array/>
+					<key>showProbability</key>
+					<integer>100</integer>
+				</dict>
+			</dict>
+		</dict>
+		<key>expressAds</key>
+		<dict>
+			<key>Smiley_A(NativeAds)Charging</key>
+			<dict>
+				<key>autoRefresh</key>
+				<dict>
+					<key>enable</key>
+					<false/>
+					<key>interval</key>
+					<integer>0</integer>
+				</dict>
+				<key>deDuplicate</key>
+				<true/>
+				<key>packageFilter</key>
+				<true/>
+				<key>parallelCount</key>
+				<integer>0</integer>
+				<key>parallelList</key>
+				<array/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/1564190283</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>4</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/6055697633</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>4</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/4824096595</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/3040923481</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+				</array>
+				<key>tempInventoryTime</key>
+				<integer>0</integer>
+			</dict>
+			<key>Smiley_A(NativeAds)Fuse</key>
+			<dict>
+				<key>autoRefresh</key>
+				<dict>
+					<key>enable</key>
+					<false/>
+					<key>interval</key>
+					<integer>0</integer>
+				</dict>
+				<key>deDuplicate</key>
+				<true/>
+				<key>packageFilter</key>
+				<true/>
+				<key>parallelCount</key>
+				<integer>0</integer>
+				<key>parallelList</key>
+				<array/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/8045455860</string>
+						</array>
+						<key>label</key>
+						<string>A1</string>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>4</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/7610723887</string>
+						</array>
+						<key>label</key>
+						<string>A1</string>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/6137178898</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+					<dict>
+						<key>adContentType</key>
+						<dict>
+							<key>adTypeFilter</key>
+							<string>app</string>
+						</dict>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>4</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/9087457089</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+					</dict>
+				</array>
+				<key>tempInventoryTime</key>
+				<integer>0</integer>
 			</dict>
 		</dict>
 		<key>interstitialAds</key>
@@ -4101,38 +4549,6 @@
 				<array/>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
-			</dict>
-		</dict>
-		<key>irrelevantAds</key>
-		<dict>
-			<key>eventAds</key>
-			<dict>
-				<key>generalConfig</key>
-				<dict>
-					<key>minShowIntervalMinute</key>
-					<integer>180</integer>
-				</dict>
-				<key>phoneUnlockAds</key>
-				<dict>
-					<key>hoursFromFirstUse</key>
-					<integer>0</integer>
-					<key>maxShowCountPerDay</key>
-					<integer>0</integer>
-					<key>maxShowDelay</key>
-					<integer>2</integer>
-					<key>minShowDelay</key>
-					<integer>0</integer>
-					<key>minShowIntervalMinute</key>
-					<integer>180</integer>
-					<key>placementName</key>
-					<string>Smiley_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
-					<key>regionException</key>
-					<array/>
-					<key>regionFilter</key>
-					<array/>
-					<key>showProbability</key>
-					<integer>0</integer>
-				</dict>
 			</dict>
 		</dict>
 		<key>nativeAds</key>
@@ -5719,341 +6135,6 @@
 				<false/>
 				<key>serialList</key>
 				<array/>
-			</dict>
-		</dict>
-		<key>expressAds</key>
-		<dict>
-			<key>Smiley_A(NativeAds)Charging</key>
-			<dict>
-				<key>autoRefresh</key>
-				<dict>
-					<key>enable</key>
-					<false/>
-					<key>interval</key>
-					<integer>0</integer>
-				</dict>
-				<key>deDuplicate</key>
-				<true/>
-				<key>packageFilter</key>
-				<true/>
-				<key>parallelCount</key>
-				<integer>0</integer>
-				<key>parallelList</key>
-				<array/>
-				<key>preload</key>
-				<dict>
-					<key>inventory</key>
-					<integer>0</integer>
-					<key>strategy</key>
-					<string>initiative</string>
-				</dict>
-				<key>preloadOnlyInWifi</key>
-				<false/>
-				<key>serialList</key>
-				<array>
-					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>5</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/1564190283</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>4</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-8621759356895416/6055697633</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>4</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-8621759356895416/4824096595</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>5</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/3040923481</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-				</array>
-				<key>tempInventoryTime</key>
-				<integer>0</integer>
-			</dict>
-			<key>Smiley_A(NativeAds)Fuse</key>
-			<dict>
-				<key>autoRefresh</key>
-				<dict>
-					<key>enable</key>
-					<false/>
-					<key>interval</key>
-					<integer>0</integer>
-				</dict>
-				<key>deDuplicate</key>
-				<true/>
-				<key>packageFilter</key>
-				<true/>
-				<key>parallelCount</key>
-				<integer>0</integer>
-				<key>parallelList</key>
-				<array/>
-				<key>preload</key>
-				<dict>
-					<key>inventory</key>
-					<integer>0</integer>
-					<key>strategy</key>
-					<string>initiative</string>
-				</dict>
-				<key>preloadOnlyInWifi</key>
-				<false/>
-				<key>serialList</key>
-				<array>
-					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>5</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-8621759356895416/8045455860</string>
-						</array>
-						<key>label</key>
-						<string>A1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>4</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/7610723887</string>
-						</array>
-						<key>label</key>
-						<string>A1</string>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array>
-							<string>US</string>
-						</array>
-					</dict>
-					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>5</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-8621759356895416/6137178898</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>4</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-7319126281585813/9087457089</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>regionException</key>
-						<array>
-							<string>US</string>
-						</array>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-				</array>
-				<key>tempInventoryTime</key>
-				<integer>0</integer>
 			</dict>
 		</dict>
 	</dict>

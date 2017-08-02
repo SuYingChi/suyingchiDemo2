@@ -78,4 +78,6 @@ Note: You may receive a system reminder about authorizing, RainbowKey will NEVER
     <!--deep link-->
     <string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
     <string name="deeplink_description">Rainbow Keyboard description</string>
+
+    <string name="ad_placement_call_assist">Colorkey_A(NativeAds)ThemeTryAd</string>
 </resources>

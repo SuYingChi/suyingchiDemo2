@@ -74,8 +74,8 @@ android {
 
         smiley {
             applicationId = "com.smartkeyboard.emoji"
-            versionCode 15
-            versionName "2.0.2"
+            versionCode 16
+            versionName "2.0.3"
             manifestPlaceholders = [APPLY_SCHEME: "smileyKeyboard"]
             signingConfig signingConfigs.smileyReleaseConfig
         }
@@ -181,7 +181,7 @@ dependencies {
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
     compile(name: 'libcharging', ext: 'aar')
-
+    compile(name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
     //facebook
     compile "com.facebook.shimmer:shimmer:0.1.0@aar"
 
@@ -207,5 +207,12 @@ dependencies {
     compile 'com.annimon:stream:1.1.7'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
     compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
+
+    //callassistant
+    compile (name: 'ihs/libCallAssistant/libcallassistant', ext: 'aar')
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //----
+
 }
 

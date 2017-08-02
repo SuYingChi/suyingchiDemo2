@@ -2,6 +2,9 @@ package com.ihs.inputmethod.uimodules.ui.theme.utils;
 
 import android.app.Activity;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.view.View;
 import android.widget.Toast;
@@ -10,8 +13,10 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
+import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.alerts.HSAlertDialog;
+import com.keyboard.core.themes.custom.KCCustomThemeHelper;
 
 import java.io.File;
 
@@ -58,22 +63,43 @@ public class ThemeMenuUtils {
         return popup;
     }
 
-    public static void shareTheme(Activity activity, HSKeyboardTheme keyboardTheme) {
-        String shareActionTitle = "Choose Share";
-        String title = "";
-        String content;
-        String shareImagePath;
+    public static void shareTheme(final Activity activity, final HSKeyboardTheme keyboardTheme) {
+        final String shareActionTitle = "Choose Share";
+        final String title = "";
+        final String content;
+        final String shareImagePath;
         switch (keyboardTheme.getThemeType()) {
             case CUSTOM:
                 content = HSApplication.getContext().getResources().getString(R.string.theme_share_text_content_for_custom_theme);
                 shareImagePath = getCustomShareFile(keyboardTheme);
+                File file = new File(shareImagePath);
+                if (!file.exists() || file.length() == 0){
+                    final AlertDialog loadingDialog = HSAlertDialog.build(activity).setView(R.layout.dialog_loading).setCancelable(false).create();
+                    loadingDialog.show();
+                    HSThreadUtils.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            KCCustomThemeHelper.createAndSaveShareImage(keyboardTheme,shareImagePath);
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loadingDialog.dismiss();
+                                    ShareUtils.shareImageFilterBlackList(activity, shareActionTitle, title, content, shareImagePath);
+                                }
+                            });
+                        }
+                    });
+                }else {
+                    ShareUtils.shareImageFilterBlackList(activity, shareActionTitle, title, content, shareImagePath);
+                }
                 break;
             default:
                 content = HSApplication.getContext().getResources().getString(R.string.theme_share_text_content);
                 shareImagePath = getDefaultShareFile();
+                ShareUtils.shareImageFilterBlackList(activity, shareActionTitle, title, content, shareImagePath);
                 break;
         }
-        ShareUtils.shareImageFilterBlackList(activity, shareActionTitle, title, content, shareImagePath);
+
     }
 
 

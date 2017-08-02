@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -23,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
+import com.artw.lockscreen.LockerEnableDialog;
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
@@ -74,7 +77,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
     private static final int keyboardActivationFromHome = 11;
-    private static final int keyboardActivationFromHomeWithTrial = 12;
+    public static final int keyboardActivationFromHomeWithTrial = 12;
 
     private static final int GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME = 3;
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
@@ -465,15 +468,57 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
-    private void showTrialKeyboardDialog(int activationCode) {
-        if (trialKeyboardDialog == null) {
-            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, this);
-        }
-        if (activationCode == keyboardActivationFromCustom) {
-            trialKeyboardDialog.show(this, activationCode, false);
-        } else {
-            trialKeyboardDialog.show(this, activationCode, true);
-        }
+    private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
+        final KeyboardActivationProcessor processor =
+                new KeyboardActivationProcessor(ThemeHomeActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
+                    @Override
+                    public void activeDialogShowing() {
+
+                    }
+
+                    @Override
+                    public void keyboardSelected(int requestCode) {
+                        if (requestCode == activationCode) {
+                            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing() ) {
+                                LockerEnableDialog dialog = new LockerEnableDialog(ThemeHomeActivity.this, R.style.LockerEnableDialogTheme);
+                                dialog.show();
+                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        if (trialKeyboardDialog == null) {
+                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
+                                        }
+                                        if (activationCode == keyboardActivationFromCustom) {
+                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
+                                        } else {
+                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
+                                        }
+                                    }
+                                });
+                            } else {
+                                if (trialKeyboardDialog == null) {
+                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
+                                }
+                                if (activationCode == keyboardActivationFromCustom) {
+                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
+                                } else {
+                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void activeDialogCanceled() {
+
+                    }
+
+                    @Override
+                    public void activeDialogDismissed() {
+
+                    }
+                });
+        processor.activateKeyboard(ThemeHomeActivity.this, true, activationCode);
     }
 
     @Override

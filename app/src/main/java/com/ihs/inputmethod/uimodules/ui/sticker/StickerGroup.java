@@ -5,9 +5,9 @@ import android.content.res.AssetManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.utils.ImageLoaderURIUtils;
-import com.ihs.keyboardutils.configfile.KCList;
-import com.ihs.keyboardutils.configfile.KCMap;
-import com.ihs.keyboardutils.configfile.KCParser;
+import com.kc.commons.configfile.KCList;
+import com.kc.commons.configfile.KCMap;
+import com.kc.commons.configfile.KCParser;
 
 import java.io.File;
 import java.io.FileInputStream;

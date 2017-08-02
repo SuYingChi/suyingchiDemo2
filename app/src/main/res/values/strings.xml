@@ -275,6 +275,10 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
 	<string name="sticker_downloading_successful">Download Successfully</string>
 	<string name="sticker_downloading_guide">Download for free now!</string>
     <string name="sticker_share_toast">The app does not support stickers.</string>
+    <string name="unzip_sticker_group_failed">Unzip stickers failed, please download again!</string>
+    <string name="foreground_download_failed">Download failed</string>
     <string name="boost_noti_setting_desc" >Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
     <string name="boost_noti_setting_title" >Phone Boost</string>
+    <string name="setting_key_call_assistant">setting_key_call_assistant</string>
+    <string name="setting_call_assistant_title">Screen Flash for Calls</string>
 </resources>

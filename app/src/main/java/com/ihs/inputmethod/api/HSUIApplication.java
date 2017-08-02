@@ -11,6 +11,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.acb.call.AcbCallManager;
 import com.acb.expressads.AcbExpressAdManager;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
@@ -119,13 +120,17 @@ public class HSUIApplication extends HSInputMethodApplication {
             intent = new Intent();
         }
 
-        intent.setClass(this, getMainActivityClass());
-        if (isAccessibilityEnabled) {
+        // need to pass the intent to the main activity
+        if (!TextUtils.isEmpty(intent.getScheme())) {
+            intent.setClass(this, getMainActivityClass());
+        } else if (isAccessibilityEnabled) {
             if (!HSAccessibilityService.isAvailable()) {
                 intent.setClass(this, KeyboardActivationActivity.class);
             } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
             }
+        } else {
+            intent.setClass(this, getMainActivityClass());
         }
         splashActivity.startActivity(intent);
     }
@@ -242,6 +247,13 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
         ActivityLifecycleMonitor.startMonitor(this);
         activeAdPlacements();
+
+        AcbCallManager.initWithDefaultFactory(getResources().getString(R.string.ad_placement_call_assist), new AcbCallManager.OnFeatureRestrictCallBack() {
+            @Override
+            public boolean isFeatureRestrict() {
+                return !KCFeatureRestrictionConfig.isFeatureRestricted("AdCallAssistant");
+            }
+        });
     }
 
     private void activeAdPlacements() {
