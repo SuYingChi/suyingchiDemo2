@@ -125,61 +125,64 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
 
         if(!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            final boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
-            final boolean hideAdTitle = HSConfig.optBoolean(false,"Application", "KeyboardEmoji", "HideAdTitle");
-            final LayoutParams params = new LayoutParams(0, height, hideAdTitle?1.0f:1.6f);
-            params.gravity = Gravity.CENTER_VERTICAL;
-            final RelativeLayout adContainer = new RelativeLayout(getContext());
-            adContainer.setTag("NativeAd");
-            addView(adContainer, params);
-            final FlashFrameLayout flashAdContainer = new FlashFrameLayout(getContext());
-            flashAdContainer.setAngle(FlashFrameLayout.MaskAngle.CW_0);
-            flashAdContainer.setDuration(1000);
-            flashAdContainer.setRepeatCount(0);
-            flashAdContainer.setAutoStart(false);
+            final boolean showAd = HSConfig.optBoolean(false,"Application", "NativeAds", "KeyboardEmojiAd", "ShowAd");
+            if (showAd) {
+                final boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
+                final boolean hideAdTitle = HSConfig.optBoolean(false,"Application", "KeyboardEmoji", "HideAdTitle");
+                final LayoutParams params = new LayoutParams(0, height, hideAdTitle?1.0f:1.6f);
+                params.gravity = Gravity.CENTER_VERTICAL;
+                final RelativeLayout adContainer = new RelativeLayout(getContext());
+                adContainer.setTag("NativeAd");
+                addView(adContainer, params);
+                final FlashFrameLayout flashAdContainer = new FlashFrameLayout(getContext());
+                flashAdContainer.setAngle(FlashFrameLayout.MaskAngle.CW_0);
+                flashAdContainer.setDuration(1000);
+                flashAdContainer.setRepeatCount(0);
+                flashAdContainer.setAutoStart(false);
 
-            final View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
-            if(!showIconAd) {
-                adLoadingView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-            }
-            ImageView loadingImageView = (ImageView) adLoadingView.findViewById(R.id.ad_loading_image);
-            Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_gift");
-            loadingImageView.setImageDrawable(drawable);
-
-            int adHeight =  height -  HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
-            final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(hideAdTitle ?adHeight : ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
-            adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-            adContainer.addView(flashAdContainer, adLayoutParams);
-            flashAdContainer.addView(adLoadingView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!released) {
-                        View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
-                        if (!showIconAd) {
-                            adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-                        }
-                        if (hideAdTitle) {
-                            adLayoutView.findViewById(R.id.ad_title).setVisibility(GONE);
-                        }
-                        adView = new NativeAdView(HSApplication.getContext(), adLayoutView, null);
-                        adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
-                        adView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
-                            @Override
-                            public void onAdLoaded(NativeAdView nativeAdView) {
-                                flashAdContainer.removeView(adLoadingView);
-                                if (!released) {
-                                    flashAdContainer.startShimmerAnimation();
-                                }
-                                adView.setOnAdLoadedListener(null);
-                            }
-                        });
-                        adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
-                        flashAdContainer.addView(adView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    }
+                final View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
+                if(!showIconAd) {
+                    adLoadingView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
                 }
-            },500);
+                ImageView loadingImageView = (ImageView) adLoadingView.findViewById(R.id.ad_loading_image);
+                Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_gift");
+                loadingImageView.setImageDrawable(drawable);
+
+                int adHeight =  height -  HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
+                final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(hideAdTitle ?adHeight : ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
+                adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                adContainer.addView(flashAdContainer, adLayoutParams);
+                flashAdContainer.addView(adLoadingView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!released) {
+                            View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
+                            if (!showIconAd) {
+                                adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
+                            }
+                            if (hideAdTitle) {
+                                adLayoutView.findViewById(R.id.ad_title).setVisibility(GONE);
+                            }
+                            adView = new NativeAdView(HSApplication.getContext(), adLayoutView, null);
+                            adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
+                            adView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                                @Override
+                                public void onAdLoaded(NativeAdView nativeAdView) {
+                                    flashAdContainer.removeView(adLoadingView);
+                                    if (!released) {
+                                        flashAdContainer.startShimmerAnimation();
+                                    }
+                                    adView.setOnAdLoadedListener(null);
+                                }
+                            });
+                            adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
+                            flashAdContainer.addView(adView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        }
+                    }
+                },500);
+            }
         }
 
         alphabet_left = (TextView) findViewById(R.id.emoji_keyboard_alphabet_left);

@@ -928,6 +928,11 @@
 			</dict>
 			<key>NativeAds</key>
 			<dict>
+			    <key>KeyboardEmojiAd</key>
+                <dict>
+                	<key>ShowAd</key>
+                	<false/>
+                </dict>
 				<key>FetchAdInterval</key>
 				<real>15000</real>
 				<key>GooglePlayNativeAd</key>
