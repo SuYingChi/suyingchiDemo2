@@ -52,6 +52,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
@@ -66,6 +67,7 @@ import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.colorkeyboard.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
@@ -96,12 +98,12 @@ public class MainActivity extends HSDeepLinkActivity {
     private SharedPreferences mPrefs;
     private View bt_step_one;
     private View bt_step_two;
+    private RelativeLayout accessibilityButtonContainer;
     private TextView protocolText;
     private TextView bt_design_theme;
     private LinearLayout settings_languages_layout;
     private TextView bt_settings;
     private TextView bt_languages;
-    private ImageView img_rainbow;
     private ImageView img_enter_one;
     private ImageView img_enter_two;
     private ImageView img_choose_one;
@@ -111,7 +113,10 @@ public class MainActivity extends HSDeepLinkActivity {
     private LottieAnimationView flashLottieAnimationView;
     private boolean isFlashLottieAnimationPlayed;
 
-    private int mode; //根据Accessibility判断按钮内容
+    private static final int TYPE_MANUAL = 0;
+    private static final int TYPE_AUTO = 1;
+    private int mode = TYPE_MANUAL; //根据Accessibility判断按钮内容
+
     private boolean isInStepOne;
     private boolean clickStepOne;
     /**
@@ -191,11 +196,15 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (shouldShowThemeHome()) {
+                if (false) {
                     startThemeHomeActivity();
                 } else {
                     // 开始渐变动画
-                    playSelectButtonAnimation();
+                    if (isAccessibilityEnable()) {
+                        playAccessibilityButtonShowAnimation();
+                    } else {
+                        playManualButtonShowAnimation();
+                    }
                 }
                 HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
             }
@@ -245,25 +254,24 @@ public class MainActivity extends HSDeepLinkActivity {
 
         bt_step_one = this.findViewById(R.id.bt_step_one);
         bt_step_two = this.findViewById(R.id.bt_step_two);
+        accessibilityButtonContainer = (RelativeLayout) findViewById(R.id.accessibility_button_container);
         bt_step_one.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
                 getResources().getDimension(R.dimen.guide_bg_radius)));
         bt_step_two.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
                 getResources().getDimension(R.dimen.guide_bg_radius)));
+        accessibilityButtonContainer.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
+                getResources().getDimension(R.dimen.guide_bg_radius)));
         RelativeLayout.LayoutParams stepOneLayoutParams = (RelativeLayout.LayoutParams) bt_step_one.getLayoutParams();
         RelativeLayout.LayoutParams stepTwoLayoutParams = (RelativeLayout.LayoutParams) bt_step_two.getLayoutParams();
-        stepOneLayoutParams.setMargins(0, 0, 0, (int) (screenHeight * 0.03f));
-        stepTwoLayoutParams.setMargins(0, 0, 0, (int) (screenHeight * 0.03f));
+        RelativeLayout.LayoutParams accessibilityLayoutParams = (RelativeLayout.LayoutParams) accessibilityButtonContainer.getLayoutParams();
 
         if (getResources().getBoolean(R.bool.isTablet)) {
             stepOneLayoutParams.width = (int) (screenWidth * 0.45f);
             stepTwoLayoutParams.width = (int) (screenWidth * 0.45f);
+            accessibilityLayoutParams.width = (int) (screenWidth * 0.45f);
 
             final float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicHeight())
                     / ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicWidth());
-
-            final float ratio_log_img = ((float) getResources().getDrawable(R.drawable.app_rainbow_logo).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.app_rainbow_logo).getIntrinsicWidth());
-
 
             bt_design_theme.post(new Runnable() {
                 @Override
@@ -280,6 +288,7 @@ public class MainActivity extends HSDeepLinkActivity {
         } else {
             stepOneLayoutParams.width = (int) (screenWidth * 0.75f);
             stepTwoLayoutParams.width = (int) (screenWidth * 0.75f);
+            accessibilityLayoutParams.width = (int) (screenWidth * 0.75f);
         }
 
 
@@ -300,8 +309,6 @@ public class MainActivity extends HSDeepLinkActivity {
                 m.showInputMethodPicker();
                 Toast toast = Toast.makeText(MainActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
                 toast.show();
-                //                MainActivity.this.doSetpTwoFinishAnimation();
-
 
                 if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
 
@@ -323,6 +330,13 @@ public class MainActivity extends HSDeepLinkActivity {
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
+            }
+        });
+
+        accessibilityButtonContainer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -386,22 +400,13 @@ public class MainActivity extends HSDeepLinkActivity {
 
             clickStepOne = true;
 
-//            Intent settingIntent = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
-//            settingIntent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
-//            startActivity(settingIntent);
-//            isInStepOne = true;
-//
-//            ImageView imageCodeProject = new ImageView(getApplicationContext());
-//            imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-//            final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-//            imageCodeProject.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    customViewDialog.show();
-//                }
-//            }, 500);
-
         }
+    }
+
+    private boolean isAccessibilityEnable() {
+        boolean isAccessibilityEnabledInConfig = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
+        boolean isHSAccessibilityServiceAvailable = HSAccessibilityService.isAvailable();
+        return isAccessibilityEnabledInConfig && !isHSAccessibilityServiceAvailable;
     }
 
     /**
@@ -522,7 +527,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 isInStepOne = false;
             }
         });
-        if(clickStepOne){
+        if (clickStepOne) {
             bt_step_one.performClick();
             clickStepOne = false;
         }
@@ -560,7 +565,6 @@ public class MainActivity extends HSDeepLinkActivity {
         if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
-            rootView.setBackgroundColor(Color.TRANSPARENT);
             edit_text_test.setAlpha(0);
             edit_text_test.setFocusable(false);
             edit_text_test.setFocusableInTouchMode(false);
@@ -568,10 +572,12 @@ public class MainActivity extends HSDeepLinkActivity {
             bt_design_theme.setVisibility(View.INVISIBLE);
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
+
             bt_step_one.setEnabled(true);
             bt_step_one.setAlpha(1.0f);
             bt_step_two.setEnabled(false);
             bt_step_two.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
+
             bt_design_theme.setAlpha(0);
             bt_settings.setAlpha(0);
             bt_languages.setAlpha(0);
@@ -585,8 +591,6 @@ public class MainActivity extends HSDeepLinkActivity {
         } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
-            rootView.setBackgroundColor(Color.TRANSPARENT);
-            //  restoreTitleImage();
 
             edit_text_test.setAlpha(0);
             edit_text_test.setFocusable(false);
@@ -595,6 +599,7 @@ public class MainActivity extends HSDeepLinkActivity {
             bt_design_theme.setVisibility(View.INVISIBLE);
             bt_settings.setVisibility(View.INVISIBLE);
             bt_languages.setVisibility(View.INVISIBLE);
+
             bt_step_one.setClickable(false);
             if (isInStepOne) {
                 bt_step_one.setAlpha(1.0f);
@@ -606,6 +611,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 bt_step_two.setAlpha(1.0f);
                 bt_step_two.setEnabled(true);
             }
+
             bt_design_theme.setAlpha(0);
             bt_settings.setAlpha(0);
             bt_languages.setAlpha(0);
@@ -616,7 +622,6 @@ public class MainActivity extends HSDeepLinkActivity {
             img_choose_two.setAlpha(0);
 
             style = CurrentUIStyle.UISTYLE_STEP_TWO;
-
         }
     }
 
@@ -641,7 +646,7 @@ public class MainActivity extends HSDeepLinkActivity {
         finish();
     }
 
-    private void playSelectButtonAnimation() {
+    private void playManualButtonShowAnimation() {
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
                 ObjectAnimator.ofFloat(bt_step_one, "alpha", 0f, 1.0f),
@@ -660,62 +665,21 @@ public class MainActivity extends HSDeepLinkActivity {
         set.setDuration(1000).start();
     }
 
-    private void doHideAnimation() {
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-        alphaAnimation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
+    private void playAccessibilityButtonShowAnimation() {
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(accessibilityButtonContainer, "alpha", 0f, 1.0f),
+                ObjectAnimator.ofFloat(protocolText, "alpha", 0f, 1.0f)
+        );
+        set.addListener(new AnimatorListenerAdapter() {
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                bt_step_one.setVisibility(View.GONE);
-                bt_step_two.setVisibility(View.GONE);
-                MainActivity.this.doAppearAnimation();
-                // MainActivity.this.doScaleAnimation();
+            public void onAnimationStart(Animator animation) {
+                accessibilityButtonContainer.setVisibility(View.VISIBLE);
+                protocolText.setVisibility(View.VISIBLE);
             }
         });
-        alphaAnimation.setDuration(500);
-        this.bt_step_one.startAnimation(alphaAnimation);
-        this.bt_step_two.startAnimation(alphaAnimation);
-    }
-
-    private void doAppearAnimation() {
-        rootView.setBackgroundColor(getResources().getColor(R.color.bg_translucent_black));
-        bt_design_theme.setAlpha(1);
-        bt_settings.setAlpha(1);
-        bt_languages.setAlpha(1);
-        bt_design_theme.setVisibility(View.VISIBLE);
-        bt_settings.setVisibility(View.VISIBLE);
-        bt_languages.setVisibility(View.VISIBLE);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                //                edit_text_test.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                edit_text_test.setAlpha(1);
-                edit_text_test.setFocusable(true);
-                edit_text_test.setFocusableInTouchMode(true);
-                edit_text_test.requestFocus();
-                ((InputMethodManager) edit_text_test.getContext().getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(edit_text_test, 0);
-            }
-        });
-        alphaAnimation.setDuration(500);
-        this.bt_design_theme.startAnimation(alphaAnimation);
-        this.bt_settings.startAnimation(alphaAnimation);
-        this.bt_languages.startAnimation(alphaAnimation);
+        set.setDuration(1000).start();
     }
 
     private void doSetpOneFinishAnimation() {
@@ -863,7 +827,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                MainActivity.this.doHideAnimation();
                 startThemeHomeActivity();
             }
         });

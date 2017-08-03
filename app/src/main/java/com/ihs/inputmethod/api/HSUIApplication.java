@@ -126,7 +126,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             intent.setClass(this, getMainActivityClass());
         } else if (isAccessibilityEnabled) {
             if (!HSAccessibilityService.isAvailable()) {
-                intent.setClass(this, KeyboardActivationActivity.class);
+                intent.setClass(this, getMainActivityClass());
             } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
             }
