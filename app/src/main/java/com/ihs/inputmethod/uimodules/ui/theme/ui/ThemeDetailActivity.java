@@ -109,7 +109,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         if (themeName != null) {
             List<HSKeyboardTheme> allKeyboardThemeList = HSKeyboardThemeManager.getAllKeyboardThemeList();
             for (HSKeyboardTheme keyboardTheme : allKeyboardThemeList) {
-                if (themeName.equals(keyboardTheme.mThemeName)) {
+                if (themeName.equals(keyboardTheme.mThemeName) || themeName.equals(keyboardTheme.getThemePkName())) {
                     this.keyboardTheme = keyboardTheme;
                     this.themeType = keyboardTheme.getThemeType();
                     break;

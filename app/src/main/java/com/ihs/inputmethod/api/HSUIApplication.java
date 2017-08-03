@@ -25,7 +25,6 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.analytics.publisher.HSPublisherMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
@@ -54,6 +53,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
+import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.LauncherActivity;
@@ -63,7 +63,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -84,10 +83,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 onSessionStart();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
-            } else if (HSNotificationConstant.HS_SESSION_END.equals(notificationName)) {
-                if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
-                    KCNotificationManager.getInstance().removeNotificationEvent("Charging");
-                }
             }
         }
     };
@@ -182,7 +177,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_END, notificationObserver);
 
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
@@ -281,22 +275,18 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     private void registerNotificationEvent() {
-
-        KCNotificationManager.getInstance().setNotificationResponserType(KCNotificationManager.TYPE_BROADCAST);
-        //注册notification事件
-        ArrayList<String> eventList = new ArrayList<>();
-        eventList.add("ChangeFont");
-        eventList.add("Charging");
-        eventList.add("SetPhotoAsBackground");
-        eventList.add("ChangeTheme");
-        for (String event : eventList) {
-            Intent resultIntent = new Intent(this, NotificationBroadcastReceiver.class);
-            resultIntent.putExtra("eventName", event);
-            KCNotificationManager.getInstance().addNotificationEvent(event, resultIntent);
-        }
-        if (ChargingPrefsUtil.getChargingEnableStates() == ChargingPrefsUtil.CHARGING_DEFAULT_ACTIVE) {
-            KCNotificationManager.getInstance().removeNotificationEvent("Charging");
-        }
+        KCNotificationManager.getInstance().init(NotificationBroadcastReceiver.class, new KCNotificationManager.NotificationAvailabilityCallBack() {
+            @Override
+            public boolean isItemDownloaded(NotificationBean notificationBean) {
+                switch (notificationBean.getActionType()) {
+                    case "Sticker":
+                        return StickerDataManager.getInstance().isStickerGroupDownloaded(notificationBean.getName());
+                    case "Theme":
+                        return HSKeyboardThemeManager.getDownloadedThemeByPackageName(notificationBean.getName()) != null;
+                }
+                return false;
+            }
+        },false);
     }
 
     /**
@@ -362,8 +352,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         String getName = HSConfig.getString("MagicTrick", "get");
         String setName = HSConfig.getString("MagicTrick", "set");
 
-        Class[] getArgTypes = new Class[] { ComponentName.class };
-        Class[] setArgTypes = new Class[] { ComponentName.class, int.class, int.class };
+        Class[] getArgTypes = new Class[]{ComponentName.class};
+        Class[] setArgTypes = new Class[]{ComponentName.class, int.class, int.class};
 
         try {
             Method getMethod = manager.getClass().getDeclaredMethod(getName, getArgTypes);
