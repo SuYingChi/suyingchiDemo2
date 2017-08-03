@@ -65,7 +65,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if(NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+            if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 View adContainer = findViewWithTag("NativeAd");
                 removeView(adContainer);
             }
@@ -79,6 +79,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     public HSEmoticonActionBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
+
     public HSEmoticonActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
@@ -124,12 +125,12 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         }
 
 
-        if(!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            final boolean showAd = HSConfig.optBoolean(false,"Application", "NativeAds", "KeyboardEmojiAd", "ShowAd");
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            final boolean showAd = HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardEmojiAd", "ShowAd");
             if (showAd) {
-                final boolean showIconAd = HSConfig.optBoolean(true,"Application", "NativeAds", "ShowIconAd");
-                final boolean hideAdTitle = HSConfig.optBoolean(false,"Application", "KeyboardEmoji", "HideAdTitle");
-                final LayoutParams params = new LayoutParams(0, height, hideAdTitle?1.0f:1.6f);
+                final boolean showIconAd = HSConfig.optBoolean(true, "Application", "NativeAds", "ShowIconAd");
+                final boolean hideAdTitle = HSConfig.optBoolean(false, "Application", "KeyboardEmoji", "HideAdTitle");
+                final LayoutParams params = new LayoutParams(0, height, hideAdTitle ? 1.0f : 1.6f);
                 params.gravity = Gravity.CENTER_VERTICAL;
                 final RelativeLayout adContainer = new RelativeLayout(getContext());
                 adContainer.setTag("NativeAd");
@@ -141,15 +142,15 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                 flashAdContainer.setAutoStart(false);
 
                 final View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
-                if(!showIconAd) {
+                if (!showIconAd) {
                     adLoadingView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
                 }
                 ImageView loadingImageView = (ImageView) adLoadingView.findViewById(R.id.ad_loading_image);
                 Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_gift");
                 loadingImageView.setImageDrawable(drawable);
 
-                int adHeight =  height -  HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
-                final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(hideAdTitle ?adHeight : ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
+                int adHeight = height - HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
+                final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(hideAdTitle ? adHeight : ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
                 adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                 adContainer.addView(flashAdContainer, adLayoutParams);
                 flashAdContainer.addView(adLoadingView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -181,7 +182,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                             flashAdContainer.addView(adView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         }
                     }
-                },500);
+                }, 500);
             }
         }
 
