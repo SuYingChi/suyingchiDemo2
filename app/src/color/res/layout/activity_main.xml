@@ -122,6 +122,65 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/accessibility_container"
+        style="@style/MainGuideBgStyle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:visibility="gone"
+        app:layout_marginBottomPercent="15%">
+
+        <ImageView
+            android:id="@+id/accessibility_image_button_guide_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
+            android:src="@drawable/app_button_guide_1"
+            android:visibility="invisible" />
+
+        <FrameLayout
+            android:id="@+id/accessibility_view_choose_one_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:id="@+id/accessibility_view_choose_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_choose"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/accessibility_view_enter_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/app_button_guide_enter" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/accessibility_text_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:singleLine="true"
+            android:text="@string/toast_enable_keyboard"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/button_guide_textsize"
+            android:textStyle="normal" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/privacy_policy_text"

@@ -111,6 +111,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private LottieAnimationView flashLottieAnimationView;
     private boolean isFlashLottieAnimationPlayed;
 
+    private int mode; //根据Accessibility判断按钮内容
     private boolean isInStepOne;
     private boolean clickStepOne;
     /**
@@ -172,7 +173,7 @@ public class MainActivity extends HSDeepLinkActivity {
         final int screenHeight = size.y;
 
         flashLottieAnimationView = (LottieAnimationView) this.findViewById(R.id.flash_lottie_animation);
-        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "interstitial_ad_trigger_anim.json", new OnCompositionLoadedListener() {
+        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "flash_animation.json", new OnCompositionLoadedListener() {
             @Override
             public void onCompositionLoaded(LottieComposition lottieComposition) {
                 flashLottieAnimationView.setComposition(lottieComposition);
