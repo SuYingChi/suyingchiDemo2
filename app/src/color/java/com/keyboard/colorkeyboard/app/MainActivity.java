@@ -102,9 +102,6 @@ public class MainActivity extends HSDeepLinkActivity {
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
     private static final int GUIDE_DELAY = 300;
 
-    private final static float SCALE_MIN = 0.5f;
-    private final static float SCALE_MAX = 1.5f;
-
     private boolean versionFilterForRecordEvent;
 
     public enum CurrentUIStyle {
@@ -113,7 +110,6 @@ public class MainActivity extends HSDeepLinkActivity {
         UISTYLE_STEP_THREE_TEST,
     }
 
-    private View rootView;
     private SharedPreferences mPrefs;
     private View bt_step_one;
     private View bt_step_two;
@@ -215,7 +211,6 @@ public class MainActivity extends HSDeepLinkActivity {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
             HSGoogleAnalyticsUtils.getInstance().logAppEvent(INSTRUCTION_SCREEN_VIEWED);
         }
-        rootView = this.findViewById(R.id.view_root);
 
         WindowManager wm = this.getWindowManager();
         Display display = wm.getDefaultDisplay();
@@ -418,7 +413,7 @@ public class MainActivity extends HSDeepLinkActivity {
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
         registerReceiver(imeChangeReceiver, filter);
 
-        this.refreshUIState();
+        refreshUIState();
     }
 
 
@@ -716,10 +711,10 @@ public class MainActivity extends HSDeepLinkActivity {
             bt_step_two.setEnabled(false);
             bt_step_two.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
 
-            img_enter_one.setAlpha(255);
-            img_enter_two.setAlpha(255);
-            img_choose_one.setAlpha(0);
-            img_choose_two.setAlpha(0);
+            img_enter_one.setAlpha(1f);
+            img_enter_two.setAlpha(1f);
+            img_choose_one.setAlpha(0f);
+            img_choose_two.setAlpha(0f);
 
             style = CurrentUIStyle.UISTYLE_STEP_ONE;
         } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
@@ -738,10 +733,10 @@ public class MainActivity extends HSDeepLinkActivity {
                 bt_step_two.setEnabled(true);
             }
 
-            img_enter_one.setAlpha(0);
-            img_enter_two.setAlpha(255);
-            img_choose_one.setAlpha(255);
-            img_choose_two.setAlpha(0);
+            img_enter_one.setAlpha(0f);
+            img_enter_two.setAlpha(1f);
+            img_choose_one.setAlpha(1f);
+            img_choose_two.setAlpha(0f);
 
             style = CurrentUIStyle.UISTYLE_STEP_TWO;
         }
@@ -786,7 +781,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 protocolText.setVisibility(View.VISIBLE);
             }
         });
-        set.setDuration(1000).start();
+        set.setDuration(500).start();
     }
 
     private void playAccessibilityButtonShowAnimation() {
@@ -807,14 +802,15 @@ public class MainActivity extends HSDeepLinkActivity {
                 logOneTimeGA(app_accessibility_setkey_screen_viewed);
             }
         });
-        set.setDuration(1000).start();
+        set.setDuration(500).start();
     }
 
     private void doStepOneFinish() {
         bt_step_one.setClickable(false);
-        img_enter_one.setAlpha(0);
+        bt_step_one.setEnabled(false);
+        img_enter_one.setAlpha(0f);
         img_choose_one.setVisibility(View.VISIBLE);
-        img_choose_one.setAlpha(255);
+        img_choose_one.setAlpha(1f);
         bt_step_two.setAlpha(1.0f);
         bt_step_two.setEnabled(true);
     }
@@ -823,9 +819,9 @@ public class MainActivity extends HSDeepLinkActivity {
         bt_step_one.setClickable(false);
         bt_step_two.setClickable(false);
         bt_step_one.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
-        img_enter_two.setAlpha(0);
+        img_enter_two.setAlpha(0f);
         img_choose_two.setVisibility(View.VISIBLE);
-        img_choose_two.setAlpha(255);
+        img_choose_two.setAlpha(1f);
         startThemeHomeActivity();
     }
 
