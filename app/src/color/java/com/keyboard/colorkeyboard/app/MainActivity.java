@@ -202,6 +202,7 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        HSLog.d("MainAc onCreate");
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
@@ -227,10 +228,28 @@ public class MainActivity extends HSDeepLinkActivity {
         try {
             GifDrawable gifDrawable = new GifDrawable(getResources(), R.raw.launch_page_animation);
             gifDrawable.setLoopCount(1);
+            gifDrawable.addAnimationListener(new AnimationListener() {
+                @Override
+                public void onAnimationCompleted(int loopNumber) {
+                    if (shouldShowThemeHome()) {
+                        startThemeHomeActivity();
+                    } else {
+                        // 开始渐变动画
+                        if (isAccessibilityEnable()) {
+                            accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
+                            listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
+                            playAccessibilityButtonShowAnimation();
+                        } else {
+                            playManualButtonShowAnimation();
+                        }
+                    }
+                    HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
+                }
+            });
             launchGifView.setImageDrawable(gifDrawable);
         } catch (IOException e) {
             e.printStackTrace();
-            launchGifView.setImageResource(R.raw.launch_page_animation);
+            startThemeHomeActivity();
         }
 
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
@@ -571,6 +590,7 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        HSLog.d("MainAc onResume");
 
         if (edit_text_test != null) {
             edit_text_test.requestFocus();
@@ -578,24 +598,6 @@ public class MainActivity extends HSDeepLinkActivity {
         if (!isLaunchAnimationPlayed) {
             isLaunchAnimationPlayed = true;
             launchGifView.start();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (shouldShowThemeHome()) {
-                        startThemeHomeActivity();
-                    } else {
-                        // 开始渐变动画
-                        if (isAccessibilityEnable()) {
-                            accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
-                            listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
-                            playAccessibilityButtonShowAnimation();
-                        } else {
-                            playManualButtonShowAnimation();
-                        }
-                    }
-                    HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
-                }
-            }, 5000);
         }
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
@@ -666,6 +668,7 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        HSLog.d("MainAc onStop");
         if (edit_text_test != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edit_text_test.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -676,6 +679,7 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        HSLog.d("MainAc onDestroy");
         needActiveThemePkName = null;
         try {
             if (settingsContentObserver != null) {
