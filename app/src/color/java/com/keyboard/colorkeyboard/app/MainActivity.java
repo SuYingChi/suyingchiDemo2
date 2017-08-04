@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -16,11 +17,15 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -53,7 +58,12 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.inputmethod.accessbility.AccGALogger;
+import com.ihs.inputmethod.accessbility.AccessibilityEventListener;
+import com.ihs.inputmethod.accessbility.CustomViewDialog;
+import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
+import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -71,6 +81,16 @@ import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.colorkeyboard.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
+import static android.view.View.GONE;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_guide_gotit_clicked;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_guide_viewed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_setkey_screen_viewed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_setkey_success_page_viewed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_alert_auto_setkey_showed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_auto_setkey_clicked;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_manual_setkey_clicked;
+import static com.ihs.inputmethod.accessbility.AccGALogger.app_setting_up_page_viewed;
+import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
 import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
 
 
@@ -82,6 +102,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private final static String APP_STEP_ONE_HINT = "app_step_one_hint";
 
     private final static float BUTTON_BACKGROUND_OPACITY_DISABLED = 0.7f;
+    private static final int GUIDE_DELAY = 300;
 
     private final static float SCALE_MIN = 0.5f;
     private final static float SCALE_MAX = 1.5f;
@@ -115,7 +136,14 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private static final int TYPE_MANUAL = 0;
     private static final int TYPE_AUTO = 1;
-    private int mode = TYPE_MANUAL; //根据Accessibility判断按钮内容
+    private int currentType = TYPE_MANUAL; //根据Accessibility判断按钮内容
+    private boolean shouldShowEnableDialog = false;
+    private AccessibilityEventListener accessibilityEventListener;
+    private int listenerKey = -1;
+    private LinearLayout dialogView;
+    private GivenSizeVideoView videoView;
+    private CustomViewDialog customViewDialog;
+    private boolean alertDialogShowing;
 
     private boolean isInStepOne;
     private boolean clickStepOne;
@@ -128,26 +156,46 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private Handler handler = new Handler();
 
-    private BroadcastReceiver imeChangeRecevier = new BroadcastReceiver() {
+    private BroadcastReceiver imeChangeReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_INPUT_METHOD_CHANGED)) {
                 if (HSInputMethodListManager.isMyInputMethodSelected()) {
-                    if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
+                    if (currentType == TYPE_MANUAL) {
+                        if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED)) {
 
-                        if (isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
-                                && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)
-                                && isEventRecorded(APP_STEP_ONE_HINT_CLICKED)
-                                && isEventRecorded(APP_STEP_ONE_HINT)
-                                && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
-                            setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                            if (isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)
+                                    && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)
+                                    && isEventRecorded(APP_STEP_ONE_HINT_CLICKED)
+                                    && isEventRecorded(APP_STEP_ONE_HINT)
+                                    && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
+                                setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                            }
                         }
+                        MainActivity.this.doSetpTwoFinishAnimation();
+                        style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
+                    } else if (currentType == TYPE_AUTO) {
+                        View coverView = HSFloatWindowManager.getInstance().getCoverView();
+                        logOneTimeGA(app_setting_up_page_viewed);
+
+                        if (coverView != null) {
+                            coverView.findViewById(R.id.progressBar).setVisibility(GONE);
+                            coverView.findViewById(R.id.iv_succ).setVisibility(View.VISIBLE);
+                            ((TextView) coverView.findViewById(R.id.tv_settings_item)).setText(R.string.access_set_up_success);
+                            logOneTimeGA(app_accessibility_setkey_success_page_viewed);
+                        }
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startThemeHomeActivity();
+                            }
+                        }, 200);
+                    } else {
+                        HSLog.e("wrong Mode.");
                     }
-                    MainActivity.this.doSetpTwoFinishAnimation();
-                    style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
                 }
             }
         }
@@ -194,13 +242,21 @@ public class MainActivity extends HSDeepLinkActivity {
             }
 
             @Override
+            public void onAnimationCancel(Animator animation) {
+                super.onAnimationCancel(animation);
+                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
+            }
+
+            @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (false) {
+                if (shouldShowThemeHome()) {
                     startThemeHomeActivity();
                 } else {
                     // 开始渐变动画
                     if (isAccessibilityEnable()) {
+                        accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
+                        listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
                         playAccessibilityButtonShowAnimation();
                     } else {
                         playManualButtonShowAnimation();
@@ -336,19 +392,23 @@ public class MainActivity extends HSDeepLinkActivity {
         accessibilityButtonContainer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                logOneTimeGA(app_auto_setkey_clicked);
 
+                if (HSAccessibilityService.isAvailable()) {
+                    try {
+                        accessibilityEventListener.onAvailable();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    autoSetupKeyboard();
+                }
             }
         });
 
         bt_design_theme.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
-
-
-//                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiableFromActivity(MainActivity.this,null);
-
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
             }
         });
@@ -371,7 +431,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
-        registerReceiver(imeChangeRecevier, filter);
+        registerReceiver(imeChangeReceiver, filter);
 
         this.refreshUIState();
     }
@@ -406,7 +466,67 @@ public class MainActivity extends HSDeepLinkActivity {
     private boolean isAccessibilityEnable() {
         boolean isAccessibilityEnabledInConfig = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
         boolean isHSAccessibilityServiceAvailable = HSAccessibilityService.isAvailable();
-        return isAccessibilityEnabledInConfig && !isHSAccessibilityServiceAvailable;
+        boolean isSDKSatisfied = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
+        boolean oneTapPageViewed = AccGALogger.isOneTapPageViewed();
+        return isAccessibilityEnabledInConfig && !isHSAccessibilityServiceAvailable && !oneTapPageViewed && isSDKSatisfied;
+    }
+
+    private void autoSetupKeyboard() { //播放自动设置键盘动画的Dialog
+        shouldShowEnableDialog = true;
+
+        Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        startActivityForResult(intent, 100);
+
+        if (dialogView == null) {
+            dialogView = (LinearLayout) View.inflate(getApplicationContext(), R.layout.dialog_enable_accessbility_guide, null);
+            videoView = (GivenSizeVideoView) dialogView.findViewById(R.id.videoview_guide);
+            Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.accesibility_guide);
+            videoView.setVideoURI(uri);
+            videoView.setZOrderOnTop(true);
+
+            customViewDialog = new CustomViewDialog(HSApplication.getContext());
+            customViewDialog.setContentView(dialogView);
+            customViewDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    videoView.stopPlayback();
+                }
+            });
+            customViewDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    int width = dialogView.getMeasuredWidth();
+                    if (width != videoView.getMeasuredWidth()) {
+                        videoView.setViewSize(width, width * 588 / 948);
+                    }
+                    dialogView.forceLayout();
+                }
+            });
+
+            dialogView.findViewById(R.id.tv_confirm).setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_enable));
+            dialogView.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    logOneTimeGA(app_accessibility_guide_gotit_clicked);
+                    customViewDialog.dismiss();
+                }
+            });
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.setLooping(true);
+                }
+            });
+        }
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                videoView.start();
+                logOneTimeGA(app_accessibility_guide_viewed);
+                customViewDialog.show();
+            }
+        }, GUIDE_DELAY);
     }
 
     /**
@@ -488,8 +608,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
         if (edit_text_test != null) {
             edit_text_test.requestFocus();
-            //            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            //            imm.showSoftInput(edit_text_test, InputMethodManager.SHOW_IMPLICIT);
         }
 
         this.runOnUiThread(new Runnable() {
@@ -498,38 +616,71 @@ public class MainActivity extends HSDeepLinkActivity {
                 if (!isFlashLottieAnimationPlayed) {
                     flashLottieAnimationView.playAnimation();
                 }
-                if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
-                    getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
-                            settingsContentObserver);
-                    refreshUIState();
-                } else {
-                    if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-                        if (isInStepOne) {
-                            doSetpOneFinishAnimation();
-                            style = CurrentUIStyle.UISTYLE_STEP_TWO;
-                            if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
-                                setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
-                                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                if (currentType == TYPE_MANUAL) {
+                    if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
+                        getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
+                                settingsContentObserver);
+                        refreshUIState();
+                    } else {
+                        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
+                            if (isInStepOne) {
+                                doSetpOneFinishAnimation();
+                                style = CurrentUIStyle.UISTYLE_STEP_TWO;
+                                if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                                    setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                                }
+                            } else {
+                                refreshUIState();
                             }
                         } else {
                             refreshUIState();
                         }
-                    } else {
-                        refreshUIState();
+                        try {
+                            if (settingsContentObserver != null)
+                                getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
+                        } catch (IllegalArgumentException ex) {
+                            HSLog.e("content observer not registered yet");
+                        }
                     }
-                    try {
-                        if (settingsContentObserver != null)
-                            getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
-                    } catch (IllegalArgumentException ex) {
-                        HSLog.e("content observer not registered yet");
+                    isInStepOne = false;
+                    if (clickStepOne) {
+                        bt_step_one.performClick();
+                        clickStepOne = false;
                     }
+                } else {
+                    showChooseManualAlertIfNecessary();
                 }
-                isInStepOne = false;
             }
         });
-        if (clickStepOne) {
-            bt_step_one.performClick();
-            clickStepOne = false;
+    }
+
+    private void showChooseManualAlertIfNecessary() {
+        if (!alertDialogShowing && shouldShowEnableDialog && !HSAccessibilityService.isAvailable()) {
+            AlertDialog.Builder alertDialogBuilder;
+            alertDialogBuilder = new AlertDialog.Builder(MainActivity.this, R.style.AppCompactDialogStyle);
+            alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
+            alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content));//设置显示文本
+            alertDialogBuilder.setPositiveButton(getString(R.string.alert_enable_access_warn_confirm), new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    logOneTimeGA(app_manual_setkey_clicked);
+                    dialog.dismiss();
+                    playManualButtonShowAnimation();
+                }
+            });
+            alertDialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    alertDialogShowing = false;
+                }
+            });
+
+            alertDialogBuilder.show();
+            alertDialogShowing = true;
+
+            logOneTimeGA(app_alert_auto_setkey_showed);
         }
     }
 
@@ -554,33 +705,36 @@ public class MainActivity extends HSDeepLinkActivity {
             if (settingsContentObserver != null) {
                 getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
             }
-            unregisterReceiver(imeChangeRecevier);
+            unregisterReceiver(imeChangeReceiver);
         } catch (IllegalArgumentException ex) {
             HSLog.e("content observer not registered yet");
         }
         getWindow().setBackgroundDrawable(null);
+
+        if (videoView != null) {
+            try {
+                videoView.stopPlayback();
+                videoView = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (accessibilityEventListener != null) {
+            accessibilityEventListener.onDestroy();
+        }
+        HSAccessibilityService.unregisterEvent(listenerKey);
+
     }
 
     private void refreshUIState() {
         if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_ONE)
                 return;
-            edit_text_test.setAlpha(0);
-            edit_text_test.setFocusable(false);
-            edit_text_test.setFocusableInTouchMode(false);
-
-            bt_design_theme.setVisibility(View.INVISIBLE);
-            bt_settings.setVisibility(View.INVISIBLE);
-            bt_languages.setVisibility(View.INVISIBLE);
 
             bt_step_one.setEnabled(true);
             bt_step_one.setAlpha(1.0f);
             bt_step_two.setEnabled(false);
             bt_step_two.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
-
-            bt_design_theme.setAlpha(0);
-            bt_settings.setAlpha(0);
-            bt_languages.setAlpha(0);
 
             img_enter_one.setAlpha(255);
             img_enter_two.setAlpha(255);
@@ -591,14 +745,6 @@ public class MainActivity extends HSDeepLinkActivity {
         } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             if (style == CurrentUIStyle.UISTYLE_STEP_TWO)
                 return;
-
-            edit_text_test.setAlpha(0);
-            edit_text_test.setFocusable(false);
-            edit_text_test.setFocusableInTouchMode(false);
-
-            bt_design_theme.setVisibility(View.INVISIBLE);
-            bt_settings.setVisibility(View.INVISIBLE);
-            bt_languages.setVisibility(View.INVISIBLE);
 
             bt_step_one.setClickable(false);
             if (isInStepOne) {
@@ -611,10 +757,6 @@ public class MainActivity extends HSDeepLinkActivity {
                 bt_step_two.setAlpha(1.0f);
                 bt_step_two.setEnabled(true);
             }
-
-            bt_design_theme.setAlpha(0);
-            bt_settings.setAlpha(0);
-            bt_languages.setAlpha(0);
 
             img_enter_one.setAlpha(0);
             img_enter_two.setAlpha(255);
@@ -657,8 +799,10 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationStart(Animator animation) {
+                currentType = TYPE_MANUAL;
                 bt_step_one.setVisibility(View.VISIBLE);
                 bt_step_two.setVisibility(View.VISIBLE);
+                accessibilityButtonContainer.setVisibility(GONE);
                 protocolText.setVisibility(View.VISIBLE);
             }
         });
@@ -675,8 +819,12 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationStart(Animator animation) {
+                currentType = TYPE_AUTO;
+                bt_step_one.setVisibility(View.GONE);
+                bt_step_two.setVisibility(View.GONE);
                 accessibilityButtonContainer.setVisibility(View.VISIBLE);
                 protocolText.setVisibility(View.VISIBLE);
+                logOneTimeGA(app_accessibility_setkey_screen_viewed);
             }
         });
         set.setDuration(1000).start();
