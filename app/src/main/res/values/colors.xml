@@ -116,8 +116,8 @@
     <color name="selector_keyactive_manual_normal">#59bbfb</color>
     <color name="selector_keyactive_enable">#0db664</color>
 
-    <color name="guide_bg_normal_color">#3c96fa</color>
-    <color name="guide_bg_disable_color">#88000000</color>
+    <color name="guide_bg_normal_color">#536dfe</color>
+    <color name="guide_bg_disable_color">#bdc4ed</color>
 
     <color name="sticker_download_button_color">#2cbcff</color>
     <color name="sticker_download_button_pressed_color">#2396cc</color>

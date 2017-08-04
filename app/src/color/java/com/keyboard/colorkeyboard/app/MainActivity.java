@@ -50,9 +50,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.LottieComposition;
-import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -78,7 +75,12 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.ihs.keyboardutils.view.HSGifImageView;
 import com.keyboard.colorkeyboard.utils.Constants;
+
+import java.io.IOException;
+
+import pl.droidsonroids.gif.GifDrawable;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;
@@ -131,8 +133,8 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView img_choose_two;
     private EditText edit_text_test;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
-    private LottieAnimationView flashLottieAnimationView;
-    private boolean isFlashLottieAnimationPlayed;
+    private HSGifImageView launchGifView;
+    private boolean isLaunchAnimationPlayed;
 
     private static final int TYPE_MANUAL = 0;
     private static final int TYPE_AUTO = 1;
@@ -225,46 +227,16 @@ public class MainActivity extends HSDeepLinkActivity {
         int screenWidth = size.x;
         final int screenHeight = size.y;
 
-        flashLottieAnimationView = (LottieAnimationView) this.findViewById(R.id.flash_lottie_animation);
-        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "flash_animation.json", new OnCompositionLoadedListener() {
-            @Override
-            public void onCompositionLoaded(LottieComposition lottieComposition) {
-                flashLottieAnimationView.setComposition(lottieComposition);
-                flashLottieAnimationView.setProgress(0f);
-            }
-        });
-        flashLottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
+        launchGifView = (HSGifImageView) findViewById(R.id.launch_gif_view);
+        try {
+            GifDrawable gifDrawable = new GifDrawable(getResources(), R.raw.launch_page_animation);
+            gifDrawable.setLoopCount(1);
+            launchGifView.setImageDrawable(gifDrawable);
+        } catch (IOException e) {
+            e.printStackTrace();
+            launchGifView.setImageResource(R.raw.launch_page_animation);
+        }
 
-            @Override
-            public void onAnimationStart(Animator animation) {
-                isFlashLottieAnimationPlayed = true;
-                super.onAnimationStart(animation);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                super.onAnimationCancel(animation);
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                if (shouldShowThemeHome()) {
-                    startThemeHomeActivity();
-                } else {
-                    // 开始渐变动画
-                    if (isAccessibilityEnable()) {
-                        accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
-                        listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
-                        playAccessibilityButtonShowAnimation();
-                    } else {
-                        playManualButtonShowAnimation();
-                    }
-                }
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
-            }
-        });
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
         img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
@@ -609,50 +581,63 @@ public class MainActivity extends HSDeepLinkActivity {
         if (edit_text_test != null) {
             edit_text_test.requestFocus();
         }
-
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!isFlashLottieAnimationPlayed) {
-                    flashLottieAnimationView.playAnimation();
-                }
-                if (currentType == TYPE_MANUAL) {
-                    if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
-                        getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
-                                settingsContentObserver);
-                        refreshUIState();
+        if (!isLaunchAnimationPlayed) {
+            isLaunchAnimationPlayed = true;
+            launchGifView.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (shouldShowThemeHome()) {
+                        startThemeHomeActivity();
                     } else {
-                        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-                            if (isInStepOne) {
-                                doSetpOneFinishAnimation();
-                                style = CurrentUIStyle.UISTYLE_STEP_TWO;
-                                if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
-                                    setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
-                                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
-                                }
-                            } else {
-                                refreshUIState();
-                            }
+                        // 开始渐变动画
+                        if (isAccessibilityEnable()) {
+                            accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
+                            listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
+                            playAccessibilityButtonShowAnimation();
                         } else {
-                            refreshUIState();
-                        }
-                        try {
-                            if (settingsContentObserver != null)
-                                getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
-                        } catch (IllegalArgumentException ex) {
-                            HSLog.e("content observer not registered yet");
+                            playManualButtonShowAnimation();
                         }
                     }
-                    isInStepOne = false;
-                    if (clickStepOne) {
-                        bt_step_one.performClick();
-                        clickStepOne = false;
+                    HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
+                }
+            }, 3000);
+        }
+        if (currentType == TYPE_MANUAL) {
+            if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
+                getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
+                        settingsContentObserver);
+                refreshUIState();
+            } else {
+                if (!HSInputMethodListManager.isMyInputMethodSelected()) {
+                    if (isInStepOne) {
+                        doSetpOneFinishAnimation();
+                        style = CurrentUIStyle.UISTYLE_STEP_TWO;
+                        if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
+                            setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                        }
+                    } else {
+                        refreshUIState();
                     }
                 } else {
-                    showChooseManualAlertIfNecessary();
+                    refreshUIState();
+                }
+                try {
+                    if (settingsContentObserver != null)
+                        getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
+                } catch (IllegalArgumentException ex) {
+                    HSLog.e("content observer not registered yet");
                 }
             }
-        });
+            isInStepOne = false;
+            if (clickStepOne) {
+                bt_step_one.performClick();
+                clickStepOne = false;
+            }
+        } else {
+            showChooseManualAlertIfNecessary();
+        }
     }
 
     private void showChooseManualAlertIfNecessary() {
@@ -691,10 +676,7 @@ public class MainActivity extends HSDeepLinkActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edit_text_test.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
-        if (flashLottieAnimationView.isAnimating()) {
-            flashLottieAnimationView.cancelAnimation();
-            flashLottieAnimationView.setProgress(0f);
-        }
+        launchGifView.stop();
     }
 
     @Override
@@ -723,7 +705,7 @@ public class MainActivity extends HSDeepLinkActivity {
             accessibilityEventListener.onDestroy();
         }
         HSAccessibilityService.unregisterEvent(listenerKey);
-
+        handler.removeCallbacksAndMessages(null);
     }
 
     private void refreshUIState() {

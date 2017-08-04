@@ -4,18 +4,16 @@
     android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_standard"
+    android:background="#eef0f7"
     android:orientation="vertical"
     tools:context="com.keyboard.colorkeyboard.app.MainActivity">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/flash_lottie_animation"
+    <com.ihs.keyboardutils.view.HSGifImageView
+        android:id="@+id/launch_gif_view"
         android:layout_centerHorizontal="true"
-        app:layout_aspectRatio="100%"
+        app:layout_aspectRatio="75%"
         app:layout_marginTopPercent="15%"
-        app:layout_widthPercent="60%"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false" />
+        app:layout_widthPercent="60%" />
 
     <RelativeLayout
         android:id="@+id/bt_step_one"
@@ -24,21 +22,14 @@
         android:visibility="gone"
         app:layout_marginBottomPercent="3%">
 
-        <ImageView
-            android:id="@+id/image_button_guide_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/app_button_guide_1" />
-
         <FrameLayout
             android:id="@+id/view_choose_one_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp">
+            android:layout_marginRight="5dp"
+            android:clipChildren="false">
 
             <ImageView
                 android:id="@+id/view_choose_one"
@@ -78,21 +69,14 @@
         android:visibility="gone"
         app:layout_marginBottomPercent="3%">
 
-        <ImageView
-            android:id="@+id/image_button_guide_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/app_button_guide_2" />
-
         <FrameLayout
             android:id="@+id/view_choose_two_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp">
+            android:layout_marginRight="5dp"
+            android:clipChildren="false">
 
             <ImageView
                 android:id="@+id/view_choose_two"
