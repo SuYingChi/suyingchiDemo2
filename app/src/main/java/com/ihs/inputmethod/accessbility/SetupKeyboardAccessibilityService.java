@@ -182,7 +182,6 @@ public class SetupKeyboardAccessibilityService {
         HSLog.e("onServiceConnected");
         HSFloatWindowManager instance = HSFloatWindowManager.getInstance();
         instance.showAccessibilityCover(R.layout.layout_accessbility_cover);
-        scaleTitleImage(instance.getCoverView().findViewById(R.id.view_img_title));
 
         imeSettingState = IME_STATE_NOT_ENABLE;
         isScrolled = false;

@@ -121,4 +121,6 @@
 
     <color name="sticker_download_button_color">#2cbcff</color>
     <color name="sticker_download_button_pressed_color">#2396cc</color>
+
+    <color name="launch_bg">#eef0f7</color>
 </resources>
