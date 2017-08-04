@@ -37,11 +37,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -80,6 +75,7 @@ import com.keyboard.colorkeyboard.utils.Constants;
 
 import java.io.IOException;
 
+import pl.droidsonroids.gif.AnimationListener;
 import pl.droidsonroids.gif.GifDrawable;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
@@ -177,7 +173,7 @@ public class MainActivity extends HSDeepLinkActivity {
                                 HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                             }
                         }
-                        MainActivity.this.doSetpTwoFinishAnimation();
+                        MainActivity.this.doStepTwoFinish();
                         style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
                     } else if (currentType == TYPE_AUTO) {
                         View coverView = HSFloatWindowManager.getInstance().getCoverView();
@@ -264,17 +260,15 @@ public class MainActivity extends HSDeepLinkActivity {
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.setColor(Color.BLACK);
-                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-//                ds.setUnderlineText(true);
+                ds.setColor(Color.parseColor("#53c0fe"));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
             }
         }, policyText.indexOf(serviceKeyText), policyText.indexOf(serviceKeyText) + serviceKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.setColor(Color.BLACK);
-                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-//                ds.setUnderlineText(true);
+                ds.setColor(Color.parseColor("#53c0fe"));
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
             }
         }, policyText.indexOf(policyKeyText), policyText.indexOf(policyKeyText) + policyKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         protocolText.setText(ss);
@@ -601,7 +595,7 @@ public class MainActivity extends HSDeepLinkActivity {
                     }
                     HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
                 }
-            }, 3000);
+            }, 5000);
         }
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
@@ -611,7 +605,7 @@ public class MainActivity extends HSDeepLinkActivity {
             } else {
                 if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                     if (isInStepOne) {
-                        doSetpOneFinishAnimation();
+                        doStepOneFinish();
                         style = CurrentUIStyle.UISTYLE_STEP_TWO;
                         if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
                             setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
@@ -812,157 +806,24 @@ public class MainActivity extends HSDeepLinkActivity {
         set.setDuration(1000).start();
     }
 
-    private void doSetpOneFinishAnimation() {
-
-        AnimationSet animationSet = new AnimationSet(true);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_MIN, SCALE_MAX, SCALE_MIN, SCALE_MAX, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(350);
-        animationSet.addAnimation(scaleAnimation);
-        animationSet.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                bt_step_one.setClickable(false);
-                img_enter_one.setAlpha(0);
-                img_choose_one.setVisibility(View.VISIBLE);
-                img_choose_one.setAlpha(255);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                MainActivity.this.doSetpOneFinishAnimation2();
-            }
-        });
-        img_choose_one.startAnimation(animationSet);
-    }
-
-    private void doSetpOneFinishAnimation2() {
-        ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_MAX, 1.0f, SCALE_MAX, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(350);
-        scaleAnimation.setFillAfter(true);
-        scaleAnimation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                doSetpOneFinishAnimation3();
-            }
-        });
-        img_choose_one.startAnimation(scaleAnimation);
-    }
-
-    private void doSetpOneFinishAnimation3() {
-
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, BUTTON_BACKGROUND_OPACITY_DISABLED);
-        alphaAnimation.setDuration(350);
-        alphaAnimation.setFillAfter(true);
-        alphaAnimation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                bt_step_one.setEnabled(false);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                doSetpOneFinishAnimation4();
-            }
-        });
-        bt_step_one.startAnimation(alphaAnimation);
-    }
-
-    private void doSetpOneFinishAnimation4() {
+    private void doStepOneFinish() {
+        bt_step_one.setClickable(false);
+        img_enter_one.setAlpha(0);
+        img_choose_one.setVisibility(View.VISIBLE);
+        img_choose_one.setAlpha(255);
         bt_step_two.setAlpha(1.0f);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(BUTTON_BACKGROUND_OPACITY_DISABLED, 1.0f);
-        alphaAnimation.setDuration(0);
-        alphaAnimation.setFillAfter(true);
-        alphaAnimation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                bt_step_two.setEnabled(true);
-            }
-        });
-        bt_step_two.startAnimation(alphaAnimation);
+        bt_step_two.setEnabled(true);
     }
 
-    private void doSetpTwoFinishAnimation() {
+    private void doStepTwoFinish() {
         bt_step_one.setClickable(false);
         bt_step_two.setClickable(false);
         bt_step_one.setAlpha(BUTTON_BACKGROUND_OPACITY_DISABLED);
-
-        this.runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                AnimationSet animationSet = new AnimationSet(true);
-                AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-                alphaAnimation.setDuration(300);
-                animationSet.addAnimation(alphaAnimation);
-
-                ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_MIN, SCALE_MAX, SCALE_MIN, SCALE_MAX, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                scaleAnimation.setDuration(300);
-                animationSet.addAnimation(scaleAnimation);
-                animationSet.setAnimationListener(new AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        img_enter_two.setAlpha(0);
-                        img_choose_two.setAlpha(255);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        MainActivity.this.doSetpTwoFinishAnimation2();
-                    }
-                });
-                img_choose_two.startAnimation(animationSet);
-            }
-        });
+        img_enter_two.setAlpha(0);
+        img_choose_two.setVisibility(View.VISIBLE);
+        img_choose_two.setAlpha(255);
+        startThemeHomeActivity();
     }
-
-    private void doSetpTwoFinishAnimation2() {
-        ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_MAX, 1.0f, SCALE_MAX, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(350);
-        scaleAnimation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                startThemeHomeActivity();
-            }
-        });
-        img_choose_two.startAnimation(scaleAnimation);
-    }
-
 
     private boolean isEventRecorded(String pref_name) {
         return mPrefs.getBoolean(pref_name, false);

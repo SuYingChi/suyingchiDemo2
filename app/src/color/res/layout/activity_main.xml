@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         app:layout_aspectRatio="75%"
         app:layout_marginTopPercent="15%"
-        app:layout_widthPercent="60%" />
+        app:layout_widthPercent="50%" />
 
     <RelativeLayout
         android:id="@+id/bt_step_one"
@@ -163,8 +163,8 @@
         android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:text="Private Policy"
-        android:textColor="@android:color/black"
-        android:textSize="13sp"
+        android:textColor="#727272"
+        android:textSize="12sp"
         android:visibility="gone" />
 
     <LinearLayout
