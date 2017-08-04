@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -34,6 +33,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -382,18 +382,17 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     public void keyboardSelected(int requestCode) {
                         if (requestCode == activationCode) {
                             if (LockerSettings.isLockerEnableShowSatisfied()) {
-                                LockerEnableDialog dialog = new LockerEnableDialog(ThemeDetailActivity.this, R.style.LockerEnableDialogTheme);
-                                dialog.show();
-                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(DialogInterface dialog) {
-                                        if (trialKeyboardDialog == null) {
-                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(ThemeDetailActivity.this, ThemeDetailActivity.this);
+                                LockerEnableDialog.showLockerEnableDialog(ThemeDetailActivity.this,
+                                        ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()), new LockerEnableDialog.OnLockerBgLoadingListener() {
+                                            @Override
+                                            public void onFinish() {
+                                                if (trialKeyboardDialog == null) {
+                                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(ThemeDetailActivity.this, ThemeDetailActivity.this);
 
-                                        }
-                                        trialKeyboardDialog.show(ThemeDetailActivity.this, activationCode, true);
-                                    }
-                                });
+                                                }
+                                                trialKeyboardDialog.show(ThemeDetailActivity.this, activationCode, true);
+                                            }
+                                        });
                             } else {
                                 if (trialKeyboardDialog == null) {
                                     trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(ThemeDetailActivity.this, ThemeDetailActivity.this);

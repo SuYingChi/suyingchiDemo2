@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -41,10 +40,12 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
+import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
@@ -479,12 +480,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     @Override
                     public void keyboardSelected(int requestCode) {
                         if (requestCode == activationCode) {
-                            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing() ) {
-                                LockerEnableDialog dialog = new LockerEnableDialog(ThemeHomeActivity.this, R.style.LockerEnableDialogTheme);
-                                dialog.show();
-                                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
+                                LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()), new LockerEnableDialog.OnLockerBgLoadingListener() {
                                     @Override
-                                    public void onDismiss(DialogInterface dialog) {
+                                    public void onFinish() {
                                         if (trialKeyboardDialog == null) {
                                             trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
                                         }
