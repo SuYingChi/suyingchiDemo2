@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -82,6 +83,8 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private HSKeyboardTheme keyboardTheme;
     private NativeAdView nativeAdView;
     private long currentResumeTime;
+    private String themeLockerBgUrl;
+
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
@@ -175,6 +178,8 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
                 }
             }
+
+            themeLockerBgUrl = ThemeLockerBgUtil.getInstance().getThemeBgUrl(themeName);
 
             setButtonText();
 
@@ -298,7 +303,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private void setButtonText() {
         switch (themeType) {
             case NEED_DOWNLOAD:
-                leftBtn.setText(R.string.theme_card_menu_share);
+                if (TextUtils.isEmpty(themeLockerBgUrl)) {
+                    leftBtn.setText(R.string.theme_card_menu_share);
+                } else {
+                    leftBtn.setText(R.string.theme_card_set_locker_bg);
+                }
                 if (ThemeDownloadManager.getInstance().isDownloading(keyboardTheme.mThemeName)) {
                     rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_downloading));
                     rightBtn.setEnabled(false);
@@ -317,7 +326,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     rightBtn.setText(R.string.theme_card_menu_apply);
                     rightBtn.setEnabled(true);
                 }
-                leftBtn.setText(R.string.theme_card_menu_share);
+                if (TextUtils.isEmpty(themeLockerBgUrl)) {
+                    leftBtn.setText(R.string.theme_card_menu_share);
+                } else {
+                    leftBtn.setText(R.string.theme_card_set_locker_bg);
+                }
                 break;
         }
     }
@@ -348,9 +361,18 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             }
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_delete).equalsIgnoreCase(text)) {
             KCCustomThemeManager.getInstance().removeCustomTheme(keyboardTheme.getThemeId());
+
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_share).equalsIgnoreCase(text)) {
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_share_clicked", themeName);
+        } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
+            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, new LockerEnableDialog.OnLockerBgLoadingListener() {
+                @Override
+                public void onFinish() {
+
+                }
+            });
+
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_apply).equalsIgnoreCase(text)) {
             if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName())) {
                 ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName))));

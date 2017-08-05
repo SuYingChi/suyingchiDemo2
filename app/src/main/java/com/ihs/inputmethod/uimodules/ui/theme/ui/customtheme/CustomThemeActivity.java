@@ -475,6 +475,10 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
     private void saveTheme() {
         if (!isThemeSaving) {
+
+            //saving的时候前加载 locker 背景图
+            ImageLoader.getInstance().loadImage(customThemeData.getBackgroundElement().getLockerImgUrl(),null);
+
             isThemeSaving = true;
             if (savingDialog == null) {
                 savingDialog = new MaterialDialog.Builder(CustomThemeActivity.this)

@@ -90,7 +90,7 @@
                 android:background="@drawable/theme_detail_left_btn_bg"
                 android:gravity="center"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:text="@string/theme_card_menu_share"
+                android:text="@string/theme_card_set_locker_bg"
                 android:textColor="@color/theme_button_text_color" />
 
             <Button
