@@ -11,8 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -38,7 +36,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -62,7 +59,6 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
@@ -115,10 +111,6 @@ public class MainActivity extends HSDeepLinkActivity {
     private View bt_step_two;
     private RelativeLayout accessibilityButtonContainer;
     private TextView protocolText;
-    private TextView bt_design_theme;
-    private LinearLayout settings_languages_layout;
-    private TextView bt_settings;
-    private TextView bt_languages;
     private ImageView img_enter_one;
     private ImageView img_enter_two;
     private ImageView img_choose_one;
@@ -249,19 +241,6 @@ public class MainActivity extends HSDeepLinkActivity {
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
         img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
-        bt_settings = (TextView) this.findViewById(R.id.bt_settings);
-        bt_languages = (TextView) this.findViewById(R.id.bt_languages);
-
-        bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
-        bt_design_theme.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.entrance_customize_button)));
-        float density = getResources().getDisplayMetrics().density;
-        bt_design_theme.setPadding((int) density * 20, (int) density * 10, (int) density * 20, (int) density * 10);
-        LinearLayout.LayoutParams designThemeLayoutParam = (LinearLayout.LayoutParams) bt_design_theme.getLayoutParams();
-        designThemeLayoutParam.topMargin = (int) (screenHeight * 0.09);
-
-        settings_languages_layout = (LinearLayout) this.findViewById(R.id.settings_languages_layout);
-        LinearLayout.LayoutParams settings_languages_layoutLayoutParams = (LinearLayout.LayoutParams) settings_languages_layout.getLayoutParams();
-        settings_languages_layoutLayoutParams.topMargin = (int) (screenHeight * 0.03646);
 
         protocolText = (TextView) findViewById(R.id.privacy_policy_text);
         String serviceKeyText = getString(R.string.text_terms_of_service);
@@ -271,14 +250,14 @@ public class MainActivity extends HSDeepLinkActivity {
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "TermsOfService")) {
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.setColor(Color.parseColor("#53c0fe"));
+                ds.setColor(getResources().getColor(R.color.privacy_stress_text));
                 ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
             }
         }, policyText.indexOf(serviceKeyText), policyText.indexOf(serviceKeyText) + serviceKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new URLSpan(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy")) {
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.setColor(Color.parseColor("#53c0fe"));
+                ds.setColor(getResources().getColor(R.color.privacy_stress_text));
                 ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
             }
         }, policyText.indexOf(policyKeyText), policyText.indexOf(policyKeyText) + policyKeyText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -302,17 +281,6 @@ public class MainActivity extends HSDeepLinkActivity {
             stepOneLayoutParams.width = (int) (screenWidth * 0.45f);
             stepTwoLayoutParams.width = (int) (screenWidth * 0.45f);
             accessibilityLayoutParams.width = (int) (screenWidth * 0.45f);
-
-            final float ratio_button_guide_settings = ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicHeight())
-                    / ((float) getResources().getDrawable(R.drawable.entrance_customize_button).getIntrinsicWidth());
-
-            bt_design_theme.post(new Runnable() {
-                @Override
-                public void run() {
-                    LinearLayout.LayoutParams designThemeLayouParam = (LinearLayout.LayoutParams) bt_design_theme.getLayoutParams();
-                    designThemeLayouParam.height = (int) (bt_design_theme.getMeasuredWidth() * ratio_button_guide_settings);
-                }
-            });
 
             Paint p1 = new Paint();
             p1.setTextSize(getResources().getDimension(R.dimen.main_logo_title_textsize));
@@ -380,29 +348,6 @@ public class MainActivity extends HSDeepLinkActivity {
                 } else {
                     autoSetupKeyboard();
                 }
-            }
-        });
-
-        bt_design_theme.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
-            }
-        });
-
-        bt_settings.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HSUIInputMethod.launchMoreLanguageActivity();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_SETTINGS_CLICKED);
-            }
-        });
-
-        bt_languages.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HSUIInputMethod.launchSettingsActivity();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_LANGUAGES_CLICKED);
             }
         });
 

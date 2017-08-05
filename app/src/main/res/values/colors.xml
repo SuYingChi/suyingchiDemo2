@@ -123,4 +123,5 @@
     <color name="sticker_download_button_pressed_color">#2396cc</color>
 
     <color name="main_activity_bg">#eef0f7</color>
+    <color name="privacy_stress_text">#53c0fe</color>
 </resources>
