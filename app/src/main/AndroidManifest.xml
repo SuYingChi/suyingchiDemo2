@@ -90,6 +90,12 @@
         </service>
 
         <activity
+            android:name="com.ihs.inputmethod.accessbility.KeyboardActivationActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoPreviewTheme"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
             android:name="com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
