@@ -123,7 +123,6 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView img_enter_two;
     private ImageView img_choose_one;
     private ImageView img_choose_two;
-    private EditText edit_text_test;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
     private HSGifImageView launchGifView;
     private boolean isLaunchAnimationPlayed;
@@ -198,7 +197,6 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HSLog.d("MainAc onCreate");
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
@@ -253,7 +251,6 @@ public class MainActivity extends HSDeepLinkActivity {
         img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
         bt_settings = (TextView) this.findViewById(R.id.bt_settings);
         bt_languages = (TextView) this.findViewById(R.id.bt_languages);
-        edit_text_test = (EditText) this.findViewById(R.id.edit_text_test);
 
         bt_design_theme = (TextView) this.findViewById(R.id.bt_design_theme);
         bt_design_theme.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.entrance_customize_button)));
@@ -585,11 +582,7 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        HSLog.d("MainAc onResume");
 
-        if (edit_text_test != null) {
-            edit_text_test.requestFocus();
-        }
         if (!isLaunchAnimationPlayed) {
             isLaunchAnimationPlayed = true;
             launchGifView.start();
@@ -663,18 +656,12 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        HSLog.d("MainAc onStop");
-        if (edit_text_test != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(edit_text_test.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-        }
         launchGifView.stop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        HSLog.d("MainAc onDestroy");
         needActiveThemePkName = null;
         try {
             if (settingsContentObserver != null) {
