@@ -91,6 +91,7 @@ import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcesso
 public class MainActivity extends HSDeepLinkActivity {
 
 
+    public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
     private final static String INSTRUCTION_SCREEN_VIEWED = "Instruction_screen_viewed";
     private final static String APP_STEP_ONE_HINT_CLICKED = "app_step_one_hint_clicked";
     private final static String APP_STEP_ONE_HINT = "app_step_one_hint";
@@ -189,6 +190,7 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        HSLog.d("MainActivity onCreate.");
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
@@ -362,6 +364,7 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        HSLog.d("MainActivity onNewIntent.");
         Uri data = intent.getData();
         if (data != null) {
             String pkName = data.getQueryParameter("pkName");
@@ -527,7 +530,7 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        HSLog.d("MainActivity onResume.");
         if (!isLaunchAnimationPlayed) {
             isLaunchAnimationPlayed = true;
             launchGifView.start();
@@ -601,12 +604,14 @@ public class MainActivity extends HSDeepLinkActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        HSLog.d("MainActivity onStop.");
         launchGifView.stop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        HSLog.d("MainActivity onDestroy.");
         needActiveThemePkName = null;
         try {
             if (settingsContentObserver != null) {
@@ -616,7 +621,6 @@ public class MainActivity extends HSDeepLinkActivity {
         } catch (IllegalArgumentException ex) {
             HSLog.e("content observer not registered yet");
         }
-        getWindow().setBackgroundDrawable(null);
 
         if (videoView != null) {
             try {
