@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.artw.lockscreen.LockerEnableDialog;
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
@@ -117,9 +120,26 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                     return;
                 }
 
-                LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), ThemeLockerBgUtil.getInstance().getThemeBgUrl(model.themeName), new LockerEnableDialog.OnLockerBgLoadingListener() {
-                    @Override
-                    public void onFinish() {
+                final int enableShowed = HSPreferenceHelper.getDefault().getInt("locker_enable_showed", 0);
+                if (!HSKeyboardThemeManager.getCurrentTheme().mThemeName.equals(model.themeName)) {
+                    if (enableShowed < HSConfig.optInteger(3, "Application", "Locker", "EnableAlertMaxShowCount") && !LockerSettings.isLockerEnabledBefore()) {
+                        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), ThemeLockerBgUtil.getInstance().getThemeBgUrl(model.themeName), new LockerEnableDialog.OnLockerBgLoadingListener() {
+                            @Override
+                            public void onFinish() {
+                                if (!HSKeyboardThemeManager.setKeyboardTheme(model.themeName)) {
+                                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                                    HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
+                                }
+
+                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_theme_chosed", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
+                                if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
+                                    ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
+                                }
+                                int count = enableShowed + 1;
+                                HSPreferenceHelper.getDefault().putInt("locker_enable_showed", count);
+                            }
+                        });
+                    } else {
                         if (!HSKeyboardThemeManager.setKeyboardTheme(model.themeName)) {
                             String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
                             HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
@@ -131,7 +151,9 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                         }
 
                     }
-                });
+
+                }
+
             }
         });
 
