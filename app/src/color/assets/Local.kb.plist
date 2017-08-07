@@ -1263,6 +1263,8 @@
 				</array>
 				<key>state</key>
 				<integer>1</integer>
+				<key>EnableAlertMaxShowCount</key>
+				<integer>6</integer>
 			</dict>
 			<key>Lucky</key>
 			<dict>
@@ -1725,7 +1727,7 @@
 						<key>showNewMark</key>
 						<true/>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/custom_themes_background/fantasy-land.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fantasyland.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1743,7 +1745,7 @@
 						<key>price</key>
 						<string>$0.99</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/custom_themes_background/mysterious-universe.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mysteriousuniverse.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1809,7 +1811,7 @@
 						<key>price</key>
 						<string>$0.99</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/custom_themes_background/Marshmallow.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/marshmallow.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1819,7 +1821,7 @@
 						<key>price</key>
 						<string>$0.99</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/custom_themes_background/kisses.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/kisses.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1837,7 +1839,7 @@
 						<key>price</key>
 						<string>$0.99</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/custom_themes_background/donuts-bg.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/donuts.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1875,7 +1877,7 @@
 						<key>price</key>
 						<string>$0.99</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/custom_themes_background/diamond-bg.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/diamond.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -2805,7 +2807,7 @@
 						<key>zipName</key>
 						<string>Galaxy</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/official_themes_bg/Galaxy_locker_jpg.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/galaxy.jpg</string>
 					</dict>
 					<dict>
 						<key>bannerImgUrl</key>
@@ -2839,7 +2841,7 @@
 						<key>zipName</key>
 						<string>Spinner</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/official_themes_bg/spinner-wallpaper-jpg.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/spinner.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -2857,7 +2859,7 @@
 						<key>zipName</key>
 						<string>RoseGold</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/official_themes_bg/Rose-Gold_Banner_1024-500-5.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/rosegold.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -2875,7 +2877,7 @@
 						<key>zipName</key>
 						<string>RoyalBattle</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/official_themes_bg/RoyalBattle.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/royalbattle.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -2909,7 +2911,7 @@
 						<key>zipName</key>
 						<string>GoldSilver</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/official_themes_bg/GoldSliver_Background_1242_813.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/goldsliver.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -2927,7 +2929,7 @@
 						<key>zipName</key>
 						<string>PinkDrops</string>
 						<key>lockerImgUrl</key>
-						<string>https://emojidevelop.s3.amazonaws.com/resource/Downloads/official_themes_bg/pink-drops-bg.jpg</string>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/pinkdrops.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
