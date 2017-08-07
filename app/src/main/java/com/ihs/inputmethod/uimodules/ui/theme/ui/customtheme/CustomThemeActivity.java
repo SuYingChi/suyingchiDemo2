@@ -476,9 +476,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     private void saveTheme() {
         if (!isThemeSaving) {
 
-            //saving的时候前加载 locker 背景图
-            ImageLoader.getInstance().loadImage(customThemeData.getBackgroundElement().getLockerImgUrl(),null);
-
             isThemeSaving = true;
             if (savingDialog == null) {
                 savingDialog = new MaterialDialog.Builder(CustomThemeActivity.this)
@@ -515,7 +512,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     }
 
     private void onNewThemeCreated() {
-        if (!showInterstitialAdsAfterSaveTheme() && !showChargingEnableAlert()) {
+        if (!showInterstitialAdsAfterSaveTheme()) {
             showTrialKeyboard();
         }
     }
@@ -532,42 +529,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         });
 
         return interstitialAdShown;
-    }
-
-    private boolean showChargingEnableAlert() {
-        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
-
-            if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
-                CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-                dialog.setTitle(getString(R.string.charging_alert_title));
-                dialog.setMessage(getString(R.string.charging_alert_message));
-                dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-                dialog.setCancelable(true);
-                dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
-                    }
-                });
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        showTrialKeyboard();
-                    }
-                });
-                dialog.show();
-            } else {
-                Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
-                intent.putExtra("type", "charging");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                HSApplication.getContext().startActivity(intent);
-            }
-            return true;
-        }
-
-        return false;
     }
 
     private void showTrialKeyboard() {

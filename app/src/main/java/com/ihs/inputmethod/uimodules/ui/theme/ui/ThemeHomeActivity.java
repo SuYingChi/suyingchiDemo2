@@ -80,7 +80,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private static final int keyboardActivationFromHome = 11;
     public static final int keyboardActivationFromHomeWithTrial = 12;
 
-    private static final int GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME = 3;
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
 
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
@@ -101,11 +100,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private boolean isResumeOnCreate = true;
 
     private AcbInterstitialAdLoader acbInterstitialAdLoader;
-    //    private LottieAnimationView lottieAnimationView;
     private AlertDialog fullscreenAdLoadingDialog;
-    private boolean isAdTriggerLottieAnimationPlayed = false;
     private boolean fullscreenShowed = false;
-    private int adTriggerLottieAnimationPlayedTimes = 0;
 
     private Handler handler = new Handler() {
         @Override
@@ -156,26 +152,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         setContentView(R.layout.activity_theme_home);
         getWindow().setBackgroundDrawable(null);
 
-        // Init custom theme res in case we fail before
-        //HSKeyboardThemeManager.initCustomThemeResource();
-//        KCCustomThemeManager.getInstance();
-
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         String themeTitle = getResources().getString(R.string.theme_nav_theme_store);
         toolbar.setTitle(HSLog.isDebugging() ? themeTitle + " (Debug)" : themeTitle);
         setSupportActionBar(toolbar);
-
-//        lottieAnimationView = (LottieAnimationView) findViewById(R.id.theme_home_interstitial_ad_trigger_view);
-//        LottieComposition.Factory.fromAssetFileName(HSApplication.getContext(), "interstitial_ad_trigger_anim.json", new OnCompositionLoadedListener() {
-//            @Override
-//            public void onCompositionLoaded(LottieComposition lottieComposition) {
-//                lottieAnimationView.setComposition(lottieComposition);
-//                lottieAnimationView.setProgress(0f);
-//            }
-//        });
-//        lottieAnimationView.setOnClickListener(this);
-
 
         View adTriggerView = findViewById(R.id.theme_home_interstitial_ad_trigger_view);
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
@@ -365,7 +346,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         if (isResumeOnCreate) {
             showEnableChargingAlertIfNeeded();
         }
-
         isResumeOnCreate = false;
 
 //        if (!isAdTriggerLottieAnimationPlayed) {
