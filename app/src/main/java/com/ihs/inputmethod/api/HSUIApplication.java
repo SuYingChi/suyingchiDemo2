@@ -40,7 +40,6 @@ import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
 import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
-import com.ihs.inputmethod.accessbility.KeyboardActivationActivity;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
@@ -121,9 +120,11 @@ public class HSUIApplication extends HSInputMethodApplication {
             intent.setClass(this, getMainActivityClass());
         } else if (isAccessibilityEnabled) {
             if (!HSAccessibilityService.isAvailable()) {
-                intent.setClass(this, KeyboardActivationActivity.class);
+                intent.setClass(this, getMainActivityClass());
             } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
+            } else {
+                intent.setClass(this, getMainActivityClass());
             }
         } else {
             intent.setClass(this, getMainActivityClass());
