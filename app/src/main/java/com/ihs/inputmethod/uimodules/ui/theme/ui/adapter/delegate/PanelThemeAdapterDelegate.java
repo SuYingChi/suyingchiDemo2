@@ -120,20 +120,18 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                 LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), ThemeLockerBgUtil.getInstance().getThemeBgUrl(model.themeName), new LockerEnableDialog.OnLockerBgLoadingListener() {
                     @Override
                     public void onFinish() {
+                        if (!HSKeyboardThemeManager.setKeyboardTheme(model.themeName)) {
+                            String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                            HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
+                        }
+
+                        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_theme_chosed", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
+                        if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
+                            ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
+                        }
 
                     }
                 });
-
-                if (!HSKeyboardThemeManager.setKeyboardTheme(model.themeName)) {
-                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
-                    HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
-                }
-
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_theme_chosed", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
-                if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
-                    ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
-                }
-
             }
         });
 

@@ -366,15 +366,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_share_clicked", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
-            LockerSettings.setLockerBgUrl(themeLockerBgUrl);
-            LockerSettings.setLockerEnabled(true);
-            HSToastUtils.toastBottomLong("Applied Successfully");
-//            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, new LockerEnableDialog.OnLockerBgLoadingListener() {
-//                @Override
-//                public void onFinish() {
-//
-//                }
-//            });
+            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, false, new LockerEnableDialog.OnLockerBgLoadingListener() {
+                @Override
+                public void onFinish() {
+                }
+            });
 
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_apply).equalsIgnoreCase(text)) {
             if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName())) {
