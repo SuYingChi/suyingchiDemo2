@@ -135,6 +135,12 @@
         <!--android:textSize="14sp"/>-->
         <!--</LinearLayout>-->
     </LinearLayout>
+    <ImageView
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ad_engine_ad_mark"/>
 </RelativeLayout>
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->
