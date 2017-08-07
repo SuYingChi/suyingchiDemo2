@@ -148,7 +148,7 @@
     <string name="theme_card_menu_downloading">Downloading</string>
     <string name="theme_card_downloading_tip">Downloading...</string>
     <string name="theme_card_menu_share">Share</string>
-    <string name="theme_card_set_locker_bg">Set As Locker Screen</string>
+    <string name="theme_card_set_locker_bg">Set As Lockscreen</string>
     <string name="theme_card_menu_apply">Apply</string>
     <string name="theme_card_menu_applied">Applied</string>
     <string name="theme_card_menu_delete">Delete</string>
