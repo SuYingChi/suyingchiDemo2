@@ -1,142 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center">
 
 
+    <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
+        android:id="@+id/ad_cover_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@mipmap/ad_banner_title_bg">
 
 
-            <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
-                android:id="@+id/ad_cover_img"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY" />
-
-            <FrameLayout
-                android:id="@+id/ad_choice"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|right" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="2">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@mipmap/ad_banner_title_bg">
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginBottom="8dp"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:id="@+id/ad_call_to_action"
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/charging_ad_button_bg"
-                            android:ellipsize="end"
-                            android:fontFamily="sans-serif-medium"
-                            android:gravity="center"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:text="download"
-                            android:textAllCaps="true"
-                            android:textColor="#ffffff"
-                            android:textSize="14sp"
-                            android:textStyle="normal" />
-
-                        <com.acb.adadapter.ContainerView.AcbNativeAdIconView
-                            android:id="@+id/ad_icon"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:maxHeight="20dp"
-                            android:maxWidth="20dp"
-                            android:src="@mipmap/ad_engine_app_icon"
-                            app:riv_corner_radius="2dp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:layout_toLeftOf="@id/ad_call_to_action"
-                            android:layout_toRightOf="@id/ad_icon"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/ad_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:ellipsize="end"
-                                android:fontFamily="sans-serif"
-                                android:singleLine="true"
-                                android:text="title"
-                                android:textColor="#ffffff"
-                                android:textSize="14sp"
-                                android:textStyle="normal" />
-
-                            <TextView
-                                android:id="@+id/ad_subtitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="20dp"
-                                android:ellipsize="end"
-                                android:fontFamily="sans-serif"
-                                android:singleLine="true"
-                                android:text="subTitle"
-                                android:textColor="#7fffffff"
-                                android:textSize="12sp"
-                                android:textStyle="normal" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </RelativeLayout>
-            </LinearLayout>
-            <ImageView
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ad_engine_ad_mark" />
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/ad_call_to_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/charging_ad_button_bg"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="download"
+                    android:textAllCaps="true"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+                    android:id="@+id/ad_icon"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:maxHeight="20dp"
+                    android:maxWidth="20dp"
+                    android:src="@mipmap/ad_engine_app_icon"
+                    app:riv_corner_radius="2dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@id/ad_call_to_action"
+                    android:layout_toRightOf="@id/ad_icon"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/ad_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif"
+                        android:singleLine="true"
+                        android:text="title"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/ad_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif"
+                        android:singleLine="true"
+                        android:text="subTitle"
+                        android:textColor="#7fffffff"
+                        android:textSize="12sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
+    </LinearLayout>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/ad_engine_ad_mark" />
 
-
-
-    <!--<com.ihs.inputmethod.uimodules.widget.MdProgressBar-->
-    <!--android:id="@+id/progressBar"-->
-    <!--android:layout_width="36dp"-->
-    <!--android:layout_height="36dp"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:background="#00ff00" />-->
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/ad_choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right" />
+</RelativeLayout>
 
