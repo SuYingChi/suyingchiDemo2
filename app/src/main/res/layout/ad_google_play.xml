@@ -24,11 +24,17 @@
             android:background="#0f9d58"
             android:fontFamily="sans-serif-medium"
             android:paddingBottom="3.7dp"
-            android:paddingLeft="3.7dp"
+            android:paddingLeft="20.7dp"
             android:paddingRight="4.7dp"
             android:paddingTop="4.7dp"
             android:text="Recommended For You"
             android:textColor="@android:color/white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:src="@mipmap/ad_engine_ad_mark"/>
 
         <FrameLayout
             android:id="@+id/ad_choice"
