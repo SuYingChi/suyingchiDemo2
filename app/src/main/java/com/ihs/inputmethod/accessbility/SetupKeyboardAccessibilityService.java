@@ -25,6 +25,7 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 
 import java.util.List;
 
@@ -224,7 +225,7 @@ public class SetupKeyboardAccessibilityService {
             @Override
             public void onCancel(DialogInterface dialog) {
                 HSFloatWindowManager.getInstance().removeAccessibilityCover();
-                Intent intent = new Intent(HSApplication.getContext(), KeyboardActivationActivity.class);
+                Intent intent = new Intent(HSApplication.getContext(), ThemeHomeActivity.class);
                 intent.setFlags(
                         FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP |
                                 FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_NEW_TASK);
