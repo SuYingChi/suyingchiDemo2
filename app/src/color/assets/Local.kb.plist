@@ -1376,7 +1376,7 @@
 				<key>KeyboardEmojiAd</key>
 				<dict>
 					<key>ShowAd</key>
-					<false/>
+					<true/>
 				</dict>
 				<key>GooglePlayNativeAd</key>
 				<dict>
@@ -3995,6 +3995,8 @@
 			<dict>
 				<key>expireTime</key>
 				<integer>3600</integer>
+				<key>appid</key>
+				<string>ca-app-pub-7319126281585813~4171107486</string>
 				<key>frequencyCap</key>
 				<integer>200</integer>
 				<key>frequencyTime</key>
