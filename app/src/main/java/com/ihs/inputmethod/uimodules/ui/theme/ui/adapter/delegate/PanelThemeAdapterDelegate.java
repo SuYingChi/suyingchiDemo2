@@ -122,7 +122,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 
                 final int enableShowed = HSPreferenceHelper.getDefault().getInt("locker_enable_showed", 0);
                 if (!HSKeyboardThemeManager.getCurrentTheme().mThemeName.equals(model.themeName)) {
-                    if (enableShowed < HSConfig.optInteger(3, "Application", "Locker", "EnableAlertMaxShowCount") && !LockerSettings.isLockerEnableShowSatisfied()) {
+                    if (enableShowed < HSConfig.optInteger(3, "Application", "Locker", "EnableAlertMaxShowCount") && LockerSettings.getLockerEnableStates() == 1 && !LockerSettings.isUserTouchedLockerSettings()) {
                         LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), ThemeLockerBgUtil.getInstance().getThemeBgUrl(model.themeName), new LockerEnableDialog.OnLockerBgLoadingListener() {
                             @Override
                             public void onFinish() {
