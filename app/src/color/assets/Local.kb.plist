@@ -6,34 +6,479 @@
 	<dict>
 		<key>Application</key>
 		<dict>
-			<key>ScreenFlash</key>
+			<key>AccessUsageAlert</key>
 			<dict>
-				<key>CallAssistant</key>
+				<key>AskInterval</key>
+				<integer>3</integer>
+				<key>enable</key>
+				<false/>
+			</dict>
+			<key>AutoSetKeyEnable</key>
+			<false/>
+			<key>BoostPlus</key>
+			<dict>
+				<key>AccCleanTimeoutSeconds</key>
+				<integer>5</integer>
+				<key>AutoCleanFeatureEnabled</key>
+				<false/>
+				<key>CleanIfScreenOffCount</key>
+				<integer>8</integer>
+				<key>CleanIfScreenOffIntervalTime</key>
+				<integer>60</integer>
+				<key>RootPermissionTimeoutSeconds</key>
+				<integer>10</integer>
+				<key>SystemAppsKillList</key>
+				<array>
+					<string>com.google.android.apps.docs</string>
+					<string>com.android.vending</string>
+					<string>com.google.android.music</string>
+					<string>com.google.android.apps.maps</string>
+					<string>com.google.android.youtube</string>
+					<string>com.google.android.apps.books</string>
+					<string>com.google.android.apps.magezines</string>
+					<string>com.google.android.gm</string>
+					<string>com.google.android.calendar</string>
+					<string>com.google.android.videos</string>
+					<string>com.google.earth</string>
+					<string>com.google.android.street</string>
+					<string>com.google.android.keep</string>
+					<string>com.quickoffice.android</string>
+					<string>com.google.android.play.games</string>
+					<string>com.google.android.apps.currents</string>
+					<string>com.google.android.apps.genie.geniewidget</string>
+					<string>com.google.android.videoeditor</string>
+					<string>com.google.android.gallery3d</string>
+					<string>com.google.android.GoogleCamera</string>
+					<string>com.google.android.syncadapters.contacts</string>
+					<string>com.google.android.apps.walletnfcrel</string>
+					<string>com.google.android.email</string>
+					<string>com.google.android.calculator</string>
+					<string>com.google.android.apps.cloudprint</string>
+					<string>com.google.android.contacts</string>
+					<string>com.google.android.apps.photos</string>
+					<string>com.google.android.gm.exchange</string>
+				</array>
+				<key>ThirdPartyAppsAllowList</key>
+				<array>
+					<string>com.facebook.katana</string>
+					<string>com.instagram.android</string>
+					<string>com.zabibtech.aadhaarcard</string>
+					<string>com.Shareitapplication.shareit</string>
+					<string>com.snapchat.android</string>
+					<string>com.facebook.lite</string>
+					<string>sg.bigo.live</string>
+					<string>com.bsb.hike</string>
+					<string>in.mohalla.sharechat</string>
+					<string>mobi.ahihi.whofollowme.india</string>
+					<string>io.zenforms.aadhaar</string>
+					<string>com.pinterest</string>
+					<string>com.phonegap.helloepfo</string>
+					<string>com.dhj.allstatus</string>
+					<string>com.linkedin.android</string>
+					<string>com.google.android.apps.plus</string>
+					<string>vsoft.aadharlinking</string>
+					<string>com.repost</string>
+					<string>com.mico</string>
+					<string>com.ansh.hindicalender</string>
+					<string>com.textmeinc.textme</string>
+					<string>com.path</string>
+					<string>com.beetalk</string>
+					<string>com.zhiliaoapp.musically</string>
+					<string>com.badoo.mobile</string>
+					<string>com.cmcm.live</string>
+					<string>com.likesfamousapp</string>
+					<string>com.redcactus.repost</string>
+					<string>com.camshare.camfrog.android</string>
+					<string>com.nono.android</string>
+					<string>com.akasanet.yogrt.android</string>
+					<string>com.projectgoth</string>
+					<string>co.triller.droid</string>
+					<string>com.scorp</string>
+					<string>com.zhiliaoapp.musicallylite</string>
+					<string>com.tumblr</string>
+					<string>com.jaumo</string>
+					<string>com.narvii.amino.master</string>
+					<string>com.skout.android</string>
+					<string>com.myyearbook.m</string>
+					<string>com.facebook.flash</string>
+					<string>br.gov.caixa.bolsafamilia</string>
+					<string>br.gov.caixa.trabalhador</string>
+					<string>com.idqfzqxeuv5i9a1ofyx2q</string>
+					<string>com.amberfog.vkfree</string>
+					<string>com.finchmil.thtclub</string>
+					<string>com.vkontakte.android</string>
+					<string>ru.ok.android</string>
+					<string>com.perm.kate_new_6</string>
+					<string>drug.vokrug</string>
+					<string>tv.periscope.android</string>
+					<string>com.classic.lurdes</string>
+					<string>ru.mamba.client</string>
+					<string>me.msqrd.android</string>
+					<string>ru.fsrar.anticontrafact</string>
+					<string>com.wVkontaktesdruzyami_3831735</string>
+					<string>com.madpixels.stickersvk</string>
+					<string>com.chat.ruletka</string>
+					<string>com.polyglotmobile.vkontakte</string>
+					<string>com.asiainno.uplive</string>
+					<string>com.machipopo.swag</string>
+					<string>com.sgiggle.production</string>
+					<string>com.sina.weibo</string>
+					<string>fast.explorer.web.browser</string>
+					<string>com.loudtalks</string>
+					<string>com.tencent.minihd.qq</string>
+					<string>com.lihkg.app</string>
+					<string>com.tencent.livemaster</string>
+					<string>com.twodate.app</string>
+					<string>com.askfm</string>
+					<string>com.weheartit</string>
+					<string>com.colure.app.privacygallery</string>
+					<string>com.grindrapp.android</string>
+					<string>com.waplog.social</string>
+					<string>com.foursquare.robin</string>
+					<string>com.skyfireapps.followersinsightapp</string>
+					<string>net.lovoo.android</string>
+					<string>com.instalookfree.android</string>
+					<string>com.turkcell.bip</string>
+					<string>tr.gov.eba.hesap</string>
+					<string>com.connected2.ozzy.c2m</string>
+					<string>com.pudra.shop.pudra</string>
+					<string>com.pof.android</string>
+					<string>com.zhiliaoapp.lively</string>
+					<string>com.oovoo</string>
+					<string>com.herzick.houseparty</string>
+					<string>me.dingtone.app.im</string>
+					<string>com.zoosk.zoosk</string>
+					<string>com.enflick.android.TextNow</string>
+					<string>com.pinger.textfree</string>
+					<string>im.twogo.godroid</string>
+					<string>com.gogii.textplus</string>
+					<string>com.futurebits.instamessage.free</string>
+					<string>lt.ito.eskimi</string>
+					<string>com.streetbees</string>
+					<string>com.unearby.sayhi</string>
+					<string>com.twoo</string>
+					<string>com.taggedapp</string>
+					<string>com.infostream.seekingarrangement</string>
+					<string>com.blued.international</string>
+					<string>com.topface.topface</string>
+					<string>com.magicjack</string>
+					<string>com.hi5.app</string>
+					<string>com.textmeinc.freetone</string>
+					<string>com.paltalk.chat.android</string>
+					<string>co.clover.clover</string>
+					<string>com.thaifriendly.app</string>
+					<string>jp.naver.lineplay.android</string>
+					<string>younow.live</string>
+					<string>com.anykey.ulala</string>
+					<string>com.imvu.mobilecordova</string>
+					<string>tv.hiclub.live</string>
+					<string>com.fsp.android.c</string>
+					<string>com.woozworld.woozworld.app</string>
+					<string>com.hornet.android</string>
+					<string>air.com.stardoll.access</string>
+					<string>com.chatroullete.alternative</string>
+					<string>com.appspot.scruffapp</string>
+					<string>air.meez.app.Towers</string>
+					<string>com.badoo.mobile.premium</string>
+					<string>com.adopteunmec.androidbr</string>
+					<string>com.lavendrapp.lavendr</string>
+					<string>ru.mail.love</string>
+					<string>ru.dom2.app</string>
+					<string>com.dev.puer.guestsvk</string>
+					<string>ru.fotostrana.sweetmeet</string>
+					<string>com.server</string>
+					<string>ru.like.vs</string>
+					<string>ru.flerov.vksecrets</string>
+					<string>com.fovplusapp.com</string>
+					<string>com.asiandate</string>
+					<string>com.mcot.a</string>
+					<string>jp.cocone.pocketcolony</string>
+					<string>jp.pxv.android</string>
+					<string>kr.co.vcnc.android.couple</string>
+					<string>com.skoutplus.android</string>
+					<string>com.taptrip</string>
+					<string>net.iaround</string>
+					<string>chat.meme.inke</string>
+					<string>com.lang.lang</string>
+					<string>com.udfun.cnjcz1</string>
+					<string>com.riseproject.supe</string>
+					<string>jailyne.com.jailyneojedaochoa</string>
+					<string>com.nintendo.zaaa</string>
+					<string>com.itonline.anastasiadate</string>
+					<string>com.mejorapps.fastboostpro</string>
+					<string>com.adopteunmec.androidmx</string>
+					<string>com.hoott</string>
+					<string>go.dev.matchandtalk</string>
+					<string>com.bloomyapp</string>
+					<string>com.forplay.app</string>
+					<string>com.livestar.livestarTV</string>
+					<string>com.koikatsu.android.dokidoki2.kr</string>
+					<string>club.mokomoko.pd04</string>
+					<string>kr.co.infinio.zultalks</string>
+					<string>com.aosapp.chatradar</string>
+					<string>com.NoonDate</string>
+					<string>com.klinker.android.twitter_l</string>
+					<string>com.detectunfollowersnoads</string>
+					<string>com.lumiyaviewer.lumiya</string>
+					<string>com.samruston.twitter</string>
+					<string>com.quoord.tapatalkHD</string>
+					<string>com.handmark.tweetcaster.premium</string>
+					<string>com.emogoth.android.phone.mimi.donate</string>
+					<string>com.eboticons.notkarltonbanks</string>
+					<string>com.icorpsonline.iCorps</string>
+					<string>com.tagsforlikes.tagsforlikes.pro</string>
+					<string>com.twitpane.premium</string>
+					<string>net.janesoft.janetter.android.pro</string>
+					<string>com.dwdesign.tweetings</string>
+					<string>biz.dealnote.phoenix</string>
+					<string>com.softama.twitamaplus</string>
+					<string>com.fsoft.ihabotdonate</string>
+					<string>com.ao.reader</string>
+					<string>com.motto.demikeyboard</string>
+					<string>com.rmsoft.follower.insight.pro</string>
+					<string>com.akasaka.facebookinviter</string>
+					<string>com.colincharisma.pageinviter</string>
+					<string>com.vidates.vid_api</string>
+					<string>appinventor.ai_agui037.ConsultaAntecedentesSP</string>
+					<string>com.profiletracker_new_paid</string>
+					<string>com.whoviewedmy.profile.fbook_</string>
+					<string>com.matteobiasetton.hashtagspro</string>
+					<string>com.emojiworld.familyedition</string>
+					<string>com.emojiworld.family</string>
+					<string>com.triladroid.glt.tracker.pro</string>
+					<string>ru.evgostr.guestforvk2</string>
+					<string>com.zakharchenko.yotavk</string>
+					<string>com.gpspsec.panicbutton</string>
+					<string>ru.elegen.iswear</string>
+					<string>com.ubersocialpro</string>
+					<string>devilsoftware.pdapro</string>
+					<string>com.muzurisana.birthday</string>
+					<string>com.alex.reminder</string>
+					<string>com.mico.pro</string>
+					<string>ru.magicgeo.cosmoenergyschool</string>
+					<string>com.brainrainsolutions.eboticons</string>
+					<string>com.emojiworld.holyemojis</string>
+					<string>com.emojiworld.animated</string>
+					<string>com.chymoji</string>
+					<string>com.tapatalk.myfreemasonry</string>
+					<string>com.drummoji</string>
+					<string>com.facebook.orca</string>
+					<string>com.whatsapp</string>
+					<string>com.tencent.mm</string>
+					<string>co.happybits.marcopolo</string>
+					<string>kik.android</string>
+					<string>com.imo.android.imoim</string>
+					<string>com.antivirus</string>
+					<string>jp.naver.line.android</string>
+					<string>com.tencent.mobileqqi</string>
+					<string>com.tencent.qqlite</string>
+					<string>com.google.android.apps.messaging</string>
+					<string>com.airteltalk</string>
+					<string>com.isharing.isharing</string>
+					<string>com.google.android.apps.tachyon</string>
+					<string>com.google.android.apps.fireball</string>
+					<string>com.yahoo.mobile.client.android.im</string>
+					<string>ru.mail</string>
+					<string>com.google.android.talk</string>
+					<string>com.viber.voip</string>
+					<string>com.skype.raider</string>
+					<string>org.telegram.messenger</string>
+					<string>com.studiokuma.callfilter</string>
+					<string>com.yahoo.mobile.client.android.mail</string>
+					<string>gogolook.callgogolook2</string>
+					<string>com.imo.android.imoimbeta</string>
+					<string>com.wZapChatMessenger5</string>
+					<string>com.whatscan</string>
+					<string>com.contapps.android</string>
+					<string>com.yeecall.app</string>
+					<string>com.jiochat.jiochatapp</string>
+					<string>com.nowitgoesapps.fgts.inativo</string>
+					<string>com.rubbiellena.dualbbbmdelta</string>
+					<string>com.jb.gosms</string>
+					<string>com.alundaani.dual.one</string>
+					<string>net.simplifiedcoding.workersdesign</string>
+					<string>com.linecorp.linelite</string>
+					<string>com.bbm</string>
+					<string>com.emoji.keyboard.touchpal</string>
+					<string>com.jb.emoji.gokeyboard</string>
+					<string>com.google.android.inputmethod.latin</string>
+					<string>com.iqt.iqqijni.f</string>
+					<string>com.google.android.apps.inputmethod.zhuyin</string>
+					<string>com.asus.ime</string>
+					<string>com.blackberry.keyboard</string>
+					<string>com.google.android.inputmethod.pinyin</string>
+					<string>com.sonyericsson.textinput.uxp</string>
+					<string>com.linpusime_tc.android.linpus_tckbd</string>
+					<string>com.sohu.inputmethod.sogou</string>
+					<string>com.iflytek.inputmethod.pad</string>
+					<string>com.jb.gokeyboard</string>
+					<string>com.touchtype.swiftkey</string>
+					<string>com.iflytek.inputmethod.google</string>
+					<string>com.gingersoftware.android.keyboard</string>
+					<string>com.pinssible.fancykey</string>
+					<string>com.aitype.android</string>
+					<string>com.klye.ime.latin</string>
+					<string>com.mykeyboard.myphotokeyboard</string>
+					<string>com.google.android.apps.handwriting.ime</string>
+					<string>com.qisiemoji.inputmethod</string>
+					<string>com.cootek.smartinputv5</string>
+				</array>
+				<key>Thresholds</key>
 				<dict>
-					<key>AutoRefresh</key>
-					<dict>
-						<key>enable</key>
-						<false/>
-						<key>interval</key>
-						<integer>10</integer>
-					</dict>
-					<key>OpenWhenScreenFlashTurnOn</key>
-					<true/>
-					<key>ShowAds</key>
-					<true/>
-					<key>ShowWhenIncomingCall</key>
-					<true/>
-					<key>ShowWhenIncomingFailedCall</key>
-					<true/>
-					<key>ShowWhenOutgoingCall</key>
+					<key>CriticalRamUsageMbs</key>
+					<integer>100</integer>
+					<key>OptimalRamUsageMbs</key>
+					<integer>30</integer>
+				</dict>
+			</dict>
+			<key>ChargeLocker</key>
+			<dict>
+				<key>Alert</key>
+				<dict>
+					<key>AdText</key>
+					<string>(contains ads)</string>
+					<key>Body</key>
+					<string>Enable battery protection to speed up the phone charging by 50%</string>
+					<key>Button</key>
+					<string>OK</string>
+					<key>Title</key>
+					<string>Battery Protection</string>
+				</dict>
+				<key>EnableAlertStyle</key>
+				<integer>0</integer>
+				<key>HoursFromFirstUse</key>
+				<integer>0</integer>
+				<key>ShowAppInfo</key>
+				<true/>
+				<key>ShowSettingIcon</key>
+				<true/>
+				<key>StateDescription</key>
+				<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+				<key>state</key>
+				<integer>1</integer>
+			</dict>
+			<key>DownloadTheme</key>
+			<dict>
+				<key>DownloadThemeEnable</key>
+				<true/>
+				<key>DownloadThemePkNamePrefix</key>
+				<array>
+					<string>com.keyboard.theme</string>
+				</array>
+			</dict>
+			<key>ExitAlert</key>
+			<dict>
+				<key>Enable</key>
+				<false/>
+				<key>style</key>
+				<integer>2</integer>
+			</dict>
+			<key>FeaturePrompt</key>
+			<dict>
+				<key>ChargerLockerAlert</key>
+				<dict>
+					<key>MaxShowCount</key>
+					<integer>3</integer>
+					<key>SessionInterval</key>
+					<integer>1</integer>
+				</dict>
+				<key>ThemeCard</key>
+				<dict>
+					<key>MaxShowCount</key>
+					<integer>2</integer>
+					<key>SessionInterval</key>
+					<integer>2</integer>
+				</dict>
+			</dict>
+			<key>FeatureRestriction</key>
+			<dict>
+				<key>AdBackButton</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdCallAssistant</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdGooglePlayIcon</key>
+				<dict>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdGooglePlayNative</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>24</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdKeyboardClose</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>3</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdKeyboardOpen</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>3</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>BoostNotification</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>KeyboardBannerAd</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>MagicTrick</key>
+				<dict>
+					<key>Always</key>
 					<true/>
 				</dict>
-				<key>DefaultSwitch</key>
-				<false/>
-				<key>DefaultTheme</key>
-				<string>1</string>
-				<key>Enable</key>
-				<true/>
 			</dict>
 			<key>FeaturesGuide</key>
 			<dict>
@@ -60,59 +505,125 @@
 				<key>ShowBladeFlash</key>
 				<true/>
 			</dict>
+			<key>GifConfig</key>
+			<dict>
+				<key>UpdateIntervalInHour</key>
+				<string>2</string>
+			</dict>
+			<key>InterstitialAds</key>
+			<dict>
+				<key>BackButton</key>
+				<dict>
+					<key>MaxCountPerDay</key>
+					<integer>4</integer>
+					<key>MinIntervalByHour</key>
+					<integer>1</integer>
+					<key>PackageNameExclude</key>
+					<array>
+						<string>android</string>
+						<string>facebook</string>
+						<string>com.whatsapp</string>
+					</array>
+					<key>Show</key>
+					<false/>
+				</dict>
+				<key>KeyboardAds</key>
+				<dict>
+					<key>KeyboardClose</key>
+					<dict>
+						<key>SessionIndexOfDay</key>
+						<array/>
+						<key>Show</key>
+						<false/>
+					</dict>
+					<key>KeyboardOpen</key>
+					<dict>
+						<key>SessionIndexOfDay</key>
+						<array/>
+						<key>Show</key>
+						<false/>
+					</dict>
+				</dict>
+			</dict>
+			<key>KeyboardEmoji</key>
+			<dict>
+				<key>HideAdTitle</key>
+				<true/>
+			</dict>
+			<key>KeyboardToolBar</key>
+			<dict>
+				<key>GooglePlay</key>
+				<dict>
+					<key>CameraAd</key>
+					<array>
+						<dict>
+							<key>PackageName</key>
+							<string>com.camera.beautycam</string>
+							<key>icon</key>
+							<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
+							<key>name</key>
+							<string>Beauty Cam - Selfie Editor</string>
+						</dict>
+					</array>
+					<key>ShowAd</key>
+					<true/>
+					<key>ShowCameraAd</key>
+					<false/>
+				</dict>
+			</dict>
 			<key>LocalNotifications</key>
 			<array>
 				<dict>
-					<key>Repeat</key>
-					<true/>
 					<key>ActionType</key>
 					<string>Charging</string>
 					<key>Message</key>
 					<array>
 						<string>Enable smart charging to prevent overcharging efficiently.</string>
 					</array>
+					<key>Repeat</key>
+					<true/>
 					<key>Title</key>
 					<string>Enable Smart Charging</string>
 				</dict>
 				<dict>
-					<key>Repeat</key>
-					<true/>
 					<key>ActionType</key>
 					<string>Locker</string>
 					<key>Message</key>
 					<array>
 						<string>Displaying your favourite themes on lock screen.</string>
 					</array>
+					<key>Repeat</key>
+					<true/>
 					<key>Title</key>
 					<string>Enable Screen Locker</string>
 				</dict>
 				<dict>
-					<key>Repeat</key>
-					<true/>
 					<key>ActionType</key>
 					<string>CustomizedTheme</string>
 					<key>Message</key>
 					<array>
 						<string>Nice photo! Would you like to set it as background? </string>
 					</array>
-					<key>Title</key>
-					<string>Got new pictures?</string>
 					<key>Name</key>
 					<string>name1</string>
-				</dict>
-				<dict>
 					<key>Repeat</key>
 					<true/>
+					<key>Title</key>
+					<string>Got new pictures?</string>
+				</dict>
+				<dict>
 					<key>ActionType</key>
 					<string>CustomizedTheme</string>
 					<key>Message</key>
 					<array>
 						<string>Wanna have a new look? 😎✨ Come and create new keyboard &gt;&gt;</string>
 					</array>
-					<key>Title</key>
-					<string>Dress your keyboard!</string>
 					<key>Name</key>
 					<string>name2</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Title</key>
+					<string>Dress your keyboard!</string>
 				</dict>
 				<dict>
 					<key>ActionType</key>
@@ -129,17 +640,17 @@
 					<string>New theme Black Gold available!</string>
 				</dict>
 				<dict>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/panda.png</string>
-					<key>Name</key>
-					<string>com.keyboard.theme.panda</string>
 					<key>ActionType</key>
 					<string>Theme</string>
+					<key>IconUrl</key>
+					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/panda.png</string>
 					<key>Message</key>
 					<array>
 						<string>Guess you like Panda？Come and design your keyboard!</string>
 						<string>Decorate your keyboard with exclusive Panda!</string>
 					</array>
+					<key>Name</key>
+					<string>com.keyboard.theme.panda</string>
 					<key>Title</key>
 					<string>New theme Panda available!</string>
 				</dict>
@@ -540,546 +1051,6 @@
 			<array>
 				<integer>12</integer>
 			</array>
-			<key>AccessUsageAlert</key>
-			<dict>
-				<key>AskInterval</key>
-				<integer>3</integer>
-				<key>enable</key>
-				<false/>
-			</dict>
-			<key>AutoSetKeyEnable</key>
-			<false/>
-			<key>BoostPlus</key>
-			<dict>
-				<key>AccCleanTimeoutSeconds</key>
-				<integer>5</integer>
-				<key>AutoCleanFeatureEnabled</key>
-				<false/>
-				<key>CleanIfScreenOffCount</key>
-				<integer>8</integer>
-				<key>CleanIfScreenOffIntervalTime</key>
-				<integer>60</integer>
-				<key>RootPermissionTimeoutSeconds</key>
-				<integer>10</integer>
-				<key>SystemAppsKillList</key>
-				<array>
-					<string>com.google.android.apps.docs</string>
-					<string>com.android.vending</string>
-					<string>com.google.android.music</string>
-					<string>com.google.android.apps.maps</string>
-					<string>com.google.android.youtube</string>
-					<string>com.google.android.apps.books</string>
-					<string>com.google.android.apps.magezines</string>
-					<string>com.google.android.gm</string>
-					<string>com.google.android.calendar</string>
-					<string>com.google.android.videos</string>
-					<string>com.google.earth</string>
-					<string>com.google.android.street</string>
-					<string>com.google.android.keep</string>
-					<string>com.quickoffice.android</string>
-					<string>com.google.android.play.games</string>
-					<string>com.google.android.apps.currents</string>
-					<string>com.google.android.apps.genie.geniewidget</string>
-					<string>com.google.android.videoeditor</string>
-					<string>com.google.android.gallery3d</string>
-					<string>com.google.android.GoogleCamera</string>
-					<string>com.google.android.syncadapters.contacts</string>
-					<string>com.google.android.apps.walletnfcrel</string>
-					<string>com.google.android.email</string>
-					<string>com.google.android.calculator</string>
-					<string>com.google.android.apps.cloudprint</string>
-					<string>com.google.android.contacts</string>
-					<string>com.google.android.apps.photos</string>
-					<string>com.google.android.gm.exchange</string>
-				</array>
-				<key>ThirdPartyAppsAllowList</key>
-				<array>
-					<string>com.facebook.katana</string>
-					<string>com.instagram.android</string>
-					<string>com.zabibtech.aadhaarcard</string>
-					<string>com.Shareitapplication.shareit</string>
-					<string>com.snapchat.android</string>
-					<string>com.facebook.lite</string>
-					<string>sg.bigo.live</string>
-					<string>com.bsb.hike</string>
-					<string>in.mohalla.sharechat</string>
-					<string>mobi.ahihi.whofollowme.india</string>
-					<string>io.zenforms.aadhaar</string>
-					<string>com.pinterest</string>
-					<string>com.phonegap.helloepfo</string>
-					<string>com.dhj.allstatus</string>
-					<string>com.linkedin.android</string>
-					<string>com.google.android.apps.plus</string>
-					<string>vsoft.aadharlinking</string>
-					<string>com.repost</string>
-					<string>com.mico</string>
-					<string>com.ansh.hindicalender</string>
-					<string>com.textmeinc.textme</string>
-					<string>com.path</string>
-					<string>com.beetalk</string>
-					<string>com.zhiliaoapp.musically</string>
-					<string>com.badoo.mobile</string>
-					<string>com.cmcm.live</string>
-					<string>com.likesfamousapp</string>
-					<string>com.redcactus.repost</string>
-					<string>com.camshare.camfrog.android</string>
-					<string>com.nono.android</string>
-					<string>com.akasanet.yogrt.android</string>
-					<string>com.projectgoth</string>
-					<string>co.triller.droid</string>
-					<string>com.scorp</string>
-					<string>com.zhiliaoapp.musicallylite</string>
-					<string>com.tumblr</string>
-					<string>com.jaumo</string>
-					<string>com.narvii.amino.master</string>
-					<string>com.skout.android</string>
-					<string>com.myyearbook.m</string>
-					<string>com.facebook.flash</string>
-					<string>br.gov.caixa.bolsafamilia</string>
-					<string>br.gov.caixa.trabalhador</string>
-					<string>com.idqfzqxeuv5i9a1ofyx2q</string>
-					<string>com.amberfog.vkfree</string>
-					<string>com.finchmil.thtclub</string>
-					<string>com.vkontakte.android</string>
-					<string>ru.ok.android</string>
-					<string>com.perm.kate_new_6</string>
-					<string>drug.vokrug</string>
-					<string>tv.periscope.android</string>
-					<string>com.classic.lurdes</string>
-					<string>ru.mamba.client</string>
-					<string>me.msqrd.android</string>
-					<string>ru.fsrar.anticontrafact</string>
-					<string>com.wVkontaktesdruzyami_3831735</string>
-					<string>com.madpixels.stickersvk</string>
-					<string>com.chat.ruletka</string>
-					<string>com.polyglotmobile.vkontakte</string>
-					<string>com.asiainno.uplive</string>
-					<string>com.machipopo.swag</string>
-					<string>com.sgiggle.production</string>
-					<string>com.sina.weibo</string>
-					<string>fast.explorer.web.browser</string>
-					<string>com.loudtalks</string>
-					<string>com.tencent.minihd.qq</string>
-					<string>com.lihkg.app</string>
-					<string>com.tencent.livemaster</string>
-					<string>com.twodate.app</string>
-					<string>com.askfm</string>
-					<string>com.weheartit</string>
-					<string>com.colure.app.privacygallery</string>
-					<string>com.grindrapp.android</string>
-					<string>com.waplog.social</string>
-					<string>com.foursquare.robin</string>
-					<string>com.skyfireapps.followersinsightapp</string>
-					<string>net.lovoo.android</string>
-					<string>com.instalookfree.android</string>
-					<string>com.turkcell.bip</string>
-					<string>tr.gov.eba.hesap</string>
-					<string>com.connected2.ozzy.c2m</string>
-					<string>com.pudra.shop.pudra</string>
-					<string>com.pof.android</string>
-					<string>com.zhiliaoapp.lively</string>
-					<string>com.oovoo</string>
-					<string>com.herzick.houseparty</string>
-					<string>me.dingtone.app.im</string>
-					<string>com.zoosk.zoosk</string>
-					<string>com.enflick.android.TextNow</string>
-					<string>com.pinger.textfree</string>
-					<string>im.twogo.godroid</string>
-					<string>com.gogii.textplus</string>
-					<string>com.futurebits.instamessage.free</string>
-					<string>lt.ito.eskimi</string>
-					<string>com.streetbees</string>
-					<string>com.unearby.sayhi</string>
-					<string>com.twoo</string>
-					<string>com.taggedapp</string>
-					<string>com.infostream.seekingarrangement</string>
-					<string>com.blued.international</string>
-					<string>com.topface.topface</string>
-					<string>com.magicjack</string>
-					<string>com.hi5.app</string>
-					<string>com.textmeinc.freetone</string>
-					<string>com.paltalk.chat.android</string>
-					<string>co.clover.clover</string>
-					<string>com.thaifriendly.app</string>
-					<string>jp.naver.lineplay.android</string>
-					<string>younow.live</string>
-					<string>com.anykey.ulala</string>
-					<string>com.imvu.mobilecordova</string>
-					<string>tv.hiclub.live</string>
-					<string>com.fsp.android.c</string>
-					<string>com.woozworld.woozworld.app</string>
-					<string>com.hornet.android</string>
-					<string>air.com.stardoll.access</string>
-					<string>com.chatroullete.alternative</string>
-					<string>com.appspot.scruffapp</string>
-					<string>air.meez.app.Towers</string>
-					<string>com.badoo.mobile.premium</string>
-					<string>com.adopteunmec.androidbr</string>
-					<string>com.lavendrapp.lavendr</string>
-					<string>ru.mail.love</string>
-					<string>ru.dom2.app</string>
-					<string>com.dev.puer.guestsvk</string>
-					<string>ru.fotostrana.sweetmeet</string>
-					<string>com.server</string>
-					<string>ru.like.vs</string>
-					<string>ru.flerov.vksecrets</string>
-					<string>com.fovplusapp.com</string>
-					<string>com.asiandate</string>
-					<string>com.mcot.a</string>
-					<string>jp.cocone.pocketcolony</string>
-					<string>jp.pxv.android</string>
-					<string>kr.co.vcnc.android.couple</string>
-					<string>com.skoutplus.android</string>
-					<string>com.taptrip</string>
-					<string>net.iaround</string>
-					<string>chat.meme.inke</string>
-					<string>com.lang.lang</string>
-					<string>com.udfun.cnjcz1</string>
-					<string>com.riseproject.supe</string>
-					<string>jailyne.com.jailyneojedaochoa</string>
-					<string>com.nintendo.zaaa</string>
-					<string>com.itonline.anastasiadate</string>
-					<string>com.mejorapps.fastboostpro</string>
-					<string>com.adopteunmec.androidmx</string>
-					<string>com.hoott</string>
-					<string>go.dev.matchandtalk</string>
-					<string>com.bloomyapp</string>
-					<string>com.forplay.app</string>
-					<string>com.livestar.livestarTV</string>
-					<string>com.koikatsu.android.dokidoki2.kr</string>
-					<string>club.mokomoko.pd04</string>
-					<string>kr.co.infinio.zultalks</string>
-					<string>com.aosapp.chatradar</string>
-					<string>com.NoonDate</string>
-					<string>com.klinker.android.twitter_l</string>
-					<string>com.detectunfollowersnoads</string>
-					<string>com.lumiyaviewer.lumiya</string>
-					<string>com.samruston.twitter</string>
-					<string>com.quoord.tapatalkHD</string>
-					<string>com.handmark.tweetcaster.premium</string>
-					<string>com.emogoth.android.phone.mimi.donate</string>
-					<string>com.eboticons.notkarltonbanks</string>
-					<string>com.icorpsonline.iCorps</string>
-					<string>com.tagsforlikes.tagsforlikes.pro</string>
-					<string>com.twitpane.premium</string>
-					<string>net.janesoft.janetter.android.pro</string>
-					<string>com.dwdesign.tweetings</string>
-					<string>biz.dealnote.phoenix</string>
-					<string>com.softama.twitamaplus</string>
-					<string>com.fsoft.ihabotdonate</string>
-					<string>com.ao.reader</string>
-					<string>com.motto.demikeyboard</string>
-					<string>com.rmsoft.follower.insight.pro</string>
-					<string>com.akasaka.facebookinviter</string>
-					<string>com.colincharisma.pageinviter</string>
-					<string>com.vidates.vid_api</string>
-					<string>appinventor.ai_agui037.ConsultaAntecedentesSP</string>
-					<string>com.profiletracker_new_paid</string>
-					<string>com.whoviewedmy.profile.fbook_</string>
-					<string>com.matteobiasetton.hashtagspro</string>
-					<string>com.emojiworld.familyedition</string>
-					<string>com.emojiworld.family</string>
-					<string>com.triladroid.glt.tracker.pro</string>
-					<string>ru.evgostr.guestforvk2</string>
-					<string>com.zakharchenko.yotavk</string>
-					<string>com.gpspsec.panicbutton</string>
-					<string>ru.elegen.iswear</string>
-					<string>com.ubersocialpro</string>
-					<string>devilsoftware.pdapro</string>
-					<string>com.muzurisana.birthday</string>
-					<string>com.alex.reminder</string>
-					<string>com.mico.pro</string>
-					<string>ru.magicgeo.cosmoenergyschool</string>
-					<string>com.brainrainsolutions.eboticons</string>
-					<string>com.emojiworld.holyemojis</string>
-					<string>com.emojiworld.animated</string>
-					<string>com.chymoji</string>
-					<string>com.tapatalk.myfreemasonry</string>
-					<string>com.drummoji</string>
-					<string>com.facebook.orca</string>
-					<string>com.whatsapp</string>
-					<string>com.tencent.mm</string>
-					<string>co.happybits.marcopolo</string>
-					<string>kik.android</string>
-					<string>com.imo.android.imoim</string>
-					<string>com.antivirus</string>
-					<string>jp.naver.line.android</string>
-					<string>com.tencent.mobileqqi</string>
-					<string>com.tencent.qqlite</string>
-					<string>com.google.android.apps.messaging</string>
-					<string>com.airteltalk</string>
-					<string>com.isharing.isharing</string>
-					<string>com.google.android.apps.tachyon</string>
-					<string>com.google.android.apps.fireball</string>
-					<string>com.yahoo.mobile.client.android.im</string>
-					<string>ru.mail</string>
-					<string>com.google.android.talk</string>
-					<string>com.viber.voip</string>
-					<string>com.skype.raider</string>
-					<string>org.telegram.messenger</string>
-					<string>com.studiokuma.callfilter</string>
-					<string>com.yahoo.mobile.client.android.mail</string>
-					<string>gogolook.callgogolook2</string>
-					<string>com.imo.android.imoimbeta</string>
-					<string>com.wZapChatMessenger5</string>
-					<string>com.whatscan</string>
-					<string>com.contapps.android</string>
-					<string>com.yeecall.app</string>
-					<string>com.jiochat.jiochatapp</string>
-					<string>com.nowitgoesapps.fgts.inativo</string>
-					<string>com.rubbiellena.dualbbbmdelta</string>
-					<string>com.jb.gosms</string>
-					<string>com.alundaani.dual.one</string>
-					<string>net.simplifiedcoding.workersdesign</string>
-					<string>com.linecorp.linelite</string>
-					<string>com.bbm</string>
-					<string>com.emoji.keyboard.touchpal</string>
-					<string>com.jb.emoji.gokeyboard</string>
-					<string>com.google.android.inputmethod.latin</string>
-					<string>com.iqt.iqqijni.f</string>
-					<string>com.google.android.apps.inputmethod.zhuyin</string>
-					<string>com.asus.ime</string>
-					<string>com.blackberry.keyboard</string>
-					<string>com.google.android.inputmethod.pinyin</string>
-					<string>com.sonyericsson.textinput.uxp</string>
-					<string>com.linpusime_tc.android.linpus_tckbd</string>
-					<string>com.sohu.inputmethod.sogou</string>
-					<string>com.iflytek.inputmethod.pad</string>
-					<string>com.jb.gokeyboard</string>
-					<string>com.touchtype.swiftkey</string>
-					<string>com.iflytek.inputmethod.google</string>
-					<string>com.gingersoftware.android.keyboard</string>
-					<string>com.pinssible.fancykey</string>
-					<string>com.aitype.android</string>
-					<string>com.klye.ime.latin</string>
-					<string>com.mykeyboard.myphotokeyboard</string>
-					<string>com.google.android.apps.handwriting.ime</string>
-					<string>com.qisiemoji.inputmethod</string>
-					<string>com.cootek.smartinputv5</string>
-				</array>
-				<key>Thresholds</key>
-				<dict>
-					<key>CriticalRamUsageMbs</key>
-					<integer>100</integer>
-					<key>OptimalRamUsageMbs</key>
-					<integer>30</integer>
-				</dict>
-			</dict>
-			<key>ChargeLocker</key>
-			<dict>
-				<key>Alert</key>
-				<dict>
-					<key>AdText</key>
-					<string>(contains ads)</string>
-					<key>Body</key>
-					<string>Enable battery protection to speed up the phone charging by 50%</string>
-					<key>Button</key>
-					<string>OK</string>
-					<key>Title</key>
-					<string>Battery Protection</string>
-				</dict>
-				<key>EnableAlertStyle</key>
-				<integer>0</integer>
-				<key>HoursFromFirstUse</key>
-				<integer>0</integer>
-				<key>ShowAppInfo</key>
-				<true/>
-				<key>ShowSettingIcon</key>
-				<true/>
-				<key>StateDescription</key>
-				<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
-				<key>state</key>
-				<integer>1</integer>
-			</dict>
-			<key>DownloadTheme</key>
-			<dict>
-				<key>DownloadThemeEnable</key>
-				<true/>
-				<key>DownloadThemePkNamePrefix</key>
-				<array>
-					<string>com.keyboard.theme</string>
-				</array>
-			</dict>
-			<key>ExitAlert</key>
-			<dict>
-				<key>Enable</key>
-				<false/>
-				<key>style</key>
-				<integer>2</integer>
-			</dict>
-			<key>FeaturePrompt</key>
-			<dict>
-				<key>ChargerLockerAlert</key>
-				<dict>
-					<key>MaxShowCount</key>
-					<integer>3</integer>
-					<key>SessionInterval</key>
-					<integer>1</integer>
-				</dict>
-				<key>ThemeCard</key>
-				<dict>
-					<key>MaxShowCount</key>
-					<integer>2</integer>
-					<key>SessionInterval</key>
-					<integer>2</integer>
-				</dict>
-			</dict>
-			<key>FeatureRestriction</key>
-			<dict>
-				<key>AdCallAssistant</key>
-				<dict>
-					<key>TimeZoneException</key>
-					<array/>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-				</dict>
-				<key>AdBackButton</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdGooglePlayIcon</key>
-				<dict>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdGooglePlayNative</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>24</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdKeyboardClose</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>3</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdKeyboardOpen</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>3</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>BoostNotification</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>KeyboardBannerAd</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>MagicTrick</key>
-				<dict>
-					<key>Always</key>
-					<true/>
-				</dict>
-			</dict>
-			<key>GifConfig</key>
-			<dict>
-				<key>UpdateIntervalInHour</key>
-				<string>2</string>
-			</dict>
-			<key>InterstitialAds</key>
-			<dict>
-				<key>BackButton</key>
-				<dict>
-					<key>MaxCountPerDay</key>
-					<integer>4</integer>
-					<key>MinIntervalByHour</key>
-					<integer>1</integer>
-					<key>PackageNameExclude</key>
-					<array>
-						<string>android</string>
-						<string>facebook</string>
-						<string>com.whatsapp</string>
-					</array>
-					<key>Show</key>
-					<false/>
-				</dict>
-				<key>KeyboardAds</key>
-				<dict>
-					<key>KeyboardClose</key>
-					<dict>
-						<key>SessionIndexOfDay</key>
-						<array/>
-						<key>Show</key>
-						<false/>
-					</dict>
-					<key>KeyboardOpen</key>
-					<dict>
-						<key>SessionIndexOfDay</key>
-						<array/>
-						<key>Show</key>
-						<false/>
-					</dict>
-				</dict>
-			</dict>
-			<key>KeyboardEmoji</key>
-			<dict>
-				<key>HideAdTitle</key>
-				<true/>
-			</dict>
-			<key>KeyboardToolBar</key>
-			<dict>
-				<key>GooglePlay</key>
-				<dict>
-					<key>ShowAd</key>
-					<true/>
-					<key>ShowCameraAd</key>
-					<false/>
-					<key>CameraAd</key>
-					<array>
-						<dict>
-							<key>icon</key>
-							<string>https://emojidevelop.s3.amazonaws.com/colorcam/push/icon/Sakura.png</string>
-							<key>PackageName</key>
-							<string>com.camera.beautycam</string>
-							<key>name</key>
-							<string>Beauty Cam - Selfie Editor</string>
-						</dict>
-					</array>
-				</dict>
-			</dict>
 			<key>Locker</key>
 			<dict>
 				<key>Ads</key>
@@ -1116,6 +1087,8 @@
 					<string>com.zui.calculator</string>
 					<string>com.android.bbkcalculator</string>
 				</array>
+				<key>EnableAlertMaxShowCount</key>
+				<integer>6</integer>
 				<key>EnableAlertStyle</key>
 				<integer>1</integer>
 				<key>HoursFromFirstUse</key>
@@ -1263,8 +1236,6 @@
 				</array>
 				<key>state</key>
 				<integer>1</integer>
-				<key>EnableAlertMaxShowCount</key>
-				<integer>6</integer>
 			</dict>
 			<key>Lucky</key>
 			<dict>
@@ -1373,11 +1344,6 @@
 			<dict>
 				<key>FetchAdInterval</key>
 				<real>15000</real>
-				<key>KeyboardEmojiAd</key>
-				<dict>
-					<key>ShowAd</key>
-					<true/>
-				</dict>
 				<key>GooglePlayNativeAd</key>
 				<dict>
 					<key>ShowAd</key>
@@ -1392,6 +1358,11 @@
 					</array>
 					<key>Show</key>
 					<false/>
+				</dict>
+				<key>KeyboardEmojiAd</key>
+				<dict>
+					<key>ShowAd</key>
+					<true/>
 				</dict>
 				<key>KeyboardEmojiTopLeftTabAd</key>
 				<dict>
@@ -1490,6 +1461,35 @@
 			</dict>
 			<key>RiffsyKey</key>
 			<string>ZJY5JD88TACB</string>
+			<key>ScreenFlash</key>
+			<dict>
+				<key>CallAssistant</key>
+				<dict>
+					<key>AutoRefresh</key>
+					<dict>
+						<key>enable</key>
+						<false/>
+						<key>interval</key>
+						<integer>10</integer>
+					</dict>
+					<key>OpenWhenScreenFlashTurnOn</key>
+					<true/>
+					<key>ShowAds</key>
+					<true/>
+					<key>ShowWhenIncomingCall</key>
+					<true/>
+					<key>ShowWhenIncomingFailedCall</key>
+					<true/>
+					<key>ShowWhenOutgoingCall</key>
+					<true/>
+				</dict>
+				<key>DefaultSwitch</key>
+				<false/>
+				<key>DefaultTheme</key>
+				<string>1</string>
+				<key>Enable</key>
+				<true/>
+			</dict>
 			<key>SearchEngine</key>
 			<dict>
 				<key>url</key>
@@ -1720,14 +1720,14 @@
 				<key>custom_theme_backgrounds</key>
 				<array>
 					<dict>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fantasyland.jpg</string>
 						<key>name</key>
 						<string>Fantasyland</string>
 						<key>price</key>
 						<string>$0.99</string>
 						<key>showNewMark</key>
 						<true/>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fantasyland.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1740,12 +1740,12 @@
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier30</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mysteriousuniverse.jpg</string>
 						<key>name</key>
 						<string>Mysterious Universe</string>
 						<key>price</key>
 						<string>$0.99</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mysteriousuniverse.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1806,22 +1806,22 @@
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier17</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/marshmallow.jpg</string>
 						<key>name</key>
 						<string>Marshmallow</string>
 						<key>price</key>
 						<string>$0.99</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/marshmallow.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier12</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/kisses.jpg</string>
 						<key>name</key>
 						<string>Kisses</string>
 						<key>price</key>
 						<string>$0.99</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/kisses.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1834,12 +1834,12 @@
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier24</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/donuts.jpg</string>
 						<key>name</key>
 						<string>Donuts</string>
 						<key>price</key>
 						<string>$0.99</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/donuts.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1872,12 +1872,12 @@
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier10</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/diamond.jpg</string>
 						<key>name</key>
 						<string>Diamonds</string>
 						<key>price</key>
 						<string>$0.99</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/diamond.jpg</string>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -2796,6 +2796,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Galaxy.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Galaxy.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/galaxy.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Galaxy.jpg</string>
 						<key>showName</key>
@@ -2806,8 +2808,6 @@
 						<string>com.keyboard.theme.galaxy</string>
 						<key>zipName</key>
 						<string>Galaxy</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/galaxy.jpg</string>
 					</dict>
 					<dict>
 						<key>bannerImgUrl</key>
@@ -2832,6 +2832,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Spinner.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Spinner.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/spinner.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Spinner.jpg</string>
 						<key>showName</key>
@@ -2840,8 +2842,6 @@
 						<string>com.keyboard.theme.spinner</string>
 						<key>zipName</key>
 						<string>Spinner</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/spinner.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -2850,6 +2850,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/RoseGold.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/RoseGold.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/rosegold.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/RoseGold.jpg</string>
 						<key>showName</key>
@@ -2858,8 +2860,6 @@
 						<string>com.keyboard.theme.rosegold</string>
 						<key>zipName</key>
 						<string>RoseGold</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/rosegold.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -2868,6 +2868,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/RoyalBattle.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/RoyalBattle.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/royalbattle.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/RoyalBattle.jpg</string>
 						<key>showName</key>
@@ -2876,8 +2878,6 @@
 						<string>com.keyboard.theme.royalbattle</string>
 						<key>zipName</key>
 						<string>RoyalBattle</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/royalbattle.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -2902,6 +2902,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/GoldSilver.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/GoldSilver.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/goldsliver.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/GoldSilver.jpg</string>
 						<key>showName</key>
@@ -2910,8 +2912,6 @@
 						<string>com.keyboard.theme. goldsilver</string>
 						<key>zipName</key>
 						<string>GoldSilver</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/goldsliver.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -2920,6 +2920,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/PinkDrops.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/PinkDrops.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/pinkdrops.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/PinkDrops.jpg</string>
 						<key>showName</key>
@@ -2928,8 +2930,6 @@
 						<string>com.keyboard.theme.pinkdrops</string>
 						<key>zipName</key>
 						<string>PinkDrops</string>
-						<key>lockerImgUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/pinkdrops.jpg</string>
 					</dict>
 					<dict>
 						<key>apkUrl</key>
@@ -3993,10 +3993,10 @@
 		<dict>
 			<key>admobexpress</key>
 			<dict>
-				<key>expireTime</key>
-				<integer>3600</integer>
 				<key>appid</key>
 				<string>ca-app-pub-7319126281585813~4171107486</string>
+				<key>expireTime</key>
+				<integer>3600</integer>
 				<key>frequencyCap</key>
 				<integer>200</integer>
 				<key>frequencyTime</key>
@@ -4013,6 +4013,8 @@
 			</dict>
 			<key>admobnative</key>
 			<dict>
+				<key>appid</key>
+				<string>ca-app-pub-7319126281585813~4171107486</string>
 				<key>expireTime</key>
 				<integer>3600</integer>
 				<key>frequencyCap</key>
@@ -5824,7 +5826,7 @@
 						<string>US</string>
 						<key>ids</key>
 						<array>
-							<string>ca-app-pub-7319126281585813/9684290288</string>
+							<string>ca-app-pub-7319126281585813/3373195087</string>
 						</array>
 						<key>networkType</key>
 						<integer>0</integer>
@@ -5880,7 +5882,7 @@
 						<string>US</string>
 						<key>ids</key>
 						<array>
-							<string>ca-app-pub-7319126281585813/2161023487</string>
+							<string>ca-app-pub-7319126281585813/9589484917</string>
 						</array>
 						<key>networkType</key>
 						<integer>0</integer>
