@@ -8,13 +8,6 @@
     android:orientation="vertical"
     tools:context="com.keyboard.colorkeyboard.app.MainActivity">
 
-    <!--<com.ihs.keyboardutils.view.HSGifImageView-->
-        <!--android:id="@+id/launch_gif_view"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--app:layout_aspectRatio="75%"-->
-        <!--app:layout_marginTopPercent="15%"-->
-        <!--app:layout_widthPercent="50%" />-->
-
     <VideoView
         android:id="@+id/launch_mp4_view"
         android:layout_centerHorizontal="true"
