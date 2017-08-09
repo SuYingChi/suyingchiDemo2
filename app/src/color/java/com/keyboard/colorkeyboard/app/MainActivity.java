@@ -41,6 +41,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -53,7 +54,6 @@ import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
@@ -130,6 +130,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private GivenSizeVideoView videoView;
     private CustomViewDialog customViewDialog;
     private boolean alertDialogShowing;
+    private VideoView launchVideoView;
 
     private boolean isInStepOne;
     private boolean clickStepOne;
@@ -211,33 +212,38 @@ public class MainActivity extends HSDeepLinkActivity {
         int screenWidth = size.x;
         final int screenHeight = size.y;
 
-        launchGifView = (HSGifImageView) findViewById(R.id.launch_gif_view);
-        try {
-            GifDrawable gifDrawable = new GifDrawable(getResources(), R.raw.launch_page_animation);
-            gifDrawable.setLoopCount(1);
-            gifDrawable.addAnimationListener(new AnimationListener() {
-                @Override
-                public void onAnimationCompleted(int loopNumber) {
-                    if (shouldShowThemeHome()) {
-                        startThemeHomeActivity();
-                    } else {
-                        // 开始渐变动画
-                        if (isAccessibilityEnable()) {
-                            accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
-                            listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
-                            playAccessibilityButtonShowAnimation();
-                        } else {
-                            playManualButtonShowAnimation();
-                        }
-                    }
-                    HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
-                }
-            });
-            launchGifView.setImageDrawable(gifDrawable);
-        } catch (IOException e) {
-            e.printStackTrace();
-            startThemeHomeActivity();
-        }
+//        launchGifView = (HSGifImageView) findViewById(R.id.launch_gif_view);
+//        try {
+//            GifDrawable gifDrawable = new GifDrawable(getResources(), R.raw.launch_page_animation);
+//            gifDrawable.setLoopCount(1);
+//            gifDrawable.addAnimationListener(new AnimationListener() {
+//                @Override
+//                public void onAnimationCompleted(int loopNumber) {
+//                    if (shouldShowThemeHome()) {
+//                        startThemeHomeActivity();
+//                    } else {
+//                        // 开始渐变动画
+//                        if (isAccessibilityEnable()) {
+//                            accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
+//                            listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
+//                            playAccessibilityButtonShowAnimation();
+//                        } else {
+//                            playManualButtonShowAnimation();
+//                        }
+//                    }
+//                    HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
+//                }
+//            });
+//            launchGifView.setImageDrawable(gifDrawable);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            startThemeHomeActivity();
+//        }
+
+        launchVideoView = (VideoView) findViewById(R.id.launch_mp4_view);
+        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation2);
+        launchVideoView.setVideoURI(uri);
+        launchVideoView.setZOrderOnTop(true);
 
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
@@ -533,7 +539,8 @@ public class MainActivity extends HSDeepLinkActivity {
         HSLog.d("MainActivity onResume.");
         if (!isLaunchAnimationPlayed) {
             isLaunchAnimationPlayed = true;
-            launchGifView.start();
+//            launchGifView.start();
+            launchVideoView.start();
         }
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
@@ -605,7 +612,8 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onStop() {
         super.onStop();
         HSLog.d("MainActivity onStop.");
-        launchGifView.stop();
+        //launchGifView.stop();
+        launchVideoView.stopPlayback();
     }
 
     @Override
