@@ -1,7 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,7 +12,9 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -48,6 +50,7 @@ import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
@@ -61,6 +64,8 @@ import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
+
+import java.util.ArrayList;
 
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
@@ -89,7 +94,12 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private AppBarLayout appbarLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ArrayList<Fragment> fragments;
+    private TabFragmentPagerAdapter tabFragmentPagerAdapter;
     private String currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
+
     private TrialKeyboardDialog trialKeyboardDialog;
     private boolean isFromUsageAccessActivity;
     private View enableTipTV;
@@ -166,6 +176,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             adTriggerView.setOnClickListener(this);
         }
 
+        tabLayout = (TabLayout)  findViewById(R.id.store_tab);
+
+        viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
@@ -216,6 +229,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         layoutParams.height = (int) (getResources().getDisplayMetrics().widthPixels * 0.48f);
 
         //remove myThemeFragment if exist
+        /* origin code
         Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
         if (myThemeFragment != null) {
             getFragmentManager().beginTransaction().remove(myThemeFragment).commit();
@@ -227,8 +241,19 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             storeFragment = new ThemeHomeFragment();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.content_layout, storeFragment, THEME_STORE_FRAGMENT_TAG).commit();
-        }
+        }*/
+        fragments = new ArrayList<>();
+        Fragment themeHomeFragment = new ThemeHomeFragment();
+        Fragment myThemeFragment = new MyThemeFragment();
+        fragments.add(themeHomeFragment);
+        fragments.add(myThemeFragment);
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
+
+        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        viewPager.setOffscreenPageLimit(fragments.size());
+        viewPager.setAdapter(tabFragmentPagerAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
 
         //init locker function
         boolean lockerEnable = getResources().getBoolean(R.bool.config_locker_drawer_visiable_enable) && HSAppLockerUtils.isLockerEnabled();
@@ -384,6 +409,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         int id = item.getItemId();
 
         if (id == R.id.nav_theme_store) {
+            /* origin
             if (!currentFragmentTag.equals(THEME_STORE_FRAGMENT_TAG)) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
@@ -393,15 +419,16 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 }
                 if (themeStoreFragment == null) {
                     themeStoreFragment = new ThemeHomeFragment();
-                    transaction.add(R.id.content_layout, themeStoreFragment, THEME_STORE_FRAGMENT_TAG);
+                    //transaction.add(R.id.content_layout, themeStoreFragment, THEME_STORE_FRAGMENT_TAG);
                 }
                 transaction.show(themeStoreFragment).commit();
                 appbarLayout.setExpanded(true);
                 toolbar.setTitle(R.string.theme_nav_theme_store);
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_store_clicked");
-            }
+            }*/
             currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
         } else if (id == R.id.nav_my_themes) {
+            /* origin
             if (!currentFragmentTag.equals(MY_THEME_FRAGMENT_TAG)) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
@@ -411,13 +438,13 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 }
                 if (myThemeFragment == null) {
                     myThemeFragment = new MyThemeFragment();
-                    transaction.add(R.id.content_layout, myThemeFragment, MY_THEME_FRAGMENT_TAG);
+                    //transaction.add(R.id.content_layout, myThemeFragment, MY_THEME_FRAGMENT_TAG);
                 }
                 transaction.show(myThemeFragment).commit();
                 appbarLayout.setExpanded(true);
                 toolbar.setTitle(R.string.theme_nav_my_themes);
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_mythemes_clicked");
-            }
+            }*/
             currentFragmentTag = MY_THEME_FRAGMENT_TAG;
         } else if (id == R.id.nav_language) {
             HSUIInputMethod.launchMoreLanguageActivity();

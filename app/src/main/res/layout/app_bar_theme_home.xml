@@ -58,6 +58,14 @@
                 <!--app:lottie_loop="true" />-->
         </RelativeLayout>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/store_tab"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+
         <!--android:background="#ffe92d"
                 android:background="#FBC02D"-->
         <TextView
@@ -78,13 +86,19 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/fragment_view_pager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@color/theme_activity_bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <FrameLayout
+    <!-- <FrameLayout
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/theme_activity_bg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/> -->
 
 
     <LinearLayout

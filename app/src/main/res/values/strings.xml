@@ -129,6 +129,14 @@
     <string name="theme_detail_custom_theme_title_name">Customized Theme</string>
     <string name="theme_trial_keyboard_edit_text_hint">Try typing here now&#8230;</string>
 
+    <!-- store home -->
+    <string name="tab_theme">THEME</string>
+    <string name="tab_theme_my">MY THEME</string>
+    <string name="tab_sticker">STICKER</string>
+    <string name="tab_sticker_my">MY STICKER</string>
+    <string name="tab_font">FONT</string>
+    <string name="tab_font_my">MY FONT</string>
+
     <string name="dialog_app_usage_tips">For better typing experience across different apps, we recommend you to turn on apps with usage access.</string>
     <string name="dialog_agree">@string/allow</string>
     <string name="dialog_disagree">@string/cancel</string>
