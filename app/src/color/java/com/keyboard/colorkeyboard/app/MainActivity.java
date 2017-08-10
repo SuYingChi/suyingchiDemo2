@@ -124,6 +124,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private CustomViewDialog customViewDialog;
     private boolean alertDialogShowing;
     private VideoView launchVideoView;
+    private ImageView launchImageView;
 
     private boolean isInStepOne;
     private boolean clickStepOne;
@@ -205,6 +206,7 @@ public class MainActivity extends HSDeepLinkActivity {
         int screenWidth = size.x;
         final int screenHeight = size.y;
 
+        launchImageView = (ImageView) findViewById(R.id.launch_image_view);
         launchVideoView = (VideoView) findViewById(R.id.launch_mp4_view);
         Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
         launchVideoView.setVideoURI(uri);
@@ -529,7 +531,12 @@ public class MainActivity extends HSDeepLinkActivity {
         HSLog.d("MainActivity onResume.");
         if (!isLaunchAnimationPlayed) {
             isLaunchAnimationPlayed = true;
+            launchImageView.setVisibility(GONE);
+            launchVideoView.setVisibility(View.VISIBLE);
             launchVideoView.start();
+        } else {
+            launchImageView.setVisibility(View.VISIBLE);
+            launchVideoView.setVisibility(GONE);
         }
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
@@ -602,6 +609,8 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onStop();
         HSLog.d("MainActivity onStop.");
         launchVideoView.stopPlayback();
+        launchImageView.setVisibility(View.VISIBLE);
+        launchVideoView.setVisibility(GONE);
     }
 
     @Override

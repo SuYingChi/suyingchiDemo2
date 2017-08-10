@@ -12,7 +12,17 @@
         android:id="@+id/launch_mp4_view"
         android:layout_centerHorizontal="true"
         android:background="@color/main_activity_bg"
-        app:layout_aspectRatio="75%"
+        app:layout_aspectRatio="85.6%"
+        app:layout_marginTopPercent="15%"
+        app:layout_widthPercent="50%" />
+
+    <ImageView
+        android:id="@+id/launch_image_view"
+        android:layout_centerHorizontal="true"
+        android:background="@color/main_activity_bg"
+        android:src="@drawable/launch_page_icon"
+        android:visibility="gone"
+        app:layout_aspectRatio="85.6%"
         app:layout_marginTopPercent="15%"
         app:layout_widthPercent="50%" />
 
