@@ -64,11 +64,19 @@
             android:layout_marginStart="13dp"
             android:layout_marginTop="35dp" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/ad_engine_ad_mark"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/lucky_award_ad_frame" />
+
     </FrameLayout>
 
     <FrameLayout
