@@ -1,7 +1,10 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.ClipDescription;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v13.view.inputmethod.EditorInfoCompat;
 import android.support.v13.view.inputmethod.InputConnectionCompat;
 import android.support.v13.view.inputmethod.InputContentInfoCompat;
@@ -133,8 +137,13 @@ public class StickerUtils {
             }
             if (pngSupported) {
                 addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
-                File uri = new File(targetExternalFilePath);
-                commitPNGImage(Uri.fromFile(uri), "");
+                File externalImageFile = new File(targetExternalFilePath);
+                if (!externalImageFile.exists()) {
+                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_send_failed), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
+                commitPNGImage(uri, "");
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_png");
                 return;
             }
@@ -180,6 +189,29 @@ public class StickerUtils {
             flags |= InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
         }
         InputConnectionCompat.commitContent(inputConnection, editorInfo, inputContentInfo, flags, null);
+    }
+
+    private static Uri getImageContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.Media._ID},
+                MediaStore.Images.Media.DATA + "=? ",
+                new String[]{filePath}, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            cursor.close();
+            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
     }
 
     private static void copyStickerFileToSDCard(Sticker sticker, String destinationPath) {
