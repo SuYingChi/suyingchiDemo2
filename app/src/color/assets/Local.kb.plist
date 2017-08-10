@@ -380,7 +380,7 @@
 					<key>MaxShowCount</key>
 					<integer>3</integer>
 					<key>SessionInterval</key>
-					<integer>1</integer>
+					<integer>3</integer>
 				</dict>
 				<key>ThemeCard</key>
 				<dict>
@@ -497,9 +497,9 @@
 						<key>GuideScreenFlash</key>
 						<true/>
 						<key>Interval</key>
-						<integer>6</integer>
+						<integer>0</integer>
 						<key>ShowTime</key>
-						<integer>3</integer>
+						<integer>100</integer>
 					</dict>
 				</dict>
 				<key>ShowBladeFlash</key>
@@ -575,15 +575,17 @@
 			<array>
 				<dict>
 					<key>ActionType</key>
-					<string>Charging</string>
+					<string>Theme</string>
+					<key>IconUrl</key>
+					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/galaxy.png</string>
 					<key>Message</key>
 					<array>
-						<string>Enable smart charging to prevent overcharging efficiently.</string>
+						<string>Enjoy new theme picked just for you.</string>
 					</array>
-					<key>Repeat</key>
-					<true/>
+					<key>Name</key>
+					<string>com.keyboard.theme.galaxy</string>
 					<key>Title</key>
-					<string>Enable Smart Charging</string>
+					<string>New Theme Discovery</string>
 				</dict>
 				<dict>
 					<key>ActionType</key>
@@ -596,6 +598,74 @@
 					<true/>
 					<key>Title</key>
 					<string>Enable Screen Locker</string>
+				</dict>
+				<dict>
+					<key>ActionType</key>
+					<string>Theme</string>
+					<key>IconUrl</key>
+					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/spinner.png</string>
+					<key>Message</key>
+					<array>
+						<string>Enjoy new theme picked just for you.</string>
+					</array>
+					<key>Name</key>
+					<string>com.keyboard.theme.spinner</string>
+					<key>Title</key>
+					<string>New Theme Discovery</string>
+				</dict>
+				<dict>
+					<key>ActionType</key>
+					<string>Theme</string>
+					<key>IconUrl</key>
+					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/royalbattle.png</string>
+					<key>Message</key>
+					<array>
+						<string>Enjoy new theme picked just for you.</string>
+					</array>
+					<key>Name</key>
+					<string>com.keyboard.theme.royalbattle</string>
+					<key>Title</key>
+					<string>New Theme Discovery</string>
+				</dict>
+				<dict>
+					<key>ActionType</key>
+					<string>Theme</string>
+					<key>IconUrl</key>
+					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/goldsilver.png</string>
+					<key>Message</key>
+					<array>
+						<string>Enjoy new theme picked just for you.</string>
+					</array>
+					<key>Name</key>
+					<string>com.keyboard.theme.goldsilver</string>
+					<key>Title</key>
+					<string>New Theme Discovery</string>
+				</dict>
+				<dict>
+					<key>ActionType</key>
+					<string>Charging</string>
+					<key>Message</key>
+					<array>
+						<string>Enable smart charging to prevent overcharging efficiently.</string>
+					</array>
+					<key>Repeat</key>
+					<true/>
+					<key>Title</key>
+					<string>Enable Smart Charging</string>
+				</dict>
+				<dict>
+					<key>ActionType</key>
+					<string>Theme</string>
+					<key>IconUrl</key>
+					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/futuregalaxy.png</string>
+					<key>Message</key>
+					<array>
+						<string>Enjoy new theme picked just for you.</string>
+					</array>
+					<key>Name</key>
+					<string>com.keyboard.theme.futuregalaxy</string>
+					<key>Title</key>
+					<string>New Theme Discovery</string>
 				</dict>
 				<dict>
 					<key>ActionType</key>
@@ -686,34 +756,6 @@
 					<key>ActionType</key>
 					<string>Theme</string>
 					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/galaxy.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.galaxy</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/spinner.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.spinner</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
 					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/rosegold.png</string>
 					<key>Message</key>
 					<array>
@@ -721,34 +763,6 @@
 					</array>
 					<key>Name</key>
 					<string>com.keyboard.theme.rosegold</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/royalbattle.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.royalbattle</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/goldsilver.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.goldsilver</string>
 					<key>Title</key>
 					<string>New Theme Discovery</string>
 				</dict>
@@ -805,20 +819,6 @@
 					</array>
 					<key>Name</key>
 					<string>com.keyboard.theme.glory</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/futuregalaxy.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.futuregalaxy</string>
 					<key>Title</key>
 					<string>New Theme Discovery</string>
 				</dict>
@@ -1362,7 +1362,7 @@
 				<key>KeyboardEmojiAd</key>
 				<dict>
 					<key>ShowAd</key>
-					<true/>
+					<false/>
 				</dict>
 				<key>KeyboardEmojiTopLeftTabAd</key>
 				<dict>
@@ -2778,6 +2778,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Kitty.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Kitty.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/kitty.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Kitty.jpg</string>
 						<key>showName</key>
@@ -2814,6 +2816,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Pop.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Pop.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/pop.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Pop.jpg</string>
 						<key>showName</key>
@@ -2886,6 +2890,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/FireDemon.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/FireDemon.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/firedemon.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/FireDemon.jpg</string>
 						<key>showName</key>
@@ -2938,6 +2944,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Jelly.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Jelly.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/jelly.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Jelly.jpg</string>
 						<key>showName</key>
@@ -2954,6 +2962,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_banner/Neon.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Neon.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/neon.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Neon.jpg</string>
 						<key>showName</key>
@@ -2972,6 +2982,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Panda.jpg</string>
 						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Panda.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/panda.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Panda.jpg</string>
 						<key>showName</key>
