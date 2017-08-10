@@ -1,13 +1,19 @@
 package com.ihs.inputmethod.uimodules.ui.gif.riffsy.control;
 
 import android.content.ClipDescription;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v13.view.inputmethod.EditorInfoCompat;
 import android.support.v13.view.inputmethod.InputConnectionCompat;
 import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
@@ -68,7 +74,7 @@ public final class GifManager {
         }
 
 
-        File uri = DirectoryUtils.getDownloadGifUri(gif.id);
+        File gifFile = DirectoryUtils.getDownloadGifUri(gif.id);
 
         final Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);
         final boolean canSendDirectly = (Boolean) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_SEND_DIRECTLY);
@@ -83,9 +89,14 @@ public final class GifManager {
                 }
             }
             if (gifSupported) {
-                commitGifImage(Uri.fromFile(uri), "");
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "direct_send_gif");
-                return;
+                Uri imageUri = getGifContentUri(HSApplication.getContext(), gifFile);
+                if (!gifFile.exists() || imageUri == null) {
+                    HSLog.e("send GIF directly failed.");
+                } else {
+                    commitGifImage(imageUri, "");
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "direct_send_gif");
+                    return;
+                }
             }
         }
 
@@ -107,7 +118,7 @@ public final class GifManager {
         switch (mode) {
             // image
             case MediaShareUtils.IMAGE_SHARE_MODE_INTENT:
-                HSFileUtils.copyFile(uri.getAbsolutePath(), targetFilePath);
+                HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
                 try {
                     MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetFilePath)), mimeType, packageName);
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "intent");
@@ -118,7 +129,7 @@ public final class GifManager {
                 break;
             // save to gallery
             case ShareUtils.IMAGE_SHARE_MODE_EXPORT:
-                HSFileUtils.copyFile(uri.getAbsolutePath(), targetFilePath);
+                HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
                 MediaShareUtils.shareImageByExport(targetFilePath);
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "export");
                 break;
@@ -136,6 +147,28 @@ public final class GifManager {
         DownloadManager.getInstance().loadMp4(gif.id + ".mp4", gif.getMp4Url(), callback);
     }
 
+    private Uri getGifContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.Media._ID},
+                MediaStore.Images.Media.DATA + "=? ",
+                new String[]{filePath}, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            cursor.close();
+            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
+    }
 
     /**
      * Commits a GIF image
