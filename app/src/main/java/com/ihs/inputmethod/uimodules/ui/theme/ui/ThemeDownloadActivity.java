@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
 import android.support.v4.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -11,17 +10,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
@@ -54,7 +49,6 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
@@ -75,7 +69,7 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
 /**
  * Created by jixiang on 16/8/17.
  */
-public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
+public class ThemeDownloadActivity extends HSAppCompatActivity implements KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
 
@@ -93,7 +87,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private static int HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG = 103;
 
     private AppBarLayout appbarLayout;
-    private NavigationView navigationView;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -105,7 +98,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private boolean isFromUsageAccessActivity;
     private View enableTipTV;
     private boolean shouldShowActivationTip;
-    private ThemeHomeActivity context = ThemeHomeActivity.this;
+    private ThemeDownloadActivity context = ThemeDownloadActivity.this;
     private KeyboardActivationProcessor keyboardActivationProcessor;
     private View apkUpdateTip;
     private boolean isResumeOnCreate = true;
@@ -119,7 +112,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         public void handleMessage(Message msg) {
             if (msg.what == HANDLER_SHOW_ACTIVE_DIALOG) {
                 if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-                    keyboardActivationProcessor.showHomePageActivationDialog(ThemeHomeActivity.this);
+                    keyboardActivationProcessor.showHomePageActivationDialog(ThemeDownloadActivity.this);
                 }
             } else if (msg.what == HANDLER_SHOW_UPDATE_DIALOG) {
                 checkAndShowApkUpdateAlert(false);
@@ -131,7 +124,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     }
                     dismissDialog(fullscreenAdLoadingDialog);
                     fullscreenAdLoadingDialog = null;
-                    Toast.makeText(ThemeHomeActivity.this, R.string.locker_wallpaper_network_error, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ThemeDownloadActivity.this, R.string.locker_wallpaper_network_error, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -145,13 +138,12 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 if (hsBundle != null) {
                     String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
                     int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
-                    if (ThemeHomeActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
+                    if (ThemeDownloadActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
                         showTrialKeyboardDialog(activationCode);
                     }
                 }
             } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.purchase_success), Toast.LENGTH_LONG).show();
-                navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
             }
         }
     };
@@ -160,7 +152,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_theme_home);
+        setContentView(R.layout.activity_theme_download);
         getWindow().setBackgroundDrawable(null);
 
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
@@ -170,18 +162,13 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         setSupportActionBar(toolbar);
 
         View adTriggerView = findViewById(R.id.download_page_trigger);
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            adTriggerView.setVisibility(View.GONE);
-        } else {
-            adTriggerView.setVisibility(View.VISIBLE);
-            adTriggerView.setOnClickListener(this);
-        }
+        adTriggerView.setOnClickListener(this);
 
         tabLayout = (TabLayout)  findViewById(R.id.store_tab);
 
         viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
 
-        keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
+        keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeDownloadActivity.class, ThemeDownloadActivity.this);
 
         enableTipTV = findViewById(R.id.tv_enable_keyboard);
         enableTipTV.setVisibility(GONE);
@@ -189,11 +176,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             @Override
             public void onClick(View v) {
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_appbar_clicked");
-                keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
+                keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromHome);
             }
         });
         if (getIntent() != null && getIntent().getBooleanExtra(BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
-            keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
+            keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromHome);
         }
         findViewById(R.id.home_create_theme_layout).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,14 +207,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setItemIconTintList(null);//去除自动染色，默认图标灰色，点击后变成colorAccent色
-        navigationView.setItemTextColor(null);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        ViewGroup.LayoutParams layoutParams = headerView.getLayoutParams();
-        layoutParams.height = (int) (getResources().getDisplayMetrics().widthPixels * 0.48f);
 
         //remove myThemeFragment if exist
         /* origin code
@@ -257,15 +236,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
-
-        //init locker function
-        boolean lockerEnable = getResources().getBoolean(R.bool.config_locker_drawer_visiable_enable) && HSAppLockerUtils.isLockerEnabled();
-        navigationView.getMenu().findItem(R.id.nav_app_locker).setVisible(lockerEnable);
-
-        // init update function
-        navigationView.getMenu().findItem(R.id.nav_update).setVisible(ApkUtils.isUpdateEnabled());
-        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(getResources().getBoolean(R.bool.show_remove_ads_menu) && !RemoveAdsManager.getInstance().isRemoveAdsPurchased());
-        apkUpdateTip = findViewById(R.id.apk_update_tip);
 
 
         //界面被启动 请求 扫描权限
@@ -331,8 +301,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store), Toast.LENGTH_SHORT).show();
             }
         }
-        MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
-        onNavigationItemSelected(item);
     }
 
     @Override
@@ -356,8 +324,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     protected void onResume() {
         super.onResume();
 
-        restoreNavigationView();
-
         shouldShowActivationTip = true;
 
         if (isFromUsageAccessActivity) {
@@ -367,7 +333,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             }
         }
 
-        refreshApkUpdateViews();
         HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
 
         // Place here to get a right session id from appframework
@@ -406,82 +371,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(final MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_theme_store) {
-            /* origin
-            if (!currentFragmentTag.equals(THEME_STORE_FRAGMENT_TAG)) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-                Fragment themeStoreFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-                if (myThemeFragment != null) {
-                    transaction.hide(myThemeFragment);
-                }
-                if (themeStoreFragment == null) {
-                    themeStoreFragment = new ThemeHomeFragment();
-                    //transaction.add(R.id.content_layout, themeStoreFragment, THEME_STORE_FRAGMENT_TAG);
-                }
-                transaction.show(themeStoreFragment).commit();
-                appbarLayout.setExpanded(true);
-                toolbar.setTitle(R.string.theme_nav_theme_store);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_store_clicked");
-            }*/
-            currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
-        } else if (id == R.id.nav_my_themes) {
-            /* origin
-            if (!currentFragmentTag.equals(MY_THEME_FRAGMENT_TAG)) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-                Fragment themeStoreFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-                if (themeStoreFragment != null) {
-                    transaction.hide(themeStoreFragment);
-                }
-                if (myThemeFragment == null) {
-                    myThemeFragment = new MyThemeFragment();
-                    //transaction.add(R.id.content_layout, myThemeFragment, MY_THEME_FRAGMENT_TAG);
-                }
-                transaction.show(myThemeFragment).commit();
-                appbarLayout.setExpanded(true);
-                toolbar.setTitle(R.string.theme_nav_my_themes);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_mythemes_clicked");
-            }*/
-            currentFragmentTag = MY_THEME_FRAGMENT_TAG;
-        } else if (id == R.id.nav_language) {
-            HSUIInputMethod.launchMoreLanguageActivity();
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_languages_clicked");
-        } else if (id == R.id.nav_setting) {
-            HSUIInputMethod.launchSettingsActivity();
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_settings_clicked");
-        } else if (id == R.id.nav_app_locker) {
-            HSGlobalNotificationCenter.sendNotificationOnMainThread(HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK);
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_applocker_clicked");
-        } else if (id == R.id.nav_update) {
-            handler.removeMessages(HANDLER_SHOW_UPDATE_DIALOG);
-            checkAndShowApkUpdateAlert(true);
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("sidebar_update_clicked");
-
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    restoreNavigationView();
-                }
-            });
-        } else if (id == R.id.nav_no_ads) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("removeAds_clicked");
-            RemoveAdsManager.getInstance().purchaseRemoveAds();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
         final KeyboardActivationProcessor processor =
-                new KeyboardActivationProcessor(ThemeHomeActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
+                new KeyboardActivationProcessor(ThemeDownloadActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
                     @Override
                     public void activeDialogShowing() {
 
@@ -491,27 +385,27 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     public void keyboardSelected(int requestCode) {
                         if (requestCode == activationCode) {
                             if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
-                                LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()), new LockerEnableDialog.OnLockerBgLoadingListener() {
+                                LockerEnableDialog.showLockerEnableDialog(ThemeDownloadActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()), new LockerEnableDialog.OnLockerBgLoadingListener() {
                                     @Override
                                     public void onFinish() {
                                         if (trialKeyboardDialog == null) {
-                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
+                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(context, ThemeDownloadActivity.this);
                                         }
                                         if (activationCode == keyboardActivationFromCustom) {
-                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
+                                            trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, false);
                                         } else {
-                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
+                                            trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, true);
                                         }
                                     }
                                 });
                             } else {
                                 if (trialKeyboardDialog == null) {
-                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
+                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(context, ThemeDownloadActivity.this);
                                 }
                                 if (activationCode == keyboardActivationFromCustom) {
-                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
+                                    trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, false);
                                 } else {
-                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
+                                    trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, true);
                                 }
                             }
                         }
@@ -527,7 +421,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
                     }
                 });
-        processor.activateKeyboard(ThemeHomeActivity.this, true, activationCode);
+        processor.activateKeyboard(ThemeDownloadActivity.this, true, activationCode);
     }
 
     @Override
@@ -618,37 +512,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
     }
 
-    private void restoreNavigationView() {
-        if (THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag)) {
-            navigationView.setCheckedItem(R.id.nav_theme_store);
-            if (shouldShowActivationTip && !HSInputMethodListManager.isMyInputMethodSelected()) {
-                enableTipTV.setVisibility(View.VISIBLE);
-            } else {
-                enableTipTV.setVisibility(GONE);
-            }
-
-        } else if (MY_THEME_FRAGMENT_TAG.equals(currentFragmentTag)) {
-            navigationView.setCheckedItem(R.id.nav_my_themes);
-        }
-    }
-
-    private void resetApkUpdateViews() {
-        apkUpdateTip.setVisibility(View.GONE);
-        navigationView.getMenu().findItem(R.id.nav_update).getActionView().setVisibility(View.GONE);
-    }
-
-    private void refreshApkUpdateViews() {
-        resetApkUpdateViews();
-
-        if (ApkUtils.shouldUpdate()) {
-            if (shouldShowApkUpdateTip(ApkUtils.getLatestVersionCode())) {
-                showApkUpdateTip();
-            }
-
-            showApkUpdateMenuItemIndicationIcon();
-        }
-    }
-
     private void checkAndShowApkUpdateAlert(final boolean force) {
         if (ApkUtils.checkAndShowUpdateAlert(force)) {
             return;
@@ -664,30 +527,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             apkUpdateTip.setVisibility(View.GONE);
             ApkUtils.saveUpdateApkVersionCode();
         }
-    }
-
-    private void showApkUpdateTip() {
-        apkUpdateTip.setVisibility(View.VISIBLE);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_menu_reddot_show");
-    }
-
-    private void showApkUpdateMenuItemIndicationIcon() {
-        navigationView.getMenu().findItem(R.id.nav_update).getActionView().setVisibility(View.VISIBLE);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sidebar_update_icon_show");
-    }
-
-    private boolean shouldShowApkUpdateTip(final int versionCode) {
-        // Get update apk version code from local storage and remote
-        final int versionCodeOfLocalStorage = ApkUtils.getUpdateApkVersionCode();
-
-        HSLog.d("Local storage version code to update: " + versionCodeOfLocalStorage + ", latest version code: " + versionCode);
-
-        // If we have record version code and not less than latest, means we already show the dot
-        if (versionCodeOfLocalStorage >= versionCode) {
-            return false;
-        }
-
-        return true;
     }
 
     private boolean showEnableChargingAlertIfNeeded() {

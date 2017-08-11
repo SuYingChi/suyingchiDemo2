@@ -14,6 +14,7 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> fragments;
     private String[] tabTitle = new String[] {"THEME", "STICKER", "FONT"};
+    private String[] myTabTitle = new String[] {"MY THEME", "MY STICKER", "MY FONT"};
 
     public TabFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
         super(fm);
@@ -31,7 +32,13 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
+    public int getItemPosition(Object object) {
+        return POSITION_UNCHANGED;
+    }
+
+    @Override
     public CharSequence getPageTitle(int position) {
         return tabTitle[position];
     }
+
 }

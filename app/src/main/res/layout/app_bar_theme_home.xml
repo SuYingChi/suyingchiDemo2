@@ -39,11 +39,11 @@
 
             <ImageView
                 android:layout_centerVertical="true"
-                android:id="@+id/theme_home_interstitial_ad_trigger_view"
+                android:id="@+id/download_page_trigger"
                 android:layout_alignParentRight="true"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:src="@drawable/actionbar_gift_ad_selector"
+                android:src="@drawable/download_icon_home_store"
                 />
             <!--<com.airbnb.lottie.LottieAnimationView-->
                 <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
@@ -62,9 +62,7 @@
             android:id="@+id/store_tab"
             android:layout_below="@+id/toolbar"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll|enterAlways" />
-
+            android:layout_width="match_parent" />
 
         <!--android:background="#ffe92d"
                 android:background="#FBC02D"-->
