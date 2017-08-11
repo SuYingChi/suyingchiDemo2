@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
 import android.support.v4.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -737,7 +736,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     private void switchToDownloads() {
         Intent intent = new Intent(this, ThemeDownloadActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

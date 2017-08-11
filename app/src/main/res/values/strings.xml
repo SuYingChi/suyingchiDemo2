@@ -130,6 +130,7 @@
     <string name="theme_trial_keyboard_edit_text_hint">Try typing here now&#8230;</string>
 
     <!-- store home -->
+    <string name="store_nav_download">My Downloads</string>
     <string name="tab_theme">THEME</string>
     <string name="tab_theme_my">MY THEME</string>
     <string name="tab_sticker">STICKER</string>

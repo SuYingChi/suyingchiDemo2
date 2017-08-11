@@ -13,9 +13,11 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,7 +36,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -53,8 +54,6 @@ import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
-import com.ihs.keyboardutils.alerts.KCAlert;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
@@ -97,10 +96,8 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     private TrialKeyboardDialog trialKeyboardDialog;
     private boolean isFromUsageAccessActivity;
     private View enableTipTV;
-    private boolean shouldShowActivationTip;
     private ThemeDownloadActivity context = ThemeDownloadActivity.this;
     private KeyboardActivationProcessor keyboardActivationProcessor;
-    private View apkUpdateTip;
     private boolean isResumeOnCreate = true;
 
     private AcbInterstitialAdLoader acbInterstitialAdLoader;
@@ -157,8 +154,8 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        String themeTitle = getResources().getString(R.string.theme_nav_theme_store);
-        toolbar.setTitle(HSLog.isDebugging() ? themeTitle + " (Debug)" : themeTitle);
+        String downloadTitle = getResources().getString(R.string.store_nav_download);
+        toolbar.setTitle(downloadTitle);
         setSupportActionBar(toolbar);
 
         View adTriggerView = findViewById(R.id.download_page_trigger);
@@ -167,6 +164,10 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         tabLayout = (TabLayout)  findViewById(R.id.store_tab);
 
         viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeDownloadActivity.class, ThemeDownloadActivity.this);
 
@@ -187,41 +188,15 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             public void onClick(View view) {
 
                 Bundle bundle = new Bundle();
-                String customEntry = THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store_float_button" : "mytheme_float_button";
+                String customEntry = "mytheme_float_button";
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                 CustomThemeActivity.startCustomThemeActivity(bundle);
 
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("customize_entry_clicked", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
-                HSAnalytics.logEvent("customize_entry_clicked", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
+                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("customize_entry_clicked", "mythemes");
+                HSAnalytics.logEvent("customize_entry_clicked", "mythemes");
             }
         });
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                context, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                clearApkUpdateTip();
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_show", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
-            }
-        };
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
-        //remove myThemeFragment if exist
-        /* origin code
-        Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-        if (myThemeFragment != null) {
-            getFragmentManager().beginTransaction().remove(myThemeFragment).commit();
-        }
-
-        //create storeFragment only if not exist
-        Fragment storeFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-        if (storeFragment == null) {
-            storeFragment = new ThemeHomeFragment();
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.content_layout, storeFragment, THEME_STORE_FRAGMENT_TAG).commit();
-        }*/
         fragments = new ArrayList<>();
         Fragment themeHomeFragment = new ThemeHomeFragment();
         Fragment stickerHomeFragment = new StickerHomeFragment();
@@ -238,52 +213,9 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         tabLayout.setupWithViewPager(viewPager);
 
 
-        //界面被启动 请求 扫描权限
-        if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !PermissionUtils.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
-
-            HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
-            new KCAlert.Builder(this)
-                    .setTitle(getString(R.string.dialog_app_usage_title))
-                    .setMessage(getString(R.string.dialog_app_usage_tips))
-                    .setTopImageResource(R.drawable.enable_keyboard_alert_top_bg)
-                    .setPositiveButton(getString(R.string.dialog_agree).toUpperCase(), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
-                                isFromUsageAccessActivity = true;
-                            }
-                            enableUsageAccessPermission();
-                            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
-                        }
-                    })
-                    .setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), null)
-                    .show();
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_showed");
-        }
-
         HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
 
-        //如果是第一次进入页面并且当前键盘没有被选为自己则弹框。
-        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-            handler.sendEmptyMessageDelayed(HANDLER_SHOW_ACTIVE_DIALOG, 500);
-        } else {
-            handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
-        }
-
         onNewIntent(getIntent());
-    }
-
-    private void enableUsageAccessPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !PermissionUtils.isUsageAccessGranted()) {
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            }
-            HSApplication.getContext().startActivity(intent);
-            PermissionFloatWindow.getInstance().createPermissionTip(PermissionTip.TYPE_TEXT_USAGE);
-        }
     }
 
     @Override
@@ -310,6 +242,17 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onPostResume() {
         super.onPostResume();
         handler.postDelayed(new Runnable() {
@@ -323,8 +266,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     @Override
     protected void onResume() {
         super.onResume();
-
-        shouldShowActivationTip = true;
 
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
@@ -340,26 +281,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             showEnableChargingAlertIfNeeded();
         }
         isResumeOnCreate = false;
-
-//        if (!isAdTriggerLottieAnimationPlayed) {
-////            lottieAnimationView.loop(true);
-////            lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
-////                /**
-////                 * {@inheritDoc}
-////                 *
-////                 * @param animation
-////                 */
-////                @Override
-////                public void onAnimationRepeat(Animator animation) {
-////                    super.onAnimationRepeat(animation);
-////                    if (++adTriggerLottieAnimationPlayedTimes >= GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME) {
-////                        lottieAnimationView.cancelAnimation();
-////                    }
-////                }
-////            });
-//            isAdTriggerLottieAnimationPlayed = true;
-////            lottieAnimationView.playAnimation();
-//        }
     }
 
     @Override
@@ -370,8 +291,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             trialKeyboardDialog.dismiss();
         }
     }
-
-
 
     private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
         final KeyboardActivationProcessor processor =
@@ -438,34 +357,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            finishAffinity();
-        }
-
-    }
-
-
-    private boolean shouldShowUsageAccessAlert() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int currentSessionId = HSSessionMgr.getCurrentSessionId();
-            if (HSPreferenceHelper.getDefault().getInt(SP_LAST_USAGE_ALERT_SESSION_ID, 0) == 0) {
-                HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, currentSessionId);
-                return true;
-            } else {
-                if (currentSessionId - HSPreferenceHelper.getDefault().getInt(SP_LAST_USAGE_ALERT_SESSION_ID, 0)
-                        >= HSConfig.optInteger(0, "Application", "AccessUsageAlert", "AskInterval")) {
-                    HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, currentSessionId);
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    @Override
     public void activeDialogShowing() {
         enableTipTV.setVisibility(GONE);
     }
@@ -519,13 +410,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
         if (force) {
             HSToastUtils.toastCenterLong(getResources().getString(R.string.apk_update_to_date_tip));
-        }
-    }
-
-    private void clearApkUpdateTip() {
-        if (apkUpdateTip.getVisibility() == View.VISIBLE) {
-            apkUpdateTip.setVisibility(View.GONE);
-            ApkUtils.saveUpdateApkVersionCode();
         }
     }
 
