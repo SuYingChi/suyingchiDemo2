@@ -4543,6 +4543,19 @@
 				</array>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
+				<key>policy</key>
+				<dict>
+					<key>adCorner</key>
+					<dict>
+						<key>mode</key>
+						<string>allShow</string>
+					</dict>
+					<key>policybreaking</key>
+					<dict>
+						<key>mode</key>
+						<string>toast</string>
+					</dict>
+				</dict>
 			</dict>
 			<key>Smiley_A(NativeAds)Fuse</key>
 			<dict>
@@ -4711,6 +4724,19 @@
 				</array>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
+				<key>policy</key>
+				<dict>
+					<key>adCorner</key>
+					<dict>
+						<key>mode</key>
+						<string>allShow</string>
+					</dict>
+					<key>policybreaking</key>
+					<dict>
+						<key>mode</key>
+						<string>toast</string>
+					</dict>
+				</dict>
 			</dict>
 		</dict>
 		<key>interstitialAds</key>
