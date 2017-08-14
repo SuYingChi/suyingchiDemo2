@@ -83,6 +83,9 @@ public class HSUIApplication extends HSInputMethodApplication {
                 onSessionStart();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
+            } else if(RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(notificationName)){
+                AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(AcbCallManager.getAdPlacement());
+                AcbCallManager.setAdPlacement("");
             }
         }
     };
@@ -175,6 +178,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_SESSION_START, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSNotificationConstant.HS_CONFIG_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
 
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
@@ -242,7 +246,12 @@ public class HSUIApplication extends HSInputMethodApplication {
         ActivityLifecycleMonitor.startMonitor(this);
         activeAdPlacements();
 
-        AcbCallManager.initWithDefaultFactory(getResources().getString(R.string.ad_placement_call_assist), new AcbCallManager.OnFeatureRestrictCallBack() {
+
+        String callAdPlacement = "";
+        if(false && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
+            callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
+        }
+        AcbCallManager.initWithDefaultFactory(callAdPlacement, new AcbCallManager.OnFeatureRestrictCallBack() {
             @Override
             public boolean isFeatureRestrict() {
                 return !KCFeatureRestrictionConfig.isFeatureRestricted("AdCallAssistant");
