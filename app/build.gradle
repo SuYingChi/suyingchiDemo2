@@ -156,12 +156,12 @@ dependencies {
     compile 'com.ihandy.3rdadadapter:libAdAdmobExpressAdapter.gm:4.0.2.gm'
 
     // Google Play Services
-    compile "com.google.android.gms:play-services-ads:10.2.6"
-    compile "com.google.android.gms:play-services-basement:10.2.6"
-    compile "com.google.android.gms:play-services-location:10.2.6"
-    compile "com.google.android.gms:play-services-analytics:10.2.6"
-    compile "com.google.android.gms:play-services-gcm:10.2.6"
-    compile "com.google.firebase:firebase-appindexing:10.2.6"
+    compile "com.google.android.gms:play-services-ads:11.0.4"
+    compile "com.google.android.gms:play-services-basement:11.0.4"
+    compile "com.google.android.gms:play-services-location:11.0.4"
+    compile "com.google.android.gms:play-services-analytics:11.0.4"
+    compile "com.google.android.gms:play-services-gcm:11.0.4"
+    compile "com.google.firebase:firebase-appindexing:11.0.4"
 
     // Android Support
     compile "com.android.support:support-v4:25.3.1"
