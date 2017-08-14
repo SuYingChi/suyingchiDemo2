@@ -46,6 +46,7 @@ public class PrizeView extends FlyAwardBaseView {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         mContainer = inflater.inflate(R.layout.lucky_award_ad_container_hs, this, false);
         mAdContentView = new AcbNativeAdContainerView(getContext());
+        mAdContentView.hideAdCorner();
         mAdContentView.addContentView(mContainer);
 
         mIcon = ViewUtils.findViewById(mContainer, R.id.lucky_game_ad_icon);
