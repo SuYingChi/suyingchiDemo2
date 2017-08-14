@@ -1,4 +1,4 @@
-package com.keyboard.colorkeyboard.app;
+package com.keyboard.common;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -66,7 +66,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
-import com.keyboard.colorkeyboard.utils.Constants;
+import com.ihs.inputmethod.utils.Constants;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;

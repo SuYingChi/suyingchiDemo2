@@ -88,6 +88,9 @@
     
     <dimen name="main_activity_button_height">68dp</dimen>
     <dimen name="main_activity_two_buttons_height">136dp</dimen>
+    <dimen name="button_guide_textsize">17sp</dimen>
+    <dimen name="guide_bg_radius">28dp</dimen>
+    <dimen name="guide_bg_padding_top">12dp</dimen>
     
     <dimen name="upload_activity_gif_size">160dp</dimen>
     <dimen name="upload_activity_upload_pic_height">120dp</dimen>
@@ -165,8 +168,6 @@
     <dimen name="purchase_slot_dialog_width">330dp</dimen>
     <dimen name="purchase_slot_dialog_height">400dp</dimen>
     <dimen name="purchase_slot_dialog_margin">15dp</dimen>
-
-    <dimen name="guide_bg_radius">8dp</dimen>
 
     <dimen name="sticker_image_width">60dp</dimen>
 </resources>

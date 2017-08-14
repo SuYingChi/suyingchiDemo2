@@ -56,6 +56,7 @@ import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.LauncherActivity;
+import com.keyboard.common.MainActivity;
 import com.keyboard.core.themes.ThemeDirManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -99,10 +100,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
     };
 
-    protected Class<? extends Activity> getMainActivityClass() {
-        return null;
-    }
-
     protected Class<? extends Activity> getSplashActivityClass() {
         return null;
     }
@@ -117,17 +114,17 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         // need to pass the intent to the main activity
         if (!TextUtils.isEmpty(intent.getScheme())) {
-            intent.setClass(this, getMainActivityClass());
+            intent.setClass(this, MainActivity.class);
         } else if (isAccessibilityEnabled) {
             if (!HSAccessibilityService.isAvailable()) {
-                intent.setClass(this, getMainActivityClass());
+                intent.setClass(this, MainActivity.class);
             } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
             } else {
-                intent.setClass(this, getMainActivityClass());
+                intent.setClass(this, MainActivity.class);
             }
         } else {
-            intent.setClass(this, getMainActivityClass());
+            intent.setClass(this, MainActivity.class);
         }
         splashActivity.startActivity(intent);
     }

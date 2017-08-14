@@ -235,12 +235,6 @@
             android:enabled="true"
             android:exported="false" />
 
-
-
-
-
-
-
         <activity
             android:name="com.mobipioneer.lockerkeyboard.SplashActivity"
             android:launchMode="singleTask"
@@ -275,19 +269,6 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.mobipioneer.lockerkeyboard.app.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
-            tools:replace="android:theme">
-            <intent-filter>
-                <action android:name="${applicationId}.keyboard.main" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
         <service
             android:name="com.ihs.devicemonitor.accessibility.HSAccessibilityService"
             android:label="@string/english_service_label"

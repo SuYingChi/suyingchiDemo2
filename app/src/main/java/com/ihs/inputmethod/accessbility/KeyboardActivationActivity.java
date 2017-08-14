@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -34,7 +32,6 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
-import com.ihs.inputmethod.api.utils.HSBitmapScaleUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
@@ -155,23 +152,6 @@ public class KeyboardActivationActivity extends HSActivity {
 
         accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
         listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
-
-//        View manulSetupBtn = findViewById(R.id.bt_step_two);
-//        manulSetupBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_manual_normal));
-//        manulSetupBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                logOneTimeGA(app_manual_setkey_clicked);
-//
-//                Intent actIntent = getIntent();
-//                if (actIntent == null) {
-//                    actIntent = new Intent();
-//                }
-//                actIntent.setClass(HSApplication.getContext(), MainActivity.class);
-//                startActivity(actIntent);
-//            }
-//        });
-
 
         if (findViewById(view_img_title) != null) {
             scaleTitleImage(findViewById(view_img_title));

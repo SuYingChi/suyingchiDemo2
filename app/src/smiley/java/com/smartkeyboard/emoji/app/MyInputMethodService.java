@@ -1,11 +1,10 @@
 package com.smartkeyboard.emoji.app;
 
+import com.ihs.inputmethod.api.HSUIInputMethodService;
 
 /**
- * Created by Arthur on 4/17.
-    simley自己的service
-
+ * 保持Service的ClassPath不变，防止用户需要重新设置输入法
  */
-public class MyInputMethodService extends com.mobipioneer.lockerkeyboard.app.MyInputMethodService {
+public class MyInputMethodService extends HSUIInputMethodService {
 
 }

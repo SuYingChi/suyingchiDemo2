@@ -1,8 +1,7 @@
 package com.smartkeyboard.emoji.app;
 
-/**
- * Created by Arthur on 2017/4/17.
- */
+import com.ihs.inputmethod.api.HSUIApplication;
 
-public class MyInputMethodApplication extends  com.mobipioneer.lockerkeyboard.app.MyInputMethodApplication {
+public class MyInputMethodApplication extends HSUIApplication {
+
 }

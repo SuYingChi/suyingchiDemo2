@@ -147,19 +147,6 @@
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
         <activity
-            android:name="com.keyboard.colorkeyboard.app.MainActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="${applicationId}.keyboard.main" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name="com.keyboard.colorkeyboard.app.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
