@@ -18,11 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by guonan.lv on 17/8/10.
+ * Created by guonan.lv on 17/8/14.
  */
 
-public class StickerHomeFragment extends Fragment {
-
+public class myStickerFragment extends Fragment {
     private RecyclerView recyclerView;
     private StickerCardAdapter stickerCardAdapter;
     private List<StickerModel> stickerModelList = new ArrayList<>();
@@ -30,7 +29,7 @@ public class StickerHomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sticker, container, false);
+        View view = inflater.inflate(R.layout.fragment_mysticker, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         initView();
         return view;
@@ -39,13 +38,13 @@ public class StickerHomeFragment extends Fragment {
     private void initView() {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        loadStickerGroup();
+        loadStickerModel();
         stickerCardAdapter = new StickerCardAdapter(stickerModelList);
         recyclerView.setAdapter(stickerCardAdapter);
 
     }
 
-    private void loadStickerGroup() {
+    private void loadStickerModel() {
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
@@ -53,6 +52,7 @@ public class StickerHomeFragment extends Fragment {
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
             StickerModel stickerModel = new StickerModel(stickerGroup);
+            stickerModel.setIsDownload(true);
             stickerModelList.add(stickerModel);
         }
     }
@@ -72,5 +72,4 @@ public class StickerHomeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
-
 }

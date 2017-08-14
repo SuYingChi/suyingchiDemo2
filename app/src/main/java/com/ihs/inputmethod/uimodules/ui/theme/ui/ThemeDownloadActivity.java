@@ -42,7 +42,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.myStickerFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
@@ -78,7 +78,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     private ViewPager viewPager;
     private ArrayList<Fragment> fragments;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
-    private String currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
     private TrialKeyboardDialog trialKeyboardDialog;
     private boolean isFromUsageAccessActivity;
@@ -184,11 +183,10 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         });
 
         fragments = new ArrayList<>();
-        Fragment stickerHomeFragment = new StickerHomeFragment();
+        Fragment myStickerFragment = new myStickerFragment();
         Fragment myThemeFragment = new MyThemeFragment();
         fragments.add(myThemeFragment);
-        fragments.add(stickerHomeFragment);
-        currentFragmentTag = MY_THEME_FRAGMENT_TAG;
+        fragments.add(myStickerFragment);
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments, ThemeDownloadActivity.class.getSimpleName());
         viewPager.setOffscreenPageLimit(fragments.size());
@@ -366,6 +364,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
         keyboardActivationProcessor.release();
         keyboardActivationProcessor = null;
+
         super.onDestroy();
     }
 
@@ -462,12 +461,9 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         }
     }
 
-
     private void dismissDialog(Dialog dialog) {
         if (dialog != null && dialog.isShowing() && !isFinishing()) {
             dialog.dismiss();
         }
     }
-
-
 }

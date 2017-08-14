@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
+package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,23 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.commons.config.HSConfig;
+import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
+import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by guonan.lv on 17/8/10.
+ * Created by guonan.lv on 17/8/14.
  */
 
-public class StickerHomeFragment extends Fragment {
-
+public class FontHomeFragment extends Fragment {
+    
     private RecyclerView recyclerView;
-    private StickerCardAdapter stickerCardAdapter;
-    private List<StickerModel> stickerModelList = new ArrayList<>();
+    private FontCardAdapter fontCardAdapter;
+    private List<FontModel> fontModelList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -39,21 +38,21 @@ public class StickerHomeFragment extends Fragment {
     private void initView() {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        loadStickerGroup();
-        stickerCardAdapter = new StickerCardAdapter(stickerModelList);
-        recyclerView.setAdapter(stickerCardAdapter);
+        loadFontModel();
+        fontCardAdapter = new FontCardAdapter(fontModelList, new FontCardAdapter.OnFontCardClickListener() {
 
+            @Override
+            public void onFontCardClick() {
+
+            }
+        });
+        recyclerView.setAdapter(fontCardAdapter);
     }
 
-    private void loadStickerGroup() {
-        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
-        for (Map<String, Object> map : stickerConfigList) {
-            String stickerGroupName = (String) map.get("name");
-            String stickerGroupDownloadDisplayName = (String) map.get("showName");
-            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
-            StickerModel stickerModel = new StickerModel(stickerGroup);
-            stickerModelList.add(stickerModel);
+    private void loadFontModel() {
+        List<HSSpecialCharacter> hsSpecialCharacterList = HSSpecialCharacterManager.getSpecialCharacterList();
+        for(HSSpecialCharacter hsSpecialCharacter : hsSpecialCharacterList) {
+            fontModelList.add(new FontModel(hsSpecialCharacter));
         }
     }
 
@@ -72,5 +71,4 @@ public class StickerHomeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
-
 }

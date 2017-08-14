@@ -51,9 +51,11 @@ import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
+import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font.FontFragment;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
@@ -232,10 +234,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         fragments = new ArrayList<>();
         Fragment themeHomeFragment = new ThemeHomeFragment();
         Fragment stickerHomeFragment = new StickerHomeFragment();
-        Fragment myThemeFragment = new MyThemeFragment();
+        Fragment fontFragment = new FontHomeFragment();
         fragments.add(themeHomeFragment);
         fragments.add(stickerHomeFragment);
-        fragments.add(myThemeFragment);
+        fragments.add(fontFragment);
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
