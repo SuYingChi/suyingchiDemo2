@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
@@ -228,20 +229,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         ViewGroup.LayoutParams layoutParams = headerView.getLayoutParams();
         layoutParams.height = (int) (getResources().getDisplayMetrics().widthPixels * 0.48f);
 
-        //remove myThemeFragment if exist
-        /* origin code
-        Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-        if (myThemeFragment != null) {
-            getFragmentManager().beginTransaction().remove(myThemeFragment).commit();
-        }
-
-        //create storeFragment only if not exist
-        Fragment storeFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-        if (storeFragment == null) {
-            storeFragment = new ThemeHomeFragment();
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.content_layout, storeFragment, THEME_STORE_FRAGMENT_TAG).commit();
-        }*/
         fragments = new ArrayList<>();
         Fragment themeHomeFragment = new ThemeHomeFragment();
         Fragment stickerHomeFragment = new StickerHomeFragment();
@@ -256,6 +243,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
+        setTabListener();
 
         //init locker function
         boolean lockerEnable = getResources().getBoolean(R.bool.config_locker_drawer_visiable_enable) && HSAppLockerUtils.isLockerEnabled();
@@ -476,6 +464,34 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setTabListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+                if(tab.getPosition() == 0) {
+                    layout.setVisibility(View.VISIBLE);
+                } else {
+                    layout.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+                if(position == 0) {
+                    layout.setVisibility(View.VISIBLE);
+                } else {
+                    layout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker

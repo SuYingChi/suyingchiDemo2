@@ -4,21 +4,18 @@ import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.acb.interstitialads.AcbInterstitialAdLoader;
@@ -26,15 +23,12 @@ import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -52,12 +46,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
-import com.ihs.keyboardutils.ads.KCInterstitialAd;
-import com.ihs.keyboardutils.alerts.HSAlertDialog;
-import com.ihs.keyboardutils.permission.PermissionFloatWindow;
-import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
-import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 
 import java.util.ArrayList;
 
@@ -66,7 +55,7 @@ import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeA
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
- * Created by jixiang on 16/8/17.
+ * Created by guonan.lv on 17/8/14.
  */
 public class ThemeDownloadActivity extends HSAppCompatActivity implements KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
@@ -78,8 +67,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
     private static final int keyboardActivationFromHome = 11;
     public static final int keyboardActivationFromHomeWithTrial = 12;
-
-    private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
 
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
     private static int HANDLER_SHOW_UPDATE_DIALOG = 102;
@@ -158,8 +145,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         toolbar.setTitle(downloadTitle);
         setSupportActionBar(toolbar);
 
-        View adTriggerView = findViewById(R.id.download_page_trigger);
-        adTriggerView.setOnClickListener(this);
+        findViewById(R.id.download_page_trigger).setVisibility(View.GONE);
 
         tabLayout = (TabLayout)  findViewById(R.id.store_tab);
 
@@ -198,19 +184,18 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         });
 
         fragments = new ArrayList<>();
-        Fragment themeHomeFragment = new ThemeHomeFragment();
         Fragment stickerHomeFragment = new StickerHomeFragment();
         Fragment myThemeFragment = new MyThemeFragment();
-        fragments.add(themeHomeFragment);
-        fragments.add(stickerHomeFragment);
         fragments.add(myThemeFragment);
-        currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
+        fragments.add(stickerHomeFragment);
+        currentFragmentTag = MY_THEME_FRAGMENT_TAG;
 
-        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments, ThemeDownloadActivity.class.getSimpleName());
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
+        setTabListener();
 
 
         HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
@@ -290,6 +275,34 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         if (homeKeyTracker.isHomeKeyPressed() && trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
             trialKeyboardDialog.dismiss();
         }
+    }
+
+    private void setTabListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+                if(tab.getPosition() == 0) {
+                    layout.setVisibility(View.VISIBLE);
+                } else {
+                    layout.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+                if(position == 0) {
+                    layout.setVisibility(View.VISIBLE);
+                } else {
+                    layout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
@@ -445,23 +458,8 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.download_page_trigger:
-//                if (lottieAnimationView.isAnimating()) {
-//                    lottieAnimationView.cancelAnimation();
-//                    lottieAnimationView.setProgress(0f);
-//                }
-                /*loadFullscreenAd();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_fullscreenAds_icon_mainscreencorner_clicked");
-                HSAnalytics.logEvent("app_fullscreenAds_icon_mainscreencorner_clicked");*/
-                switchToDownloads();
-                break;
+            default:
         }
-    }
-
-    private void switchToDownloads() {
-        Intent intent = new Intent(this, ThemeDownloadActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 
 
@@ -469,29 +467,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         if (dialog != null && dialog.isShowing() && !isFinishing()) {
             dialog.dismiss();
         }
-    }
-
-    private void loadFullscreenAd() {
-        if (!InterstitialGiftUtils.isNetworkAvailable(-1)) {
-            Toast.makeText(this, R.string.no_network_connection, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        fullscreenShowed = false;
-        acbInterstitialAdLoader = KCInterstitialAd.loadAndShow(getString(R.string.placement_full_screen_open_keyboard), new KCInterstitialAd.OnAdShowListener() {
-            @Override
-            public void onAdShow(boolean b) {
-                fullscreenShowed = b;
-                dismissDialog(fullscreenAdLoadingDialog);
-                fullscreenAdLoadingDialog = null;
-                handler.removeMessages(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG);
-            }
-        }, null);
-
-        fullscreenAdLoadingDialog = HSAlertDialog.build(this).setView(R.layout.dialog_loading).setCancelable(false).create();
-        fullscreenAdLoadingDialog.show();
-
-        handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
     }
 
 

@@ -3,6 +3,10 @@ package com.ihs.inputmethod.uimodules.ui.common.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
+
+import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDownloadActivity;
 
 import java.util.ArrayList;
 
@@ -19,6 +23,14 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
     public TabFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
         super(fm);
         this.fragments = fragments;
+    }
+
+    public TabFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments, String currentPage) {
+        super(fm);
+        this.fragments = fragments;
+        if(TextUtils.equals(currentPage, ThemeDownloadActivity.class.getSimpleName())) {
+            tabTitle = myTabTitle;
+        }
     }
 
     @Override
