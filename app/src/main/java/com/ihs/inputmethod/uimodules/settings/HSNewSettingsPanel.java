@@ -245,6 +245,7 @@ public class HSNewSettingsPanel extends BasePanel {
     protected boolean onShowPanelView(int appearMode) {
         if (nativeAdHelper != null) {
             nativeAdHelper.showAdFlashAnimation();
+            nativeAdHelper.nativeAdView.refresh();
         }
         return true;
     }

@@ -198,7 +198,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             notifyItemInserted(adInfo.position);
                         }
                     });
-                    nativeAdView.setPrimaryViewSize(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     nativeAdView.load(adInfo.nativeAd);
                     adInfo.nativeAdView = nativeAdView;
                     backgroundNativeAdViews.put(adInfo.nativeAd + adInfo.position, nativeAdView);
