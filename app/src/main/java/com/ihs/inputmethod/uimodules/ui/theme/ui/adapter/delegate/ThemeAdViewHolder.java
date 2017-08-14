@@ -8,7 +8,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 
 
 /**
@@ -17,7 +17,7 @@ import com.ihs.keyboardutils.nativeads.NativeAdView;
 
 public final class ThemeAdViewHolder extends RecyclerView.ViewHolder {
 
-    private NativeAdView adView;
+    private KCNativeAdView adView;
 
     private final INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
@@ -34,7 +34,7 @@ public final class ThemeAdViewHolder extends RecyclerView.ViewHolder {
 
     public ThemeAdViewHolder(View itemView) {
         super(itemView);
-        adView = (NativeAdView) ((CardView) itemView).getChildAt(0);
+        adView = (KCNativeAdView) ((CardView) itemView).getChildAt(0);
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
     }
 }

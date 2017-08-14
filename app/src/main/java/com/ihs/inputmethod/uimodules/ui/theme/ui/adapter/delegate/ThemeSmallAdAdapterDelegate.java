@@ -19,8 +19,7 @@ import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 
 import java.util.List;
 
@@ -68,10 +67,12 @@ public final class ThemeSmallAdAdapterDelegate extends ThemeAdAdapterDelegate {
             LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, -1);
             loadingView.setLayoutParams(loadingLP);
             loadingView.setGravity(Gravity.CENTER);
-            NativeAdView nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
-            NativeAdParams nativeAdParams = new NativeAdParams(nativeAd, width, 1.6f);
-            nativeAdParams.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            nativeAdView.configParams(nativeAdParams);
+            KCNativeAdView nativeAdView = new KCNativeAdView(HSApplication.getContext());
+            nativeAdView.setAdLayoutView(view);
+            nativeAdView.setLoadingView(loadingView);
+            nativeAdView.setPrimaryViewSize(width, (int)(width / 1.6f));
+            nativeAdView.setPrimaryViewScaleType(ImageView.ScaleType.CENTER_CROP);
+            nativeAdView.load(nativeAd);
             cardView.addView(nativeAdView);
 
             nativeAdViewCached.put(nativeAd, nativeAdView);

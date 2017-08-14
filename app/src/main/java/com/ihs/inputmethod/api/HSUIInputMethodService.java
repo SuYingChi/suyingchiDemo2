@@ -160,7 +160,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             int maxCountPerDay = HSConfig.optInteger(0, "Application", "InterstitialAds", "BackButton", "MaxCountPerDay");
 
             if (currentTimeMillis - lastBackAdShowTimeMillis >= minIntervalByHour * 3600 * 1000 && backAdShowCountOfDay < maxCountPerDay) {
-                boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, true);
+                boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, null, true);
                 if (adShown) {
                     backAdShowCountOfDay++;
                     prefs.putLong("BackAdShowCountOfDay", backAdShowCountOfDay);

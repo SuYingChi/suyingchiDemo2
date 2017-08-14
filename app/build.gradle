@@ -131,9 +131,9 @@ dependencies {
     compile "com.ihandy.appframework:libAppframework.gm:4.3.4.gm"
 
     // Ads
-    compile "com.ihandy.nativeads:libNativeAds.gm:4.3.0.gm"
-    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.3.0.gm"
-    compile 'com.ihandy.expressads:libExpressAds.gm:4.2.0.gm'
+    compile "com.ihandy.nativeads:libNativeAds.beta:4.4.0.beta01"
+    compile "com.ihandy.interstitialads:InterstitialAds.beta:4.4.0.beta01"
+    compile 'com.ihandy.expressads:libExpressAds.beta:4.3.0.beta02'
 
     // Native Ad Adapters
     compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.1.3.gm'

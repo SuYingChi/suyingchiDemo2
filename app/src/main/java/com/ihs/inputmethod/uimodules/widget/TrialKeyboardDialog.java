@@ -41,8 +41,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD;
 
@@ -59,7 +58,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     private boolean showAdOnDismiss;
     private boolean onlyCloseKeyboard = true;
     private long currentResumeTime;
-    private NativeAdView nativeAdView;
+    private KCNativeAdView nativeAdView;
 
     private TrialKeyboardDialog(Context context, Builder build, String from, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
         super(context, R.style.TrialKeyboardDialogStyle);
@@ -151,7 +150,9 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     private void showInterstitialAds() {
         if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            boolean adShown = KCInterstitialAd.show(getContext().getString(R.string.placement_full_screen_open_keyboard));
+            boolean adShown = KCInterstitialAd.show(getContext().getString(R.string.placement_full_screen_open_keyboard),
+                    getContext().getString(R.string.interstitial_ad_title_after_try_keyboard),
+                    getContext().getString(R.string.interstitial_ad_subtitle_after_try_keyboard));
             if (!adShown) {
                 showChargingEnableAlert();
             }
@@ -186,7 +187,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     }
 
     @NonNull
-    private NativeAdView addNativeAdView() {
+    private KCNativeAdView addNativeAdView() {
         String placementName = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
 
         final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
@@ -194,13 +195,15 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
         View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
         if (nativeAdView == null) {
-            nativeAdView = new NativeAdView(HSApplication.getContext(), view, null);
-            nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
+            nativeAdView = new KCNativeAdView(HSApplication.getContext());
+            nativeAdView.setAdLayoutView(view);
+            nativeAdView.setPrimaryViewSize(width, (int)(width / 1.9f));
+            nativeAdView.load(placementName);
             final CardView cardView = ViewConvertor.toCardView(nativeAdView);
 
-            nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+            nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
                 @Override
-                public void onAdLoaded(NativeAdView nativeAdView) {
+                public void onAdLoaded(KCNativeAdView nativeAdView) {
                     HSLog.e("themetry got ad");
                     if (cardView.getParent() == null) {
                         HSLog.e("themetry ad view added");

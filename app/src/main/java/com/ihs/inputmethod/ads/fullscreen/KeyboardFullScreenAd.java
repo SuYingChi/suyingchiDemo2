@@ -41,7 +41,7 @@ public class KeyboardFullScreenAd {
                 HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", eventName, "keyboard", null, null, null);
             }
 
-            boolean adShown = KCInterstitialAd.show(placementName, null, true);
+            boolean adShown = KCInterstitialAd.show(placementName, null, null, true);
             if (adShown) {
                 hasFetchedAd();
                 return true;

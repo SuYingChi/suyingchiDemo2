@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.view.RoundedCornerLayout;
 
 /**
@@ -26,10 +26,10 @@ public class AdGooglePlayDialog extends Dialog {
     private static final int AD_DELAY = 2000;
     private FrameLayout progressBarContainer;
     private RoundedCornerLayout frameLayoutAdContainer;
-    private NativeAdView nativeAdView;
+    private KCNativeAdView nativeAdView;
     private Handler handler = new Handler();
 
-    public AdGooglePlayDialog(@NonNull Context context, NativeAdView nativeAdView) {
+    public AdGooglePlayDialog(@NonNull Context context, KCNativeAdView nativeAdView) {
         super(context, R.style.DesignDialog);
         this.nativeAdView = nativeAdView;
         init();

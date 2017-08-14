@@ -29,8 +29,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.decoration.BackgroundItemDecora
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -102,7 +101,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
         private Activity activity;
         private int portraitScreenWidth;
         private List<Object> backgrounds = new ArrayList<>();
-        private Map<String, NativeAdView> backgroundNativeAdViews = new HashMap<>();
+        private Map<String, KCNativeAdView> backgroundNativeAdViews = new HashMap<>();
         private final INotificationObserver notificationObserver = new INotificationObserver() {
             @Override
             public void onReceive(String s, HSBundle hsBundle) {
@@ -186,19 +185,21 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
                     //完成初始化nativeAdView
                     View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_4, null);
-                    NativeAdView nativeAdView = new NativeAdView(HSApplication.getContext(), view, null);
-                    nativeAdView.setNativeAdType(NativeAdView.NativeAdType.ICON);
+                    KCNativeAdView nativeAdView = new KCNativeAdView(HSApplication.getContext());
+                    nativeAdView.setAdLayoutView(view);
+                    nativeAdView.setNativeAdType(KCNativeAdView.NativeAdType.ICON);
                     nativeAdView.setTag("nativeadview");
-                    nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                    nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
                         @Override
-                        public void onAdLoaded(NativeAdView nativeAdView) {
+                        public void onAdLoaded(KCNativeAdView nativeAdView) {
                             nativeAdView.findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
                             adInfo.hasAd = true;
                             backgrounds.add(adInfo.position, adInfo);
                             notifyItemInserted(adInfo.position);
                         }
                     });
-                    nativeAdView.configParams(new NativeAdParams(adInfo.nativeAd, ViewGroup.LayoutParams.MATCH_PARENT, 1));
+                    nativeAdView.setPrimaryViewSize(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    nativeAdView.load(adInfo.nativeAd);
                     adInfo.nativeAdView = nativeAdView;
                     backgroundNativeAdViews.put(adInfo.nativeAd + adInfo.position, nativeAdView);
                 }
@@ -410,7 +411,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             private String nativeAd;
             private int position;
             private boolean hasAd = false;
-            private NativeAdView nativeAdView = null;
+            private KCNativeAdView nativeAdView = null;
 
 
             @Override

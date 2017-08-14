@@ -37,8 +37,7 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanel;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.view.FlashFrameLayout;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -59,7 +58,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     private TextView alphabet_left;
     private Map<Class, View> btnMap = new HashMap<>();
     private Map<String, Class> panels = new HashMap<>();
-    private NativeAdView adView;
+    private KCNativeAdView adView;
     private boolean released;
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -166,11 +165,12 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                             if (hideAdTitle) {
                                 adLayoutView.findViewById(R.id.ad_title).setVisibility(GONE);
                             }
-                            adView = new NativeAdView(HSApplication.getContext(), adLayoutView, null);
-                            adView.setNativeAdType(NativeAdView.NativeAdType.ICON);
-                            adView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                            adView = new KCNativeAdView(HSApplication.getContext());
+                            adView.setAdLayoutView(adLayoutView);
+                            adView.setNativeAdType(KCNativeAdView.NativeAdType.ICON);
+                            adView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
                                 @Override
-                                public void onAdLoaded(NativeAdView nativeAdView) {
+                                public void onAdLoaded(KCNativeAdView nativeAdView) {
                                     flashAdContainer.removeView(adLoadingView);
                                     if (!released) {
                                         flashAdContainer.startShimmerAnimation();
@@ -178,7 +178,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                                     adView.setOnAdLoadedListener(null);
                                 }
                             });
-                            adView.configParams(new NativeAdParams(getContext().getString(R.string.ad_placement_keyboardemojiad)));
+                            adView.load(getContext().getString(R.string.ad_placement_keyboardemojiad));
                             flashAdContainer.addView(adView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         }
                     }

@@ -446,8 +446,7 @@ public class LuckyActivity extends HSAppCompatActivity
 
     public void requestAds() {
         //request ad
-        AcbNativeAdLoader loader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_lucky));
-        loader.load(1, null);
+        AcbNativeAdLoader.preload(HSApplication.getContext(), 1, HSApplication.getContext().getString(R.string.ad_placement_lucky));
     }
 
     public int getChanceCount() {

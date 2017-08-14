@@ -300,7 +300,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         }
 
 
-
         new ShowKeyboardTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -521,14 +520,16 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
-        boolean interstitialAdShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), new KCInterstitialAd.OnAdCloseListener() {
-            @Override
-            public void onAdClose() {
-                showTrialKeyboard();
-            }
-        });
-
-        return interstitialAdShown;
+        return KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard),
+                getString(R.string.interstitial_ad_title_after_save_theme),
+                getString(R.string.interstitial_ad_subtitle_after_save_theme),
+                new KCInterstitialAd.OnAdCloseListener() {
+                    @Override
+                    public void onAdClose() {
+                        showTrialKeyboard();
+                    }
+                }
+        );
     }
 
     private void showTrialKeyboard() {
@@ -572,10 +573,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         }
     }
 
-    public class ShowKeyboardTask extends AsyncTask<Void,Void,Drawable>{
+    public class ShowKeyboardTask extends AsyncTask<Void, Void, Drawable> {
 
         private RelativeLayout keyboardFrameLayout;
         private float height;
+
         @Override
         protected void onPreExecute() {
             height = HSResourceUtils.getDefaultKeyboardHeight(getResources());

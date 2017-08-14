@@ -48,8 +48,7 @@ import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -81,7 +80,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private String themeName;
     private HSKeyboardTheme.ThemeType themeType;
     private HSKeyboardTheme keyboardTheme;
-    private NativeAdView nativeAdView;
+    private KCNativeAdView nativeAdView;
     private long currentResumeTime;
     private String themeLockerBgUrl;
 
@@ -263,14 +262,17 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
                 loadingView.setLayoutParams(loadingLP);
                 loadingView.setGravity(Gravity.CENTER);
-                nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
-                nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_themetryad), width, 1.9f));
+                nativeAdView = new KCNativeAdView(HSApplication.getContext());
+                nativeAdView.setAdLayoutView(view);
+                nativeAdView.setLoadingView(loadingView);
+                nativeAdView.setPrimaryViewSize(width, (int)(width / 1.9f));
+                nativeAdView.load(getString(R.string.ad_placement_themetryad));
                 CardView cardView = ViewConvertor.toCardView(nativeAdView);
                 linearLayout.addView(cardView);
                 linearLayout.setVisibility(View.GONE);
-                nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
                     @Override
-                    public void onAdLoaded(NativeAdView nativeAdView) {
+                    public void onAdLoaded(KCNativeAdView nativeAdView) {
                         linearLayout.setVisibility(View.VISIBLE);
                     }
                 });

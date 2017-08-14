@@ -9,8 +9,7 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 
@@ -18,10 +17,10 @@ import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
  * Created by xiayan on 2017/6/25.
  */
 
-public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListener, NativeAdView.OnAdClickedListener {
+public class KeyboardGooglePlayAdManager implements KCNativeAdView.OnAdLoadedListener, KCNativeAdView.OnAdClickedListener {
     private static final String PREF_AD_SHOW_TIME = "pref_ad_show_time";
     private String adPlacement;
-    private NativeAdView nativeAdView;
+    private KCNativeAdView nativeAdView;
     private AdGooglePlayDialog adGooglePlayDialog;
 
     public KeyboardGooglePlayAdManager(String adPlacement) {
@@ -32,8 +31,10 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
         int width = getNativeAdViewWidth();
         View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_google_play, null);
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        nativeAdView = new NativeAdView(HSApplication.getContext(), view);
-        nativeAdView.configParams(new NativeAdParams(adPlacement, width, 1.9f));
+        nativeAdView = new KCNativeAdView(HSApplication.getContext());
+        nativeAdView.setAdLayoutView(view);
+        nativeAdView.setPrimaryViewSize(width, (int)(width / 1.9f));
+        nativeAdView.load(adPlacement);
         nativeAdView.setOnAdLoadedListener(this);
         nativeAdView.setOnAdClickedListener(this);
     }
@@ -77,12 +78,12 @@ public class KeyboardGooglePlayAdManager implements NativeAdView.OnAdLoadedListe
     }
 
     @Override
-    public void onAdLoaded(NativeAdView nativeAdView) {
+    public void onAdLoaded(KCNativeAdView nativeAdView) {
         initAndShowDialog();
     }
 
     @Override
-    public void onAdClicked(NativeAdView nativeAdView) {
+    public void onAdClicked(KCNativeAdView nativeAdView) {
         if (adGooglePlayDialog != null && adGooglePlayDialog.isShowing()) {
             adGooglePlayDialog.dismiss();
         }

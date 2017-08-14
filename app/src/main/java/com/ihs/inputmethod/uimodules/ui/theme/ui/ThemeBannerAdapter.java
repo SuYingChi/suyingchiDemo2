@@ -27,8 +27,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -66,7 +65,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     private final static int loopMultiple = 500;
 
     private CardView adCardView;
-    private NativeAdView nativeAdView;
+    private KCNativeAdView nativeAdView;
 
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .displayer(new RoundedBitmapDisplayer(HSDisplayUtils.dip2px(2)))
@@ -119,17 +118,18 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             if (adCardView == null) {
                 View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
-                nativeAdView = new NativeAdView(HSApplication.getContext(), view);
-                nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+                nativeAdView = new KCNativeAdView(HSApplication.getContext());
+                nativeAdView.setAdLayoutView(view);
+                nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
                     @Override
-                    public void onAdLoaded(NativeAdView nativeAdView) {
+                    public void onAdLoaded(KCNativeAdView nativeAdView) {
                         nativeAdView.setTag("NativeAd");
                         adCardView = ViewConvertor.toCardView(nativeAdView);
                         adCardView.setCardBackgroundColor(0xfff6f6f6);
                         scrollToPreAdPosition();
                     }
                 });
-                nativeAdView.configParams(new NativeAdParams(HSApplication.getContext().getString(R.string.ad_placement_cardad)));
+                nativeAdView.load(HSApplication.getContext().getString(R.string.ad_placement_cardad));
             }
         }
     }
@@ -487,7 +487,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
     public void recycle() {
         if (adCardView != null) {
-            ((NativeAdView) adCardView.getChildAt(0)).release();
+            ((KCNativeAdView) adCardView.getChildAt(0)).release();
         }
 
         stopAutoScroll();

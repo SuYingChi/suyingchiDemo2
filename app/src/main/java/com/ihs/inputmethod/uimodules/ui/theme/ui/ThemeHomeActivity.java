@@ -718,7 +718,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         fullscreenShowed = false;
-        acbInterstitialAdLoader = KCInterstitialAd.loadAndShow(getString(R.string.placement_full_screen_open_keyboard), new KCInterstitialAd.OnAdShowListener() {
+        acbInterstitialAdLoader = KCInterstitialAd.loadAndShow(getString(R.string.placement_full_screen_open_keyboard),
+                getString(R.string.interstitial_ad_title_home_gift_button),
+                getString(R.string.interstitial_ad_subtitle_home_gift_button),
+                new KCInterstitialAd.OnAdShowListener() {
             @Override
             public void onAdShow(boolean b) {
                 fullscreenShowed = b;

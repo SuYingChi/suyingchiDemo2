@@ -285,4 +285,13 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="sticker_send_failed">Sticker send failed, please try again.</string>
     <string name="unzip_sticker_group_failed">Unzip stickers failed, please download again!</string>
     <string name="foreground_download_failed">Download failed</string>
+
+    <string name="interstitial_ad_title_after_save_theme">This is title</string>
+    <string name="interstitial_ad_subtitle_after_save_theme">This is subtitle</string>
+
+    <string name="interstitial_ad_title_after_try_keyboard">This is title</string>
+    <string name="interstitial_ad_subtitle_after_try_keyboard">This is subtitle</string>
+
+    <string name="interstitial_ad_title_home_gift_button">This is title</string>
+    <string name="interstitial_ad_subtitle_home_gift_button">This is subtitle</string>
 </resources>

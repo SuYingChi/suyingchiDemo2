@@ -33,8 +33,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.widget.RoundedCornerLayout;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 
 import me.drakeet.multitype.ItemViewProvider;
 
@@ -63,11 +62,11 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
         loadingLayout.setCircle(adsItem.isCircleStyle);
 
 
-        final NativeAdView nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingLayout);
-        final NativeAdParams nativeAdParams = new NativeAdParams(context.getString(R.string.ad_placement_customize_theme));
-        nativeAdView.configParams(nativeAdParams);
-        nativeAdParams.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-
+        final KCNativeAdView nativeAdView = new KCNativeAdView(HSApplication.getContext());
+        nativeAdView.setAdLayoutView(view);
+        nativeAdView.setLoadingView(loadingLayout);
+        nativeAdView.setPrimaryViewScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        nativeAdView.load(context.getString(R.string.ad_placement_customize_theme));
 
         loadingLayout.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override

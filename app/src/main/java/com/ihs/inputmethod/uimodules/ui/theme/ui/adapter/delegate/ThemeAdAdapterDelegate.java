@@ -25,8 +25,7 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.ThemeHomeAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,8 +61,8 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 
 	public void release() {
 		for(Map.Entry<String, View> entry : nativeAdViewCached.entrySet()) {
-			if(entry.getValue() instanceof NativeAdView) {
-				((NativeAdView)entry.getValue()).release();
+			if(entry.getValue() instanceof KCNativeAdView) {
+				((KCNativeAdView)entry.getValue()).release();
 			}
 		}
 	}
@@ -126,9 +125,12 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				loadingView.setLayoutParams(loadingLP);
 				loadingView.setGravity(Gravity.CENTER);
 				loadingView.setTag("loadingview");
-				NativeAdView nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
+				KCNativeAdView nativeAdView = new KCNativeAdView(HSApplication.getContext());
+				nativeAdView.setAdLayoutView(view);
+                nativeAdView.setLoadingView(loadingView);
 				nativeAdView.setTag("nativeadview");
-				nativeAdView.configParams(new NativeAdParams(nativeAd, width, 1.9f));
+                nativeAdView.setPrimaryViewSize(width, (int)(width / 1.9f));
+                nativeAdView.load(nativeAd);
 				cardView.addView(nativeAdView);
 				nativeAdViewCached.put(nativeAd, nativeAdView);
 			} else {

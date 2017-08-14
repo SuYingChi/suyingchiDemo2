@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.nativeads.NativeAdParams;
-import com.ihs.keyboardutils.nativeads.NativeAdView;
+import com.ihs.keyboardutils.nativeads.KCNativeAdView;
+
 import com.ihs.keyboardutils.view.FlashFrameLayout;
 
 /**
@@ -20,7 +20,7 @@ import com.ihs.keyboardutils.view.FlashFrameLayout;
  */
 
 public class NativeAdHelper {
-    NativeAdView nativeAdView;
+    KCNativeAdView nativeAdView;
     private static FlashFrameLayout flashAdContainer;
     String adPoolName = HSApplication.getContext().getResources().getString(R.string.ad_placement_keyboardsettingsad);
     private boolean isAdFlashAnimationPlayed = false;
@@ -33,18 +33,18 @@ public class NativeAdHelper {
             AdView adView = new AdView(HSApplication.getContext());
             //it will change its parent(NativeContentAdView) LayoutParams too
             adView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            nativeAdView = new NativeAdView(HSApplication.getContext(), adView);
-            nativeAdView.setNativeAdType(NativeAdView.NativeAdType.ICON);
-            nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
+            nativeAdView = new KCNativeAdView(HSApplication.getContext());
+            nativeAdView.setAdLayoutView(adView);
+            nativeAdView.setNativeAdType(KCNativeAdView.NativeAdType.ICON);
+            nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
                 @Override
-                public void onAdLoaded(NativeAdView nativeAdView) {
+                public void onAdLoaded(KCNativeAdView nativeAdView) {
                     showAdFlashAnimationIfNecessary();
                     nativeAdView.setOnAdLoadedListener(null);
                 }
             });
-            NativeAdParams nativeAdParams = new NativeAdParams(adPoolName);
-            nativeAdView.configParams(nativeAdParams);
 
+            nativeAdView.load(adPoolName);
             ViewItemBuilder.getAdsItem().viewContainer.removeAllViews();
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
