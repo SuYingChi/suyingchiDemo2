@@ -8,11 +8,6 @@ import com.keyboard.common.SplashActivity;
 
 public class MyInputMethodApplication extends HSUIApplication {
     @Override
-    protected Class<? extends Activity> getMainActivityClass() {
-        return MainActivity.class;
-    }
-
-    @Override
     protected Class<? extends Activity> getSplashActivityClass() {
         return SplashActivity.class;
     }
