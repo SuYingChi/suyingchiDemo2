@@ -25,6 +25,6 @@ public class FontCardViewHolder extends RecyclerView.ViewHolder {
         fontCardView = itemView.findViewById(R.id.font_card_view);
         fontCardContent = (TextView) itemView.findViewById(R.id.font_content);
         downloadIcon = (ImageView) itemView.findViewById(R.id.more_menu_image);
-        radioButton = (RadioButton) itemView.findViewById(R.id.font_radion_button);
+        radioButton = (RadioButton) itemView.findViewById(R.id.font_radio_button);
     }
 }
