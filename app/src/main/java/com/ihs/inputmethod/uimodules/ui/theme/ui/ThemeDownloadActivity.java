@@ -41,8 +41,9 @@ import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
+import com.ihs.inputmethod.uimodules.ui.fonts.homeui.MyFontFragment;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.myStickerFragment;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.MyStickerFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
@@ -183,10 +184,12 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         });
 
         fragments = new ArrayList<>();
-        Fragment myStickerFragment = new myStickerFragment();
+        Fragment myStickerFragment = new MyStickerFragment();
         Fragment myThemeFragment = new MyThemeFragment();
+        Fragment myFontFragment = new MyFontFragment();
         fragments.add(myThemeFragment);
         fragments.add(myStickerFragment);
+        fragments.add(myFontFragment);
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments, ThemeDownloadActivity.class.getSimpleName());
         viewPager.setOffscreenPageLimit(fragments.size());
@@ -365,6 +368,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         keyboardActivationProcessor.release();
         keyboardActivationProcessor = null;
 
+        fragments.clear();
         super.onDestroy();
     }
 

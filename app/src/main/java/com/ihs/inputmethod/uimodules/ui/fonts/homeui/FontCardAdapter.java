@@ -4,7 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
+import com.ihs.inputmethod.settings.RadioButtonPreference;
 import com.ihs.inputmethod.uimodules.R;
 
 import java.util.List;
@@ -17,6 +23,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
 
     private List<FontModel> fontModelList;
     private OnFontCardClickListener onFontCardClickListener;
+    private RadioButton selectRadioButton = null;
 
     public FontCardAdapter(List<FontModel> fontModels, OnFontCardClickListener onFontCardClickListener) {
         this.onFontCardClickListener = onFontCardClickListener;
@@ -29,7 +36,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(FontCardViewHolder holder, int position) {
+    public void onBindViewHolder(final FontCardViewHolder holder, final int position) {
         if(fontModelList == null) {
             return;
         }
@@ -37,13 +44,22 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
         FontModel fontModel = fontModelList.get(position);
         HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
         holder.fontCardContent.setText(hsSpecialCharacter.example);
-        holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
+        if(fontModel.getNeedDownload()) {
+            holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
+        } else {
+            holder.downloadIcon.setVisibility(View.GONE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(onFontCardClickListener != null) {
-                    onFontCardClickListener.onFontCardClick();
+                    if(selectRadioButton != null)  {
+                        selectRadioButton.setChecked(false);
+                    }
+                    selectRadioButton = holder.radioButton;
+                    selectRadioButton.setChecked(true);
                 }
+                onFontCardClickListener.onFontCardClick();
             }
         });
         if(fontModel.getNeedDownload()) {

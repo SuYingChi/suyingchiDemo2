@@ -74,5 +74,6 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
     public int getItemCount() {
         return stickerModelList.size();
     }
+
 }
 

@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -29,7 +31,7 @@ public class FontHomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sticker, container, false);
+        View view = inflater.inflate(R.layout.fragment_font, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         initView();
         return view;
@@ -43,7 +45,7 @@ public class FontHomeFragment extends Fragment {
 
             @Override
             public void onFontCardClick() {
-
+                Toast.makeText(getContext(), "fontCardClicked", Toast.LENGTH_SHORT).show();
             }
         });
         recyclerView.setAdapter(fontCardAdapter);

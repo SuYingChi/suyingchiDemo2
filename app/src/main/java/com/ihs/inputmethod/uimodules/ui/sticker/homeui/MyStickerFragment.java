@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by guonan.lv on 17/8/14.
  */
 
-public class myStickerFragment extends Fragment {
+public class MyStickerFragment extends Fragment {
     private RecyclerView recyclerView;
     private StickerCardAdapter stickerCardAdapter;
     private List<StickerModel> stickerModelList = new ArrayList<>();
