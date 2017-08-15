@@ -39,7 +39,11 @@ public class DownloadCompleteReceiver extends BroadcastReceiver {
             HSLog.d("Install apk:" + uri);
 
             if (uri != null) {
-                ApkUtils.startInstall(context, uri);
+                try { //Galaxy Tab S2 (171号手机会挂，先try catch处理)
+                    ApkUtils.startInstall(context, uri);
+                }catch (Exception e){
+
+                }
             }
         }
     }
