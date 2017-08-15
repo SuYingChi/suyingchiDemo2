@@ -5,13 +5,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +46,35 @@ public class StickerHomeFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
         loadStickerGroup();
-        stickerCardAdapter = new StickerCardAdapter(stickerModelList);
+        stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
+            @Override
+            public void onCardViewClick(StickerModel stickerModel) {
+                HSAnalytics.logEvent(stickerModel.getStickerGroup().getStickerGroupName(), "sticker_download_clicked");
+            }
+
+            @Override
+            public void onDownloadButtonClick(final StickerModel stickerModel) {
+                StickerDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerModel.getStickerGroup(), null, new AdLoadingView.OnAdBufferingListener() {
+                    @Override
+                    public void onDismiss(boolean success) {
+                        if(success) {
+                            showTrialStickerKeyboard(stickerModel.getStickerGroup());
+                            int position = stickerModelList.indexOf(stickerModel);
+                            stickerModelList.remove(position);
+                            stickerCardAdapter.notifyItemRemoved(position);
+                            stickerCardAdapter.notifyItemRangeChanged(position, stickerModelList.size());
+                        } else {
+                            Toast.makeText(getActivity(), "Download Failed! Please Try Again!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
         recyclerView.setAdapter(stickerCardAdapter);
+
+    }
+
+    private void showTrialStickerKeyboard(StickerGroup stickerGroup) {
 
     }
 
@@ -49,10 +82,17 @@ public class StickerHomeFragment extends Fragment {
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
-            String stickerGroupDownloadDisplayName = (String) map.get("showName");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
+            if(stickerGroup.isStickerGroupDownloaded()) {
+                continue;
+            }
+            String stickerTag = (String) map.get("tagName");
+            String stickerGroupDownloadDisplayName = (String) map.get("showName");
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
             StickerModel stickerModel = new StickerModel(stickerGroup);
+            if(stickerTag != null) {
+                stickerModel.setStickTag(stickerTag);
+            }
             stickerModelList.add(stickerModel);
         }
     }

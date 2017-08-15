@@ -39,7 +39,17 @@ public class MyStickerFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
         loadStickerModel();
-        stickerCardAdapter = new StickerCardAdapter(stickerModelList);
+        stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
+            @Override
+            public void onCardViewClick(StickerModel stickerModel) {
+
+            }
+
+            @Override
+            public void onDownloadButtonClick(StickerModel stickerModel) {
+
+            }
+        });
         recyclerView.setAdapter(stickerCardAdapter);
 
     }

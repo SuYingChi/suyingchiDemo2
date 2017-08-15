@@ -27,14 +27,16 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
     private List<StickerModel> stickerModelList;
     private int imageWidth;
     private int imageHeight;
+    private OnStickerCardClickListener onStickerCardClickListener;
 
     private DisplayImageOptions options=new DisplayImageOptions.Builder().cacheInMemory(false).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
 
-    public StickerCardAdapter(List<StickerModel> data) {
+    public StickerCardAdapter(List<StickerModel> data, OnStickerCardClickListener onStickerCardClickListener) {
         stickerModelList = data;
         Resources resources = HSApplication.getContext().getResources();
         imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
         imageHeight = (int) (imageWidth / 1.6f);
+        this.onStickerCardClickListener = onStickerCardClickListener;
     }
 
     @Override
@@ -43,13 +45,13 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
     }
 
     @Override
-    public void onBindViewHolder(StickerCardViewHolder holder, int position) {
+    public void onBindViewHolder(StickerCardViewHolder holder, final int position) {
         if (stickerModelList == null) {
             return;
         }
 
-        StickerModel stickerModel = stickerModelList.get(position);
-        StickerGroup stickerGroup = stickerModel.getStickerGroup();
+        final StickerModel stickerModel = stickerModelList.get(position);
+        final StickerGroup stickerGroup = stickerModel.getStickerGroup();
         holder.stickerGroupName.setText(stickerGroup.getStickerGroupName());
         final String realImageUrl = stickerGroup.getStickerGroupDownloadPreviewImageUri();
         if(realImageUrl != null) {
@@ -58,11 +60,22 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
         }
         if(!stickerModel.getIsDownload()) {
             holder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
+            holder.moreMenuImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onStickerCardClickListener.onDownloadButtonClick(stickerModel);
+                }
+            });
         } else {
             holder.moreMenuImage.setVisibility(View.GONE);
         }
+        holder.stickerRealImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onStickerCardClickListener.onCardViewClick(stickerModel);
+            }
+        });
         holder.stickerNewImage.setVisibility(stickerModel.getStickerTag() == null ? View.GONE : View.VISIBLE);
-
     }
 
     @Override
@@ -75,5 +88,9 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
         return stickerModelList.size();
     }
 
+    public interface OnStickerCardClickListener {
+        void onCardViewClick(StickerModel stickerModel);
+        void onDownloadButtonClick(StickerModel stickerModel);
+    }
 }
 
