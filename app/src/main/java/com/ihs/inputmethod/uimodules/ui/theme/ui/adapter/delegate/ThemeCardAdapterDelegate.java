@@ -21,7 +21,9 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -68,10 +70,16 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 		themeCardViewHolder.themeRealImage.setImageDrawable(null);
 		final HSKeyboardTheme keyboardTheme = items.get(position).keyboardTheme;
 		holder.itemView.setTag(keyboardTheme.mThemeName);
+        themeCardViewHolder.themeDelete.setVisibility(View.GONE);
 
-		themeCardViewHolder.themeDelete.setVisibility(View.GONE);
+        // show animated mark
+        boolean isShowAnimatedMark = keyboardTheme.getShowAnimatedMark();
+        if(isShowAnimatedMark){
+            themeCardViewHolder.themeAnimatedImage.setVisibility(View.VISIBLE);
+        }else{
+            themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
+        }
 
-		themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
 		switch (keyboardTheme.getThemeType()) {
 			case CUSTOM:
 				themeCardViewHolder.themeName.setText(HSApplication.getContext().getString(R.string.theme_card_custom_theme_default_name));
