@@ -11,6 +11,7 @@ import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
+import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 /**
@@ -27,7 +28,8 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         HSLog.e(intent.getStringExtra("actionType") + intent.toString());
-        KCAnalyticUtil.logEvent("notification_click",intent.getStringExtra("eventName"));
+        KCAnalyticUtil.logEvent("notification_click",intent.getStringExtra("name"));
+        KCNotificationManager.logNotificationClick(intent.getStringExtra("actionType"),intent.getStringExtra("name"));
         String name = intent.getStringExtra("name");
         HSLog.e("notification name " + name);
         switch (intent.getStringExtra("actionType")) {
