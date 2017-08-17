@@ -215,7 +215,9 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 HSLog.e("MainActivity mp4 play error: what = " + what + " extra = " + extra);
-                return false;
+                startThemeHomeActivity();
+                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
+                return true;
             }
         });
         launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
