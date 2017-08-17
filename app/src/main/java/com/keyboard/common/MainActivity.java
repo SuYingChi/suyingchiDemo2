@@ -112,6 +112,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView img_choose_two;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
     private boolean isLaunchAnimationPlayed;
+    private boolean isSettingButtonAnimationPlayed;
 
     private static final int TYPE_MANUAL = 0;
     private static final int TYPE_AUTO = 1;
@@ -218,6 +219,25 @@ public class MainActivity extends HSDeepLinkActivity {
                 startThemeHomeActivity();
                 HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
                 return true;
+            }
+        });
+        launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if (isSettingButtonAnimationPlayed) {
+                    HSLog.w("setting button already showed.");
+                    return;
+                }
+                if (shouldShowThemeHome()) {
+                    startThemeHomeActivity();
+                } else {
+                    // 开始渐变动画
+                    if (isAccessibilityEnable()) {
+                        playAccessibilityButtonShowAnimation();
+                    } else {
+                        playManualButtonShowAnimation();
+                    }
+                }
             }
         });
 
@@ -521,9 +541,8 @@ public class MainActivity extends HSDeepLinkActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (shouldShowThemeHome()) {
-                        startThemeHomeActivity();
-                    } else {
+                    if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+                        HSLog.w("show setting button in abnormal way");
                         // 开始渐变动画
                         if (isAccessibilityEnable()) {
                             playAccessibilityButtonShowAnimation();
@@ -531,9 +550,8 @@ public class MainActivity extends HSDeepLinkActivity {
                             playManualButtonShowAnimation();
                         }
                     }
-                    HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
                 }
-            }, 3000);
+            }, 6000);
         } else {
             launchImageView.setVisibility(View.VISIBLE);
             launchVideoView.setVisibility(GONE);
@@ -716,11 +734,18 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationStart(Animator animation) {
+                isSettingButtonAnimationPlayed = true;
                 currentType = TYPE_MANUAL;
                 bt_step_one.setVisibility(View.VISIBLE);
                 bt_step_two.setVisibility(View.VISIBLE);
                 accessibilityButtonContainer.setVisibility(GONE);
                 protocolText.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
             }
         });
         set.setDuration(500).start();
@@ -738,12 +763,19 @@ public class MainActivity extends HSDeepLinkActivity {
             public void onAnimationStart(Animator animation) {
                 accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
                 listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
+                isSettingButtonAnimationPlayed = true;
                 currentType = TYPE_AUTO;
                 bt_step_one.setVisibility(View.GONE);
                 bt_step_two.setVisibility(View.GONE);
                 accessibilityButtonContainer.setVisibility(View.VISIBLE);
                 protocolText.setVisibility(View.VISIBLE);
                 logOneTimeGA(app_accessibility_setkey_screen_viewed);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
             }
         });
         set.setDuration(500).start();
