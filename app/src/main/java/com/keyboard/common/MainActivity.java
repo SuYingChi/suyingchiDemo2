@@ -220,24 +220,6 @@ public class MainActivity extends HSDeepLinkActivity {
                 return true;
             }
         });
-        launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if (shouldShowThemeHome()) {
-                    startThemeHomeActivity();
-                } else {
-                    // 开始渐变动画
-                    if (isAccessibilityEnable()) {
-                        accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
-                        listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
-                        playAccessibilityButtonShowAnimation();
-                    } else {
-                        playManualButtonShowAnimation();
-                    }
-                }
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
-            }
-        });
 
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
@@ -536,6 +518,22 @@ public class MainActivity extends HSDeepLinkActivity {
             launchImageView.setVisibility(GONE);
             launchVideoView.setVisibility(View.VISIBLE);
             launchVideoView.start();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (shouldShowThemeHome()) {
+                        startThemeHomeActivity();
+                    } else {
+                        // 开始渐变动画
+                        if (isAccessibilityEnable()) {
+                            playAccessibilityButtonShowAnimation();
+                        } else {
+                            playManualButtonShowAnimation();
+                        }
+                    }
+                    HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
+                }
+            }, 3000);
         } else {
             launchImageView.setVisibility(View.VISIBLE);
             launchVideoView.setVisibility(GONE);
@@ -686,6 +684,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private void startThemeHomeActivity() {
+        HSLog.d("MainActivity startThemeHomeActivity start.");
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
@@ -737,6 +736,8 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationStart(Animator animation) {
+                accessibilityEventListener = new AccessibilityEventListener(AccessibilityEventListener.MODE_SETUP_KEYBOARD);
+                listenerKey = HSAccessibilityService.registerEventListener(accessibilityEventListener);
                 currentType = TYPE_AUTO;
                 bt_step_one.setVisibility(View.GONE);
                 bt_step_two.setVisibility(View.GONE);
