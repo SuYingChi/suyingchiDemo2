@@ -293,5 +293,5 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="interstitial_ad_subtitle_after_try_keyboard">--------------- You May Like ---------------</string>
 
     <string name="interstitial_ad_title_home_gift_button"> </string>
-    <string name="interstitial_ad_subtitle_home_gift_button"> </string>
+    <string name="interstitial_ad_subtitle_home_gift_button">--------------- You May Like ---------------</string>
 </resources>
