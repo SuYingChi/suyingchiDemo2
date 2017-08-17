@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -12,6 +11,7 @@ import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -55,7 +55,6 @@ import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font.FontFragment;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
@@ -420,6 +419,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             }*/
             currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
         } else if (id == R.id.nav_my_themes) {
+            switchToDownloads();
             /* origin
             if (!currentFragmentTag.equals(MY_THEME_FRAGMENT_TAG)) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

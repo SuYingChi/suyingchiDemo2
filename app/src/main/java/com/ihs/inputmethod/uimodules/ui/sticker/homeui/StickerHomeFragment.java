@@ -50,6 +50,7 @@ public class StickerHomeFragment extends Fragment {
             @Override
             public void onCardViewClick(StickerModel stickerModel) {
                 HSAnalytics.logEvent(stickerModel.getStickerGroup().getStickerGroupName(), "sticker_download_clicked");
+                onDownloadButtonClick(stickerModel);
             }
 
             @Override
@@ -81,7 +82,7 @@ public class StickerHomeFragment extends Fragment {
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if(StickerDataManager.getInstance().isStickerGroupDownloaded(stickerGroupName) || stickerGroup.isStickerGroupDownloaded()) {
+            if(StickerDataManager.getInstance().isStickerGroupDownloaded(stickerGroupName)) {
                 continue;
             }
             String stickerTag = (String) map.get("tagName");
