@@ -588,17 +588,6 @@
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
-				<key>AdCallAssistant</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
 				<key>AdGooglePlayIcon</key>
 				<dict>
 					<key>TimeZoneException</key>
@@ -744,503 +733,39 @@
 			<dict>
 				<key>GooglePlay</key>
 				<dict>
-					<key>CameraAd</key>
-					<array>
-						<dict>
-							<key>PackageName</key>
-							<string>com.camera.beautycam</string>
-							<key>icon</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/beautycam.png</string>
-							<key>name</key>
-							<string>Beauty Cam - Selfie Editor</string>
-						</dict>
-					</array>
 					<key>ShowAd</key>
-					<true/>
-					<key>ShowCameraAd</key>
 					<true/>
 				</dict>
 			</dict>
 			<key>LocalNotifications</key>
-			<array>
+			<dict>
+				<key>ChangeTheme</key>
 				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/galaxy.png</string>
+					<key>Interval</key>
+					<integer>3</integer>
+					<key>MaxShowCount</key>
+					<integer>5</integer>
 					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.galaxy</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Locker</string>
-					<key>Message</key>
-					<array>
-						<string>Displaying your favourite themes on lock screen.</string>
-					</array>
-					<key>Repeat</key>
-					<true/>
-					<key>Title</key>
-					<string>Enable Screen Locker</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/spinner.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.spinner</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/royalbattle.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.royalbattle</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/goldsilver.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.goldsilver</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Charging</string>
-					<key>Message</key>
-					<array>
-						<string>Enable smart charging to prevent overcharging efficiently.</string>
-					</array>
-					<key>Repeat</key>
-					<true/>
-					<key>Title</key>
-					<string>Enable Smart Charging</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/futuregalaxy.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.futuregalaxy</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>CustomizedTheme</string>
-					<key>Message</key>
-					<array>
-						<string>Nice photo! Would you like to set it as background? </string>
-					</array>
-					<key>Name</key>
-					<string>name1</string>
-					<key>Repeat</key>
-					<true/>
+					<string>Time to decorate your own keyboard!</string>
+					<key>Priority</key>
+					<integer>1</integer>
 					<key>Title</key>
 					<string>Got new pictures?</string>
 				</dict>
+				<key>Charging</key>
 				<dict>
-					<key>ActionType</key>
-					<string>CustomizedTheme</string>
+					<key>Interval</key>
+					<integer>3</integer>
+					<key>MaxShowCount</key>
+					<integer>3</integer>
 					<key>Message</key>
-					<array>
-						<string>Wanna have a new look? 😎✨ Come and create new keyboard &gt;&gt;</string>
-					</array>
-					<key>Name</key>
-					<string>name2</string>
-					<key>Repeat</key>
-					<true/>
+					<string>Enable smart charging to prevent overcharging efficiently.</string>
+					<key>Priority</key>
+					<integer>2</integer>
 					<key>Title</key>
-					<string>Dress your keyboard!</string>
+					<string>Enable Smart Charging</string>
 				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/blackgold.png</string>
-					<key>Message</key>
-					<array>
-						<string>Decorate your keyboard with exclusive theme!</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.blackgold</string>
-					<key>Title</key>
-					<string>New theme Black Gold available!</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/panda.png</string>
-					<key>Message</key>
-					<array>
-						<string>Guess you like Panda？Come and design your keyboard!</string>
-						<string>Decorate your keyboard with exclusive Panda!</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.panda</string>
-					<key>Title</key>
-					<string>New theme Panda available!</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/poolparty.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.poolparty</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/kitty.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.kitty</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/rosegold.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.rosegold</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/jelly.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.jelly</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pop.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.pop</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/firedemon.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.firedemon</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/glory.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.glory</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/californiasummer.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.californiasummer</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/goldbars.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.goldbars</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/gold.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.gold</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/irontech.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.irontech</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pinklace.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.pinklace</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/forthehorde.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.forthehorde</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/demon.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.demon</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/bluejeans.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.bluejeans</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/soccerfan.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.soccerfan</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/blackdiamond.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.blackdiamond</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/kawaii.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.kawaii</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/deathstar.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.deathstar</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/dragon.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.dragon</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/fairyforest.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.fairyforest</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/graffiti.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.graffiti</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-				<dict>
-					<key>ActionType</key>
-					<string>Theme</string>
-					<key>IconUrl</key>
-					<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/handwriting.png</string>
-					<key>Message</key>
-					<array>
-						<string>Enjoy new theme picked just for you.</string>
-					</array>
-					<key>Name</key>
-					<string>com.keyboard.theme.handwriting</string>
-					<key>Title</key>
-					<string>New Theme Discovery</string>
-				</dict>
-			</array>
-			<key>LocalNotificationsPushTime</key>
-			<array>
-				<integer>12</integer>
-			</array>
+			</dict>
 			<key>Locker</key>
 			<dict>
 				<key>Ads</key>
@@ -1549,11 +1074,6 @@
 						<integer>20</integer>
 					</array>
 					<key>Show</key>
-					<true/>
-				</dict>
-				<key>KeyboardEmojiAd</key>
-				<dict>
-					<key>ShowAd</key>
 					<false/>
 				</dict>
 				<key>KeyboardEmojiTopLeftTabAd</key>
@@ -1911,6 +1431,8 @@
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier31</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/immortal.jpg</string>
 						<key>name</key>
 						<string>Immortal</string>
 						<key>price</key>
@@ -1929,6 +1451,8 @@
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier29</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fieryguitar.jpg</string>
 						<key>name</key>
 						<string>Fiery Guitar</string>
 						<key>price</key>
@@ -1951,6 +1475,8 @@
 						<string>$0.99</string>
 					</dict>
 					<dict>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fallingstars.jpg</string>
 						<key>name</key>
 						<string>Falling Stars</string>
 					</dict>
@@ -1959,6 +1485,8 @@
 						<string>background30</string>
 					</dict>
 					<dict>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lightningfootball.jpg</string>
 						<key>name</key>
 						<string>Lightning Football</string>
 					</dict>
@@ -2023,6 +1551,8 @@
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier7</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/valentines.jpg</string>
 						<key>name</key>
 						<string>Valentines</string>
 						<key>price</key>
@@ -2043,6 +1573,8 @@
 					<dict>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.background.tier2</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainbowswirl.jpg</string>
 						<key>name</key>
 						<string>Rainbow Swirl</string>
 						<key>price</key>
@@ -4096,16 +3628,6 @@
 					</dict>
 					<dict>
 						<key>largePreviewUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
-						<key>showName</key>
-						<string>System White</string>
-						<key>themeDesc</key>
-						<string>No color will ever be brighter than white.</string>
-						<key>zipName</key>
-						<string>White</string>
-					</dict>
-					<dict>
-						<key>largePreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Classic.jpg</string>
 						<key>showName</key>
 						<string>Classic</string>
@@ -4141,6 +3663,16 @@
 						<string>Addicted to black.</string>
 						<key>zipName</key>
 						<string>Dark</string>
+					</dict>
+					<dict>
+						<key>largePreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
+						<key>showName</key>
+						<string>System White</string>
+						<key>themeDesc</key>
+						<string>No color will ever be brighter than white.</string>
+						<key>zipName</key>
+						<string>White</string>
 					</dict>
 				</array>
 				<key>unlimited_theme_slots</key>
@@ -4225,8 +3757,6 @@
 		<dict>
 			<key>admobexpress</key>
 			<dict>
-				<key>appid</key>
-				<string>ca-app-pub-7319126281585813~6672531489</string>
 				<key>expireTime</key>
 				<integer>3600</integer>
 				<key>frequencyCap</key>
@@ -4245,8 +3775,6 @@
 			</dict>
 			<key>admobnative</key>
 			<dict>
-				<key>appid</key>
-				<string>ca-app-pub-7319126281585813~6672531489</string>
 				<key>expireTime</key>
 				<integer>3600</integer>
 				<key>frequencyCap</key>
@@ -4409,11 +3937,62 @@
 				<key>serialList</key>
 				<array>
 					<dict>
-						<key>adContentType</key>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
 						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>22</integer>
+							</dict>
 						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/3664715000</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>21</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/8621264049</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
 						<key>adType</key>
 						<string>admobnative</string>
 						<key>countPerLoad</key>
@@ -4423,7 +4002,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>5</integer>
+								<integer>20</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4442,11 +4021,34 @@
 						</array>
 					</dict>
 					<dict>
-						<key>adContentType</key>
+						<key>adType</key>
+						<string>adxexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
 						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
 						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/4650895295</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
 						<key>adType</key>
 						<string>adxnative</string>
 						<key>countPerLoad</key>
@@ -4456,7 +4058,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>4</integer>
+								<integer>18</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -4475,11 +4077,230 @@
 						</array>
 					</dict>
 					<dict>
-						<key>adContentType</key>
+						<key>adType</key>
+						<string>adxexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
 						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>16</integer>
+							</dict>
 						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/1838716764</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/8844625325</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>14</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>480b94b5b58e4250a5fe93e198994b5e</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>6949eb3a27bb4874b4a035c8fb604dd0</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>12</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>5316c660385b47809e952ae419180a14</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>11</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>aa8581f7b0344ded939582d12759b815</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>10</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>7eae88a8e7904429809e84991334728c</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>9</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>08670df623834ef5a985c0a48409186d</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
 						<key>adType</key>
 						<string>adxnative</string>
 						<key>countPerLoad</key>
@@ -4508,11 +4329,6 @@
 						<array/>
 					</dict>
 					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
 						<key>adType</key>
 						<string>admobnative</string>
 						<key>countPerLoad</key>
@@ -4543,19 +4359,6 @@
 				</array>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
-				<key>policy</key>
-				<dict>
-					<key>adCorner</key>
-					<dict>
-						<key>mode</key>
-						<string>allShow</string>
-					</dict>
-					<key>policybreaking</key>
-					<dict>
-						<key>mode</key>
-						<string>toast</string>
-					</dict>
-				</dict>
 			</dict>
 			<key>Smiley_A(NativeAds)Fuse</key>
 			<dict>
@@ -4586,11 +4389,62 @@
 				<key>serialList</key>
 				<array>
 					<dict>
-						<key>adContentType</key>
+						<key>adType</key>
+						<string>admobexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
 						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>21</integer>
+							</dict>
 						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/4434607027</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>adxexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>20</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/5820667981</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
 						<key>adType</key>
 						<string>adxnative</string>
 						<key>countPerLoad</key>
@@ -4600,15 +4454,13 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>5</integer>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
 							<string>ca-mb-app-pub-8621759356895416/8045455860</string>
 						</array>
-						<key>label</key>
-						<string>A1</string>
 						<key>loadCount</key>
 						<integer>1</integer>
 						<key>networkType</key>
@@ -4621,11 +4473,62 @@
 						</array>
 					</dict>
 					<dict>
-						<key>adContentType</key>
+						<key>adType</key>
+						<string>adxexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
 						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>18</integer>
+							</dict>
 						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/9525634461</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/3931688924</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
 						<key>adType</key>
 						<string>admobnative</string>
 						<key>countPerLoad</key>
@@ -4635,15 +4538,13 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>4</integer>
+								<integer>16</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
 							<string>ca-app-pub-7319126281585813/7610723887</string>
 						</array>
-						<key>label</key>
-						<string>A1</string>
 						<key>loadCount</key>
 						<integer>1</integer>
 						<key>networkType</key>
@@ -4656,11 +4557,174 @@
 						</array>
 					</dict>
 					<dict>
-						<key>adContentType</key>
+						<key>adType</key>
+						<string>mopubexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
 						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>14</integer>
+							</dict>
 						</dict>
+						<key>ids</key>
+						<array>
+							<string>fc72972e31d440a18e0c298bd987d737</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>dc61edf193a6411dae9ee8e7039934c2</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>12</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>2f42e6e34d004e2ca86ff091a7739e5f</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>11</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>80476691a1a24690823281cf7a0d441c</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubexpress</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>10</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>d3b598156eb84bffacf600712e41ce48</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>mopubnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>9</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>10388bdcbb6b41ffa9188163a8f87bf5</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
 						<key>adType</key>
 						<string>adxnative</string>
 						<key>countPerLoad</key>
@@ -4689,11 +4753,6 @@
 						<array/>
 					</dict>
 					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
 						<key>adType</key>
 						<string>admobnative</string>
 						<key>countPerLoad</key>
@@ -4724,19 +4783,6 @@
 				</array>
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
-				<key>policy</key>
-				<dict>
-					<key>adCorner</key>
-					<dict>
-						<key>mode</key>
-						<string>allShow</string>
-					</dict>
-					<key>policybreaking</key>
-					<dict>
-						<key>mode</key>
-						<string>toast</string>
-					</dict>
-				</dict>
 			</dict>
 		</dict>
 		<key>interstitialAds</key>
@@ -4893,23 +4939,36 @@
 				<key>packageFilter</key>
 				<true/>
 				<key>parallelCount</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>parallelList</key>
+				<array/>
+				<key>preCacheIcon</key>
+				<true/>
+				<key>preCacheImage</key>
+				<true/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
+				<key>serialList</key>
 				<array>
 					<dict>
 						<key>adType</key>
-						<string>facebooknative</string>
+						<string>adxinterstitial</string>
 						<key>cpmInfo</key>
 						<dict>
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>10</integer>
+								<integer>20</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
-							<string>333786680151584_642806355916280</string>
+							<string>ca-mb-app-pub-8621759356895416/8212552158</string>
 						</array>
 						<key>networkType</key>
 						<integer>0</integer>
@@ -4918,7 +4977,87 @@
 						<key>regionException</key>
 						<array/>
 						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobinterstitial</string>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/2614915436</string>
+						</array>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionFilter</key>
 						<array/>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>adxinterstitial</string>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>18</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/2351632697</string>
+						</array>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobinterstitial</string>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/4117983618</string>
+						</array>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
 					</dict>
 					<dict>
 						<key>adType</key>
@@ -4940,31 +5079,9 @@
 						<key>osVersionFilter</key>
 						<array/>
 						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>facebookinterstitial</string>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>8</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
 						<array>
-							<string>333786680151584_642806522582930</string>
+							<string>US</string>
 						</array>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>regionException</key>
-						<array/>
 						<key>regionFilter</key>
 						<array/>
 					</dict>
@@ -4988,24 +5105,12 @@
 						<key>osVersionFilter</key>
 						<array/>
 						<key>regionException</key>
-						<array/>
+						<array>
+							<string>US</string>
+						</array>
 						<key>regionFilter</key>
 						<array/>
 					</dict>
-				</array>
-				<key>preCacheIcon</key>
-				<true/>
-				<key>preCacheImage</key>
-				<true/>
-				<key>preload</key>
-				<dict>
-					<key>inventory</key>
-					<integer>0</integer>
-					<key>strategy</key>
-					<string>initiative</string>
-				</dict>
-				<key>serialList</key>
-				<array>
 					<dict>
 						<key>adType</key>
 						<string>admobinterstitial</string>
@@ -5026,7 +5131,9 @@
 						<key>osVersionFilter</key>
 						<array/>
 						<key>regionException</key>
-						<array/>
+						<array>
+							<string>US</string>
+						</array>
 						<key>regionFilter</key>
 						<array/>
 					</dict>
@@ -5192,9 +5299,155 @@
 				<key>packageFilter</key>
 				<true/>
 				<key>parallelCount</key>
-				<integer>2</integer>
+				<integer>0</integer>
 				<key>parallelList</key>
+				<array/>
+				<key>serialList</key>
 				<array>
+					<dict>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>20</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_692725690924346</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/5053198904</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>18</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_692725724257676</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>appnextnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>6</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>2d338054-3a13-4107-ac22-55dcb9ba32fe</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>regionFilter</key>
+						<array/>
+						<key>url</key>
+						<string></string>
+					</dict>
 					<dict>
 						<key>adType</key>
 						<string>facebooknative</string>
@@ -5225,41 +5478,9 @@
 						<key>primaryViewOption</key>
 						<string>imageView</string>
 						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>9</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
 						<array>
-							<string>ca-mb-app-pub-8621759356895416/4770586198</string>
+							<string>US</string>
 						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>regionException</key>
-						<array/>
 						<key>regionFilter</key>
 						<array/>
 						<key>url</key>
@@ -5293,7 +5514,9 @@
 						<key>priceRatio</key>
 						<integer>1</integer>
 						<key>regionException</key>
-						<array/>
+						<array>
+							<string>US</string>
+						</array>
 						<key>regionFilter</key>
 						<array/>
 						<key>url</key>
@@ -5301,7 +5524,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>appnextnative</string>
+						<string>adxnative</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -5309,12 +5532,12 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>6</integer>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
-							<string>2d338054-3a13-4107-ac22-55dcb9ba32fe</string>
+							<string>ca-mb-app-pub-8621759356895416/4770586198</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
@@ -5327,44 +5550,9 @@
 						<key>priceRatio</key>
 						<integer>1</integer>
 						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-				</array>
-				<key>serialList</key>
-				<array>
-					<dict>
-						<key>adType</key>
-						<string>admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>3</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
 						<array>
-							<string>ca-app-pub-7319126281585813/3029848685</string>
+							<string>US</string>
 						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>regionException</key>
-						<array/>
 						<key>regionFilter</key>
 						<array/>
 						<key>url</key>
@@ -5379,8 +5567,23 @@
 				<key>packageFilter</key>
 				<true/>
 				<key>parallelCount</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>parallelList</key>
+				<array/>
+				<key>preCacheIcon</key>
+				<true/>
+				<key>preCacheImage</key>
+				<true/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>Initiative</string>
+				</dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
+				<key>serialList</key>
 				<array>
 					<dict>
 						<key>adType</key>
@@ -5392,7 +5595,115 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>25</integer>
+								<integer>20</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_692725757591006</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/7104647177</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>18</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_692725790924336</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>10</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5412,7 +5723,9 @@
 						<key>primaryViewOption</key>
 						<string>imageView</string>
 						<key>regionException</key>
-						<array/>
+						<array>
+							<string>US</string>
+						</array>
 						<key>regionFilter</key>
 						<array/>
 						<key>url</key>
@@ -5428,7 +5741,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>20</integer>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5446,62 +5759,15 @@
 						<key>priceRatio</key>
 						<integer>1</integer>
 						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>appnextnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>15</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
 						<array>
-							<string>7d7802bb-4a91-4727-8900-c783a16c7952</string>
+							<string>US</string>
 						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>regionException</key>
-						<array/>
 						<key>regionFilter</key>
 						<array/>
 						<key>url</key>
 						<string></string>
 					</dict>
 				</array>
-				<key>preCacheIcon</key>
-				<true/>
-				<key>preCacheImage</key>
-				<true/>
-				<key>preload</key>
-				<dict>
-					<key>inventory</key>
-					<integer>1</integer>
-					<key>strategy</key>
-					<string>App</string>
-				</dict>
-				<key>preloadOnlyInWifi</key>
-				<false/>
-				<key>serialList</key>
-				<array/>
 			</dict>
 			<key>Smiley_A(NativeAds)GooglePlayIcon</key>
 			<dict>
@@ -5664,11 +5930,6 @@
 				<key>serialList</key>
 				<array>
 					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
 						<key>adType</key>
 						<string>Adxnative</string>
 						<key>countPerLoad</key>
@@ -5705,11 +5966,6 @@
 						<string></string>
 					</dict>
 					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
 						<key>adType</key>
 						<string>admobnative</string>
 						<key>countPerLoad</key>
@@ -5746,11 +6002,6 @@
 						<string></string>
 					</dict>
 					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
 						<key>adType</key>
 						<string>admobnative</string>
 						<key>countPerLoad</key>
@@ -5787,11 +6038,6 @@
 						<string></string>
 					</dict>
 					<dict>
-						<key>adContentType</key>
-						<dict>
-							<key>adTypeFilter</key>
-							<string>app</string>
-						</dict>
 						<key>adType</key>
 						<string>adxnative</string>
 						<key>countPerLoad</key>
@@ -6448,9 +6694,119 @@
 				<key>packageFilter</key>
 				<true/>
 				<key>parallelCount</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>parallelList</key>
+				<array/>
+				<key>serialList</key>
 				<array>
+					<dict>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>20</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_692725830924332</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-8621759356895416/2024730689</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>18</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_692725900924325</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
 					<dict>
 						<key>adType</key>
 						<string>admobnative</string>
@@ -6461,7 +6817,43 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>25</integer>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-7319126281585813/8369982603</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array/>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6479,7 +6871,9 @@
 						<key>priceRatio</key>
 						<integer>1</integer>
 						<key>regionException</key>
-						<array/>
+						<array>
+							<string>US</string>
+						</array>
 						<key>regionFilter</key>
 						<array/>
 						<key>url</key>
@@ -6495,7 +6889,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>20</integer>
+								<integer>8</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6512,126 +6906,16 @@
 						<array/>
 						<key>priceRatio</key>
 						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
 						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>facebooknative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>15</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
 						<array>
-							<string>333786680151584_630067060523543</string>
+							<string>US</string>
 						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>yeahmobinative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>10</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>1187</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>appnextnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>5</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>3d6d2206-9329-4473-95ef-e01c1b92ece0</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
 						<key>regionFilter</key>
 						<array/>
 						<key>url</key>
 						<string></string>
 					</dict>
 				</array>
-				<key>serialList</key>
-				<array/>
 			</dict>
 			<key>Smiley_A(NativeAds)Uninstall</key>
 			<dict>
@@ -6767,6 +7051,483 @@
 				<false/>
 				<key>serialList</key>
 				<array/>
+			</dict>
+		</dict>
+	</dict>
+	<key>GP</key>
+	<dict>
+		<key>Facebook Ads</key>
+		<dict>
+			<key>Data</key>
+			<dict>
+				<key>Application</key>
+				<dict>
+					<key>ChargeLocker</key>
+					<dict>
+						<key>Alert</key>
+						<dict>
+							<key>AdText</key>
+							<string>(contains ads)</string>
+							<key>Body</key>
+							<string>Enable battery protection to speed up the phone charging by 50%</string>
+							<key>Button</key>
+							<string>OK</string>
+							<key>Title</key>
+							<string>Battery Protection</string>
+						</dict>
+						<key>EnableAlertStyle</key>
+						<integer>0</integer>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+						<key>ShowAppInfo</key>
+						<true/>
+						<key>ShowSettingIcon</key>
+						<true/>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+						<key>state</key>
+						<integer>2</integer>
+					</dict>
+					<key>InterstitialAds</key>
+					<dict>
+						<key>BackButton</key>
+						<dict>
+							<key>MaxCountPerDay</key>
+							<integer>5</integer>
+							<key>MinIntervalByHour</key>
+							<integer>1</integer>
+							<key>PackageNameExclude</key>
+							<array>
+								<string>android</string>
+								<string>facebook</string>
+							</array>
+							<key>Show</key>
+							<true/>
+						</dict>
+					</dict>
+					<key>Locker</key>
+					<dict>
+						<key>Ads</key>
+						<dict>
+							<key>MinCountToShowAds</key>
+							<integer>0</integer>
+							<key>ShowAd</key>
+							<true/>
+							<key>ShowAdsInterval</key>
+							<integer>0</integer>
+						</dict>
+						<key>Alert</key>
+						<dict>
+							<key>AdText</key>
+							<string>(contains sponsored contents)</string>
+							<key>Body</key>
+							<string>Open camera directly from lock screen and never miss a shot agian</string>
+							<key>Button</key>
+							<string>OK</string>
+							<key>Title</key>
+							<string>Quickly Open Camera</string>
+						</dict>
+						<key>Calculator</key>
+						<array>
+							<string>com.android.calculator2</string>
+							<string>com.sec.android.app.popupcalculator</string>
+							<string>com.meizu.flyme.calculator</string>
+							<string>com.sec.android.app.calculator</string>
+							<string>com.htc.calculator</string>
+							<string>com.asus.calculator</string>
+							<string>com.android.calculator</string>
+							<string>com.google.android.calculator</string>
+							<string>cn.nubia.calculator2.preset</string>
+							<string>com.zui.calculator</string>
+							<string>com.android.bbkcalculator</string>
+						</array>
+						<key>EnableAlertStyle</key>
+						<integer>1</integer>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+						<key>Wallpapers</key>
+						<array>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/1.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/1_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/2.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/2_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/3.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/3_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/4.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/4_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/5.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/5_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/6.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/6_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/7.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/7_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/8.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/8_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/9.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/9_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/10.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/10_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/11.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/11_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/12.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/12_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/13.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/13_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/14.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/14_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/15.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/15_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/16.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/16_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/17.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/17_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/18.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/18_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/19.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/19_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/20.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/20_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/21.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/21_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/22.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/22_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/23.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/23_s.jpg</string>
+							</dict>
+						</array>
+						<key>state</key>
+						<integer>2</integer>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+		<key>Organic</key>
+		<dict/>
+		<key>Others</key>
+		<dict>
+			<key>Data</key>
+			<dict>
+				<key>Application</key>
+				<dict>
+					<key>ChargeLocker</key>
+					<dict>
+						<key>Alert</key>
+						<dict>
+							<key>AdText</key>
+							<string>(contains ads)</string>
+							<key>Body</key>
+							<string>Enable battery protection to speed up the phone charging by 50%</string>
+							<key>Button</key>
+							<string>OK</string>
+							<key>Title</key>
+							<string>Battery Protection</string>
+						</dict>
+						<key>EnableAlertStyle</key>
+						<integer>0</integer>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+						<key>ShowAppInfo</key>
+						<true/>
+						<key>ShowSettingIcon</key>
+						<true/>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+						<key>state</key>
+						<integer>2</integer>
+					</dict>
+					<key>InterstitialAds</key>
+					<dict>
+						<key>BackButton</key>
+						<dict>
+							<key>MaxCountPerDay</key>
+							<integer>5</integer>
+							<key>MinIntervalByHour</key>
+							<integer>1</integer>
+							<key>PackageNameExclude</key>
+							<array>
+								<string>android</string>
+								<string>facebook</string>
+							</array>
+							<key>Show</key>
+							<true/>
+						</dict>
+					</dict>
+					<key>Locker</key>
+					<dict>
+						<key>Ads</key>
+						<dict>
+							<key>MinCountToShowAds</key>
+							<integer>0</integer>
+							<key>ShowAd</key>
+							<true/>
+							<key>ShowAdsInterval</key>
+							<integer>0</integer>
+						</dict>
+						<key>Alert</key>
+						<dict>
+							<key>AdText</key>
+							<string>(contains sponsored contents)</string>
+							<key>Body</key>
+							<string>Open camera directly from lock screen and never miss a shot agian</string>
+							<key>Button</key>
+							<string>OK</string>
+							<key>Title</key>
+							<string>Quickly Open Camera</string>
+						</dict>
+						<key>Calculator</key>
+						<array>
+							<string>com.android.calculator2</string>
+							<string>com.sec.android.app.popupcalculator</string>
+							<string>com.meizu.flyme.calculator</string>
+							<string>com.sec.android.app.calculator</string>
+							<string>com.htc.calculator</string>
+							<string>com.asus.calculator</string>
+							<string>com.android.calculator</string>
+							<string>com.google.android.calculator</string>
+							<string>cn.nubia.calculator2.preset</string>
+							<string>com.zui.calculator</string>
+							<string>com.android.bbkcalculator</string>
+						</array>
+						<key>EnableAlertStyle</key>
+						<integer>1</integer>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+						<key>Wallpapers</key>
+						<array>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/1.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/1_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/2.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/2_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/3.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/3_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/4.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/4_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/5.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/5_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/6.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/6_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/7.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/7_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/8.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/8_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/9.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/9_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/10.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/10_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/11.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/11_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/12.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/12_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/13.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/13_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/14.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/14_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/15.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/15_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/16.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/16_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/17.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/17_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/18.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/18_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/19.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/19_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/20.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/20_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/21.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/21_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/22.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/22_s.jpg</string>
+							</dict>
+							<dict>
+								<key>HD</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/23.jpg</string>
+								<key>thumb</key>
+								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/23_s.jpg</string>
+							</dict>
+						</array>
+						<key>state</key>
+						<integer>2</integer>
+					</dict>
+				</dict>
 			</dict>
 		</dict>
 	</dict>
