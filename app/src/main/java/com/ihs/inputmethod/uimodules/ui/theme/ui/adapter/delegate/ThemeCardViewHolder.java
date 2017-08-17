@@ -33,6 +33,6 @@ public final class ThemeCardViewHolder extends RecyclerView.ViewHolder {
 		themeDelete.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.preview_keyboard_delete)));
 		moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
 		themeNewImage = (ImageView) itemView.findViewById(R.id.theme_new_view);
-		themeAnimatedImage = (ImageView) itemView.findViewById(R.id.theme_Animated_view);
+		themeAnimatedImage = (ImageView) itemView.findViewById(R.id.theme_animated_view);
 	}
 }
