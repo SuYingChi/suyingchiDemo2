@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,35 +8,24 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.acb.interstitialads.AcbInterstitialAdLoader;
-import com.artw.lockscreen.LockerEnableDialog;
-import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
-import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.charging.ChargingConfigManager;
-import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
-import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
@@ -45,7 +33,6 @@ import com.ihs.inputmethod.uimodules.ui.fonts.homeui.MyFontFragment;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.MyStickerFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 
@@ -62,16 +49,10 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
 
-    private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
-    private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
-    private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
-
     private static final int keyboardActivationFromHome = 11;
     public static final int keyboardActivationFromHomeWithTrial = 12;
 
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
-    private static int HANDLER_SHOW_UPDATE_DIALOG = 102;
-    private static int HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG = 103;
 
     private AppBarLayout appbarLayout;
     private Toolbar toolbar;
@@ -87,28 +68,12 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     private KeyboardActivationProcessor keyboardActivationProcessor;
     private boolean isResumeOnCreate = true;
 
-    private AcbInterstitialAdLoader acbInterstitialAdLoader;
-    private AlertDialog fullscreenAdLoadingDialog;
-    private boolean fullscreenShowed = false;
-
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == HANDLER_SHOW_ACTIVE_DIALOG) {
                 if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                     keyboardActivationProcessor.showHomePageActivationDialog(ThemeDownloadActivity.this);
-                }
-            } else if (msg.what == HANDLER_SHOW_UPDATE_DIALOG) {
-                checkAndShowApkUpdateAlert(false);
-            } else if (msg.what == HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG) {
-                if (!fullscreenShowed) {
-                    if (acbInterstitialAdLoader != null) {
-                        acbInterstitialAdLoader.cancel();
-                        acbInterstitialAdLoader = null;
-                    }
-                    dismissDialog(fullscreenAdLoadingDialog);
-                    fullscreenAdLoadingDialog = null;
-                    Toast.makeText(ThemeDownloadActivity.this, R.string.locker_wallpaper_network_error, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -147,7 +112,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
         findViewById(R.id.download_page_trigger).setVisibility(View.GONE);
 
-        tabLayout = (TabLayout)  findViewById(R.id.store_tab);
+        tabLayout = (TabLayout) findViewById(R.id.store_tab);
 
         viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
 
@@ -262,10 +227,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
         HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
 
-        // Place here to get a right session id from appframework
-        if (isResumeOnCreate) {
-            showEnableChargingAlertIfNeeded();
-        }
         isResumeOnCreate = false;
     }
 
@@ -284,7 +245,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
                 LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
-                if(tab.getPosition() == 0) {
+                if (tab.getPosition() == 0) {
                     layout.setVisibility(View.VISIBLE);
                 } else {
                     layout.setVisibility(View.GONE);
@@ -297,7 +258,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
-                if(position == 0) {
+                if (position == 0) {
                     layout.setVisibility(View.VISIBLE);
                 } else {
                     layout.setVisibility(View.GONE);
@@ -317,29 +278,13 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
                     @Override
                     public void keyboardSelected(int requestCode) {
                         if (requestCode == activationCode) {
-                            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
-                                LockerEnableDialog.showLockerEnableDialog(ThemeDownloadActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()), new LockerEnableDialog.OnLockerBgLoadingListener() {
-                                    @Override
-                                    public void onFinish() {
-                                        if (trialKeyboardDialog == null) {
-                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(context, ThemeDownloadActivity.this);
-                                        }
-                                        if (activationCode == keyboardActivationFromCustom) {
-                                            trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, false);
-                                        } else {
-                                            trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, true);
-                                        }
-                                    }
-                                });
+                            if (trialKeyboardDialog == null) {
+                                trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(context, ThemeDownloadActivity.this);
+                            }
+                            if (activationCode == keyboardActivationFromCustom) {
+                                trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, false);
                             } else {
-                                if (trialKeyboardDialog == null) {
-                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(context, ThemeDownloadActivity.this);
-                                }
-                                if (activationCode == keyboardActivationFromCustom) {
-                                    trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, false);
-                                } else {
-                                    trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, true);
-                                }
+                                trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, true);
                             }
                         }
                     }
@@ -401,13 +346,13 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
         switch (requestCode) {
             case keyboardActivationFromHomeWithTrial:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "themepackage");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_font_try_viewed", "themepackage");
                 break;
             case keyboardActivationFromCustom:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "customizetheme");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_font_try_viewed", "customizetheme");
                 break;
             default:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "apply");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_font_try_viewed", "apply");
                 break;
         }
     }
@@ -417,45 +362,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         if (!HSInputMethodListManager.isMyInputMethodSelected()) {
             enableTipTV.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void checkAndShowApkUpdateAlert(final boolean force) {
-        if (ApkUtils.checkAndShowUpdateAlert(force)) {
-            return;
-        }
-
-        if (force) {
-            HSToastUtils.toastCenterLong(getResources().getString(R.string.apk_update_to_date_tip));
-        }
-    }
-
-    private boolean showEnableChargingAlertIfNeeded() {
-        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
-            ChargingConfigManager.getManager().increaseEnableAlertShowCount();
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
-            if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
-                CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-                dialog.setTitle(getString(R.string.charging_alert_title));
-                dialog.setMessage(getString(R.string.charging_alert_message));
-                dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-                dialog.setCancelable(true);
-                dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
-                    }
-                });
-                dialog.show();
-            } else {
-                Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
-                intent.putExtra("type", "charging");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                HSApplication.getContext().startActivity(intent);
-            }
-            return true;
-        }
-        return false;
     }
 
     @Override

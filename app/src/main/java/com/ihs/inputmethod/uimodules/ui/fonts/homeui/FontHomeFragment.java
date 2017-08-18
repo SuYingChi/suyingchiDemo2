@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -22,7 +21,7 @@ import java.util.List;
  * Created by guonan.lv on 17/8/14.
  */
 
-public class FontHomeFragment extends Fragment {
+public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFontCardClickListener {
     
     private RecyclerView recyclerView;
     private FontCardAdapter fontCardAdapter;
@@ -41,13 +40,7 @@ public class FontHomeFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
         loadFontModel();
-        fontCardAdapter = new FontCardAdapter(fontModelList, new FontCardAdapter.OnFontCardClickListener() {
-
-            @Override
-            public void onFontCardClick() {
-                Toast.makeText(getContext(), "fontCardClicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+        fontCardAdapter = new FontCardAdapter(fontModelList, this);
         recyclerView.setAdapter(fontCardAdapter);
     }
 
@@ -72,5 +65,10 @@ public class FontHomeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onFontCardClick() {
+        Toast.makeText(getContext(), "fontCardClicked", Toast.LENGTH_SHORT).show();
     }
 }

@@ -83,7 +83,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                 - res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
-        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_CHANGE_NOTIFICATION, observer);
+        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION, observer);
     }
 
     @Override

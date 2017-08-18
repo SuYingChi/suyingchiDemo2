@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class StickerDataManager {
     public static final String STICKER_DATA_LOAD_FINISH_NOTIFICATION = "sticker_data_load_finish";
-    public static final String STICKER_DATA_CHANGE_NOTIFICATION = "sticker_data_change_finish";
+    public static final String STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION = "sticker_data_change_finish";
     private static StickerDataManager instance;
     private List<StickerGroup> stickerGroups;
     private boolean isReady = false;
@@ -85,7 +85,7 @@ public class StickerDataManager {
             return;
         }
         stickerGroup.reloadStickers();
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(STICKER_DATA_CHANGE_NOTIFICATION);
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION);
     }
 
     List<StickerGroup> getStickerGroupList() {

@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDownloadActivity;
+import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +23,12 @@ import java.util.List;
  * Created by guonan.lv on 17/8/14.
  */
 
-public class MyFontFragment extends Fragment {
+public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCardClickListener {
     private RecyclerView recyclerView;
     private FontCardAdapter fontCardAdapter;
     private List<FontModel> fontModelList = new ArrayList<>();
+    private TrialKeyboardDialog trialKeyboardDialog;
+
 
     @Nullable
     @Override
@@ -38,18 +43,13 @@ public class MyFontFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
         loadFontModel();
-        fontCardAdapter = new FontCardAdapter(fontModelList, new FontCardAdapter.OnFontCardClickListener() {
-            @Override
-            public void onFontCardClick() {
-
-            }
-        });
+        fontCardAdapter = new FontCardAdapter(fontModelList, this);
         recyclerView.setAdapter(fontCardAdapter);
     }
 
     private void loadFontModel() {
         List<HSSpecialCharacter> hsSpecialCharacterList = HSSpecialCharacterManager.getSpecialCharacterList();
-        for(HSSpecialCharacter hsSpecialCharacter : hsSpecialCharacterList) {
+        for (HSSpecialCharacter hsSpecialCharacter : hsSpecialCharacterList) {
             FontModel fontModel = new FontModel(hsSpecialCharacter);
             fontModel.setNeedDownload(false);
             fontModelList.add(fontModel);
@@ -70,5 +70,43 @@ public class MyFontFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onFontCardClick() {
+        showTrialKeyboardDialog(6);
+    }
+
+    private void showTrialKeyboardDialog(final int activationCode) {
+        final KeyboardActivationProcessor processor =
+                new KeyboardActivationProcessor(getActivity().getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
+                    @Override
+                    public void activeDialogShowing() {
+
+                    }
+
+                    @Override
+                    public void keyboardSelected(int requestCode) {
+                        if (requestCode == activationCode) {
+
+                            if (trialKeyboardDialog == null) {
+                                trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(getActivity(), (TrialKeyboardDialog.OnTrialKeyboardStateChanged) getActivity());
+
+                            }
+                            trialKeyboardDialog.show(getActivity(), activationCode, true);
+                        }
+                    }
+
+                    @Override
+                    public void activeDialogCanceled() {
+
+                    }
+
+                    @Override
+                    public void activeDialogDismissed() {
+
+                    }
+                });
+        processor.activateKeyboard(getActivity(), true, activationCode);
     }
 }
