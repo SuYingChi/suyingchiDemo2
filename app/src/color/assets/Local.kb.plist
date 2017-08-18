@@ -2738,6 +2738,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/BlackGold.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/BlackGold.jpg</string>
+						<key>showAnimatedMark</key>
+						<true/>
 						<key>showName</key>
 						<string>Black Gold</string>
 						<key>showNewMark</key>
@@ -2756,6 +2758,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Flame.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Flame.jpg</string>
+						<key>showAnimatedMark</key>
+						<false/>
 						<key>showName</key>
 						<string>Flame</string>
 						<key>showNewMark</key>
@@ -2774,6 +2778,8 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/PoolParty.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/PoolParty.jpg</string>
+						<key>showAnimatedMark</key>
+						<true/>
 						<key>showName</key>
 						<string>Pool Party</string>
 						<key>showNewMark</key>
