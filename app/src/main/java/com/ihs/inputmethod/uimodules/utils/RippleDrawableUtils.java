@@ -22,6 +22,7 @@ import java.util.Arrays;
 
 public class RippleDrawableUtils {
 
+    private static final float DEFAULT_RIPPLE_COLOR_LEVEL = 0.8f;
     /**
      * for general button with ripple above 5.0 and selector lower than.
      *
@@ -33,7 +34,7 @@ public class RippleDrawableUtils {
 
         float radius = HSDisplayUtils.dip2px(2);
         int normalColor = HSApplication.getContext().getResources().getColor(normalColorID);
-        return getCompatRippleDrawable(normalColor, getRippleColor(normalColor), radius);
+        return getCompatRippleDrawable(normalColor, getRippleColor(normalColor, DEFAULT_RIPPLE_COLOR_LEVEL), radius);
     }
 
     public static Drawable getTransparentRippleBackground() {
@@ -52,7 +53,7 @@ public class RippleDrawableUtils {
     public static Drawable getCompatRippleDrawable(
             int normalColor, int pressedColor, float radius) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor)),
+            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor, DEFAULT_RIPPLE_COLOR_LEVEL)),
                     getStateListDrawable(normalColor, pressedColor, -1, radius), getRippleMask(normalColor, radius));
         } else {
             return getStateListDrawable(normalColor, pressedColor, -1, radius);
@@ -62,27 +63,27 @@ public class RippleDrawableUtils {
     public static Drawable getCompatRippleDrawable(
             int normalColor, float radius) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor)),
+            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor, DEFAULT_RIPPLE_COLOR_LEVEL)),
                     getStateListDrawable(normalColor, -1, -1, radius), getRippleMask(normalColor, radius));
         } else {
-            return getStateListDrawable(normalColor, getRippleColor(normalColor), -1, radius);
+            return getStateListDrawable(normalColor, getRippleColor(normalColor, DEFAULT_RIPPLE_COLOR_LEVEL), -1, radius);
         }
     }
 
     public static Drawable getContainDisableStatusCompatRippleDrawable(int normalColor, int disableColor, float radius) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor))
+            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor, 0.5f))
                     , getStateListDrawable(normalColor, -1, disableColor, radius)
                     , getRippleMask(normalColor, radius));
         } else {
-            return getStateListDrawable(normalColor, getRippleColor(normalColor), disableColor, radius);
+            return getStateListDrawable(normalColor, getRippleColor(normalColor, 0.5f), disableColor, radius);
         }
     }
 
-    private static int getRippleColor(int normalColor) {
-        int r = (int) (((normalColor >> 16) & 0xFF) * 0.8);
-        int g = (int) (((normalColor >> 8) & 0xFF) * 0.8);
-        int b = (int) (((normalColor) & 0xFF) * 0.8);
+    private static int getRippleColor(int normalColor, float level) {
+        int r = (int) (((normalColor >> 16) & 0xFF) * level);
+        int g = (int) (((normalColor >> 8) & 0xFF) * level);
+        int b = (int) (((normalColor) & 0xFF) * level);
         return Color.rgb(r, g, b);
     }
 
