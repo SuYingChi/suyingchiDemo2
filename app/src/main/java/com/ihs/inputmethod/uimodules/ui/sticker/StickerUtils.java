@@ -156,7 +156,7 @@ public class StickerUtils {
             String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
             boolean pngSupported = false;
             for (String mime_Type : mimeTypes) {
-                if (ClipDescription.compareMimeTypes(mime_Type, "image/png")) {
+                if (ClipDescription.compareMimeTypes(mime_Type, "image/png")||ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
                     pngSupported = true;
                 }
             }
@@ -167,15 +167,21 @@ public class StickerUtils {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_send_failed), Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
-                commitPNGImage(uri, "");
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_png");
+                if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX)) {
+                    commitStickerImage(uri,"","image/gif");
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_gif");
+                }else {
+                    commitStickerImage(uri, "","image/png");
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_png");
+
+                }
                 return;
             }
         }
 
         final int mode = (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE);
-
         switch (mode) {
             // image
             case MediaShareUtils.IMAGE_SHARE_MODE_INTENT:
@@ -204,9 +210,9 @@ public class StickerUtils {
         }
     }
 
-    private static void commitPNGImage(Uri contentUri, String imageDescription) {
+    private static void commitStickerImage(Uri contentUri, String imageDescription,String fileType) {
         InputContentInfoCompat inputContentInfo = new InputContentInfoCompat(contentUri,
-                new ClipDescription(imageDescription, new String[]{"image/png"}), null);
+                new ClipDescription(imageDescription, new String[]{fileType}), null);
         InputConnection inputConnection = HSInputMethodService.getInstance().getCurrentInputConnection();
         EditorInfo editorInfo = HSInputMethodService.getInstance().getCurrentInputEditorInfo();
         int flags = 0;
@@ -256,6 +262,10 @@ public class StickerUtils {
     }
 
     private static void addDifferentBackgroundForSticker(Sticker sticker, String packageName, String outputFilePath) {
+        if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX)) {
+            copyStickerFileToSDCard(sticker, outputFilePath);
+            return;
+        }
         FileOutputStream out = null;
         BitmapFactory.Options option = new BitmapFactory.Options();
         option.inJustDecodeBounds = true;
