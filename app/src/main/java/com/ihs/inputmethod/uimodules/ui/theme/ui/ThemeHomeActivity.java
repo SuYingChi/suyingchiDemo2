@@ -201,7 +201,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             public void onClick(View view) {
 
                 Bundle bundle = new Bundle();
-                String customEntry = THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store_float_button" : "mytheme_float_button";
+                String customEntry =  "store_float_button";
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                 CustomThemeActivity.startCustomThemeActivity(bundle);
 
@@ -418,26 +418,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_store_clicked");
             }*/
             currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
-        } else if (id == R.id.nav_my_themes) {
-            switchToDownloads();
-            /* origin
-            if (!currentFragmentTag.equals(MY_THEME_FRAGMENT_TAG)) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-                Fragment themeStoreFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-                if (themeStoreFragment != null) {
-                    transaction.hide(themeStoreFragment);
-                }
-                if (myThemeFragment == null) {
-                    myThemeFragment = new MyThemeFragment();
-                    //transaction.add(R.id.content_layout, myThemeFragment, MY_THEME_FRAGMENT_TAG);
-                }
-                transaction.show(myThemeFragment).commit();
-                appbarLayout.setExpanded(true);
-                toolbar.setTitle(R.string.theme_nav_my_themes);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_mythemes_clicked");
-            }*/
-            currentFragmentTag = MY_THEME_FRAGMENT_TAG;
         } else if (id == R.id.nav_language) {
             HSUIInputMethod.launchMoreLanguageActivity();
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_languages_clicked");
@@ -644,8 +624,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 enableTipTV.setVisibility(GONE);
             }
 
-        } else if (MY_THEME_FRAGMENT_TAG.equals(currentFragmentTag)) {
-            navigationView.setCheckedItem(R.id.nav_my_themes);
         }
     }
 
