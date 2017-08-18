@@ -29,7 +29,6 @@
                 android:layout_centerInParent="true"
                 android:textSize="23sp" />
 
-
             <ImageView
                 android:id="@+id/more_menu_image"
                 android:layout_width="wrap_content"

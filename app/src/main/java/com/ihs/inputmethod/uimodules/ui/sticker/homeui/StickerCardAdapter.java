@@ -56,7 +56,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
         final String realImageUrl = stickerGroup.getStickerGroupDownloadPreviewImageUri();
         if(realImageUrl != null) {
             ImageSize imageSize = new ImageSize(imageWidth,imageHeight);
-            ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(holder.stickerRealImage), options,imageSize,null,null);
+            ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(holder.stickerRealImage), options, imageSize, null, null);
         }
         if(!stickerModel.getIsDownload()) {
             holder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);

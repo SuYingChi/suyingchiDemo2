@@ -22,15 +22,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
+            <android.support.percent.PercentFrameLayout
                 android:id="@+id/sticker_image_container"
                 app:layout_aspectRatio="160%"
                 app:layout_widthPercent="100%">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/sticker_image_real_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    app:layout_widthPercent="80%"
+                    app:layout_heightPercent="80%"
+                    android:layout_gravity="center"
                     android:scaleType="centerCrop"
                     app:riv_corner_radius_top_left="@dimen/common_round_corner"
                     app:riv_corner_radius_top_right="@dimen/common_round_corner" />
@@ -42,7 +43,7 @@
                     android:layout_gravity="right|top"
                     android:src="@drawable/app_theme_new"
                     android:visibility="gone" />
-            </FrameLayout>
+            </android.support.percent.PercentFrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -41,10 +41,10 @@
                 android:layout_centerVertical="true"
                 android:id="@+id/download_page_trigger"
                 android:layout_alignParentRight="true"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/download_icon_home_store"
-                />
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/download_icon_home_store" />
             <!--<com.airbnb.lottie.LottieAnimationView-->
                 <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
                 <!--android:layout_width="36dp"-->
