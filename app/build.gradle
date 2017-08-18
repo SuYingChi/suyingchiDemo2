@@ -214,5 +214,10 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //----
 
+    //keep alive
+    def DEVICE_VERSION = ".gm:4.0.+"
+
+    compile "com.ihandy.device:device-common$DEVICE_VERSION"
+    compile "com.ihandy.device:device-permanent$DEVICE_VERSION"
 }
 
