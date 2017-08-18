@@ -2,10 +2,12 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.os.AsyncTask;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,10 +22,12 @@ public class StickerDataManager {
     public static final String STICKER_DATA_CHANGE_NOTIFICATION = "sticker_data_change_finish";
     private static StickerDataManager instance;
     private List<StickerGroup> stickerGroups;
+    private List<StickerGroup> localAssetGroup;
     private boolean isReady = false;
 
     private StickerDataManager() {
         stickerGroups = new ArrayList<>();
+        localAssetGroup = new ArrayList<>();
         loadStickersAsync();
     }
 
@@ -75,6 +79,25 @@ public class StickerDataManager {
         }
 
     }
+    private synchronized void loadAssetStickers() {
+        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
+        ;
+        try {
+            String[] files = HSApplication.getContext(). getAssets().list(StickerGroup.ASSETS_STICKER_FILE_NAME);
+            if (files != null) {
+                for (String stickerGroupName : files) {
+                    StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
+                    stickerGroup.setDownloadDisplayName(stickerGroupName);
+
+                    localAssetGroup.add(stickerGroup);
+                }
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     boolean isStickersReady() {
         return isReady;
@@ -90,7 +113,10 @@ public class StickerDataManager {
 
     List<StickerGroup> getStickerGroupList() {
         if (!isReady) {
-            return Collections.emptyList();
+            if (localAssetGroup.size() == 0) {
+                this.loadAssetStickers();
+            }
+            return localAssetGroup;
         } else {
             return stickerGroups;
         }

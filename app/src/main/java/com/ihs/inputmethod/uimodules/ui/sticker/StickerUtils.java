@@ -51,7 +51,8 @@ public class StickerUtils {
     public static final String ASSETS_STICKER_FILE_PATH = "Stickers";
     public static final String STICKER_TAB_IMAGE_SUFFIX = "-tab.png";
     public static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
-    public static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
+//    public static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
+//    public static final String STICKER_IMAGE_GIF_SUFFIX = ".gif";
 
     private static Map<String, String> map = new HashMap<>();
     private static final float STICKER_BACKGROUND_ASPECT_RATIO = 1.7f;
@@ -60,6 +61,30 @@ public class StickerUtils {
 
     public static String getStickerRootFolderPath() {
         return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_STICKER_FILE_PATH;
+    }
+
+    /**
+     * get the sticker file local saved path:
+     * example:/data/user/0/com.keyboard.colorkeyboard/files/Stickers/YellowSmile3-2.gif
+     * @param sticker
+     * @return
+     */
+    public static String getStickerLocalPath(Sticker sticker) {
+        String stickerRootFolderPath = getStickerRootFolderPath();
+        StringBuilder stringBuilder = new StringBuilder(stickerRootFolderPath).append(File.separator)
+                .append(sticker.getStickerGroupName()).append(File.separator)
+                .append(sticker.getStickerName()).append(sticker.getStickerFileSuffix());
+        return stringBuilder.toString();
+    }
+
+    /**
+     * get the sticker asset file path
+     * example:Stickers/YellowSmile3/
+     * @param sticker
+     * @return
+     */
+    public static String getStickerAssetFolderPath(Sticker sticker) {
+        return ASSETS_STICKER_FILE_PATH + File.separator + sticker.getStickerGroupName();
     }
 
     public static String getStickerFolderPath(String stickerGroupName) {
@@ -71,11 +96,11 @@ public class StickerUtils {
     }
 
     private static String getStickerAssetsPath(Sticker sticker) {
-        return ASSETS_STICKER_FILE_PATH + "/" + sticker.getStickerGroupName() + "/" + sticker.getStickerName() + STICKER_IMAGE_PNG_SUFFIX;
+        return ASSETS_STICKER_FILE_PATH + "/" + sticker.getStickerGroupName() + "/" + sticker.getStickerName() + sticker.getStickerFileSuffix();
     }
 
     private static String getStickerFilePath(Sticker sticker) {
-        return getStickerFolderPath(sticker.getStickerGroupName()) + "/" + sticker.getStickerName() + STICKER_IMAGE_PNG_SUFFIX;
+        return getStickerFolderPath(sticker.getStickerGroupName()) + "/" + sticker.getStickerName() + sticker.getStickerFileSuffix();
     }
 
     private static Map<String, List<String>> cachedDirectoryContents = new HashMap<>();
@@ -120,7 +145,7 @@ public class StickerUtils {
             return;
         }
 
-        final String targetExternalFilePath = DirectoryUtils.getImageExportFolder() + "/" + sticker.getStickerName() + STICKER_IMAGE_PNG_SUFFIX;
+        final String targetExternalFilePath = DirectoryUtils.getImageExportFolder() + "/" + sticker.getStickerName() + sticker.getStickerFileSuffix();
         final String mimeType = "image/*";
 
         final Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);

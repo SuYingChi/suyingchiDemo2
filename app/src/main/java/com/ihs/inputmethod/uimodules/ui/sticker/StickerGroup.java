@@ -30,7 +30,7 @@ public class StickerGroup {
     private String stickerGroupDownloadUri;
     private boolean isInternalStickerGroup = false;
     private List<Sticker> stickerList = new ArrayList<>();
-    private static final String ASSETS_STICKER_FILE_NAME = "Stickers";
+    public static final String ASSETS_STICKER_FILE_NAME = "Stickers";
     private static final String STICKER_TAB_IMAGE_SUFFIX = "-tab.png";
     private static final String STICKER_DOWNLOAD_IMAGE_SUFFIX = "-preview.png";
     private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
