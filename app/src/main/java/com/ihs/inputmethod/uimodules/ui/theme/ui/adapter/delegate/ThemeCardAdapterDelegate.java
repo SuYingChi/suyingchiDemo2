@@ -73,9 +73,15 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
         themeCardViewHolder.themeDelete.setVisibility(View.GONE);
 
         // show animated mark
-        boolean isShowAnimatedMark = keyboardTheme.getShowAnimatedMark();
+        boolean isShowAnimatedMark;
+        if (keyboardTheme.getThemeData().get("showAnimatedMark") == null) {
+            isShowAnimatedMark = false;
+        } else {
+            isShowAnimatedMark = (boolean) keyboardTheme.getThemeData().get("showAnimatedMark");
+        }
         if (isShowAnimatedMark) {
             themeCardViewHolder.themeAnimatedImage.setVisibility(View.VISIBLE);
+            themeCardViewHolder.themeNewImage.setVisibility(View.GONE);
         } else {
             themeCardViewHolder.themeAnimatedImage.setVisibility(View.GONE);
             themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
