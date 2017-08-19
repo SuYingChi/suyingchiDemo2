@@ -61,6 +61,7 @@ import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
@@ -511,6 +512,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         keyboardActivationProcessor.release();
         keyboardActivationProcessor = null;
         super.onDestroy();
+
+        KCCommonUtils.fixInputMethodManagerLeak(this);
     }
 
     @Override
