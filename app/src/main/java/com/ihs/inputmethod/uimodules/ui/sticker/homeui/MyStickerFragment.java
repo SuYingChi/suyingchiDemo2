@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 
 import java.util.ArrayList;
@@ -58,11 +59,18 @@ public class MyStickerFragment extends Fragment {
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
-            String stickerGroupDownloadDisplayName = (String) map.get("showName");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
+            if(!StickerDataManager.getInstance().isStickerGroupDownloaded(stickerGroupName)) {
+                continue;
+            }
+            String stickerTag = (String) map.get("tagName");
+            String stickerGroupDownloadDisplayName = (String) map.get("showName");
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
             StickerModel stickerModel = new StickerModel(stickerGroup);
             stickerModel.setIsDownload(true);
+            if(stickerTag != null) {
+                stickerModel.setStickTag(stickerTag);
+            }
             stickerModelList.add(stickerModel);
         }
     }
