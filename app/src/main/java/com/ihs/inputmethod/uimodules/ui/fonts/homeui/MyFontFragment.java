@@ -73,11 +73,11 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
     }
 
     @Override
-    public void onFontCardClick() {
-        showTrialKeyboardDialog(6);
+    public void onFontCardClick(int position) {
+        showTrialKeyboardDialog(6, position);
     }
 
-    private void showTrialKeyboardDialog(final int activationCode) {
+    private void showTrialKeyboardDialog(final int activationCode, final int position) {
         final KeyboardActivationProcessor processor =
                 new KeyboardActivationProcessor(getActivity().getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
                     @Override
@@ -93,6 +93,7 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
                                 trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(getActivity(), (TrialKeyboardDialog.OnTrialKeyboardStateChanged) getActivity());
 
                             }
+                            HSSpecialCharacterManager.selectSpecialCharacter(position);
                             trialKeyboardDialog.show(getActivity(), activationCode, true);
                         }
                     }

@@ -5,12 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
-import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
-import com.ihs.inputmethod.settings.RadioButtonPreference;
 import com.ihs.inputmethod.uimodules.R;
 
 import java.util.List;
@@ -59,7 +55,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
                     selectRadioButton = holder.radioButton;
                     selectRadioButton.setChecked(true);
                 }
-                onFontCardClickListener.onFontCardClick();
+                onFontCardClickListener.onFontCardClick(position);
             }
         });
         if(fontModel.getNeedDownload()) {
@@ -76,6 +72,6 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
     }
 
     public interface OnFontCardClickListener {
-        void onFontCardClick();
+        void onFontCardClick(int position);
     }
 }

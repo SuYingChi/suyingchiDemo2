@@ -68,7 +68,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     }
 
     @Override
-    public void onFontCardClick() {
+    public void onFontCardClick(int position) {
         Toast.makeText(getContext(), "fontCardClicked", Toast.LENGTH_SHORT).show();
     }
 }
