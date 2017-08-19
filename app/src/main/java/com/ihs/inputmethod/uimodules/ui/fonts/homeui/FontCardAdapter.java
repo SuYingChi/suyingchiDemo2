@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
@@ -19,7 +18,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
 
     private List<FontModel> fontModelList;
     private OnFontCardClickListener onFontCardClickListener;
-    private RadioButton selectRadioButton = null;
+    private int currentSelectPosition = -1;
 
     public FontCardAdapter(List<FontModel> fontModels, OnFontCardClickListener onFontCardClickListener) {
         this.onFontCardClickListener = onFontCardClickListener;
@@ -32,38 +31,57 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final FontCardViewHolder holder, final int position) {
-        if(fontModelList == null) {
-            return;
+    public void onBindViewHolder(final FontCardViewHolder holder, final int position, List payLoads) {
+        if(payLoads.isEmpty()) {
+            if(fontModelList == null) {
+                return;
+            }
+
+            FontModel fontModel = fontModelList.get(position);
+            HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
+            holder.fontCardContent.setText(hsSpecialCharacter.example);
+            if(fontModel.getNeedDownload()) {
+                holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
+                holder.radioButton.setVisibility(View.GONE);
+            } else {
+                holder.downloadIcon.setVisibility(View.GONE);
+                holder.radioButton.setVisibility(View.VISIBLE);
+                holder.radioButton.setChecked(position == currentSelectPosition);
+            }
+
+        } else {
+            holder.radioButton.setChecked(position == currentSelectPosition);
         }
 
-        FontModel fontModel = fontModelList.get(position);
-        HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
-        holder.fontCardContent.setText(hsSpecialCharacter.example);
-        if(fontModel.getNeedDownload()) {
-            holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
-        } else {
-            holder.downloadIcon.setVisibility(View.GONE);
-        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(onFontCardClickListener != null) {
-                    if(selectRadioButton != null)  {
-                        selectRadioButton.setChecked(false);
+                if(currentSelectPosition != position) {
+                    holder.radioButton.setChecked(true);
+                    if(currentSelectPosition != -1) {
+                        notifyItemChanged(currentSelectPosition, 0);
                     }
-                    selectRadioButton = holder.radioButton;
-                    selectRadioButton.setChecked(true);
+                    currentSelectPosition = position;
+                    notifyItemChanged(position, 0);
                 }
-                onFontCardClickListener.onFontCardClick(position);
+                if(onFontCardClickListener != null) {
+                    onFontCardClickListener.onFontCardClick(position);
+                }
             }
         });
-        if(fontModel.getNeedDownload()) {
-            holder.radioButton.setVisibility(View.GONE);
-        } else {
-            holder.radioButton.setVisibility(View.VISIBLE);
-        }
+    }
 
+    @Override
+    public void onBindViewHolder(final FontCardViewHolder holder, final int position) {
+
+    }
+    
+    public int getcurrentSelectPosition() {
+        return currentSelectPosition;
+    }
+
+    public void setCurrentSelectPosition(int position) {
+        currentSelectPosition = position;
     }
 
     @Override

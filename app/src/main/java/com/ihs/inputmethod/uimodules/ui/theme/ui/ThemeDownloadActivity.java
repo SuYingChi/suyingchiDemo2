@@ -49,8 +49,8 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
 
-    private static final int keyboardActivationFromHome = 11;
-    public static final int keyboardActivationFromHomeWithTrial = 12;
+    public static final int keyboardActivationFromDownload = 113;
+    public static final int keyboardActivationFromDownloadWithTrial = 114;
 
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
 
@@ -128,11 +128,11 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             @Override
             public void onClick(View v) {
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_appbar_clicked");
-                keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromHome);
+                keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromDownload);
             }
         });
         if (getIntent() != null && getIntent().getBooleanExtra(BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
-            keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromHome);
+            keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromDownload);
         }
         findViewById(R.id.home_create_theme_layout).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +176,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         boolean showTrial = intent.getBooleanExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
         if (showTrial) {
             handler.removeMessages(HANDLER_SHOW_ACTIVE_DIALOG);
-            showTrialKeyboardDialog(keyboardActivationFromHomeWithTrial);
+            showTrialKeyboardDialog(keyboardActivationFromDownloadWithTrial);
             getIntent().putExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
         } else {
             String from = intent.getStringExtra("From");
@@ -323,7 +323,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     }
 
     public void keyboardSelected(int requestCode) {
-        if (keyboardActivationFromHomeWithTrial == requestCode || keyboardActivationFromCustom == requestCode) {
+        if (keyboardActivationFromDownloadWithTrial == requestCode || keyboardActivationFromCustom == requestCode) {
             showTrialKeyboardDialog(requestCode);
         }
         enableTipTV.setVisibility(GONE);
@@ -345,14 +345,14 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         enableTipTV.setVisibility(GONE);
 
         switch (requestCode) {
-            case keyboardActivationFromHomeWithTrial:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_font_try_viewed", "themepackage");
+            case keyboardActivationFromDownloadWithTrial:
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_download_try_viewed", "themepackage");
                 break;
             case keyboardActivationFromCustom:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_font_try_viewed", "customizetheme");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_download_try_viewed", "customizetheme");
                 break;
             default:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_font_try_viewed", "apply");
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_download_try_viewed", "apply");
                 break;
         }
     }

@@ -74,7 +74,7 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
 
     @Override
     public void onFontCardClick(int position) {
-        showTrialKeyboardDialog(6, position);
+        showTrialKeyboardDialog(ThemeDownloadActivity.keyboardActivationFromDownload, position);
     }
 
     private void showTrialKeyboardDialog(final int activationCode, final int position) {
