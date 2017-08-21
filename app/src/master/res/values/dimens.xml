@@ -30,4 +30,5 @@
     <dimen name="main_activity_button_height">68dp</dimen>
     <dimen name="main_activity_two_buttons_height">136dp</dimen>
     <dimen name="config_gif_emoji_search_page_id_view_height">2dp</dimen>
+    <dimen name="main_logo_title_textsize">24sp</dimen>
 </resources>

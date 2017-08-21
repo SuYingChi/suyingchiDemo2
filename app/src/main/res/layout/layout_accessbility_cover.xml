@@ -1,25 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:latin="http://schemas.android.com/apk/res-auto"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2a9de8"
-    android:orientation="vertical">
+    android:background="@color/main_activity_bg">
+
 
     <ImageView
         android:id="@+id/view_img_title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher_keyboard"
+        app:layout_aspectRatio="100%"
+        app:layout_marginTopPercent="26.2%"
+        app:layout_widthPercent="26.8%" />
+
+    <TextView
+        android:id="@+id/view_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/view_img_title"
+        android:layout_centerHorizontal="true"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/main_logo_title_textsize"
+        app:layout_marginTopPercent="5.9%" />
 
 
     <LinearLayout
         android:id="@+id/bt_step_two"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_marginBottomPercent="13.3%">
 
 
         <com.ihs.inputmethod.uimodules.widget.MdProgressBar
@@ -27,13 +44,13 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@color/white_standard" />
+            android:background="@android:color/black" />
 
         <ImageView
             android:id="@+id/iv_succ"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/access_sucessful"
+            android:src="@drawable/access_sucessful_black"
             android:visibility="gone" />
 
         <TextView
@@ -42,9 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="Setting up keyboard"
-            android:textColor="@color/white_standard" />
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
-
-</LinearLayout>
+</android.support.percent.PercentRelativeLayout>
