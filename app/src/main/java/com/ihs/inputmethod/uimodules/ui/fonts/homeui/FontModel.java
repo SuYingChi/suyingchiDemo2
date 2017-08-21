@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
-import android.view.View;
-
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 
 /**
@@ -10,12 +9,15 @@ import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 
 public class FontModel {
     private HSSpecialCharacter hsSpecialCharacter;
+    private String baseDownloadUrl;
+    private static final String FONT_FILE_SUFFIX = ".json";
 
     private boolean needDownload = true;
 
     public FontModel(HSSpecialCharacter specialCharacter) {
         hsSpecialCharacter = specialCharacter;
         needDownload = true;
+        baseDownloadUrl = HSConfig.getString("Application", "Server", "FontDownloadBaseURL");
     }
 
     public HSSpecialCharacter getHsSpecialCharacter() {
@@ -28,6 +30,10 @@ public class FontModel {
 
     public void setNeedDownload(boolean download) {
         needDownload = download;
+    }
+
+    public String getFontDownloadBaseURL() {
+        return null;
     }
 
 }
