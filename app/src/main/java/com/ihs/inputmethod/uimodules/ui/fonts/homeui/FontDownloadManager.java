@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.view.View;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
@@ -20,12 +19,12 @@ import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by guonan.lv on 17/8/21.
@@ -40,7 +39,6 @@ public class FontDownloadManager {
     private List<FontModel> remoteFonts = new ArrayList<>();
 
     private FontDownloadManager() {
-        List<Map<String, Object>> fontList = (List<Map<String, Object>>) HSConfig.getList("Application", "FontList");
 
     }
 
@@ -152,13 +150,13 @@ public class FontDownloadManager {
         JSONObject supportFont = new JSONObject();
         String fontFileName = this.getFontModelDownloadFilePath(fontModel.getFontName());
         if(fontFileName != null) {
-            InputStream e = null;
-
+            BufferedInputStream bufferedInputStream = null;
+            File jsonFile = new File(fontFileName);
+            int size = (int) jsonFile.length();
+            byte[] font = new byte[size];
             try {
-                e = HSApplication.getContext().getAssets().open(fontFileName);
-                byte[] font = new byte[e.available()];
-                e.read(font);
-
+                bufferedInputStream = new BufferedInputStream(new FileInputStream(jsonFile));
+                bufferedInputStream.read(font, 0, font.length);
                 try {
                     supportFont = (new JSONObject(new String(font)));
                 } catch (JSONException eJson) {
@@ -167,9 +165,9 @@ public class FontDownloadManager {
             } catch (IOException eIO) {
                 eIO.printStackTrace();
             } finally {
-                if(e != null) {
+                if(bufferedInputStream != null) {
                     try {
-                        e.close();
+                        bufferedInputStream.close();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
