@@ -44,7 +44,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/download_icon_home_store" />
+                app:srcCompat="@drawable/download_icon_home_store" />
             <!--<com.airbnb.lottie.LottieAnimationView-->
                 <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
                 <!--android:layout_width="36dp"-->

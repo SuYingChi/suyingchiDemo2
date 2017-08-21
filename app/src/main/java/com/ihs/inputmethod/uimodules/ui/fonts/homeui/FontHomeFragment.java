@@ -8,14 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
-import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by guonan.lv on 17/8/14.
@@ -45,10 +47,19 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     }
 
     private void loadFontModel() {
-        List<HSSpecialCharacter> hsSpecialCharacterList = HSSpecialCharacterManager.getSpecialCharacterList();
-        for(HSSpecialCharacter hsSpecialCharacter : hsSpecialCharacterList) {
-            fontModelList.add(new FontModel(hsSpecialCharacter));
+        List<Map<String, Object>> fontList = (List<Map<String, Object>>) HSConfig.getList("Application", "FontList");
+        for (Map<String, Object> map : fontList) {
+            String fontName = (String) map.get("name");
+            String example = (String) map.get("example");
+            HSSpecialCharacter hsSpecialCharacter = new HSSpecialCharacter();
+            hsSpecialCharacter.name = fontName;
+            hsSpecialCharacter.example = example;
+            FontModel fontModel = new FontModel(hsSpecialCharacter);
+            if (!fontModel.isFontDownloaded()) {
+                fontModelList.add(fontModel);
+            }
         }
+        FontDownloadManager.getInstance().setRemoteFonts(fontModelList);
     }
 
     @Override
@@ -68,7 +79,16 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     }
 
     @Override
-    public void onFontCardClick(int position) {
-        Toast.makeText(getContext(), "fontCardClicked", Toast.LENGTH_SHORT).show();
+    public void onFontCardClick(final int position) {
+        FontDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), fontModelList.get(position), null, new AdLoadingView.OnAdBufferingListener() {
+            @Override
+            public void onDismiss(boolean success) {
+                if (success) {
+                    fontModelList.remove(position);
+                    fontCardAdapter.notifyItemRemoved(position);
+                    fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
+                }
+            }
+        });
     }
 }
