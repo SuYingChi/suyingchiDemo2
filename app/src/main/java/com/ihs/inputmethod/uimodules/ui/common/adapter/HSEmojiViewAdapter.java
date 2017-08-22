@@ -81,6 +81,11 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 			textView.setTag(null);
 			textView.setClickable(false);
 		}
+		if (emoji.supportSkin()) {
+			textView.setBackgroundColor(Color.RED);
+		}else {
+			textView.setBackgroundColor(Color.GREEN);
+		}
 	}
 
 	@Override

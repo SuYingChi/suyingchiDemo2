@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.emoji;
 
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Build;
 
@@ -8,19 +9,34 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.model.Emoji;
 import com.ihs.inputmethod.uimodules.ui.common.model.EmojiGroup;
 import com.ihs.inputmethod.uimodules.utils.ReleaseVersionUtil;
+import com.kc.commons.configfile.KCList;
+import com.kc.commons.configfile.KCMap;
+import com.kc.commons.configfile.KCParser;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by wenbinduan on 2016/11/15.
  */
 
 final class EmojiLoader {
+	private final String SKIN_PATH = "emoji_skin";
+	private final String SKIN_FILE = "Emoji_Skin_Map.kc";
+
 	private static EmojiLoader instance;
 	private List<EmojiGroup> emojiGroups;
 	private List<Emoji> textEmoji=new ArrayList<>();
+
+	private Map<String,ArrayList<Emoji>> emojiSkinMapping;
 
 	private EmojiLoader() {
 		emojiGroups=new ArrayList<>();
@@ -53,6 +69,8 @@ final class EmojiLoader {
 			final String[] emojiGroupNames = res.getStringArray(emojiGroupArrayId);
 			final String[] textGroupNames = res.getStringArray(R.array.emoji_groups_text);
 
+			KCMap emojiMapping = getEmojiSkinConfigMap();
+			resolveSkinMapping(emojiMapping);
 			for (final String groupName : emojiGroupNames) {
 				final EmojiGroup group = new EmojiGroup(groupName, false);
 				int emojiGroupId = res.getIdentifier(groupName + version, "array", packageName);
@@ -65,12 +83,14 @@ final class EmojiLoader {
 				if (isText) {
 					for (final String emojiStr : emojiStrings) {
 						final Emoji emoji = new Emoji(emojiStr, 1, true);
+						setEmojiSkin(emoji);
 						group.addEmoji(emoji);
 					}
 					textEmoji.addAll(group.getEmojiList());
 				} else {
 					for (final String emojiStr : emojiStrings) {
 						final Emoji emoji = new Emoji(codeToEmoji(emojiStr), 1, false);
+						setEmojiSkin(emoji);
 						group.addEmoji(emoji);
 					}
 				}
@@ -138,5 +158,53 @@ final class EmojiLoader {
 			}
 		}
 		return sb.toString();
+	}
+
+
+	private KCMap getEmojiSkinConfigMap() {
+		KCMap kcMap = null;
+		try {
+				AssetManager assetManager = HSApplication.getContext().getAssets();
+				kcMap = KCParser.parseMap(assetManager.open(SKIN_PATH + File.separator + SKIN_FILE));
+			return kcMap;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private void resolveSkinMapping(KCMap kcMap) {
+		if (kcMap != null) {
+			emojiSkinMapping = new HashMap<>();
+			Set<String> allKey = kcMap.keySet();
+			KCList emojiArray = null;
+			for (String key: allKey ) {
+				emojiArray =  kcMap.getList(key);
+				ArrayList<Emoji> skinItems = new ArrayList<>();
+
+				Iterator<Object> emojiArrayIterator = emojiArray.iterator();
+
+				while (emojiArrayIterator.hasNext()) {
+					String emojiStr  = (String)emojiArrayIterator.next();
+					final Emoji emoji = new Emoji(emojiStr, 1, true);
+					skinItems.add(emoji);
+
+				}
+				this.emojiSkinMapping.put(key,skinItems);
+			}
+		}
+
+
+
+
+	}
+
+	private void setEmojiSkin(Emoji emoji) {
+		if (this.emojiSkinMapping != null) {
+			ArrayList<Emoji> emojiSkinItems = this.emojiSkinMapping.get(emoji.getLabel());
+			emoji.setSkinItems(emojiSkinItems);
+		}
+
+
 	}
 }
