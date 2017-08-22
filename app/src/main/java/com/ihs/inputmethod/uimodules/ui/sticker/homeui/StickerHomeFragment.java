@@ -60,7 +60,6 @@ public class StickerHomeFragment extends Fragment {
                     @Override
                     public void onDismiss(boolean success) {
                         if(success) {
-                            showTrialStickerKeyboard(stickerModel.getStickerGroup());
                             int position = stickerModelList.indexOf(stickerModel);
                             stickerModelList.remove(position);
                             removeStickerFromView(position);
@@ -70,10 +69,6 @@ public class StickerHomeFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(stickerCardAdapter);
-
-    }
-
-    private void showTrialStickerKeyboard(StickerGroup stickerGroup) {
 
     }
 

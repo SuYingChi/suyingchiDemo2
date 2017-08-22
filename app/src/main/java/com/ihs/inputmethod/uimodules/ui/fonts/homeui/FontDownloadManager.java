@@ -13,6 +13,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.ihs.inputmethod.specialcharacter.SpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
@@ -68,11 +69,18 @@ public class FontDownloadManager {
     public void updateFontList(FontModel fontModel, FontModel newFontModel) {
         downloadedFonts.add(newFontModel);
         remoteFonts.remove(fontModel);
+        SpecialCharacterManager.getInstance().addSpecialFont(newFontModel.getHsSpecialCharacter());
     }
 
     public void setRemoteFonts(List<FontModel> fonts) {
         if (remoteFonts.isEmpty()) {
             remoteFonts = fonts;
+        }
+    }
+
+    public void setDownloadedFonts(List<FontModel> fonts) {
+        if (downloadedFonts.isEmpty()) {
+            downloadedFonts = fonts;
         }
     }
 
@@ -109,7 +117,7 @@ public class FontDownloadManager {
                 }, 2000, false);
         adLoadingView.showInDialog();
 
-        HSHttpConnection connection = new HSHttpConnection(fontModel.getFontDownloadBaseURL());
+        HSHttpConnection connection = new HSHttpConnection("http://testauto.s3.amazonaws.com/test.json");
         connection.setDownloadFile(HSFileUtils.createNewFile(fontModelJsonFilePath));
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override

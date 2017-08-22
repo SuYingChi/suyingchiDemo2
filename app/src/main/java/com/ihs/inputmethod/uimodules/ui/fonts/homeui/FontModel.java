@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
+import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 
 import java.io.File;
 
@@ -43,13 +44,22 @@ public class FontModel {
     }
 
     public boolean isFontDownloaded() {
-        if (true) {
+        if (isBuiltInFont()) {
             return true;
         } else {
             String fontFilePath = FontDownloadManager.getInstance().getFontModelDownloadFilePath(getFontName());
             File file = new File(fontFilePath);
             return file.exists() && file.length() > 0;
         }
+    }
+
+    private boolean isBuiltInFont() {
+        for (HSSpecialCharacter hsSpecialCharacter : HSSpecialCharacterManager.getSpecialCharacterList()) {
+            if(hsSpecialCharacter.name.equals(getFontName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

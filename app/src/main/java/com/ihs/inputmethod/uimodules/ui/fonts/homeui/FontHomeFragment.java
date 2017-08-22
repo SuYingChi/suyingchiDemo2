@@ -48,6 +48,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     private void loadFontModel() {
         List<Map<String, Object>> fontList = (List<Map<String, Object>>) HSConfig.getList("Application", "FontList");
+        List<FontModel> downloadFontModelList = new ArrayList<>();
         for (Map<String, Object> map : fontList) {
             String fontName = (String) map.get("name");
             String example = (String) map.get("example");
@@ -57,9 +58,13 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
             FontModel fontModel = new FontModel(hsSpecialCharacter);
             if (!fontModel.isFontDownloaded()) {
                 fontModelList.add(fontModel);
+            } else {
+                downloadFontModelList.add(fontModel);
             }
         }
         FontDownloadManager.getInstance().setRemoteFonts(fontModelList);
+        FontDownloadManager.getInstance().setDownloadedFonts(downloadFontModelList);
+        downloadFontModelList.clear();
     }
 
     @Override
@@ -80,11 +85,12 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     @Override
     public void onFontCardClick(final int position) {
-        FontDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), fontModelList.get(position), null, new AdLoadingView.OnAdBufferingListener() {
+        final FontModel fontModel = fontModelList.get(position);
+        FontDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), fontModel, null, new AdLoadingView.OnAdBufferingListener() {
             @Override
             public void onDismiss(boolean success) {
                 if (success) {
-                    fontModelList.remove(position);
+                    //fontModelList.remove(position);
                     fontCardAdapter.notifyItemRemoved(position);
                     fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
                 }

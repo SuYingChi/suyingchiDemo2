@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
+import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
 
     @Override
     public FontCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        currentSelectPosition = HSSpecialCharacterManager.getCurrentSpecialCharacterIndex();
         return new FontCardViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_font_card, parent, false));
     }
 
@@ -37,10 +39,10 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
                 return;
             }
 
-            FontModel fontModel = fontModelList.get(position);
+            final FontModel fontModel = fontModelList.get(position);
             HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
             holder.fontCardContent.setText(hsSpecialCharacter.example);
-            if(fontModel.getNeedDownload()) {
+            if(!fontModel.isFontDownloaded()) {
                 holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
                 holder.radioButton.setVisibility(View.GONE);
             } else {
@@ -49,26 +51,28 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
                 holder.radioButton.setChecked(position == currentSelectPosition);
             }
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (fontModel.isFontDownloaded()) {
+                        if (currentSelectPosition != position) {
+                            holder.radioButton.setChecked(true);
+                            if (currentSelectPosition != -1) {
+                                notifyItemChanged(currentSelectPosition, 0);
+                            }
+                            currentSelectPosition = position;
+                            notifyItemChanged(position, 0);
+                        }
+                    }
+                    if(onFontCardClickListener != null) {
+                        onFontCardClickListener.onFontCardClick(position);
+                    }
+                }
+            });
+
         } else {
             holder.radioButton.setChecked(position == currentSelectPosition);
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(currentSelectPosition != position) {
-                    holder.radioButton.setChecked(true);
-                    if(currentSelectPosition != -1) {
-                        notifyItemChanged(currentSelectPosition, 0);
-                    }
-                    currentSelectPosition = position;
-                    notifyItemChanged(position, 0);
-                }
-                if(onFontCardClickListener != null) {
-                    onFontCardClickListener.onFontCardClick(position);
-                }
-            }
-        });
     }
 
     @Override
