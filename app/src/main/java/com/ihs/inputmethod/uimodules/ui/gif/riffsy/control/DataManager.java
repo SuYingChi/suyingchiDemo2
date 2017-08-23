@@ -251,7 +251,7 @@ public final class DataManager {
         }
         if (!favorite.contains(item)) {
             favorite.add(0, item);
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_favorite_added");
+            // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_favorite_added");
         }
     }
 
@@ -263,7 +263,7 @@ public final class DataManager {
             tabData.put(GifCategory.TAB_FAVORITE, favorite);
         }
         favorite.remove(item);
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_favorite_removed");
+        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_favorite_removed");
         if (favorite.size() == 0) {
             AsyncThreadPools.execute(new Runnable() {
                 @Override

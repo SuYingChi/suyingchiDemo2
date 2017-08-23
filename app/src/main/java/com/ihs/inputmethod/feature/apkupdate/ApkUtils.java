@@ -232,7 +232,7 @@ public class ApkUtils {
     }
 
     private static void showUpdateAlert() {
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_apk_update_dialog_show");
+        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_apk_update_dialog_show");
 
         saveUpdateAlertLastShownTime();
 
@@ -258,7 +258,7 @@ public class ApkUtils {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_apk_update_dialog_update_clicked");
+                        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_apk_update_dialog_update_clicked");
                         doUpdate();
                         dialog.dismiss();
                     }

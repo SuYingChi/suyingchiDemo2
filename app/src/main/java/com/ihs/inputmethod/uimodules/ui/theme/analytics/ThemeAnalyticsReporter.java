@@ -132,7 +132,7 @@ public final class ThemeAnalyticsReporter {
 		theme=theme.trim();
 		if(!reportedTheme.contains(theme)){
 			reportedTheme.add(theme);
-			HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_preview_first_viewed", theme+"_true");
+			// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_preview_first_viewed", theme+"_true");
 			HSLog.d(theme+"_true");
 		}
 	}
@@ -150,10 +150,10 @@ public final class ThemeAnalyticsReporter {
 		long currentTime=System.currentTimeMillis();
 		String timeLabel=getTimeLabel(currentTime-currentThemeStartTime);
 		if(!HSKeyboardThemeManager.isCustomTheme(theme)){
-			HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_"+currentTheme+"_usage_time ", timeLabel);
+			// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_"+currentTheme+"_usage_time ", timeLabel);
 		}
 		else {
-			HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_customize_usage_time ", timeLabel);
+			// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_customize_usage_time ", timeLabel);
 		}
 		HSLog.d("last theme "+currentTheme+" :"+timeLabel);
 		currentTheme=theme;
@@ -186,7 +186,7 @@ public final class ThemeAnalyticsReporter {
 		banner=banner.trim();
 		if(!reportedTheme.contains(banner)){
 			reportedTheme.add(banner);
-			HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_banner_first_viewed", banner+"_true");
+//			HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_banner_first_viewed", banner+"_true");
 			HSLog.d(banner+"_true");
 		}
 	}
@@ -202,7 +202,7 @@ public final class ThemeAnalyticsReporter {
 		recordThemeUsage(theme);
 		if(!detailReported.contains(theme)){
 			detailReported.add(theme);
-			HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_detail_first_viewed", theme+"_true");
+			// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_detail_first_viewed", theme+"_true");
 			HSLog.d(theme+"_true");
 		}
 	}
@@ -212,7 +212,7 @@ public final class ThemeAnalyticsReporter {
 		theme=theme.trim();
 		if(!detailReported.contains(theme)){
 			detailReported.add(theme);
-			HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_detail_first_viewed", theme+"_true");
+			// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_detail_first_viewed", theme+"_true");
 			HSLog.d(theme+"_true");
 		}
 	}
@@ -243,17 +243,17 @@ public final class ThemeAnalyticsReporter {
 	}
 
 	private void recordThemeClickFalse(String theme) {
-		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_preview_first_viewed", theme+"_false");
+		// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_preview_first_viewed", theme+"_false");
 		HSLog.d(theme+"_false");
 	}
 
 	private void recordBannerThemeClickFalse(String banner) {
-		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_banner_first_viewed", banner+"_false");
+//		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_banner_first_viewed", banner+"_false");
 		HSLog.d(banner+"_false");
 	}
 
 	private void recordThemeClickFalseInDetailActivity(String theme) {
-		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_detail_first_viewed", theme+"_false");
+		// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("theme_detail_first_viewed", theme+"_false");
 		HSLog.d(theme+"_false");
 	}
 }

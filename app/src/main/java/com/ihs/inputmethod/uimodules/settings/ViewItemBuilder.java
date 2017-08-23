@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -132,9 +133,11 @@ final class ViewItemBuilder {
     private static void updateSoundsSettings(ViewItem item) {
         item.setSelected(!HSInputMethodSettings.getKeySoundEnabled());
         if (!item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_ON);
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_ON);
+            HSAnalytics.logEvent("keyboard_setting_sounds_clicked", "item_sound", SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_OFF);
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_OFF);
+            HSAnalytics.logEvent("keyboard_setting_sounds_clicked", "item_sound", SETTING_OFF);
         }
     }
 
@@ -159,9 +162,11 @@ final class ViewItemBuilder {
     private static void updateAutoCorrectionSettings(ViewItem item) {
         item.setSelected(!HSInputMethodSettings.getAutoCorrectionEnabled());
         if (!item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_ON);
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_ON);
+            HSAnalytics.logEvent("keyboard_setting_auto_correction_clicked", "auto_correction", SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_OFF);
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_OFF);
+            HSAnalytics.logEvent("keyboard_setting_auto_correction_clicked", "auto_correction", SETTING_OFF);
         }
     }
 
@@ -187,9 +192,11 @@ final class ViewItemBuilder {
     private static void updateAutoCapitalizationSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getAutoCapitalizationEnabled());
         if (item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_ON);
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_ON);
+            HSAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_OFF);
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_OFF);
+            HSAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_OFF);
         }
     }
 
@@ -215,9 +222,9 @@ final class ViewItemBuilder {
     private static void updatePredicationSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getWordPredictionEnabled());
         if (item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_ON);
+            // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_ON);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_OFF);
+            // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_OFF);
         }
     }
 
@@ -243,9 +250,13 @@ final class ViewItemBuilder {
     private static void updateSwipeSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getGestureTypingEnabled());
         if (item.isSelected) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_ON);
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_ON);
+            HSAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_OFF);
         } else {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_OFF);
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_OFF);
+            HSAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_ON);
+
+
         }
     }
 

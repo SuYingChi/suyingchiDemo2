@@ -60,7 +60,7 @@ public class CustomUIRateAlertUtils {
             actionListenerList.get(0).onClick(dialog, 0);
         }
 
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_ratenow_clicked");
+        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_ratenow_clicked");
     }
 
     /**
@@ -72,7 +72,7 @@ public class CustomUIRateAlertUtils {
             actionListenerList.get(1).onClick(dialog, 1);
         }
 
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_later_clicked");
+        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_later_clicked");
     }
 
     /**
@@ -118,7 +118,7 @@ public class CustomUIRateAlertUtils {
 
         dialog.show();
 
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_showed");
+        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("custom_theme_simulate_rate_showed");
     }
 
     private static void updateRateAlertInfo(String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {

@@ -25,7 +25,7 @@ public class AccGALogger {
 
     public static void logOneTimeGA(String key) {
         if (!HSPreferenceHelper.getDefault().getBoolean(key, false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(key);
+            // HSGoogleAnalyticsUtils.getInstance().logAppEvent(key);
             HSPreferenceHelper.getDefault().putBoolean(key, true);
         }
     }

@@ -113,7 +113,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 editText.setText("");
                 long time = (System.currentTimeMillis() - currentResumeTime) / 1000;
                 HSLog.e("app_keyboardtest_view_show_time : " + time);
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_keyboardtest_view_show_time", String.valueOf(time));
+                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_keyboardtest_view_show_time", String.valueOf(time));
 
                 int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                 if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -161,7 +161,8 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+//            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+            HSAnalytics.logEvent("alert_show");
             if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
 
                 CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
@@ -173,7 +174,8 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+//                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+                        HSAnalytics.logEvent("alert_clicked");
                     }
                 });
                 dialog.show();

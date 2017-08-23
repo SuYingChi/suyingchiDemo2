@@ -63,7 +63,7 @@ public class FontSelectPanel extends BasePanel {
                 String ad = HSConfig.getString("Application", "ShareContents", "Keyboard", "ShareTexts", "ForFonts");
                 if (ad.length() > 2)
                     HSInputMethod.inputText(ad);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("font_share_button_clicked");
+                // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("font_share_button_clicked");
             }
         });
         return view;

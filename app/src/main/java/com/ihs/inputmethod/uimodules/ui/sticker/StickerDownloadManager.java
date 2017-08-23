@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
@@ -113,7 +114,8 @@ public class StickerDownloadManager {
                 if (totalSize > 0) {
                     final float percent = (float) received * 100 / totalSize;
                     if (received >= totalSize) {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroup.getStickerGroupName());
+//                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroup.getStickerGroupName());
+                        HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroup.getStickerGroupName());
                         unzipStickerGroup(stickerGroupZipFilePath, stickerGroup);
                     }
                     new Handler().post(new Runnable() {

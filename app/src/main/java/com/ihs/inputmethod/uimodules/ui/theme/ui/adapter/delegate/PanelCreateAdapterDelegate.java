@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -112,7 +113,8 @@ public final class PanelCreateAdapterDelegate extends AdapterDelegate<List<Theme
 					bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
 					CustomThemeActivity.startCustomThemeActivity(bundle);
 				}
-				HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_create_clicked");
+//				HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_create_clicked");
+				HSAnalytics.logEvent("keyboard_customtheme_create_clicked");
 			}
 		});
 	}

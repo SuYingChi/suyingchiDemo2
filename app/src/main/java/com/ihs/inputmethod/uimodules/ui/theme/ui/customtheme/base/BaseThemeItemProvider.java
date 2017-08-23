@@ -21,6 +21,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
@@ -97,17 +98,23 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         addCustomData((KCBaseElement) item);
 
         if (((KCBaseElement) item).getTypeName().equals("background")) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_background_clicked", ((KCBaseElement) item).getName());
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_background_clicked", ((KCBaseElement) item).getName());
+            HSAnalytics.logEvent("app_customize_background_background_clicked", "item",((KCBaseElement) item).getName() );
         } else if (((KCBaseElement) item).getTypeName().equals("button_style")) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_button_style_clicked", ((KCBaseElement) item).getName());
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_button_style_clicked", ((KCBaseElement) item).getName());
+            HSAnalytics.logEvent("app_customize_button_style_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("button_shape")) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_button_shape_clicked", ((KCBaseElement) item).getName());
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_button_shape_clicked", ((KCBaseElement) item).getName());
+            HSAnalytics.logEvent("app_customize_button_shape_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("font_color")) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_font_color_clicked", ((KCBaseElement) item).getName());
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_font_color_clicked", ((KCBaseElement) item).getName());
+            HSAnalytics.logEvent("app_customize_font_color_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("font")) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_font_font_clicked", ((KCBaseElement) item).getName());
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_font_font_clicked", ((KCBaseElement) item).getName());
+            HSAnalytics.logEvent("app_customize_font_font_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("click_sound")) {
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_sound_clicked", ((KCBaseElement) item).getName());
+//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_sound_clicked", ((KCBaseElement) item).getName());
+            HSAnalytics.logEvent("app_customize_sound_clicked", "item", ((KCBaseElement) item).getName());
         }
 
         if (android.text.TextUtils.isEmpty(adPlacementName)) {
@@ -299,7 +306,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected void setItemDrawable(@NonNull final BaseItemHolder holder, @NonNull final Object obj) {
         final KCBaseElement item = (KCBaseElement) obj;
 
-        ImageLoader.getInstance().loadImage(ImageDownloader.Scheme.FILE.wrap(item.getLocalPreviewPath()),options, new ImageLoadingListener() {
+        ImageLoader.getInstance().loadImage(ImageDownloader.Scheme.FILE.wrap(item.getLocalPreviewPath()), options, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 holder.mPlaceholderView.setVisibility(View.VISIBLE);
@@ -573,6 +580,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         //        public SectorProgressView mProgressView;
         public View itemView;
         public OnDownloadingProgressListener downloadingProgressListener;
+
         public BaseItemHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
@@ -595,10 +603,11 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         }
     }
 
-    public static class LoadPreviewTask extends AsyncTask<Void,Void,Drawable>{
+    public static class LoadPreviewTask extends AsyncTask<Void, Void, Drawable> {
         loadPreviewResultListener loadPreviewResultListener;
         KCBaseElement item;
-        public LoadPreviewTask(KCBaseElement item,BaseThemeItemProvider.loadPreviewResultListener loadPreviewResultListener) {
+
+        public LoadPreviewTask(KCBaseElement item, BaseThemeItemProvider.loadPreviewResultListener loadPreviewResultListener) {
             this.item = item;
             this.loadPreviewResultListener = loadPreviewResultListener;
         }
@@ -610,7 +619,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
         @Override
         protected void onPostExecute(Drawable drawable) {
-            if (loadPreviewResultListener != null){
+            if (loadPreviewResultListener != null) {
                 loadPreviewResultListener.onLoadResult(drawable);
             }
         }

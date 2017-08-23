@@ -10,6 +10,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -86,7 +87,8 @@ public class HSNewSettingsPanel extends BasePanel {
 
                 item.hideNewMark();
                 ((BaseFunctionBar) panelActionListener.getBarView()).hideNewMark();
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_themes_clicked");
+//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_themes_clicked");
+                HSAnalytics.logEvent("keyboard_setting_themes_clicked");
             }
         });
         items.add(themeItem);
@@ -103,7 +105,8 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 getPanelActionListener().showChildPanel(HSFontSelectPanel.class, null);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_fonts_clicked");
+//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_fonts_clicked");
+                HSAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));
         items.add(ViewItemBuilder.getSoundsPositionItem());
@@ -122,7 +125,8 @@ public class HSNewSettingsPanel extends BasePanel {
                         HSUIInputMethod.launchMoreLanguageActivity();
                     }
                 }, 100);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_addlanguage_clicked");
+//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_addlanguage_clicked");
+                HSAnalytics.logEvent("keyboard_setting_addlanguage_clicked");
             }
         }));
         items.add(ViewItemBuilder.getMoreSettingsItem(new ViewItem.ViewItemListener() {
@@ -136,7 +140,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         HSUIInputMethod.launchSettingsActivity();
                     }
                 }, 100);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_MORE_CLICKED);
+                // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_MORE_CLICKED);
             }
         }));
 

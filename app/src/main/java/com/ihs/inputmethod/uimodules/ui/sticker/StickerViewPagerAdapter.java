@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
@@ -134,7 +135,8 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                     if (ClickUtils.isFastDoubleClick()) {
                         return;
                     }
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
+//                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
+                    HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName());
                     StickerDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroup, sticker_download_preview.getDrawable(), null);
                 }
             });

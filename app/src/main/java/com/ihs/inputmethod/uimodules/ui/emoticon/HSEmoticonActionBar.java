@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -272,7 +273,8 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
                 sp.edit().putString("emoticon_last_show_panel_name", tag.toString()).apply();
                 containerListener.showPanel(panel);
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_emoji_tab_switch", tag.toString());
+//                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_emoji_tab_switch", tag.toString());
+                HSAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
             }
         } else {
             if (v.getId() == alphabet_left.getId() && keyboardActionListener != null) {

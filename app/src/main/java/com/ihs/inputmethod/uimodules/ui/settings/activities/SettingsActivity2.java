@@ -315,7 +315,7 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                         isSettingChargingClicked = true;
                         ChargingConfigManager.getManager().setUserChangeChargingToggle();
                         String switchOn = isSwitchOn ? "true" : "false";
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, switchOn);
+                        // HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, switchOn);
                         HSAnalytics.logEvent(GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, "switchOn", switchOn);
                     }
 

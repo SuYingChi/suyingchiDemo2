@@ -99,7 +99,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				this.shouldShowChargingEnableCard = ChargingConfigManager.getManager().shouldShowEnableChargingCard(true);
 				if (this.shouldShowChargingEnableCard) {
 					ChargingConfigManager.getManager().increaseEnableCardShowCount();
-					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_show");
+					// HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_show");
 				}
 			}
 		}
@@ -113,7 +113,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				public void onClick(View v) {
 					ChargingManagerUtil.enableCharging(false);
 					themeAdOnClickListener.onThemeAdClick(position);
-					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_click");
+					// HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_click");
 				}
 			});
 		} else {// Show ad

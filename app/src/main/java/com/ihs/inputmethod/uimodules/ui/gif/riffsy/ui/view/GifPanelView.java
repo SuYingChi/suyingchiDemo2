@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -168,7 +169,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
             public void onClick(View v) {
                 showStripView();
                 mStripView.showStripViewToSearch();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_search_click");
+                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_search_click");
             }
         });
 
@@ -222,7 +223,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
             e.printStackTrace();
             onFail();
         }
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_tab_switched", mGifCategory.getCurrentLogCategoryId());
+        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_tab_switched", mGifCategory.getCurrentLogCategoryId());
     }
 
     private BaseRequest getRequest(String tabId) {
@@ -307,7 +308,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
         if (tag.startsWith("#")) {
             tag = tag.substring(1);
         }
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_tag_clicked", tag);
+        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_tag_clicked", tag);
         mGifCategory.setCurrentExtendedCategoryId(tag);
 
         clear();
@@ -594,16 +595,17 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
         }
     }
 
-	private void onGifClicked(GifView view) {
-		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_clicked", mGifCategory.getCurrentLogCategoryId());
-		mp4PackageName = HSInputMethod.getCurrentHostAppPackageName();
-		shareUrl = view.getGifItem().getUrl();
-		notifyImageClicked(view, mp4PackageName, mp4DownloadCallback);
-	}
+    private void onGifClicked(GifView view) {
+//		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_clicked", mGifCategory.getCurrentLogCategoryId());
+        HSAnalytics.logEvent("keyboard_gif_clicked", "currentLogCategoryId", mGifCategory.getCurrentLogCategoryId());
+        mp4PackageName = HSInputMethod.getCurrentHostAppPackageName();
+        shareUrl = view.getGifItem().getUrl();
+        notifyImageClicked(view, mp4PackageName, mp4DownloadCallback);
+    }
 
-	public void notifyImageClicked(final GifView item, final String packageName, final GifDownloadTask.Callback callback) {
-		if (item != null) {
-			DataManager.getInstance().addRecent(item.getGifItem());
+    public void notifyImageClicked(final GifView item, final String packageName, final GifDownloadTask.Callback callback) {
+        if (item != null) {
+            DataManager.getInstance().addRecent(item.getGifItem());
             GifManager.getInstance().share(item.getGifItem(), packageName, callback);
 //			item.shareHdGif(new DownloadStatusListener() {
 //				@Override
@@ -621,7 +623,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
 //
 //				}
 //			});
-		}
-	}
+        }
+    }
 
 }

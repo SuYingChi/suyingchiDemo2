@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
@@ -29,7 +30,8 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
 
 
     protected void onAlbumItemClicked(final BaseItemHolder holder, final Integer item) {
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_album_clicked");
+//        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_album_clicked");
+        HSAnalytics.logEvent("app_customize_background_album_clicked");
         fragment.pickFromGallery(new BackgroundFragment.OnSelectCallback() {
             @Override
             public void onSelectItem(int type) {
@@ -39,7 +41,8 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
     }
 
     protected void onCameraItemClicked(final BaseItemHolder holder, final Integer item) {
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_camera_clicked");
+//        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_camera_clicked");
+        HSAnalytics.logEvent("app_customize_background_camera_clicked");
         fragment.pickFromCamera(new BackgroundFragment.OnSelectCallback() {
             @Override
             public void onSelectItem(int type) {
