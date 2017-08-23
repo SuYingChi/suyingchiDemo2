@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
@@ -84,13 +85,14 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     }
 
     @Override
-    public void onFontCardClick(final int position) {
-        final FontModel fontModel = fontModelList.get(position);
+    public void onFontCardClick(final FontModel fontModel) {
         FontDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), fontModel, null, new AdLoadingView.OnAdBufferingListener() {
             @Override
             public void onDismiss(boolean success) {
                 if (success) {
-                    //fontModelList.remove(position);
+                    int position = fontModelList.indexOf(fontModel);
+                    HSLog.e("eee", String.valueOf(position));
+//                    fontModelList.remove(position);
                     fontCardAdapter.notifyItemRemoved(position);
                     fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
                 }

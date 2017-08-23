@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -24,6 +25,8 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
     public FontCardAdapter(List<FontModel> fontModels, OnFontCardClickListener onFontCardClickListener) {
         this.onFontCardClickListener = onFontCardClickListener;
         this.fontModelList = fontModels;
+        boolean b = this.fontModelList.get(0) == fontModels.get(0) ? true : false;
+        HSLog.e("eee", String.valueOf(b));
     }
 
     @Override
@@ -40,7 +43,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
             }
 
             final FontModel fontModel = fontModelList.get(position);
-            HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
+            final HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
             holder.fontCardContent.setText(hsSpecialCharacter.example);
             if(!fontModel.isFontDownloaded()) {
                 holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
@@ -49,29 +52,42 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
                 holder.downloadIcon.setVisibility(View.GONE);
                 holder.radioButton.setVisibility(View.VISIBLE);
                 holder.radioButton.setChecked(position == currentSelectPosition);
+                holder.radioButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        fontSelected(fontModel);
+                    }
+                });
             }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (fontModel.isFontDownloaded()) {
-                        if (currentSelectPosition != position) {
-                            holder.radioButton.setChecked(true);
-                            if (currentSelectPosition != -1) {
-                                notifyItemChanged(currentSelectPosition, 0);
-                            }
-                            currentSelectPosition = position;
-                            notifyItemChanged(position, 0);
-                        }
-                    }
-                    if(onFontCardClickListener != null) {
-                        onFontCardClickListener.onFontCardClick(position);
-                    }
+                    fontSelected(fontModel);
                 }
             });
 
+
         } else {
             holder.radioButton.setChecked(position == currentSelectPosition);
+        }
+    }
+
+    private void fontSelected(final FontModel fontModel) {
+        if(fontModel.isFontDownloaded()) {
+            int position = fontModelList.indexOf(fontModel);
+            if (currentSelectPosition != position) {
+//            holder.radioButton.setChecked(true);
+                if (currentSelectPosition != -1) {
+                    notifyItemChanged(currentSelectPosition, 0);
+                }
+                currentSelectPosition = position;
+                notifyItemChanged(position, 0);
+            }
+        }
+
+        if (onFontCardClickListener != null) {
+            onFontCardClickListener.onFontCardClick(fontModel);
         }
     }
 
@@ -94,6 +110,6 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
     }
 
     public interface OnFontCardClickListener {
-        void onFontCardClick(int position);
+        void onFontCardClick(final FontModel fontModel);
     }
 }

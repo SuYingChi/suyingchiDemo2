@@ -29,7 +29,6 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
     private List<FontModel> fontModelList = new ArrayList<>();
     private TrialKeyboardDialog trialKeyboardDialog;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,11 +73,12 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
     }
 
     @Override
-    public void onFontCardClick(int position) {
-        showTrialKeyboardDialog(ThemeDownloadActivity.keyboardActivationFromDownload, position);
+    public void onFontCardClick(FontModel fontModel) {
+        showTrialKeyboardDialog(ThemeDownloadActivity.keyboardActivationFromDownload, fontModel);
     }
 
-    private void showTrialKeyboardDialog(final int activationCode, final int position) {
+    private void showTrialKeyboardDialog(final int activationCode, final FontModel fontModel) {
+        final int position = fontModelList.indexOf(fontModel);
         final KeyboardActivationProcessor processor =
                 new KeyboardActivationProcessor(getActivity().getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
                     @Override
@@ -89,10 +89,8 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
                     @Override
                     public void keyboardSelected(int requestCode) {
                         if (requestCode == activationCode) {
-
                             if (trialKeyboardDialog == null) {
                                 trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(getActivity(), (TrialKeyboardDialog.OnTrialKeyboardStateChanged) getActivity());
-
                             }
                             HSSpecialCharacterManager.selectSpecialCharacter(position);
                             trialKeyboardDialog.show(getActivity(), activationCode, true);

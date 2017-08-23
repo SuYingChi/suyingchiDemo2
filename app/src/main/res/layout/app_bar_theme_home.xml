@@ -60,6 +60,8 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/store_tab"
+            app:tabIndicatorHeight="2dp"
+            app:tabIndicatorColor="@color/white"
             android:layout_below="@+id/toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent" />

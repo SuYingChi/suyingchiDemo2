@@ -732,6 +732,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     private void switchToDownloads() {
         Intent intent = new Intent(this, ThemeDownloadActivity.class);
+        intent.putExtra("currentTab", tabLayout.getSelectedTabPosition());
         startActivity(intent);
     }
 

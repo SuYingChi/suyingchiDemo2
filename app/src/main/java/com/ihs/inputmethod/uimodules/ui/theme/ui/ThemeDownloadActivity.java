@@ -161,6 +161,16 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
+        int position = getIntent().getIntExtra("currentTab", 0);
+        TabLayout.Tab tab = tabLayout.getTabAt(position);
+        tab.select();
+        LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+        if (position == 0) {
+            layout.setVisibility(View.VISIBLE);
+        } else {
+            layout.setVisibility(View.GONE);
+        }
+
         setTabListener();
 
 
@@ -267,7 +277,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         });
     }
 
-    private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
+    private void showTrialKeyboardDialog(final int activationCode) {
         final KeyboardActivationProcessor processor =
                 new KeyboardActivationProcessor(ThemeDownloadActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
                     @Override
@@ -279,7 +289,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
                     public void keyboardSelected(int requestCode) {
                         if (requestCode == activationCode) {
                             if (trialKeyboardDialog == null) {
-                                trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(context, ThemeDownloadActivity.this);
+                                trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(ThemeDownloadActivity.this, ThemeDownloadActivity.this);
                             }
                             if (activationCode == keyboardActivationFromCustom) {
                                 trialKeyboardDialog.show(ThemeDownloadActivity.this, activationCode, false);
