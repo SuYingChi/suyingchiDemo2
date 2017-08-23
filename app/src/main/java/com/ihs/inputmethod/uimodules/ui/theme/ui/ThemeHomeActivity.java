@@ -675,8 +675,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
 //            // HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
-            HSAnalytics.logEvent("alert_show");
+            HSAnalytics.logEvent("alert_charging_show");
             if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
+                HSAnalytics.logEvent("alert_charging_show_halfscreen");
                 CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
                 dialog.setTitle(getString(R.string.charging_alert_title));
                 dialog.setMessage(getString(R.string.charging_alert_message));
@@ -687,11 +688,12 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false);
 //                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
-                        HSAnalytics.logEvent("alert_clicked");
+                        HSAnalytics.logEvent("alert_charging_clicked_halfscreen");
                     }
                 });
                 dialog.show();
             } else {
+                HSAnalytics.logEvent("alert_charging_show_fullscreen");
                 Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
                 intent.putExtra("type", "charging");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
