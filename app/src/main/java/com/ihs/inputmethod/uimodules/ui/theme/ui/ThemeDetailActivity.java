@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -368,6 +369,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
             HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_share_clicked", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
+            HSAnalytics.logEvent("keyboard_setaslockscreen_button_clicked");
             LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, false, new LockerEnableDialog.OnLockerBgLoadingListener() {
                 @Override
                 public void onFinish() {
