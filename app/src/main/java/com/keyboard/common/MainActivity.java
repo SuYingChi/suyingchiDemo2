@@ -30,6 +30,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -391,6 +392,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private boolean isAccessibilityEnable() {
+        Log.e("access","accessi read");
         boolean isAccessibilityEnabledInConfig = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
         boolean isHSAccessibilityServiceAvailable = HSAccessibilityService.isAvailable();
         boolean isSDKSatisfied = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;

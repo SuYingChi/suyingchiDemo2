@@ -80,6 +80,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 onSessionStart();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
+                Log.e("access","config changed");
             } else if(RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(notificationName)){
                 AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(AcbCallManager.getAdPlacement());
                 AcbCallManager.setAdPlacement("");
@@ -91,10 +92,10 @@ public class HSUIApplication extends HSInputMethodApplication {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(intent.getAction())) {
+                Log.e("access","appsflyer");
                 Intent configChangedIntent = new Intent(HSNotificationConstant.HS_CONFIG_CHANGED);
                 configChangedIntent.setPackage(HSApplication.getContext().getPackageName());
                 HSUIApplication.this.sendBroadcast(configChangedIntent, HSNotificationConstant.getSecurityPermission(HSApplication.getContext()));
-
                 recordInstallType();
             }
         }
