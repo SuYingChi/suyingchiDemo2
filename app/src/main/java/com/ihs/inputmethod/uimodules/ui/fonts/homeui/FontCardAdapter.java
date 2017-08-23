@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -25,8 +24,6 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
     public FontCardAdapter(List<FontModel> fontModels, OnFontCardClickListener onFontCardClickListener) {
         this.onFontCardClickListener = onFontCardClickListener;
         this.fontModelList = fontModels;
-        boolean b = this.fontModelList.get(0) == fontModels.get(0) ? true : false;
-        HSLog.e("eee", String.valueOf(b));
     }
 
     @Override

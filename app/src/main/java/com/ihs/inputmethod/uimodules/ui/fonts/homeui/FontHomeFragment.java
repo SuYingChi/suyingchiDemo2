@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
@@ -19,6 +19,8 @@ import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.PREFERENCE_KEY_SHOW_FONT_DOWNLOAD_NEW_MARK;
 
 /**
  * Created by guonan.lv on 17/8/14.
@@ -91,7 +93,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
             public void onDismiss(boolean success) {
                 if (success) {
                     int position = fontModelList.indexOf(fontModel);
-                    HSLog.e("eee", String.valueOf(position));
+                    HSPreferenceHelper.getDefault().putBoolean(PREFERENCE_KEY_SHOW_FONT_DOWNLOAD_NEW_MARK, true);
 //                    fontModelList.remove(position);
                     fontCardAdapter.notifyItemRemoved(position);
                     fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());

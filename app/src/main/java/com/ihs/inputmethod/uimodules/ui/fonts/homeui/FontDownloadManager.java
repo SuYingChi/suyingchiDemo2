@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
@@ -26,6 +27,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.FONT_DOWNLOAD_SUCCESS_NOTIFICATION;
 
 /**
  * Created by guonan.lv on 17/8/21.
@@ -67,6 +70,7 @@ public class FontDownloadManager {
     }
 
     public void updateFontList(FontModel fontModel, FontModel newFontModel) {
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(FONT_DOWNLOAD_SUCCESS_NOTIFICATION);
         downloadedFonts.add(newFontModel);
         remoteFonts.remove(fontModel);
         SpecialCharacterManager.getInstance().addSpecialFont(newFontModel.getHsSpecialCharacter());

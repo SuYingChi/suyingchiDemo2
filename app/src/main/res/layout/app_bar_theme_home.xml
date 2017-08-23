@@ -36,15 +36,27 @@
                 android:src="@drawable/apk_update_tip"
                 android:visibility="gone"/>
 
-
-            <ImageView
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:id="@+id/download_page_trigger"
-                android:layout_alignParentRight="true"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="5dp"
-                app:srcCompat="@drawable/download_icon_home_store" />
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:id="@+id/download_page_trigger"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/download_icon_home_store" />
+
+                <ImageView
+                    android:id="@+id/download_button_new_mark"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+
             <!--<com.airbnb.lottie.LottieAnimationView-->
                 <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
                 <!--android:layout_width="36dp"-->

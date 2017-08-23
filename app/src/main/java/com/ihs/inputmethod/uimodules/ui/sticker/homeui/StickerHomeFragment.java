@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import static com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.PREFERENCE_KEY_SHOW_STICKER_DOWNLOAD_NEW_MARK;
 
 /**
  * Created by guonan.lv on 17/8/10.
@@ -60,6 +63,7 @@ public class StickerHomeFragment extends Fragment {
                     @Override
                     public void onDismiss(boolean success) {
                         if(success) {
+                            HSPreferenceHelper.getDefault().putBoolean(PREFERENCE_KEY_SHOW_STICKER_DOWNLOAD_NEW_MARK, true);
                             int position = stickerModelList.indexOf(stickerModel);
                             stickerModelList.remove(position);
                             removeStickerFromView(position);

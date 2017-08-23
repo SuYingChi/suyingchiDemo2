@@ -3,6 +3,8 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -53,6 +56,7 @@ import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
@@ -79,10 +83,13 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
 public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
+    public static final String PREFERENCE_KEY_SHOW_STICKER_DOWNLOAD_NEW_MARK = "sp_key_sticker_download_new_mark";
+    public static final String PREFERENCE_KEY_SHOW_FONT_DOWNLOAD_NEW_MARK = "sp_key_font_download_new_mark";
 
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
+    public static final String  FONT_DOWNLOAD_SUCCESS_NOTIFICATION = "font_data_download";
 
     private static final int keyboardActivationFromHome = 11;
     public static final int keyboardActivationFromHomeWithTrial = 12;
@@ -106,6 +113,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private boolean isFromUsageAccessActivity;
     private View enableTipTV;
     private boolean shouldShowActivationTip;
+    private ImageView downloadNewMark;
     private ThemeHomeActivity context = ThemeHomeActivity.this;
     private KeyboardActivationProcessor keyboardActivationProcessor;
     private View apkUpdateTip;
@@ -153,6 +161,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.purchase_success), Toast.LENGTH_LONG).show();
                 navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
+            } else if (StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION.equals(s)) {
+                changeDownloadNewMark(true);
+            } else if (FONT_DOWNLOAD_SUCCESS_NOTIFICATION.equals(s)) {
+                changeDownloadNewMark(true);
             }
         }
     };
@@ -171,12 +183,18 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         setSupportActionBar(toolbar);
 
         View adTriggerView = findViewById(R.id.download_page_trigger);
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            adTriggerView.setVisibility(View.GONE);
-        } else {
-            adTriggerView.setVisibility(View.VISIBLE);
-            adTriggerView.setOnClickListener(this);
-        }
+        adTriggerView.setVisibility(View.VISIBLE);
+        adTriggerView.setOnClickListener(this);
+
+        downloadNewMark = (ImageView) findViewById(R.id.download_button_new_mark);
+        GradientDrawable redPointDrawable = new GradientDrawable();
+        redPointDrawable.setColor(Color.RED);
+        redPointDrawable.setShape(GradientDrawable.OVAL);
+        downloadNewMark.setImageDrawable(redPointDrawable);
+
+        boolean downloadStickerNew = HSPreferenceHelper.getDefault().getBoolean(PREFERENCE_KEY_SHOW_STICKER_DOWNLOAD_NEW_MARK, false);
+        boolean downloadFontNew = HSPreferenceHelper.getDefault().getBoolean(PREFERENCE_KEY_SHOW_FONT_DOWNLOAD_NEW_MARK, false);
+        downloadNewMark.setVisibility((downloadStickerNew || downloadFontNew) ? View.VISIBLE : View.GONE);
 
         tabLayout = (TabLayout)  findViewById(R.id.store_tab);
 
@@ -280,6 +298,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(FONT_DOWNLOAD_SUCCESS_NOTIFICATION, notificationObserver);
 
         //如果是第一次进入页面并且当前键盘没有被选为自己则弹框。
         if (!HSInputMethodListManager.isMyInputMethodSelected()) {
@@ -289,6 +309,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         onNewIntent(getIntent());
+    }
+
+    public void changeDownloadNewMark(boolean status) {
+        downloadNewMark.setVisibility(status ? View.VISIBLE : View.GONE);
     }
 
     private void enableUsageAccessPermission() {
@@ -354,6 +378,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("permission_usage_access");
             }
         }
+
+        changeDownloadNewMark(false);
 
         refreshApkUpdateViews();
         HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
