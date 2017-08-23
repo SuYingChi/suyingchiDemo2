@@ -2,17 +2,24 @@ package com.ihs.inputmethod.uimodules.ui.emoji;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.Pair;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -23,12 +30,14 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.BaseTabViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.HSEmojiTabAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.HSEmojiViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.model.Emoji;
+import com.ihs.inputmethod.uimodules.ui.emoji.Skin.HSEmojiSkinViewAdapter;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
@@ -38,7 +47,7 @@ import java.util.List;
 
 
 public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter.OnTabChangeListener,
-		HSEmojiViewAdapter.OnEmojiClickListener  {
+		HSEmojiViewAdapter.OnEmojiClickListener,HSEmojiViewAdapter.OnEmojiLongPressListener ,HSEmojiSkinViewAdapter.OnEmojiClickListener {
 
 
     private HSEmojiTabAdapter tabAdapter;
@@ -47,6 +56,9 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 
     private final EmojiCategory emojiCategory;
     private KeyboardPanelAdManager keyboardPanelAdManager;
+
+	//emoji skin support
+	HSEmojiSkinViewAdapter skinViewAdapter;
 
 	public HSEmojiPanelView(Context context) {
 		this(context,null);
@@ -110,6 +122,8 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 
 		emojiView = (RecyclerView) findViewById(R.id.emoji_keyboard_pager);
 		emojiAdapter =new HSEmojiViewAdapter(emojiHeight,emojiWidth,0.6f,this);
+		emojiAdapter.setLongPressListener(this);
+
 		emojiAdapter.setHasStableIds(true);
 		emojiView.setLayoutManager(new StaggeredGridLayoutManager(emojiRow,StaggeredGridLayoutManager.HORIZONTAL));
 		emojiView.setAdapter(emojiAdapter);
@@ -145,6 +159,61 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(HSGoogleAnalyticsConstants.GA_PARAM_ACTION_EMOJI_INPUT, key.getLabel());
 		HSAnalytics.logEvent("emoji_input", "Value", key.getLabel());
 	}
+
+	@Override
+	public void onEmojiLongPress(Emoji emoji,View emojiTextView){
+
+		View contentView = LayoutInflater.from(getContext()).inflate(R.layout.panel_emoji_skin_view,
+				null);
+		final Resources res = getResources();
+		final int height = HSResourceUtils.getDefaultKeyboardHeight(res)
+				- res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
+
+		final int width = HSResourceUtils.getDefaultKeyboardWidth(res);
+		final int emojiCol = res.getInteger(R.integer.config_emoji_col_count);
+		final int emojiRow = res.getInteger(R.integer.config_emoji_row_count);
+		final int emojiHeight = height/emojiRow;
+		final int emojiWidth = (int) (width/(emojiCol+0.5f));
+
+		RecyclerView emojiSkinView = (RecyclerView) contentView.findViewById(R.id.emoji_skin_container);
+
+		skinViewAdapter = new HSEmojiSkinViewAdapter(emojiTextView.getMeasuredHeight(),emojiWidth,0.8f,this);
+		skinViewAdapter.setHasStableIds(true);
+		emojiSkinView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+		emojiSkinView.setAdapter(skinViewAdapter);
+
+		emojiSkinView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+
+		int skinPanelWidth = emojiWidth *  emoji.getSkinItems().size()  ;
+		PopupWindow mPopBottom = new  PopupWindow(contentView,
+				skinPanelWidth, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//      mPopBottom.setTouchInterceptor(new OnTouchListener() {
+//          @Override
+//          public boolean onTouch(View v, MotionEvent event) {
+//              if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+//                  mPopBottom.dismiss();
+//                  return true;
+//              }
+//              return false;
+//          }
+//      });
+		mPopBottom.setBackgroundDrawable(new ColorDrawable());
+
+
+		mPopBottom.setWidth(skinPanelWidth);
+		mPopBottom.setHeight(emojiTextView.getMeasuredHeight() );
+		mPopBottom.setTouchable(true);
+		mPopBottom.setFocusable(true);
+		mPopBottom.setOutsideTouchable(true);
+		int windowPos[] = calculatePopWindowPos(emojiTextView, contentView);
+		windowPos[1] -=  HSDisplayUtils.dip2px(15);
+		mPopBottom.showAtLocation(emojiTextView,  Gravity.TOP | Gravity.START, windowPos[0], windowPos[1]);
+
+		skinViewAdapter.setData(emoji.getSkinItems());
+
+	}
+
+
 
 	public void showPanelView() {
 		setHardwareAcceleratedDrawingEnabled(HSInputMethod.isHardwareAcceleratedDrawingEnabled());
@@ -245,5 +314,46 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 				}
 			}
 		}
+	}
+
+
+	/**
+	 * 计算出来的位置，y方向就在anchorView的上面和下面对齐显示，x方向就是与屏幕右边对齐显示
+	 * 如果anchorView的位置有变化，就可以适当自己额外加入偏移来修正
+	 * @param anchorView  呼出window的view
+	 * @param contentView   window的内容布局
+	 * @return window显示的左上角的xOff,yOff坐标
+	 */
+	private static int[] calculatePopWindowPos(final View anchorView, final View contentView) {
+		final int windowPos[] = new int[2];
+		final int anchorLoc[] = new int[2];
+		// 获取锚点View在屏幕上的左上角坐标位置
+		anchorView.getLocationOnScreen(anchorLoc);
+
+		final int anchorHeight = anchorView.getMeasuredHeight();
+		// 获取屏幕的高宽
+		final int screenHeight =  getScreenHeight(anchorView.getContext());
+		final int screenWidth =  getScreenWidth(anchorView.getContext());
+		contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+		// 计算contentView的高宽
+		final int windowHeight = contentView.getMeasuredHeight();
+		final int windowWidth = contentView.getMeasuredWidth();
+
+		windowPos[0] = anchorLoc[0];
+		windowPos[1] = anchorLoc[1]  - windowHeight - anchorView.getMeasuredHeight();
+		return windowPos;
+	}
+
+	/**
+	 * 获取屏幕高度(px)
+	 */
+	public static int getScreenHeight(Context context) {
+		return context.getResources().getDisplayMetrics().heightPixels;
+	}
+	/**
+	 * 获取屏幕宽度(px)
+	 */
+	public static int getScreenWidth(Context context) {
+		return context.getResources().getDisplayMetrics().widthPixels;
 	}
 }

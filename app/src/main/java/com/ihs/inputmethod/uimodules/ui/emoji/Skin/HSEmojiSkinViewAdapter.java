@@ -1,8 +1,7 @@
-package com.ihs.inputmethod.uimodules.ui.common.adapter;
+package com.ihs.inputmethod.uimodules.ui.emoji.Skin;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.annimon.stream.function.FunctionalInterface;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -26,15 +24,13 @@ import java.util.List;
  * Created by wenbinduan on 2016/11/22.
  */
 
-public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAdapter.ViewHolder> implements View.OnClickListener,View.OnLongClickListener{
+public final class HSEmojiSkinViewAdapter extends RecyclerView.Adapter<HSEmojiSkinViewAdapter.ViewHolder> implements View.OnClickListener {
 
 	public interface OnEmojiClickListener {
 		void onEmojiClick(Emoji emoji);
 	}
 
-	public interface OnEmojiLongPressListener {
-		void onEmojiLongPress(Emoji emoji,View emojiView);
-	}
+
 
 	private final int childViewHeight;
 	private final int childViewWidth;
@@ -42,28 +38,25 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	private List<Emoji> emojiList;
 	private final OnEmojiClickListener listener;
 
-
-	private OnEmojiLongPressListener longPressListener;
-
-	public HSEmojiViewAdapter(int childViewHeight, int childViewWidth, float scaleRatio, OnEmojiClickListener listener) {
+	public HSEmojiSkinViewAdapter(int childViewHeight, int childViewWidth, float scaleRatio, OnEmojiClickListener listener) {
 		this.childViewHeight = childViewHeight;
 		this.childViewWidth = childViewWidth;
-		emojiSize= (int) (Math.min(childViewWidth,childViewHeight)*scaleRatio);
-		this.listener=listener;
+		emojiSize = (int) (Math.min(childViewWidth,childViewHeight) * scaleRatio);
+		this.listener = listener;
 	}
 
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.common_emoji_view,parent,false));
+		return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.emoji_skin_view,parent,false));
 	}
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
-		if(emojiList==null){
+		if(emojiList == null){
 			return;
 		}
-		final Emoji emoji=emojiList.get(position);
-		TextView textView=holder.tv;
+		final Emoji emoji = emojiList.get(position);
+		TextView textView = holder.tv;
 		textView.setText(emoji.getLabel());
 		if(!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()){
 			textView.setTextColor(Color.BLACK);
@@ -75,11 +68,12 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 		}
 		textView.setHorizontallyScrolling(false);//must
 
-		RecyclerView.LayoutParams lp= (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-		lp.width=childViewWidth*emoji.getColumn();
-		lp.height=childViewHeight;
+		RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+		lp.width = childViewWidth * emoji.getColumn();
+		lp.height = childViewHeight;
+
 		if(emoji.isDivider()){
-			lp.width=HSDisplayUtils.dip2px(20);
+			lp.width = HSDisplayUtils.dip2px(20);
 		}
 		holder.itemView.setLayoutParams(lp);
 
@@ -93,26 +87,12 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 			textView.setTag(null);
 			textView.setClickable(false);
 		}
-		if (emoji.supportSkin()) {
 
-			FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams)holder.iv.getLayoutParams();
-			flp.width= childViewWidth / 4;
-			flp.height= childViewHeight / 4;
-			holder.iv.setLayoutParams(flp);
-
-			holder.iv.setVisibility(View.VISIBLE);
-			holder.tv.setOnLongClickListener(this);
-
-		}else {
-			holder.tv.setOnLongClickListener(null);
-
-			holder.iv.setVisibility(View.GONE);
-		}
 	}
 
 	@Override
 	public int getItemCount() {
-		if(emojiList!=null){
+		if(emojiList != null){
 			return emojiList.size();
 		}
 		return 0;
@@ -124,57 +104,33 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	}
 
 	public void setData(List<Emoji> emojis) {
-		this.emojiList=emojis;
+		this.emojiList = emojis;
 		notifyDataSetChanged();
 	}
 
 	@Override
 	public void onClick(View v) {
-		final Object tag=v.getTag();
+		final Object tag = v.getTag();
 		if(tag instanceof Emoji && listener!=null){
 			listener.onEmojiClick((Emoji) tag);
 
-			Animation set=createClickAnimation(1.4f,80,80);
+			Animation set = createClickAnimation(1.4f,80,80);
 
 			v.startAnimation(set);
 		}
-	}
-
-	@Override
-	public  boolean onLongClick(View v) {
-		final Object tag= v.getTag();
-		if(tag instanceof Emoji && longPressListener!=null){
-			longPressListener.onEmojiLongPress((Emoji) tag,v);
-
-			Animation set=createClickAnimation(1.4f,80,80);
-
-			v.startAnimation(set);
-			return true;
-		}
-
-		return false;
-	}
-
-
-	public OnEmojiLongPressListener getLongPressListener() {
-		return longPressListener;
-	}
-
-	public void setLongPressListener(OnEmojiLongPressListener longPressListener) {
-		this.longPressListener = longPressListener;
 	}
 
 	private Animation createClickAnimation(final float scaleRation, final int upDuration, final int downDuration){
 
-		final Animation scaleUp=new ScaleAnimation(
+		final Animation scaleUp = new ScaleAnimation(
 				1.0f,scaleRation,1.0f,scaleRation,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
 		);
-		final Animation scaleDown=new ScaleAnimation(
+		final Animation scaleDown = new ScaleAnimation(
 				1.0f,1/scaleRation,1.0f,1/scaleRation,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
 		);
-		final AnimationSet set=new AnimationSet(false);
+		final AnimationSet set = new AnimationSet(false);
 		scaleUp.setDuration(upDuration);
 		scaleUp.setFillAfter(true);
 		scaleDown.setDuration(downDuration);
@@ -190,11 +146,10 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 
 	class ViewHolder extends RecyclerView.ViewHolder{
 		TextView tv;
-		ImageView iv;
 		public ViewHolder(View itemView) {
 			super(itemView);
-			tv = (TextView) itemView.findViewById(R.id.emoji_tv);
-			iv = (ImageView) itemView.findViewById(R.id.emoji_iv);
+			tv = (TextView) itemView.findViewById(R.id.emoji_skin_tv);
+
 		}
 	}
 }
