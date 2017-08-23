@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.utils.ImageLoaderURIUtils;
 import com.kc.commons.configfile.KCList;
 import com.kc.commons.configfile.KCMap;
@@ -63,11 +64,12 @@ public class StickerGroup {
         reloadStickers();
     }
 
-    void reloadStickers() {
+    public void reloadStickers() {
         stickerList.clear();
         KCMap configMap = getStickerConfigMap();
         if (configMap != null) {
             KCList contents = configMap.getList("contents");
+            HSLog.e("reloadSticker", String.valueOf(contents.size())); //correct
             for (int i = 0; i < contents.size(); i++) {
                 final Map<String, Object> contentMap = (Map<String, Object>) contents.get(i);
                 final String imageName = (String) contentMap.get("imageName");
