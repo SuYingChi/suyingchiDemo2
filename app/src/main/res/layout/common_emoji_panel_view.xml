@@ -25,9 +25,25 @@
 			android:layout_marginLeft="3dp"
 			android:layout_marginRight="3dp" />
 	</LinearLayout>
-
-	<android.support.v7.widget.RecyclerView
-		android:id="@+id/emoji_keyboard_pager"
+	<FrameLayout
+		android:id="@+id/emoji_emoji_container"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+		android:layout_height="match_parent"
+		android:clipChildren="false"
+		>
+
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/emoji_keyboard_pager"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" />
+
+		<ViewStub
+			android:id="@+id/emoji_skin_import"
+			android:layout="@layout/panel_emoji_skin_view"
+			android:layout_width="fill_parent"
+			android:layout_height="match_parent"
+			  />
+
+	</FrameLayout>
+
 </com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanelView>

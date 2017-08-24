@@ -33,7 +33,7 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	}
 
 	public interface OnEmojiLongPressListener {
-		void onEmojiLongPress(Emoji emoji,View emojiView);
+		void onEmojiLongPress(Emoji emoji,View emojiView,int parentViewHeight);
 	}
 
 	private final int childViewHeight;
@@ -128,6 +128,7 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 		notifyDataSetChanged();
 	}
 
+
 	@Override
 	public void onClick(View v) {
 		final Object tag=v.getTag();
@@ -144,7 +145,7 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	public  boolean onLongClick(View v) {
 		final Object tag= v.getTag();
 		if(tag instanceof Emoji && longPressListener!=null){
-			longPressListener.onEmojiLongPress((Emoji) tag,v);
+			longPressListener.onEmojiLongPress((Emoji) tag,v,this.childViewHeight);
 
 			Animation set=createClickAnimation(1.4f,80,80);
 
@@ -195,6 +196,16 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 			super(itemView);
 			tv = (TextView) itemView.findViewById(R.id.emoji_tv);
 			iv = (ImageView) itemView.findViewById(R.id.emoji_iv);
+		}
+	}
+
+	public void selectedEmoji(Emoji emoji) {
+		if (this.emojiList == null) {
+			return;
+		}
+		int index = this.emojiList.indexOf(emoji);
+		if (index != -1) {
+			this.notifyItemChanged(index);
 		}
 	}
 }

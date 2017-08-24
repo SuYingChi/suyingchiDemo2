@@ -27,7 +27,7 @@ import java.util.List;
 public final class HSEmojiSkinViewAdapter extends RecyclerView.Adapter<HSEmojiSkinViewAdapter.ViewHolder> implements View.OnClickListener {
 
 	public interface OnEmojiClickListener {
-		void onEmojiClick(Emoji emoji);
+		void onEmojiSkinClick(Emoji emoji);
 	}
 
 
@@ -82,8 +82,11 @@ public final class HSEmojiSkinViewAdapter extends RecyclerView.Adapter<HSEmojiSk
 			textView.setTag(emoji);
 			textView.setOnClickListener(this);
 			textView.setSoundEffectsEnabled(false);
-
+			holder.itemView.setOnClickListener(this);
+			holder.itemView.setTag(emoji);
 		}else{
+			holder.itemView.setOnClickListener(null);
+			holder.itemView.setTag(null);
 			textView.setTag(null);
 			textView.setClickable(false);
 		}
@@ -112,7 +115,7 @@ public final class HSEmojiSkinViewAdapter extends RecyclerView.Adapter<HSEmojiSk
 	public void onClick(View v) {
 		final Object tag = v.getTag();
 		if(tag instanceof Emoji && listener!=null){
-			listener.onEmojiClick((Emoji) tag);
+			listener.onEmojiSkinClick((Emoji) tag);
 
 			Animation set = createClickAnimation(1.4f,80,80);
 

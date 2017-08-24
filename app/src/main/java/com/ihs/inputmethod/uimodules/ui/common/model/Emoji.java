@@ -16,6 +16,8 @@ public final class Emoji {
 
 
 	private List<Emoji> skinItems;//皮肤族
+	private int skinSelectedIndex = -1;//记录被选中的表情族序号
+	private Emoji superEmoji;//父表情
 	
 	public Emoji(final String label, final int column, final boolean isText) {
 		this.label = label;
@@ -24,6 +26,10 @@ public final class Emoji {
 	}
 
 	public String getLabel() {
+		if (this.skinSelectedIndex != -1 && skinItems != null && skinItems.size() > skinSelectedIndex) {
+			Emoji selectedEmoji = skinItems.get(skinSelectedIndex);
+			return selectedEmoji.getLabel();
+		}
 		return label;
 	}
 
@@ -59,6 +65,12 @@ public final class Emoji {
 
 	public void setSkinItems(List<Emoji> skinItems) {
 		this.skinItems = skinItems;
+		if (this.skinItems != null ) {
+			for (Emoji item:this.skinItems) {
+				item.superEmoji  = this;
+			}
+		}
+
 	}
 
 	/**
@@ -67,6 +79,30 @@ public final class Emoji {
 	 */
 	public boolean supportSkin() {
 		return this.skinItems != null;
+	}
+	public Emoji getSuperEmoji() {
+		return superEmoji;
+	}
+
+	public void setSuperEmoji(Emoji superEmoji) {
+		this.superEmoji = superEmoji;
+	}
+
+	public int getSkinSelectedIndex() {
+		return skinSelectedIndex;
+	}
+
+	public void setSkinSelectedIndex(int skinSelectedIndex) {
+		this.skinSelectedIndex = skinSelectedIndex;
+	}
+
+	public void selected() {
+		Emoji superEmoji = this.superEmoji;
+		if (superEmoji == null) {
+			return ;
+		}
+		int index = superEmoji.getSkinItems().indexOf(this);
+		superEmoji.setSkinSelectedIndex(index);
 	}
 
 	@Override

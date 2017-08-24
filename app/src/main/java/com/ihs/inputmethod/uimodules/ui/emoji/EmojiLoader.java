@@ -204,7 +204,5 @@ final class EmojiLoader {
 			ArrayList<Emoji> emojiSkinItems = this.emojiSkinMapping.get(emoji.getLabel());
 			emoji.setSkinItems(emojiSkinItems);
 		}
-
-
 	}
 }
