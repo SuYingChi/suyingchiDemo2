@@ -51,7 +51,6 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     private void loadFontModel() {
         List<Map<String, Object>> fontList = (List<Map<String, Object>>) HSConfig.getList("Application", "FontList");
-        List<FontModel> downloadFontModelList = new ArrayList<>();
         for (Map<String, Object> map : fontList) {
             String fontName = (String) map.get("name");
             String example = (String) map.get("example");
@@ -61,13 +60,8 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
             FontModel fontModel = new FontModel(hsSpecialCharacter);
             if (!fontModel.isFontDownloaded()) {
                 fontModelList.add(fontModel);
-            } else {
-                downloadFontModelList.add(fontModel);
             }
         }
-        FontDownloadManager.getInstance().setRemoteFonts(fontModelList);
-        FontDownloadManager.getInstance().setDownloadedFonts(downloadFontModelList);
-        downloadFontModelList.clear();
     }
 
     @Override
@@ -94,7 +88,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                 if (success) {
                     int position = fontModelList.indexOf(fontModel);
                     HSPreferenceHelper.getDefault().putBoolean(PREFERENCE_KEY_SHOW_FONT_DOWNLOAD_NEW_MARK, true);
-//                    fontModelList.remove(position);
+                    fontModelList.remove(position);
                     fontCardAdapter.notifyItemRemoved(position);
                     fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
                 }

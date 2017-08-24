@@ -53,7 +53,6 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
             fontModel.setNeedDownload(false);
             fontModelList.add(fontModel);
         }
-        fontModelList.addAll(FontDownloadManager.getInstance().getDownloadedFonts());
     }
 
     @Override

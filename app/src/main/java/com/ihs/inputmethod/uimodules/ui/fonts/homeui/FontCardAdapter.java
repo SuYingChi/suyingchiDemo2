@@ -32,44 +32,6 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
         return new FontCardViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_font_card, parent, false));
     }
 
-    @Override
-    public void onBindViewHolder(final FontCardViewHolder holder, final int position, List payLoads) {
-        if(payLoads.isEmpty()) {
-            if(fontModelList == null) {
-                return;
-            }
-
-            final FontModel fontModel = fontModelList.get(position);
-            final HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
-            holder.fontCardContent.setText(hsSpecialCharacter.example);
-            if(!fontModel.isFontDownloaded()) {
-                holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
-                holder.radioButton.setVisibility(View.GONE);
-            } else {
-                holder.downloadIcon.setVisibility(View.GONE);
-                holder.radioButton.setVisibility(View.VISIBLE);
-                holder.radioButton.setChecked(position == currentSelectPosition);
-                holder.radioButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        fontSelected(fontModel);
-                    }
-                });
-            }
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    fontSelected(fontModel);
-                }
-            });
-
-
-        } else {
-            holder.radioButton.setChecked(position == currentSelectPosition);
-        }
-    }
-
     private void fontSelected(final FontModel fontModel) {
         if(fontModel.isFontDownloaded()) {
             int position = fontModelList.indexOf(fontModel);
@@ -90,7 +52,34 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
 
     @Override
     public void onBindViewHolder(final FontCardViewHolder holder, final int position) {
+        if(fontModelList == null) {
+            return;
+        }
 
+        final FontModel fontModel = fontModelList.get(position);
+        final HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
+        holder.fontCardContent.setText(hsSpecialCharacter.example);
+        if(!fontModel.isFontDownloaded()) {
+            holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
+            holder.radioButton.setVisibility(View.GONE);
+        } else {
+            holder.downloadIcon.setVisibility(View.GONE);
+            holder.radioButton.setVisibility(View.VISIBLE);
+            holder.radioButton.setChecked(position == currentSelectPosition);
+            holder.radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fontSelected(fontModel);
+                }
+            });
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fontSelected(fontModel);
+            }
+        });
     }
     
     public int getcurrentSelectPosition() {

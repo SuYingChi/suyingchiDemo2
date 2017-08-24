@@ -18,6 +18,7 @@ import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontDownloadManager;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class FontSelectViewAdapter extends BaseAdapter {
         mItemDefaultBackground = mParentView.getItemDefaultBackground();
         mItemSelectedBackground = mParentView.getItemSelectedBackground();
         // Set data
+        FontDownloadManager.getInstance();
         mFonts = HSSpecialCharacterManager.getSpecialCharacterList();
         onFontClickListener = listener;
     }
