@@ -34,6 +34,9 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
+import com.ihs.feature.battery.BatteryActivity;
+import com.ihs.feature.boost.plus.BoostPlusActivity;
+import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
 import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
@@ -187,8 +190,11 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         if (!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
+        }else {
+            BoostPlusActivity.initBoost();
+            CpuCoolerScanActivity.initBoost();
+            BatteryActivity.initBattery();
         }
-        
         Log.e("time log", "time log application oncreated finished");
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
