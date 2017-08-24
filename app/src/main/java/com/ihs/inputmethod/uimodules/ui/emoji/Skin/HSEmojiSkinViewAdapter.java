@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,13 +57,14 @@ public final class HSEmojiSkinViewAdapter extends RecyclerView.Adapter<HSEmojiSk
 			return;
 		}
 		final Emoji emoji = emojiList.get(position);
-		TextView textView = holder.tv;
+		Button textView = holder.tv;
+
 		textView.setText(emoji.getLabel());
 		if(!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()){
 			textView.setTextColor(Color.BLACK);
 		}
 		if(emoji.isText()){
-			textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, emojiSize/1.5f);
+			textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, emojiSize * 0.9f);
 		}else{
 			textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, emojiSize);
 		}
@@ -148,10 +150,10 @@ public final class HSEmojiSkinViewAdapter extends RecyclerView.Adapter<HSEmojiSk
 	}
 
 	class ViewHolder extends RecyclerView.ViewHolder{
-		TextView tv;
+		Button tv;
 		public ViewHolder(View itemView) {
 			super(itemView);
-			tv = (TextView) itemView.findViewById(R.id.emoji_skin_tv);
+			tv = (Button) itemView.findViewById(R.id.emoji_skin_tv);
 
 		}
 	}

@@ -45,6 +45,7 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.HSEmojiTabAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.HSEmojiViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.common.model.Emoji;
 import com.ihs.inputmethod.uimodules.ui.emoji.Skin.HSEmojiSkinViewAdapter;
+import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
@@ -180,7 +181,13 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
 		emojiAdapter.selectedEmoji(key.getSuperEmoji());
 		this.emojiView.invalidate();
 
-		hiddenSkinView();
+		UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				hiddenSkinView();
+			}
+		},500);
+
 		emojiCategory.pendingRecentEmoji(key);
 		HSInputMethod.inputText(key.getLabel());
 
@@ -212,13 +219,20 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
           @Override
           public boolean onTouch(View v, MotionEvent event) {
               if (event.getAction() == MotionEvent.ACTION_DOWN) {
-				  hiddenSkinView();
+
+				  UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
+					  @Override
+					  public void run() {
+						  hiddenSkinView();
+					  }
+				  },500);
+
                   return true;
               }
               return false;
           }
       });
-		skinViewAdapter = new HSEmojiSkinViewAdapter(emojiTextView.getMeasuredHeight(),emojiWidth,0.8f,this);
+		skinViewAdapter = new HSEmojiSkinViewAdapter(emojiTextView.getMeasuredHeight() +  HSDisplayUtils.dip2px(5) ,emojiWidth,0.8f,this);
 		skinViewAdapter.setHasStableIds(true);
 
 		emojiSkinView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -7,18 +7,20 @@
 	android:layout_gravity="center"
 	android:hapticFeedbackEnabled="false"
 	android:soundEffectsEnabled="false"
-
-
+    android:orientation="vertical"
 	>
-	<TextView
+	<Button
 		android:id="@+id/emoji_skin_tv"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:textColor="#FFFFFF"
 		android:gravity="center"
+		android:layout_gravity="center"
 		android:singleLine="true"
+		android:background="@drawable/emoji_select_background"
+		android:paddingBottom="2dip"
 		/>
 
 
-</FrameLayout>
+</LinearLayout>
 
