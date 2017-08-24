@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -88,27 +89,27 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 			textView.setTag(emoji);
 			textView.setOnClickListener(this);
 			textView.setSoundEffectsEnabled(false);
-
+			holder.itemView.setTag(emoji);
 		}else{
 			textView.setTag(null);
 			textView.setClickable(false);
+			holder.itemView.setTag(null);
 		}
 		if (emoji.supportSkin()) {
 
 			FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams)holder.iv.getLayoutParams();
-			flp.width= childViewWidth / 4;
-			flp.height= childViewHeight / 4;
+			flp.width= childViewWidth / 5;
+			flp.height= childViewHeight / 5;
 			holder.iv.setLayoutParams(flp);
 
 			holder.iv.setVisibility(View.VISIBLE);
 			holder.tv.setOnLongClickListener(this);
-
 		}else {
 			holder.tv.setOnLongClickListener(null);
-
 			holder.iv.setVisibility(View.GONE);
 		}
 	}
+
 
 	@Override
 	public int getItemCount() {

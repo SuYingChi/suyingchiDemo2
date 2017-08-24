@@ -5,45 +5,50 @@
 	android:layout_height="wrap_content"
 	android:layout_gravity="bottom"
 	android:clipChildren="false"
-	android:orientation="vertical">
+	>
+
 	<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
-		android:layout_height="@dimen/config_suggestions_strip_height"
-		android:orientation="horizontal">
-		<ImageView
-			android:layout_width="@dimen/config_suggestions_strip_height"
-			android:layout_height="@dimen/config_suggestions_strip_height"
-			android:id="@+id/emoji_ad_container"
-			android:scaleType="fitXY"
-			android:visibility="gone"
-			android:src="@drawable/tabbar_emoji_ad_selector">
-		</ImageView>
-		<android.support.v7.widget.RecyclerView
-			android:id="@+id/image_category_tabhost"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_marginLeft="3dp"
-			android:layout_marginRight="3dp" />
-	</LinearLayout>
-	<FrameLayout
-		android:id="@+id/emoji_emoji_container"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
 		android:clipChildren="false"
-		>
+		android:orientation="vertical">
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/config_suggestions_strip_height"
+			android:orientation="horizontal">
+			<ImageView
+				android:layout_width="@dimen/config_suggestions_strip_height"
+				android:layout_height="@dimen/config_suggestions_strip_height"
+				android:id="@+id/emoji_ad_container"
+				android:scaleType="fitXY"
+				android:visibility="gone"
+				android:src="@drawable/tabbar_emoji_ad_selector">
+			</ImageView>
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/image_category_tabhost"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginLeft="3dp"
+				android:layout_marginRight="3dp" />
+		</LinearLayout>
 
 		<android.support.v7.widget.RecyclerView
 			android:id="@+id/emoji_keyboard_pager"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent" />
 
-		<ViewStub
-			android:id="@+id/emoji_skin_import"
-			android:layout="@layout/panel_emoji_skin_view"
-			android:layout_width="fill_parent"
-			android:layout_height="match_parent"
-			  />
+	</LinearLayout>
 
-	</FrameLayout>
+
+
+
+	<ViewStub
+		android:id="@+id/emoji_skin_import"
+		android:layout="@layout/panel_emoji_skin_view"
+		android:layout_width="fill_parent"
+		android:layout_height="match_parent"
+		/>
 
 </com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanelView>

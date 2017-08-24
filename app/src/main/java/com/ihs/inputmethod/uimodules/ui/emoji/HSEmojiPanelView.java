@@ -19,6 +19,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,7 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter.OnTabChangeListener,
+public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.OnTabChangeListener,
 		HSEmojiViewAdapter.OnEmojiClickListener,HSEmojiViewAdapter.OnEmojiLongPressListener ,HSEmojiSkinViewAdapter.OnEmojiClickListener {
 
 
@@ -133,7 +137,7 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 		emojiView.setLayoutManager(new StaggeredGridLayoutManager(emojiRow,StaggeredGridLayoutManager.HORIZONTAL));
 		emojiView.setAdapter(emojiAdapter);
 		emojiView.addOnScrollListener(new ScrollListener());
-		FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams)emojiView.getLayoutParams();//new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,height)
+		LinearLayout.LayoutParams flp = (LinearLayout.LayoutParams)emojiView.getLayoutParams();//new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,height)
 		flp.height = height;
 		
 		RecyclerView.ItemAnimator animator = emojiView.getItemAnimator();
@@ -192,7 +196,7 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 		}
 
 		skinView = findViewById(R.id.emoji_skin_layout);//LayoutInflater.from(getContext()).inflate(R.layout.panel_emoji_skin_view,null);
-		skinView.setVisibility(View.VISIBLE);
+
 		final Resources res = getResources();
 		final int height = HSResourceUtils.getDefaultKeyboardHeight(res)
 				- res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
@@ -208,7 +212,7 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
           @Override
           public boolean onTouch(View v, MotionEvent event) {
               if (event.getAction() == MotionEvent.ACTION_DOWN) {
-				  skinView.setVisibility(View.GONE);
+				  hiddenSkinView();
                   return true;
               }
               return false;
@@ -229,6 +233,10 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 		llp.topMargin = windowPos[1] - (parentViewHeight - emojiTextView.getMeasuredHeight()  );
 		emojiSkinView.setLayoutParams(llp);
 		skinViewAdapter.setData(emoji.getSkinItems());
+
+		Animation animation = createShowAnimation(2,50);
+		skinView.setVisibility(View.VISIBLE);
+		skinView.setAnimation(animation);
 
 	}
 
@@ -353,9 +361,64 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 	}
 
 	private void hiddenSkinView() {
-		if (this.skinView != null) {
-			this.skinView.setVisibility(View.GONE);
+		if (this.skinView != null && this.skinView.getVisibility() == View.VISIBLE) {
+
+			Animation animation = createHiddenAnimation(2,50);
+			animation.setAnimationListener(new Animation.AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					skinView.setVisibility(View.GONE);
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+			});
+			skinView.startAnimation(animation);
 		}
-		emojiCategoryView.setEnabled(true);
+	}
+
+	private Animation createShowAnimation(final float scaleRation, final int upDuration){
+
+		final Animation scaleUp=new ScaleAnimation(
+				1/scaleRation,1.0f,1,1.0f,
+				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1f
+		);
+
+		final AnimationSet set=new AnimationSet(false);
+		scaleUp.setDuration(upDuration);
+		scaleUp.setFillAfter(true);
+		set.setDuration(upDuration);
+		set.addAnimation(scaleUp);
+
+		AlphaAnimation  alpha = new AlphaAnimation(0.5f, 1.0f);
+		alpha.setFillAfter(true);
+		alpha.setDuration(upDuration);
+		set.addAnimation(alpha);
+		return set;
+	}
+
+	private Animation createHiddenAnimation(final float scaleRation,   final int downDuration){
+
+
+		final Animation scaleDown=new ScaleAnimation(
+				1.0f,1/scaleRation,1.0f,1,
+				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1.f
+		);
+		final AnimationSet set=new AnimationSet(false);
+		scaleDown.setDuration(downDuration);
+		scaleDown.setFillAfter(true);
+		set.setDuration( downDuration);
+		set.addAnimation(scaleDown);
+
+		AlphaAnimation  alpha = new AlphaAnimation(1.0f, 0.5f);
+		alpha.setFillAfter(true);
+		alpha.setDuration(downDuration);
+		set.addAnimation(alpha);
+		return set;
 	}
 }

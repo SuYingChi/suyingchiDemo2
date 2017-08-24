@@ -68,9 +68,11 @@ final class EmojiLoader {
 			}
 			final String[] emojiGroupNames = res.getStringArray(emojiGroupArrayId);
 			final String[] textGroupNames = res.getStringArray(R.array.emoji_groups_text);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+				KCMap emojiMapping = getEmojiSkinConfigMap();
+				resolveSkinMapping(emojiMapping);
+			}
 
-			KCMap emojiMapping = getEmojiSkinConfigMap();
-			resolveSkinMapping(emojiMapping);
 			for (final String groupName : emojiGroupNames) {
 				final EmojiGroup group = new EmojiGroup(groupName, false);
 				int emojiGroupId = res.getIdentifier(groupName + version, "array", packageName);
