@@ -21,7 +21,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -39,8 +38,6 @@ import com.ihs.keyboardutils.permission.PermissionUtils;
 import java.util.ArrayList;
 
 import static android.view.View.GONE;
-import static com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.PREFERENCE_KEY_SHOW_FONT_DOWNLOAD_NEW_MARK;
-import static com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.PREFERENCE_KEY_SHOW_STICKER_DOWNLOAD_NEW_MARK;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
@@ -170,10 +167,8 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         if (position == 0) {
             layout.setVisibility(View.VISIBLE);
         } else if (position == 1) { //my sticker
-            HSPreferenceHelper.getDefault().getBoolean(PREFERENCE_KEY_SHOW_STICKER_DOWNLOAD_NEW_MARK, false);
             layout.setVisibility(View.GONE);
         } else if (position == 2) { // my font
-            HSPreferenceHelper.getDefault().getBoolean(PREFERENCE_KEY_SHOW_FONT_DOWNLOAD_NEW_MARK, false);
             layout.setVisibility(View.GONE);
         }
 

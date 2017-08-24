@@ -5,18 +5,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by guonan.lv on 17/8/14.
@@ -56,23 +56,33 @@ public class MyStickerFragment extends Fragment {
     }
 
     private void loadStickerModel() {
-        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
-        for (Map<String, Object> map : stickerConfigList) {
-            String stickerGroupName = (String) map.get("name");
-            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if(!StickerDataManager.getInstance().isStickerGroupDownloaded(stickerGroupName)) {
-                continue;
+        String downloadStickerNameListJoin = HSPreferenceHelper.getDefault().getString(StickerHomeFragment.DOWNLOAD_STICKER_NAME_LIST, "");
+        List<String> downloadStickerNameList = Arrays.asList(downloadStickerNameListJoin.split("\t"));
+        for (String downloadStickerName : downloadStickerNameList) {
+            if(!TextUtils.isEmpty(downloadStickerName)) {
+                StickerGroup stickerGroup = new StickerGroup(downloadStickerName);
+                StickerModel stickerModel = new StickerModel(stickerGroup);
+                stickerModel.setIsDownload(true);
+                stickerModelList.add(stickerModel);
             }
-            String stickerTag = (String) map.get("tagName");
-            String stickerGroupDownloadDisplayName = (String) map.get("showName");
-            stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
-            StickerModel stickerModel = new StickerModel(stickerGroup);
-            stickerModel.setIsDownload(true);
-            if(stickerTag != null) {
-                stickerModel.setStickTag(stickerTag);
-            }
-            stickerModelList.add(stickerModel);
         }
+//        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
+//        for (Map<String, Object> map : stickerConfigList) {
+//            String stickerGroupName = (String) map.get("name");
+//            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
+//            if(!StickerDataManager.getInstance().isStickerGroupDownloaded(stickerGroupName)) {
+//                continue;
+//            }
+//            String stickerTag = (String) map.get("tagName");
+//            String stickerGroupDownloadDisplayName = (String) map.get("showName");
+//            stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
+//            StickerModel stickerModel = new StickerModel(stickerGroup);
+//            stickerModel.setIsDownload(true);
+//            if(stickerTag != null) {
+//                stickerModel.setStickTag(stickerTag);
+//            }
+//            stickerModelList.add(stickerModel);
+//        }
     }
 
     @Override

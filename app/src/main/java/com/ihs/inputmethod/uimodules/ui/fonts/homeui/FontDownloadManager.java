@@ -8,14 +8,13 @@ import android.view.View;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.connection.HSHttpConnection;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
+import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.specialcharacter.SpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
@@ -26,11 +25,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.FONT_DOWNLOAD_SUCCESS_NOTIFICATION;
 
 /**
  * Created by guonan.lv on 17/8/21.
@@ -42,17 +38,14 @@ public class FontDownloadManager {
     private static final String DOWNLOADED_FONT_NAME_JOIN = "download_font_name_join";
     private static FontDownloadManager instance;
 
-    private List<FontModel> downloadFonts = new ArrayList<>();
-
     private FontDownloadManager() {
         String downloadedFontNameJoin = HSPreferenceHelper.getDefault().getString(DOWNLOADED_FONT_NAME_JOIN, "");
         if (!downloadedFontNameJoin.isEmpty()) {
             List<String> downloadFontNameList = Arrays.asList(downloadedFontNameJoin.split("\t"));
             for (String downloadFontName : downloadFontNameList) {
-                HSLog.e("eeee", downloadFontName);
                 HSSpecialCharacter downloadSpecialCharacter = readSpecialCharacterFromFile(downloadFontName);
-                if (downloadSpecialCharacter != null) {
-                    SpecialCharacterManager.getInstance().addSpecialFont(downloadSpecialCharacter);
+                if (downloadSpecialCharacter != null && !HSSpecialCharacterManager.getSpecialCharacterList().isEmpty()) {
+                    HSSpecialCharacterManager.addSpecilCharacter(1, downloadSpecialCharacter, 14);
                 }
             }
         }
@@ -74,29 +67,13 @@ public class FontDownloadManager {
     }
 
     public void updateSpecialCharacterList(FontModel newFontModel) {
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(FONT_DOWNLOAD_SUCCESS_NOTIFICATION);
-        SpecialCharacterManager.getInstance().addSpecialFont(newFontModel.getHsSpecialCharacter());
+        HSSpecialCharacterManager.addSpecilCharacter(1, newFontModel.getHsSpecialCharacter(), 14);
 
         String downloadedFontNameJoin = HSPreferenceHelper.getDefault().getString(DOWNLOADED_FONT_NAME_JOIN, "");
         String downloadedFontName = newFontModel.getFontName();
         downloadedFontNameJoin += downloadedFontNameJoin.isEmpty() ? downloadedFontName : "\t" + downloadedFontName;
         HSPreferenceHelper.getDefault().putString(DOWNLOADED_FONT_NAME_JOIN, downloadedFontNameJoin);
 
-    }
-
-    public List<FontModel> getDownloadFonts() {
-        return downloadFonts;
-    }
-
-    public void setDownloadFonts(List<FontModel> fonts) {
-        if (!fonts.isEmpty()) {
-            if (downloadFonts.isEmpty()) {
-                downloadFonts = fonts;
-                for (FontModel fontModel : downloadFonts) {
-                    SpecialCharacterManager.getInstance().addSpecialFont(fontModel.getHsSpecialCharacter());
-                }
-            }
-        }
     }
 
     public void startForegroundDownloading(Context context, final FontModel fontModel,

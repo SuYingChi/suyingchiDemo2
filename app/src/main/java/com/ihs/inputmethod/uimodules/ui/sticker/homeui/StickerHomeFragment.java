@@ -24,8 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.PREFERENCE_KEY_SHOW_STICKER_DOWNLOAD_NEW_MARK;
-
 /**
  * Created by guonan.lv on 17/8/10.
  */
@@ -35,6 +33,8 @@ public class StickerHomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private StickerCardAdapter stickerCardAdapter;
     private List<StickerModel> stickerModelList = new ArrayList<>();
+
+    public static final String DOWNLOAD_STICKER_NAME_LIST = "download_sticker_name_list";
 
     @Nullable
     @Override
@@ -63,7 +63,9 @@ public class StickerHomeFragment extends Fragment {
                     @Override
                     public void onDismiss(boolean success) {
                         if(success) {
-                            HSPreferenceHelper.getDefault().putBoolean(PREFERENCE_KEY_SHOW_STICKER_DOWNLOAD_NEW_MARK, true);
+                            String downloadStickers = HSPreferenceHelper.getDefault().getString(DOWNLOAD_STICKER_NAME_LIST, "");
+                            downloadStickers = stickerModel.getStickerGroup().getStickerGroupName() + "\t" + downloadStickers;
+                            HSPreferenceHelper.getDefault().putString(DOWNLOAD_STICKER_NAME_LIST, downloadStickers);
                             int position = stickerModelList.indexOf(stickerModel);
                             stickerModelList.remove(position);
                             removeStickerFromView(position);
