@@ -393,7 +393,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         super.onKeyboardWindowShow();
         if (shouldShowGoogleAD()) {
             getKeyboardPanelMananger().showGoogleAdBar();
-        } else {
+        } else if (!TextUtils.equals(currentAppPackageName, HSApplication.getContext().getPackageName())) {
             getKeyboardPanelMananger().showBannerAdBar();
         }
 
