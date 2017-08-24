@@ -37,6 +37,11 @@
             android:id="@+id/nav_no_ads"
             android:icon="@drawable/nav_no_ads_icon"
             android:title="@string/theme_nav_no_ads"/>
+
+        <item
+            android:id="@+id/nav_privacy"
+            android:icon="@drawable/nav_privacy_icon"
+            android:title="@string/text_privacy_policy"/>
     </group>
 
 </menu>

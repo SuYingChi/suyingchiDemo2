@@ -3,12 +3,15 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Browser;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -17,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -443,8 +447,16 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         } else if (id == R.id.nav_no_ads) {
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("removeAds_clicked");
             RemoveAdsManager.getInstance().purchaseRemoveAds();
+        } else if ( id == R.id.nav_privacy){
+            Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Log.w("URLSpan", "Actvity was not found for intent, " + intent.toString());
+            }
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
