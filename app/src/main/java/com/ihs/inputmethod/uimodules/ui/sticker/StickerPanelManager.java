@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.Pair;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
 import com.ihs.inputmethod.uimodules.R;
 
@@ -69,8 +68,6 @@ public class StickerPanelManager {
             if (stickerGroup.isInternalStickerGroup()) {
                 stickerBuildInList.add(stickerGroup);
             } else if (stickerGroup.isStickerGroupDownloaded()) {
-                HSLog.e("reload", stickerGroup.getStickerGroupName());
-                HSLog.e("reload", String.valueOf(stickerGroup.getStickerList().size()));
                 stickerDownloadedList.add(stickerGroup);
             } else {
                 stickerNeedDownloadList.add(stickerGroup);
@@ -91,7 +88,9 @@ public class StickerPanelManager {
             if (stickerGroup.isInternalStickerGroup()) {
                 stickerBuildInNameList.add(stickerGroup.getStickerGroupName());
             } else if (stickerGroup.isStickerGroupDownloaded()) {
-                stickerGroup.reloadStickers();
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
                 stickerDownloadedNameList.add(stickerGroup.getStickerGroupName());
             } else {
                 stickerNeedDownloadNameList.add(stickerGroup.getStickerGroupName());

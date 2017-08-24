@@ -78,6 +78,7 @@ public class StickerHomeFragment extends Fragment {
 
     private void loadStickerGroup() {
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
+
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
