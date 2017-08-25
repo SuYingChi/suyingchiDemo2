@@ -98,22 +98,16 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         addCustomData((KCBaseElement) item);
 
         if (((KCBaseElement) item).getTypeName().equals("background")) {
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_background_clicked", ((KCBaseElement) item).getName());
             HSAnalytics.logEvent("app_customize_background_background_clicked", "item",((KCBaseElement) item).getName() );
         } else if (((KCBaseElement) item).getTypeName().equals("button_style")) {
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_button_style_clicked", ((KCBaseElement) item).getName());
             HSAnalytics.logEvent("app_customize_button_style_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("button_shape")) {
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_button_shape_clicked", ((KCBaseElement) item).getName());
             HSAnalytics.logEvent("app_customize_button_shape_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("font_color")) {
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_font_color_clicked", ((KCBaseElement) item).getName());
             HSAnalytics.logEvent("app_customize_font_color_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("font")) {
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_font_font_clicked", ((KCBaseElement) item).getName());
             HSAnalytics.logEvent("app_customize_font_font_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("click_sound")) {
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_sound_clicked", ((KCBaseElement) item).getName());
             HSAnalytics.logEvent("app_customize_sound_clicked", "item", ((KCBaseElement) item).getName());
         }
 

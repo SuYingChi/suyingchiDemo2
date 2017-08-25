@@ -100,7 +100,6 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 		backgroundTitle.titleClickListener=new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("shortcut_customize_background_more_clicked");
 				HSAnalytics.logEvent("shortcut_customize_background_more_clicked");
 				Bundle bundle = new Bundle();
 				String customEntry = "store_more";
@@ -212,7 +211,6 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
 	@Override
 	public void onCardClick(HSKeyboardTheme keyboardTheme) {
-//		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("store_themes_preview_clicked", keyboardTheme.mThemeName);
 		HSAnalytics.logEvent("store_themes_preview_clicked", "themeName", keyboardTheme.mThemeName);
 		if (isThemeAnalyticsEnabled) {
 			ThemeAnalyticsReporter.getInstance().recordThemeClick(keyboardTheme.mThemeName);
@@ -221,7 +219,6 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
 	@Override
 	public void onMenuApplyClick(HSKeyboardTheme keyboardTheme) {
-		// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("store_themes_apply_clicked", keyboardTheme.mThemeName);
 		if (isThemeAnalyticsEnabled) {
 			ThemeAnalyticsReporter.getInstance().recordThemeApply(keyboardTheme.mThemeName);
 		}
@@ -229,12 +226,10 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
 	@Override
 	public void onMenuShareClick(HSKeyboardTheme keyboardTheme) {
-		// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("store_themes_share_clicked", keyboardTheme.mThemeName);
 	}
 
 	@Override
 	public void onMenuDownloadClick(HSKeyboardTheme keyboardTheme) {
-//		HSGoogleAnalyticsUtils.getInstance().logAppEvent("store_themes_download_clicked", keyboardTheme.mThemeName);
 		HSAnalytics.logEvent("store_themes_download_clicked", "themeName", keyboardTheme.mThemeName);
 		if (isThemeAnalyticsEnabled) {
 			ThemeAnalyticsReporter.getInstance().recordThemeDownload(keyboardTheme.mThemeName);
@@ -260,7 +255,6 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 	@Override
 	public void onPause() {
 		long time = (System.currentTimeMillis() - currentResumeTime) / 1000;
-		// HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_mainpage_show_time", time);
 		super.onPause();
 	}
 

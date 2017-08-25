@@ -196,20 +196,16 @@ public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.
 
     @Override
     public void onCardClick(HSKeyboardTheme keyboardTheme) {
-//		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("mythemes_preview_clicked",
-//				keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.CUSTOM ? getString(R.string.theme_card_custom_theme_default_name) : keyboardTheme.mThemeName);
         HSAnalytics.logEvent("mythemes_preview_clicked", "themeType", keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.CUSTOM ? getString(R.string.theme_card_custom_theme_default_name) : keyboardTheme.mThemeName);
     }
 
     @Override
     public void onMenuApplyClick(HSKeyboardTheme keyboardTheme) {
-//        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("mythemes_apply_clicked", keyboardTheme.mThemeName);
         HSAnalytics.logEvent("mythemes_apply_clicked", "themeName", keyboardTheme.mThemeName);
     }
 
     @Override
     public void onMenuShareClick(HSKeyboardTheme keyboardTheme) {
-//		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("mythemes_share_clicked", keyboardTheme.mThemeName);
         HSAnalytics.logEvent("mythemes_share_clicked", "themeName", keyboardTheme.mThemeName);
     }
 

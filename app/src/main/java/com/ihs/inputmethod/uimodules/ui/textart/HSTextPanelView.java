@@ -117,8 +117,6 @@ public class HSTextPanelView extends LinearLayout implements BaseTabViewAdapter.
 	public void onEmojiClick(final Emoji key) {
 		emojiCategory.pendingRecentEmoji(key);
 		HSInputMethod.inputText(key.getLabel());
-
-//		HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("kaomoji_input", key.getLabel());
 		HSAnalytics.logEvent("kaomoji_input", "keyLabel", key.getLabel());
 	}
 

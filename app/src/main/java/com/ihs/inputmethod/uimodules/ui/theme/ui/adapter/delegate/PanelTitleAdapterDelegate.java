@@ -66,7 +66,6 @@ public final class PanelTitleAdapterDelegate extends AdapterDelegate<List<ThemeP
 				public void onClick(View v) {
 					model.isCustomThemeInEditMode=!model.isCustomThemeInEditMode;
 					if(model.isCustomThemeInEditMode){
-						// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_trash_clicked");
 						viewHolder.doneButton.setVisibility(View.VISIBLE);
 						viewHolder.editButton.setVisibility(View.INVISIBLE);
 					}else{

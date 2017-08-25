@@ -26,11 +26,8 @@ public class DownloadCompleteReceiver extends BroadcastReceiver {
             long myId = ApkDownloadManager.obtainDownloadId(UpdateConfig.getDefault());
             if (myId == downloadId) {
                 // launcher App update
-                //HSAnalytics.logEvent("Update_APK_Download_Succeed");
                 HSLog.d("Download update apk succeed: " + uri);
-                // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_apk_download_success");
             } else {
-                //HSAnalytics.logEvent("Theme_DownloadFromS3_Result", "type", "Succeed");
                 HSLog.e("Download update apk failed(Non-expected downloadId: " + myId+")");
             }
 

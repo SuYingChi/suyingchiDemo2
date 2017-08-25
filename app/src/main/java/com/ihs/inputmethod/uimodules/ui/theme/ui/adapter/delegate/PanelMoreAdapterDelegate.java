@@ -105,7 +105,6 @@ public final class PanelMoreAdapterDelegate extends AdapterDelegate<List<ThemePa
 					return;
 				}
 				startThemeHomeActivity();
-//				HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_more_clicked");
 				HSAnalytics.logEvent("keyboard_customtheme_more_clicked");
 			}
 		});

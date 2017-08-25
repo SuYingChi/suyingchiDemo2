@@ -135,7 +135,6 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                     if (ClickUtils.isFastDoubleClick()) {
                         return;
                     }
-//                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
                     HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName());
                     StickerDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroup, sticker_download_preview.getDrawable(), null);
                 }

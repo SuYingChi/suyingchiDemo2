@@ -40,7 +40,6 @@ public class ShareManager {
         final String packageName = ShareChannel.CURRENT.getPackageName();
         final Pair<Integer, String> pair = ShareUtils.getSequenceFramesImageShareMode(packageName);
         final int mode = pair.first;
-        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_facemoji_clicked", sfImage.getCategoryName() + "_" + sfImage.getName());
         if(ShareChannel.MESSAGE.getPackageName().equals(ShareChannel.CURRENT.getPackageName())){
             shareFacemojiByIntent(sfImage, pair.second, ShareChannel.CURRENT, progressListener);
             return;

@@ -200,8 +200,6 @@ public class SetupKeyboardAccessibilityService {
         alertDialogBuilder.setNegativeButton(context.getResources().getString(R.string.dialog_access_setup_manual), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_alert_setup_failed_manual_clicked");
-
                 stopSelf = true;
                 handler.removeCallbacksAndMessages(null);
                 HSFloatWindowManager.getInstance().removeAccessibilityCover();
@@ -215,7 +213,6 @@ public class SetupKeyboardAccessibilityService {
         alertDialogBuilder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_alert_setup_failed_retry_clicked");
                 dialog.dismiss();
                 onServiceConnected();
             }
@@ -250,7 +247,6 @@ public class SetupKeyboardAccessibilityService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_alert_setup_failed_show");
     }
 
     private void findAndPerformActionButton(String text) {

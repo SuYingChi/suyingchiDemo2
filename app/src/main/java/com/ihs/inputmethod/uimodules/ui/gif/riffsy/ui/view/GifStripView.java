@@ -187,7 +187,6 @@ public final class GifStripView extends FrameLayout implements EmojiSearchView.O
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction()==MotionEvent.ACTION_DOWN){
-					// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_search_clicked");
 					updateStripViewState(StripState.SEARCH);
 					return true;
 				}
@@ -305,7 +304,6 @@ public final class GifStripView extends FrameLayout implements EmojiSearchView.O
 		emojiText.setText(esItem.getId());
 		panelView.onEmojiSearchItemClicked(esItem);
 		updateStripViewState(StripState.Emoji);
-		// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_emoji_search",esItem.getId());
 	}
 
 	public void bindPanelView(GifPanelView panelView) {
@@ -343,7 +341,6 @@ public final class GifStripView extends FrameLayout implements EmojiSearchView.O
 		emojiSearchView.setEmojiData(emojiLoader.getEmojiList());
 		showEmojiSearchView();
 		showEmojiStripView();
-		// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_emoji_search_start");
 	}
 
 	private void showEmojiSearchView(){

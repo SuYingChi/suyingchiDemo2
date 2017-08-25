@@ -292,7 +292,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         super.onPause();
         long time = (System.currentTimeMillis() - currentResumeTime) / 1000;
         HSLog.e("app_theme_preview_show_time : " + time);
-        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_theme_preview_show_time", time);
     }
 
     @Override
@@ -358,7 +357,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             ((TextView) v).setText(R.string.theme_card_menu_downloading);
             v.setEnabled(false);
             ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
-//            HSGoogleAnalyticsUtils.getInstance().logAppEvent("themedetails_download_clicked", themeName);
             HSAnalytics.logEvent("themedetails_download_clicked", "themeName", themeName);
             if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                 ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(themeName);
@@ -368,7 +366,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_share).equalsIgnoreCase(text)) {
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_share_clicked", themeName);
             HSAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
             LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, false, new LockerEnableDialog.OnLockerBgLoadingListener() {
@@ -388,7 +385,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
                 }
             }
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_apply_clicked", themeName);
             HSAnalytics.logEvent("themedetails_apply_clicked", "themeName", themeName);
             if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                 ThemeAnalyticsReporter.getInstance().recordThemeApplyInDetailActivity(themeName);
@@ -514,13 +510,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     @Override
     public void onCardClick(HSKeyboardTheme keyboardTheme) {
-//        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_themes_preview_clicked", keyboardTheme.mThemeName);
         HSAnalytics.logEvent("themedetails_themes_preview_clicked", "keyboardTheme", keyboardTheme.mThemeName);
     }
 
     @Override
     public void onMenuApplyClick(HSKeyboardTheme keyboardTheme) {
-        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_themes_apply_clicked", keyboardTheme.mThemeName);
         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
             ThemeAnalyticsReporter.getInstance().recordThemeApplyInDetailActivity(keyboardTheme.mThemeName);
         }
@@ -528,12 +522,10 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     @Override
     public void onMenuShareClick(HSKeyboardTheme keyboardTheme) {
-        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_themes_share_clicked", keyboardTheme.mThemeName);
     }
 
     @Override
     public void onMenuDownloadClick(HSKeyboardTheme keyboardTheme) {
-//        HSGoogleAnalyticsUtils.getInstance().logAppEvent("themedetails_themes_download_clicked", keyboardTheme.mThemeName);
         HSAnalytics.logEvent("themedetails_themes_download_clicked", "keyboardTheme", keyboardTheme.mThemeName);
         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
             ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(keyboardTheme.mThemeName);
@@ -560,17 +552,14 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 rightBtn.setText(R.string.theme_card_menu_apply);
                 rightBtn.setEnabled(true);
             }
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_apply_clicked", themeName);
             HSAnalytics.logEvent("themedetails_apply_clicked", "themeName", themeName);
         }
 
         switch (requestCode) {
             case keyboardActivationFromDetail:
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "apply");
                 HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_detail", "apply");
                 break;
             case ThemeMenuUtils.keyboardActivationFromAdapter:
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "apply");
                 HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_detail", "apply");
                 break;
         }

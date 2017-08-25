@@ -114,7 +114,6 @@ public class StickerDownloadManager {
                 if (totalSize > 0) {
                     final float percent = (float) received * 100 / totalSize;
                     if (received >= totalSize) {
-//                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroup.getStickerGroupName());
                         HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroup.getStickerGroupName());
                         unzipStickerGroup(stickerGroupZipFilePath, stickerGroup);
                     }

@@ -142,15 +142,12 @@ public class HSEmojiPanelView extends LinearLayout implements BaseTabViewAdapter
 		emojiCategory.pendingRecentEmoji(key);
 		HSInputMethod.inputText(key.getLabel());
 
-		// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(HSGoogleAnalyticsConstants.GA_PARAM_ACTION_EMOJI_INPUT, key.getLabel());
 		HSAnalytics.logEvent("emoji_input", "Value", key.getLabel());
 	}
 
 	public void showPanelView() {
 		setHardwareAcceleratedDrawingEnabled(HSInputMethod.isHardwareAcceleratedDrawingEnabled());
 		updateTabsBeforeStart();
-//		emojiAdapter.setData(emojiCategory.getSortEmoji());
-//		tabAdapter.setCurrentTab(emojiCategory.getCurrentTabName(),emojiCategory.getDefaultTab());
 	}
 
 	void onDataLoaded(){

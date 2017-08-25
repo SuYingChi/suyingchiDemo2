@@ -113,7 +113,6 @@ public final class PanelCreateAdapterDelegate extends AdapterDelegate<List<Theme
 					bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
 					CustomThemeActivity.startCustomThemeActivity(bundle);
 				}
-//				HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_create_clicked");
 				HSAnalytics.logEvent("keyboard_customtheme_create_clicked");
 			}
 		});

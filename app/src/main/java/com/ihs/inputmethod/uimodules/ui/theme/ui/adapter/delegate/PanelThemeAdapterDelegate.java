@@ -132,7 +132,6 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                                     HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
                                 }
 
-//                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_theme_chosed", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
                                 HSAnalytics.logEvent("keyboard_theme_chosed", "themeType", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
                                 if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                                     ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
@@ -147,7 +146,6 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                             HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
                         }
 
-                        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_theme_chosed", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
                         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                             ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
                         }
@@ -163,9 +161,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
             viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//					HSKeyboardThemeManager.removeTheme(model.themeName);
                     KCCustomThemeManager.getInstance().removeCustomTheme(model.themeName);
-//                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_delete_clicked");
                     HSAnalytics.logEvent("keyboard_customtheme_deleted");
                 }
             });

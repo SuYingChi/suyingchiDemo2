@@ -44,9 +44,6 @@ public class IntentShare extends FacemojiShare {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_facemoji_send", format);
-
         // check current face picture
         String faceName = MediaController.getFaceNameProvider().faceName();
         if (faceName == null) return;

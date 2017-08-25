@@ -253,10 +253,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
         String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
         if ("keyboard_create".equals(customEntry)) {
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
             HSAnalytics.logEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, "bundle_key", customEntry);
         } else {
-//            HSGoogleAnalyticsUtils.getInstance().logAppEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
             HSAnalytics.logEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, "bundle_key", customEntry);
         }
 
@@ -383,7 +381,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                     //首页返回
                     Intent intent = getIntent();
                     String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
-//                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_cancel_clicked", customEntry);
                     HSAnalytics.logEvent("app_customize_background_cancel_clicked", "bundle_key", customEntry);
                     finish();
                 } else {
@@ -424,7 +421,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 }
                 Intent intent = getIntent();
                 String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent(action, customEntry);
                 break;
             case 1:
                 //button
@@ -446,7 +442,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 label = customThemeData.getSoundElement().getName();
                 break;
         }
-//        HSGoogleAnalyticsUtils.getInstance().logAppEvent(action, label);
         HSAnalytics.logEvent(action, "currentPage", label);
     }
 
@@ -504,7 +499,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             getKeyboardView().draw(canvas);
             new SaveThemeChangesTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bitmap);
 
-//            HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_save", null);
             HSAnalytics.logEvent("app_customize_save", "save_state", "Save_Success");
         }
     }

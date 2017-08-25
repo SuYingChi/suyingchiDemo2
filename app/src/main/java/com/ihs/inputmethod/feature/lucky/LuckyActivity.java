@@ -164,7 +164,6 @@ public class LuckyActivity extends HSAppCompatActivity
         mMusicHandler = new MusicPlayerHandler();
         initView(mute);
 
-//        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("lucky_open");
         HSAnalytics.logEvent("lucky_open");
     }
 

@@ -199,7 +199,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 case SettingsButton.SettingButtonType.MENU:
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
-//                    // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_function_button_click");
                     HSAnalytics.logEvent("keyboard_function_button_click");
                     break;
 
@@ -228,7 +227,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("From", "Keyboard");
             HSApplication.getContext().startActivity(intent);
-//            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_cloth_button_click");
             HSAnalytics.logEvent("keyboard_cloth_button_click");
         }
     }
@@ -338,7 +336,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     acbNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                         @Override
                         public void onAdClick(AcbAd acbAd) {
-//                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_click", "GooglePlay_Search");
                             HSAnalytics.logEvent("keyboard_toolBar_click", "where", "GooglePlay_Search");
                             logGoogleAdEvent("Click");
                         }
@@ -401,7 +398,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
                     keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
                 }
-//                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_close", "GooglePlay_Search");
                 HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
             }
         });
@@ -417,7 +413,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void logCustomizeBarShowed() {
         if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE) {
-//            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_toolBar_show", "GooglePlay_Search");
             HSAnalytics.logEvent("keyboard_toolBar_show", "where", "GooglePlay_Search");
             logGoogleAdEvent("Show");
         }

@@ -261,7 +261,6 @@ public class StickerManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_sticker_clicked",type);
 	}
 
 	public static void copyFile(final InputStream in,final File file) throws IOException {

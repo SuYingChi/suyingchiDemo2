@@ -30,7 +30,6 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
 
 
     protected void onAlbumItemClicked(final BaseItemHolder holder, final Integer item) {
-//        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_album_clicked");
         HSAnalytics.logEvent("app_customize_background_album_clicked");
         fragment.pickFromGallery(new BackgroundFragment.OnSelectCallback() {
             @Override
@@ -41,7 +40,6 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
     }
 
     protected void onCameraItemClicked(final BaseItemHolder holder, final Integer item) {
-//        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("app_customize_background_camera_clicked");
         HSAnalytics.logEvent("app_customize_background_camera_clicked");
         fragment.pickFromCamera(new BackgroundFragment.OnSelectCallback() {
             @Override

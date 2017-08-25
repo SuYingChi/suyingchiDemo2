@@ -232,8 +232,6 @@ public class ApkUtils {
     }
 
     private static void showUpdateAlert() {
-        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_apk_update_dialog_show");
-
         saveUpdateAlertLastShownTime();
 
         // Create custom dialog object
@@ -258,7 +256,6 @@ public class ApkUtils {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_apk_update_dialog_update_clicked");
                         doUpdate();
                         dialog.dismiss();
                     }

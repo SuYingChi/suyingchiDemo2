@@ -188,9 +188,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             HSLog.e("wrong sticker!");
             return;
         }
-//        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_input ", sticker.getStickerName());
         HSAnalytics.logEvent("sticker_input", "stickerName", sticker.getStickerName());
-//        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_input_tab ", sticker.getStickerGroupName());
         HSAnalytics.logEvent("sticker_input_tab", "stickerGroupName", sticker.getStickerGroupName());
         stickerPanelManager.pendingRecentSticker(sticker);
         String currentPackageName = HSInputMethod.getCurrentHostAppPackageName();

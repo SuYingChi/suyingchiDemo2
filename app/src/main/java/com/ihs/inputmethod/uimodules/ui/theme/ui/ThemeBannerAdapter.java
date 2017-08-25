@@ -410,7 +410,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                     Intent intent = new Intent(activity, ThemeDetailActivity.class);
                     intent.putExtra(ThemeDetailActivity.INTENT_KEY_THEME_NAME, keyboardTheme.mThemeName);
                     activity.startActivity(intent);
-//                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("store_banner_clicked", keyboardTheme.mThemeName);
                     HSAnalytics.logEvent("store_banner_clicked", "themeName", keyboardTheme.mThemeName);
                     HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);
                     if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {

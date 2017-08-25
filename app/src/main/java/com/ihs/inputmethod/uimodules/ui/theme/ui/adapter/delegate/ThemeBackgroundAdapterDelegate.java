@@ -233,7 +233,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_CAMERA, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                         CustomThemeActivity.startCustomThemeActivity(bundle);
-                        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("shortcut_customize_background_clicked", "camera");
                         HSAnalytics.logEvent("shortcut_customize_background_clicked", "camera");
                     }
                 });
@@ -249,7 +248,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_GALLERY, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                         CustomThemeActivity.startCustomThemeActivity(bundle);
-                        // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("shortcut_customize_background_clicked", "album");
                         HSAnalytics.logEvent("shortcut_customize_background_clicked", "album");
                     }
                 });
@@ -298,7 +296,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
                             bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                             CustomThemeActivity.startCustomThemeActivity(bundle);
-                            // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("shortcut_customize_background_clicked", background.getName());
                             HSAnalytics.logEvent("shortcut_customize_background_clicked", background.getName());
                         }
                     });

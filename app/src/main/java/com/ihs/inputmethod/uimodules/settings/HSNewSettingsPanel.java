@@ -25,7 +25,6 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
-import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -87,7 +86,6 @@ public class HSNewSettingsPanel extends BasePanel {
 
                 item.hideNewMark();
                 ((BaseFunctionBar) panelActionListener.getBarView()).hideNewMark();
-//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_themes_clicked");
                 HSAnalytics.logEvent("keyboard_setting_themes_clicked");
             }
         });
@@ -105,7 +103,6 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 getPanelActionListener().showChildPanel(HSFontSelectPanel.class, null);
-//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_fonts_clicked");
                 HSAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));
@@ -125,7 +122,6 @@ public class HSNewSettingsPanel extends BasePanel {
                         HSUIInputMethod.launchMoreLanguageActivity();
                     }
                 }, 100);
-//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("setting_addlanguage_clicked");
                 HSAnalytics.logEvent("keyboard_setting_addlanguage_clicked");
             }
         }));
@@ -140,7 +136,6 @@ public class HSNewSettingsPanel extends BasePanel {
                         HSUIInputMethod.launchSettingsActivity();
                     }
                 }, 100);
-                // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_MORE_CLICKED);
             }
         }));
 

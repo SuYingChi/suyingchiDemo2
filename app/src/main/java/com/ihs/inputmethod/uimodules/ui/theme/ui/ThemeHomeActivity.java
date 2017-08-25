@@ -175,7 +175,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         enableTipTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_appbar_clicked");
                 keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
             }
         });
@@ -191,7 +190,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                 CustomThemeActivity.startCustomThemeActivity(bundle);
 
-//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("customize_entry_clicked", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
                 HSAnalytics.logEvent("customize_entry_clicked", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
             }
         });
@@ -202,7 +200,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 clearApkUpdateTip();
-//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_show", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
                 HSAnalytics.logEvent("sidebar_show", "fragment", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
             }
         };
@@ -257,12 +254,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                                 isFromUsageAccessActivity = true;
                             }
                             enableUsageAccessPermission();
-                            // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_agree_clicked");
                         }
                     })
                     .setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), null)
                     .show();
-            // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("appalert_usageaccess_showed");
         }
 
         HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
@@ -336,9 +331,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
-            if (PermissionUtils.isUsageAccessGranted()) {
-                // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("permission_usage_access");
-            }
         }
 
         refreshApkUpdateViews();
@@ -350,25 +342,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
         isResumeOnCreate = false;
 
-//        if (!isAdTriggerLottieAnimationPlayed) {
-////            lottieAnimationView.loop(true);
-////            lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
-////                /**
-////                 * {@inheritDoc}
-////                 *
-////                 * @param animation
-////                 */
-////                @Override
-////                public void onAnimationRepeat(Animator animation) {
-////                    super.onAnimationRepeat(animation);
-////                    if (++adTriggerLottieAnimationPlayedTimes >= GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME) {
-////                        lottieAnimationView.cancelAnimation();
-////                    }
-////                }
-////            });
-//            isAdTriggerLottieAnimationPlayed = true;
-////            lottieAnimationView.playAnimation();
-//        }
     }
 
     @Override
@@ -400,7 +373,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 transaction.show(themeStoreFragment).commit();
                 appbarLayout.setExpanded(true);
                 toolbar.setTitle(R.string.theme_nav_theme_store);
-                // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_store_clicked");
             }
             currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
         } else if (id == R.id.nav_my_themes) {
@@ -418,26 +390,20 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 transaction.show(myThemeFragment).commit();
                 appbarLayout.setExpanded(true);
                 toolbar.setTitle(R.string.theme_nav_my_themes);
-//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_mythemes_clicked");
                 HSAnalytics.logEvent("sidebar_mythemes_clicked");
             }
             currentFragmentTag = MY_THEME_FRAGMENT_TAG;
         } else if (id == R.id.nav_language) {
             HSUIInputMethod.launchMoreLanguageActivity();
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_languages_clicked");
             HSAnalytics.logEvent("sidebar_languages_clicked");
         } else if (id == R.id.nav_setting) {
             HSUIInputMethod.launchSettingsActivity();
-//            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_settings_clicked");
             HSAnalytics.logEvent("sidebar_settings_clicked");
         } else if (id == R.id.nav_app_locker) {
             HSGlobalNotificationCenter.sendNotificationOnMainThread(HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK);
-            // HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_applocker_clicked");
         } else if (id == R.id.nav_update) {
             handler.removeMessages(HANDLER_SHOW_UPDATE_DIALOG);
             checkAndShowApkUpdateAlert(true);
-            // HSGoogleAnalyticsUtils.getInstance().logAppEvent("sidebar_update_clicked");
-
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -445,7 +411,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 }
             });
         } else if (id == R.id.nav_no_ads) {
-//            HSGoogleAnalyticsUtils.getInstance().logAppEvent("removeAds_clicked");
             HSAnalytics.logEvent("removeAds_clicked");
             RemoveAdsManager.getInstance().purchaseRemoveAds();
         }
@@ -578,15 +543,12 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         switch (requestCode) {
             case keyboardActivationFromHomeWithTrial:
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "themepackage");
                 HSAnalytics.logEvent("keyboard_theme_try_viewed", "from", "themePackage");
                 break;
             case keyboardActivationFromCustom:
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "customizetheme");
                 HSAnalytics.logEvent("keyboard_theme_try_viewed", "from", "customizetheme");
                 break;
             default:
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "apply");
                 HSAnalytics.logEvent("keyboard_theme_try_viewed", "from", "apply");
                 break;
         }
@@ -649,12 +611,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     private void showApkUpdateTip() {
         apkUpdateTip.setVisibility(View.VISIBLE);
-        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_menu_reddot_show");
     }
 
     private void showApkUpdateMenuItemIndicationIcon() {
         navigationView.getMenu().findItem(R.id.nav_update).getActionView().setVisibility(View.VISIBLE);
-        // HSGoogleAnalyticsUtils.getInstance().logAppEvent("sidebar_update_icon_show");
     }
 
     private boolean shouldShowApkUpdateTip(final int versionCode) {
@@ -674,7 +634,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private boolean showEnableChargingAlertIfNeeded() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
-//            // HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
             HSAnalytics.logEvent("alert_charging_show");
             if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
                 HSAnalytics.logEvent("alert_charging_show_halfscreen");
@@ -687,7 +646,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false);
-//                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
                         HSAnalytics.logEvent("alert_charging_clicked_halfscreen");
                     }
                 });
@@ -713,7 +671,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 //                    lottieAnimationView.setProgress(0f);
 //                }
                 loadFullscreenAd();
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_fullscreenAds_icon_mainscreencorner_clicked");
                 HSAnalytics.logEvent("app_fullscreenAds_icon_mainscreencorner_clicked");
                 break;
         }

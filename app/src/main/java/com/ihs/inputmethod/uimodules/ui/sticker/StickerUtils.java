@@ -144,7 +144,6 @@ public class StickerUtils {
                 }
                 Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
                 commitPNGImage(uri, "");
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_png");
                 return;
             }
         }
@@ -157,7 +156,6 @@ public class StickerUtils {
                 addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
                 try {
                     MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetExternalFilePath)), mimeType, packageName);
-                    // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "intent");
                 } catch (Exception e) {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
                     //HSInputMethod.inputText(sticker.getStickerRemoteUri());
@@ -167,7 +165,6 @@ public class StickerUtils {
             case ShareUtils.IMAGE_SHARE_MODE_EXPORT:
                 copyStickerFileToSDCard(sticker, targetExternalFilePath);
                 MediaShareUtils.shareImageByExport(targetExternalFilePath);
-                // HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "export");
                 break;
             case MediaShareUtils.IMAGE_SHARE_MODE_LINK:
                 Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
