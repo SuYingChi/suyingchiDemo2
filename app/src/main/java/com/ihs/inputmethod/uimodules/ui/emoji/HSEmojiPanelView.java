@@ -186,7 +186,7 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
 			public void run() {
 				hiddenSkinView();
 			}
-		},500);
+		},100);
 
 		emojiCategory.pendingRecentEmoji(key);
 		HSInputMethod.inputText(key.getLabel());
@@ -225,7 +225,7 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
 					  public void run() {
 						  hiddenSkinView();
 					  }
-				  },500);
+				  },100);
 
                   return true;
               }
