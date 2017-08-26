@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
 
 import java.util.List;

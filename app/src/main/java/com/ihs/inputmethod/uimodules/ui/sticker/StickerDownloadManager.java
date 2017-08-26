@@ -12,7 +12,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.uimodules.R;

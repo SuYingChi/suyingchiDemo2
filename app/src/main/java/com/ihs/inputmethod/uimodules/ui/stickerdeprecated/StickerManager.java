@@ -8,7 +8,6 @@ import android.util.Pair;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSMapUtils;
 import com.ihs.commons.utils.HSPlistParser;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;

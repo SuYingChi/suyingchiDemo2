@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 
 /**
  * When apk download completes, this receiver handles it.

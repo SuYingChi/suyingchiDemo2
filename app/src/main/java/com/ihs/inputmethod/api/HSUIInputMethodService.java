@@ -27,7 +27,6 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.adpanel.KeyboardGooglePlayAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;

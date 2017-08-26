@@ -9,7 +9,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.activity.IDialogHolder;
 import com.ihs.app.framework.inner.HomeKeyTracker;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 
 public class HSAppCompatActivity extends AppCompatActivity implements IDialogHolder {
 

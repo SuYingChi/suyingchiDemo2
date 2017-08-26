@@ -40,7 +40,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;

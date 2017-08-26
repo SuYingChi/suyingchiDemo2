@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.accessbility;
 
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 
 /**
  * Created by Arthur on 17/1/11.

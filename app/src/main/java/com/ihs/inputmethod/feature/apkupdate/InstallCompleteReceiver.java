@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 
 public class InstallCompleteReceiver extends BroadcastReceiver {
 

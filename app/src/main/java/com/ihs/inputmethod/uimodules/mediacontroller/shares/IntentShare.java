@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.mediacontroller.shares;
 import android.net.Uri;
 
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.mediacontroller.ISequenceFramesImageItem;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.converts.SyncWorkHandler;

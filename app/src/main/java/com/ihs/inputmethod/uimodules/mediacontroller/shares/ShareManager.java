@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.mediacontroller.shares;
 import android.net.Uri;
 import android.util.Pair;
 
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.mediacontroller.Constants;
 import com.ihs.inputmethod.uimodules.mediacontroller.ISequenceFramesImageItem;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
