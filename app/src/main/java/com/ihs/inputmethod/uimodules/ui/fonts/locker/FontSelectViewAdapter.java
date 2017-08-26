@@ -43,7 +43,7 @@ public class FontSelectViewAdapter extends BaseAdapter {
         mItemDefaultBackground = mParentView.getItemDefaultBackground();
         mItemSelectedBackground = mParentView.getItemSelectedBackground();
         // Set data
-        FontDownloadManager.getInstance();
+        FontDownloadManager.getInstance(); // read fonts from file
         mFonts = HSSpecialCharacterManager.getSpecialCharacterList();
         onFontClickListener = listener;
     }

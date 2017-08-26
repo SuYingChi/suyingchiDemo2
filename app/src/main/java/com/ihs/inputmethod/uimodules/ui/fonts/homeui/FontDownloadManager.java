@@ -76,6 +76,10 @@ public class FontDownloadManager {
 
     }
 
+    public String getFontDownloadUrl(String fontName) {
+        return "http://s3.amazonaws.com/rainbowkey-dev/Fonts/" + fontName + FONT_DOWNLOAD_JSON_SUFFIX;
+    }
+
     public void startForegroundDownloading(Context context, final FontModel fontModel,
                                            final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
         final String fontModelJsonFilePath = getFontModelDownloadFilePath(fontModel.getFontName());
@@ -108,8 +112,11 @@ public class FontDownloadManager {
                     }
                 }, 2000, false);
         adLoadingView.showInDialog();
+        String downloadUrl;
+        downloadUrl = fontModel.getFontDownloadBaseURL().replace(" ", "%20");
 
-        HSHttpConnection connection = new HSHttpConnection("http://testauto.s3.amazonaws.com/test.json");
+//        HSHttpConnection connection = new HSHttpConnection("http://rainbowkey-dev.s3.amazonaws.com/test.json");
+        HSHttpConnection connection = new HSHttpConnection(downloadUrl);
         connection.setDownloadFile(HSFileUtils.createNewFile(fontModelJsonFilePath));
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override

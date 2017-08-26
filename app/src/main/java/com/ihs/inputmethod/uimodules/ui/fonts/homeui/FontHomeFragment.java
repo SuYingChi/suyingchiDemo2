@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -51,11 +52,16 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         for (Map<String, Object> map : fontList) {
             String fontName = (String) map.get("name");
             String example = (String) map.get("example");
+            Object SDKVersion = map.get("sdkVersion");
+            int minSDKVersion = 0;
+            if (SDKVersion != null) {
+                minSDKVersion = (int) SDKVersion;
+            }
             HSSpecialCharacter hsSpecialCharacter = new HSSpecialCharacter();
             hsSpecialCharacter.name = fontName;
             hsSpecialCharacter.example = example;
             FontModel fontModel = new FontModel(hsSpecialCharacter);
-            if (!fontModel.isFontDownloaded()) {
+            if (!fontModel.isFontDownloaded() && Build.VERSION.SDK_INT >= minSDKVersion) {
                 fontModelList.add(fontModel);
             }
         }
