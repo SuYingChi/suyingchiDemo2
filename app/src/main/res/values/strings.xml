@@ -21,7 +21,7 @@
     <string name="use">Use</string>
     <string name="unknown">Unknown</string>
 
-    <string name="alert_find_keyboard_and_switch_on">Find %1$s and switch on</string>
+    <string name="alert_find_keyboard_and_switch_on">Switch on %1$s</string>
 
     <!--main-->
     <string name="alert_attention_messenger">RainbowKey keyboard treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
@@ -34,7 +34,7 @@
     <!--dialog-->
     <string name="dialog_title_select_keyboard_apply_rain">"Activate RainbowKey"</string>
     <string name="dialog_msg_select_keyboard_apply_rain">You need to activate RainbowKey keyboard to use this theme.</string>
-    <string name="dialog_confirm_select_keyboard_apply_rain">Activate Now</string>
+    <string name="dialog_confirm_select_keyboard_apply_rain">ACTIVATE</string>
 
     <string name="dialog_title_enable_keyboard_home_rain">"Activate RainbowKey"</string>
     <string name="dialog_msg_enable_keyboard_home_rain">RainbowKey provides you with personalized keyboard themes and cute emojis.</string>
@@ -48,18 +48,18 @@
 
     <!--lib-->
     <string name="choose_language">Choose language</string>
-    <string name="more_language">MORE LANGUAGE</string>
+    <string name="more_language">Add Language</string>
 
     <!--settings-->
-    <string name="language_dict">Language and dictionary</string>
+    <string name="language_dict">Languages</string>
 
     <string name="setting_preference_title">Preferences</string>
     <string name="setting_auto_correction">Auto-Correction</string>
     <string name="setting_auto_capitalization">Auto-Capitalization</string>
-    <string name="setting_word_prediction">Word Prediction</string>
+    <string name="setting_word_prediction">Prediction</string>
     <string name="setting_emoji_prediction">Emoji Prediction</string>
-    <string name="setting_swipe_input">Swipe Input</string>
-    <string name="setting_double_space_period">Double-space period</string>
+    <string name="setting_swipe_input">Swipe</string>
+    <string name="setting_double_space_period">"." Shortcut</string>
     <string name="setting_double_space_period_summary">Double tapping the space bar will insert a period followed by a space.</string>
     <string name="setting_sound_on_keypress">Sound on keypress</string>
     <string name="setting_vibrate_on_keypress">Vibrate on keypress</string>
@@ -83,14 +83,14 @@
     <string name="setting_item_capitalization">@string/setting_auto_capitalization</string>
     <string name="setting_item_word_prediction">@string/setting_word_prediction</string>
     <string name="setting_item_swipe">Swipe</string>
-    <string name="setting_item_add_languages">Add Languages</string>
+    <string name="setting_item_add_languages">Add Language</string>
     <string name="setting_item_more_settings">More Settings</string>
 
     <!--settings panel-->
     <string name="settings_button_sound">@string/setting_item_sounds</string>
     <string name="settings_button_tell_a_friend">Tell a friend</string>
     <string name="settings_button_tell_a_friend_tip">Share your message now</string>
-    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app RainbowKey keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #RainbowKey For Free: http://rainbowkey.com</string>
+    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app RainbowKey keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙  your keyboard with your own pictures! And the (fonts) and emojis are awesome! Download #RainbowKey For Free: http://rainbowkey.com</string>
     <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
     <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
     <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
@@ -102,7 +102,7 @@
     <!-- gif panel -->
     <string name="result_no">No GIFs or stickers found.</string>
     <string name="result_no_recent">No Recents.</string>
-    <string name="result_no_suggestion">No suggestion GIFs or stickers.</string>
+    <string name="result_no_suggestion">No suggested GIFs or stickers.</string>
     <string name="result_no_favorites">No Favorites.</string>
     <string name="result_no_data_on_fail">Please check your network and try again.</string>
     <string name="result_no_data_on_complete">No GIFs or stickers found.</string>
@@ -112,7 +112,7 @@
     <string name="emoji_search_hint">Search GIFs by text or emoji </string>
 
     <!--theme panel-->
-    <string name="customized_themes">Customized Themes</string>
+    <string name="customized_themes">Customized Keyboard</string>
     <string name="default_themes">RainbowKey Themes</string>
     <string name="custom_theme_create">Create</string>
     <string name="theme_more">More</string>
@@ -121,12 +121,12 @@
     <string name="theme_store_background_title">Create My Own Themes</string>
     <string name="theme_store_theme_title">RainbowKey Themes</string>
     <string name="theme_store_more">MORE</string>
-    <string name="my_theme_customized_theme_title">Customized Themes</string>
-    <string name="my_theme_downloaded_theme_title">Downloaded Themes</string>
+    <string name="my_theme_customized_theme_title">Customized Keyboard</string>
+    <string name="my_theme_downloaded_theme_title">Downloaded</string>
     <string name="theme_detail_recommend_title">You May Like</string>
     <string name="theme_card_custom_theme_default_name">My Theme</string>
     <string name="theme_detail_common_title_name">RainbowKey Theme</string>
-    <string name="theme_detail_custom_theme_title_name">Customized Theme</string>
+    <string name="theme_detail_custom_theme_title_name">Customized Keyboard</string>
     <string name="theme_trial_keyboard_edit_text_hint">Try typing here now&#8230;</string>
 
     <string name="dialog_app_usage_tips">For better typing experience across different apps, we recommend you to turn on apps with usage access.</string>
@@ -177,7 +177,7 @@
     <string name="custom_theme_sound_tip">To use click sound effect, please turn off the silent mode or enable Sound on keypress in the settings section.</string>
 
     <!--IAP Tip Info -->
-    <string name="purchase_error_message">Purchase is unavailable now, please try again later.</string>
+    <string name="purchase_error_message">Purchase Failed. Please try again later.</string>
     <string name="purchase_google_play_unavailable">Google Play purchases are not available on your device.</string>
     <string name="purchase_unavailable">Purchase is unavailable.</string>
 
@@ -190,17 +190,17 @@
     <string name="free_slots_price">Unlimited slots for %1$s</string>
     <string name="free_slots_via_watch_video">Watch Video to Unlock One Slot</string>
 
-    <string name="purchase_success">Purchase success.</string>
+    <string name="purchase_success">Your purchase was successful.</string>
     <string name="purchase_error">ERROR:</string>
     <string name="purchase_error_bill">BILLING UNAVAILABLE</string>
     <string name="purchase_error_item">ITEM UNAVAILABLE</string>
     <string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
 
     <!-- Theme new tip -->
-    <string name="new_background_tip">New background available</string>
-    <string name="new_font_tip">New font available</string>
-    <string name="new_tap_effect_tip">New tap effect available</string>
-    <string name="new_click_sound_tip">New click sound available</string>
+    <string name="new_background_tip">New background</string>
+    <string name="new_font_tip">New font</string>
+    <string name="new_tap_effect_tip">New tap effect</string>
+    <string name="new_click_sound_tip">New click sound</string>
     <string name="new_theme_tip">New themes available</string>
 
     <!--apk update-->
@@ -209,7 +209,7 @@
     <string name="apk_update_alert_negative_btn">LATER</string>
     <string name="apk_update_alert_positive_btn">UPDATE</string>
     <string name="apk_update_downloading">Update downloading</string>
-    <string name="apk_update_downloading_notification_title">Downloading Update</string>
+    <string name="apk_update_downloading_notification_title">Downloading</string>
 
 
     <string name="sd_card_unavailable_tip">SD card is not available!</string>
@@ -223,10 +223,10 @@
     <string name="app_recommended">Recommended for you:</string>
 
     <string name="key_uninstall">uninstall_key</string>
-    <string name="home_create_keyboard">Create My Own Keyboard</string>
+    <string name="home_create_keyboard">Create My Own Themes</string>
 
     <string name="charging_alert_title">Smart Charging</string>
-    <string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains sponsored contents.</string>
+    <string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains ads.</string>
   
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
