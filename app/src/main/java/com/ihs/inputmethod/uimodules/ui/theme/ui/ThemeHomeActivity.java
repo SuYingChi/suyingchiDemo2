@@ -543,10 +543,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         switch (requestCode) {
             case keyboardActivationFromHomeWithTrial:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from", "themePackage");
+                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_home", "themePackage");
                 break;
             case keyboardActivationFromCustom:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from", "customizetheme");
+                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_custom", "customizetheme");
                 break;
             default:
                 HSAnalytics.logEvent("keyboard_theme_try_viewed", "from", "apply");
@@ -634,7 +634,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private boolean showEnableChargingAlertIfNeeded() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
-            HSAnalytics.logEvent("alert_charging_show");
             if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
                 HSAnalytics.logEvent("alert_charging_show_halfscreen");
                 CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());

@@ -560,7 +560,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_detail", "apply");
                 break;
             case ThemeMenuUtils.keyboardActivationFromAdapter:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_detail", "apply");
+                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_adapter", "apply");
                 break;
         }
     }

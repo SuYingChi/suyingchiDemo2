@@ -160,7 +160,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSAnalytics.logEvent("alert_charging_show");
             if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
                 HSAnalytics.logEvent("alert_charging_show_halfscreen");
                 CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
