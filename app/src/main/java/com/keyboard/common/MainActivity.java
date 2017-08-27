@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -68,7 +67,6 @@ import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.utils.Constants;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
-import com.ihs.device.permanent.*;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;
@@ -188,21 +186,6 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         HSLog.d("MainActivity onCreate.");
-        HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
-            @Override
-            public Notification getForegroundNotification() {
-                return null;
-            }
-
-            @Override
-            public int getNotificationID() {
-                return 0;
-            }
-
-            @Override
-            public void onServiceCreate() {
-            }
-        });
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
