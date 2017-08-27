@@ -19,6 +19,8 @@ public class StickerCardViewHolder extends RecyclerView.ViewHolder {
     ImageView stickerNewImage;
     ImageView stickerRealImage;
 
+    TextView moreStickersComing;
+
     public StickerCardViewHolder(View itemView) {
         super(itemView);
 
@@ -27,5 +29,6 @@ public class StickerCardViewHolder extends RecyclerView.ViewHolder {
         stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
         moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
         stickerNewImage = (ImageView) itemView.findViewById(R.id.sticker_new_view);
+        moreStickersComing = (TextView) itemView.findViewById(R.id.more_sticker_coming);
     }
 }

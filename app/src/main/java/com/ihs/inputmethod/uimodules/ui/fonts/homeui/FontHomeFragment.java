@@ -40,11 +40,21 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     }
 
     private void initView() {
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(layoutManager);
         loadFontModel();
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+
+            @Override
+            public int getSpanSize(int position) {
+                if (fontCardAdapter.getItemViewType(position) == FontCardAdapter.MORE_FONT_COMING_TYPE) {
+                    return 2;
+                }
+                return 1;
+            }
+        });
         fontCardAdapter = new FontCardAdapter(fontModelList, this);
         recyclerView.setAdapter(fontCardAdapter);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void loadFontModel() {

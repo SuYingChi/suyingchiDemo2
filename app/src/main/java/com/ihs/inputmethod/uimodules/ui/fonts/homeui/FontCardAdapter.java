@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -20,6 +21,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
     private List<FontModel> fontModelList;
     private OnFontCardClickListener onFontCardClickListener;
     private int currentSelectPosition = -1;
+    public final static int MORE_FONT_COMING_TYPE = 2;
 
     public FontCardAdapter(List<FontModel> fontModels, OnFontCardClickListener onFontCardClickListener) {
         this.onFontCardClickListener = onFontCardClickListener;
@@ -36,7 +38,6 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
         if(fontModel.isFontDownloaded()) {
             int position = fontModelList.indexOf(fontModel);
             if (currentSelectPosition != position) {
-//            holder.radioButton.setChecked(true);
                 if (currentSelectPosition != -1) {
                     notifyItemChanged(currentSelectPosition, 0);
                 }
@@ -56,12 +57,17 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
             return;
         }
 
+        if(getItemViewType(position) == MORE_FONT_COMING_TYPE) {
+            holder.moreFontHint.setVisibility(View.VISIBLE);
+            holder.fontCardView.setVisibility(View.GONE);
+            return;
+        }
+
         final FontModel fontModel = fontModelList.get(position);
         final HSSpecialCharacter hsSpecialCharacter = fontModel.getHsSpecialCharacter();
         holder.fontCardContent.setText(hsSpecialCharacter.example);
         if(!fontModel.isFontDownloaded()) {
             holder.downloadIcon.setImageResource(R.drawable.ic_download_icon);
-            holder.radioButton.setVisibility(View.GONE);
         } else {
             holder.downloadIcon.setVisibility(View.GONE);
             holder.radioButton.setVisibility(View.VISIBLE);
@@ -92,7 +98,15 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
 
     @Override
     public int getItemCount() {
-        return fontModelList.size();
+        return fontModelList.size()+1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == getItemCount()-1) {
+            return MORE_FONT_COMING_TYPE;
+        }
+        return 0;
     }
 
     public interface OnFontCardClickListener {

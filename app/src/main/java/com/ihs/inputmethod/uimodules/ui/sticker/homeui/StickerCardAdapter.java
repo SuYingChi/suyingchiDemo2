@@ -28,6 +28,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
     private int imageWidth;
     private int imageHeight;
     private OnStickerCardClickListener onStickerCardClickListener;
+    public static final int MORE_STICKER_COMING = 2;
 
     private DisplayImageOptions options=new DisplayImageOptions.Builder().cacheInMemory(false).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
 
@@ -47,6 +48,12 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
     @Override
     public void onBindViewHolder(StickerCardViewHolder holder, final int position) {
         if (stickerModelList == null) {
+            return;
+        }
+
+        if (getItemViewType(position) == MORE_STICKER_COMING) {
+            holder.moreStickersComing.setVisibility(View.VISIBLE);
+            holder.stickerCardView.setVisibility(View.GONE);
             return;
         }
 
@@ -80,12 +87,15 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
 
     @Override
     public int getItemViewType(int position) {
+        if (position == getItemCount()-1) {
+            return MORE_STICKER_COMING;
+        }
         return 0;
     }
 
     @Override
     public int getItemCount() {
-        return stickerModelList.size();
+        return stickerModelList.size()+1;
     }
 
     public interface OnStickerCardClickListener {
