@@ -210,8 +210,6 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
 
 		final int width = HSResourceUtils.getDefaultKeyboardWidth(res);
 		final int emojiCol = res.getInteger(R.integer.config_emoji_col_count);
-		final int emojiRow = res.getInteger(R.integer.config_emoji_row_count);
-		final int emojiHeight = height/emojiRow;
 		final int emojiWidth = (int) (width/(emojiCol+0.5f));
 
 		RecyclerView emojiSkinView = (RecyclerView) skinView.findViewById(R.id.emoji_skin_container);
@@ -253,8 +251,6 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
 		skinView.setAnimation(animation);
 
 	}
-
-
 
 	public void showPanelView() {
 		hiddenSkinView();
@@ -417,7 +413,6 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
 	}
 
 	private Animation createHiddenAnimation(final float scaleRation,   final int downDuration){
-
 
 		final Animation scaleDown=new ScaleAnimation(
 				1.0f,1/scaleRation,1.0f,1,

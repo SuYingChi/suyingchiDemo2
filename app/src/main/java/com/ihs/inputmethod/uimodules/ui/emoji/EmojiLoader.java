@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.emoji;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Build;
+import android.util.Log;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
@@ -166,6 +167,8 @@ final class EmojiLoader {
 	private KCMap getEmojiSkinConfigMap() {
 		KCMap kcMap = null;
 		try {
+			   //KEY: emoji unicode string
+			   // VALUE: Emoji string as the value.
 				AssetManager assetManager = HSApplication.getContext().getAssets();
 				kcMap = KCParser.parseMap(assetManager.open(SKIN_PATH + File.separator + SKIN_FILE));
 			return kcMap;
@@ -203,7 +206,14 @@ final class EmojiLoader {
 
 	private void setEmojiSkin(Emoji emoji) {
 		if (this.emojiSkinMapping != null) {
-			ArrayList<Emoji> emojiSkinItems = this.emojiSkinMapping.get(emoji.getLabel());
+			String emojiUnicodeStr = emoji.getUnicodeStr();
+			ArrayList<Emoji> emojiSkinItems = this.emojiSkinMapping.get(emojiUnicodeStr);
+			if (emojiSkinItems == null) {
+				//remove emoji specific variation selectors
+				emojiUnicodeStr = emojiUnicodeStr.replace("\\ufe0f","");
+				emojiUnicodeStr = emojiUnicodeStr.replace("\\ufe0e","");
+				emojiSkinItems = this.emojiSkinMapping.get(emojiUnicodeStr);
+			}
 			emoji.setSkinItems(emojiSkinItems);
 		}
 	}

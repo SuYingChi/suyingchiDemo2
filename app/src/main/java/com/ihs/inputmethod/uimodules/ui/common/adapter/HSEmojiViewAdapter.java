@@ -85,15 +85,16 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 		holder.itemView.setLayoutParams(lp);
 
 		if(emoji.getLabel().trim().length()>0){
-			textView.setClickable(true);
+			holder.itemView.setClickable(true);
 			textView.setTag(emoji);
-			textView.setOnClickListener(this);
+			holder.itemView.setOnClickListener(this);
 			textView.setSoundEffectsEnabled(false);
 			holder.itemView.setTag(emoji);
 		}else{
 			textView.setTag(null);
-			textView.setClickable(false);
+			holder.itemView.setOnClickListener(null);
 			holder.itemView.setTag(null);
+			holder.itemView.setClickable(false);
 		}
 		if (emoji.supportSkin()) {
 
@@ -103,9 +104,9 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 			holder.iv.setLayoutParams(flp);
 
 			holder.iv.setVisibility(View.VISIBLE);
-			holder.tv.setOnLongClickListener(this);
+			holder.itemView.setOnLongClickListener(this);
 		}else {
-			holder.tv.setOnLongClickListener(null);
+			holder.itemView.setOnLongClickListener(null);
 			holder.iv.setVisibility(View.GONE);
 		}
 	}
@@ -134,11 +135,12 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	public void onClick(View v) {
 		final Object tag=v.getTag();
 		if(tag instanceof Emoji && listener!=null){
+			View textView = (TextView) v.findViewById(R.id.emoji_tv);
 			listener.onEmojiClick((Emoji) tag);
-
+//			String unicode = ((Emoji) tag).getUnicodeStr();
+//			Log.d("emoji",  ((Emoji) tag).getLabel() + " ---->unicode:"+unicode);
 			Animation set=createClickAnimation(1.4f,80,80);
-
-			v.startAnimation(set);
+			textView.startAnimation(set);
 		}
 	}
 
@@ -146,11 +148,13 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	public  boolean onLongClick(View v) {
 		final Object tag= v.getTag();
 		if(tag instanceof Emoji && longPressListener!=null){
-			longPressListener.onEmojiLongPress((Emoji) tag,v,this.childViewHeight);
+			View textView = (TextView) v.findViewById(R.id.emoji_tv);
+			longPressListener.onEmojiLongPress((Emoji) tag,textView,this.childViewHeight);
 
 			Animation set=createClickAnimation(1.4f,80,80);
-
-			v.startAnimation(set);
+//			String unicode = ((Emoji) tag).getUnicodeStr();
+//			Log.d("emoji",  ((Emoji) tag).getLabel() + " ---->unicode:"+unicode);
+			textView.startAnimation(set);
 			return true;
 		}
 
