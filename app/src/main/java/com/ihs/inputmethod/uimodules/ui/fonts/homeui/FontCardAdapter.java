@@ -1,11 +1,11 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -22,6 +22,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
     private OnFontCardClickListener onFontCardClickListener;
     private int currentSelectPosition = -1;
     public final static int MORE_FONT_COMING_TYPE = 2;
+    private String FROM_FRAGMENT_TYPE;
 
     public FontCardAdapter(List<FontModel> fontModels, OnFontCardClickListener onFontCardClickListener) {
         this.onFontCardClickListener = onFontCardClickListener;
@@ -51,13 +52,17 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
         }
     }
 
+    public void setFragmentType(String type) {
+        FROM_FRAGMENT_TYPE = type;
+    }
+
     @Override
     public void onBindViewHolder(final FontCardViewHolder holder, final int position) {
         if(fontModelList == null) {
             return;
         }
 
-        if(getItemViewType(position) == MORE_FONT_COMING_TYPE) {
+        if(isFromFontHomeType() && getItemViewType(position) == MORE_FONT_COMING_TYPE) {
             holder.moreFontHint.setVisibility(View.VISIBLE);
             holder.fontCardView.setVisibility(View.GONE);
             return;
@@ -98,12 +103,19 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardViewHolder> {
 
     @Override
     public int getItemCount() {
-        return fontModelList.size()+1;
+        if (isFromFontHomeType()) {
+            return fontModelList.size()+1;
+        }
+        return  fontModelList.size();
+    }
+
+    private boolean isFromFontHomeType() {
+        return TextUtils.equals(FROM_FRAGMENT_TYPE, FontHomeFragment.class.getSimpleName());
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount()-1) {
+        if (isFromFontHomeType() && position == getItemCount()-1) {
             return MORE_FONT_COMING_TYPE;
         }
         return 0;

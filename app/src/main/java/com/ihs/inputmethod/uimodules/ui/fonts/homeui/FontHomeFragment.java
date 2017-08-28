@@ -53,6 +53,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
             }
         });
         fontCardAdapter = new FontCardAdapter(fontModelList, this);
+        fontCardAdapter.setFragmentType(FontHomeFragment.class.getSimpleName());
         recyclerView.setAdapter(fontCardAdapter);
         recyclerView.setLayoutManager(layoutManager);
     }

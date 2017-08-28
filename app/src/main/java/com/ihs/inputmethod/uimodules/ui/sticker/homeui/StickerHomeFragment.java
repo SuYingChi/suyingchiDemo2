@@ -84,6 +84,7 @@ public class StickerHomeFragment extends Fragment {
                 return 1;
             }
         });
+        stickerCardAdapter.setFragmentType(StickerHomeFragment.class.getSimpleName());
         recyclerView.setAdapter(stickerCardAdapter);
         recyclerView.setLayoutManager(layoutManager);
 

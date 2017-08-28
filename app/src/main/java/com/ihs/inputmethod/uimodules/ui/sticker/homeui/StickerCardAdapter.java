@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
     private int imageHeight;
     private OnStickerCardClickListener onStickerCardClickListener;
     public static final int MORE_STICKER_COMING = 2;
+    private String FROM_FRAGMENT_TYPE;
 
     private DisplayImageOptions options=new DisplayImageOptions.Builder().cacheInMemory(false).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
 
@@ -38,6 +40,10 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
         imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
         imageHeight = (int) (imageWidth / 1.6f);
         this.onStickerCardClickListener = onStickerCardClickListener;
+    }
+
+    public void setFragmentType(String type) {
+        FROM_FRAGMENT_TYPE = type;
     }
 
     @Override
@@ -51,7 +57,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
             return;
         }
 
-        if (getItemViewType(position) == MORE_STICKER_COMING) {
+        if (isFromHomeType() && getItemViewType(position) == MORE_STICKER_COMING) {
             holder.moreStickersComing.setVisibility(View.VISIBLE);
             holder.stickerCardView.setVisibility(View.GONE);
             return;
@@ -85,9 +91,13 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
         holder.stickerNewImage.setVisibility(stickerModel.getStickerTag() == null ? View.GONE : View.VISIBLE);
     }
 
+    private boolean isFromHomeType() {
+        return TextUtils.equals(FROM_FRAGMENT_TYPE, StickerHomeFragment.class.getSimpleName());
+    }
+
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount()-1) {
+        if (isFromHomeType() && position == getItemCount()-1) {
             return MORE_STICKER_COMING;
         }
         return 0;
@@ -95,7 +105,10 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
 
     @Override
     public int getItemCount() {
-        return stickerModelList.size()+1;
+        if (isFromHomeType()) {
+            return stickerModelList.size()+1;
+        }
+        return stickerModelList.size();
     }
 
     public interface OnStickerCardClickListener {
