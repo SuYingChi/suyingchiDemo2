@@ -93,7 +93,7 @@
     <string name="settings_button_sound">@string/setting_item_sounds</string>
     <string name="settings_button_tell_a_friend">Tell a friend</string>
     <string name="settings_button_tell_a_friend_tip">Share your message now</string>
-    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app RainbowKey keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙  your keyboard with your own pictures! And the (fonts) and emojis are awesome! Download #RainbowKey For Free: http://rainbowkey.com</string>
+    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app RainbowKey keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #RainbowKey For Free: http://rainbowkey.com</string>
     <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
     <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
     <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
@@ -229,7 +229,7 @@
     <string name="home_create_keyboard">Create My Own Themes</string>
 
     <string name="charging_alert_title">Smart Charging</string>
-    <string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains ads.</string>
+    <string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains sponsored contents.</string>
   
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
