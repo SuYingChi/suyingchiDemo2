@@ -214,5 +214,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //----
 
+    //keep alive
+    compile "com.ihandy.device:device-permanent$LIB_DEVICE_VERSION"
 }
 

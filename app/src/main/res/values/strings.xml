@@ -31,6 +31,9 @@
     <string name="text_terms_of_service">Terms of Service</string>
     <string name="text_privacy_policy">Privacy Policy</string>
 
+    <!-- sync type Required by keep alive service -->
+    <string name="sync_account_type">com.keyboard.colorkeyboard.sync</string>
+
     <!--dialog-->
     <string name="dialog_title_select_keyboard_apply_rain">"Activate RainbowKey"</string>
     <string name="dialog_msg_select_keyboard_apply_rain">You need to activate RainbowKey keyboard to use this theme.</string>

@@ -66,8 +66,8 @@ import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.inputmethod.utils.Constants;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;

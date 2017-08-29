@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.api;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -33,6 +34,8 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.device.permanent.HSPermanentUtils;
+import com.ihs.device.permanent.PermanentService;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
@@ -152,12 +155,40 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onRemoteProcessApplicationCreate(String processSuffix) {
+        HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
+            @Override
+            public Notification getForegroundNotification() {
+                return null;
+            }
 
+            @Override
+            public int getNotificationID() {
+                return 0;
+            }
+
+            @Override
+            public void onServiceCreate() {
+            }
+        });
     }
 
     protected void onMainProcessApplicationCreate() {
 
+        HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
+            @Override
+            public Notification getForegroundNotification() {
+                return null;
+            }
 
+            @Override
+            public int getNotificationID() {
+                return 0;
+            }
+
+            @Override
+            public void onServiceCreate() {
+            }
+        });
 
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
