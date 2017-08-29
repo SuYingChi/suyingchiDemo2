@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:gravity="center"
 	android:hapticFeedbackEnabled="false"
-	android:soundEffectsEnabled="false">
+	android:soundEffectsEnabled="false"
+
+	>
 	<TextView
 		android:id="@+id/emoji_tv"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textColor="#FFFFFF"
 		android:gravity="center"
+		android:layout_gravity="center"
 		android:singleLine="true"
 		/>
-</LinearLayout>
+
+	<ImageView
+		android:id="@+id/emoji_iv"
+		android:layout_width="10dip"
+		android:layout_height="10dip"
+		android:layout_gravity="right|bottom"
+		android:gravity="bottom|right"
+		android:background="@android:color/transparent"
+		android:src="@drawable/emoji_skin_corner"
+		android:layout_margin="5dip"
+		android:visibility="gone"
+		/>
+</FrameLayout>
 
