@@ -51,7 +51,8 @@ public class StickerUtils {
     public static final String ASSETS_STICKER_FILE_PATH = "Stickers";
     public static final String STICKER_TAB_IMAGE_SUFFIX = "-tab.png";
     public static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
-    public static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
+//    public static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
+//    public static final String STICKER_IMAGE_GIF_SUFFIX = ".gif";
 
     private static Map<String, String> map = new HashMap<>();
     private static final float STICKER_BACKGROUND_ASPECT_RATIO = 1.7f;
@@ -60,6 +61,30 @@ public class StickerUtils {
 
     public static String getStickerRootFolderPath() {
         return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_STICKER_FILE_PATH;
+    }
+
+    /**
+     * get the sticker file local saved path:
+     * example:/data/user/0/com.keyboard.colorkeyboard/files/Stickers/YellowSmile3-2.gif
+     * @param sticker
+     * @return
+     */
+    public static String getStickerLocalPath(Sticker sticker) {
+        String stickerRootFolderPath = getStickerRootFolderPath();
+        StringBuilder stringBuilder = new StringBuilder(stickerRootFolderPath).append(File.separator)
+                .append(sticker.getStickerGroupName()).append(File.separator)
+                .append(sticker.getStickerName()).append(sticker.getStickerFileSuffix());
+        return stringBuilder.toString();
+    }
+
+    /**
+     * get the sticker asset file path
+     * example:Stickers/YellowSmile3/
+     * @param sticker
+     * @return
+     */
+    public static String getStickerAssetFolderPath(Sticker sticker) {
+        return ASSETS_STICKER_FILE_PATH + File.separator + sticker.getStickerGroupName();
     }
 
     public static String getStickerFolderPath(String stickerGroupName) {
@@ -71,11 +96,11 @@ public class StickerUtils {
     }
 
     private static String getStickerAssetsPath(Sticker sticker) {
-        return ASSETS_STICKER_FILE_PATH + "/" + sticker.getStickerGroupName() + "/" + sticker.getStickerName() + STICKER_IMAGE_PNG_SUFFIX;
+        return ASSETS_STICKER_FILE_PATH + "/" + sticker.getStickerGroupName() + "/" + sticker.getStickerName() + sticker.getStickerFileSuffix();
     }
 
     private static String getStickerFilePath(Sticker sticker) {
-        return getStickerFolderPath(sticker.getStickerGroupName()) + "/" + sticker.getStickerName() + STICKER_IMAGE_PNG_SUFFIX;
+        return getStickerFolderPath(sticker.getStickerGroupName()) + "/" + sticker.getStickerName() + sticker.getStickerFileSuffix();
     }
 
     private static Map<String, List<String>> cachedDirectoryContents = new HashMap<>();
@@ -120,7 +145,7 @@ public class StickerUtils {
             return;
         }
 
-        final String targetExternalFilePath = DirectoryUtils.getImageExportFolder() + "/" + sticker.getStickerName() + STICKER_IMAGE_PNG_SUFFIX;
+        final String targetExternalFilePath = DirectoryUtils.getImageExportFolder() + "/" + sticker.getStickerName() + sticker.getStickerFileSuffix();
         final String mimeType = "image/*";
 
         final Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);
@@ -131,7 +156,7 @@ public class StickerUtils {
             String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
             boolean pngSupported = false;
             for (String mime_Type : mimeTypes) {
-                if (ClipDescription.compareMimeTypes(mime_Type, "image/png")) {
+                if (ClipDescription.compareMimeTypes(mime_Type, "image/png")||ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
                     pngSupported = true;
                 }
             }
@@ -142,15 +167,21 @@ public class StickerUtils {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_send_failed), Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
-                commitPNGImage(uri, "");
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_png");
+                if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX)) {
+                    commitStickerImage(uri,"","image/gif");
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_gif");
+                }else {
+                    commitStickerImage(uri, "","image/png");
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_png");
+
+                }
                 return;
             }
         }
 
         final int mode = (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE);
-
         switch (mode) {
             // image
             case MediaShareUtils.IMAGE_SHARE_MODE_INTENT:
@@ -179,9 +210,9 @@ public class StickerUtils {
         }
     }
 
-    private static void commitPNGImage(Uri contentUri, String imageDescription) {
+    private static void commitStickerImage(Uri contentUri, String imageDescription,String fileType) {
         InputContentInfoCompat inputContentInfo = new InputContentInfoCompat(contentUri,
-                new ClipDescription(imageDescription, new String[]{"image/png"}), null);
+                new ClipDescription(imageDescription, new String[]{fileType}), null);
         InputConnection inputConnection = HSInputMethodService.getInstance().getCurrentInputConnection();
         EditorInfo editorInfo = HSInputMethodService.getInstance().getCurrentInputEditorInfo();
         int flags = 0;
@@ -231,6 +262,10 @@ public class StickerUtils {
     }
 
     private static void addDifferentBackgroundForSticker(Sticker sticker, String packageName, String outputFilePath) {
+        if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX)) {
+            copyStickerFileToSDCard(sticker, outputFilePath);
+            return;
+        }
         FileOutputStream out = null;
         BitmapFactory.Options option = new BitmapFactory.Options();
         option.inJustDecodeBounds = true;

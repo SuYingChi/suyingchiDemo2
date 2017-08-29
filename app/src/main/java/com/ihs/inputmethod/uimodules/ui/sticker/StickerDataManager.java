@@ -1,13 +1,17 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.os.AsyncTask;
+import android.support.v7.widget.util.SortedListAdapterCallback;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
