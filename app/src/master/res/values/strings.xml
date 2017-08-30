@@ -13,6 +13,8 @@
     <string name="keyboard_theme_dark" translatable="false">Dark</string>
     <string name="keyboard_theme_grey" translatable="false">Grey</string>
 
+    <!-- required by device permanent -->
+    <string name="sync_account_type">com.masterkeyboard.emoji.sync</string>
     <!--<string name="panel_keyboard" translatable="false">keyboard</string>-->
     <!--<string name="panel_fonts" translatable="false">fonts</string>-->
     <!--<string name="panel_settings" translatable="false">settings</string>-->
