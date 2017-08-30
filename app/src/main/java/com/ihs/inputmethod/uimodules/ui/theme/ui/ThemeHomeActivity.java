@@ -364,26 +364,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             showEnableChargingAlertIfNeeded();
         }
         isResumeOnCreate = false;
-
-//        if (!isAdTriggerLottieAnimationPlayed) {
-////            lottieAnimationView.loop(true);
-////            lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
-////                /**
-////                 * {@inheritDoc}
-////                 *
-////                 * @param animation
-////                 */
-////                @Override
-////                public void onAnimationRepeat(Animator animation) {
-////                    super.onAnimationRepeat(animation);
-////                    if (++adTriggerLottieAnimationPlayedTimes >= GIFT_AD_TRIGGER_ANIMATION_PLAY_TIME) {
-////                        lottieAnimationView.cancelAnimation();
-////                    }
-////                }
-////            });
-//            isAdTriggerLottieAnimationPlayed = true;
-////            lottieAnimationView.playAnimation();
-//        }
     }
 
     @Override
@@ -401,23 +381,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         int id = item.getItemId();
 
         if (id == R.id.nav_theme_store) {
-            /* origin
-            if (!currentFragmentTag.equals(THEME_STORE_FRAGMENT_TAG)) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-                Fragment themeStoreFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-                if (myThemeFragment != null) {
-                    transaction.hide(myThemeFragment);
-                }
-                if (themeStoreFragment == null) {
-                    themeStoreFragment = new ThemeHomeFragment();
-                    //transaction.add(R.id.content_layout, themeStoreFragment, THEME_STORE_FRAGMENT_TAG);
-                }
-                transaction.show(themeStoreFragment).commit();
-                appbarLayout.setExpanded(true);
-                toolbar.setTitle(R.string.theme_nav_theme_store);
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_store_clicked");
-            }*/
             currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
         } else if (id == R.id.nav_language) {
             HSUIInputMethod.launchMoreLanguageActivity();

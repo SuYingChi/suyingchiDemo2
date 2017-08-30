@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
@@ -23,7 +25,7 @@ import java.util.List;
  * Created by guonan.lv on 17/8/10.
  */
 
-public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHolder> {
+public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.StickerCardViewHolder> {
 
     private List<StickerModel> stickerModelList;
     private int imageWidth;
@@ -31,6 +33,11 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
     private OnStickerCardClickListener onStickerCardClickListener;
     public static final int MORE_STICKER_COMING = 2;
     private String FROM_FRAGMENT_TYPE;
+    private enum ITEM_TYPE {
+        ITEM_TYPE_HOME,
+        ITEM_TYPE_MY,
+        ITEM_TYPE_MORE
+    }
 
     private DisplayImageOptions options=new DisplayImageOptions.Builder().cacheInMemory(false).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
 
@@ -48,7 +55,11 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
 
     @Override
     public StickerCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new StickerCardViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sticker_card, parent, false));
+        if (viewType == ITEM_TYPE.ITEM_TYPE_MY.ordinal()) {
+            return new MyStickerCardViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sticker_card, parent, false));
+        } else {
+            return new StickerCardHomeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sticker_card, parent, false));
+        }
     }
 
     @Override
@@ -57,8 +68,8 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
             return;
         }
 
-        if (isFromHomeType() && getItemViewType(position) == MORE_STICKER_COMING) {
-            holder.moreStickersComing.setVisibility(View.VISIBLE);
+        if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_MORE.ordinal()) {
+            ((StickerCardHomeViewHolder) holder).moreStickersComing.setVisibility(View.VISIBLE);
             holder.stickerCardView.setVisibility(View.GONE);
             return;
         }
@@ -71,16 +82,17 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
             ImageSize imageSize = new ImageSize(imageWidth,imageHeight);
             ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(holder.stickerRealImage), options, imageSize, null, null);
         }
-        if(!stickerModel.getIsDownload()) {
-            holder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
-            holder.moreMenuImage.setOnClickListener(new View.OnClickListener() {
+        if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_HOME.ordinal()) {
+           ((StickerCardHomeViewHolder) holder).moreMenuImage.setVisibility(View.VISIBLE);
+            ((StickerCardHomeViewHolder) holder).moreMenuImage.setImageResource(R.drawable.ic_download_icon);
+            ((StickerCardHomeViewHolder) holder).moreMenuImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onStickerCardClickListener.onDownloadButtonClick(stickerModel);
                 }
             });
         } else {
-            holder.moreMenuImage.setVisibility(View.GONE);
+
         }
         holder.stickerRealImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,9 +110,9 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
     @Override
     public int getItemViewType(int position) {
         if (isFromHomeType() && position == getItemCount()-1) {
-            return MORE_STICKER_COMING;
+            return ITEM_TYPE.ITEM_TYPE_MORE.ordinal();
         }
-        return 0;
+        return isFromHomeType() ? ITEM_TYPE.ITEM_TYPE_HOME.ordinal() : ITEM_TYPE.ITEM_TYPE_MY.ordinal();
     }
 
     @Override
@@ -115,5 +127,40 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardViewHold
         void onCardViewClick(StickerModel stickerModel);
         void onDownloadButtonClick(StickerModel stickerModel);
     }
+
+    public class StickerCardViewHolder extends RecyclerView.ViewHolder {
+        View stickerCardView;
+
+        TextView stickerGroupName;
+        ImageView stickerNewImage;
+        ImageView stickerRealImage;
+
+
+        public StickerCardViewHolder(View itemView) {
+            super(itemView);
+
+            stickerCardView = itemView.findViewById(R.id.sticker_card_view) ;
+            stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
+            stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
+            stickerNewImage = (ImageView) itemView.findViewById(R.id.sticker_new_view);
+        }
+    }
+
+    private class StickerCardHomeViewHolder extends StickerCardViewHolder {
+        TextView moreStickersComing;
+        ImageView moreMenuImage;
+
+        public StickerCardHomeViewHolder(View view) {
+            super(view);
+            moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
+            moreStickersComing = (TextView) itemView.findViewById(R.id.more_sticker_coming);
+        }
+    }
+    private class MyStickerCardViewHolder extends StickerCardViewHolder {
+        public MyStickerCardViewHolder(View view) {
+            super(view);
+        }
+    }
+
 }
 

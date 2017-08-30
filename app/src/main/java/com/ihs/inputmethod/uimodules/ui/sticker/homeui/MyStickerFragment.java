@@ -74,27 +74,11 @@ public class MyStickerFragment extends Fragment {
             if(!TextUtils.isEmpty(downloadStickerName)) {
                 StickerGroup stickerGroup = new StickerGroup(downloadStickerName);
                 StickerModel stickerModel = new StickerModel(stickerGroup);
-                stickerModel.setIsDownload(true);
+                stickerModel.setIsDownloaded(true);
                 stickerModelList.add(stickerModel);
             }
         }
-//        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
-//        for (Map<String, Object> map : stickerConfigList) {
-//            String stickerGroupName = (String) map.get("name");
-//            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-//            if(!StickerDataManager.getInstance().isStickerGroupDownloaded(stickerGroupName)) {
-//                continue;
-//            }
-//            String stickerTag = (String) map.get("tagName");
-//            String stickerGroupDownloadDisplayName = (String) map.get("showName");
-//            stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
-//            StickerModel stickerModel = new StickerModel(stickerGroup);
-//            stickerModel.setIsDownload(true);
-//            if(stickerTag != null) {
-//                stickerModel.setStickTag(stickerTag);
-//            }
-//            stickerModelList.add(stickerModel);
-//        }
+
     }
 
     @Override

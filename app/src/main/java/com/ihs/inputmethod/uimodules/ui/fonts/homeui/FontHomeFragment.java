@@ -96,7 +96,8 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     }
 
     @Override
-    public void onFontCardClick(final FontModel fontModel) {
+    public void onFontCardClick(final int position) {
+        final FontModel fontModel = fontModelList.get(position);
         FontDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), fontModel, null, new AdLoadingView.OnAdBufferingListener() {
             @Override
             public void onDismiss(boolean success) {

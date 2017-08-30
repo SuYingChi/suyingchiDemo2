@@ -97,7 +97,7 @@ public class StickerHomeFragment extends Fragment {
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if(StickerDataManager.getInstance().isStickerGroupDownloaded(stickerGroupName)) {
+            if(stickerGroup.isStickerGroupDownloaded()) {
                 continue;
             }
             String stickerTag = (String) map.get("tagName");

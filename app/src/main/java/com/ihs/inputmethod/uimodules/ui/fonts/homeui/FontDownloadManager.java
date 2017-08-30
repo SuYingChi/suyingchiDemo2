@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.view.View;
 
@@ -77,7 +78,7 @@ public class FontDownloadManager {
     }
 
     public String getFontDownloadUrl(String fontName) {
-        return "http://s3.amazonaws.com/rainbowkey-dev/Fonts/" + fontName + FONT_DOWNLOAD_JSON_SUFFIX;
+        return "http://s3.amazonaws.com/rainbowkey-dev/Fonts/" + Uri.encode(fontName) + FONT_DOWNLOAD_JSON_SUFFIX;
     }
 
     public void startForegroundDownloading(Context context, final FontModel fontModel,
@@ -112,11 +113,8 @@ public class FontDownloadManager {
                     }
                 }, 2000, false);
         adLoadingView.showInDialog();
-        String downloadUrl;
-        downloadUrl = fontModel.getFontDownloadBaseURL().replace(" ", "%20");
 
-//        HSHttpConnection connection = new HSHttpConnection("http://rainbowkey-dev.s3.amazonaws.com/test.json");
-        HSHttpConnection connection = new HSHttpConnection(downloadUrl);
+        HSHttpConnection connection = new HSHttpConnection(fontModel.getFontDownloadBaseURL());
         connection.setDownloadFile(HSFileUtils.createNewFile(fontModelJsonFilePath));
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override

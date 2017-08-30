@@ -35,7 +35,7 @@ public class StickerModel {
         return isDownloaded;
     }
 
-    public void setIsDownload(boolean download) {
+    public void setIsDownloaded(boolean download) {
         isDownloaded = download;
     }
 }
