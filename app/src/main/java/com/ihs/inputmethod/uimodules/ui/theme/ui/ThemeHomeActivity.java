@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.acb.call.CPSettings;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
@@ -79,6 +80,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
 
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
+    private static final String SP_TREBLE_FUNCTION_ALERT_SHOWED = "sp_treble_function_alert_showed";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
@@ -448,14 +450,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("removeAds_clicked");
             RemoveAdsManager.getInstance().purchaseRemoveAds();
         } else if ( id == R.id.nav_privacy){
-            Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
-            try {
-                startActivity(intent);
-            } catch (ActivityNotFoundException e) {
-                Log.w("URLSpan", "Actvity was not found for intent, " + intent.toString());
-            }
+            startBrowsePrivacy();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -675,46 +670,72 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
-    private boolean showEnableChargingAlertIfNeeded() {
-        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            ChargingConfigManager.getManager().increaseEnableAlertShowCount();
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
-            if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
-                CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-                dialog.setEnablePrivacy(true, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
-                        try {
-                            startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+    private void showEnableChargingAlertIfNeeded() {
+        if (!HSPreferenceHelper.getDefault().getBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, false)) {
+            CustomDesignAlert trebleFunctionDialog = new CustomDesignAlert(HSApplication.getContext());
+            trebleFunctionDialog.setEnablePrivacy(true, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startBrowsePrivacy();
+                }
+            });
+            trebleFunctionDialog.setTitle(getString(R.string.treble_function_alert_title));
+            trebleFunctionDialog.setMessage(getString(R.string.treble_function_alert_message));
+            trebleFunctionDialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            trebleFunctionDialog.setCancelable(true);
+            trebleFunctionDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChargingManagerUtil.enableCharging(false);
+                    LockerSettings.setLockerEnabled(true);
+                    CPSettings.setScreenFlashModuleEnabled(true);
+                }
+            });
+            trebleFunctionDialog.show();
+            HSPreferenceHelper.getDefault().putBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, true);
+        } else {
+            if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+                ChargingConfigManager.getManager().increaseEnableAlertShowCount();
+                HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+                if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
+                    CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+                    dialog.setEnablePrivacy(true, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startBrowsePrivacy();
                         }
-                    }
-                });
-                dialog.setTitle(getString(R.string.charging_alert_title));
-                dialog.setMessage(getString(R.string.charging_alert_message));
-                dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-                dialog.setCancelable(true);
-                dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
-                    }
-                });
-                dialog.show();
-            } else {
-                Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
-                intent.putExtra("type", "charging");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                HSApplication.getContext().startActivity(intent);
+                    });
+                    dialog.setTitle(getString(R.string.charging_alert_title));
+                    dialog.setMessage(getString(R.string.charging_alert_message));
+                    dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+                    dialog.setCancelable(true);
+                    dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ChargingManagerUtil.enableCharging(false);
+                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+                        }
+                    });
+                    dialog.show();
+                } else {
+                    Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
+                    intent.putExtra("type", "charging");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    HSApplication.getContext().startActivity(intent);
+                }
             }
-            return true;
         }
-        return false;
+    }
+
+    private void startBrowsePrivacy() {
+        Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+        }
     }
 
     @Override
