@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -32,6 +33,7 @@ public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.
 	private List<ThemeHomeModel> themes=new ArrayList<>();
 	private List<ThemeHomeModel> downloaded=new ArrayList<>();
 	private List<ThemeHomeModel> custom=new ArrayList<>();
+	public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_theme_my);
 
 
 	private ThemeHomeModel customTitle=new ThemeHomeModel();

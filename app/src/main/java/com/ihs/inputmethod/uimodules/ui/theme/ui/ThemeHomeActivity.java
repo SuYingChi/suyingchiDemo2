@@ -236,6 +236,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        String[] tabTitles = new String[3];
+        tabTitles[0] = getApplicationContext().getString(R.string.tab_theme);
+        tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker);
+        tabTitles[2] = getApplicationContext().getString(R.string.tab_font);
+        tabFragmentPagerAdapter.setTabTitles(tabTitles);
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(tabFragmentPagerAdapter);
 

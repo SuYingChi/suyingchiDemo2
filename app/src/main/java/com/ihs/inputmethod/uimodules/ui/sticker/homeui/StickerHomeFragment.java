@@ -36,6 +36,7 @@ public class StickerHomeFragment extends Fragment {
     private List<StickerModel> stickerModelList = new ArrayList<>();
 
     public static final String DOWNLOAD_STICKER_NAME_LIST = "download_sticker_name_list";
+    public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker);
 
     @Nullable
     @Override

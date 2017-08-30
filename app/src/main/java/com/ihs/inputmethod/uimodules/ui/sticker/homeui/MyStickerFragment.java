@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontCardAdapter;
@@ -27,6 +28,7 @@ public class MyStickerFragment extends Fragment {
     private RecyclerView recyclerView;
     private StickerCardAdapter stickerCardAdapter;
     private List<StickerModel> stickerModelList = new ArrayList<>();
+    public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker_my);
 
     @Nullable
     @Override

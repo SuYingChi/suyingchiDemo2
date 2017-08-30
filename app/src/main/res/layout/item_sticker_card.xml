@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center"
-        android:text="More Stickers Are Coming Soon"
+        android:text="@string/item_sticker_more_coming"
         android:textSize="16sp"
         android:visibility="gone"/>
 

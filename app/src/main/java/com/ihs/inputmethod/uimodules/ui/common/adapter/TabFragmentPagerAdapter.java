@@ -3,12 +3,9 @@ package com.ihs.inputmethod.uimodules.ui.common.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.text.TextUtils;
-
-import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDownloadActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by guonan.lv on 17/8/10.
@@ -17,20 +14,20 @@ import java.util.ArrayList;
 public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> fragments;
-    private String[] tabTitle = new String[] {"THEME", "STICKER", "FONT"};
-    private String[] myTabTitle = new String[] {"MY THEME", "MY STICKER", "MY FONT"};
+    private String[] tabTitle;
 
     public TabFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
         super(fm);
+        tabTitle = new String[fragments.size()];
         this.fragments = fragments;
     }
 
-    public TabFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments, String currentPage) {
-        super(fm);
-        this.fragments = fragments;
-        if(TextUtils.equals(currentPage, ThemeDownloadActivity.class.getSimpleName())) {
-            tabTitle = myTabTitle;
+    public void setTabTitles(String[] tabTitles) {
+        if (tabTitles.length > getCount()) {
+            tabTitle = Arrays.copyOfRange(tabTitles, 0, getCount());
+            return;
         }
+        tabTitle = tabTitles;
     }
 
     @Override

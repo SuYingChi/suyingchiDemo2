@@ -1,8 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -41,6 +42,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 	private RecyclerView recyclerView;
 	private ThemeHomeAdapter adapter;
 	private List<ThemeHomeModel> themeHomeModelList=new ArrayList<>();
+	public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_theme);
 
 	private List<ThemeHomeModel> themeList=new ArrayList<>();
 

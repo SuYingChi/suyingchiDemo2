@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -28,6 +29,7 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
     private FontCardAdapter fontCardAdapter;
     private List<FontModel> fontModelList = new ArrayList<>();
     private TrialKeyboardDialog trialKeyboardDialog;
+    public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_font_my);
 
     @Nullable
     @Override

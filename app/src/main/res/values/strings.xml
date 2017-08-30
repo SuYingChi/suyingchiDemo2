@@ -137,6 +137,8 @@
     <string name="tab_sticker_my">MY STICKER</string>
     <string name="tab_font">FONT</string>
     <string name="tab_font_my">MY FONT</string>
+    <string name="item_sticker_more_coming">More Stickers Are Coming Soon</string>
+    <string name="item_font_more_coming">More Fonts Are Coming Soon</string>
 
     <string name="dialog_app_usage_tips">For better typing experience across different apps, we recommend you to turn on apps with usage access.</string>
     <string name="dialog_agree">@string/allow</string>
