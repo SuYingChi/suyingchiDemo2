@@ -236,8 +236,8 @@
     <string name="call_assistant_alert_title">Smart Call Assistant</string>
     <string name="call_assistant_alert_message">Enable Smart Call Assistant. Contains ads.</string>
 
-    <string name="treble_function_alert_title">Screen Locker &amp; Caller Screen</string>
-    <string name="treble_function_alert_message">Enable smart locker and call flash to make your phone more fashionable. May contains sponsored content.</string>
+    <string name="treble_function_alert_title">Screen Locker / Caller Screen</string>
+    <string name="treble_function_alert_message">Enable screen locker and call flash to make your phone more fashionable. May contain sponsored content.</string>
 
     <!--Accessibility-->
     <string name="accessibility_service" translatable="false">Emoji Keyboard</string>
