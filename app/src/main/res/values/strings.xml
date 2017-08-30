@@ -233,6 +233,9 @@
   
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
+    <string name="call_assistant_alert_title">Smart Call Assistant</string>
+    <string name="call_assistant_alert_message">Enable Smart Call Assistant. Contains ads.</string>
+
     <!--Accessibility-->
     <string name="accessibility_service" translatable="false">Emoji Keyboard</string>
     <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️

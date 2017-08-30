@@ -676,11 +676,24 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     }
 
     private boolean showEnableChargingAlertIfNeeded() {
-        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
+        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
             if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
                 CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+                dialog.setEnablePrivacy(true, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
+                        try {
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException e) {
+                            Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+                        }
+                    }
+                });
                 dialog.setTitle(getString(R.string.charging_alert_title));
                 dialog.setMessage(getString(R.string.charging_alert_message));
                 dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
