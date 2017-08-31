@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
+import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 
 import java.io.File;
 
@@ -48,7 +49,7 @@ public class FontModel {
         if (!needDownload) { //原先内置的字体存放路径在assets中，所以通过这种方式判断是否内置字体
             return true;
         }
-        String fontFilePath = FontDownloadManager.getInstance().getFontDownloadFilePath(getFontName());
+        String fontFilePath = HSFontDownloadManager.getInstance().getFontDownloadFilePath(getFontName());
         File file = new File(fontFilePath);
         return file.exists() && file.length() > 0;
     }

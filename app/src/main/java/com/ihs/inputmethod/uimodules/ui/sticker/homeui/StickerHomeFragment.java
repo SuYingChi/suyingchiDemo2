@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -47,15 +48,15 @@ public class StickerHomeFragment extends Fragment {
         loadStickerGroup();
         stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
             @Override
-            public void onCardViewClick(StickerModel stickerModel) {
+            public void onCardViewClick(StickerModel stickerModel, Drawable drawable) {
                 HSAnalytics.logEvent(stickerModel.getStickerGroup().getStickerGroupName(), "sticker_download_clicked");
-                onDownloadButtonClick(stickerModel);
+                onDownloadButtonClick(stickerModel, drawable);
             }
 
             @Override
-            public void onDownloadButtonClick(final StickerModel stickerModel) {
+            public void onDownloadButtonClick(final StickerModel stickerModel, Drawable drawable) {
 
-                StickerDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerModel.getStickerGroup(), null, new AdLoadingView.OnAdBufferingListener() {
+                StickerDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerModel.getStickerGroup(), drawable, new AdLoadingView.OnAdBufferingListener() {
                     @Override
                     public void onDismiss(boolean success) {
                         if(success) {

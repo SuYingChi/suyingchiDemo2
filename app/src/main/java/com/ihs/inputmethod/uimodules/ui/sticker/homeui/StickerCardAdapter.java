@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
     }
 
     @Override
-    public void onBindViewHolder(StickerCardViewHolder holder, final int position) {
+    public void onBindViewHolder(final StickerCardViewHolder holder, final int position) {
         if (stickerModelList == null) {
             return;
         }
@@ -87,7 +88,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
             ((StickerCardHomeViewHolder) holder).moreMenuImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onStickerCardClickListener.onDownloadButtonClick(stickerModel);
+                    onStickerCardClickListener.onDownloadButtonClick(stickerModel, holder.stickerRealImage.getDrawable());
                 }
             });
         } else {
@@ -96,7 +97,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         holder.stickerRealImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onStickerCardClickListener.onCardViewClick(stickerModel);
+                onStickerCardClickListener.onCardViewClick(stickerModel, holder.stickerRealImage.getDrawable());
             }
         });
         holder.stickerNewImage.setVisibility(stickerModel.getStickerTag() == null ? View.GONE : View.VISIBLE);
@@ -123,8 +124,8 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
     }
 
     public interface OnStickerCardClickListener {
-        void onCardViewClick(StickerModel stickerModel);
-        void onDownloadButtonClick(StickerModel stickerModel);
+        void onCardViewClick(StickerModel stickerModel, Drawable drawable);
+        void onDownloadButtonClick(StickerModel stickerModel, Drawable drawable);
     }
 
     public class StickerCardViewHolder extends RecyclerView.ViewHolder {

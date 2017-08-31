@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
+package com.ihs.inputmethod.uimodules.ui.fonts.common;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,6 +15,7 @@ import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.kc.commons.configfile.KCList;
 import com.kc.commons.configfile.KCParser;
@@ -34,21 +35,21 @@ import java.io.IOException;
  * Created by guonan.lv on 17/8/21.
  */
 
-public class FontDownloadManager {
+public class HSFontDownloadManager {
     public static final String JSON_SUFFIX = ".json";
     public static final String ASSETS_FONT_FILE_PATH = "Fonts";
     private static final String DOWNLOADED_FONT_NAME_JOIN = "download_font_name_join";
-    private static FontDownloadManager instance;
+    private static HSFontDownloadManager instance;
 
-    private FontDownloadManager() {
+    private HSFontDownloadManager() {
         loadDownloadedFont();
     }
 
-    public static FontDownloadManager getInstance() {
+    public static HSFontDownloadManager getInstance() {
         if (instance == null) {
-            synchronized (FontDownloadManager.class) {
+            synchronized (HSFontDownloadManager.class) {
                 if (instance == null) {
-                    instance = new FontDownloadManager();
+                    instance = new HSFontDownloadManager();
                 }
             }
         }

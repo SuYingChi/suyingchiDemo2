@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -42,12 +43,12 @@ public class MyStickerFragment extends Fragment {
         loadStickerModel();
         stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
             @Override
-            public void onCardViewClick(StickerModel stickerModel) {
+            public void onCardViewClick(StickerModel stickerModel, Drawable drawable) {
 
             }
 
             @Override
-            public void onDownloadButtonClick(StickerModel stickerModel) {
+            public void onDownloadButtonClick(StickerModel stickerModel, Drawable drawable) {
 
             }
         });
