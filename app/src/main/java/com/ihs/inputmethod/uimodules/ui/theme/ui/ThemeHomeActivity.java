@@ -682,8 +682,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     startBrowsePrivacy();
                 }
             });
-            multiFunctionDialog.setTitle(getString(R.string.treble_function_alert_title));
-            multiFunctionDialog.setMessage(getString(R.string.treble_function_alert_message));
+            multiFunctionDialog.setTitle(getString(R.string.multi_function_alert_title));
+            multiFunctionDialog.setMessage(getString(R.string.multi_function_alert_message));
             multiFunctionDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);
             multiFunctionDialog.setCancelable(true);
             multiFunctionDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
