@@ -233,6 +233,9 @@
   
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
+    <string name="locker_alert_title">Screen Locker</string>
+    <string name="locker_alert_message">Enable Screen Locker. Contains ads.</string>
+
     <string name="call_assistant_alert_title">Smart Call Assistant</string>
     <string name="call_assistant_alert_message">Enable Smart Call Assistant. Contains ads.</string>
 

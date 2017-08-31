@@ -33,7 +33,6 @@ import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
-import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -58,6 +57,8 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.inputmethod.utils.CallAssistantConfigUtils;
+import com.ihs.inputmethod.utils.ScreenLockerConfigUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
@@ -67,6 +68,8 @@ import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.kc.commons.utils.KCCommonUtils;
+
+import java.util.Random;
 
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
@@ -351,7 +354,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // Place here to get a right session id from appframework
         if (isResumeOnCreate) {
-            showEnableChargingAlertIfNeeded();
+            showOpenAlertIfNeeded();
         }
         isResumeOnCreate = false;
 
@@ -670,8 +673,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
-    private void showEnableChargingAlertIfNeeded() {
-        if (!HSPreferenceHelper.getDefault().getBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, false)) {
+    private void showOpenAlertIfNeeded() {
+        if (!HSPreferenceHelper.getDefault().getBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, false) && ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
             CustomDesignAlert trebleFunctionDialog = new CustomDesignAlert(HSApplication.getContext());
             trebleFunctionDialog.setEnablePrivacy(true, new View.OnClickListener() {
                 @Override
@@ -694,35 +697,28 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             trebleFunctionDialog.show();
             HSPreferenceHelper.getDefault().putBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, true);
         } else {
-            if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-                ChargingConfigManager.getManager().increaseEnableAlertShowCount();
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
-                if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
-                    CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-                    dialog.setEnablePrivacy(true, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startBrowsePrivacy();
-                        }
-                    });
-                    dialog.setTitle(getString(R.string.charging_alert_title));
-                    dialog.setMessage(getString(R.string.charging_alert_message));
-                    dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-                    dialog.setCancelable(true);
-                    dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ChargingManagerUtil.enableCharging(false);
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
-                        }
-                    });
-                    dialog.show();
-                } else {
-                    Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
-                    intent.putExtra("type", "charging");
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    HSApplication.getContext().startActivity(intent);
-                }
+            Random random = new Random();
+            int priority = random.nextInt(3); // 0:Charging 1:Locker 2:Call Assistant
+            HSLog.d("OpenAlert priority  = " + priority);
+            switch (priority) {
+                case 0:
+                    if (!showChargingDialog() && !showScreenLockerDialog() && !showCallAssistantDialog()) {
+                        HSLog.d("OpenAlert priority  = " + priority + " show nothing.");
+                    }
+                    break;
+                case 1:
+                    if (!showScreenLockerDialog() && !showCallAssistantDialog() && !showChargingDialog()) {
+                        HSLog.d("OpenAlert priority  = " + priority + " show nothing.");
+                    }
+                    break;
+                case 2:
+                    if (!showCallAssistantDialog() && !showChargingDialog() && !showScreenLockerDialog()) {
+                        HSLog.d("OpenAlert priority  = " + priority + " show nothing.");
+                    }
+                    break;
+                default:
+                    HSLog.w("OpenAlert priority wrong");
+                    break;
             }
         }
     }
@@ -735,6 +731,91 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+        }
+    }
+
+    private boolean showChargingDialog() {
+        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+            dialog.setTitle(getString(R.string.charging_alert_title));
+            dialog.setMessage(getString(R.string.charging_alert_message));
+            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            dialog.setCancelable(true);
+            dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChargingManagerUtil.enableCharging(false);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+                }
+            });
+            dialog.show();
+            ChargingConfigManager.getManager().increaseEnableAlertShowCount();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean showScreenLockerDialog() {
+        if (ScreenLockerConfigUtils.shouldShowScreenLockerAlert(true)) {
+            CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
+            lockerDialog.setTitle(getString(R.string.locker_alert_title));
+            lockerDialog.setMessage(getString(R.string.locker_alert_message));
+            lockerDialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            lockerDialog.setCancelable(true);
+            lockerDialog.setEnablePrivacy(true, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startBrowsePrivacy();
+                }
+            });
+            lockerDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LockerSettings.setLockerEnabled(true);
+                    String themeName = "";
+                    if (HSKeyboardThemeManager.getCurrentTheme() != null) {
+                        themeName = HSKeyboardThemeManager.getCurrentTheme().mThemeName;
+                        HSLog.d("OpenAlert themeName = " +themeName);
+                        LockerSettings.setLockerBgUrl(ThemeLockerBgUtil.getInstance().getThemeBgUrl(themeName));
+                    } else {
+                        HSLog.w("OpenAlert getCurrentTheme failed.");
+                    }
+                }
+            });
+            lockerDialog.show();
+            ScreenLockerConfigUtils.increaseEnableAlertShowCount();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean showCallAssistantDialog() {
+        if (CallAssistantConfigUtils.shouldShowCallAssistantAlert(true)) {
+            CustomDesignAlert callAssistantDialog = new CustomDesignAlert(HSApplication.getContext());
+            callAssistantDialog.setTitle(getString(R.string.call_assistant_alert_title));
+            callAssistantDialog.setMessage(getString(R.string.call_assistant_alert_message));
+            callAssistantDialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            callAssistantDialog.setCancelable(true);
+            callAssistantDialog.setEnablePrivacy(true, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startBrowsePrivacy();
+                }
+            });
+            callAssistantDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CPSettings.setScreenFlashModuleEnabled(true);
+                }
+            });
+            callAssistantDialog.show();
+            CallAssistantConfigUtils.increaseAlertShowCount();
+            return true;
+        } else {
+            return false;
         }
     }
 
