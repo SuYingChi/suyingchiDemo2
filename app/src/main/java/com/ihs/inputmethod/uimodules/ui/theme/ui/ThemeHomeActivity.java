@@ -764,12 +764,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             lockerDialog.setMessage(getString(R.string.locker_alert_message));
             lockerDialog.setImageResource(R.drawable.enable_charging_alert_top_image);
             lockerDialog.setCancelable(true);
-            lockerDialog.setEnablePrivacy(true, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startBrowsePrivacy();
-                }
-            });
             lockerDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

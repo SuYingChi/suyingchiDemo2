@@ -14,7 +14,7 @@ public class ScreenLockerConfigUtils {
     private static final String LOG_TAG = ScreenLockerConfigUtils.class.getSimpleName();
 
     private final static String PREF_KEY_SCREEN_LOCKER_ENABLE_ALERT_SHOW_COUNT = "pref_key_screen_locker_enable_alert_show_count";
-    private final static int MAX_SHOW_COUNT = 3;
+    private final static int MAX_SHOW_COUNT = 2;
 
     private static boolean shouldFocusOnEnableEvent() {
         if (LockerSettings.getLockerEnableStates() != LockerSettings.LOCKER_DEFAULT_DISABLED) {

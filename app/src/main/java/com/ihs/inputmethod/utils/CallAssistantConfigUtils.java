@@ -11,7 +11,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 
 public class CallAssistantConfigUtils {
     private static final String PREF_KEY_CALL_ASSISTANT_ALERT_SHOW_TIME = "pref_call_assistant_alert_show_time";
-    private static final int MAX_SHOW_COUNT = 3;
+    private static final int MAX_SHOW_COUNT = 2;
 
     public static boolean shouldShowCallAssistantAlert(boolean limitShowCount) {
         if (CPSettings.isScreenFlashModuleEnabled()) {
