@@ -1,11 +1,16 @@
 package com.ihs.inputmethod.utils;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Browser;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.acb.call.CPSettings;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
@@ -88,6 +93,12 @@ public class TrialKeyboardDialogAlertUtils {
             dialog.setMessage(HSApplication.getContext().getString(R.string.call_assistant_alert_message));
             dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
             dialog.setCancelable(true);
+            dialog.setEnablePrivacy(true, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startBrowsePrivacy();
+                }
+            });
             dialog.setPositiveButton(HSApplication.getContext().getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -100,6 +111,18 @@ public class TrialKeyboardDialogAlertUtils {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private static void startBrowsePrivacy() {
+        Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.putExtra(Browser.EXTRA_APPLICATION_ID, HSApplication.getContext().getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            HSApplication.getContext().startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            HSLog.w("URLSpan", "Activity was not found for intent, " + intent.toString());
         }
     }
 
