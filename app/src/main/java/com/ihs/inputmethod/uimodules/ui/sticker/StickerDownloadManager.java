@@ -69,7 +69,7 @@ public class StickerDownloadManager {
         return stickerNames;
     }
 
-    private void unzipStickerGroup(String stickerGroupZipFilePath, StickerGroup stickerGroup) {
+    public void unzipStickerGroup(String stickerGroupZipFilePath, StickerGroup stickerGroup) {
         try {
             // 下载成功 先解压好下载的zip
             HSZipUtils.unzip(new File(stickerGroupZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));

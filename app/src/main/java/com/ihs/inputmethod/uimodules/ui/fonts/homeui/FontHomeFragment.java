@@ -14,7 +14,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
+import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.util.ArrayList;
@@ -98,7 +98,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     @Override
     public void onFontCardClick(final int position) {
         final FontModel fontModel = fontModelList.get(position);
-        HSFontDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), fontModel, null, new AdLoadingView.OnAdBufferingListener() {
+        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontModel, null, new AdLoadingView.OnAdBufferingListener() {
             @Override
             public void onDismiss(boolean success) {
                 if (success) {

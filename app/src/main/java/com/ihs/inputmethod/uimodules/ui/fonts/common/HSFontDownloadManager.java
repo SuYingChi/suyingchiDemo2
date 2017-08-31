@@ -1,34 +1,19 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.common;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.view.View;
-
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.connection.HSHttpConnection;
-import com.ihs.commons.utils.HSError;
-import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
-import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
-import com.ihs.keyboardutils.adbuffer.AdLoadingView;
+import com.ihs.inputmethod.utils.DownloadUtils;
 import com.kc.commons.configfile.KCList;
 import com.kc.commons.configfile.KCParser;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -62,7 +47,7 @@ public class HSFontDownloadManager {
         if (kcList == null) {
             return;
         }
-        for (int i = kcList.size()-1; i >= 0; i--) { //download order
+        for (int i = kcList.size(); i > 0; i--) { //order of adding opposite to the order of download
             String downloadFontName = kcList.getString(i);
             HSSpecialCharacter downloadSpecialCharacter = readSpecialCharacterFromFile(downloadFontName);
             if (downloadSpecialCharacter != null && !HSSpecialCharacterManager.getSpecialCharacterList().isEmpty()) {
@@ -79,101 +64,49 @@ public class HSFontDownloadManager {
         return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_FONT_FILE_PATH + "/" + DOWNLOADED_FONT_NAME_JOIN + JSON_SUFFIX;
     }
 
-    public void updateSpecialCharacterList(FontModel newFontModel) {
-        HSSpecialCharacterManager.addSpecilCharacter(1, newFontModel.getHsSpecialCharacter(), 14);
-
-        JSONArray jsonArray = new JSONArray();
-        File file = new File(getDownloadedFontNameList());
-        KCList kcList = KCParser.parseList(file);
-        if (kcList == null) {
-            jsonArray.put(newFontModel.getFontName());
-        } else {
-            for (int i = 0; i < kcList.size(); i++) {
-                jsonArray.put(kcList.getString(i));
-            }
-            jsonArray.put(newFontModel.getFontName());
-        }
-        writeJsonToFile(jsonArray, getDownloadedFontNameList());
-
-    }
-
-    public void startForegroundDownloading(Context context, final FontModel fontModel,
-                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
-        final String fontModelJsonFilePath = getFontDownloadFilePath(fontModel.getFontName());
-        final AdLoadingView adLoadingView = new AdLoadingView(context);
-        final Resources resources = HSApplication.getContext().getResources();
-        adLoadingView.configParams(null, thumbnailDrawable != null ? thumbnailDrawable : resources.getDrawable(R.drawable.ic_sticker_loading_image),
-                resources.getString(R.string.sticker_downloading_label),
-                resources.getString(R.string.sticker_downloading_successful),
-                resources.getString(R.string.ad_placement_lucky),
-                new AdLoadingView.OnAdBufferingListener() {
-                    @Override
-                    public void onDismiss(boolean downloadSuccess) {
-                        if (downloadSuccess) {
-                            if (fontModel.isFontDownloaded()) {
-                                HSLog.d("sticker " + fontModel.getFontName() + " download succeed");
-                            } else {
-                                HSLog.e("sticker " + fontModel.getFontName() + " download error!");
-                            }
-                        } else {
-                            // 没下载成功
-                            HSHttpConnection connection = (HSHttpConnection) adLoadingView.getTag();
-                            if (connection != null) {
-                                connection.cancel();
-                                HSFileUtils.delete(new File(fontModelJsonFilePath));
-                            }
-                        }
-                        if (onAdBufferingListener != null) {
-                            onAdBufferingListener.onDismiss(downloadSuccess);
-                        }
-                    }
-                }, 2000, false);
-        adLoadingView.showInDialog();
-
-        HSHttpConnection connection = new HSHttpConnection(fontModel.getFontDownloadBaseURL());
-        connection.setDownloadFile(HSFileUtils.createNewFile(fontModelJsonFilePath));
-        connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
-            @Override
-            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-            }
-
-            @Override
-            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
-                HSLog.e("startForegroundDownloading onConnectionFailed hsError" + hsError.getMessage());
-                adLoadingView.setConnectionStateText(resources.getString(R.string.foreground_download_failed));
-                adLoadingView.setConnectionProgressVisibility(View.INVISIBLE);
-            }
-        });
-        connection.setDataReceivedListener(new HSHttpConnection.OnDataReceivedListener() {
-            @Override
-            public void onDataReceived(HSHttpConnection hsHttpConnection, byte[] bytes, long received, long totalSize) {
-                if (totalSize > 0) {
-                    final float percent = (float) received * 100 / totalSize;
-                    if (received >= totalSize) {
-                        updateFontModel(fontModel);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("font_download_succeed", fontModel.getFontName());
-                    }
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            adLoadingView.updateProgressPercent((int) percent);
-                        }
-                    });
-                }
-            }
-        });
-        connection.startAsync();
-        adLoadingView.setTag(connection);
-    }
-
     public void updateFontModel(FontModel fontModel) {
         HSSpecialCharacter hsSpecialCharacter = readSpecialCharacterFromFile(fontModel.getFontName());
         if (hsSpecialCharacter == null) {
             return;
         }
-        FontModel newFontModel = new FontModel(hsSpecialCharacter);
-        updateSpecialCharacterList(newFontModel);
+        updateSpecialCharacterList(hsSpecialCharacter);
     }
+
+    public void updateSpecialCharacterList(HSSpecialCharacter hsSpecialCharacter) {
+        HSSpecialCharacterManager.addSpecilCharacter(1, hsSpecialCharacter, 14);
+
+        DownloadUtils.getInstance().writeJsonToFile(hsSpecialCharacter.name, getDownloadedFontNameList());
+    }
+
+//    private void writeJsonToFile(JSONArray jsonObject, String filePath) {
+//        try {
+//            File file = new File(filePath);
+//            if (!file.exists()) {
+//                file.createNewFile();
+//            }
+//            DataOutputStream out = new DataOutputStream(new FileOutputStream(
+//                    file));
+//            out.writeBytes(jsonObject.toString());
+//            out.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private JSONArray updateJsonArray(String fileName) {
+//        JSONArray jsonArray = new JSONArray();
+//        File file = new File(getDownloadedFontNameList());
+//        KCList kcList = KCParser.parseList(file);
+//        if (kcList == null) {
+//            jsonArray.put(fileName);
+//        } else {
+//            for (int i = 0; i < kcList.size(); i++) {
+//                jsonArray.put(kcList.getString(i));
+//            }
+//            jsonArray.put(fileName);
+//        }
+//        return jsonArray;
+//    }
 
     private HSSpecialCharacter readSpecialCharacterFromFile(String fontName) {
         HSSpecialCharacter hsNewSpecialCharacter = new HSSpecialCharacter();
@@ -192,21 +125,6 @@ public class HSFontDownloadManager {
             return null;
         } finally {
 
-        }
-    }
-
-    private void writeJsonToFile(JSONArray jsonObject, String filePath) {
-        try {
-            File file = new File(filePath);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            DataOutputStream out = new DataOutputStream(new FileOutputStream(
-                    file));
-            out.writeBytes(jsonObject.toString());
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
