@@ -24,10 +24,9 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
     private List<FontModel> fontModelList;
     private OnFontCardClickListener onFontCardClickListener;
     private int currentSelectPosition = -1;
-    public final static int MORE_FONT_COMING_TYPE = 2;
     private String fromFragmentType;
 
-    private enum ITEM_TYPE {
+    public enum ITEM_TYPE {
         ITEM_TYPE_HOME,
         ITEM_TYPE_MY,
         ITEM_TYPE_MORE

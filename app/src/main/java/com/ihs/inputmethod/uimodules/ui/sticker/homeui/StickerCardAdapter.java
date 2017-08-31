@@ -31,9 +31,8 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
     private int imageWidth;
     private int imageHeight;
     private OnStickerCardClickListener onStickerCardClickListener;
-    public static final int MORE_STICKER_COMING = 2;
     private String FROM_FRAGMENT_TYPE;
-    private enum ITEM_TYPE {
+    public enum ITEM_TYPE {
         ITEM_TYPE_HOME,
         ITEM_TYPE_MY,
         ITEM_TYPE_MORE

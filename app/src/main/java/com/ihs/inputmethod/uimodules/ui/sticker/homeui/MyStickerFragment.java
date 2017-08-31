@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 
 import java.util.ArrayList;
@@ -51,16 +50,6 @@ public class MyStickerFragment extends Fragment {
             @Override
             public void onDownloadButtonClick(StickerModel stickerModel) {
 
-            }
-        });
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-
-            @Override
-            public int getSpanSize(int position) {
-                if (stickerCardAdapter.getItemViewType(position) == FontCardAdapter.MORE_FONT_COMING_TYPE) {
-                    return 2;
-                }
-                return 1;
             }
         });
         recyclerView.setAdapter(stickerCardAdapter);

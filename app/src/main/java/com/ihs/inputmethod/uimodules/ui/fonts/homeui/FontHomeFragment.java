@@ -47,7 +47,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
             @Override
             public int getSpanSize(int position) {
-                if (fontCardAdapter.getItemViewType(position) == FontCardAdapter.MORE_FONT_COMING_TYPE) {
+                if (fontCardAdapter.getItemViewType(position) == FontCardAdapter.ITEM_TYPE.ITEM_TYPE_MORE.ordinal()) {
                     return 2;
                 }
                 return 1;

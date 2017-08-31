@@ -14,7 +14,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -79,7 +78,7 @@ public class StickerHomeFragment extends Fragment {
 
             @Override
             public int getSpanSize(int position) {
-                if (stickerCardAdapter.getItemViewType(position) == FontCardAdapter.MORE_FONT_COMING_TYPE) {
+                if (stickerCardAdapter.getItemViewType(position) == StickerCardAdapter.ITEM_TYPE.ITEM_TYPE_MORE.ordinal()) {
                     return 2;
                 }
                 return 1;
