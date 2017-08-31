@@ -47,6 +47,26 @@
 
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/fl_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/design_base_padding"
+            android:paddingRight="@dimen/design_base_padding"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|right"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="@string/text_privacy_policy"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="10sp" />
+        </FrameLayout>
+
         <LinearLayout
             android:id="@+id/ll_single_button"
             style="@style/DesignDialogActionArea">
@@ -55,31 +75,6 @@
                 android:id="@+id/btn_positive_single"
                 style="@style/DesignDialogSingleActionButton"/>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_privacy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/design_base_padding"
-            android:paddingRight="@dimen/design_base_padding"
-            android:paddingBottom="@dimen/design_base_padding"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tv_privacy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:paddingLeft="@dimen/design_base_padding"
-                android:paddingRight="@dimen/design_base_padding"
-                android:text="Privacy Policy"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="10sp" />
         </LinearLayout>
     </LinearLayout>
 

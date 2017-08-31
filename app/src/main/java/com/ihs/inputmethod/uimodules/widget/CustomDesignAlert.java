@@ -92,12 +92,12 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
 
     private void enablePrivacy(boolean enable) {
         if (enable) {
-            findViewById(R.id.ll_privacy).setVisibility(View.VISIBLE);
+            findViewById(R.id.fl_privacy).setVisibility(View.VISIBLE);
             TextView textView = (TextView) findViewById(R.id.tv_privacy);
             textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
             textView.setOnClickListener(this);
         } else {
-            findViewById(R.id.ll_privacy).setVisibility(View.GONE);
+            findViewById(R.id.fl_privacy).setVisibility(View.GONE);
         }
     }
 
