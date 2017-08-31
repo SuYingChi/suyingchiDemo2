@@ -681,7 +681,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             });
             trebleFunctionDialog.setTitle(getString(R.string.treble_function_alert_title));
             trebleFunctionDialog.setMessage(getString(R.string.treble_function_alert_message));
-            trebleFunctionDialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            trebleFunctionDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);
             trebleFunctionDialog.setCancelable(true);
             trebleFunctionDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
