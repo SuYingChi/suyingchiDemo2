@@ -807,14 +807,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     private void enableLocker() {
         LockerSettings.setLockerEnabled(true);
-        String themeName = "";
-        if (HSKeyboardThemeManager.getCurrentTheme() != null) {
-            themeName = HSKeyboardThemeManager.getCurrentTheme().mThemeName;
-            HSLog.d("OpenAlert themeName = " +themeName);
-            LockerSettings.setLockerBgUrl(ThemeLockerBgUtil.getInstance().getThemeBgUrl(themeName));
-        } else {
-            HSLog.w("OpenAlert getCurrentTheme failed.");
-        }
     }
 
     @Override
