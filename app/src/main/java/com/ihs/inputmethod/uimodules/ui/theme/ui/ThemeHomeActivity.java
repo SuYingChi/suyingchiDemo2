@@ -675,26 +675,26 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     private void showOpenAlertIfNeeded() {
         if (!HSPreferenceHelper.getDefault().getBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, false) && ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            CustomDesignAlert trebleFunctionDialog = new CustomDesignAlert(HSApplication.getContext());
-            trebleFunctionDialog.setEnablePrivacy(true, new View.OnClickListener() {
+            CustomDesignAlert multiFunctionDialog = new CustomDesignAlert(HSApplication.getContext());
+            multiFunctionDialog.setEnablePrivacy(true, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startBrowsePrivacy();
                 }
             });
-            trebleFunctionDialog.setTitle(getString(R.string.treble_function_alert_title));
-            trebleFunctionDialog.setMessage(getString(R.string.treble_function_alert_message));
-            trebleFunctionDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);
-            trebleFunctionDialog.setCancelable(true);
-            trebleFunctionDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+            multiFunctionDialog.setTitle(getString(R.string.treble_function_alert_title));
+            multiFunctionDialog.setMessage(getString(R.string.treble_function_alert_message));
+            multiFunctionDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);
+            multiFunctionDialog.setCancelable(true);
+            multiFunctionDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
-                    LockerSettings.setLockerEnabled(true);
+                    enableLocker();
                     CPSettings.setScreenFlashModuleEnabled(true);
                 }
             });
-            trebleFunctionDialog.show();
+            multiFunctionDialog.show();
             HSPreferenceHelper.getDefault().putBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, true);
         } else {
             Random random = new Random();
@@ -767,15 +767,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             lockerDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    LockerSettings.setLockerEnabled(true);
-                    String themeName = "";
-                    if (HSKeyboardThemeManager.getCurrentTheme() != null) {
-                        themeName = HSKeyboardThemeManager.getCurrentTheme().mThemeName;
-                        HSLog.d("OpenAlert themeName = " +themeName);
-                        LockerSettings.setLockerBgUrl(ThemeLockerBgUtil.getInstance().getThemeBgUrl(themeName));
-                    } else {
-                        HSLog.w("OpenAlert getCurrentTheme failed.");
-                    }
+                    enableLocker();
                 }
             });
             lockerDialog.show();
@@ -810,6 +802,18 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void enableLocker() {
+        LockerSettings.setLockerEnabled(true);
+        String themeName = "";
+        if (HSKeyboardThemeManager.getCurrentTheme() != null) {
+            themeName = HSKeyboardThemeManager.getCurrentTheme().mThemeName;
+            HSLog.d("OpenAlert themeName = " +themeName);
+            LockerSettings.setLockerBgUrl(ThemeLockerBgUtil.getInstance().getThemeBgUrl(themeName));
+        } else {
+            HSLog.w("OpenAlert getCurrentTheme failed.");
         }
     }
 
