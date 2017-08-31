@@ -384,7 +384,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
                 }
             }
-            HSAnalytics.logEvent("themedetails_apply_clicked", "themeName", themeName);
             if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                 ThemeAnalyticsReporter.getInstance().recordThemeApplyInDetailActivity(themeName);
             }
@@ -551,7 +550,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 rightBtn.setText(R.string.theme_card_menu_apply);
                 rightBtn.setEnabled(true);
             }
-            HSAnalytics.logEvent("themedetails_apply_clicked", "themeName", themeName);
         }
 
         switch (requestCode) {

@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.accessbility;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSPreferenceHelper;
 
 /**
@@ -24,6 +25,7 @@ public class AccGALogger {
 
     public static void logOneTimeGA(String key) {
         if (!HSPreferenceHelper.getDefault().getBoolean(key, false)) {
+            HSAnalytics.logEvent(key);
             HSPreferenceHelper.getDefault().putBoolean(key, true);
         }
     }

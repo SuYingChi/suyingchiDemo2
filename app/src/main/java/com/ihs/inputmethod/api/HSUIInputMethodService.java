@@ -440,11 +440,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 sb.append(this.getCurrentInputConnection().getTextBeforeCursor(100, 0));
                 sb.append(this.getCurrentInputConnection().getTextAfterCursor(100, 0));
                 String text = sb.toString();
-                HSLog.d("Key enter pressed in google play.");
+                HSLog.i("Key enter pressed in google play.");
+                HSLog.i("CodeInput:" + text);
                 HSAnalytics.logEvent("keyboard_googleplay_search_content", "codeInput", text);
             }
         } catch (Exception e) {
-            HSLog.d("Failed to log key enter in google play.");
+            HSLog.i("Failed to log key enter in google play.");
         }
 
         super.onCodeInput(codePoint, x, y, isKeyRepeat);

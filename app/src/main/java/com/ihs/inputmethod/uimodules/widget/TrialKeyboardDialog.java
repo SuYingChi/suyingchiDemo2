@@ -160,7 +160,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     private void showChargingEnableAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
             if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
-                HSAnalytics.logEvent("alert_charging_show_halfscreen");
+                HSAnalytics.logEvent("alert_charging_show", "size", "half_screen");
                 CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
                 dialog.setTitle(getContext().getString(R.string.charging_alert_title));
                 dialog.setMessage(getContext().getString(R.string.charging_alert_message));
@@ -170,12 +170,11 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                     @Override
                     public void onClick(View view) {
                         ChargingManagerUtil.enableCharging(false);
-                        HSAnalytics.logEvent("alert_charging_clicked_halfscreen");
+                        HSAnalytics.logEvent("alert_charging_click", "size", "half_screen");
                     }
                 });
                 dialog.show();
             }else {
-                HSAnalytics.logEvent("alert_charging_show_fullscreen");
                 Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
                 intent.putExtra("type", "charging");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

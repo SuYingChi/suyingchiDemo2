@@ -135,6 +135,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         HSUIInputMethod.launchSettingsActivity();
                     }
                 }, 100);
+                HSAnalytics.logEvent("keyboard_setting_more_clicked");
             }
         }));
 
