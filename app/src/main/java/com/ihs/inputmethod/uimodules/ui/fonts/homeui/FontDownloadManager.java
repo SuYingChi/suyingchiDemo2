@@ -61,7 +61,7 @@ public class FontDownloadManager {
         if (kcList == null) {
             return;
         }
-        for (int i = 0; i < kcList.size(); i++) {
+        for (int i = kcList.size()-1; i >= 0; i--) { //download order
             String downloadFontName = kcList.getString(i);
             HSSpecialCharacter downloadSpecialCharacter = readSpecialCharacterFromFile(downloadFontName);
             if (downloadSpecialCharacter != null && !HSSpecialCharacterManager.getSpecialCharacterList().isEmpty()) {
@@ -206,7 +206,6 @@ public class FontDownloadManager {
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
-            HSLog.e("eee", "writeError");
         }
     }
 

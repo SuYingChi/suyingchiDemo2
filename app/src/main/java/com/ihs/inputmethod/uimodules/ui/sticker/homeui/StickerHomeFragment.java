@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 /**
  * Created by guonan.lv on 17/8/10.
  */
@@ -33,8 +31,6 @@ public class StickerHomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private StickerCardAdapter stickerCardAdapter;
     private List<StickerModel> stickerModelList = new ArrayList<>();
-
-    public static final String DOWNLOAD_STICKER_NAME_LIST = "download_sticker_name_list";
     public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker);
 
     @Nullable
@@ -63,9 +59,6 @@ public class StickerHomeFragment extends Fragment {
                     @Override
                     public void onDismiss(boolean success) {
                         if(success) {
-                            String downloadStickers = HSPreferenceHelper.getDefault().getString(DOWNLOAD_STICKER_NAME_LIST, "");
-                            downloadStickers = stickerModel.getStickerGroup().getStickerGroupName() + "\t" + downloadStickers;
-                            HSPreferenceHelper.getDefault().putString(DOWNLOAD_STICKER_NAME_LIST, downloadStickers);
                             int position = stickerModelList.indexOf(stickerModel);
                             stickerModelList.remove(position);
                             removeStickerFromView(position);

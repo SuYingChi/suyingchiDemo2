@@ -89,7 +89,6 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         super.onHiddenChanged(hidden);
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();

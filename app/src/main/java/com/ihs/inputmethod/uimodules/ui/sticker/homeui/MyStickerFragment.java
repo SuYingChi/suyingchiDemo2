@@ -11,12 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,9 +56,12 @@ public class MyStickerFragment extends Fragment {
     }
 
     private void loadStickerModel() {
-        String downloadStickerNameListJoin = HSPreferenceHelper.getDefault().getString(StickerHomeFragment.DOWNLOAD_STICKER_NAME_LIST, "");
-        List<String> downloadStickerNameList = Arrays.asList(downloadStickerNameListJoin.split("\t"));
-        for (String downloadStickerName : downloadStickerNameList) {
+        List<String> downloadStickerNameList = StickerDownloadManager.getInstance().getDownloadedStickerFileList();
+        if (downloadStickerNameList == null) {
+            return;
+        }
+        for (int i = downloadStickerNameList.size()-1; i >= 0; i--) {
+            String downloadStickerName = downloadStickerNameList.get(i);
             if(!TextUtils.isEmpty(downloadStickerName)) {
                 StickerGroup stickerGroup = new StickerGroup(downloadStickerName);
                 StickerModel stickerModel = new StickerModel(stickerGroup);
@@ -79,7 +81,6 @@ public class MyStickerFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
     }
-
 
     @Override
     public void onDestroy() {
