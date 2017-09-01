@@ -762,7 +762,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
             lockerDialog.setTitle(getString(R.string.locker_alert_title));
             lockerDialog.setMessage(getString(R.string.locker_alert_message));
-            lockerDialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
             lockerDialog.setCancelable(true);
             lockerDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
@@ -783,7 +783,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             CustomDesignAlert callAssistantDialog = new CustomDesignAlert(HSApplication.getContext());
             callAssistantDialog.setTitle(getString(R.string.call_assistant_alert_title));
             callAssistantDialog.setMessage(getString(R.string.call_assistant_alert_message));
-            callAssistantDialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            callAssistantDialog.setImageResource(R.drawable.enable_charging_alert_top_image);// call image
             callAssistantDialog.setCancelable(true);
             callAssistantDialog.setEnablePrivacy(true, new View.OnClickListener() {
                 @Override

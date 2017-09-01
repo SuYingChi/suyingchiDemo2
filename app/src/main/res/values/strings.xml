@@ -234,13 +234,13 @@
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
     <string name="locker_alert_title">Screen Locker</string>
-    <string name="locker_alert_message">Enable Screen Locker. Contains ads.</string>
+    <string name="locker_alert_message">Add your favorite themes on lockscreen. May contain sponsored contents.</string>
 
-    <string name="call_assistant_alert_title">Smart Call Assistant</string>
-    <string name="call_assistant_alert_message">Enable Smart Call Assistant. Contains ads.</string>
+    <string name="call_assistant_alert_title">Animated Themes for Calls</string>
+    <string name="call_assistant_alert_message">Add animated themes on incoming calls. May contain sponsored contents.</string>
 
     <string name="multi_function_alert_title">Screen Locker / Caller Screen</string>
-    <string name="multi_function_alert_message">Add stunning themes on screen locker and caller screen. May contain sponsored contents.</string>
+    <string name="multi_function_alert_message">Add stunning themes on lockscreen and incoming calls. May contain sponsored contents.</string>
 
     <!--Accessibility-->
     <string name="accessibility_service" translatable="false">Emoji Keyboard</string>

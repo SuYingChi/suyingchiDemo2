@@ -91,7 +91,7 @@ public class TrialKeyboardDialogAlertUtils {
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(HSApplication.getContext().getString(R.string.call_assistant_alert_title));
             dialog.setMessage(HSApplication.getContext().getString(R.string.call_assistant_alert_message));
-            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            dialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//call image
             dialog.setCancelable(true);
             dialog.setEnablePrivacy(true, new View.OnClickListener() {
                 @Override
