@@ -673,6 +673,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
+    private Random random = new Random();
+
     private void showOpenAlertIfNeeded() {
         if (!HSPreferenceHelper.getDefault().getBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, false) && ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
             CustomDesignAlert multiFunctionDialog = new CustomDesignAlert(HSApplication.getContext());
@@ -697,7 +699,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             multiFunctionDialog.show();
             HSPreferenceHelper.getDefault().putBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, true);
         } else {
-            Random random = new Random();
             int priority = random.nextInt(3); // 0:Charging 1:Locker 2:Call Assistant
             HSLog.d("OpenAlert priority  = " + priority);
             switch (priority) {
