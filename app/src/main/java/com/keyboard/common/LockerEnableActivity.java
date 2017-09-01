@@ -22,7 +22,7 @@ public class LockerEnableActivity extends HSActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String uri = intent.getStringExtra("lockerBgUri");
-            LockerEnableDialog.showLockerEnableDialog(this, uri, new LockerEnableDialog.OnLockerBgLoadingListener() {
+            LockerEnableDialog.showLockerEnableDialog(this, uri, false, new LockerEnableDialog.OnLockerBgLoadingListener() {
                 @Override
                 public void onFinish() {
                     finish();
