@@ -78,35 +78,6 @@ public class HSFontDownloadManager {
         DownloadUtils.getInstance().writeJsonToFile(hsSpecialCharacter.name, getDownloadedFontNameList());
     }
 
-//    private void writeJsonToFile(JSONArray jsonObject, String filePath) {
-//        try {
-//            File file = new File(filePath);
-//            if (!file.exists()) {
-//                file.createNewFile();
-//            }
-//            DataOutputStream out = new DataOutputStream(new FileOutputStream(
-//                    file));
-//            out.writeBytes(jsonObject.toString());
-//            out.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private JSONArray updateJsonArray(String fileName) {
-//        JSONArray jsonArray = new JSONArray();
-//        File file = new File(getDownloadedFontNameList());
-//        KCList kcList = KCParser.parseList(file);
-//        if (kcList == null) {
-//            jsonArray.put(fileName);
-//        } else {
-//            for (int i = 0; i < kcList.size(); i++) {
-//                jsonArray.put(kcList.getString(i));
-//            }
-//            jsonArray.put(fileName);
-//        }
-//        return jsonArray;
-//    }
 
     private HSSpecialCharacter readSpecialCharacterFromFile(String fontName) {
         HSSpecialCharacter hsNewSpecialCharacter = new HSSpecialCharacter();

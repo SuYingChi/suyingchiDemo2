@@ -15,8 +15,8 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class StickerHomeFragment extends Fragment {
             @Override
             public void onDownloadButtonClick(final StickerModel stickerModel, Drawable drawable) {
 
-                StickerDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerModel.getStickerGroup(), drawable, new AdLoadingView.OnAdBufferingListener() {
+                DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerModel.getStickerGroup(), drawable, new AdLoadingView.OnAdBufferingListener() {
                     @Override
                     public void onDismiss(boolean success) {
                         if(success) {

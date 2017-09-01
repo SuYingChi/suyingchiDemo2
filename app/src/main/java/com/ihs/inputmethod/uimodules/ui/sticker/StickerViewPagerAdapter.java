@@ -13,6 +13,7 @@ import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.utils.DownloadUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -135,7 +136,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                         return;
                     }
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
-                    StickerDownloadManager.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroup, sticker_download_preview.getDrawable(), null);
+                    DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroup, sticker_download_preview.getDrawable(), null);
                 }
             });
             container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

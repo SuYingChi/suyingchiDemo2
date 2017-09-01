@@ -61,7 +61,7 @@ public class MyStickerFragment extends Fragment {
         if (downloadStickerNameList == null) {
             return;
         }
-        for (int i = downloadStickerNameList.size()-1; i >= 0; i--) {
+        for (int i = 0; i < downloadStickerNameList.size(); i++) {
             String downloadStickerName = downloadStickerNameList.get(i);
             if(!TextUtils.isEmpty(downloadStickerName)) {
                 StickerGroup stickerGroup = new StickerGroup(downloadStickerName);
