@@ -27,6 +27,7 @@ public class ChargingConfigManager {
     private final static String PREF_KEY_ENABLE_ALERT_SHOW_COUNT = "pref_key_lock_enable_alert_show_count";
     private final static String PREF_KEY_ENABLE_CARD_SHOW_COUNT = "pref_key_lock_enable_card_show_count";
 
+    private final static int MAX_SHOW_COUNT = 2;
     private final boolean CHARGING_TOGGLE_DEFAULT_VALUE = false;
 
     private static ChargingConfigManager instance;
@@ -186,21 +187,14 @@ public class ChargingConfigManager {
                 HSLog.i(TAG, "Charging enable alert achieved max show count");
                 return false;
             }
-
-            if (!shouldShowEnableChargingAlertAtThisTime()) {
-                HSLog.i(TAG, "Charging enable alert should not show at session: " + HSSessionMgr.getCurrentSessionId());
-                return false;
-            }
         }
 
         return true;
     }
 
     private boolean isEnableChargingAlertShowCountAchievedMax() {
-        final int maxCount = HSConfig.optInteger(3, "Application", "FeaturePrompt", "ChargerLockerAlert", "MaxShowCount");
-        HSLog.i(TAG, "MaxShowCount: " + maxCount);
         final int showCount = HSPreferenceHelper.getDefault(HSApplication.getContext()).getInt(PREF_KEY_ENABLE_ALERT_SHOW_COUNT, 0);
-        return showCount >= maxCount;
+        return showCount >= MAX_SHOW_COUNT;
     }
 
     private boolean shouldShowEnableChargingAlertAtThisTime() {

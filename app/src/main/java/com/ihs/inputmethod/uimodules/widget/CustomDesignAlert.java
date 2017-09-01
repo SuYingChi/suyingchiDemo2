@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +28,8 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
     private CharSequence negativeButtonText;
     private View.OnClickListener positiveButtonClickListener;
     private View.OnClickListener negativeButtonClickListener;
+    private View.OnClickListener privacyButtonClickListener;
+    private boolean enablePrivacy;
 
     public CustomDesignAlert(@NonNull Context context) {
         super(context, R.style.DesignDialog);
@@ -54,6 +57,8 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
         } else {
             enableButtons();
         }
+
+        enablePrivacy(enablePrivacy);
 
         int width = (int) getContext().getResources().getFraction(R.fraction.design_dialog_width, HSDisplayUtils.getScreenWidthForContent(), HSDisplayUtils.getScreenWidthForContent());
         findViewById(R.id.root_view).getLayoutParams().width = width;
@@ -83,6 +88,17 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
         positiveButton.setText(positiveButtonText);
         positiveButton.setOnClickListener(this);
         positiveButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xff4db752, radius));
+    }
+
+    private void enablePrivacy(boolean enable) {
+        if (enable) {
+            findViewById(R.id.fl_privacy).setVisibility(View.VISIBLE);
+            TextView textView = (TextView) findViewById(R.id.tv_privacy);
+            textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+            textView.setOnClickListener(this);
+        } else {
+            findViewById(R.id.fl_privacy).setVisibility(View.GONE);
+        }
     }
 
     private void enableButtons() {
@@ -120,6 +136,10 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
             if (negativeButtonClickListener != null) {
                 negativeButtonClickListener.onClick(findViewById(R.id.btn_negative));
             }
+        } else if (id == R.id.tv_privacy) {
+            if (privacyButtonClickListener != null) {
+                privacyButtonClickListener.onClick(findViewById(R.id.tv_privacy));
+            }
         }
     }
 
@@ -131,6 +151,11 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
     @Override
     public void setMessage(CharSequence message) {
         this.message = message;
+    }
+
+    public void setEnablePrivacy(boolean enablePrivacy, View.OnClickListener listener) {
+        this.enablePrivacy = enablePrivacy;
+        this.privacyButtonClickListener = listener;
     }
 
     public void setPositiveButton(CharSequence text, View.OnClickListener listener) {

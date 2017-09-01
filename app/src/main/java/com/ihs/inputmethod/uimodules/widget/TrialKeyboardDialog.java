@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -22,9 +21,6 @@ import android.widget.LinearLayout;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
@@ -32,13 +28,13 @@ import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
+import com.ihs.inputmethod.utils.TrialKeyboardDialogAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
@@ -160,30 +156,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     }
 
     private void showChargingEnableAlert() {
-        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
-            if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
-
-                CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-                dialog.setTitle(getContext().getString(R.string.charging_alert_title));
-                dialog.setMessage(getContext().getString(R.string.charging_alert_message));
-                dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-                dialog.setCancelable(true);
-                dialog.setPositiveButton(getContext().getString(R.string.enable), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
-                    }
-                });
-                dialog.show();
-            }else {
-                Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
-                intent.putExtra("type", "charging");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                HSApplication.getContext().startActivity(intent);
-            }
-        }
+        TrialKeyboardDialogAlertUtils.showSpecialFunctionEnableAlert();
     }
 
     @NonNull

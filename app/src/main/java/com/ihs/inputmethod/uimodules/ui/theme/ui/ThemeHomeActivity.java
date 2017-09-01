@@ -26,13 +26,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.acb.call.CPSettings;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
-import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -57,6 +57,8 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.inputmethod.utils.CallAssistantConfigUtils;
+import com.ihs.inputmethod.utils.ScreenLockerConfigUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
@@ -66,6 +68,8 @@ import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.kc.commons.utils.KCCommonUtils;
+
+import java.util.Random;
 
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
@@ -79,6 +83,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
 
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
+    private static final String SP_TREBLE_FUNCTION_ALERT_SHOWED = "sp_treble_function_alert_showed";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
@@ -349,7 +354,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // Place here to get a right session id from appframework
         if (isResumeOnCreate) {
-            showEnableChargingAlertIfNeeded();
+            showOpenAlertIfNeeded();
         }
         isResumeOnCreate = false;
 
@@ -448,14 +453,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("removeAds_clicked");
             RemoveAdsManager.getInstance().purchaseRemoveAds();
         } else if ( id == R.id.nav_privacy){
-            Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
-            try {
-                startActivity(intent);
-            } catch (ActivityNotFoundException e) {
-                Log.w("URLSpan", "Actvity was not found for intent, " + intent.toString());
-            }
+            startBrowsePrivacy();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -675,33 +673,141 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
-    private boolean showEnableChargingAlertIfNeeded() {
-        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
-            ChargingConfigManager.getManager().increaseEnableAlertShowCount();
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
-            if (HSConfig.optInteger(0, "Application", "ChargeLocker", "EnableAlertStyle") == 0) {
-                CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-                dialog.setTitle(getString(R.string.charging_alert_title));
-                dialog.setMessage(getString(R.string.charging_alert_message));
-                dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
-                dialog.setCancelable(true);
-                dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ChargingManagerUtil.enableCharging(false);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+    private Random random = new Random();
+
+    private void showOpenAlertIfNeeded() {
+        if (!HSPreferenceHelper.getDefault().getBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, false) && ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            CustomDesignAlert multiFunctionDialog = new CustomDesignAlert(HSApplication.getContext());
+            multiFunctionDialog.setEnablePrivacy(true, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startBrowsePrivacy();
+                }
+            });
+            multiFunctionDialog.setTitle(getString(R.string.multi_function_alert_title));
+            multiFunctionDialog.setMessage(getString(R.string.multi_function_alert_message));
+            multiFunctionDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);
+            multiFunctionDialog.setCancelable(true);
+            multiFunctionDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChargingManagerUtil.enableCharging(false);
+                    enableLocker();
+                    CPSettings.setScreenFlashModuleEnabled(true);
+                }
+            });
+            multiFunctionDialog.show();
+            HSPreferenceHelper.getDefault().putBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, true);
+        } else {
+            int priority = random.nextInt(3); // 0:Charging 1:Locker 2:Call Assistant
+            HSLog.d("OpenAlert priority  = " + priority);
+            switch (priority) {
+                case 0:
+                    if (!showChargingDialog() && !showScreenLockerDialog() && !showCallAssistantDialog()) {
+                        HSLog.d("OpenAlert priority  = " + priority + " show nothing.");
                     }
-                });
-                dialog.show();
-            } else {
-                Intent intent = new Intent(HSApplication.getContext(), ChargingFullScreenAlertDialogActivity.class);
-                intent.putExtra("type", "charging");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                HSApplication.getContext().startActivity(intent);
+                    break;
+                case 1:
+                    if (!showScreenLockerDialog() && !showCallAssistantDialog() && !showChargingDialog()) {
+                        HSLog.d("OpenAlert priority  = " + priority + " show nothing.");
+                    }
+                    break;
+                case 2:
+                    if (!showCallAssistantDialog() && !showChargingDialog() && !showScreenLockerDialog()) {
+                        HSLog.d("OpenAlert priority  = " + priority + " show nothing.");
+                    }
+                    break;
+                default:
+                    HSLog.w("OpenAlert priority wrong");
+                    break;
             }
-            return true;
         }
-        return false;
+    }
+
+    private void startBrowsePrivacy() {
+        Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+        }
+    }
+
+    private boolean showChargingDialog() {
+        if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
+            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+            CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
+            dialog.setTitle(getString(R.string.charging_alert_title));
+            dialog.setMessage(getString(R.string.charging_alert_message));
+            dialog.setImageResource(R.drawable.enable_charging_alert_top_image);
+            dialog.setCancelable(true);
+            dialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ChargingManagerUtil.enableCharging(false);
+                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+                }
+            });
+            dialog.show();
+            ChargingConfigManager.getManager().increaseEnableAlertShowCount();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean showScreenLockerDialog() {
+        if (ScreenLockerConfigUtils.shouldShowScreenLockerAlert(true)) {
+            CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
+            lockerDialog.setTitle(getString(R.string.locker_alert_title));
+            lockerDialog.setMessage(getString(R.string.locker_alert_message));
+            lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
+            lockerDialog.setCancelable(true);
+            lockerDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    enableLocker();
+                }
+            });
+            lockerDialog.show();
+            ScreenLockerConfigUtils.increaseEnableAlertShowCount();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean showCallAssistantDialog() {
+        if (CallAssistantConfigUtils.shouldShowCallAssistantAlert(true)) {
+            CustomDesignAlert callAssistantDialog = new CustomDesignAlert(HSApplication.getContext());
+            callAssistantDialog.setTitle(getString(R.string.call_assistant_alert_title));
+            callAssistantDialog.setMessage(getString(R.string.call_assistant_alert_message));
+            callAssistantDialog.setImageResource(R.drawable.enable_charging_alert_top_image);// call image
+            callAssistantDialog.setCancelable(true);
+            callAssistantDialog.setEnablePrivacy(true, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startBrowsePrivacy();
+                }
+            });
+            callAssistantDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CPSettings.setScreenFlashModuleEnabled(true);
+                }
+            });
+            callAssistantDialog.show();
+            CallAssistantConfigUtils.increaseAlertShowCount();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void enableLocker() {
+        LockerSettings.setLockerEnabled(true);
     }
 
     @Override
