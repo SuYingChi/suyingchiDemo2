@@ -21,9 +21,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -74,7 +72,7 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 
         // show animated mark
         boolean isShowAnimatedMark;
-        if (keyboardTheme.getThemeData().get("showAnimatedMark") == null) {
+        if (keyboardTheme.getThemeData() == null || keyboardTheme.getThemeData().get("showAnimatedMark") == null) {
             isShowAnimatedMark = false;
         } else {
             isShowAnimatedMark = (boolean) keyboardTheme.getThemeData().get("showAnimatedMark");

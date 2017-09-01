@@ -32,7 +32,7 @@
     <string name="text_privacy_policy">Privacy Policy</string>
 
     <!-- sync type Required by keep alive service -->
-    <string name="sync_account_type">com.keyboard.colorkeyboard.sync</string>
+    <string name="sync_account_type">com.masterkeyboard.emoji.sync</string>
 
     <!--dialog-->
     <string name="dialog_title_select_keyboard_apply_rain">"Activate RainbowKey"</string>

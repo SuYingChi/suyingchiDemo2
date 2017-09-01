@@ -4,7 +4,7 @@
     <string name="feedback_email">feedback.emoji@hotmail.com</string>
     <string name="fb_app_id">1474873346171463</string>
 
-    <!-- required by device permanent -->
+    <!--&lt;!&ndash; required by device permanent &ndash;&gt;-->
     <string name="sync_account_type">com.smartkeyboard.emoji.sync</string>
 
 </resources>

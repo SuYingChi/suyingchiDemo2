@@ -6,6 +6,9 @@
     <string name="app_name">RainbowKey</string>
     <string name="fb_app_id">910238615719294</string>
 
+    <!-- sync type Required by keep alive service -->
+    <string name="sync_account_type">com.keyboard.colorkeyboard.sync</string>
+
     <!-- Ad placement ID -->
     <string name="ad_placement_lucky">Colorkey_A(NativeAds)KeyboardLuckyAd</string>
     <string name="ad_placement_cardad">Colorkey_A(NativeAds)CardAd</string>
