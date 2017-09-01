@@ -22,7 +22,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.utils.CommonUtils;
 
@@ -232,8 +231,6 @@ public class ApkUtils {
     }
 
     private static void showUpdateAlert() {
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_apk_update_dialog_show");
-
         saveUpdateAlertLastShownTime();
 
         // Create custom dialog object
@@ -258,7 +255,6 @@ public class ApkUtils {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_apk_update_dialog_update_clicked");
                         doUpdate();
                         dialog.dismiss();
                     }

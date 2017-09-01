@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -96,7 +95,6 @@ public class KeyboardActivationProcessor {
                         return;
                     }
                     setEventRecorded(GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
 
                 Toast toast = Toast.makeText(context, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
@@ -150,7 +148,6 @@ public class KeyboardActivationProcessor {
                 .setPositiveButton(context.getResources().getString(R.string.dialog_confirm_select_keyboard_apply_rain), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_alert_clicked");
                         enableOrSelectKeyboard(activity);
                     }
                 }).create();
@@ -162,7 +159,6 @@ public class KeyboardActivationProcessor {
                 onKeyboardActivationChangedListener.activeDialogCanceled();
             }
         });
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_alert_show");
     }
 
     private void enableOrSelectKeyboard(Activity activity) {
@@ -191,7 +187,6 @@ public class KeyboardActivationProcessor {
 
             if (versionFilterForRecordEvent && !isEventRecorded(GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
                 setEventRecorded(GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
             }
         } else {
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_KEYBOARD_PICKER, 200);
@@ -209,7 +204,6 @@ public class KeyboardActivationProcessor {
             public void onClick(View view) {
                 if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
                     setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
                 }
 
                 ImageView imageCodeProject = new ImageView(context);
@@ -223,7 +217,6 @@ public class KeyboardActivationProcessor {
 
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT);
         }
     }
 
@@ -233,7 +226,6 @@ public class KeyboardActivationProcessor {
                 .setPositiveButton(context.getResources().getString(R.string.dialog_confirm_select_keyboard_apply_rain), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_alert_clicked");
                         enableOrSelectKeyboard(activity);
                     }
                 }).create();
@@ -258,7 +250,6 @@ public class KeyboardActivationProcessor {
                 }
             }
         });
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_alert_show");
     }
 
 
@@ -284,7 +275,6 @@ public class KeyboardActivationProcessor {
                 handler.sendEmptyMessageDelayed(HANDLER_SHOW_KEYBOARD_PICKER, 700);
                 if (versionFilterForRecordEvent && !isEventRecorded(GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
                     setEventRecorded(GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                 }
                 try {
                     if (settingsContentObserver != null) {
@@ -313,7 +303,6 @@ public class KeyboardActivationProcessor {
                                 && isEventRecorded(APP_STEP_ONE_HINT)
                                 && isEventRecorded(GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
                             setEventRecorded(GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                         }
                     }
                 }

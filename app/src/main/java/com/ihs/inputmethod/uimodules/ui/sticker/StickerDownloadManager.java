@@ -9,12 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+
 import com.flurry.sdk.ao;
+
+import com.ihs.app.analytics.HSAnalytics;
+
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.feature.common.ConcurrentUtils;
@@ -130,7 +133,7 @@ public class StickerDownloadManager {
                 if (totalSize > 0) {
                     final float percent = (float) received * 100 / totalSize;
                     if (received >= totalSize) {
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroup.getStickerGroupName());
+                        HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroup.getStickerGroupName());
                         unzipStickerGroup(stickerGroupZipFilePath, stickerGroup);
                     }
                     new Handler().post(new Runnable() {

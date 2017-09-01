@@ -24,7 +24,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -109,7 +108,6 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                 editText.setText("");
                 long time = (System.currentTimeMillis() - currentResumeTime) / 1000;
                 HSLog.e("app_keyboardtest_view_show_time : " + time);
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_keyboardtest_view_show_time", String.valueOf(time));
 
                 int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                 if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {

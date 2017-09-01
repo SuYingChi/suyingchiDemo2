@@ -44,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -55,7 +56,6 @@ import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -155,7 +155,6 @@ public class MainActivity extends HSDeepLinkActivity {
                                     && isEventRecorded(APP_STEP_ONE_HINT)
                                     && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
                                 setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
-                                HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                             }
                         }
                         MainActivity.this.doStepTwoFinish();
@@ -198,7 +197,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
         if (versionFilterForRecordEvent && !isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(INSTRUCTION_SCREEN_VIEWED);
         }
 
         WindowManager wm = this.getWindowManager();
@@ -304,7 +302,6 @@ public class MainActivity extends HSDeepLinkActivity {
                 showKeyboardEnableDialog();
                 if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
                 }
             }
         });
@@ -334,7 +331,6 @@ public class MainActivity extends HSDeepLinkActivity {
                     }
 
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
             }
         });
@@ -471,7 +467,6 @@ public class MainActivity extends HSDeepLinkActivity {
             public void onClick(View view) {
                 if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
                     setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT_CLICKED);
                 }
 
                 ImageView imageCodeProject = new ImageView(getApplicationContext());
@@ -497,7 +492,6 @@ public class MainActivity extends HSDeepLinkActivity {
 
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent(APP_STEP_ONE_HINT);
         }
     }
 
@@ -570,7 +564,6 @@ public class MainActivity extends HSDeepLinkActivity {
                         style = CurrentUIStyle.UISTYLE_STEP_TWO;
                         if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
                             setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                         }
                     } else {
                         refreshUIState();

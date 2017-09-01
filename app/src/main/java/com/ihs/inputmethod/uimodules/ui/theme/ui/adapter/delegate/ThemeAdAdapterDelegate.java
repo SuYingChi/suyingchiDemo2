@@ -17,7 +17,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -99,7 +98,6 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				this.shouldShowChargingEnableCard = ChargingConfigManager.getManager().shouldShowEnableChargingCard(true);
 				if (this.shouldShowChargingEnableCard) {
 					ChargingConfigManager.getManager().increaseEnableCardShowCount();
-					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_show");
 				}
 			}
 		}
@@ -113,7 +111,6 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				public void onClick(View v) {
 					ChargingManagerUtil.enableCharging(false);
 					themeAdOnClickListener.onThemeAdClick(position);
-					HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_themeCard_prompt_click");
 				}
 			});
 		} else {// Show ad

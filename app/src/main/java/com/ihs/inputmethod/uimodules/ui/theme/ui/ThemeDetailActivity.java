@@ -29,7 +29,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -266,7 +265,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 nativeAdView = new KCNativeAdView(HSApplication.getContext());
                 nativeAdView.setAdLayoutView(view);
                 nativeAdView.setLoadingView(loadingView);
-                nativeAdView.setPrimaryViewSize(width, (int)(width / 1.9f));
+                nativeAdView.setPrimaryViewSize(width, (int) (width / 1.9f));
                 nativeAdView.load(getString(R.string.ad_placement_themetryad));
                 CardView cardView = ViewConvertor.toCardView(nativeAdView);
                 linearLayout.addView(cardView);
@@ -292,7 +291,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         super.onPause();
         long time = (System.currentTimeMillis() - currentResumeTime) / 1000;
         HSLog.e("app_theme_preview_show_time : " + time);
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_theme_preview_show_time", time);
     }
 
     @Override
@@ -358,7 +356,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             ((TextView) v).setText(R.string.theme_card_menu_downloading);
             v.setEnabled(false);
             ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("themedetails_download_clicked", themeName);
+            HSAnalytics.logEvent("themedetails_download_clicked", "themeName", themeName);
             if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                 ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(themeName);
             }
@@ -367,7 +365,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_share).equalsIgnoreCase(text)) {
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_share_clicked", themeName);
+            HSAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
             HSAnalytics.logEvent("keyboard_setaslockscreen_button_clicked");
             LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, false, new LockerEnableDialog.OnLockerBgLoadingListener() {
@@ -387,7 +385,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
                 }
             }
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_apply_clicked", themeName);
             if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                 ThemeAnalyticsReporter.getInstance().recordThemeApplyInDetailActivity(themeName);
             }
@@ -512,12 +509,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     @Override
     public void onCardClick(HSKeyboardTheme keyboardTheme) {
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_themes_preview_clicked", keyboardTheme.mThemeName);
+        HSAnalytics.logEvent("themedetails_themes_preview_clicked", "keyboardTheme", keyboardTheme.mThemeName);
     }
 
     @Override
     public void onMenuApplyClick(HSKeyboardTheme keyboardTheme) {
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_themes_apply_clicked", keyboardTheme.mThemeName);
         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
             ThemeAnalyticsReporter.getInstance().recordThemeApplyInDetailActivity(keyboardTheme.mThemeName);
         }
@@ -525,12 +521,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     @Override
     public void onMenuShareClick(HSKeyboardTheme keyboardTheme) {
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_themes_share_clicked", keyboardTheme.mThemeName);
     }
 
     @Override
     public void onMenuDownloadClick(HSKeyboardTheme keyboardTheme) {
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("themedetails_themes_download_clicked", keyboardTheme.mThemeName);
+        HSAnalytics.logEvent("themedetails_themes_download_clicked", "keyboardTheme", keyboardTheme.mThemeName);
         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
             ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(keyboardTheme.mThemeName);
         }
@@ -556,15 +551,14 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 rightBtn.setText(R.string.theme_card_menu_apply);
                 rightBtn.setEnabled(true);
             }
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("themedetails_apply_clicked", themeName);
         }
 
         switch (requestCode) {
             case keyboardActivationFromDetail:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "apply");
+                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_detail", "apply");
                 break;
             case ThemeMenuUtils.keyboardActivationFromAdapter:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_theme_try_viewed", "apply");
+                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_adapter", "apply");
                 break;
         }
     }

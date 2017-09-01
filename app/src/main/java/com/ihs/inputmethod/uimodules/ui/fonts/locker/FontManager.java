@@ -12,7 +12,6 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -94,7 +93,6 @@ public class FontManager {
 				String ad = HSConfig.getString("Application", "ShareContents", "Keyboard", "ShareTexts", "ForFonts");
 				if (ad.length() > 2)
 					HSInputMethod.inputText(ad);
-				HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("font_share_button_clicked");
 			}
 		});
 	}

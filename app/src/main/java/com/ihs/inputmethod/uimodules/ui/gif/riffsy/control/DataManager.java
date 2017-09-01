@@ -5,7 +5,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.DaoHelper;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
@@ -251,7 +250,6 @@ public final class DataManager {
         }
         if (!favorite.contains(item)) {
             favorite.add(0, item);
-            HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_favorite_added");
         }
     }
 
@@ -263,7 +261,6 @@ public final class DataManager {
             tabData.put(GifCategory.TAB_FAVORITE, favorite);
         }
         favorite.remove(item);
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_gif_favorite_removed");
         if (favorite.size() == 0) {
             AsyncThreadPools.execute(new Runnable() {
                 @Override

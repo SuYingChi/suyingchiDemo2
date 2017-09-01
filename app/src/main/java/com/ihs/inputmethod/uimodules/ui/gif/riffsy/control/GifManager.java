@@ -14,7 +14,6 @@ import android.view.inputmethod.InputConnection;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
@@ -69,10 +68,8 @@ public final class GifManager {
     public void share(final GifItem gif, final String packageName, final GifDownloadTask.Callback callback) {
         if (!DirectoryUtils.isSDCardEnabled()) {
             HSInputMethod.inputText(gif.getUrl());
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "link");
             return;
         }
-
 
         File gifFile = DirectoryUtils.getDownloadGifUri(gif.id);
 
@@ -94,7 +91,6 @@ public final class GifManager {
                     HSLog.e("send GIF directly failed.");
                 } else {
                     commitGifImage(imageUri, "");
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "direct_send_gif");
                     return;
                 }
             }
@@ -106,7 +102,6 @@ public final class GifManager {
 
         if (format.equals(MediaShareUtils.IMAGE_SHARE_FORMAT_MP4)) {
             if (gif.getMp4Url() != null) {
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "intent");
                 shareMp4(gif, callback);
                 return;
             }
@@ -121,25 +116,20 @@ public final class GifManager {
                 HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
                 try {
                     MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetFilePath)), mimeType, packageName);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "intent");
                 } catch (Exception e) {
                     HSInputMethod.inputText(gif.getUrl());
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "link");
                 }
                 break;
             // save to gallery
             case ShareUtils.IMAGE_SHARE_MODE_EXPORT:
                 HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
                 MediaShareUtils.shareImageByExport(targetFilePath);
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "export");
                 break;
             case MediaShareUtils.IMAGE_SHARE_MODE_LINK:
                 HSInputMethod.inputText(gif.getUrl());
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "link");
                 break;
             default:
                 HSInputMethod.inputText(gif.getUrl());
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_gif_share_mode", "link");
         }
     }
 

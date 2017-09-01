@@ -8,12 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.acb.call.CPSettings;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
@@ -64,7 +64,7 @@ public class TrialKeyboardDialogAlertUtils {
 
     private static boolean showChargingAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_show");
+            HSAnalytics.logEvent("alert_charging_show", "size", "half_screen");
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(HSApplication.getContext().getString(R.string.charging_alert_title));
             dialog.setMessage(HSApplication.getContext().getString(R.string.charging_alert_message));
@@ -74,9 +74,10 @@ public class TrialKeyboardDialogAlertUtils {
                 @Override
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_charging_click");
+                    HSAnalytics.logEvent("alert_charging_click", "size", "half_screen");
                 }
             });
+
             dialog.show();
             increaseAlertShowCount();
             setLastShowFunctionTag(TAG_CHARGING);

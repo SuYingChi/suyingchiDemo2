@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -66,7 +65,6 @@ public final class PanelTitleAdapterDelegate extends AdapterDelegate<List<ThemeP
 				public void onClick(View v) {
 					model.isCustomThemeInEditMode=!model.isCustomThemeInEditMode;
 					if(model.isCustomThemeInEditMode){
-						HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_trash_clicked");
 						viewHolder.doneButton.setVisibility(View.VISIBLE);
 						viewHolder.editButton.setVisibility(View.INVISIBLE);
 					}else{

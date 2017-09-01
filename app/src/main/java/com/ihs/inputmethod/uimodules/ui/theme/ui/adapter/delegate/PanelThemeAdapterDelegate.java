@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
@@ -131,7 +131,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                                     HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
                                 }
 
-                                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_theme_chosed", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
+                                HSAnalytics.logEvent("keyboard_theme_chosed", "themeType", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
                                 if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                                     ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
                                 }
@@ -145,7 +145,6 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                             HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
                         }
 
-                        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_theme_chosed", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
                         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                             ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
                         }
@@ -161,9 +160,8 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
             viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//					HSKeyboardThemeManager.removeTheme(model.themeName);
                     KCCustomThemeManager.getInstance().removeCustomTheme(model.themeName);
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_customtheme_delete_clicked");
+                    HSAnalytics.logEvent("keyboard_customtheme_deleted");
                 }
             });
         }

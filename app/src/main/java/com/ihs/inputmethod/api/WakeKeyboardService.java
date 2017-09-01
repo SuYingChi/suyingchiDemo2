@@ -16,7 +16,6 @@ import android.view.inputmethod.InputMethodInfo;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
@@ -73,7 +72,6 @@ public class WakeKeyboardService extends Service {
                     }
                     long l = System.currentTimeMillis();
                     checkDefaultKeyboard();
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("WakeKeyboardUsedTime",(System.currentTimeMillis() - l));
                     handler.sendEmptyMessageDelayed(CHECK_DEFAULT_KEYBOARD, CHECKING_INTERVAL);
                     break;
             }
@@ -210,21 +208,17 @@ public class WakeKeyboardService extends Service {
                             intent.putExtra(ThemeHomeActivity.BUNDLE_AUTO_ENABLE_KEYBOARD, true);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_enable_clicked");
                         }
                     }).setNegativeButton("Later", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             recordKeyboardShow();
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_cancel_clicked");
                         }
                     }).build();
         }
 
         alertDialog.show();
-        HSGoogleAnalyticsUtils.getInstance().logAppEvent("alert_remind_changekeyboard_show");
         recordKeyboardShow();
-
     }
 
 

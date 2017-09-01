@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.mediacontroller.shares;
 import android.net.Uri;
 import android.util.Pair;
 
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.mediacontroller.Constants;
 import com.ihs.inputmethod.uimodules.mediacontroller.ISequenceFramesImageItem;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
@@ -40,7 +39,6 @@ public class ShareManager {
         final String packageName = ShareChannel.CURRENT.getPackageName();
         final Pair<Integer, String> pair = ShareUtils.getSequenceFramesImageShareMode(packageName);
         final int mode = pair.first;
-        HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("keyboard_facemoji_clicked", sfImage.getCategoryName() + "_" + sfImage.getName());
         if(ShareChannel.MESSAGE.getPackageName().equals(ShareChannel.CURRENT.getPackageName())){
             shareFacemojiByIntent(sfImage, pair.second, ShareChannel.CURRENT, progressListener);
             return;

@@ -11,9 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.HSUIInputMethod;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
@@ -21,12 +21,9 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.utils.Constants;
 import com.ihs.panelcontainer.BasePanel;
 
 public class HSSettingsPanel extends BasePanel {
-
-
 
 
     private final static String SETTINGS_KEY_CAP_OFF = "settings_key_capitalization_off.png";
@@ -72,7 +69,6 @@ public class HSSettingsPanel extends BasePanel {
     private TextView btnMoreText;
 
 
-
     public HSSettingsPanel() {
         mContext = HSApplication.getContext();
     }
@@ -111,16 +107,16 @@ public class HSSettingsPanel extends BasePanel {
             public void onClick(View v) {
                 if (HSInputMethodSettings.getKeySoundEnabled()) {
                     HSInputMethodSettings.setKeySoundEnabled(false);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_sound)+" "+HSApplication.getContext().getString(R.string.disabled));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_sound) + " " + HSApplication.getContext().getString(R.string.disabled));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_OFF);
+                    HSAnalytics.logEvent("keyboard_setting_sounds_clicked", "item_sound", SETTING_OFF);
                 } else {
                     HSInputMethodSettings.setKeySoundEnabled(true);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_sound)+" "+HSApplication.getContext().getString(R.string.enable));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_sound) + " " + HSApplication.getContext().getString(R.string.enable));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SOUNDS_CLICKED, SETTING_ON);
+                    HSAnalytics.logEvent("keyboard_setting_sounds_clicked", "item_sound", SETTING_ON);
                 }
                 HSSettingsPanel.this.updateSoundSettings();
             }
@@ -135,16 +131,16 @@ public class HSSettingsPanel extends BasePanel {
             public void onClick(View v) {
                 if (HSInputMethodSettings.getAutoCorrectionEnabled()) {
                     HSInputMethodSettings.setAutoCorrectionEnabled(false);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_auto_correction)+" "+HSApplication.getContext().getString(R.string.disabled));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_auto_correction) + " " + HSApplication.getContext().getString(R.string.disabled));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_OFF);
+                    HSAnalytics.logEvent("keyboard_setting_auto_correction_clicked", "auto_correction", SETTING_OFF);
                 } else {
                     HSInputMethodSettings.setAutoCorrectionEnabled(true);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_auto_correction)+" "+HSApplication.getContext().getString(R.string.enable));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_auto_correction) + " " + HSApplication.getContext().getString(R.string.enable));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CORRECTION_CLICKED, SETTING_ON);
+                    HSAnalytics.logEvent("keyboard_setting_auto_correction_clicked", "auto_correction", SETTING_ON);
                 }
                 HSSettingsPanel.this.updateCorrectionSettings();
             }
@@ -159,16 +155,16 @@ public class HSSettingsPanel extends BasePanel {
             public void onClick(View v) {
                 if (HSInputMethodSettings.getAutoCapitalizationEnabled()) {
                     HSInputMethodSettings.setAutoCapitalizationEnabled(false);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_auto_capitalization)+" "+HSApplication.getContext().getString(R.string.disabled));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_auto_capitalization) + " " + HSApplication.getContext().getString(R.string.disabled));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_OFF);
+                    HSAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_OFF);
                 } else {
                     HSInputMethodSettings.setAutoCapitalizationEnabled(true);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_auto_capitalization)+" "+HSApplication.getContext().getString(R.string.enable));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_auto_capitalization) + " " + HSApplication.getContext().getString(R.string.enable));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_AUTO_CAPITALIZATION_CLICKED, SETTING_ON);
+                    HSAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_ON);
                 }
                 HSSettingsPanel.this.updateCapitalizationSettings();
             }
@@ -183,16 +179,17 @@ public class HSSettingsPanel extends BasePanel {
             public void onClick(View v) {
                 if (HSInputMethodSettings.getWordPredictionEnabled()) {
                     HSInputMethodSettings.setWordPredictionEnabled(false);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_word_prediction)+" "+HSApplication.getContext().getString(R.string.disabled));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_word_prediction) + " " + HSApplication.getContext().getString(R.string.disabled));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_OFF);
+                    HSAnalytics.logEvent("keyboard_setting_prediction_clicked", "word_prediction", SETTING_OFF);
                 } else {
                     HSInputMethodSettings.setWordPredictionEnabled(true);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_word_prediction)+" "+HSApplication.getContext().getString(R.string.enable));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.settings_button_word_prediction) + " " + HSApplication.getContext().getString(R.string.enable));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_PREDICTION_CLICKED, SETTING_ON);
+                    HSAnalytics.logEvent("keyboard_setting_prediction_clicked", "word_prediction", SETTING_ON);
+
                 }
                 HSSettingsPanel.this.updatePredictiveSettings();
             }
@@ -207,16 +204,16 @@ public class HSSettingsPanel extends BasePanel {
             public void onClick(View v) {
                 if (HSInputMethodSettings.getGestureTypingEnabled()) {
                     HSInputMethodSettings.setGestureTypingEnabled(false);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.setting_swipe_input)+" "+HSApplication.getContext().getString(R.string.disabled));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.setting_swipe_input) + " " + HSApplication.getContext().getString(R.string.disabled));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_OFF);
+                    HSAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_OFF);
                 } else {
                     HSInputMethodSettings.setGestureTypingEnabled(true);
-                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.setting_swipe_input)+" "+HSApplication.getContext().getString(R.string.enable));
+                    HSSettingsPanel.this.showToast(HSApplication.getContext().getString(R.string.setting_swipe_input) + " " + HSApplication.getContext().getString(R.string.enable));
 
                     // Record event.
-                    HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_SWIPE_CLICKED, SETTING_ON);
+                    HSAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_ON);
                 }
                 HSSettingsPanel.this.updateSwipeSettings();
             }
@@ -230,7 +227,6 @@ public class HSSettingsPanel extends BasePanel {
             @Override
             public void onClick(View v) {
                 HSUIInputMethod.launchMoreLanguageActivity();
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_ADD_LANGUAGE_CLICKED);
             }
         });
 
@@ -251,12 +247,12 @@ public class HSSettingsPanel extends BasePanel {
                 HSUIInputMethod.launchSettingsActivity();
 
                 // Record event.
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent(Constants.GA_PARAM_ACTION_SETTING_MORE_CLICKED);
+                HSAnalytics.logEvent("keyboard_setting_more_clicked");
             }
         });
 
         StateListDrawable btnStatesDrawable = new StateListDrawable();
-        btnStatesDrawable.addState(new int[] { android.R.attr.state_pressed },
+        btnStatesDrawable.addState(new int[]{android.R.attr.state_pressed},
                 HSKeyboardThemeManager.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_off), SETTINGS_KEY_MORE_OFF));
         btnStatesDrawable.addState(new int[]{},
                 HSKeyboardThemeManager.getStyledDrawable(mContext.getResources().getDrawable(R.drawable.settings_key_more_on), SETTINGS_KEY_MORE_ON));
