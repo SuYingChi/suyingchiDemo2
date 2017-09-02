@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
@@ -60,7 +59,6 @@ import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.LauncherActivity;
-import com.keyboard.common.LockerEnableActivity;
 import com.keyboard.common.MainActivity;
 import com.keyboard.core.themes.ThemeDirManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -122,10 +120,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
 
         // need to pass the intent to the main activity
-        Uri uri = intent.getData();
-        if (uri != null && TextUtils.equals("locker", uri.getHost())) { // 由皮肤包进入并展示locker
-            intent.setClass(this, LockerEnableActivity.class);
-        } else if (!TextUtils.isEmpty(intent.getScheme())) {
+        if (!TextUtils.isEmpty(intent.getScheme())) {
             intent.setClass(this, MainActivity.class);
         } else if (isAccessibilityEnabled) {
             if (!HSAccessibilityService.isAvailable()) {
