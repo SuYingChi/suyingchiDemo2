@@ -38,8 +38,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yanxia on 2017/6/6.
@@ -170,10 +170,8 @@ public class StickerUtils {
                 Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
                 if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX)) {
                     commitStickerImage(uri,"","image/gif");
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_gif");
                 }else {
                     commitStickerImage(uri, "","image/png");
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_sticker_share_mode", "direct_send_png");
 
                 }
                 return;
