@@ -3,13 +3,13 @@ package com.ihs.inputmethod.uimodules.ui.fonts.common;
 import android.os.Build;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
 import com.ihs.inputmethod.utils.DownloadUtils;
-import com.kc.commons.configfile.KCList;
-import com.kc.commons.configfile.KCParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,19 +44,21 @@ public class HSFontDownloadManager {
     }
 
     private void loadDownloadedFont() {
-        File file = new File(getDownloadedFontNameList());
-        KCList kcList = KCParser.parseList(file);
-        if (kcList == null) {
-            return;
-        }
-        for (int i = kcList.size(); i > 0; i--) { //order of adding opposite to the order of download
-            String downloadFontName = kcList.getString(i);
-            HSSpecialCharacter downloadSpecialCharacter = readSpecialCharacterFromFile(downloadFontName);
-            if (downloadSpecialCharacter != null && !HSSpecialCharacterManager.getSpecialCharacterList().isEmpty()) {
-                HSSpecialCharacterManager.addSpecilCharacter(1, downloadSpecialCharacter, Build.VERSION_CODES.ICE_CREAM_SANDWICH);
+        String fontDownloadNameJoins = HSPreferenceHelper.getDefault().getString(DOWNLOADED_FONT_NAME_JOIN, "");
+        try {
+            JSONArray jsonArray = new JSONArray(fontDownloadNameJoins);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String downloadFontName = (String) jsonArray.get(i);
+                HSSpecialCharacter downloadSpecialCharacter = readSpecialCharacterFromFile(downloadFontName);
+                if (downloadSpecialCharacter != null && !HSSpecialCharacterManager.getSpecialCharacterList().isEmpty()) {
+                    HSSpecialCharacterManager.addSpecilCharacter(1, downloadSpecialCharacter, Build.VERSION_CODES.ICE_CREAM_SANDWICH);
+                }
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
+
 
     public String getFontDownloadFilePath(String fontName) {
         return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_FONT_FILE_PATH + "/" + fontName + JSON_SUFFIX;
@@ -77,7 +79,7 @@ public class HSFontDownloadManager {
     public void updateSpecialCharacterList(HSSpecialCharacter hsSpecialCharacter) {
         HSSpecialCharacterManager.addSpecilCharacter(1, hsSpecialCharacter, Build.VERSION_CODES.ICE_CREAM_SANDWICH);
 
-        DownloadUtils.getInstance().writeJsonToFile(hsSpecialCharacter.name, getDownloadedFontNameList());
+        DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_FONT_NAME_JOIN, hsSpecialCharacter.name);
     }
 
 

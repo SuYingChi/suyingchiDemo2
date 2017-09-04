@@ -10,6 +10,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -19,15 +20,11 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
-import com.kc.commons.configfile.KCList;
-import com.kc.commons.configfile.KCParser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager.ASSETS_FONT_FILE_PATH;
 import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager.JSON_SUFFIX;
@@ -53,33 +50,18 @@ public class DownloadUtils {
         return instance;
     }
 
-    public JSONArray updateJsonArray(String fileName, String filePath) {
-        JSONArray jsonArray = new JSONArray();
-        File file = new File(filePath);
-        KCList kcList = KCParser.parseList(file);
-        if (kcList == null) {
-            jsonArray.put(fileName);
-        } else {
-            jsonArray.put(fileName);
-            for (int i = 0; i < kcList.size(); i++) {
-                jsonArray.put(kcList.getString(i));
-            }
-        }
-        return jsonArray;
-    }
-
-    public void writeJsonToFile(String fileName, String filePath) {
-        JSONArray jsonArray = updateJsonArray(fileName, filePath);
+    public void saveJsonArrayToPref(String key, String value) {
         try {
-            File file = new File(filePath);
-            if (!file.exists()) {
-                file.createNewFile();
+            String originValue = HSPreferenceHelper.getDefault().getString(key, "");
+            JSONArray jsonArray;
+            if ("".equals(originValue)) {
+                jsonArray = new JSONArray();
+            } else {
+                jsonArray = new JSONArray(originValue);
             }
-            DataOutputStream out = new DataOutputStream(new FileOutputStream(
-                    file));
-            out.writeBytes(jsonArray.toString());
-            out.close();
-        } catch (IOException e) {
+            jsonArray.put(value);
+            HSPreferenceHelper.getDefault().putString(key, jsonArray.toString());
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -91,6 +73,7 @@ public class DownloadUtils {
     private String getStickerGroupDownloadFilePath(String stickerGroupName) {
         return StickerUtils.getStickerRootFolderPath() + "/" + stickerGroupName + STICKER_DOWNLOAD_ZIP_SUFFIX;
     }
+
 
     private void initConnection(final Resources resources, final Object object, final AdLoadingView adLoadingView, final HSHttpConnection connection) {
         connection.setDownloadFile(HSFileUtils.createNewFile(filePath));

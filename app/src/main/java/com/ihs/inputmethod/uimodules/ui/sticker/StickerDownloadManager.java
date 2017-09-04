@@ -4,11 +4,13 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.utils.DownloadUtils;
-import com.kc.commons.configfile.KCList;
-import com.kc.commons.configfile.KCParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,14 +45,14 @@ public class StickerDownloadManager {
 
     public List<String> getDownloadedStickerFileList() {
         List<String> stickerNames = new ArrayList<>();
-        File file = new File(getDownloadedStickerNameList());
-        KCList kcList = KCParser.parseList(file);
-        if (kcList == null) {
-            return null;
-        }
-        for (int i = 0; i < kcList.size(); i++) {
-            String downloadStickerName = kcList.getString(i);
-            stickerNames.add(downloadStickerName);
+        String stickerDownloadNames = HSPreferenceHelper.getDefault().getString(DOWNLOADED_STICKER_NAME_JOIN, "");
+        try {
+            JSONArray jsonArray = new JSONArray(stickerDownloadNames);
+            for (int i = jsonArray.length()-1; i >= 0; i--) {
+                stickerNames.add((String)jsonArray.get(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return stickerNames;
     }
@@ -59,8 +61,7 @@ public class StickerDownloadManager {
         try {
             // 下载成功 先解压好下载的zip
             HSZipUtils.unzip(new File(stickerGroupZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
-            DownloadUtils.getInstance().writeJsonToFile(stickerGroup.getStickerGroupName(), getDownloadedStickerNameList());
-//            writeJsonToFile(updateJsonArray(stickerGroup.getStickerGroupName()), getDownloadedStickerNameList());
+            DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_STICKER_NAME_JOIN, stickerGroup.getStickerGroupName());
             StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
         } catch (ZipException e) {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.unzip_sticker_group_failed), Toast.LENGTH_SHORT).show();
