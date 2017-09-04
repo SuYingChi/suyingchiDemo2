@@ -64,7 +64,6 @@ public class TrialKeyboardDialogAlertUtils {
 
     private static boolean showChargingAlert() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
-            HSAnalytics.logEvent("alert_charging_show", "size", "half_screen");
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(HSApplication.getContext().getString(R.string.charging_alert_title));
             dialog.setMessage(HSApplication.getContext().getString(R.string.charging_alert_message));
@@ -79,6 +78,7 @@ public class TrialKeyboardDialogAlertUtils {
             });
 
             dialog.show();
+            HSAnalytics.logEvent("alert_charging_show", "size", "half_screen");
             increaseAlertShowCount();
             setLastShowFunctionTag(TAG_CHARGING);
             return true;
@@ -103,10 +103,12 @@ public class TrialKeyboardDialogAlertUtils {
             dialog.setPositiveButton(HSApplication.getContext().getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    HSAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen");
                     CPSettings.setScreenFlashModuleEnabled(true);
                 }
             });
             dialog.show();
+            HSAnalytics.logEvent("alert_call_assistant_show", "size", "half_screen");
             increaseAlertShowCount();
             setLastShowFunctionTag(TAG_CALL_ASSISTANT);
             return true;

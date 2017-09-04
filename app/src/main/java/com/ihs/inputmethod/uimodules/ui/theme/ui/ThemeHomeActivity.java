@@ -658,12 +658,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             multiFunctionDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    HSAnalytics.logEvent("alert_multi_function_click", "size", "half_screen");
                     ChargingManagerUtil.enableCharging(false);
                     enableLocker();
                     CPSettings.setScreenFlashModuleEnabled(true);
                 }
             });
             multiFunctionDialog.show();
+            HSAnalytics.logEvent("alert_multi_function_show", "size", "half_screen");
             HSPreferenceHelper.getDefault().putBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, true);
         } else {
             int priority = random.nextInt(3); // 0:Charging 1:Locker 2:Call Assistant
@@ -704,7 +706,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
     private boolean showChargingDialog() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
-            HSAnalytics.logEvent("alert_charging_show", "size", "half_screen");
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(getString(R.string.charging_alert_title));
             dialog.setMessage(getString(R.string.charging_alert_message));
@@ -714,10 +715,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 @Override
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
-                    HSAnalytics.logEvent("alert_charging_show", "size", "half_screen");
+                    HSAnalytics.logEvent("alert_charging_click", "size", "half_screen");
                 }
             });
             dialog.show();
+            HSAnalytics.logEvent("alert_charging_show", "size", "half_screen");
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
             return true;
         } else {
@@ -735,10 +737,12 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             lockerDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    HSAnalytics.logEvent("alert_locker_click", "size", "half_screen");
                     enableLocker();
                 }
             });
             lockerDialog.show();
+            HSAnalytics.logEvent("alert_locker_show", "size", "half_screen");
             ScreenLockerConfigUtils.increaseEnableAlertShowCount();
             return true;
         } else {
@@ -762,10 +766,12 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             callAssistantDialog.setPositiveButton(getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    HSAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen");
                     CPSettings.setScreenFlashModuleEnabled(true);
                 }
             });
             callAssistantDialog.show();
+            HSAnalytics.logEvent("alert_call_assistant_show", "size", "half_screen");
             CallAssistantConfigUtils.increaseAlertShowCount();
             return true;
         } else {
