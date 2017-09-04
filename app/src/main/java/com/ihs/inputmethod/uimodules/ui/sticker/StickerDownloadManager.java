@@ -69,8 +69,4 @@ public class StickerDownloadManager {
             e.printStackTrace();
         }
     }
-
-    private String getDownloadedStickerNameList() {
-        return StickerUtils.getStickerRootFolderPath() + "/" + DOWNLOADED_STICKER_NAME_JOIN + STICKER_DOWNLOAD_JSON_SUFFIX;
-    }
 }

@@ -64,10 +64,6 @@ public class HSFontDownloadManager {
         return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_FONT_FILE_PATH + "/" + fontName + JSON_SUFFIX;
     }
 
-    public String getDownloadedFontNameList() {
-        return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_FONT_FILE_PATH + "/" + DOWNLOADED_FONT_NAME_JOIN + JSON_SUFFIX;
-    }
-
     public void updateFontModel(FontModel fontModel) {
         HSSpecialCharacter hsSpecialCharacter = readSpecialCharacterFromFile(fontModel.getFontName());
         if (hsSpecialCharacter == null) {
@@ -81,7 +77,6 @@ public class HSFontDownloadManager {
 
         DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_FONT_NAME_JOIN, hsSpecialCharacter.name);
     }
-
 
     private HSSpecialCharacter readSpecialCharacterFromFile(String fontName) {
         HSSpecialCharacter hsNewSpecialCharacter = new HSSpecialCharacter();
