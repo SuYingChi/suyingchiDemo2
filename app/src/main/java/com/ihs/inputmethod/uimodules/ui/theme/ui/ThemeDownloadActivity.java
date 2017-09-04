@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -57,7 +56,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ArrayList<Fragment> fragments;
+    private ArrayList<String> fragments;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
 
     private TrialKeyboardDialog trialKeyboardDialog;
@@ -148,12 +147,9 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         });
 
         fragments = new ArrayList<>();
-        Fragment myStickerFragment = new MyStickerFragment();
-        Fragment myThemeFragment = new MyThemeFragment();
-        Fragment myFontFragment = new MyFontFragment();
-        fragments.add(myThemeFragment);
-        fragments.add(myStickerFragment);
-        fragments.add(myFontFragment);
+        fragments.add(MyThemeFragment.class.getName());
+        fragments.add(MyStickerFragment.class.getName());
+        fragments.add(MyFontFragment.class.getName());
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
         String[] tabTitles = new String[3];

@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.common;
 
+import android.os.Build;
+
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
@@ -51,7 +53,7 @@ public class HSFontDownloadManager {
             String downloadFontName = kcList.getString(i);
             HSSpecialCharacter downloadSpecialCharacter = readSpecialCharacterFromFile(downloadFontName);
             if (downloadSpecialCharacter != null && !HSSpecialCharacterManager.getSpecialCharacterList().isEmpty()) {
-                HSSpecialCharacterManager.addSpecilCharacter(1, downloadSpecialCharacter, 14);
+                HSSpecialCharacterManager.addSpecilCharacter(1, downloadSpecialCharacter, Build.VERSION_CODES.ICE_CREAM_SANDWICH);
             }
         }
     }
@@ -73,7 +75,7 @@ public class HSFontDownloadManager {
     }
 
     public void updateSpecialCharacterList(HSSpecialCharacter hsSpecialCharacter) {
-        HSSpecialCharacterManager.addSpecilCharacter(1, hsSpecialCharacter, 14);
+        HSSpecialCharacterManager.addSpecilCharacter(1, hsSpecialCharacter, Build.VERSION_CODES.ICE_CREAM_SANDWICH);
 
         DownloadUtils.getInstance().writeJsonToFile(hsSpecialCharacter.name, getDownloadedFontNameList());
     }

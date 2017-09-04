@@ -13,13 +13,15 @@ import java.util.Arrays;
 
 public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private ArrayList<Fragment> fragments;
+    private ArrayList<String> fragmentNames;
     private String[] tabTitle;
 
-    public TabFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
+//    private SparseArray // cache the fragments
+
+    public TabFragmentPagerAdapter(FragmentManager fm, ArrayList<String> fragmentNames) {
         super(fm);
-        tabTitle = new String[fragments.size()];
-        this.fragments = fragments;
+        tabTitle = new String[fragmentNames.size()];
+        this.fragmentNames = fragmentNames;
     }
 
     public void setTabTitles(String[] tabTitles) {
@@ -32,12 +34,25 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        try {
+            Class fragmentClass = Class.forName(fragmentNames.get(position));
+            Fragment fragment = (Fragment) fragmentClass.newInstance();
+            return fragment;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return fragmentNames.size();
     }
 
     @Override

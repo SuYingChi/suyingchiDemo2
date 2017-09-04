@@ -84,7 +84,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
         if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_HOME.ordinal()) {
             ((FontHomeViewHolder) holder).downloadIcon.setVisibility(View.VISIBLE);
             ((FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.ic_download_icon);
-        } else {
+        } else if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_MY.ordinal()) {
             AppCompatRadioButton appCompatRadioButton = ((MyFontViewHolder) holder).radioButton;
             appCompatRadioButton.setVisibility(View.VISIBLE);
             appCompatRadioButton.setChecked(position == currentSelectPosition);
@@ -99,13 +99,6 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fontSelected(position);
-            }
-        });
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 fontSelected(position);
             }
         });

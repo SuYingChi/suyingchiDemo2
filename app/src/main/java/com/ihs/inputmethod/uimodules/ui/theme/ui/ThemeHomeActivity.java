@@ -98,7 +98,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ArrayList<Fragment> fragments;
+    private ArrayList<String> fragments;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
     private String currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
@@ -227,12 +227,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         layoutParams.height = (int) (getResources().getDisplayMetrics().widthPixels * 0.48f);
 
         fragments = new ArrayList<>();
-        Fragment themeHomeFragment = new ThemeHomeFragment();
-        Fragment stickerHomeFragment = new StickerHomeFragment();
-        Fragment fontFragment = new FontHomeFragment();
-        fragments.add(themeHomeFragment);
-        fragments.add(stickerHomeFragment);
-        fragments.add(fontFragment);
+        fragments.add(ThemeHomeFragment.class.getName());
+        fragments.add(StickerHomeFragment.class.getName());
+        fragments.add(FontHomeFragment.class.getName());
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);

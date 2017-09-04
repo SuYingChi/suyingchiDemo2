@@ -42,6 +42,7 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         loadFontModel();
         fontCardAdapter = new FontCardAdapter(fontModelList, this);
+        fontCardAdapter.setFragmentType(MyFontFragment.class.getSimpleName());
         recyclerView.setAdapter(fontCardAdapter);
         recyclerView.setLayoutManager(layoutManager);
     }
