@@ -36,7 +36,6 @@
         <attr name="backgroundRadius" format="dimension" />
     </declare-styleable>
 
-
     <declare-styleable name="RoundedCornerLayout">
         <attr name="rcl_corner_radius" format="dimension"/>
     </declare-styleable>
@@ -73,4 +72,18 @@
         <attr name="drawable_width" format="dimension" />
         <attr name="drawable_height" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="FixedRatioLayout">
+        <attr name="aspectRatio" format="float" />
+    </declare-styleable>
+
+    <style name="WallpaperLoadingDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>       <!-- Dialog的windowFrame框为无 -->
+        <item name="android:windowBackground">@color/transparent_progress_dialog</item> <!-- 设置dialog的背景 -->
+        <item name="android:windowNoTitle">true</item>      <!-- 是否显示title -->
+        <item name="android:windowIsTranslucent">true</item>    <!-- 是否半透明 -->
+        <item name="android:windowIsFloating">true</item>       <!-- 是否浮现在activity之上 -->
+        <item name="android:windowContentOverlay">@null</item>  <!-- 也是个 drawable，定义 content overlay 的背景 -->
+        <item name="android:backgroundDimEnabled">false</item>  <!-- 背景是否模糊显示 -->
+    </style>
 </resources>

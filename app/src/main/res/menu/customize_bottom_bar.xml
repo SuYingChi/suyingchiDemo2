@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/customize_bottom_bar_wallpapers"
+        android:title="@string/customize_wallpapers_title" />
+
+    <item
+        android:id="@+id/customize_bottom_bar_locker"
+        android:title="@string/customize_locker_title" />
+</menu>

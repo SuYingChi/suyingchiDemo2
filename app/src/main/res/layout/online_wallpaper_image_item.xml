@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.customize.view.FixedRatioLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:aspectRatio="1.125"
+    tools:ignore="ContentDescription">
+
+    <ImageView
+        android:id="@+id/iv_wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/iv_3d_mark"
+        android:layout_width="@dimen/customize_wallpaper_3d_mark"
+        android:layout_height="@dimen/customize_wallpaper_3d_mark"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp">
+
+        <ImageView
+            android:id="@+id/iv_popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/tv_popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            android:visibility="gone"
+            tools:text="36285"
+            tools:visibility="visible"/>
+    </LinearLayout>
+</com.ihs.inputmethod.uimodules.ui.customize.view.FixedRatioLayout>

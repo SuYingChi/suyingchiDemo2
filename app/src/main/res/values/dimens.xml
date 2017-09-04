@@ -170,4 +170,51 @@
     <dimen name="purchase_slot_dialog_margin">15dp</dimen>
 
     <dimen name="sticker_image_width">60dp</dimen>
+
+
+
+
+
+    <!-- Material design: refers to https://www.google.com/design/spec/what-is-material/elevation-shadows.html -->
+    <dimen name="app_bar_elevation">4dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+
+    <dimen name="theme_bottom_btn_height">50dp</dimen>
+
+    <dimen name="customize_spacing_large">8dp</dimen>
+    <dimen name="customize_spacing_small">4dp</dimen>
+    <dimen name="customize_spacing_tiny">2dp</dimen>
+    <dimen name="tab_padding_start">12dp</dimen>
+    <dimen name="bottom_bar_default_height">56dp</dimen>
+
+
+    <!-- Dialog -->
+    <dimen name="dialog_elevation">24dp</dimen>
+    <dimen name="dialog_rounded_corner_radius">3dp</dimen>
+    <dimen name="dialog_button_rounded_corner_radius">3dp</dimen>
+    <dimen name="dialog_content_text_margin">16dp</dimen>
+    <dimen name="dialog_button_margin">16dp</dimen>
+    <dimen name="dialog_margin">40dp</dimen>
+    <dimen name="dialog_content_margin">24dp</dimen>
+    <dimen name="dialog_button_padding">16dp</dimen>
+
+    <!-- notification-->
+    <dimen name="notification_cleaner_notification_icon_width">40dp</dimen>
+    <dimen name="notification_cleaner_notification_icon_height">40dp</dimen>
+    <dimen name="notification_cleaner_notification_bar_margin">10dp</dimen>
+
+
+    <!-- Customize -->
+    <dimen name="customize_toolbar_height">48dp</dimen>
+    <dimen name="customize_toolbar_elevation">1dp</dimen>
+    <dimen name="customize_wallpaper_3d_mark">27dp</dimen>
+
+    <!-- Overview panel param -->
+    <dimen name="overview_panel_wallpaper_theme_horizontal_padding">20dp</dimen>
+    <dimen name="overview_panel_effects_drawable_padding">0dp</dimen>
+    <dimen name="overview_panel_widgets_drawable_padding">4dp</dimen>
+    <dimen name="overview_panel_total_height">253dp</dimen>
+
+    <dimen name="online_category_title_view_translationY">-20dp</dimen>
+
 </resources>

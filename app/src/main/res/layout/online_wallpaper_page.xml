@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperPage
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tab_layout_container">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/wallpaper_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="14sp"
+        app:typeface="@string/proxima_nova_semibold"/>
+
+    <GridView
+        android:id="@+id/categories_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tab_layout_container"
+        android:alpha="0"
+        android:columnWidth="80dp"
+        android:horizontalSpacing="10dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="3"
+        android:paddingBottom="24dp"
+        android:paddingEnd="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:scrollbars="none"
+        android:verticalSpacing="8dp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/tab_layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/customize_toolbar_height"
+        android:background="@android:color/white"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperTabLayout
+                android:id="@+id/wallpaper_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:fadingEdgeLength="6dp"
+                android:layoutDirection="ltr"
+                android:paddingLeft="12dp"
+                android:requiresFadingEdge="horizontal"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/boost_plus_red"
+                app:tabIndicatorHeight="1.5dp"
+                app:tabMaxWidth="0dp"
+                app:tabMinWidth="6dp"
+                app:tabMode="scrollable"
+                app:tabPaddingEnd="@dimen/tab_padding_start"
+                app:tabPaddingStart="@dimen/tab_padding_start"
+                app:tabSelectedTextColor="#333333"
+                app:tabTextColor="#999999"
+                tools:ignore="PrivateResource,UnusedAttribute"/>
+
+            <com.ihs.feature.common.TypefacedTextView
+                android:id="@+id/categories_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/overview_panel_wallpaper_theme_horizontal_padding"
+                android:layout_marginStart="@dimen/overview_panel_wallpaper_theme_horizontal_padding"
+                android:text="@string/online_wallpaper_tab_title_categories"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:translationY="@dimen/online_category_title_view_translationY"
+                android:visibility="gone"
+                app:typeface="@string/proxima_nova_semibold"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/arrow_container"
+            android:layout_width="42dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <LinearLayout
+                android:layout_width="16dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="-1dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clipChildren="true">
+
+                    <ImageView
+                        android:id="@+id/tab_top_arrow_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="-5dp"
+                        android:layout_marginRight="-5dp"
+                        android:rotation="0" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clipChildren="true">
+
+                    <ImageView
+                        android:id="@+id/tab_top_arrow_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-5dp"
+                        android:layout_marginStart="-5dp"
+                        android:rotation="0" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperPage>
