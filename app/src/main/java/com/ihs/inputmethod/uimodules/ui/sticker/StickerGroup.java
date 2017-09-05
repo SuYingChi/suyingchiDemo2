@@ -63,7 +63,7 @@ public class StickerGroup {
         reloadStickers();
     }
 
-    public void reloadStickers() {
+    void reloadStickers() {
         stickerList.clear();
         KCMap configMap = getStickerConfigMap();
         if (configMap != null) {

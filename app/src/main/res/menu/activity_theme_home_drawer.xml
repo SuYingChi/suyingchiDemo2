@@ -7,6 +7,10 @@
             android:icon="@drawable/nav_theme_store_icon"
             android:title="@string/theme_nav_theme_store" />
         <item
+            android:id="@+id/nav_my_themes"
+            android:icon="@drawable/nav_my_themes_icon"
+            android:title="@string/theme_nav_my_themes" />
+        <item
             android:id="@+id/nav_app_locker"
             android:icon="@drawable/nav_app_locker_icon"
             android:title="@string/theme_app_locker" />

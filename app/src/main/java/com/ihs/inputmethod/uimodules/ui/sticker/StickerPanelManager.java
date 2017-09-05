@@ -88,9 +88,6 @@ public class StickerPanelManager {
             if (stickerGroup.isInternalStickerGroup()) {
                 stickerBuildInNameList.add(stickerGroup.getStickerGroupName());
             } else if (stickerGroup.isStickerGroupDownloaded()) {
-                if (stickerGroup.getStickerList().isEmpty()) {
-                    stickerGroup.reloadStickers();
-                }
                 stickerDownloadedNameList.add(stickerGroup.getStickerGroupName());
             } else {
                 stickerNeedDownloadNameList.add(stickerGroup.getStickerGroupName());

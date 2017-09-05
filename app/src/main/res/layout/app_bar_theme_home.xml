@@ -36,27 +36,15 @@
                 android:src="@drawable/apk_update_tip"
                 android:visibility="gone"/>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <ImageView
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true">
-
-                <ImageView
-                    android:id="@+id/download_page_trigger"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:srcCompat="@drawable/download_icon_home_store" />
-
-                <ImageView
-                    android:id="@+id/download_button_new_mark"
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:layout_centerInParent="true"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-
+                android:id="@+id/theme_home_interstitial_ad_trigger_view"
+                android:layout_alignParentRight="true"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/actionbar_gift_ad_selector"
+                />
             <!--<com.airbnb.lottie.LottieAnimationView-->
                 <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
                 <!--android:layout_width="36dp"-->
@@ -69,14 +57,6 @@
                 <!--app:lottie_autoPlay="false"-->
                 <!--app:lottie_loop="true" />-->
         </RelativeLayout>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/store_tab"
-            app:tabIndicatorHeight="2dp"
-            app:tabIndicatorColor="@color/white"
-            android:layout_below="@+id/toolbar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
 
         <!--android:background="#ffe92d"
                 android:background="#FBC02D"-->
@@ -98,19 +78,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/fragment_view_pager"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="@color/theme_activity_bg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <!-- <FrameLayout
+    <FrameLayout
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/theme_activity_bg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/> -->
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
     <LinearLayout

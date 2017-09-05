@@ -1,21 +1,29 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+
+import com.flurry.sdk.ao;
+
+import com.ihs.app.analytics.HSAnalytics;
+
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.feature.common.ConcurrentUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
-import com.ihs.inputmethod.utils.DownloadUtils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,8 +31,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.zip.ZipException;
 
 /**
@@ -33,9 +46,6 @@ import java.util.zip.ZipException;
 
 public class StickerDownloadManager {
     private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
-    private static final String STICKER_DOWNLOAD_JSON_SUFFIX = ".json";
-    private static final String DOWNLOADED_STICKER_NAME_JOIN = "download_sticker_name_join";
-
 
     private static StickerDownloadManager instance;
 
@@ -53,31 +63,90 @@ public class StickerDownloadManager {
         return instance;
     }
 
-    public List<String> getDownloadedStickerFileList() {
-        List<String> stickerNames = new ArrayList<>();
-        String stickerDownloadNames = HSPreferenceHelper.getDefault().getString(DOWNLOADED_STICKER_NAME_JOIN, "");
-        try {
-            JSONArray jsonArray = new JSONArray(stickerDownloadNames);
-            for (int i = jsonArray.length()-1; i >= 0; i--) {
-                stickerNames.add((String)jsonArray.get(i));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return stickerNames;
-    }
-
-    public void unzipStickerGroup(String stickerGroupZipFilePath, StickerGroup stickerGroup) {
+    private void unzipStickerGroup(String stickerGroupZipFilePath, StickerGroup stickerGroup) {
         try {
             // 下载成功 先解压好下载的zip
             HSZipUtils.unzip(new File(stickerGroupZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
-            DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_STICKER_NAME_JOIN, stickerGroup.getStickerGroupName());
             StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
         } catch (ZipException e) {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.unzip_sticker_group_failed), Toast.LENGTH_SHORT).show();
             HSLog.e(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private String getStickerGroupDownloadFilePath(String stickerGroupName) {
+        return StickerUtils.getStickerRootFolderPath() + "/" + stickerGroupName + STICKER_DOWNLOAD_ZIP_SUFFIX;
+    }
+
+    public void startForegroundDownloading(Context context, final StickerGroup stickerGroup,
+                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+
+        final String stickerGroupZipFilePath = getStickerGroupDownloadFilePath(stickerGroup.getStickerGroupName());
+        final AdLoadingView adLoadingView = new AdLoadingView(context);
+        final Resources resources = HSApplication.getContext().getResources();
+        adLoadingView.configParams(null, thumbnailDrawable != null ? thumbnailDrawable : resources.getDrawable(R.drawable.ic_sticker_loading_image),
+                resources.getString(R.string.sticker_downloading_label),
+                resources.getString(R.string.sticker_downloading_successful),
+                resources.getString(R.string.ad_placement_lucky),
+                new AdLoadingView.OnAdBufferingListener() {
+                    @Override
+                    public void onDismiss(boolean downloadSuccess) {
+                        if (downloadSuccess) {
+                            if (stickerGroup.isStickerGroupDownloaded()) {
+                                HSLog.d("sticker " + stickerGroup.getStickerGroupName() + " download succeed");
+                            } else {
+                                HSLog.e("sticker " + stickerGroup.getStickerGroupName() + " download error!");
+                            }
+                        } else {
+                            // 没下载成功
+                            HSHttpConnection connection = (HSHttpConnection) adLoadingView.getTag();
+                            if (connection != null) {
+                                connection.cancel();
+                                HSFileUtils.delete(new File(stickerGroupZipFilePath));
+                            }
+                        }
+                        if (onAdBufferingListener != null) {
+                            onAdBufferingListener.onDismiss(downloadSuccess);
+                        }
+                    }
+                }, 2000, false);
+        adLoadingView.showInDialog();
+
+        HSHttpConnection connection = new HSHttpConnection(stickerGroup.getStickerGroupDownloadUri());
+        connection.setDownloadFile(HSFileUtils.createNewFile(stickerGroupZipFilePath));
+        connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
+            @Override
+            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+            }
+
+            @Override
+            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+                HSLog.e("startForegroundDownloading onConnectionFailed hsError" + hsError.getMessage());
+                adLoadingView.setConnectionStateText(resources.getString(R.string.foreground_download_failed));
+                adLoadingView.setConnectionProgressVisibility(View.INVISIBLE);
+            }
+        });
+        connection.setDataReceivedListener(new HSHttpConnection.OnDataReceivedListener() {
+            @Override
+            public void onDataReceived(HSHttpConnection hsHttpConnection, byte[] bytes, long received, long totalSize) {
+                if (totalSize > 0) {
+                    final float percent = (float) received * 100 / totalSize;
+                    if (received >= totalSize) {
+                        HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroup.getStickerGroupName());
+                        unzipStickerGroup(stickerGroupZipFilePath, stickerGroup);
+                    }
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            adLoadingView.updateProgressPercent((int) percent);
+                        }
+                    });
+                }
+            }
+        });
+        connection.startAsync();
+        adLoadingView.setTag(connection);
     }
 
     /**
