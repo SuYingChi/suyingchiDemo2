@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
+import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.utils.HSError;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -22,6 +24,8 @@ import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
+
+import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 /**
  * Created by yanxia on 2017/6/8.
@@ -136,7 +140,22 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                         return;
                     }
                     HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
-                    DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroup, sticker_download_preview.getDrawable(), null);
+                    final String stickerGroupName = stickerGroup.getStickerGroupName();
+                    final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+                    DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
+                            stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                            sticker_download_preview.getDrawable(), null, new HSHttpConnection.OnConnectionFinishedListener() {
+                                @Override
+                                public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
+                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+                                }
+
+                                @Override
+                                public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+
+                                }
+                            });
                 }
             });
             container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

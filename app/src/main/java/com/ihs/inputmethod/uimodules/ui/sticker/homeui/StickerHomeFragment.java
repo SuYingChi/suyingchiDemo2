@@ -13,9 +13,14 @@ import android.view.ViewGroup;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.utils.HSError;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
@@ -23,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 /**
  * Created by guonan.lv on 17/8/10.
@@ -56,17 +63,31 @@ public class StickerHomeFragment extends Fragment {
 
             @Override
             public void onDownloadButtonClick(final StickerModel stickerModel, Drawable drawable) {
+                final StickerGroup stickerGroup = stickerModel.getStickerGroup();
+                final String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
+                final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
-                DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerModel.getStickerGroup(), drawable, new AdLoadingView.OnAdBufferingListener() {
-                    @Override
-                    public void onDismiss(boolean success) {
-                        if(success) {
-                            int position = stickerModelList.indexOf(stickerModel);
-                            stickerModelList.remove(position);
-                            removeStickerFromView(position);
-                        }
-                    }
-                });
+                DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
+                        stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                        drawable, new AdLoadingView.OnAdBufferingListener() {
+                            @Override
+                            public void onDismiss(boolean b) {
+                                int position = stickerModelList.indexOf(stickerModel);
+                                stickerModelList.remove(position);
+                                removeStickerFromView(position);
+                            }
+                        }, new HSHttpConnection.OnConnectionFinishedListener() {
+                            @Override
+                            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                                HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
+                                StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+                            }
+
+                            @Override
+                            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+
+                            }
+                        });
             }
         });
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

@@ -2,11 +2,15 @@ package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
 import android.net.Uri;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 
 import java.io.File;
+
+import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager.ASSETS_FONT_FILE_PATH;
+import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager.JSON_SUFFIX;
 
 /**
  * Created by guonan.lv on 17/8/14.
@@ -43,6 +47,10 @@ public class FontModel {
 
     public String getFontDownloadBaseURL() {
         return getFontName() != null ? baseDownloadUrl + Uri.encode(getFontName()) + FONT_FILE_SUFFIX : null;
+    }
+
+    public String getFontDownloadFilePath(String fontName) {
+        return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_FONT_FILE_PATH + "/" + fontName + JSON_SUFFIX;
     }
 
     public boolean isFontDownloaded() {

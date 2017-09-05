@@ -11,13 +11,8 @@ import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
-import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
@@ -74,12 +69,15 @@ public class DownloadUtils {
         return StickerUtils.getStickerRootFolderPath() + "/" + stickerGroupName + STICKER_DOWNLOAD_ZIP_SUFFIX;
     }
 
-
-    private void initConnection(final Resources resources, final Object object, final AdLoadingView adLoadingView, final HSHttpConnection connection) {
+    private void initConnection(final Resources resources, final AdLoadingView adLoadingView, final HSHttpConnection connection,
+                                final HSHttpConnection.OnConnectionFinishedListener onConnectionFinishedListener) {
         connection.setDownloadFile(HSFileUtils.createNewFile(filePath));
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                if (onConnectionFinishedListener != null) {
+                    onConnectionFinishedListener.onConnectionFinished(hsHttpConnection);
+                }
             }
 
             @Override
@@ -87,6 +85,9 @@ public class DownloadUtils {
                 HSLog.e("startForegroundDownloading onConnectionFailed hsError" + hsError.getMessage());
                 adLoadingView.setConnectionStateText(resources.getString(R.string.foreground_download_failed));
                 adLoadingView.setConnectionProgressVisibility(View.INVISIBLE);
+                if (onConnectionFinishedListener != null) {
+                    onConnectionFinishedListener.onConnectionFailed(hsHttpConnection, hsError);
+                }
             }
         });
         connection.setDataReceivedListener(new HSHttpConnection.OnDataReceivedListener() {
@@ -94,15 +95,6 @@ public class DownloadUtils {
             public void onDataReceived(HSHttpConnection hsHttpConnection, byte[] bytes, long received, long totalSize) {
                 if (totalSize > 0) {
                     final float percent = (float) received * 100 / totalSize;
-                    if (received >= totalSize) {
-                        if (object instanceof FontModel) {
-                            HSFontDownloadManager.getInstance().updateFontModel((FontModel)object);
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("font_download_succeed", objectName);
-                        } else if (object instanceof StickerGroup) {
-                            HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", objectName);
-                            StickerDownloadManager.getInstance().unzipStickerGroup(filePath, (StickerGroup)object);
-                        }
-                    }
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
@@ -115,20 +107,13 @@ public class DownloadUtils {
         connection.startAsync();
     }
 
-    public void startForegroundDownloading(Context context, final Object object,
-                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+    public void startForegroundDownloading(Context context, final String objectName, final String filePath, final String downloadUrl,
+                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener,
+                                           final HSHttpConnection.OnConnectionFinishedListener onConnectionFinishedListener) {
         HSHttpConnection connection;
-        if (object instanceof FontModel) {
-            objectName = ((FontModel)object).getFontName();
-            filePath = getFontDownloadFilePath(((FontModel)object).getFontName());
-            connection = new HSHttpConnection(((FontModel)object).getFontDownloadBaseURL());
-        } else if (object instanceof StickerGroup) {
-            objectName = ((StickerGroup)object).getStickerGroupName();
-            filePath = getStickerGroupDownloadFilePath(((StickerGroup)object).getStickerGroupName());
-            connection = new HSHttpConnection(((StickerGroup)object).getStickerGroupDownloadUri());
-        } else {
-            return;
-        }
+        this.objectName = objectName;
+        this.filePath = filePath;
+        connection = new HSHttpConnection(downloadUrl);
 
         final AdLoadingView adLoadingView = new AdLoadingView(context);
         final Resources resources = HSApplication.getContext().getResources();
@@ -140,7 +125,6 @@ public class DownloadUtils {
                     @Override
                     public void onDismiss(boolean downloadSuccess) {
                         if (downloadSuccess) {
-                            HSLog.e("eee", "downloadSuccess");
                         } else {
                             // 没下载成功
                             HSHttpConnection connection = (HSHttpConnection) adLoadingView.getTag();
@@ -156,7 +140,7 @@ public class DownloadUtils {
                 }, 2000, false);
         adLoadingView.showInDialog();
 
-        initConnection(resources, object, adLoadingView, connection);
+        initConnection(resources, adLoadingView, connection, onConnectionFinishedListener);
         adLoadingView.setTag(connection);
     }
 }

@@ -12,8 +12,12 @@ import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.utils.HSError;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
@@ -26,7 +30,7 @@ import java.util.Map;
  */
 
 public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFontCardClickListener {
-    
+
     private RecyclerView recyclerView;
     private FontCardAdapter fontCardAdapter;
     private List<FontModel> fontModelList = new ArrayList<>();
@@ -98,16 +102,27 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     @Override
     public void onFontCardClick(final int position) {
         final FontModel fontModel = fontModelList.get(position);
-        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontModel, null, new AdLoadingView.OnAdBufferingListener() {
-            @Override
-            public void onDismiss(boolean success) {
-                if (success) {
-                    int position = fontModelList.indexOf(fontModel);
-                    fontModelList.remove(position);
-                    fontCardAdapter.notifyItemRemoved(position);
-                    fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
-                }
-            }
-        });
+        final String fontName = fontModel.getFontName();
+        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
+                null, new AdLoadingView.OnAdBufferingListener() {
+                    @Override
+                    public void onDismiss(boolean b) {
+                        int position = fontModelList.indexOf(fontModel);
+                        fontModelList.remove(position);
+                        fontCardAdapter.notifyItemRemoved(position);
+                        fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
+                    }
+                }, new HSHttpConnection.OnConnectionFinishedListener() {
+                    @Override
+                    public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                        HSFontDownloadManager.getInstance().updateFontModel(fontModel);
+                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("font_download_succeed", fontName);
+                    }
+
+                    @Override
+                    public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+
+                    }
+                });
     }
 }
