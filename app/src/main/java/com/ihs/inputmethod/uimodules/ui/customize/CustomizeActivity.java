@@ -87,6 +87,7 @@ public class CustomizeActivity extends BaseCustomizeActivity implements INotific
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customize);
         mContent = ViewUtils.findViewById(this, R.id.customize_content);
+        mContent.setChildSelected(0);
         mBottomBar = ViewUtils.findViewById(this, R.id.bottom_bar);
         BottomNavigationViewHelper.disableShiftMode(mBottomBar);
 //        BottomNavigationViewHelper.setTypeface(mBottomBar, FontUtils.getTypeface(FontUtils.Font.PROXIMA_NOVA_REGULAR));

@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -57,7 +56,6 @@ public class OnlineWallpaperListView extends FrameLayout {
             progressBar.setVisibility(View.INVISIBLE);
             retryLayout.setVisibility(View.INVISIBLE);
             if (adapter != null) {
-
                 adapter.getLoadWallpaperListener().onLoadFinished(wallpaperInfoList);
             }
         }
@@ -94,7 +92,7 @@ public class OnlineWallpaperListView extends FrameLayout {
         decoration.setAdapter(adapter);
         recyclerView.addItemDecoration(decoration);
         CustomizeActivity.bindScrollListener(getContext(), recyclerView, false);
-        startLoading();
+//        startLoading();
     }
 
     public void startLoading() {
@@ -112,7 +110,6 @@ public class OnlineWallpaperListView extends FrameLayout {
                 }
             }, 500);
         } else {
-            HSLog.e("eee", "network");
 //            if (mScenario.equals(WallpaperMgr.Scenario.ONLINE_HOT)) {
 //                WallpaperDownloadEngine.getNextHotWallpaperList(mListener);
 //            } else {

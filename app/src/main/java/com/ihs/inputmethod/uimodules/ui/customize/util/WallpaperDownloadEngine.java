@@ -96,7 +96,6 @@ public class WallpaperDownloadEngine {
                         listener.onLoadFinished(wallpaperInfoList);
                     }
                 } catch (JSONException | NullPointerException e) {
-                    HSLog.e("eee", e.toString()+"asss");
                     e.printStackTrace();
 
                     if (listener != null) {

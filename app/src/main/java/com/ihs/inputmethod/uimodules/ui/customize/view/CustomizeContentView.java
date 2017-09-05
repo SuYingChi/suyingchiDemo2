@@ -67,7 +67,6 @@ public class CustomizeContentView extends FrameLayout {
 
         private void setupWithInitialTabIndex(@LayoutRes int layoutId, View child) {
             if (layoutId == R.layout.online_wallpaper_page) {
-
                     ((OnlineWallpaperPage) child).setup(0);
             }
         }
