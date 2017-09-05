@@ -145,7 +145,7 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
             case WALLPAPER_AD_VIEW:
                 break;
             case WALLPAPER_FOOTER_VIEW_LOAD_MORE:
-//                loadWallpaper();
+                loadWallpaper();
                 break;
             case WALLPAPER_FOOTER_VIEW_NO_MORE:
                 break;
@@ -158,11 +158,14 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemCount() {
-        return mDataSet.size();
+        return mDataSet.size()+ 1;
     }
 
     @Override
     public int getItemViewType(int position) {
+        if (position == mDataSet.size()) {
+            return WALLPAPER_FOOTER_VIEW_LOAD_MORE;
+        }
         return WALLPAPER_IMAGE_VIEW;
     }
 

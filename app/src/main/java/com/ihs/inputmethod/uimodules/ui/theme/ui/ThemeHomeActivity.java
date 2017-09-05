@@ -58,14 +58,11 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
-import com.ihs.keyboardutils.ads.KCInterstitialAd;
-import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
-import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.kc.commons.utils.KCCommonUtils;
 
 import static android.view.View.GONE;
@@ -730,29 +727,29 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private void loadFullscreenAd() {
         Intent intent = new Intent(this, CustomizeActivity.class);
         startActivity(intent);
-        if (!InterstitialGiftUtils.isNetworkAvailable(-1)) {
-            Toast.makeText(this, R.string.no_network_connection, Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        fullscreenShowed = false;
-        acbInterstitialAdLoader = KCInterstitialAd.loadAndShow(getString(R.string.placement_full_screen_open_keyboard),
-                getString(R.string.interstitial_ad_title_home_gift_button),
-                getString(R.string.interstitial_ad_subtitle_home_gift_button),
-                new KCInterstitialAd.OnAdShowListener() {
-            @Override
-            public void onAdShow(boolean b) {
-                fullscreenShowed = b;
-                dismissDialog(fullscreenAdLoadingDialog);
-                fullscreenAdLoadingDialog = null;
-                handler.removeMessages(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG);
-            }
-        }, null);
-
-        fullscreenAdLoadingDialog = HSAlertDialog.build(this).setView(R.layout.dialog_loading).setCancelable(false).create();
-        fullscreenAdLoadingDialog.show();
-
-        handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
+//        if (!InterstitialGiftUtils.isNetworkAvailable(-1)) {
+//            Toast.makeText(this, R.string.no_network_connection, Toast.LENGTH_LONG).show();
+//            return;
+//        }
+//
+//        fullscreenShowed = false;
+//        acbInterstitialAdLoader = KCInterstitialAd.loadAndShow(getString(R.string.placement_full_screen_open_keyboard),
+//                getString(R.string.interstitial_ad_title_home_gift_button),
+//                getString(R.string.interstitial_ad_subtitle_home_gift_button),
+//                new KCInterstitialAd.OnAdShowListener() {
+//            @Override
+//            public void onAdShow(boolean b) {
+//                fullscreenShowed = b;
+//                dismissDialog(fullscreenAdLoadingDialog);
+//                fullscreenAdLoadingDialog = null;
+//                handler.removeMessages(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG);
+//            }
+//        }, null);
+//
+//        fullscreenAdLoadingDialog = HSAlertDialog.build(this).setView(R.layout.dialog_loading).setCancelable(false).create();
+//        fullscreenAdLoadingDialog.show();
+//
+//        handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
     }
 
 
