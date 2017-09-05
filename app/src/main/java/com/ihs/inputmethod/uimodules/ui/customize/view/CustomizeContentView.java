@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 
 /**
  * Created by guonan.lv on 17/9/2.
@@ -68,10 +67,8 @@ public class CustomizeContentView extends FrameLayout {
 
         private void setupWithInitialTabIndex(@LayoutRes int layoutId, View child) {
             if (layoutId == R.layout.online_wallpaper_page) {
-                int index = ((CustomizeActivity) mContext).mWallpaperTabIndex;
-                if (index > 0) {
-                    ((OnlineWallpaperPage) child).setup(index);
-                }
+
+                    ((OnlineWallpaperPage) child).setup(0);
             }
         }
     }

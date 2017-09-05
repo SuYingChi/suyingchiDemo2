@@ -52,6 +52,7 @@ import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
@@ -727,6 +728,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     }
 
     private void loadFullscreenAd() {
+        Intent intent = new Intent(this, CustomizeActivity.class);
+        startActivity(intent);
         if (!InterstitialGiftUtils.isNetworkAvailable(-1)) {
             Toast.makeText(this, R.string.no_network_connection, Toast.LENGTH_LONG).show();
             return;
