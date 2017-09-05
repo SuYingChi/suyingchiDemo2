@@ -67,14 +67,16 @@ public class StickerHomeFragment extends Fragment {
                 final String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
                 final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
-                DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
+                DownloadUtils.getInstance().startForegroundDownloading(getContext(), stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                         drawable, new AdLoadingView.OnAdBufferingListener() {
                             @Override
                             public void onDismiss(boolean b) {
-                                int position = stickerModelList.indexOf(stickerModel);
-                                stickerModelList.remove(position);
-                                removeStickerFromView(position);
+                                if (b) {
+                                    int position = stickerModelList.indexOf(stickerModel);
+                                    stickerModelList.remove(position);
+                                    removeStickerFromView(position);
+                                }
                             }
                         }, new HSHttpConnection.OnConnectionFinishedListener() {
                             @Override
