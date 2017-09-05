@@ -1,8 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -15,7 +13,9 @@ import android.provider.Browser;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.acb.call.CPSettings;
@@ -51,7 +52,10 @@ import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
+import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
@@ -68,6 +72,7 @@ import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.kc.commons.utils.KCCommonUtils;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static android.view.View.GONE;
@@ -98,7 +103,12 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private AppBarLayout appbarLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ArrayList<Class> fragments;
+    private TabFragmentPagerAdapter tabFragmentPagerAdapter;
     private String currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
+
     private TrialKeyboardDialog trialKeyboardDialog;
     private boolean isFromUsageAccessActivity;
     private View enableTipTV;
@@ -167,14 +177,13 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         toolbar.setTitle(HSLog.isDebugging() ? themeTitle + " (Debug)" : themeTitle);
         setSupportActionBar(toolbar);
 
-        View adTriggerView = findViewById(R.id.theme_home_interstitial_ad_trigger_view);
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            adTriggerView.setVisibility(View.GONE);
-        } else {
-            adTriggerView.setVisibility(View.VISIBLE);
-            adTriggerView.setOnClickListener(this);
-        }
+        View adTriggerView = findViewById(R.id.download_page_trigger);
+        adTriggerView.setVisibility(View.VISIBLE);
+        adTriggerView.setOnClickListener(this);
 
+        tabLayout = (TabLayout)  findViewById(R.id.store_tab);
+
+        viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
@@ -194,7 +203,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             public void onClick(View view) {
 
                 Bundle bundle = new Bundle();
-                String customEntry = THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store_float_button" : "mytheme_float_button";
+                String customEntry =  "store_float_button";
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                 CustomThemeActivity.startCustomThemeActivity(bundle);
 
@@ -222,20 +231,23 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         ViewGroup.LayoutParams layoutParams = headerView.getLayoutParams();
         layoutParams.height = (int) (getResources().getDisplayMetrics().widthPixels * 0.48f);
 
-        //remove myThemeFragment if exist
-        Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-        if (myThemeFragment != null) {
-            getFragmentManager().beginTransaction().remove(myThemeFragment).commit();
-        }
-
-        //create storeFragment only if not exist
-        Fragment storeFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-        if (storeFragment == null) {
-            storeFragment = new ThemeHomeFragment();
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.content_layout, storeFragment, THEME_STORE_FRAGMENT_TAG).commit();
-        }
+        fragments = new ArrayList<>();
+        fragments.add(ThemeHomeFragment.class);
+        fragments.add(StickerHomeFragment.class);
+        fragments.add(FontHomeFragment.class);
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
+
+        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        String[] tabTitles = new String[3];
+        tabTitles[0] = getApplicationContext().getString(R.string.tab_theme);
+        tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker);
+        tabTitles[2] = getApplicationContext().getString(R.string.tab_font);
+        tabFragmentPagerAdapter.setTabTitles(tabTitles);
+        viewPager.setOffscreenPageLimit(fragments.size());
+        viewPager.setAdapter(tabFragmentPagerAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+        setTabListener();
 
         //init locker function
         boolean lockerEnable = getResources().getBoolean(R.bool.config_locker_drawer_visiable_enable) && HSAppLockerUtils.isLockerEnabled();
@@ -349,7 +361,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             showOpenAlertIfNeeded();
         }
         isResumeOnCreate = false;
-
     }
 
     @Override
@@ -367,40 +378,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         int id = item.getItemId();
 
         if (id == R.id.nav_theme_store) {
-            if (!currentFragmentTag.equals(THEME_STORE_FRAGMENT_TAG)) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-                Fragment themeStoreFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-                if (myThemeFragment != null) {
-                    transaction.hide(myThemeFragment);
-                }
-                if (themeStoreFragment == null) {
-                    themeStoreFragment = new ThemeHomeFragment();
-                    transaction.add(R.id.content_layout, themeStoreFragment, THEME_STORE_FRAGMENT_TAG);
-                }
-                transaction.show(themeStoreFragment).commit();
-                appbarLayout.setExpanded(true);
-                toolbar.setTitle(R.string.theme_nav_theme_store);
-            }
             currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
-        } else if (id == R.id.nav_my_themes) {
-            if (!currentFragmentTag.equals(MY_THEME_FRAGMENT_TAG)) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-                Fragment themeStoreFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-                if (themeStoreFragment != null) {
-                    transaction.hide(themeStoreFragment);
-                }
-                if (myThemeFragment == null) {
-                    myThemeFragment = new MyThemeFragment();
-                    transaction.add(R.id.content_layout, myThemeFragment, MY_THEME_FRAGMENT_TAG);
-                }
-                transaction.show(myThemeFragment).commit();
-                appbarLayout.setExpanded(true);
-                toolbar.setTitle(R.string.theme_nav_my_themes);
-                HSAnalytics.logEvent("sidebar_mythemes_clicked");
-            }
-            currentFragmentTag = MY_THEME_FRAGMENT_TAG;
         } else if (id == R.id.nav_language) {
             HSUIInputMethod.launchMoreLanguageActivity();
             HSAnalytics.logEvent("sidebar_languages_clicked");
@@ -427,6 +405,34 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setTabListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+                if(tab.getPosition() == 0) {
+                    layout.setVisibility(View.VISIBLE);
+                } else {
+                    layout.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+                if(position == 0) {
+                    layout.setVisibility(View.VISIBLE);
+                } else {
+                    layout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
@@ -579,8 +585,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 enableTipTV.setVisibility(GONE);
             }
 
-        } else if (MY_THEME_FRAGMENT_TAG.equals(currentFragmentTag)) {
-            navigationView.setCheckedItem(R.id.nav_my_themes);
         }
     }
 
@@ -786,15 +790,21 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.theme_home_interstitial_ad_trigger_view:
+            case R.id.download_page_trigger:
 //                if (lottieAnimationView.isAnimating()) {
 //                    lottieAnimationView.cancelAnimation();
 //                    lottieAnimationView.setProgress(0f);
 //                }
-                loadFullscreenAd();
-                HSAnalytics.logEvent("app_fullscreenAds_icon_mainscreencorner_clicked");
+
+                switchToDownloads();
                 break;
         }
+    }
+
+    private void switchToDownloads() {
+        Intent intent = new Intent(this, ThemeDownloadActivity.class);
+        intent.putExtra("currentTab", tabLayout.getSelectedTabPosition());
+        startActivity(intent);
     }
 
 
