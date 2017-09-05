@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -98,7 +97,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ArrayList<String> fragments;
+    private ArrayList<Class> fragments;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
     private String currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
@@ -227,9 +226,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         layoutParams.height = (int) (getResources().getDisplayMetrics().widthPixels * 0.48f);
 
         fragments = new ArrayList<>();
-        fragments.add(ThemeHomeFragment.class.getName());
-        fragments.add(StickerHomeFragment.class.getName());
-        fragments.add(FontHomeFragment.class.getName());
+        fragments.add(ThemeHomeFragment.class);
+        fragments.add(StickerHomeFragment.class);
+        fragments.add(FontHomeFragment.class);
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);

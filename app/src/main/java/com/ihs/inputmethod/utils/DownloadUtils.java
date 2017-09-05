@@ -13,17 +13,12 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.File;
-
-import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager.ASSETS_FONT_FILE_PATH;
-import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager.JSON_SUFFIX;
-import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 /**
  * Created by guonan.lv on 17/8/31.
@@ -59,14 +54,6 @@ public class DownloadUtils {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public String getFontDownloadFilePath(String fontName) {
-        return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_FONT_FILE_PATH + "/" + fontName + JSON_SUFFIX;
-    }
-
-    private String getStickerGroupDownloadFilePath(String stickerGroupName) {
-        return StickerUtils.getStickerRootFolderPath() + "/" + stickerGroupName + STICKER_DOWNLOAD_ZIP_SUFFIX;
     }
 
     private void initConnection(final Resources resources, final AdLoadingView adLoadingView, final HSHttpConnection connection,

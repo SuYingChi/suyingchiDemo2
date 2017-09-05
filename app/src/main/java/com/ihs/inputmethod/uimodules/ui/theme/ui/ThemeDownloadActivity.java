@@ -56,7 +56,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ArrayList<String> fragments;
+    private ArrayList<Class> fragments;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
 
     private TrialKeyboardDialog trialKeyboardDialog;
@@ -147,9 +147,9 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         });
 
         fragments = new ArrayList<>();
-        fragments.add(MyThemeFragment.class.getName());
-        fragments.add(MyStickerFragment.class.getName());
-        fragments.add(MyFontFragment.class.getName());
+        fragments.add(MyThemeFragment.class);
+        fragments.add(MyStickerFragment.class);
+        fragments.add(MyFontFragment.class);
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
         String[] tabTitles = new String[3];
