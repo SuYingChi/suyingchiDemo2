@@ -36,7 +36,7 @@ import java.util.Map;
 
 public class OnlineWallpaperPage extends RelativeLayout {
 
-    private static final int EXTRA_TABS_COUNT = 2;
+    private static final int EXTRA_TABS_COUNT = 0;
 
     private static final int TAB_INDEX_HOT = 0;
     private static final int TAB_INDEX_3D = 1;
@@ -243,9 +243,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
         @Override
         public CharSequence getPageTitle(int positionAbsolute) {
             int position = positionAbsolute;
-            if (position == TAB_INDEX_HOT) {
-                return mContext.getString(R.string.online_wallpaper_tab_title_hot);
-            }
             int categoryIndex = position - EXTRA_TABS_COUNT;
             return LauncherConfig.getMultilingualString(mCategoryConfigs.get(categoryIndex), "CategoryName");
         }

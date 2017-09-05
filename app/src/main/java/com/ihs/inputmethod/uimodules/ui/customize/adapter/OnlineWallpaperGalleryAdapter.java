@@ -133,7 +133,7 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
                 mMaxVisiblePosition = Math.max(mMaxVisiblePosition, position);
                 WallpaperInfo info = (WallpaperInfo) mDataSet.get(position);
                 Glide.with(holder.itemView.getContext()).load(info.getThumbnailUrl()).asBitmap().placeholder(R.drawable.wallpaper_loading)
-                        .error(R.drawable.wallpaper_loading).crossFade(550).format(DecodeFormat.PREFER_RGB_565)
+                        .error(R.drawable.wallpaper_load_failed).crossFade(550).format(DecodeFormat.PREFER_RGB_565)
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(
                         ((ImageViewHolder) holder).mImageView);
                 holder.itemView.setTag(position);
