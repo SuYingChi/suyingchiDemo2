@@ -103,7 +103,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     public void onFontCardClick(final int position) {
         final FontModel fontModel = fontModelList.get(position);
         final String fontName = fontModel.getFontName();
-        DownloadUtils.getInstance().startForegroundDownloading(getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
+        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
                 null, new AdLoadingView.OnAdBufferingListener() {
                     @Override
                     public void onDismiss(boolean b) {

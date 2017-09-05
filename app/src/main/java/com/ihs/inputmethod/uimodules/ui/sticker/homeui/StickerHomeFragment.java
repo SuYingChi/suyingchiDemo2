@@ -67,7 +67,7 @@ public class StickerHomeFragment extends Fragment {
                 final String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
                 final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
-                DownloadUtils.getInstance().startForegroundDownloading(getContext(), stickerGroupName,
+                DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                         drawable, new AdLoadingView.OnAdBufferingListener() {
                             @Override
