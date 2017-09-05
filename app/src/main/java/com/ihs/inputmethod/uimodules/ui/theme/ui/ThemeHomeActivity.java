@@ -824,6 +824,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     }
 
     private void loadFullscreenAd() {
+        Intent intent = new Intent(this, CustomizeActivity.class);
+        startActivity(intent);
         if (!InterstitialGiftUtils.isNetworkAvailable(-1)) {
             Toast.makeText(this, R.string.no_network_connection, Toast.LENGTH_LONG).show();
             return;

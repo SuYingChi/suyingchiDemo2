@@ -1,7 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.customize.adapter;
 
-import android.app.WallpaperInfo;
 import android.content.Context;
+import android.os.Build;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,13 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbNativeAd;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.ihs.feature.common.CompatUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
+import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
+import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +41,34 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     private static final int MAX_CONCURRENT_AD_REQUEST_COUNT = 3;
 
     private Context mContext;
+    private int mMaxVisiblePosition;
     private int mCategoryIndex = -1;
     private List<Object> mDataSet = new ArrayList<>();
     private GridLayoutManager mLayoutManager;
 
     private int mScreenWidth;
+
+    private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
+        @Override public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList) {
+            int lastSize = mDataSet.size();
+            mDataSet.addAll(wallpaperInfoList);
+
+            notifyItemRangeInserted(lastSize, wallpaperInfoList.size());
+        }
+
+        @Override public void onLoadFailed() {
+//            if (mFooterViewHolder != null) {
+//                mFooterViewHolder.mLoadingHint.setVisibility(View.INVISIBLE);
+//                mFooterViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
+//                mFooterViewHolder.mProgressBar.stopAnimation();
+//                mFooterViewHolder.mRetryHint.setVisibility(View.VISIBLE);
+//                mFooterViewHolder.itemView.setOnClickListener(v -> {
+                    loadWallpaper();
+//                    mFooterViewHolder.itemView.setOnClickListener(null);
+//                });
+//            }
+        }
+    };
 
     public OnlineWallpaperGalleryAdapter(Context context) {
         super();
@@ -106,38 +133,27 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
                 mMaxVisiblePosition = Math.max(mMaxVisiblePosition, position);
                 WallpaperInfo info = (WallpaperInfo) mDataSet.get(position);
                 Glide.with(holder.itemView.getContext()).load(info.getThumbnailUrl()).asBitmap().placeholder(R.drawable.wallpaper_loading)
-                        .error(R.drawable.wallpaper_load_failed).crossFade(550).format(DecodeFormat.PREFER_RGB_565)
+                        .error(R.drawable.wallpaper_loading).crossFade(550).format(DecodeFormat.PREFER_RGB_565)
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(
                         ((ImageViewHolder) holder).mImageView);
                 holder.itemView.setTag(position);
                 ImageViewHolder imageHolder = (ImageViewHolder) holder;
-                if (mScenario == WallpaperMgr.Scenario.ONLINE_HOT && info.getType() == WallpaperInfo.WALLPAPER_TYPE_ONLINE) {
-                    imageHolder.mTvPopularity.setVisibility(View.VISIBLE);
-                    imageHolder.mTvPopularity.setText(String.valueOf(info.getPopularity()));
-                    imageHolder.mIvPopularity.setVisibility(View.VISIBLE);
-                } else {
-                    imageHolder.mTvPopularity.setVisibility(View.INVISIBLE);
-                    imageHolder.mIvPopularity.setVisibility(View.INVISIBLE);
-                }
-                if (info.getType() == WallpaperInfo.WALLPAPER_TYPE_3D) {
-                    imageHolder.m3DMark.setVisibility(View.VISIBLE);
-                } else {
-                    imageHolder.m3DMark.setVisibility(View.INVISIBLE);
-                }
-                if (shouldShowAds(position)) {
-                    loadAds();
-                }
+                imageHolder.mTvPopularity.setVisibility(View.INVISIBLE);
+                imageHolder.mIvPopularity.setVisibility(View.INVISIBLE);
+
                 break;
             case WALLPAPER_AD_VIEW:
-                AcbNativeAd ad = (AcbNativeAd) mDataSet.get(position);
-                ((OnlineWallpaperGalleryAdapter.AdHolder) holder).mAdContentView.fillNativeAd(ad);
                 break;
             case WALLPAPER_FOOTER_VIEW_LOAD_MORE:
-                loadWallpaper();
+//                loadWallpaper();
                 break;
             case WALLPAPER_FOOTER_VIEW_NO_MORE:
                 break;
         }
+    }
+
+    public WallpaperDownloadEngine.OnLoadWallpaperListener getLoadWallpaperListener() {
+        return mListener;
     }
 
     @Override
@@ -152,7 +168,58 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public void onClick(View v) {
+        int positionInAllWallpapers = (int) v.getTag();
+        ArrayList<WallpaperInfo> allWallpapers = new ArrayList<>();
+        ArrayList<WallpaperInfo> wallpapersToPreview = new ArrayList<>();
+        int positionInPreviewWallpapers = positionInAllWallpapers;
+        for (Object item : mDataSet) {
+            if (item instanceof WallpaperInfo) {
+                allWallpapers.add((WallpaperInfo) item);
+                if (((WallpaperInfo) item).getType() != WallpaperInfo.WALLPAPER_TYPE_3D) {
+                    wallpapersToPreview.add((WallpaperInfo) item);
+                } else if (wallpapersToPreview.size() < positionInAllWallpapers) {
+                    positionInPreviewWallpapers--;
+                }
+            }
+        }
+//        WallpaperInfo clickedWallpaper = allWallpapers.get(positionInAllWallpapers);
+//        Intent intent = new Intent(mContext, WallpaperPreviewActivity.class);
+//        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_SCENARIO, mScenario.ordinal());
+//        intent.putParcelableArrayListExtra(WallpaperPreviewActivity.INTENT_KEY_WALLPAPERS, wallpapersToPreview);
+//        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_INDEX, positionInPreviewWallpapers);
+//        try {
+//            mContext.startActivity(intent);
+//        } catch (Exception e) {
+//            // TODO: consider sending wallpaper data through file to avoid TransactionTooLargeException
+//            HSLog.e("OnlineWallpaperGalleryAdapter", "Error launching WallpaperPreviewActivity, "
+//                    + "perhaps wallpaper data is too large to transact through binder.");
+//            CrashlyticsCore.getInstance().logException(e);
+//        }
+    }
 
+    private boolean isDeviceAlwaysReturnCancel() {
+        return CompatUtils.IS_HUAWEI_DEVICE && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT;
+    }
+
+    public void onDestroy() {
+
+    }
+
+    private void loadWallpaper() {
+//        mFooterViewHolder.mProgressBar.startLoadingAnimation();
+//        mFooterViewHolder.mProgressBar.setVisibility(View.VISIBLE);
+//        mFooterViewHolder.mLoadingHint.setVisibility(View.VISIBLE);
+//        mFooterViewHolder.mRetryHint.setVisibility(View.INVISIBLE);
+        if (Utils.isNetworkAvailable(-1)) {
+                WallpaperDownloadEngine.getNextCategoryWallpaperList(mCategoryIndex, mListener);
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mListener.onLoadFailed();
+                }
+            }, 1000);
+        }
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {

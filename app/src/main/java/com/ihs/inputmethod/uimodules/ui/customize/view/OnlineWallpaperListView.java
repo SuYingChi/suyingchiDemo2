@@ -9,11 +9,16 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
+import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.adapter.OnlineWallpaperGalleryAdapter;
+import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
+
+import java.util.List;
 
 /**
  * Created by guonan.lv on 17/9/4.
@@ -46,7 +51,29 @@ public class OnlineWallpaperListView extends FrameLayout {
         super(context, attrs, defStyle);
     }
 
-    @Override protected void onFinishInflate() {
+    private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
+        @Override
+        public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList) {
+            progressBar.setVisibility(View.INVISIBLE);
+            retryLayout.setVisibility(View.INVISIBLE);
+            if (adapter != null) {
+
+                adapter.getLoadWallpaperListener().onLoadFinished(wallpaperInfoList);
+            }
+        }
+
+        @Override
+        public void onLoadFailed() {
+            progressBar.setVisibility(View.INVISIBLE);
+            retryLayout.setVisibility(View.VISIBLE);
+            if (adapter != null) {
+                adapter.getLoadWallpaperListener().onLoadFailed();
+            }
+        }
+    };
+
+    @Override
+    protected void onFinishInflate() {
         super.onFinishInflate();
 
         this.recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -67,6 +94,7 @@ public class OnlineWallpaperListView extends FrameLayout {
         decoration.setAdapter(adapter);
         recyclerView.addItemDecoration(decoration);
         CustomizeActivity.bindScrollListener(getContext(), recyclerView, false);
+        startLoading();
     }
 
     public void startLoading() {
@@ -84,11 +112,23 @@ public class OnlineWallpaperListView extends FrameLayout {
                 }
             }, 500);
         } else {
+            HSLog.e("eee", "network");
 //            if (mScenario.equals(WallpaperMgr.Scenario.ONLINE_HOT)) {
 //                WallpaperDownloadEngine.getNextHotWallpaperList(mListener);
 //            } else {
-//                WallpaperDownloadEngine.getNextCategoryWallpaperList(mCategoryIndex, mListener);
+            WallpaperDownloadEngine.getNextCategoryWallpaperList(mCategoryIndex, mListener);
 //            }
+        }
+    }
+
+    public void setCategoryName(String categoryName) {
+//        recyclerView.addOnScrollListener(new ScrollLogger(categoryName));
+    }
+
+    public void setCategoryIndex(int categoryIndex) {
+        mCategoryIndex = categoryIndex;
+        if (adapter != null) {
+            adapter.setCategoryIndex(categoryIndex);
         }
     }
 }

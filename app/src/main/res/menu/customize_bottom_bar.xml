@@ -3,9 +3,11 @@
 
     <item
         android:id="@+id/customize_bottom_bar_wallpapers"
+        android:icon="@drawable/customize_wallpaper"
         android:title="@string/customize_wallpapers_title" />
 
     <item
         android:id="@+id/customize_bottom_bar_locker"
+        android:icon="@drawable/customize_locker"
         android:title="@string/customize_locker_title" />
 </menu>
