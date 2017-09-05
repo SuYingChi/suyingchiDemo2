@@ -131,7 +131,6 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         if(cameraInserted) {
             return adList.size()+1;
-
         }
         return adList.size();
     }

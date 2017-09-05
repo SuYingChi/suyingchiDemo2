@@ -1,8 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -23,6 +25,8 @@ import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.ThemeCardItemClickListener, View.OnClickListener {
