@@ -85,6 +85,11 @@
             android:theme="@style/BaseWallpaperTheme" />
 
         <service android:name="com.ihs.inputmethod.api.WakeKeyboardService" />
+        <service
+            android:name=".ui.customize.service.CustomizeService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
 
         <service
             android:name="com.ihs.devicemonitor.accessibility.HSAccessibilityService"

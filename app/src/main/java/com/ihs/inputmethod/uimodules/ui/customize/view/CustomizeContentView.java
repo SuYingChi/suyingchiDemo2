@@ -8,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
+import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
 
 /**
  * Created by guonan.lv on 17/9/2.
  */
 
-public class CustomizeContentView extends FrameLayout {
+public class CustomizeContentView extends FrameLayout implements ServiceListener {
 
     private CustomizeContentAdapter mAdapter;
 
@@ -28,7 +31,12 @@ public class CustomizeContentView extends FrameLayout {
         addView(mAdapter.getView(position));
     }
 
-    private static class CustomizeContentAdapter {
+    @Override
+    public void onServiceConnected(ICustomizeService service) {
+        mAdapter.onServiceConnected(service);
+    }
+
+    private static class CustomizeContentAdapter implements ServiceListener {
         private CustomizeContentView mView;
         private Context mContext;
         private LayoutInflater mLayoutInflater;
@@ -52,6 +60,7 @@ public class CustomizeContentView extends FrameLayout {
         }
 
         View getView(int position) {
+            HSLog.e("eee", ""+position);
             int layoutId = CONTENT_VIEW_IDS[position];
             View child = mViewMap.get(layoutId);
             if (child == null) {
@@ -67,7 +76,18 @@ public class CustomizeContentView extends FrameLayout {
 
         private void setupWithInitialTabIndex(@LayoutRes int layoutId, View child) {
             if (layoutId == R.layout.online_wallpaper_page) {
-                    ((OnlineWallpaperPage) child).setup(0);
+                ((OnlineWallpaperPage) child).setup(0);
+            }
+        }
+
+        @Override
+        public void onServiceConnected(ICustomizeService service) {
+            HSLog.e("eee", "ServiceConn" + mViewMap.size());
+            for (int i = 0, size = mViewMap.size(); i < size; i++) {
+                View child = mViewMap.valueAt(i);
+                if (child instanceof ServiceListener) {
+                    ((ServiceListener) child).onServiceConnected(service);
+                }
             }
         }
     }

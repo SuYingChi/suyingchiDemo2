@@ -1,9 +1,11 @@
 package com.ihs.inputmethod.uimodules.ui.customize;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -21,7 +23,6 @@ import com.acb.call.HomeKeyWatcher;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
@@ -112,6 +113,17 @@ public class CustomizeActivity extends BaseCustomizeActivity implements INotific
     }
 
     @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+        mContent.onServiceConnected(mService);
+        mBottomBar.setOnNavigationItemSelectedListener(CustomizeActivity.this);
+
+        if (mHasPendingTheme) {
+//            setSystemTheme();
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (mLayoutWrapper != null) {
@@ -158,7 +170,6 @@ public class CustomizeActivity extends BaseCustomizeActivity implements INotific
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        HSLog.e("eee", String.valueOf(itemId));
         int index = ITEMS_INDEX_MAP.get(itemId);
         boolean viewIndexUpdated = false;
         if (mViewIndex != index) {
