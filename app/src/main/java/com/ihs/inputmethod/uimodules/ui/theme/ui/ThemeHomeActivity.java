@@ -798,11 +798,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.download_page_trigger:
-//                if (lottieAnimationView.isAnimating()) {
-//                    lottieAnimationView.cancelAnimation();
-//                    lottieAnimationView.setProgress(0f);
-//                }
-
                 switchToDownloads();
                 break;
         }

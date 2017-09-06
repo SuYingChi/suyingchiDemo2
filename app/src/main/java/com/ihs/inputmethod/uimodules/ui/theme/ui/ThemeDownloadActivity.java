@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
@@ -175,6 +176,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
         setTabListener();
 
+        HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
 
         onNewIntent(getIntent());
     }
@@ -321,6 +323,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
         keyboardActivationProcessor.release();
         keyboardActivationProcessor = null;
+        HSGlobalNotificationCenter.removeObserver(notificationObserver);
 
         fragments.clear();
         super.onDestroy();
