@@ -22,6 +22,7 @@ import android.text.style.URLSpan;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -168,6 +169,7 @@ public class KeyboardActivationActivity extends HSActivity {
 
 
         View setupAutoBtn = findViewById(bt_step_one);
+        ((Button)setupAutoBtn).setText(getString(R.string.tv_1_tap_to_set_up_keyboard, getString(R.string.app_name)));
         if (findViewById(R.id.text_one) != null) {
             setupAutoBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
                     getResources().getDimension(R.dimen.guide_bg_radius)));

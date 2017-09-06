@@ -6,9 +6,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_idle">Emoji Keyboard</string>
     <string name="alert_attention_title">Attention !</string>
-    <string name="alert_attention_messenger">Emoji Keyboard treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
-    <string name="toast_enable_keyboard">Enable Emoji Keyboard</string>
-    <string name="toast_select_keyboard">Select Emoji Keyboard</string>
+    <string name="alert_attention_messenger">%1$s treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
+    <string name="toast_enable_keyboard">Enable %1$s</string>
+    <string name="toast_select_keyboard">Select %1$s</string>
     <string name="main_activity_edittext_hint">Try typing here now...</string>
     <string name="keyboard_theme_dark" translatable="false">Dark</string>
     <string name="keyboard_theme_grey" translatable="false">Grey</string>
@@ -37,12 +37,12 @@
     <string name="language_activity_name">com.ihs.inputmethod.settings.MoreLanguageActivity2</string>
 
     <!-- theme text override -->
-    <string name="theme_nav_theme_store">Emoji Keyboard Store</string>
-    <string name="theme_store_theme_title">Emoji Keyboard Themes</string>
-    <string name="theme_share_text_content">My personalized keyboard made with #Emoji Keyboard \nhttps://play.google.com/store/apps/details?id=com.mobipioneer.lockerkeyboard</string>
-    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #Emoji Keyboard For Free:\nhttps://play.google.com/store/apps/details?id=com.mobipioneer.lockerkeyboard</string>
+    <string name="theme_nav_theme_store">%1$s Store</string>
+    <string name="theme_store_theme_title">%1$s Themes</string>
+    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \nhttps://play.google.com/store/apps/details?id=com.mobipioneer.lockerkeyboard</string>
+    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\nhttps://play.google.com/store/apps/details?id=com.mobipioneer.lockerkeyboard</string>
     <string name="share_keyboard_name">Emoji Keyboard</string>
-    <string name="theme_detail_common_title_name">Emoji Keyboard Theme</string>
+    <string name="theme_detail_common_title_name">%1$s Theme</string>
 
     <string name="tip_usage_access">Find %s. Switch it on to enable Apps with usage access.</string>
 
@@ -50,12 +50,12 @@
     <string name="keyboard_theme_white" translatable="false">White</string>
 
 
-    <string name="dialog_title_select_keyboard_apply_rain">"Activate Emoji Keyboard"</string>
-    <string name="dialog_msg_select_keyboard_apply_rain">You need to activate Emoji Keyboard to use this theme.</string>
+    <string name="dialog_title_select_keyboard_apply_rain">"Activate %1$s"</string>
+    <string name="dialog_msg_select_keyboard_apply_rain">You need to activate %1$s to use this theme.</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">Activate Now</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain">"Activate Emoji Keyboard"</string>
-    <string name="dialog_msg_enable_keyboard_home_rain">Emoji Keyboard provides you with personalized keyboard themes and cute emojis.</string>
+    <string name="dialog_title_enable_keyboard_home_rain">"Activate %1$s"</string>
+    <string name="dialog_msg_enable_keyboard_home_rain">%1$s provides you with personalized keyboard themes and cute emojis.</string>
     <string name="dialog_confirm_enable_keyboard_home_rain">Activate Now</string>
 
     <!--deep link-->

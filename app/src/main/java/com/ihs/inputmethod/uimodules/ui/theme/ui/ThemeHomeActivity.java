@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acb.call.CPSettings;
@@ -173,7 +174,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        String themeTitle = getResources().getString(R.string.theme_nav_theme_store);
+        String themeTitle = getResources().getString(R.string.theme_nav_theme_store, getResources().getString(R.string.app_name));
         toolbar.setTitle(HSLog.isDebugging() ? themeTitle + " (Debug)" : themeTitle);
         setSupportActionBar(toolbar);
 
@@ -188,6 +189,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
         enableTipTV = findViewById(R.id.tv_enable_keyboard);
+        ((TextView)enableTipTV).setText(getString(R.string.tv_enable_keyboard_tip, getString(R.string.app_name)));
         enableTipTV.setVisibility(GONE);
         enableTipTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,6 +232,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         View headerView = navigationView.getHeaderView(0);
         ViewGroup.LayoutParams layoutParams = headerView.getLayoutParams();
         layoutParams.height = (int) (getResources().getDisplayMetrics().widthPixels * 0.48f);
+
+        MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
+        item.setTitle(getString(R.string.theme_nav_theme_store, getString(R.string.app_name)));
 
         fragments = new ArrayList<>();
         fragments.add(ThemeHomeFragment.class);
@@ -317,7 +322,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         } else {
             String from = intent.getStringExtra("From");
             if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
-                Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store, getResources().getString(R.string.app_name)), Toast.LENGTH_SHORT).show();
             }
         }
         MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);

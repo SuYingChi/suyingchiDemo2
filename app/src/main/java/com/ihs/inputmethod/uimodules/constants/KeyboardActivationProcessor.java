@@ -97,7 +97,7 @@ public class KeyboardActivationProcessor {
                     setEventRecorded(GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
 
-                Toast toast = Toast.makeText(context, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(context, context.getResources().getString(R.string.toast_select_keyboard, context.getResources().getString(R.string.app_name)), Toast.LENGTH_LONG);
                 toast.show();
             } else if (msg.what == HANDLER_SHOW_PRIVACY_ALERT) {
                 showKeyboardEnableDialog();
@@ -143,8 +143,8 @@ public class KeyboardActivationProcessor {
 
     private void showApplyActiveKeyDialog(final Activity activity) {
 
-        AlertDialog alertDialog = HSAlertDialog.build().setTitle(context.getString(R.string.dialog_title_select_keyboard_apply_rain))
-                .setMessage(context.getResources().getString(R.string.dialog_msg_select_keyboard_apply_rain))
+        AlertDialog alertDialog = HSAlertDialog.build().setTitle(context.getString(R.string.dialog_title_select_keyboard_apply_rain, context.getString(R.string.app_name)))
+                .setMessage(context.getResources().getString(R.string.dialog_msg_select_keyboard_apply_rain, context.getResources().getString(R.string.app_name)))
                 .setPositiveButton(context.getResources().getString(R.string.dialog_confirm_select_keyboard_apply_rain), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -196,8 +196,8 @@ public class KeyboardActivationProcessor {
 
     private void showKeyboardEnableDialog() {
         CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-        dialog.setTitle(context.getResources().getString(R.string.toast_enable_keyboard));
-        dialog.setMessage(context.getResources().getString(R.string.alert_attention_messenger));
+        dialog.setTitle(context.getResources().getString(R.string.toast_enable_keyboard, context.getResources().getString(R.string.app_name)));
+        dialog.setMessage(context.getResources().getString(R.string.alert_attention_messenger, context.getResources().getString(R.string.app_name)));
         dialog.setImageResource(R.drawable.enable_keyboard_alert_top_bg);
         dialog.setPositiveButton(HSApplication.getContext().getString(R.string.got_it), new View.OnClickListener() {
             @Override
@@ -221,8 +221,8 @@ public class KeyboardActivationProcessor {
     }
 
     public void showHomePageActivationDialog(final Activity activity) {
-        AlertDialog alertDialog = HSAlertDialog.build().setTitle(context.getString(R.string.dialog_title_enable_keyboard_home_rain))
-                .setMessage(context.getResources().getString(R.string.dialog_msg_enable_keyboard_home_rain))
+        AlertDialog alertDialog = HSAlertDialog.build().setTitle(context.getString(R.string.dialog_title_enable_keyboard_home_rain, context.getString(R.string.app_name)))
+                .setMessage(context.getResources().getString(R.string.dialog_msg_enable_keyboard_home_rain, context.getResources().getString(R.string.app_name)))
                 .setPositiveButton(context.getResources().getString(R.string.dialog_confirm_select_keyboard_apply_rain), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

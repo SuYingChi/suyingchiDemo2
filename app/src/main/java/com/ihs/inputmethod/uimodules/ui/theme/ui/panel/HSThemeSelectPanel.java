@@ -92,7 +92,7 @@ public final class HSThemeSelectPanel extends BasePanel {
 
 		defaultTitle = new ThemePanelModel();
 		defaultTitle.isTitle = true;
-		defaultTitle.title = HSApplication.getContext().getResources().getString(R.string.default_themes);
+		defaultTitle.title = HSApplication.getContext().getResources().getString(R.string.default_themes, HSApplication.getContext().getResources().getString(R.string.app_name));
 
 		create = new ThemePanelModel();
 		create.isCreateButton = true;

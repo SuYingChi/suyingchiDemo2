@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
@@ -121,6 +122,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeDownloadActivity.class, ThemeDownloadActivity.this);
 
         enableTipTV = findViewById(R.id.tv_enable_keyboard);
+        ((TextView)enableTipTV).setText(getString(R.string.tv_enable_keyboard_tip, getString(R.string.app_name)));
         enableTipTV.setVisibility(GONE);
         enableTipTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,7 +193,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         } else {
             String from = intent.getStringExtra("From");
             if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
-                Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store, getResources().getString(R.string.app_name)), Toast.LENGTH_SHORT).show();
             }
         }
     }
