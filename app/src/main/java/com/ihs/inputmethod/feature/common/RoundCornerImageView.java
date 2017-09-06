@@ -197,11 +197,26 @@ public class RoundCornerImageView extends ImageView {
             return;
         }
 
-        ((SelectableRoundedCornerDrawable) mDrawable).setScaleType(mScaleType);
-        ((SelectableRoundedCornerDrawable) mDrawable).setCornerRadii(mRadii);
-        ((SelectableRoundedCornerDrawable) mDrawable).setBorderWidth(mBorderWidth);
-        ((SelectableRoundedCornerDrawable) mDrawable).setBorderColor(mBorderColor);
-        ((SelectableRoundedCornerDrawable) mDrawable).setOval(isOval);
+        if (mDrawable instanceof SelectableRoundedCornerDrawable) {
+            ((SelectableRoundedCornerDrawable) mDrawable).setScaleType(mScaleType);
+            ((SelectableRoundedCornerDrawable) mDrawable).setCornerRadii(mRadii);
+            ((SelectableRoundedCornerDrawable) mDrawable).setBorderWidth(mBorderWidth);
+            ((SelectableRoundedCornerDrawable) mDrawable).setBorderColor(mBorderColor);
+            ((SelectableRoundedCornerDrawable) mDrawable).setOval(isOval);
+        } else if (mDrawable instanceof LayerDrawable) {
+            LayerDrawable ld = (LayerDrawable) mDrawable;
+            final int num = ld.getNumberOfLayers();
+            for (int i = 0; i < num; i++) {
+                Drawable d = ld.getDrawable(i);
+                if (d instanceof SelectableRoundedCornerDrawable) {
+                    ((SelectableRoundedCornerDrawable) d).setScaleType(mScaleType);
+                    ((SelectableRoundedCornerDrawable) d).setCornerRadii(mRadii);
+                    ((SelectableRoundedCornerDrawable) d).setBorderWidth(mBorderWidth);
+                    ((SelectableRoundedCornerDrawable) d).setBorderColor(mBorderColor);
+                    ((SelectableRoundedCornerDrawable) d).setOval(isOval);
+                }
+            }
+        }
     }
 
     public float getCornerRadius() {

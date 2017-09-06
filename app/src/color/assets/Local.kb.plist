@@ -1320,6 +1320,54 @@
 				<key>state</key>
 				<integer>1</integer>
 			</dict>
+			<key>LockerThemes</key>
+			<array>
+				<dict>
+					<key>thumbnail</key>
+					<string>http://moplusdevelop.s3.amazonaws.com/androidlocker/test/flower/theme_flower_thumbnail.jpg</string>
+				</dict>
+				<dict>
+					<key>thumbnail</key>
+					<string>http://moplusdevelop.s3.amazonaws.com/androidlocker/test/flower/theme_flower_thumbnail.jpg</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>polygon</string>
+					<key>thumbnail</key>
+					<string>http://moplusdevelop.s3.amazonaws.com/androidlocker/test/flower/theme_flower_thumbnail.jpg</string>
+				</dict>
+				<dict>
+					<key>HD</key>
+					<array>
+						<string>assets://theme_polygon_wallpaper.jpg</string>
+						<string>http://moplusdevelop.s3.amazonaws.com/androidlocker/test/polygon/Preview2_polygon.jpg</string>
+						<string>http://moplusdevelop.s3.amazonaws.com/androidlocker/test/polygon/Preview3_polygon.jpg</string>
+					</array>
+					<key>font</key>
+					<dict>
+						<key>date</key>
+						<string></string>
+						<key>time</key>
+						<string></string>
+					</dict>
+					<key>name</key>
+					<string>polygon</string>
+					<key>thumbnail</key>
+					<string>http://moplusdevelop.s3.amazonaws.com/androidlocker/test/flower/theme_flower_thumbnail.jpg</string>
+				</dict>
+				<dict>
+					<key>ApkUrl</key>
+					<string>http://cdn.appcloudbox.net/launcherapps/apps/lockerchannel/app/MagicLocker-1.1.9.apk</string>
+					<key>isAPK</key>
+					<true/>
+					<key>name</key>
+					<string>magiclocker</string>
+					<key>packageName</key>
+					<string>com.fasttrack.lockscreen</string>
+					<key>thumbnail</key>
+					<string>http://moplusdevelop.s3.amazonaws.com/androidlocker/test/billiards/Thumbnail_8_2.jpg</string>
+				</dict>
+			</array>
 			<key>Lucky</key>
 			<dict>
 				<key>ChanceIncrementPeriodSeconds</key>

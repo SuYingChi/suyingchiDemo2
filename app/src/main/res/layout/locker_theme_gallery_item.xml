@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grid_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/card_elevation"
+    tools:ignore="UnusedAttribute"
+    tools:layout_width="200dp">
+
+    <com.ihs.inputmethod.uimodules.ui.customize.view.HorizontalBannerImageView
+        android:id="@+id/theme_thumbnail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        launcher:aspectRatioOverride="0.5625"
+        launcher:round_left_bottom_corner_radius="@dimen/card_round_corner_radius"
+        launcher:round_left_top_corner_radius="@dimen/card_round_corner_radius"
+        launcher:round_right_bottom_corner_radius="@dimen/card_round_corner_radius"
+        launcher:round_right_top_corner_radius="@dimen/card_round_corner_radius"
+        tools:src="@drawable/wallpaper_thumbnail"/>
+
+</FrameLayout>
