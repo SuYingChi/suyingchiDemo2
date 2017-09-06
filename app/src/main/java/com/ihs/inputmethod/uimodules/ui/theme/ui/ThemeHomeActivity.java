@@ -447,19 +447,26 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     public void keyboardSelected(int requestCode) {
                         if (requestCode == activationCode) {
                             if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
-                                LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()), new LockerEnableDialog.OnLockerBgLoadingListener() {
-                                    @Override
-                                    public void onFinish() {
-                                        if (trialKeyboardDialog == null) {
-                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
-                                        }
-                                        if (activationCode == keyboardActivationFromCustom) {
-                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
-                                        } else {
-                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
-                                        }
-                                    }
-                                });
+                                String from = "unknown";
+                                if (activationCode == CustomThemeActivity.keyboardActivationFromCustom) {
+                                    from = "app_save_customize_theme";
+                                }
+                                LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
+                                        getString(R.string.locker_enable_title_has_text),
+                                        from,
+                                        new LockerEnableDialog.OnLockerBgLoadingListener() {
+                                            @Override
+                                            public void onFinish() {
+                                                if (trialKeyboardDialog == null) {
+                                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
+                                                }
+                                                if (activationCode == keyboardActivationFromCustom) {
+                                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
+                                                } else {
+                                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
+                                                }
+                                            }
+                                        });
                             } else {
                                 if (trialKeyboardDialog == null) {
                                     trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
