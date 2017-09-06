@@ -1585,7 +1585,7 @@
 				<key>StickerDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers/</string>
 				<key>WallpaperAPIURL</key>
-				<string>https://dev-service.appcloudbox.net/wallpapers/categories/</string>
+				<string>http://dev-service.appcloudbox.net/wallpapers/categories/</string>
 			</dict>
 			<key>StickerBackground</key>
 			<array>

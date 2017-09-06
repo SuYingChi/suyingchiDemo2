@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.customize.view.NewsLoadFootView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.ihs.inputmethod.uimodules.ui.customize.view.LoadingProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:shouldPrepare="false" />
+
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/loading_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progress_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/load_more"
+        android:textColor="#80000000"
+        android:textSize="14sp" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/retry_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/news_load_more_re_try"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:visibility="gone" />
+</com.ihs.inputmethod.uimodules.ui.customize.view.NewsLoadFootView>

@@ -21,9 +21,12 @@ import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
+import com.ihs.inputmethod.uimodules.ui.customize.view.LoadingProgressBar;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by guonan.lv on 17/9/4.
@@ -45,28 +48,38 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     private int mCategoryIndex = -1;
     private List<Object> mDataSet = new ArrayList<>();
     private GridLayoutManager mLayoutManager;
+    private FooterViewHolder mFooterViewHolder;
 
     private int mScreenWidth;
 
+    private DisplayImageOptions defaulltOptions = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.wallpaper_loading).showImageOnFail(R.drawable.wallpaper_load_failed)
+            .showImageForEmptyUri(R.drawable.ic_sticker_loading_image)
+            .cacheOnDisk(true).build();
+
     private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
-        @Override public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList) {
+        @Override
+        public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList) {
             int lastSize = mDataSet.size();
             mDataSet.addAll(wallpaperInfoList);
-
-            notifyItemRangeInserted(lastSize, wallpaperInfoList.size());
+            notifyDataSetChanged();
+//            notifyItemRangeInserted(lastSize, wallpaperInfoList.size());
         }
 
-        @Override public void onLoadFailed() {
-//            if (mFooterViewHolder != null) {
-//                mFooterViewHolder.mLoadingHint.setVisibility(View.INVISIBLE);
-//                mFooterViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
-//                mFooterViewHolder.mProgressBar.stopAnimation();
-//                mFooterViewHolder.mRetryHint.setVisibility(View.VISIBLE);
-//                mFooterViewHolder.itemView.setOnClickListener(v -> {
-                    loadWallpaper();
-//                    mFooterViewHolder.itemView.setOnClickListener(null);
-//                });
-//            }
+        @Override
+        public void onLoadFailed() {
+            if (mFooterViewHolder != null) {
+                mFooterViewHolder.mLoadingHint.setVisibility(View.INVISIBLE);
+                mFooterViewHolder.mProgressBar.setVisibility(View.INVISIBLE);
+                mFooterViewHolder.mProgressBar.stopAnimation();
+                mFooterViewHolder.mRetryHint.setVisibility(View.VISIBLE);
+                mFooterViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadWallpaper();
+                    }
+                });
+            }
         }
     };
 
@@ -113,9 +126,9 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
                 View wallpaperImageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.online_wallpaper_image_item, parent, false);
                 wallpaperImageView.setOnClickListener(this);
                 return new ImageViewHolder(wallpaperImageView);
-//            case WALLPAPER_FOOTER_VIEW_LOAD_MORE:
-//                mFooterViewHolder = new FooterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.load_more_auto, parent, false));
-//                return mFooterViewHolder;
+            case WALLPAPER_FOOTER_VIEW_LOAD_MORE:
+                mFooterViewHolder = new FooterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.load_more_auto, parent, false));
+                return mFooterViewHolder;
 //            case WALLPAPER_FOOTER_VIEW_NO_MORE:
 //                View noMoreView = LayoutInflater.from(parent.getContext()).inflate(
 //                        R.layout.gallery_no_more_foot_item, parent, false);
@@ -136,6 +149,27 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
                         .error(R.drawable.wallpaper_load_failed).crossFade(550).format(DecodeFormat.PREFER_RGB_565)
                         .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(
                         ((ImageViewHolder) holder).mImageView);
+//                ImageLoader.getInstance().displayImage(info.getThumbnailUrl(), ((ImageViewHolder) holder).mImageView, defaulltOptions, new ImageLoadingListener() {
+//                    @Override
+//                    public void onLoadingStarted(String imageUri, View view) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                        HSLog.e("eee", imageUri);
+//                    }
+//
+//                    @Override
+//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadingCancelled(String imageUri, View view) {
+//
+//                    }
+//                });
                 holder.itemView.setTag(position);
                 ImageViewHolder imageHolder = (ImageViewHolder) holder;
                 imageHolder.mTvPopularity.setVisibility(View.INVISIBLE);
@@ -158,7 +192,7 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemCount() {
-        return mDataSet.size()+ 1;
+        return mDataSet.size() + 1;
     }
 
     @Override
@@ -209,12 +243,12 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     }
 
     private void loadWallpaper() {
-//        mFooterViewHolder.mProgressBar.startLoadingAnimation();
-//        mFooterViewHolder.mProgressBar.setVisibility(View.VISIBLE);
-//        mFooterViewHolder.mLoadingHint.setVisibility(View.VISIBLE);
-//        mFooterViewHolder.mRetryHint.setVisibility(View.INVISIBLE);
+        mFooterViewHolder.mProgressBar.startLoadingAnimation();
+        mFooterViewHolder.mProgressBar.setVisibility(View.VISIBLE);
+        mFooterViewHolder.mLoadingHint.setVisibility(View.VISIBLE);
+        mFooterViewHolder.mRetryHint.setVisibility(View.INVISIBLE);
         if (Utils.isNetworkAvailable(-1)) {
-                WallpaperDownloadEngine.getNextCategoryWallpaperList(mCategoryIndex, mListener);
+            WallpaperDownloadEngine.getNextCategoryWallpaperList(mCategoryIndex, mListener);
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -222,6 +256,19 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
                     mListener.onLoadFailed();
                 }
             }, 1000);
+        }
+    }
+
+    private static class FooterViewHolder extends RecyclerView.ViewHolder {
+        private LoadingProgressBar mProgressBar;
+        private TextView mLoadingHint;
+        private TextView mRetryHint;
+
+        public FooterViewHolder(View itemView) {
+            super(itemView);
+            mProgressBar = ViewUtils.findViewById(itemView, R.id.progress_bar);
+            mLoadingHint = ViewUtils.findViewById(itemView, R.id.loading_hint);
+            mRetryHint = ViewUtils.findViewById(itemView, R.id.retry_hint);
         }
     }
 
