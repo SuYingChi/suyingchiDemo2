@@ -106,11 +106,13 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
                 null, new AdLoadingView.OnAdBufferingListener() {
                     @Override
-                    public void onDismiss(boolean b) {
-                        int position = fontModelList.indexOf(fontModel);
-                        fontModelList.remove(position);
-                        fontCardAdapter.notifyItemRemoved(position);
-                        fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
+                    public void onDismiss(boolean success) {
+                        if (success) {
+                            int position = fontModelList.indexOf(fontModel);
+                            fontModelList.remove(position);
+                            fontCardAdapter.notifyItemRemoved(position);
+                            fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
+                        }
                     }
                 }, new HSHttpConnection.OnConnectionFinishedListener() {
                     @Override

@@ -71,8 +71,8 @@ public class StickerHomeFragment extends Fragment {
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                         drawable, new AdLoadingView.OnAdBufferingListener() {
                             @Override
-                            public void onDismiss(boolean b) {
-                                if (b) {
+                            public void onDismiss(boolean success) {
+                                if (success) {
                                     int position = stickerModelList.indexOf(stickerModel);
                                     stickerModelList.remove(position);
                                     removeStickerFromView(position);
@@ -114,14 +114,14 @@ public class StickerHomeFragment extends Fragment {
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if(stickerGroup.isStickerGroupDownloaded()) {
+            if (stickerGroup.isStickerGroupDownloaded()) {
                 continue;
             }
             String stickerTag = (String) map.get("tagName");
             String stickerGroupDownloadDisplayName = (String) map.get("showName");
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
             StickerModel stickerModel = new StickerModel(stickerGroup);
-            if(stickerTag != null) {
+            if (stickerTag != null) {
                 stickerModel.setStickTag(stickerTag);
             }
             stickerModelList.add(stickerModel);
