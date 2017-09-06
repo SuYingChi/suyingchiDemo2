@@ -30,7 +30,7 @@ public class OnlineWallpaperListView extends FrameLayout {
     private static final int HOT_3D_WALLPAPER_COUNT = 4;
 
     public ProgressBar progressBar;
-    public LinearLayout retryLayout;
+    private LinearLayout retryLayout;
     public RecyclerView recyclerView;
     public OnlineWallpaperGalleryAdapter adapter;
     public int mCategoryIndex;
@@ -106,7 +106,7 @@ public class OnlineWallpaperListView extends FrameLayout {
                 @Override
                 public void run() {
                     progressBar.setVisibility(View.INVISIBLE);
-                    retryLayout.setVisibility(View.VISIBLE);
+                    retryLayout.setVisibility(View.INVISIBLE);
                 }
             }, 500);
         } else {

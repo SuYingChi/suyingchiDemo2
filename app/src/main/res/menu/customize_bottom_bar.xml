@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/customize_bottom_bar_wallpapers"
-        android:icon="@drawable/customize_wallpaper"
-        android:title="@string/customize_wallpapers_title" />
+    <group android:checkableBehavior="single">
 
-    <item
-        android:id="@+id/customize_bottom_bar_locker"
-        android:icon="@drawable/customize_locker"
-        android:title="@string/customize_locker_title" />
+
+        <item
+            android:id="@+id/customize_bottom_bar_wallpapers"
+            android:icon="@drawable/customize_wallpaper"
+            android:title="@string/customize_wallpapers_title" />
+
+        <item
+            android:id="@+id/customize_bottom_bar_locker"
+            android:icon="@drawable/customize_locker"
+            android:title="@string/customize_locker_title" />
+    </group>
 </menu>

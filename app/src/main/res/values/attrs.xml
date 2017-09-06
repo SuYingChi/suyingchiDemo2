@@ -86,4 +86,13 @@
         <item name="android:windowContentOverlay">@null</item>  <!-- 也是个 drawable，定义 content overlay 的背景 -->
         <item name="android:backgroundDimEnabled">false</item>  <!-- 背景是否模糊显示 -->
     </style>
+
+    <declare-styleable name="LoadingProgressBar">
+        <attr name="prepareCircleRadius" format="dimension" />
+        <attr name="loadingCircleRadius" format="dimension" />
+        <attr name="prepareCircleDistance" format="dimension" />
+        <attr name="loadingCircleDistance" format="dimension" />
+        <attr name="loadingCircleVibrateRange" format="dimension" />
+        <attr name="shouldPrepare" format="boolean" />
+    </declare-styleable>
 </resources>

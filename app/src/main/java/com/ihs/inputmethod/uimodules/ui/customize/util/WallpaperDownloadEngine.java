@@ -5,6 +5,8 @@ import android.net.Uri;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.connection.HSServerAPIConnection;
+import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -56,7 +58,9 @@ public class WallpaperDownloadEngine {
             e.printStackTrace();
         }
         HSLog.d(TAG, url);
-        final HSHttpConnection connection = new HSHttpConnection(url);
+//        final HSHttpConnection connection = new HSHttpConnection(url);
+        final HSServerAPIConnection connection = new HSServerAPIConnection(url, HttpRequest.Method.POST, jsonObject);
+
         connection.setConnectTimeout(30 * 1000);
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @SuppressWarnings("deprecation")

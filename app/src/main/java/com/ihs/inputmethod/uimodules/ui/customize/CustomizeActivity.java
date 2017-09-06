@@ -21,6 +21,7 @@ import com.acb.call.HomeKeyWatcher;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
@@ -157,6 +158,7 @@ public class CustomizeActivity extends BaseCustomizeActivity implements INotific
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
+        HSLog.e("eee", String.valueOf(itemId));
         int index = ITEMS_INDEX_MAP.get(itemId);
         boolean viewIndexUpdated = false;
         if (mViewIndex != index) {

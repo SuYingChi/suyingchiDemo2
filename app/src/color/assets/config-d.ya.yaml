@@ -29,8 +29,11 @@ libCommons:
         AppUrl: "amzn://apps/android?p="
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
   Connection:
-    SigKey: "603_2"
+    SigKey: "1"
     HashKey: "x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!"
+    EncryptionKey: "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}"
+    EncryptionKeyVersion: "1"
+
 libFramework:
   Push:
     SenderID: ""
