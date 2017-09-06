@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -31,10 +32,23 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
             .showImageOnFail(null)
             .imageScaleType(ImageScaleType.EXACTLY)
             .cacheOnDisk(true).build();
+//    private View mFootView;
+//    private static final int TYPE_NORMAl = 0;
+//    private static final int TYPE_FOOTER = 1;
 
     public StickerTabAdapter(List<String> stickerTabNameList, OnTabChangeListener onTabChangeListener) {
         super(stickerTabNameList, onTabChangeListener);
     }
+
+    @Override
+    public TagViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        if (mFootView != null && viewType == TYPE_FOOTER) {
+//            return new TagViewHolder();
+//        }
+        return super.onCreateViewHolder(parent, viewType);
+    }
+
+
 
     @Override
     public void onBindViewHolder(TagViewHolder holder, int position) {
@@ -87,6 +101,7 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
         }
     }
 
+
     @Override
     protected Drawable getTabView(String tab) {
         return getStickerTabDrawable(tab);
@@ -116,4 +131,22 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
             }
         }
     }
+
+//    public void setFootView(View footerView) {
+//        mFootView = footerView;
+//        notifyItemChanged(getItemCount() - 1);
+//    }
+
+//    @Override
+//    public int getItemViewType(int position) {
+//        if (mFootView == null) {
+//            return TYPE_NORMAl;
+//        }
+//
+//        if (position == getItemCount() - 1) {
+//            return TYPE_FOOTER;
+//        }
+//
+//        return TYPE_NORMAl;
+//    }
 }

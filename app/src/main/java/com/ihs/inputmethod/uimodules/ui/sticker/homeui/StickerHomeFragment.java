@@ -14,13 +14,16 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSError;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+//import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanelManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
+import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.StickerManager;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
@@ -76,12 +79,23 @@ public class StickerHomeFragment extends Fragment {
                                     int position = stickerModelList.indexOf(stickerModel);
                                     stickerModelList.remove(position);
                                     removeStickerFromView(position);
+
+//                                    stickerModel.getStickerGroup().reloadStickers();
+//                                    HSGlobalNotificationCenter.sendNotificationOnMainThread(StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION);
+//                                    StickerDataManager.getInstance();
+
+                                    stickerModel.getStickerGroup().reloadStickers();
+                                    HSGlobalNotificationCenter.sendNotificationOnMainThread(StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION);
+
+
+
                                 }
                             }
                         }, new HSHttpConnection.OnConnectionFinishedListener() {
                             @Override
                             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                                HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
+//                                HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
+                                HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName);
                                 StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                             }
 

@@ -103,6 +103,28 @@ public class StickerPanelManager {
         return stickerSortedNameList;
     }
 
+    /**
+     * 获取除了未下载的所有的StickerGroup名字
+     * @return
+     */
+    List<String> getSortedExceptNeedDownloadGroupNameList() {
+        List<String> stickerSortedExceptNeedDownloadNameList = new ArrayList<>();
+        List<String> stickerBuildInNameList = new ArrayList<>();
+        List<String> stickerDownloadedNameList = new ArrayList<>();
+        for (StickerGroup stickerGroup :StickerDataManager.getInstance().getStickerGroupList()) {
+            if (stickerGroup.isInternalStickerGroup()) {
+                stickerBuildInNameList.add(stickerGroup.getStickerGroupName());
+            } else if (stickerGroup.isStickerGroupDownloaded()){
+                stickerDownloadedNameList.add(stickerGroup.getStickerGroupName());
+            }
+        }
+        stickerSortedExceptNeedDownloadNameList.add(STICKER_RECENT);
+        stickerSortedExceptNeedDownloadNameList.addAll(stickerBuildInNameList);
+        stickerSortedExceptNeedDownloadNameList.addAll(stickerDownloadedNameList);
+
+        return stickerSortedExceptNeedDownloadNameList;
+    }
+
     private List<String> getStickerNeedDownloadList() {
         List<String> stickerNeedDownloadList = new ArrayList<>();
         for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {

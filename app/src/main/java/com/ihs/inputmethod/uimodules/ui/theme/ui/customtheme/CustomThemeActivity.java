@@ -86,6 +86,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     public static final String BUNDLE_KEY_BACKGROUND_USE_GALLERY = "BUNDLE_KEY_BACKGROUND_USE_GALLERY";
     public static final String BUNDLE_KEY_CUSTOMIZE_ENTRY = "customize_entry";
 
+
+
     public static final int keyboardActivationFromCustom = 15;
 
     private static final int FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD = 1;
