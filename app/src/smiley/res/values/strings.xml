@@ -6,5 +6,12 @@
 
     <!--&lt;!&ndash; required by device permanent &ndash;&gt;-->
     <string name="sync_account_type">com.smartkeyboard.emoji.sync</string>
+    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
+With accessibility authorization, you'll get the best typing experience on different apps!
+
+Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
+
+    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \n http://rainbowkey.com</string>
+    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n http://rainbowkey.com</string>
 
 </resources>

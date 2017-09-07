@@ -130,7 +130,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             setNotNew(holder, baseElement);
             if (!hasDownloadThemeContent) {
                 final AdLoadingView adLoadingView = new AdLoadingView(fragment.getActivity());
-                adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), "Downloading...", "Applied Successfully", adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+                adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip), HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard), adPlacementName, new AdLoadingView.OnAdBufferingListener() {
 
                     @Override
                     public void onDismiss(boolean success) {

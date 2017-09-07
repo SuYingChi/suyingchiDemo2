@@ -22,6 +22,7 @@ import android.text.style.URLSpan;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -168,6 +169,7 @@ public class KeyboardActivationActivity extends HSActivity {
 
 
         View setupAutoBtn = findViewById(bt_step_one);
+        ((Button)setupAutoBtn).setText(getString(R.string.tv_1_tap_to_set_up_keyboard, getString(R.string.app_name)));
         if (findViewById(R.id.text_one) != null) {
             setupAutoBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
                     getResources().getDimension(R.dimen.guide_bg_radius)));
@@ -309,7 +311,7 @@ public class KeyboardActivationActivity extends HSActivity {
             AlertDialog.Builder alertDialogBuilder;
             alertDialogBuilder = new AlertDialog.Builder(this, R.style.AppCompactDialogStyle);
             alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
-            alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content));//设置显示文本
+            alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content, getString(R.string.app_name)));//设置显示文本
             alertDialogBuilder.setPositiveButton(getString(R.string.alert_enable_access_warn_confirm), new DialogInterface.OnClickListener() {
 
                 @Override

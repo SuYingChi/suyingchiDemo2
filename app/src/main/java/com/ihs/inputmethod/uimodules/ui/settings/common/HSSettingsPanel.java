@@ -94,7 +94,7 @@ public class HSSettingsPanel extends BasePanel {
             @Override
             public void onClick(View v) {
                 HSSpecialCharacterManager.setTempDisableSpecialCharacter();
-                HSInputMethod.inputText(mContext.getResources().getString(R.string.settings_button_tell_a_friend_content));
+                HSInputMethod.inputText(mContext.getResources().getString(R.string.settings_button_tell_a_friend_content, mContext.getResources().getString(R.string.app_name), mContext.getResources().getString(R.string.app_name)));
                 HSSettingsPanel.this.showToast(mContext.getResources().getString(R.string.settings_button_tell_a_friend_tip));
             }
         });

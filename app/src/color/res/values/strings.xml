@@ -61,14 +61,14 @@
 With accessibility authorization, you'll get the best typing experience on different apps!
 
 Note: You may receive a system reminder about authorizing, RainbowKey will NEVER collect ANY of your information."</string>
-    <string name="tv_enable_keyboard_tip">Activate RainbowKey, enjoy MORE themes!</string>
-    <string name="accessibility_service_label">RainbowKey</string>
+    <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
+    <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
-    <string name="tv_1_tap_to_set_up_keyboard">Enable RainbowKey</string>
-    <string name="alter_enable_access_title">Enable RainbowKey</string>
-    <string name="alter_enable_access_content">To set up keyboard, please find and enable RainbowKey.</string>
+    <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
+    <string name="alter_enable_access_title">Enable %1$s</string>
+    <string name="alter_enable_access_content">To set up keyboard, please find and enable %1$s.</string>
     <string name="alter_enable_access_confirm">GOT IT</string>
-    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable RainbowKey manually.</string>
+    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable %1$s manually.</string>
     <string name="alert_enable_access_warn_title">Enable Keyboard Manually</string>
     <string name="access_set_up_success">Set up Successfully!</string>
     <string name="access_set_up_failed">Failed to Set up</string>
@@ -83,4 +83,7 @@ Note: You may receive a system reminder about authorizing, RainbowKey will NEVER
     <string name="deeplink_description">Rainbow Keyboard description</string>
 
     <string name="ad_placement_call_assist">Colorkey_A(NativeAds)Lumen</string>
+
+    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \n http://rainbowkey.com</string>
+    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n http://rainbowkey.com</string>
 </resources>

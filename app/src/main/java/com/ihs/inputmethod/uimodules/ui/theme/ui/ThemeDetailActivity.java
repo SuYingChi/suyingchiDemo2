@@ -130,7 +130,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             } else {
                 screenshotContainer.getLayoutParams().height = (int) (getResources().getDisplayMetrics().widthPixels * 850 * 1.0f / 1080);
                 String themeNameTitle = keyboardTheme.getThemeShowName();
-                getSupportActionBar().setTitle(R.string.theme_detail_common_title_name);
+                getSupportActionBar().setTitle(getString(R.string.theme_detail_common_title_name, getString(R.string.app_name)));
 //                themeNameText.setVisibility(View.VISIBLE);
 //                themeDescText.setVisibility(View.VISIBLE);
 //                themeNameText.setText(themeNameTitle);

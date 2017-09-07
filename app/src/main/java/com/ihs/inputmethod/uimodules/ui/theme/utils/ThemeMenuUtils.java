@@ -70,7 +70,7 @@ public class ThemeMenuUtils {
         final String shareImagePath;
         switch (keyboardTheme.getThemeType()) {
             case CUSTOM:
-                content = HSApplication.getContext().getResources().getString(R.string.theme_share_text_content_for_custom_theme);
+                content = HSApplication.getContext().getResources().getString(R.string.theme_share_text_content_for_custom_theme, HSApplication.getContext().getResources().getString(R.string.app_name));
                 shareImagePath = getCustomShareFile(keyboardTheme);
                 File file = new File(shareImagePath);
                 if (!file.exists() || file.length() == 0){
@@ -94,7 +94,7 @@ public class ThemeMenuUtils {
                 }
                 break;
             default:
-                content = HSApplication.getContext().getResources().getString(R.string.theme_share_text_content);
+                content = HSApplication.getContext().getResources().getString(R.string.theme_share_text_content, HSApplication.getContext().getResources().getString(R.string.app_name));
                 shareImagePath = getDefaultShareFile();
                 ShareUtils.shareImageFilterBlackList(activity, shareActionTitle, title, content, shareImagePath);
                 break;

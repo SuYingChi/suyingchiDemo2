@@ -24,20 +24,20 @@
     <string name="alert_find_keyboard_and_switch_on">Activa %1$s</string>
 
     <!--main-->
-    <string name="alert_attention_messenger">RainbowKey se toma la privacidad de sus usuarios muy en serio. NUNCA almacenaremos datos personales como, por ejemplo, contraseñas o números de tarjetas de crédito.</string>
-    <string name="toast_enable_keyboard">Activa RainbowKey</string>
-    <string name="toast_select_keyboard">Selecciona RainbowKey</string>
+    <string name="alert_attention_messenger">%1$s se toma la privacidad de sus usuarios muy en serio. NUNCA almacenaremos datos personales como, por ejemplo, contraseñas o números de tarjetas de crédito.</string>
+    <string name="toast_enable_keyboard">Activa %1$s</string>
+    <string name="toast_select_keyboard">Selecciona %1$s</string>
     <string name="keyboard_guide_privacy_policy">Al instalar estás aceptando las %1$s\n y %2$s de RainbowKey.</string>
     <string name="text_terms_of_service">Condiciones de uso</string>
     <string name="text_privacy_policy">Política de privacidad</string>
 
     <!--dialog-->
-    <string name="dialog_title_select_keyboard_apply_rain">"Activate RainbowKey"</string>
-    <string name="dialog_msg_select_keyboard_apply_rain">Tienes que activar el teclado RainbowKey para usar este tema.</string>
+    <string name="dialog_title_select_keyboard_apply_rain">"Activate %1$s"</string>
+    <string name="dialog_msg_select_keyboard_apply_rain">Tienes que activar el teclado %1$s para usar este tema.</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">Activate Now</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain">"Activate RainbowKey"</string>
-    <string name="dialog_msg_enable_keyboard_home_rain">RainbowKey te ofrece temas de teclado personalizados y emojis.</string>
+    <string name="dialog_title_enable_keyboard_home_rain">"Activate %1$s"</string>
+    <string name="dialog_msg_enable_keyboard_home_rain">%1$s te ofrece temas de teclado personalizados y emojis.</string>
 
     <!--language-->
     <string name="add">Añadir</string>
@@ -80,7 +80,7 @@
     <string name="settings_button_sound">@string/setting_item_sounds</string>
     <string name="settings_button_tell_a_friend">Cuéntale a un amigo sobre nosotros</string>
     <string name="settings_button_tell_a_friend_tip">Comparte tu mensaje ahora</string>
-    <string name="settings_button_tell_a_friend_content">Tienes que probar el app de teclado RainbowKey. Puedes personalizar tu teclado con tus propias fotos! Además, las fuentes y  los emojis son geniales. Descárgate #RainbowKey gratis: http://rainbowkey.com</string>
+    <string name="settings_button_tell_a_friend_content">Tienes que probar el app de teclado %1$s. Puedes personalizar tu teclado con tus propias fotos! Además, las fuentes y  los emojis son geniales. Descárgate #%2$s gratis: http://rainbowkey.com</string>
     <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
     <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
     <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
@@ -103,19 +103,19 @@
 
     <!--theme panel-->
     <string name="customized_themes">Temas personalizados</string>
-    <string name="default_themes">RainbowKey Temas</string>
+    <string name="default_themes">%1$s Temas</string>
     <string name="custom_theme_create">Crear</string>
     <string name="theme_more">Más</string>
 
     <!--theme home-->
     <string name="theme_store_background_title">Crear mis propios temas</string>
-    <string name="theme_store_theme_title">RainbowKey Temas</string>
+    <string name="theme_store_theme_title">%1$s Temas</string>
     <string name="theme_store_more">MÁS</string>
     <string name="my_theme_customized_theme_title">Temas personalizados</string>
     <string name="my_theme_downloaded_theme_title">Descargado</string>
     <string name="theme_detail_recommend_title">Quizá te guste</string>
     <string name="theme_card_custom_theme_default_name">Mis temas</string>
-    <string name="theme_detail_common_title_name">RainbowKey Temas</string>
+    <string name="theme_detail_common_title_name">%1$s Temas</string>
     <string name="theme_detail_custom_theme_title_name">Teclado personalizado</string>
     <string name="theme_trial_keyboard_edit_text_hint">¡Prueba el nuevo teclado!</string>
 
@@ -125,7 +125,7 @@
     <string name="dialog_app_usage_title">Allow Apps with Usage Access</string>
 
     <!--theme home nav-->
-    <string name="theme_nav_theme_store">Tienda RainbowKey</string>
+    <string name="theme_nav_theme_store">Tienda %1$s</string>
     <string name="theme_nav_my_themes">Mis temas</string>
     <string name="theme_app_locker">App Locker</string>
     <string name="theme_nav_languages">Idiomas</string>
@@ -141,8 +141,8 @@
     <string name="theme_card_menu_apply">Aplicar</string>
     <string name="theme_card_menu_applied">Aplicado</string>
     <string name="theme_card_menu_delete">Emliminar</string>
-    <string name="theme_share_text_content">My personalized keyboard made with #RainbowKey \n http://rainbowkey.com</string>
-    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #RainbowKey For Free:\n http://rainbowkey.com</string>
+    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \n http://rainbowkey.com</string>
+    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n http://rainbowkey.com</string>
 
     <!--custom theme-->
     <string name="custom_theme_background">Fondod</string>
@@ -224,14 +224,14 @@
 With accessibility authorization, you'll get the best typing experience on different apps!
 
 Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
-    <string name="tv_enable_keyboard_tip">Activate Emoji Keyboard, enjoy MORE themes!</string>
-    <string name="accessibility_service_label">Emoji Keyboard</string>
+    <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
+    <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
-    <string name="tv_1_tap_to_set_up_keyboard">Enable Emoji Keyboard</string>
-    <string name="alter_enable_access_title">Enable Emoji Keyboard</string>
-    <string name="alter_enable_access_content">To set up keyboard, please find and enable Emoji Keyboard.</string>
+    <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
+    <string name="alter_enable_access_title">Enable %1$s</string>
+    <string name="alter_enable_access_content">To set up keyboard, please find and enable %1$s.</string>
     <string name="alter_enable_access_confirm">GOT IT</string>
-    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable emoji keyboard manually.</string>
+    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable %1$s manually.</string>
     <string name="alert_enable_access_warn_confirm">SET UP MANUALLY</string>
     <string name="alert_enable_access_warn_title">Enable Keyboard Manually</string>
     <string name="access_set_up_success">Set up Successfully!</string>

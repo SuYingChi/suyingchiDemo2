@@ -44,7 +44,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -190,6 +189,11 @@ public class MainActivity extends HSDeepLinkActivity {
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
+        TextView textOne = (TextView) findViewById(R.id.text_one);
+        TextView textTwo = (TextView) findViewById(R.id.text_two);
+        textOne.setText(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
+        textTwo.setText(getString(R.string.toast_select_keyboard, getString(R.string.app_name)));
+
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         HSApplication.HSLaunchInfo firstLaunchInfo = HSApplication.getFirstLaunchInfo();
@@ -310,7 +314,7 @@ public class MainActivity extends HSDeepLinkActivity {
             public void onClick(View v) {
                 InputMethodManager m = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 m.showInputMethodPicker();
-                Toast toast = Toast.makeText(MainActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(MainActivity.this, getString(R.string.toast_select_keyboard, getString(R.string.app_name)), Toast.LENGTH_LONG);
                 toast.show();
 
                 if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
@@ -459,8 +463,8 @@ public class MainActivity extends HSDeepLinkActivity {
      */
     private void showKeyboardEnableDialog() {
         CustomDesignAlert dialog = new CustomDesignAlert(this);
-        dialog.setTitle(getString(R.string.toast_enable_keyboard));
-        dialog.setMessage(getString(R.string.alert_attention_messenger));
+        dialog.setTitle(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
+        dialog.setMessage(getString(R.string.alert_attention_messenger, getString(R.string.app_name)));
         dialog.setImageResource(R.drawable.enable_keyboard_alert_top_bg);
         dialog.setPositiveButton(getString(R.string.got_it), new View.OnClickListener() {
             @Override
@@ -593,7 +597,7 @@ public class MainActivity extends HSDeepLinkActivity {
             AlertDialog.Builder alertDialogBuilder;
             alertDialogBuilder = new AlertDialog.Builder(MainActivity.this, R.style.AppCompactDialogStyle);
             alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
-            alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content));//设置显示文本
+            alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content, getString(R.string.app_name)));//设置显示文本
             alertDialogBuilder.setPositiveButton(getString(R.string.alert_enable_access_warn_confirm), new DialogInterface.OnClickListener() {
 
                 @Override
