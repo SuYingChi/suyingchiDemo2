@@ -48,18 +48,16 @@ public class CustomizeActivity extends BaseCustomizeActivity implements INotific
     private static final SparseIntArray ITEMS_INDEX_MAP = new SparseIntArray(5);
     private static final SparseArray<String> ITEMS_FLURRY_NAME_MAP = new SparseArray<>(5);
 
-    public static final int TAB_INDEX_THEME = 0;
+    public static final int TAB_INDEX_KEYBOARD = 0;
     public static final int TAB_INDEX_WALLPAPER = 0;
-    public static final int TAB_INDEX_KEYBOARD = 2;
     public static final int TAB_INDEX_LOCKER = 1;
-    public static final int TAB_INDEX_LOCAL = 4;
 
     static {
-//        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_themes, TAB_INDEX_THEME);
+        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_keyboard, TAB_INDEX_KEYBOARD);
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_wallpapers, TAB_INDEX_WALLPAPER);
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_locker, TAB_INDEX_LOCKER);
 
-//        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_themes, "Theme");
+        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_keyboard, "Keyboard");
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_wallpapers, "Wallpaper");
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_locker, "Locker");
     }

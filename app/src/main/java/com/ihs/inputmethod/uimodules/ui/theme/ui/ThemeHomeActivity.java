@@ -4,28 +4,39 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.provider.Browser;
 import android.provider.Settings;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.acb.call.HomeKeyWatcher;
 import com.acb.interstitialads.AcbInterstitialAdLoader;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
@@ -49,11 +60,15 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
+import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.inputmethod.uimodules.ui.customize.BaseCustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
+import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
+import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
@@ -63,6 +78,7 @@ import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
+import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
 
 import static android.view.View.GONE;
@@ -72,13 +88,14 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
 /**
  * Created by jixiang on 16/8/17.
  */
-public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
+public class ThemeHomeActivity extends BaseCustomizeActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener,
+        KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
 
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
-    private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
-    private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
+    public final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
+    public final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
     private static final int keyboardActivationFromHome = 11;
     public static final int keyboardActivationFromHomeWithTrial = 12;
@@ -88,6 +105,34 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
     private static int HANDLER_SHOW_UPDATE_DIALOG = 102;
     private static int HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG = 103;
+
+    // customize
+    private static final SparseIntArray ITEMS_INDEX_MAP = new SparseIntArray(5);
+    private static final SparseArray<String> ITEMS_FLURRY_NAME_MAP = new SparseArray<>(5);
+
+    public static final int TAB_INDEX_KEYBOARD = 0;
+    public static final int TAB_INDEX_WALLPAPER = 1;
+    public static final int TAB_INDEX_LOCKER = 2;
+
+    static {
+        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_keyboard, TAB_INDEX_KEYBOARD);
+        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_wallpapers, TAB_INDEX_WALLPAPER);
+        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_locker, TAB_INDEX_LOCKER);
+
+        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_keyboard, "Keyboard");
+        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_wallpapers, "Wallpaper");
+        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_locker, "Locker");
+    }
+
+    private CustomizeContentView mContent;
+    private BottomNavigationView mBottomBar;
+
+    private LayoutWrapper mLayoutWrapper;
+
+    private int mViewIndex;
+    public int mThemeTabIndex;
+    public int mWallpaperTabIndex;
+    private HomeKeyWatcher mHomeKeyWatcher;
 
     private AppBarLayout appbarLayout;
     private NavigationView navigationView;
@@ -148,12 +193,39 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
     };
 
+    public static void bindScrollListener(Context context, RecyclerView recyclerView, boolean hasBottom) {
+        if (context instanceof CustomizeActivity) {
+            ((CustomizeActivity) context).getLayoutWrapper().attachToRecyclerView(recyclerView, hasBottom);
+        }
+    }
+
+    public LayoutWrapper getLayoutWrapper() {
+        return mLayoutWrapper;
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        super.onServiceConnected(name, service);
+        mContent.onServiceConnected(mService);
+        mBottomBar.setOnNavigationItemSelectedListener(ThemeHomeActivity.this);
+
+        if (mHasPendingTheme) {
+//            setSystemTheme();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_theme_home);
         getWindow().setBackgroundDrawable(null);
+
+        mContent = ViewUtils.findViewById(this, R.id.content_layout);
+        mContent.setChildSelected(0);
+        mBottomBar = ViewUtils.findViewById(this, R.id.bottom_bar);
+        BottomNavigationViewHelper.disableShiftMode(mBottomBar);
+        mLayoutWrapper = new LayoutWrapper(mBottomBar, getResources().getDimensionPixelSize(R.dimen.bottom_bar_default_height), CommonUtils.pxFromDp(3.3f));
 
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -168,7 +240,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             adTriggerView.setVisibility(View.VISIBLE);
             adTriggerView.setOnClickListener(this);
         }
-
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
@@ -306,6 +377,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store), Toast.LENGTH_SHORT).show();
             }
         }
+        if (mLayoutWrapper != null) {
+            mLayoutWrapper.show();
+        }
         MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
         onNavigationItemSelected(item);
     }
@@ -344,6 +418,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         refreshApkUpdateViews();
         HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
+
+        if (mLayoutWrapper != null) {
+            mLayoutWrapper.show();
+        }
 
         // Place here to get a right session id from appframework
         if (isResumeOnCreate) {
@@ -394,10 +472,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 if (myThemeFragment != null) {
                     transaction.hide(myThemeFragment);
                 }
-                if (themeStoreFragment == null) {
+//                if (themeStoreFragment == null) {
                     themeStoreFragment = new ThemeHomeFragment();
                     transaction.add(R.id.content_layout, themeStoreFragment, THEME_STORE_FRAGMENT_TAG);
-                }
+//                }
                 transaction.show(themeStoreFragment).commit();
                 appbarLayout.setExpanded(true);
                 toolbar.setTitle(R.string.theme_nav_theme_store);
@@ -445,7 +523,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         } else if (id == R.id.nav_no_ads) {
             HSGoogleAnalyticsUtils.getInstance().logAppEvent("removeAds_clicked");
             RemoveAdsManager.getInstance().purchaseRemoveAds();
-        } else if ( id == R.id.nav_privacy){
+        } else if (id == R.id.nav_privacy) {
             Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
@@ -457,7 +535,38 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        int index = ITEMS_INDEX_MAP.get(id);
+        boolean viewIndexUpdated = false;
+        if (mViewIndex != index) {
+            mViewIndex = index;
+            viewIndexUpdated = true;
+        }
+        mContent.setChildSelected(index);
+        // reset icon to origins
+        Menu menu = mBottomBar.getMenu();
+        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_wallpapers, R.drawable.customize_wallpaper);
+        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_keyboard, R.drawable.customize_keyboard);
+        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_locker, R.drawable.customize_locker);
+
+        switch (item.getItemId()) {
+            case R.id.customize_bottom_bar_wallpapers:
+                item.setIcon(R.drawable.customize_wallpaper_h);
+                break;
+            case R.id.customize_bottom_bar_keyboard:
+                item.setIcon(R.drawable.customize_keyboard_h);
+                break;
+            case R.id.customize_bottom_bar_locker:
+                item.setIcon(R.drawable.customize_locker_h);
+                break;
+        }
         return true;
+    }
+
+    private void setMenuItemIconDrawable(Menu menu, @IdRes int itemId, @DrawableRes int drawableId) {
+        MenuItem item = menu.findItem(itemId);
+        if (item != null) {
+            item.setIcon(drawableId);
+        }
     }
 
     private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
@@ -751,6 +860,5 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 //
 //        handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
     }
-
 
 }
