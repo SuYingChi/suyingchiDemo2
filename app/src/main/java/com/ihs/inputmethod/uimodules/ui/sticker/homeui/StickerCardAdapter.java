@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,9 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         }
 
         if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_MORE.ordinal()) {
+
+            Log.d("Kong", "ITEM_TYPE.ITEM_TYPE_MORE.ordinal(): " + ITEM_TYPE.ITEM_TYPE_MORE.ordinal());
+
             ((StickerCardHomeViewHolder) holder).moreStickersComing.setVisibility(View.VISIBLE);
             holder.stickerCardView.setVisibility(View.GONE);
             return;
@@ -100,7 +104,8 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
                 onStickerCardClickListener.onCardViewClick(stickerModel, holder.stickerRealImage.getDrawable());
             }
         });
-        holder.stickerNewImage.setVisibility(stickerModel.getStickerTag() == null ? View.GONE : View.VISIBLE);
+
+        holder.stickerNewImage.setVisibility(TextUtils.equals(stickerModel.getStickerTag(), "YES") ? View.VISIBLE : View.GONE);
     }
 
     private boolean isFromHomeType() {

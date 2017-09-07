@@ -121,7 +121,7 @@ public class StickerHomeFragment extends Fragment {
             if(stickerGroup.isStickerGroupDownloaded()) {
                 continue;
             }
-            String stickerTag = (String) map.get("tagName");
+            String stickerTag = (String) map.get("showNewMark");
             String stickerGroupDownloadDisplayName = (String) map.get("showName");
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
             StickerModel stickerModel = new StickerModel(stickerGroup);

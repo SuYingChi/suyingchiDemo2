@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -28,6 +29,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.stickerplus.PlusButton;
 import com.ihs.inputmethod.uimodules.ui.common.BaseTabViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 
@@ -45,6 +47,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
     private RecyclerView stickerMainPagerRecyclerView; // sticker 主要显示部分
     private StickerPageAdapter stickerMainRecyclerViewAdapter; // sticker 主要显示部分 adapter
     private StickerPanelManager stickerPanelManager;
+
+    private PlusButton plusButton;
 
     private ViewPager stickerPanelViewPager;
     private StickerViewPagerAdapter stickerViewPagerAdapter;
@@ -105,8 +109,41 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
 //            View footer = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.common_tab_footer, stickerTabRecyclerView, false);
 //            stickerTabAdapter.setFootView(footer);
+            plusButton = new PlusButton((getContext()));
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.plus_container);
+            relativeLayout.addView(plusButton);
 
-            findViewById(R.id.sticker_home_plus).setOnClickListener(new OnClickListener() {
+
+
+//
+//            findViewById(R.id.sticker_home_plus).setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    final Bundle bundle = new Bundle();
+//                    int plusStickerEntry = ThemeHomeActivity.BUNDLE_KEY_STIKCER_HOME_PAGE;
+//                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_PLUSSTICKER_ENTRY, plusStickerEntry);
+//
+//                    HSInputMethod.hideWindow();
+//                    plusButton.hideNewTip();
+//
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            final Intent intent = new Intent();
+//                            intent.setClass(HSApplication.getContext(), com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.class);
+//
+//                            intent.putExtras(bundle);
+//
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            HSApplication.getContext().startActivity(intent);
+//                        }
+//                    }, 0);
+//
+//
+//                }
+//            });
+
+            findViewById(R.id.plus_container).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final Bundle bundle = new Bundle();
@@ -114,6 +151,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                     bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_PLUSSTICKER_ENTRY, plusStickerEntry);
 
                     HSInputMethod.hideWindow();
+                    plusButton.hideNewTip();
+                    plusButton.saveShowNewTip();// 已点击过，此后不再展示，除非服务端去增加new sticker数目
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -127,8 +166,6 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                             HSApplication.getContext().startActivity(intent);
                         }
                     }, 0);
-
-
                 }
             });
         }

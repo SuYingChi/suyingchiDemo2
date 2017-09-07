@@ -19,24 +19,37 @@
             android:layout_marginRight="3dp"
             android:layout_weight="1" />
 
-        <FrameLayout
+        <!--<FrameLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="@dimen/config_suggestions_strip_height"-->
+            <!--android:layout_gravity="center"-->
+            <!--&gt;-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/sticker_home_plus"-->
+                <!--android:layout_marginLeft="3dp"-->
+                <!--android:layout_marginRight="3dp"-->
+                <!--android:clickable="true"-->
+                <!--android:layout_width="22dp"-->
+                <!--android:layout_height="22dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/common_tab_plus" />-->
+        <!--</FrameLayout>-->
+
+        <RelativeLayout
+            android:id="@+id/plus_container"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/config_suggestions_strip_height"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+
+
             >
 
-            <ImageView
-                android:id="@+id/sticker_home_plus"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:clickable="true"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_gravity="center"
-                android:scaleType="fitCenter"
-                android:src="@drawable/common_tab_plus" />
 
 
-        </FrameLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>
