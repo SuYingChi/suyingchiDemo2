@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,7 +45,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -56,6 +56,7 @@ import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
+import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -112,7 +113,6 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView img_choose_one;
     private ImageView img_choose_two;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
-    private boolean isLaunchAnimationPlayed;
     private boolean isSettingButtonAnimationPlayed;
 
     private static final int TYPE_MANUAL = 0;
@@ -188,6 +188,10 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onCreate(savedInstanceState);
         HSLog.d("MainActivity onCreate.");
         setContentView(R.layout.activity_main);
+        FrameLayout videoviewFrame = (FrameLayout) findViewById(R.id.launch_mp4_view);
+        launchVideoView = HSUIApplication.getLaunchVideoView();
+        videoviewFrame.addView(launchVideoView);
+
         onNewIntent(getIntent());
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -207,9 +211,7 @@ public class MainActivity extends HSDeepLinkActivity {
         final int screenHeight = size.y;
 
         launchImageView = (ImageView) findViewById(R.id.launch_image_view);
-        launchVideoView = (VideoView) findViewById(R.id.launch_mp4_view);
-        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
-        launchVideoView.setVideoURI(uri);
+
         launchVideoView.setZOrderOnTop(true);
         launchVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
@@ -388,7 +390,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private boolean isAccessibilityEnable() {
-        Log.e("access","accessi read");
+        Log.e("access", "accessi read");
         boolean isAccessibilityEnabledInConfig = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
         boolean isHSAccessibilityServiceAvailable = HSAccessibilityService.isAvailable();
         boolean isSDKSatisfied = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
@@ -529,10 +531,7 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onResume() {
         super.onResume();
         HSLog.d("MainActivity onResume.");
-        if (!isLaunchAnimationPlayed) {
-            isLaunchAnimationPlayed = true;
-            launchImageView.setVisibility(GONE);
-            launchVideoView.setVisibility(View.VISIBLE);
+        if(!isSettingButtonAnimationPlayed){
             launchVideoView.start();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -548,10 +547,12 @@ public class MainActivity extends HSDeepLinkActivity {
                     }
                 }
             }, 6000);
-        } else {
+        }else{
             launchImageView.setVisibility(View.VISIBLE);
             launchVideoView.setVisibility(GONE);
         }
+        HSLog.e("MainActivity mp4 fake start");
+
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                 getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
@@ -621,9 +622,6 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onStop() {
         super.onStop();
         HSLog.d("MainActivity onStop.");
-        launchVideoView.stopPlayback();
-        launchImageView.setVisibility(View.VISIBLE);
-        launchVideoView.setVisibility(GONE);
     }
 
     @Override
@@ -631,6 +629,11 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onDestroy();
         HSLog.d("MainActivity onDestroy.");
         needActiveThemePkName = null;
+
+
+        FrameLayout videoviewFrame = (FrameLayout) findViewById(R.id.launch_mp4_view);
+        videoviewFrame.removeAllViews();
+
         try {
             if (settingsContentObserver != null) {
                 getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);

@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.VideoView;
 
 import com.acb.call.AcbCallManager;
 import com.acb.expressads.AcbExpressAdManager;
@@ -26,6 +28,7 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.analytics.publisher.HSPublisherMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
@@ -43,6 +46,7 @@ import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
 import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
+import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
@@ -86,8 +90,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                 onSessionStart();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
-                Log.e("access","config changed");
-            } else if(RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(notificationName)){
+                Log.e("access", "config changed");
+            } else if (RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(notificationName)) {
                 AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(AcbCallManager.getAdPlacement());
                 AcbCallManager.setAdPlacement("");
             }
@@ -98,7 +102,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(intent.getAction())) {
-                Log.e("access","appsflyer");
+                Log.e("access", "appsflyer");
                 Intent configChangedIntent = new Intent(HSNotificationConstant.HS_CONFIG_CHANGED);
                 configChangedIntent.setPackage(HSApplication.getContext().getPackageName());
                 HSUIApplication.this.sendBroadcast(configChangedIntent, HSNotificationConstant.getSecurityPermission(HSApplication.getContext()));
@@ -172,7 +176,18 @@ public class HSUIApplication extends HSInputMethodApplication {
         });
     }
 
+    private static GivenSizeVideoView launchPreview;
+
+    public static VideoView getLaunchVideoView(){
+        return launchPreview;
+    }
+
+
     protected void onMainProcessApplicationCreate() {
+        launchPreview = new GivenSizeVideoView(this);
+        launchPreview.setViewSize((int) (DisplayUtils.getScreenWidthPixels() * 0.5), (int) (DisplayUtils.getScreenWidthPixels() * 0.5 / 0.856));
+        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
+        launchPreview.setVideoURI(uri);
 
         HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
             @Override
@@ -221,7 +236,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         if (!HSLog.isDebugging()) {
             Fabric.with(this, new Crashlytics());//0,5s
-        }else {
+        } else {
             BoostPlusActivity.initBoost();
             CpuCoolerScanActivity.initBoost();
             BatteryActivity.initBattery();
@@ -269,7 +284,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         ScreenLockerManager.init();
         initIAP();
 
-        if(Build.VERSION.SDK_INT >= 16){
+        if (Build.VERSION.SDK_INT >= 16) {
             NotificationManager.getInstance();
             if (NotificationCondition.isNotificationEnabled() && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
@@ -280,7 +295,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
 
         String callAdPlacement = "";
-        if(!RemoveAdsManager.getInstance().isRemoveAdsPurchased()){
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
         }
         AcbCallManager.initWithDefaultFactory(callAdPlacement, new AcbCallManager.OnFeatureRestrictCallBack() {
@@ -325,7 +340,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 }
                 return false;
             }
-        },false);
+        }, false);
     }
 
     /**
