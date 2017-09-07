@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.customize.view.WallpaperPackageCoverView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/avatar_bg"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="92dp" />
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="95dp"/>
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/avatar_bg"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="#747474"
+        android:textSize="14sp"
+        tool:text="Mira Morgen"/>
+
+    <LinearLayout
+        android:id="@+id/profile_address_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/profile_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="#575757"
+            android:textSize="13sp"
+            tool:text="New York"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/left_quote"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_below="@id/profile_address_container"
+        android:layout_marginLeft="33dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/quotation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/left_quote"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:lineSpacingExtra="6dp"
+        android:textColor="#efefef"
+        android:textSize="24sp"
+        tool:text="Hi,I'm David.\nI found 20 awesome\n images wants to show you!\nEnjoy it!"/>
+
+    <ImageView
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/quotation"
+        android:layout_marginEnd="33dp"
+        android:layout_marginRight="33dp"
+        android:layout_marginTop="8dp" />
+
+    <ImageView
+        android:id="@+id/package_guide"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:alpha="0"
+        android:paddingBottom="40dp" />
+</com.ihs.inputmethod.uimodules.ui.customize.view.WallpaperPackageCoverView>

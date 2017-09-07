@@ -21,6 +21,7 @@ import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
+import com.ihs.inputmethod.uimodules.ui.customize.view.ImagePressedTouchListener;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LockerThemeInfo;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
@@ -99,11 +100,14 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
             case ITEM_TYPE_THEME_VIEW:
                 grid = mInflater.inflate(R.layout.locker_theme_gallery_item, parent, false);
                 ThemeViewHolder themeHolder = new ThemeViewHolder(grid);
+                ImagePressedTouchListener touchListener = new ImagePressedTouchListener(themeHolder.themeThumbnail);
+                themeHolder.itemView.setOnTouchListener(touchListener);
                 themeHolder.itemView.setOnClickListener(this);
                 return themeHolder;
         }
         return null;
     }
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -118,7 +122,7 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
 
         Glide.with((themeHolder.itemView.getContext())).load(theme.thumbnailUrl).asBitmap().fitCenter()
                 .placeholder(R.drawable.locker_theme_thumbnail_loading).error(R.drawable.locker_theme_thumbnail_failed)
-                .crossFade(550).format(DecodeFormat.PREFER_RGB_565).diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .format(DecodeFormat.PREFER_RGB_565).diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(themeHolder.themeThumbnail);
     }
 

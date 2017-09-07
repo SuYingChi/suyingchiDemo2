@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.uimodules.ui.customize.view.PreviewViewPage
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wallpaper_preview_background">
+
+    <ImageView
+        android:id="@+id/large_wallpaper_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="matrix"
+        tools:ignore="ContentDescription"/>
+
+    <FrameLayout
+        android:id="@+id/wallpaper_preview_loading_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/wallpaper_preview_progress_bar"
+            android:indeterminateOnly="true"
+            android:padding="10dp"
+            android:background="@drawable/wallpaper_preview_progress_bar_bg"
+            android:keepScreenOn="true"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/retry_downloading_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitCenter"
+            android:src="@drawable/wallpaper_preview_network_error"
+            tools:ignore="ContentDescription"/>
+
+        <com.ihs.feature.common.TypefacedTextView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/network_error"
+            android:textColor="#80ffffff"
+            android:textSize="16sp"
+            app:typeface="@string/proxima_nova_semibold"/>
+
+        <com.ihs.feature.common.TypefacedTextView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/retry_downloading_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="45dp"
+            android:gravity="center_horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="26dp"
+            android:paddingRight="26dp"
+            android:paddingTop="8dp"
+            android:text="@string/wallpaper_network_error_reload"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="17sp"
+            app:typeface="@string/proxima_nova_semibold"
+            tools:ignore="HardcodedText"/>
+    </LinearLayout>
+</com.ihs.inputmethod.uimodules.ui.customize.view.PreviewViewPage>

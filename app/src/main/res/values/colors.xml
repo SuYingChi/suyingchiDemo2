@@ -124,4 +124,17 @@
 
     <color name="main_activity_bg">#eef0f7</color>
     <color name="privacy_stress_text">#53c0fe</color>
+
+    <!-- Wallpaper -->
+    <color name="wallpaper_activities_control_highlight">#dadada</color>
+    <color name="wallpaper_progressbar_bg">#bdbdbd</color>
+    <color name="wallpaper_progressbar_progress">#bdbdbd</color>
+    <color name="wallpaper_category_text_normal_bg">#ebebeb</color>
+    <color name="wallpaper_local_bg">#ffffff</color>
+    <color name="wallpaper_local_add_btn_text">#666666</color>
+    <color name="wallpaper_preview_background">#F2000000</color>
+    <color name="customize_tab_highlight">#fff9224f</color>
+    <color name="customize_tab_normal">#ff333333</color>
+    <color name="upload_wallpaper_container_normal">#ffeeeeee</color>
+    <color name="upload_wallpaper_container_pressed">#ffdedede</color>
 </resources>

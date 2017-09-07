@@ -30,6 +30,8 @@
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <!-- 新增权限 -->
     <application>
         <activity
@@ -43,6 +45,13 @@
         <activity android:name=".ui.customize.CustomizeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.customize.WallpaperPreviewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name=".ui.theme.ui.ThemeDownloadActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

@@ -20,4 +20,5 @@
 
     <string name="multi_function_alert_title">Screen Locker / Caller Screen</string>
     <string name="multi_function_alert_message">Add stunning themes on lockscreen and incoming call screens. May contain sponsored contents.</string>
+    <string name="online_wallpaper_loading">Loading HD wallpaper, please wait.</string>
 </resources>

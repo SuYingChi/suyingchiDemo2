@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.customize.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,12 +15,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.CompatUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.customize.WallPaperConstant;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
+import com.ihs.inputmethod.uimodules.ui.customize.WallpaperPreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LoadingProgressBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -60,7 +64,7 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
         @Override
         public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList) {
-            int lastSize = mDataSet.size();
+//            int lastSize = mDataSet.size();
             mDataSet.addAll(wallpaperInfoList);
             notifyDataSetChanged();
 //            notifyItemRangeInserted(lastSize, wallpaperInfoList.size());
@@ -147,29 +151,7 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
                 WallpaperInfo info = (WallpaperInfo) mDataSet.get(position);
                 Glide.with(holder.itemView.getContext()).load(info.getThumbnailUrl()).asBitmap().placeholder(R.drawable.wallpaper_loading)
                         .error(R.drawable.wallpaper_load_failed).crossFade(550).format(DecodeFormat.PREFER_RGB_565)
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(
-                        ((ImageViewHolder) holder).mImageView);
-//                ImageLoader.getInstance().displayImage(info.getThumbnailUrl(), ((ImageViewHolder) holder).mImageView, defaulltOptions, new ImageLoadingListener() {
-//                    @Override
-//                    public void onLoadingStarted(String imageUri, View view) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                        HSLog.e("eee", imageUri);
-//                    }
-//
-//                    @Override
-//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onLoadingCancelled(String imageUri, View view) {
-//
-//                    }
-//                });
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(((ImageViewHolder) holder).mImageView);
                 holder.itemView.setTag(position);
                 ImageViewHolder imageHolder = (ImageViewHolder) holder;
                 imageHolder.mTvPopularity.setVisibility(View.INVISIBLE);
@@ -216,22 +198,24 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
                     wallpapersToPreview.add((WallpaperInfo) item);
                 } else if (wallpapersToPreview.size() < positionInAllWallpapers) {
                     positionInPreviewWallpapers--;
-                }
+               }
             }
         }
-//        WallpaperInfo clickedWallpaper = allWallpapers.get(positionInAllWallpapers);
-//        Intent intent = new Intent(mContext, WallpaperPreviewActivity.class);
+        WallpaperInfo clickedWallpaper = allWallpapers.get(positionInAllWallpapers);
+        Intent intent = new Intent(mContext, WallpaperPreviewActivity.class);
 //        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_SCENARIO, mScenario.ordinal());
 //        intent.putParcelableArrayListExtra(WallpaperPreviewActivity.INTENT_KEY_WALLPAPERS, wallpapersToPreview);
-//        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_INDEX, positionInPreviewWallpapers);
-//        try {
-//            mContext.startActivity(intent);
-//        } catch (Exception e) {
-//            // TODO: consider sending wallpaper data through file to avoid TransactionTooLargeException
-//            HSLog.e("OnlineWallpaperGalleryAdapter", "Error launching WallpaperPreviewActivity, "
-//                    + "perhaps wallpaper data is too large to transact through binder.");
+        WallPaperConstant.wallpaperInfoList.addAll(wallpapersToPreview);
+        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_INDEX, positionInPreviewWallpapers);
+        try {
+            mContext.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: consider sending wallpaper data through file to avoid TransactionTooLargeException
+            HSLog.e("OnlineWallpaperGalleryAdapter", "Error launching WallpaperPreviewActivity, "
+                    + "perhaps wallpaper data is too large to transact through binder." + mDataSet.size());
 //            CrashlyticsCore.getInstance().logException(e);
-//        }
+        }
     }
 
     private boolean isDeviceAlwaysReturnCancel() {
