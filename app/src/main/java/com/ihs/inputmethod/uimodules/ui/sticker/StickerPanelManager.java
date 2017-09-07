@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.util.Log;
 import android.util.Pair;
 
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
@@ -40,6 +41,8 @@ public class StickerPanelManager {
     }
 
     void loadData() {
+        Log.e("kong", "loadData: ");
+
         loadRecent();
         while (recentStickerPanelItems.size() > maxRecentCount) {
             recentStickerPanelItems.removeLastStickerPanelItem();
@@ -48,7 +51,15 @@ public class StickerPanelManager {
         stickerPanelItemGroups.add(recentStickerPanelItems);
         for (StickerGroup stickerGroup : getSortedStickerGroup()) {
             StickerPanelItemGroup stickerPanelItemGroup = new StickerPanelItemGroup(stickerGroup.getStickerGroupName());
+
+            Log.e("kong", "stickerPanelItemGroup: " + stickerPanelItemGroup.getStickerPanelItemGroupName());
+
+//            stickerGroup.reloadStickers();
+
             for (Sticker sticker : stickerGroup.getStickerList()) {
+
+                Log.e("kong", "sticker: " + sticker.getStickerUri());
+
                 stickerPanelItemGroup.addStickerPanelItem(new StickerPanelItem(sticker));
             }
             stickerPanelItemGroups.add(stickerPanelItemGroup);
@@ -60,16 +71,31 @@ public class StickerPanelManager {
     }
 
     private List<StickerGroup> getSortedStickerGroup() {
+        Log.e("kong", "                    getSortedStickerGroup()!!!!!!");
         List<StickerGroup> stickerSortedGroupList = new ArrayList<>();
         List<StickerGroup> stickerBuildInList = new ArrayList<>();
         List<StickerGroup> stickerDownloadedList = new ArrayList<>();
         List<StickerGroup> stickerNeedDownloadList = new ArrayList<>();
         for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
             if (stickerGroup.isInternalStickerGroup()) {
+                Log.e("kong", "getSortedStickerGroup: "+ "stickerGroup.isInternalStickerGroup()  "+ stickerGroup.getDownloadDisplayName());
+
                 stickerBuildInList.add(stickerGroup);
+
             } else if (stickerGroup.isStickerGroupDownloaded()) {
+                Log.e("kong", "getSortedStickerGroup: " + "  stickerGroup.isStickerGroupDownloaded() --- reloadStickers()前 " + stickerGroup.getDownloadDisplayName());
+
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
+
+                Log.e("kong", "getSortedStickerGroup: " + "  stickerGroup.isStickerGroupDownloaded() --- reloadStickers()后 " + stickerGroup.getDownloadDisplayName());
+
                 stickerDownloadedList.add(stickerGroup);
+
             } else {
+                Log.e("kong", "getSortedStickerGroup: " + "  stickerGroup.neeedownloaded()  " + stickerGroup.getDownloadDisplayName());
+
                 stickerNeedDownloadList.add(stickerGroup);
             }
         }
@@ -116,6 +142,9 @@ public class StickerPanelManager {
                 stickerBuildInNameList.add(stickerGroup.getStickerGroupName());
             } else if (stickerGroup.isStickerGroupDownloaded()){
                 stickerDownloadedNameList.add(stickerGroup.getStickerGroupName());
+
+                Log.e("kong", "getSortedExceptNeedDownloadGroupNameList: "+ stickerGroup.getStickerGroupName());
+
             }
         }
         stickerSortedExceptNeedDownloadNameList.add(STICKER_RECENT);

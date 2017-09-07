@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.os.AsyncTask;
 import android.support.v7.widget.util.SortedListAdapterCallback;
+import android.util.Log;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -88,7 +89,11 @@ public class StickerDataManager {
         if (!isReady) {
             return;
         }
+
+        Log.e("Kong", "updateStickerGroupList:"+ "   stickerGroup     "+ stickerGroup.getDownloadDisplayName());
+
         stickerGroup.reloadStickers();
+
         HSGlobalNotificationCenter.sendNotificationOnMainThread(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION);
     }
 

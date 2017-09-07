@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -77,10 +78,14 @@ public class StickerGroup {
                             .append("/").append(stickerGroupName).append("/").append(imageName);
                     stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.Assets);
                 } else if (isStickerGroupDownloaded()) {
+                    Log.e("kong", "isStickerGroupDownloaded(): " + "stickergroup     " + getDownloadDisplayName());
                     StringBuilder stickerImageFilePath = new StringBuilder(getStickerFolderPath(stickerGroupName))
                             .append("/").append(imageName);
                     stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.File);
                 }
+
+                Log.e("kong", "      addSticker");
+
                 addSticker(new Sticker(stickerImageUri));
             }
         }
@@ -132,11 +137,16 @@ public class StickerGroup {
     public List<Sticker> getStickerList() {
         if (stickerList == null) {
             stickerList = new ArrayList<>();
+
         }
+
+        Log.e("kong", "getStickerList: " + "stickerlist == null ? " + stickerList.isEmpty());
+
         return stickerList;
     }
 
     public void addSticker(final Sticker sticker) {
+        Log.e("kong", "sticker: " + sticker.getStickerUri());
         stickerList.add(sticker);
     }
 

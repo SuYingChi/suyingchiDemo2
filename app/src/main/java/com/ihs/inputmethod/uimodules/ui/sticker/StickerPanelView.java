@@ -66,6 +66,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerExceptNeedDownloadNameList.addAll(stickerPanelManager.getSortedExceptNeedDownloadGroupNameList());
             stickerTabAdapter.setTabNameList(stickerExceptNeedDownloadNameList);
         }
+
+
         stickerPanelManager.loadData();
     }
 

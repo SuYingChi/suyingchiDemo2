@@ -79,16 +79,6 @@ public class StickerHomeFragment extends Fragment {
                                     int position = stickerModelList.indexOf(stickerModel);
                                     stickerModelList.remove(position);
                                     removeStickerFromView(position);
-
-//                                    stickerModel.getStickerGroup().reloadStickers();
-//                                    HSGlobalNotificationCenter.sendNotificationOnMainThread(StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION);
-//                                    StickerDataManager.getInstance();
-
-                                    stickerModel.getStickerGroup().reloadStickers();
-                                    HSGlobalNotificationCenter.sendNotificationOnMainThread(StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION);
-
-
-
                                 }
                             }
                         }, new HSHttpConnection.OnConnectionFinishedListener() {
