@@ -93,7 +93,6 @@
     <string name="settings_button_sound">@string/setting_item_sounds</string>
     <string name="settings_button_tell_a_friend">Tell a friend</string>
     <string name="settings_button_tell_a_friend_tip">Share your message now</string>
-    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app %1$s keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #%2$s For Free: http://rainbowkey.com</string>
     <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
     <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
     <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
