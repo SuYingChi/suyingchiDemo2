@@ -450,6 +450,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                                 String from = "unknown";
                                 if (activationCode == CustomThemeActivity.keyboardActivationFromCustom) {
                                     from = "app_save_customize_theme";
+                                } else if (activationCode == keyboardActivationFromHomeWithTrial) {
+                                    from = "theme_package_apply_button";
                                 }
                                 LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
                                         getString(R.string.locker_enable_title_has_text),
