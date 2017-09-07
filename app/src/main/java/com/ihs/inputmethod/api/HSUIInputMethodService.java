@@ -62,6 +62,18 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 if (reason != null && reason.equals("homekey")) {
                     getKeyboardPanelMananger().onHomePressed();
                 }
+            } else if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
+                if (intent.hasExtra("state")) {
+                    int state = intent.getIntExtra("state", -1);
+                    switch (state) {
+                        case 0: //unPlugged
+                            break;
+                        case 1: // plug In
+                            HSAnalytics.logEvent("headphone_pluggedin");
+                            break;
+                        default:
+                    }
+                }
             }
         }
     };
@@ -95,7 +107,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     public void onCreate() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
         super.onCreate();
-        registerReceiver(this.receiver, new IntentFilter(ACTION_CLOSE_SYSTEM_DIALOGS));
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
+        intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        registerReceiver(this.receiver, intentFilter);
 
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE, keyboardNotificationObserver);
