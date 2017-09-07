@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
@@ -44,7 +43,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         private SparseArray<View> mViewMap = new SparseArray<>(3);
 
         private int[] CONTENT_VIEW_IDS = new int[]{
-//                R.layout.online_theme_page,
+                R.layout.fragment_theme_home,
                 R.layout.online_wallpaper_page,
                 R.layout.locker_themes_page,
         };
@@ -60,7 +59,6 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         }
 
         View getView(int position) {
-            HSLog.e("eee", ""+position);
             int layoutId = CONTENT_VIEW_IDS[position];
             View child = mViewMap.get(layoutId);
             if (child == null) {
@@ -75,14 +73,20 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         }
 
         private void setupWithInitialTabIndex(@LayoutRes int layoutId, View child) {
-            if (layoutId == R.layout.online_wallpaper_page) {
-                ((OnlineWallpaperPage) child).setup(0);
+            switch (layoutId) {
+                case R.layout.fragment_theme_home:
+                    break;
+                case R.layout.online_wallpaper_page:
+                    ((OnlineWallpaperPage) child).setup(0);
+                case R.layout.locker_themes_page:
+                    break;
+                default:
+
             }
         }
 
         @Override
         public void onServiceConnected(ICustomizeService service) {
-            HSLog.e("eee", "ServiceConn" + mViewMap.size());
             for (int i = 0, size = mViewMap.size(); i < size; i++) {
                 View child = mViewMap.valueAt(i);
                 if (child instanceof ServiceListener) {

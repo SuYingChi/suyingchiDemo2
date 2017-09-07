@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
 
+        <item
+            android:id="@+id/customize_bottom_bar_keyboard"
+            android:icon="@drawable/customize_keyboard"
+            android:title="@string/customize_keyboard_title" />
 
         <item
             android:id="@+id/customize_bottom_bar_wallpapers"
