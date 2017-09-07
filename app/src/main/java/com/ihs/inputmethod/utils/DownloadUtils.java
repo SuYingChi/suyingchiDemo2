@@ -77,6 +77,18 @@ public class DownloadUtils {
                 }
             }
         });
+        connection.setHeaderReceivedListener(new HSHttpConnection.OnHeaderReceivedListener() {
+            @Override
+            public void onHeaderReceived(HSHttpConnection hsHttpConnection) {
+                new Handler().post(new Runnable() {
+                    int initialProgress = 1;
+                    @Override
+                    public void run() {
+                        adLoadingView.updateProgressPercent(initialProgress);
+                    }
+                });
+            }
+        });
         connection.setDataReceivedListener(new HSHttpConnection.OnDataReceivedListener() {
             @Override
             public void onDataReceived(HSHttpConnection hsHttpConnection, byte[] bytes, long received, long totalSize) {
