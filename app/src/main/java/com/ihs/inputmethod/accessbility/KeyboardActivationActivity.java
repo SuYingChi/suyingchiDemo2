@@ -311,7 +311,7 @@ public class KeyboardActivationActivity extends HSActivity {
             AlertDialog.Builder alertDialogBuilder;
             alertDialogBuilder = new AlertDialog.Builder(this, R.style.AppCompactDialogStyle);
             alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
-            alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content));//设置显示文本
+            alertDialogBuilder.setMessage(getString(R.string.alert_enable_access_warn_content, getString(R.string.app_name)));//设置显示文本
             alertDialogBuilder.setPositiveButton(getString(R.string.alert_enable_access_warn_confirm), new DialogInterface.OnClickListener() {
 
                 @Override

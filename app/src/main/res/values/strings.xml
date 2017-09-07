@@ -252,7 +252,6 @@
     <string name="multi_function_alert_message">Add stunning themes on lockscreen and incoming call screens. May contain sponsored contents.</string>
 
     <!--Accessibility-->
-    <string name="accessibility_service" translatable="false">Emoji Keyboard</string>
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
     <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
@@ -260,7 +259,7 @@
     <string name="alter_enable_access_title">Enable %1$s</string>
     <string name="alter_enable_access_content">To set up keyboard, please find and enable %1$s.</string>
     <string name="alter_enable_access_confirm">GOT IT</string>
-    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable emoji keyboard manually.</string>
+    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable %1$s manually.</string>
     <string name="alert_enable_access_warn_confirm">SET UP MANUALLY</string>
     <string name="alert_enable_access_warn_title">Enable Keyboard Manually</string>
     <string name="access_set_up_success">Set up Successfully!</string>
