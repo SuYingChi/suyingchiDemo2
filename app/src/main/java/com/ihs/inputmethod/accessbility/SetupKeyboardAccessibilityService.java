@@ -34,7 +34,6 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 import static android.content.Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
-import static com.ihs.inputmethod.accessbility.KeyboardActivationActivity.scaleTitleImage;
 
 
 /**
@@ -103,7 +102,7 @@ public class SetupKeyboardAccessibilityService {
         }
 
 
-        if(HSInputMethodListManager.isMyInputMethodEnabled() && !HSInputMethodListManager.isMyInputMethodSelected() && !inputMethodEnabled){
+        if (HSInputMethodListManager.isMyInputMethodEnabled() && !HSInputMethodListManager.isMyInputMethodSelected() && !inputMethodEnabled) {
             inputMethodEnabled = true;
             imeSettingState = IME_STATE_ENABLED;
             InputMethodManager m = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -125,11 +124,7 @@ public class SetupKeyboardAccessibilityService {
             String className = event.getClassName().toString().toLowerCase();
             //如果是对话框弹出 并且 内容包含键盘名字，则点击ok
             if (className.contains("dialog")) {
-                List<AccessibilityNodeInfo> nodeInfoList = rootWindow.findAccessibilityNodeInfosByText(context.getString(R.string.english_ime_name));
-                if (nodeInfoList.size() > 0) {
-                    findAndPerformActionButton(context.getString(android.R.string.ok));
-                }
-
+                findAndPerformActionButton(context.getString(android.R.string.ok));
             } else {
 
                 List<AccessibilityNodeInfo> nodeInfos = rootWindow.findAccessibilityNodeInfosByText(keyboardName);
