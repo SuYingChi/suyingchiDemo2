@@ -43,7 +43,7 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
     private Context mContext;
     private LayoutInflater mInflater;
     private List<LockerThemeInfo> mThemes = new ArrayList<>();
-    private boolean mLockerInstalled;
+    private boolean mLockerInstalled = false;
 
     public LockerThemeGalleryAdapter(Context context) {
         mContext = context;
@@ -82,30 +82,18 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
 
     @Override
     public int getItemViewType(int position) {
-        if (mLockerInstalled) {
-            return ITEM_TYPE_THEME_VIEW;
-        }
         return ITEM_TYPE_THEME_VIEW;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case ITEM_TYPE_BANNER:
-                View grid = mInflater.inflate(R.layout.locker_theme_gallery_banner, parent, false);
-                BannerViewHolder bannerHolder = new BannerViewHolder(grid);
-                bannerHolder.itemView.setOnClickListener(this);
-                bannerHolder.installButton.setOnClickListener(this);
-                return bannerHolder;
-            case ITEM_TYPE_THEME_VIEW:
-                grid = mInflater.inflate(R.layout.locker_theme_gallery_item, parent, false);
-                ThemeViewHolder themeHolder = new ThemeViewHolder(grid);
-                ImagePressedTouchListener touchListener = new ImagePressedTouchListener(themeHolder.themeThumbnail);
-                themeHolder.itemView.setOnTouchListener(touchListener);
-                themeHolder.itemView.setOnClickListener(this);
-                return themeHolder;
-        }
-        return null;
+        View grid = mInflater.inflate(R.layout.locker_theme_gallery_item, parent, false);
+        ThemeViewHolder themeHolder = new ThemeViewHolder(grid);
+        ImagePressedTouchListener touchListener = new ImagePressedTouchListener(themeHolder.themeThumbnail);
+        themeHolder.itemView.setOnTouchListener(touchListener);
+        themeHolder.itemView.setOnClickListener(this);
+        return themeHolder;
+
     }
 
 
