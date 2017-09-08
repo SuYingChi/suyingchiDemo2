@@ -149,6 +149,7 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
                             });
                             if (success) {
                                 mDialog.dismiss();
+                                finish();
                             } else {
                                 mDialog.dismiss();
                                 ToastUtils.showToast(R.string.wallpaper_toast_set_failed);

@@ -12,10 +12,10 @@ import android.widget.ProgressBar;
 import com.ihs.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.adapter.OnlineWallpaperGalleryAdapter;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 
 import java.util.List;
 
@@ -91,7 +91,7 @@ public class OnlineWallpaperListView extends FrameLayout {
         GridItemDecoration decoration = new GridItemDecoration(CommonUtils.pxFromDp(2));
         decoration.setAdapter(adapter);
         recyclerView.addItemDecoration(decoration);
-        CustomizeActivity.bindScrollListener(getContext(), recyclerView, false);
+        ThemeHomeActivity.bindScrollListener(getContext(), recyclerView, false);
 //        startLoading();
     }
 
