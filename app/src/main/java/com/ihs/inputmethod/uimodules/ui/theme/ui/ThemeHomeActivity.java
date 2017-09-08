@@ -214,8 +214,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     };
 
     public static void bindScrollListener(Context context, RecyclerView recyclerView, boolean hasBottom) {
-        if (context instanceof CustomizeActivity) {
-            ((CustomizeActivity) context).getLayoutWrapper().attachToRecyclerView(recyclerView, hasBottom);
+        if (context instanceof ThemeHomeActivity) {
+            ((ThemeHomeActivity) context).getLayoutWrapper().attachToRecyclerView(recyclerView, hasBottom);
         }
     }
 

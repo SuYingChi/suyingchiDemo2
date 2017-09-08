@@ -21,4 +21,12 @@
         launcher:round_right_top_corner_radius="@dimen/card_round_corner_radius"
         tools:src="@drawable/wallpaper_thumbnail"/>
 
+    <ImageView
+        android:id="@+id/theme_market_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:src="@drawable/promotion_themes_google_play"
+        tools:ignore="ContentDescription,RtlHardcoded"/>
+
 </FrameLayout>

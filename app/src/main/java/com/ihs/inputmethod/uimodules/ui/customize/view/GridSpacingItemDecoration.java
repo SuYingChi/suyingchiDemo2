@@ -15,6 +15,10 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
     private boolean mIncludeEdge;
     private boolean mHasHeader;
 
+    public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+        this(spanCount, spacing, includeEdge, false);
+    }
+
     public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge, boolean hasHeader) {
         mSpanCount = spanCount;
         mSpacing = spacing;
@@ -22,7 +26,8 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
         mHasHeader = hasHeader;
     }
 
-    @Override
+
+        @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view); // item position
         if (mHasHeader) {

@@ -8,10 +8,10 @@ import android.widget.LinearLayout;
 
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.adapter.LockerThemeGalleryAdapter;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 
 /**
  * Created by guonan.lv on 17/9/6.
@@ -48,9 +48,9 @@ public class LockerThemePage extends LinearLayout implements ServiceListener {
         layoutManager.setSpanSizeLookup(new LockerThemeGalleryAdapter.GridSpanSizer(adapter));
         lockerThemesList.setLayoutManager(layoutManager);
         lockerThemesList.addItemDecoration(
-                new GridSpacingItemDecoration(spanCount, spacing, false, !adapter.isLockerInstalled()));
+                new GridSpacingItemDecoration(spanCount, spacing, false));
         lockerThemesList.setAdapter(adapter);
-        CustomizeActivity.bindScrollListener(context, lockerThemesList, true);
+        ThemeHomeActivity.bindScrollListener(context, lockerThemesList, true);
     }
 
     @Override
