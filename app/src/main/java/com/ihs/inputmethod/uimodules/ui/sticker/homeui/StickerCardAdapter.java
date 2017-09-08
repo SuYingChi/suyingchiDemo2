@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,13 +15,17 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.keyboardutils.view.HSGifImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 
 /**
@@ -102,7 +107,16 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
             }
         });
 
+        Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
+
+        holder.stickerNewImage.setImageURI(uri);
+//        holder.stickerNewImage.start();
+
         holder.stickerNewImage.setVisibility(TextUtils.equals(stickerModel.getStickerTag(), "YES") ? View.VISIBLE : View.GONE);
+//        Log.i("kong", uri.toString());
+        Log.i("kong", "holder.stickerNewImage.getVisibility(): "+holder.stickerNewImage.getVisibility());
+        Log.i("kong", "stickerModel.getStickerTag(): "+ stickerModel.getStickerTag());
+
     }
 
     private boolean isFromHomeType() {
@@ -134,7 +148,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         View stickerCardView;
 
         TextView stickerGroupName;
-        ImageView stickerNewImage;
+        GifImageView stickerNewImage;
         ImageView stickerRealImage;
 
 
@@ -144,7 +158,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
             stickerCardView = itemView.findViewById(R.id.sticker_card_view) ;
             stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
             stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
-            stickerNewImage = (ImageView) itemView.findViewById(R.id.sticker_new_view);
+            stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
         }
     }
 

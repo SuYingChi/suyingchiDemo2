@@ -35,13 +35,13 @@
                     app:riv_corner_radius_top_left="@dimen/common_round_corner"
                     app:riv_corner_radius_top_right="@dimen/common_round_corner" />
 
-                <ImageView
+                <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/theme_new_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
-                    android:src="@drawable/app_theme_new"
                     android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/theme_animated_view"
                     android:layout_width="wrap_content"

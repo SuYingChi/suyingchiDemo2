@@ -9,6 +9,9 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.view.HSGifImageView;
+
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by wenbinduan on 2016/12/22.
@@ -21,7 +24,7 @@ public final class ThemeCardViewHolder extends RecyclerView.ViewHolder {
 	TextView themeName;
 	ImageView themeDelete;
 	ImageView moreMenuImage;
-	ImageView themeNewImage;
+	GifImageView themeNewImage;
 	ImageView themeAnimatedImage;
 
 	public ThemeCardViewHolder(View itemView) {
@@ -32,7 +35,7 @@ public final class ThemeCardViewHolder extends RecyclerView.ViewHolder {
 		themeDelete = (ImageView) itemView.findViewById(R.id.theme_delete_view);
 		themeDelete.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.preview_keyboard_delete)));
 		moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
-		themeNewImage = (ImageView) itemView.findViewById(R.id.theme_new_view);
+		themeNewImage = (GifImageView) itemView.findViewById(R.id.theme_new_view);
 		themeAnimatedImage = (ImageView) itemView.findViewById(R.id.theme_animated_view);
 	}
 }

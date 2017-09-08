@@ -33,16 +33,16 @@
                     app:layout_heightPercent="80%"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
+                    android:visibility="visible"
                     app:riv_corner_radius_top_left="@dimen/common_round_corner"
                     app:riv_corner_radius_top_right="@dimen/common_round_corner" />
 
-                <ImageView
+                <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/sticker_new_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
-                    android:src="@drawable/app_theme_new"
-                    android:visibility="gone" />
+                    android:visibility="invisible" />
             </android.support.percent.PercentFrameLayout>
 
             <LinearLayout
