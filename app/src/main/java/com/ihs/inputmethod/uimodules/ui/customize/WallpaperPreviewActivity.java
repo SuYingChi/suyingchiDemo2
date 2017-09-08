@@ -254,7 +254,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.wallpaper_view_return:
-                finish();
+                this.finish();
                 break;
             case R.id.set_wallpaper_button:
                 if (mCurrentWallpaper == null) {

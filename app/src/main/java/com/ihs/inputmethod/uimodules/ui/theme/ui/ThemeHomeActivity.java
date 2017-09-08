@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -66,22 +67,19 @@ import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
-import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontHomeFragment;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.BaseCustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
+import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontHomeFragment;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.utils.CallAssistantConfigUtils;
 import com.ihs.inputmethod.utils.ScreenLockerConfigUtils;
-import com.ihs.keyboardutils.ads.KCInterstitialAd;
-import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.permission.PermissionFloatWindow;
@@ -128,6 +126,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     public static final int TAB_INDEX_KEYBOARD = 0;
     public static final int TAB_INDEX_WALLPAPER = 1;
     public static final int TAB_INDEX_LOCKER = 2;
+
+    private int currentTabIndex = 0;
 
     static {
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_keyboard, TAB_INDEX_KEYBOARD);
@@ -235,6 +235,20 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("tabIndex", currentTabIndex);
+        savedInstanceState.putInt("wallpaperIndex", mWallpaperTabIndex);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle bundle) {
+        super.onRestoreInstanceState(bundle);
+        currentTabIndex = bundle.getInt("tabIndex");
+        mWallpaperTabIndex = bundle.getInt("wallpaperIndex");
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -242,7 +256,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         getWindow().setBackgroundDrawable(null);
 
         mContent = ViewUtils.findViewById(this, R.id.content_layout);
-        mContent.setChildSelected(0);
+        mContent.setChildSelected(currentTabIndex);
         mBottomBar = ViewUtils.findViewById(this, R.id.bottom_bar);
         BottomNavigationViewHelper.disableShiftMode(mBottomBar);
         mLayoutWrapper = new LayoutWrapper(mBottomBar, getResources().getDimensionPixelSize(R.dimen.bottom_bar_default_height), CommonUtils.pxFromDp(3.3f));
@@ -315,6 +329,13 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         fragments.add(ThemeHomeFragment.class);
         fragments.add(StickerHomeFragment.class);
         fragments.add(FontHomeFragment.class);
+        //create storeFragment only if not exist
+        Fragment storeFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
+//        if (storeFragment == null) {
+//            storeFragment = new ThemeHomeFragment();
+//            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//            fragmentTransaction.add(R.id.content_layout, storeFragment, THEME_STORE_FRAGMENT_TAG).commit();
+//        }
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
@@ -403,8 +424,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         if (mLayoutWrapper != null) {
             mLayoutWrapper.show();
         }
-        MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
-        onNavigationItemSelected(item);
+//        MenuItem item = mBottomBar.getMenu().findItem(R.id.customize_bottom_bar_keyboard);
+//        onNavigationItemSelected(item);
     }
 
     @Override
@@ -429,6 +450,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         super.onResume();
 
         restoreNavigationView();
+        mContent.setChildSelected(currentTabIndex);
 
         shouldShowActivationTip = true;
 
@@ -465,6 +487,22 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         int id = item.getItemId();
 
         if (id == R.id.nav_theme_store) {
+            if (!currentFragmentTag.equals(THEME_STORE_FRAGMENT_TAG)) {
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
+//                Fragment themeStoreFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
+//                if (myThemeFragment != null) {
+//                    transaction.hide(myThemeFragment);
+//                }
+////                if (themeStoreFragment == null) {
+////                    themeStoreFragment = new ThemeHomeFragment();
+////                    transaction.add(R.id.content_layout, themeStoreFragment, THEME_STORE_FRAGMENT_TAG);
+////                }
+//                transaction.show(themeStoreFragment).commit();
+//                appbarLayout.setExpanded(true);
+//                toolbar.setTitle(R.string.theme_nav_theme_store);
+//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_store_clicked");
+            }
             currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
         } else if (id == R.id.nav_language) {
             HSUIInputMethod.launchMoreLanguageActivity();
@@ -500,13 +538,13 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        int index = ITEMS_INDEX_MAP.get(id);
+        currentTabIndex = ITEMS_INDEX_MAP.get(id);
         boolean viewIndexUpdated = false;
-        if (mViewIndex != index) {
-            mViewIndex = index;
+        if (mViewIndex != currentTabIndex) {
+            mViewIndex = currentTabIndex;
             viewIndexUpdated = true;
         }
-        mContent.setChildSelected(index);
+        mContent.setChildSelected(currentTabIndex);
         // reset icon to origins
         Menu menu = mBottomBar.getMenu();
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_wallpapers, R.drawable.customize_wallpaper);

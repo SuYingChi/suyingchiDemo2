@@ -7,9 +7,6 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ihs.inputmethod.uimodules.R;
@@ -33,8 +30,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
     }
 
     public void setChildSelected(int position) {
-        removeAllViews();
-        addView(mAdapter.getView(position));
+        mAdapter.setUpView(position);
     }
 
     @Override
@@ -45,101 +41,78 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
     private static class CustomizeContentAdapter implements ServiceListener {
         private CustomizeContentView mView;
         private Context mContext;
-        private LayoutInflater mLayoutInflater;
-
-        private SparseArray<View> mViewMap = new SparseArray<>(3);
-
+        
         private int[] CONTENT_VIEW_IDS = new int[]{
                 R.layout.fragment_theme_home,
                 R.layout.online_wallpaper_page,
                 R.layout.locker_themes_page,
         };
 
-        private int[] FRAGMENT_TAG = new int[] {
-                0, 1, 2
+        private String[] FRAGMENT_TAG = new String[] {
+                "fragment_theme_home",
+                "online_wallpaper_page",
+                "locker_themes_page"
         };
-
-        private Fragment themeHomeFragment;
-        private Fragment onlineWallpaperFragment;
-        private Fragment lockerThemeFragment;
 
         CustomizeContentAdapter(CustomizeContentView view) {
             mView = view;
             mContext = view.getContext();
-            mLayoutInflater = LayoutInflater.from(mContext);
         }
 
         public int getCount() {
             return CONTENT_VIEW_IDS.length;
         }
 
-        View getView(int position) {
+        void setUpView(int position) {
             int layoutId = CONTENT_VIEW_IDS[position];
-            View child = mViewMap.get(layoutId);
-            if (child == null) {
-                child = mLayoutInflater.inflate(layoutId, mView, false);
-                setupWithInitialTabIndex(layoutId, child);
-                mViewMap.put(layoutId, child);
-            } else {
-                setupWithInitialTabIndex(layoutId, child);
-            }
-
-            return child;
+            setupWithInitialTabIndex(layoutId, position);
         }
 
-        private void setupWithInitialTabIndex(@LayoutRes int layoutId, View child) {
+        private Fragment createFragmentByType(@LayoutRes int layoutId) {
+            switch (layoutId) {
+                case R.layout.fragment_theme_home:
+                    return new ThemeHomeFragment();
+                case R.layout.online_wallpaper_page:
+                    return new OnlineWallpaperFragment();
+                case R.layout.locker_themes_page:
+                    return new LockerThemeFragment();
+                default:
+                    return null;
+            }
+        }
+
+        private void hideOtherFragment(int position, FragmentTransaction fragmentTransaction, FragmentManager fragmentManager) {
+            for (int i = 0; i < CONTENT_VIEW_IDS.length; i++) {
+                if (i == position) {
+                    continue;
+                }
+                Fragment fragment = fragmentManager.findFragmentByTag(FRAGMENT_TAG[i]);
+                if (fragment != null) {
+                    fragmentTransaction.hide(fragment);
+                }
+            }
+        }
+
+        private void setupWithInitialTabIndex(@LayoutRes int layoutId, int position) {
             if (!(mContext instanceof Activity)) {
                 return;
             }
-            FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
-            switch (layoutId) {
-                case R.layout.fragment_theme_home:
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    themeHomeFragment = fragmentManager.findFragmentById(FRAGMENT_TAG[0]);
-                    if (themeHomeFragment == null) {
-                        themeHomeFragment = new ThemeHomeFragment();
-                        fragmentTransaction.add(R.id.content_layout, themeHomeFragment, themeHomeFragment.getTag());
-                    }
-                    if(onlineWallpaperFragment != null) {
-                        fragmentTransaction.hide(onlineWallpaperFragment);
-                    }
-                    if(lockerThemeFragment != null) {
-                        fragmentTransaction.hide(lockerThemeFragment);
-                    }
-                    fragmentTransaction.show(themeHomeFragment).commit();
-                    break;
-                case R.layout.online_wallpaper_page:
-                   fragmentTransaction = fragmentManager.beginTransaction();
-                    onlineWallpaperFragment = fragmentManager.findFragmentById(FRAGMENT_TAG[1]);
-                    if (onlineWallpaperFragment == null) {
-                        onlineWallpaperFragment = new OnlineWallpaperFragment();
-                        fragmentTransaction.add(R.id.content_layout, onlineWallpaperFragment, onlineWallpaperFragment.getTag());
-                    }
-//                    ((OnlineWallpaperPage) child).setup(0);
-                    fragmentTransaction.show(onlineWallpaperFragment).commit();
-                    break;
-                case R.layout.locker_themes_page:
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    lockerThemeFragment = fragmentManager.findFragmentById(FRAGMENT_TAG[2]);
-                    if (lockerThemeFragment == null) {
-                        lockerThemeFragment = new LockerThemeFragment();
-                        fragmentTransaction.add(R.id.content_layout, lockerThemeFragment, lockerThemeFragment.getTag());
-                    }
-                    fragmentTransaction.show(lockerThemeFragment).commit();
-                    break;
-                default:
+            String tag = FRAGMENT_TAG[position];
+            FragmentManager fragmentManager = ((Activity)mContext).getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
 
+            if (currentFragment == null) {
+                currentFragment = createFragmentByType(layoutId);
+                fragmentTransaction.add(R.id.content_layout, currentFragment, tag);
             }
+            hideOtherFragment(position, fragmentTransaction, fragmentManager);
+            fragmentTransaction.show(currentFragment).commit();
         }
 
         @Override
         public void onServiceConnected(ICustomizeService service) {
-            for (int i = 0, size = mViewMap.size(); i < size; i++) {
-                View child = mViewMap.valueAt(i);
-                if (child instanceof ServiceListener) {
-                    ((ServiceListener) child).onServiceConnected(service);
-                }
-            }
+
         }
     }
 }
