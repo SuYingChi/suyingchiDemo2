@@ -116,8 +116,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                     bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_PLUSSTICKER_ENTRY, plusStickerEntry);
 
                     HSInputMethod.hideWindow();
-                    plusButton.hideNewTip();
                     plusButton.saveShowNewTip();// 已点击过，此后不再展示，除非服务端去增加new sticker数目
+                    plusButton.saveNewTipNum();
 
                     new Handler().postDelayed(new Runnable() {
                         @Override

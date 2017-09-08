@@ -30,7 +30,6 @@ import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTranspa
 public class PlusButton extends FrameLayout {
     private static final String KEY_SHOW_NEW_MARK = "key_show_new_mark";
     private static final String STICKER_NEW_NUMBER = "sticker_new_num";
-    private AppCompatImageView plusImage;
     private View newTipView;
     private final static int FUNCTION_VIEW_REAL_WIDTH = 18;
     public static final String KEY_FIRST_INTO_APP = "key_first_into_app";
@@ -53,39 +52,32 @@ public class PlusButton extends FrameLayout {
         lp.leftMargin = HSDisplayUtils.dip2px(10);
         lp.rightMargin = HSDisplayUtils.dip2px(10);
 
-        plusImage = new AppCompatImageView(getContext());
+        AppCompatImageView plusImage = new AppCompatImageView(getContext());
         plusImage.setLayoutParams(lp);
         plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
         addView(plusImage);
 
         /**
-         * 1. 如果第一次进入app，显示new
+         * 1. 如果第一次进入app，即使没有new，也显示小红点
          * 2. 如果检查有new，显示new
          * 3. 只要一次hide后，再也不显示
          * 4. 如果有new更新后，重新进入时候将会显示new
          */
 
+
         if (checkIsFirstIntoApp()) {
             showNewTip();
-        } else if (checkIsHaveNewSticker() && getShowNewTipState()) {
+            saveNotFirstIntoAppState();
+        } else if (getShowNewTipState()) {
             showNewTip();
-        } else if (checkStickerNewNumChange()) {//new sticker 数目变化时候要进入显示;并且点击后再也不显示;默认情况下是return false的，当第二次进入的时候就会去取存储的数目来进行比较，走不一致的逻辑
-            Log.e("dongdong", "checkStickerNewNumChange");
+        } else if (checkStickerNewNumChange()) {//new sticker数目增加时候会显示小红点
             showNewTip();
         } else {
             hideNewTip();
         }
     }
 
-    private boolean checkIsFirstIntoApp() {
-        helper = HSPreferenceHelper.getDefault();
-        if (helper.getBoolean(KEY_FIRST_INTO_APP, true)) {
-            helper.putBoolean(KEY_FIRST_INTO_APP, false);
-        }
-        return helper.getBoolean(KEY_FIRST_INTO_APP, true);
-    }
-
-    private boolean checkStickerNewNumChange() {
+    public void saveNewTipNum() {
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
         List<StickerGroup> stickerGroups = new ArrayList<>();
         for (Map<String, Object> map : stickerConfigList) {
@@ -97,30 +89,53 @@ public class PlusButton extends FrameLayout {
             String stickerTag = (String) map.get("showNewMark");
             if (android.text.TextUtils.equals(stickerTag, "YES")) {
                 stickerGroups.add(stickerGroup);
-
             }
         }
         int num = stickerGroups.size();
-        Log.e("dongdong", "num:    " + num);
+        if (helper == null) {
+            helper = HSPreferenceHelper.getDefault();
+        }
+        helper.putInt(STICKER_NEW_NUMBER, num);
+    }
+
+    private boolean checkIsFirstIntoApp() {
         if (helper == null) {
             helper = HSPreferenceHelper.getDefault();
         }
 
-        if (num <= helper.getInt(STICKER_NEW_NUMBER, num)) {//当和存储的数目相同或小于原有的时候，sticker没有新的
-            Log.e("dongdong", "num <= helper.getInt(STICKER_NEW_NUMBER, num):  put前     " + helper.getInt(STICKER_NEW_NUMBER, num));
-            helper.putInt(STICKER_NEW_NUMBER, num);
-            Log.e("dongdong", "num <= helper.getInt(STICKER_NEW_NUMBER, num):   put后    " + helper.getInt(STICKER_NEW_NUMBER, num));
-            return false;
-        } else if (num > helper.getInt(STICKER_NEW_NUMBER, num)){
-            Log.e("dongdong", "num > helper.getInt(STICKER_NEW_NUMBER, num):    put前   " + helper.getInt(STICKER_NEW_NUMBER, num));
+        return helper.getBoolean(KEY_FIRST_INTO_APP, true);
+    }
 
-            helper.putInt(STICKER_NEW_NUMBER, num);
-
-            Log.e("dongdong", "num > helper.getInt(STICKER_NEW_NUMBER, num):     put后  " + helper.getInt(STICKER_NEW_NUMBER, num));
-
-            return true;
+    public void saveNotFirstIntoAppState() {
+        if (helper == null) {
+            helper = HSPreferenceHelper.getDefault();
         }
-        return false;
+        helper.putBoolean(KEY_FIRST_INTO_APP, false);
+    }
+
+    private boolean checkStickerNewNumChange() {
+        Log.e("dongdong", "checkStickerNewNumChange");
+        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
+        List<StickerGroup> stickerGroups = new ArrayList<>();
+        for (Map<String, Object> map : stickerConfigList) {
+            String stickerGroupName = (String) map.get("name");
+            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
+            if (stickerGroup.isStickerGroupDownloaded()) {
+                continue;
+            }
+            String stickerTag = (String) map.get("showNewMark");
+            if (android.text.TextUtils.equals(stickerTag, "YES")) {
+                stickerGroups.add(stickerGroup);
+            }
+        }
+        int num = stickerGroups.size();
+        if (helper == null) {
+            helper = HSPreferenceHelper.getDefault();
+        }
+
+        //当大于存储的数目的时候，有新的new
+        return num > helper.getInt(STICKER_NEW_NUMBER, num);
+
     }
 
     private boolean checkIsHaveNewSticker() {
