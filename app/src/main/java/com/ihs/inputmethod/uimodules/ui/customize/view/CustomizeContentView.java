@@ -41,7 +41,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
     private static class CustomizeContentAdapter implements ServiceListener {
         private CustomizeContentView mView;
         private Context mContext;
-        
+
         private int[] CONTENT_VIEW_IDS = new int[]{
                 R.layout.fragment_theme_home,
                 R.layout.online_wallpaper_page,

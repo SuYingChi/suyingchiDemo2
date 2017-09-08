@@ -155,12 +155,13 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mCategoryInfo = getIntent().getParcelableExtra(INTENT_KEY_CATEGORY);
         mPaperIndex = getIntent().getIntExtra(INTENT_KEY_INDEX, 0);
         mWallpapers.clear();
-        mWallpapers.addAll(WallPaperConstant.wallpaperInfoList);
+        mWallpapers.addAll(getIntent().getParcelableArrayListExtra(INTENT_KEY_WALLPAPERS));
         mCurrentWallpaper = (WallpaperInfo) getWallpaperInfoByIndex(mPaperIndex);
         mAdapter.notifyDataSetChanged();
 //        mWallpapers.addAll(getIntent().getParcelableArrayListExtra(INTENT_KEY_WALLPAPERS));
         mIsOnLineWallpaper = true;
         mInitialized = true;
+        mViewPager.setCurrentItem(mPaperIndex);
     }
 
     @Override
@@ -204,6 +205,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mViewPager.setClickable(true);
         mViewPager.setLongClickable(true);
         mViewPager.addOnPageChangeListener(this);
+        mViewPager.setCurrentItem(mPaperIndex, false);
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -287,7 +289,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     @Override
     public void onRetryButtonPressed(PreviewViewPage page) {
-
+        int index = (int) (page.getTag());
+        displayPage(index, page);
     }
 
     @Override
@@ -469,15 +472,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         @Override
         public Object instantiateItem(ViewGroup view, int position) {
             int index = position;
-//            if (mWallpaperPackageInfo != null) {
-//                if (position == 0) {
-//                    WallpaperPackageCoverView coverView = (WallpaperPackageCoverView) getLayoutInflater().inflate(R.layout.wallpaper_package_cover, view, false);
-//                    coverView.setPackageInfo(mWallpaperPackageInfo);
-//                    view.addView(coverView, 0);
-//                    return coverView;
-//                }
-//                index = position - 1;
-//            }
 
             mMaxVisiblePosition = Math.max(mMaxVisiblePosition, index);
 

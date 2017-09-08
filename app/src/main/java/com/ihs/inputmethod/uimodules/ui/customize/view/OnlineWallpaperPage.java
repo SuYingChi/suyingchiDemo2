@@ -22,8 +22,8 @@ import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.common.LauncherConfig;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.adapter.CategoryViewAdapter;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.keyboardutils.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -89,7 +89,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
         viewPage.setCurrentItem(indexAbsolute, false);
 
         viewPage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            private boolean m3DTabViewEventLogged;
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -106,7 +105,7 @@ public class OnlineWallpaperPage extends RelativeLayout {
                 resetCategoryGrids();
                 ((CategoryItem) mGridView.getAdapter().getItem(positionAbsolute)).setSelected(true);
                 ((CategoryViewAdapter) mGridView.getAdapter()).notifyDataSetChanged();
-                ((CustomizeActivity) getContext()).getLayoutWrapper().show();
+                ((ThemeHomeActivity) getContext()).getLayoutWrapper().show();
                 int position = positionAbsolute;
                 if (position == TAB_INDEX_3D) {
                     PreferenceHelper.getDefault().putBoolean(PREF_KEY_3D_WALLPAPER_VIEW_SHOWN, true);
