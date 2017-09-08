@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--deep link-->
-    <string name="deeplink_key_word">RainbowKey - Bring mit personalisierten Designs, GIFs und Schriftarten Farbe in deine Tastatur.</string>
-    <string name="deeplink_description">Rainbow Keyboard description</string>
+
+    <string name="feedback_email">private.keyboardarts@gmail.com</string>
+    <string name="fb_app_id">910238615719294</string>
+
+    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
+        With accessibility authorization, you'll get the best typing experience on different apps!
+        
+        Note: You may receive a system reminder about authorizing, RainbowKey will NEVER collect ANY of your information."</string>
+    <string name="theme_share_text_content">Meine personalisierte Tastatur, gemacht mit #%1$s.</string>
+    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free: http://rainbowkey.com</string>
+    <string name="settings_button_tell_a_friend_content">Hey, Du musst die Tastatur-App %1$s ausprobieren. Du kannst deine Tastatur mit deinen eigenen Bildern ausstatten! Ausserdem sind die Schriftarten und Emojis der Wahnsinn! Lade #%2$s gratis herunter: http://rainbowkey.com</string>
 </resources>

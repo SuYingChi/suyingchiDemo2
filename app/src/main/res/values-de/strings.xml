@@ -27,7 +27,7 @@
     <string name="alert_attention_messenger">Die %1$s-Tastatur nimmt die Privatsphäre der Nutzer sehr ernst. Wir werden ZU KEINEM ZEITPUNKT Daten wie Passwörter oder Kreditkartennummern sammeln.</string>
     <string name="toast_enable_keyboard">Aktiviere %1$s</string>
     <string name="toast_select_keyboard">Wähle %1$s aus</string>
-    <string name="keyboard_guide_privacy_policy">Mit der Installation stimmst du den %1$s\n und den %2$s von RainbowKey zu.</string>
+    <string name="keyboard_guide_privacy_policy">Mit der Installation stimmst du den %1$s\n und den %2$s von %1$s zu.</string>
     <string name="text_terms_of_service">Nutzungsbedingungen</string>
     <string name="text_privacy_policy">Datenschutzerklärung</string>
 
@@ -59,7 +59,7 @@
     <string name="setting_word_prediction">Vorhersage</string>
     <string name="setting_emoji_prediction">Emoji Vorhersage</string>
     <string name="setting_swipe_input">Wischen</string>
-    <string name="setting_double_space_period">\".\" Abkürzung</string>
+    <string name="setting_double_space_period">"." Abkürzung</string>
     <string name="setting_double_space_period_summary">Doppeltippen der Leertaste fügt einen Punkt mit nachfolgendem Leerzeichen ein.</string>
     <string name="setting_sound_on_keypress">Ton bei Tastendruck</string>
     <string name="setting_vibrate_on_keypress">Bei Tastendruck vibrieren</string>
@@ -80,7 +80,6 @@
     <string name="settings_button_sound">@string/setting_item_sounds</string>
     <string name="settings_button_tell_a_friend">Einem Freund weitersagen</string>
     <string name="settings_button_tell_a_friend_tip">Teile jetzt deine Nachricht</string>
-    <string name="settings_button_tell_a_friend_content">Hey, Du musst die Tastatur-App %1$s ausprobieren. Du kannst deine Tastatur mit deinen eigenen Bildern ausstatten! Ausserdem sind die Schriftarten und Emojis der Wahnsinn! Lade #%2$s gratis herunter: http://rainbowkey.com</string>
     <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
     <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
     <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
@@ -103,19 +102,19 @@
 
     <!--theme panel-->
     <string name="customized_themes">Individuell Anpassbare Themes</string>
-    <string name="default_themes">%1$s Designs</string>
+    <string name="default_themes">%1$s Themes</string>
     <string name="custom_theme_create">Erstellen</string>
     <string name="theme_more">Mehr</string>
 
     <!--theme home-->
     <string name="theme_store_background_title">Eigene Designs erstellen</string>
-    <string name="theme_store_theme_title">%1$s Designs</string>
+    <string name="theme_store_theme_title">%1$s Themes</string>
     <string name="theme_store_more">MEHR</string>
     <string name="my_theme_customized_theme_title">individuell anpassbare Tastatur</string>
     <string name="my_theme_downloaded_theme_title">Heruntergeladen</string>
     <string name="theme_detail_recommend_title">Vielleicht gefällt dir auch</string>
     <string name="theme_card_custom_theme_default_name">Meine Designs</string>
-    <string name="theme_detail_common_title_name">%1$s Designs</string>
+    <string name="theme_detail_common_title_name">%1$s Theme</string>
     <string name="theme_detail_custom_theme_title_name">Cindividuell anpassbare Tastatur</string>
     <string name="theme_trial_keyboard_edit_text_hint">Probiere die neue Tastatur aus!</string>
 
@@ -141,8 +140,6 @@
     <string name="theme_card_menu_apply">Übernehmen</string>
     <string name="theme_card_menu_applied">Übernommen</string>
     <string name="theme_card_menu_delete">Löschen</string>
-    <string name="theme_share_text_content">Meine personalisierte Tastatur, gemacht mit #%1$s.</string>
-    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n http://rainbowkey.com</string>
 
     <!--custom theme-->
     <string name="custom_theme_background">Hintergrund</string>
@@ -192,6 +189,10 @@
     <string name="new_click_sound_tip">Neuer Klickton</string>
     <string name="new_theme_tip">Neue Designs sind verfügbar</string>
 
+    <!--deep link-->
+    <string name="deeplink_key_word">%1$s – Bring mit personalisierten Designs, GIFs und Schriftarten Farbe in deine Tastatur.</string>
+    <string name="deeplink_description">%1$s description</string>
+
     <!--apk update-->
     <string name="apk_update_to_date_tip">Du bist auf dem neusten Stand</string>
     <string name="apk_update_alert_title">Neuste Version herunterladen</string>
@@ -220,12 +221,7 @@
     <string name="enable_charging_detail">Aktiviere Intelligentes Laden, um ein Überladen effizient zu verhindern. Enthält Werbung.</string>
 
     <!--Accessibility-->
-    <string name="accessibility_service_description">"Turn \'ON\' the switch on the top right. ↗️⊙.⊙↗️
-With accessibility authorization, you'll get the best typing experience on different apps!
-
-Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
-    <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
     <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
     <string name="alter_enable_access_title">Enable %1$s</string>
@@ -242,8 +238,6 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <!--Accessibility end-->
 
     <!-- Product Master's config -->
-    <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
-
 
     <string name="lucky_game_award_no_network_description">No network connection!</string>
     <string name="lucky_game_award_chances_receive_btn">ACCEPT</string>
@@ -255,7 +249,7 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="lucky_game_award_theme_description">Found a new theme!</string>
     <string name="lucky_game_chance_counter">Grabs: %1$s</string>
     <string name="lucky_game_award_boom_description">"GRABS: "</string>
-    <string name="lucky_game_award_ad_related_title">You\’ve won a prize!</string>
+    <string name="lucky_game_award_ad_related_title">You’ve won a prize!</string>
     <string name="launcher_widget_lucky_title">Lucky</string>
     <string name="lucky_game_award_empty_action">TRY AGAIN</string>
     <string name="no_network_connection">No network connection!</string>

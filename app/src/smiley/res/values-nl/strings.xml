@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feedback_email">feedback.emoji@hotmail.com</string>
+    <string name="fb_app_id">1474873346171463</string>
+
+    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
+With accessibility authorization, you'll get the best typing experience on different apps!
+
+Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
+
+    <string name="theme_share_text_content">Mijn aangepaste toetsenbord gemaakt met #%1$s https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="settings_button_tell_a_friend_content">Hé, je moet echt de app %1$s keyboard proberen! Je kunt je toetsenbord aanpassen met je eigen plaatjes! En de ⒻⓄⓃⓉⓈ en emoticons zijn geweldig. Download #%2$s gratis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+</resources>

@@ -5,7 +5,7 @@
     <string name="enabled">activada</string>
     <string name="enable">OK</string>
     <string name="disabled">desactivada</string>
-    <string name="language">Idioma</string>
+    <string name="language">Language</string>
     <string name="languages">Idiomas</string>
     <string name="next">Siguiente</string>
     <string name="back">Anterior</string>
@@ -21,13 +21,13 @@
     <string name="use">Utilizar</string>
     <string name="unknown">Desconocido</string>
 
-    <string name="alert_find_keyboard_and_switch_on">Activa %1$s</string>
+    <string name="alert_find_keyboard_and_switch_on">Activa %1$s.</string>
 
     <!--main-->
     <string name="alert_attention_messenger">%1$s se toma la privacidad de sus usuarios muy en serio. NUNCA almacenaremos datos personales como, por ejemplo, contraseñas o números de tarjetas de crédito.</string>
     <string name="toast_enable_keyboard">Activa %1$s</string>
     <string name="toast_select_keyboard">Selecciona %1$s</string>
-    <string name="keyboard_guide_privacy_policy">Al instalar estás aceptando las %1$s\n y %2$s de RainbowKey.</string>
+    <string name="keyboard_guide_privacy_policy">Al instalar estás aceptando las %1$s\n y  p%2$s de %1$s.</string>
     <string name="text_terms_of_service">Condiciones de uso</string>
     <string name="text_privacy_policy">Política de privacidad</string>
 
@@ -51,7 +51,7 @@
     <string name="more_language">Añadir idioma</string>
 
     <!--settings-->
-    <string name="language_dict">Idiomas</string>
+    <string name="language_dict">Language and dictionary</string>
 
     <string name="setting_preference_title">Preferencias</string>
     <string name="setting_auto_correction">Autocorreción</string>
@@ -59,13 +59,13 @@
     <string name="setting_word_prediction">Predicción</string>
     <string name="setting_emoji_prediction">Predicción de emojis</string>
     <string name="setting_swipe_input">Deslizar</string>
-    <string name="setting_double_space_period">\".\" Atajo</string>
+    <string name="setting_double_space_period">"." Atajo</string>
     <string name="setting_double_space_period_summary">Al pulsar dos veces la barra espaciadora se insertará un punto seguido de un espacio.</string>
     <string name="setting_sound_on_keypress">Sonar al pulsar tecla</string>
-    <string name="setting_vibrate_on_keypress">Vibrar al pulsar tecla</string>
+    <string name="setting_vibrate_on_keypress">Vibrate on keypress</string>
 
     <!--new settings panel-->
-    <string name="setting_item_themes">Temas</string>
+    <string name="setting_item_themes">Themes</string>
     <string name="setting_item_my_theme">Crear un tema</string>
     <string name="setting_item_fonts">Fonts</string>
     <string name="setting_item_correction">@string/setting_auto_correction</string>
@@ -80,7 +80,6 @@
     <string name="settings_button_sound">@string/setting_item_sounds</string>
     <string name="settings_button_tell_a_friend">Cuéntale a un amigo sobre nosotros</string>
     <string name="settings_button_tell_a_friend_tip">Comparte tu mensaje ahora</string>
-    <string name="settings_button_tell_a_friend_content">Tienes que probar el app de teclado %1$s. Puedes personalizar tu teclado con tus propias fotos! Además, las fuentes y  los emojis son geniales. Descárgate #%2$s gratis: http://rainbowkey.com</string>
     <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
     <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
     <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
@@ -103,19 +102,19 @@
 
     <!--theme panel-->
     <string name="customized_themes">Temas personalizados</string>
-    <string name="default_themes">%1$s Temas</string>
+    <string name="default_themes">%1$s Themes</string>
     <string name="custom_theme_create">Crear</string>
     <string name="theme_more">Más</string>
 
     <!--theme home-->
     <string name="theme_store_background_title">Crear mis propios temas</string>
-    <string name="theme_store_theme_title">%1$s Temas</string>
+    <string name="theme_store_theme_title">%1$s Themes</string>
     <string name="theme_store_more">MÁS</string>
     <string name="my_theme_customized_theme_title">Temas personalizados</string>
     <string name="my_theme_downloaded_theme_title">Descargado</string>
     <string name="theme_detail_recommend_title">Quizá te guste</string>
     <string name="theme_card_custom_theme_default_name">Mis temas</string>
-    <string name="theme_detail_common_title_name">%1$s Temas</string>
+    <string name="theme_detail_common_title_name">%1$s Theme</string>
     <string name="theme_detail_custom_theme_title_name">Teclado personalizado</string>
     <string name="theme_trial_keyboard_edit_text_hint">¡Prueba el nuevo teclado!</string>
 
@@ -141,8 +140,6 @@
     <string name="theme_card_menu_apply">Aplicar</string>
     <string name="theme_card_menu_applied">Aplicado</string>
     <string name="theme_card_menu_delete">Emliminar</string>
-    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \n http://rainbowkey.com</string>
-    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n http://rainbowkey.com</string>
 
     <!--custom theme-->
     <string name="custom_theme_background">Fondod</string>
@@ -179,7 +176,7 @@
     <string name="free_slots_price">Unlimited slots for %1$s</string>
     <string name="free_slots_via_watch_video">Watch Video to Unlock One Slot</string>
 
-    <string name="purchase_success">Compra realizada</string>
+    <string name="purchase_success">Compra realizada.</string>
     <string name="purchase_error">ERROR:</string>
     <string name="purchase_error_bill">FACTURACIÓN NO DISPONIBLE</string>
     <string name="purchase_error_item">ARTÍCULO NO DISPONIBLE</string>
@@ -191,6 +188,10 @@
     <string name="new_tap_effect_tip">Nuevo efecto</string>
     <string name="new_click_sound_tip">Nuevo sonido de teclas</string>
     <string name="new_theme_tip">Nuevos temas disponibles</string>
+
+    <!--deep link-->
+    <string name="deeplink_key_word">%1$s – Da color a tu teclado con temas personalizados, GIFs y fuentes.</string>
+    <string name="deeplink_description">Rainbow Keyboard description</string>
 
     <!--apk update-->
     <string name="apk_update_to_date_tip">You are up to date</string>
@@ -220,12 +221,7 @@
     <string name="enable_charging_detail">Habilitar carga inteligente para evitar eficientemente la sobrecarga. Contiene anuncios.</string>
 
     <!--Accessibility-->
-    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
-With accessibility authorization, you'll get the best typing experience on different apps!
-
-Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
-    <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
     <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
     <string name="alter_enable_access_title">Enable %1$s</string>
@@ -245,20 +241,20 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
 
 
-    <string name="lucky_game_award_no_network_description">¡No te has conectado a internet!</string>
-    <string name="lucky_game_award_chances_receive_btn">Recibir</string>
-    <string name="lucky_game_award_theme_action">INSTALAR</string>
-    <string name="lucky_game_chance_restore_timer">Más oportunidades en %1$s</string>
-    <string name="lucky_game_award_wallpaper_description">¡Qué fondo de pantalla tan genial!</string>
-    <string name="lucky_game_award_wallpaper_action">FIJAR COMO FONDO DE PANTALLA</string>
-    <string name="lucky_game_award_chances_description">Enhorabuena +3 veces</string>
-    <string name="lucky_game_award_theme_description">¡Hemos encontrado un nuevo tema!</string>
-    <string name="lucky_game_chance_counter">Intento: %1$s</string>
-    <string name="lucky_game_award_boom_description">veces</string>
-    <string name="lucky_game_award_ad_related_title">¡Has ganado un premio!</string>
-    <string name="launcher_widget_lucky_title">Afortunado</string>
-    <string name="lucky_game_award_empty_action">INTÉNTALO DE NUEVO</string>
-    <string name="no_network_connection">¡No te has conectado a internet!</string>
+    <string name="lucky_game_award_no_network_description">No network connection!</string>
+    <string name="lucky_game_award_chances_receive_btn">ACCEPT</string>
+    <string name="lucky_game_award_theme_action">DESCARGAR</string>
+    <string name="lucky_game_chance_restore_timer">More grabs in %1$s</string>
+    <string name="lucky_game_award_wallpaper_description">Wonderful Wallpaper!</string>
+    <string name="lucky_game_award_wallpaper_action">SET AS WALLPAPER</string>
+    <string name="lucky_game_award_chances_description">Congratulations! +3 grabs!</string>
+    <string name="lucky_game_award_theme_description">Found a new theme!</string>
+    <string name="lucky_game_chance_counter">Grabs: %1$s</string>
+    <string name="lucky_game_award_boom_description">"GRABS: "</string>
+    <string name="lucky_game_award_ad_related_title">You’ve won a prize!</string>
+    <string name="launcher_widget_lucky_title">Lucky</string>
+    <string name="lucky_game_award_empty_action">TRY AGAIN</string>
+    <string name="no_network_connection">No network connection!</string>
 
 
     <string name="locker_switcher">locker_screen_enabled</string>
@@ -269,7 +265,7 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
 
 	<!-- sticker download documents-->
-	<string name="sticker_download_button">DOWNLOAD</string>
+	<string name="sticker_download_button">Descargado</string>
 	<string name="sticker_downloading_label">Descargando</string>
 	<string name="sticker_downloading_successful">Download Successfully</string>
 	<string name="sticker_downloading_guide">Download for free now!</string>
