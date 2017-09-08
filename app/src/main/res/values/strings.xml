@@ -230,15 +230,6 @@
   
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
-    <string name="locker_alert_title">Screen Locker</string>
-    <string name="locker_alert_message">Add your favorite themes on lockscreen. May contain sponsored contents.</string>
-
-    <string name="call_assistant_alert_title">Animated Themes for Calls</string>
-    <string name="call_assistant_alert_message">Add animated themes on incoming call screens. May contain sponsored contents.</string>
-
-    <string name="multi_function_alert_title">Screen Locker / Caller Screen</string>
-    <string name="multi_function_alert_message">Add stunning themes on lockscreen and incoming call screens. May contain sponsored contents.</string>
-
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
     <string name="accessibility_service_label">%1$s</string>
