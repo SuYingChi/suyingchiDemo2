@@ -106,6 +106,12 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
+    <!--<FrameLayout-->
+        <!--android:id="@+id/content_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/theme_activity_bg"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
 
     <com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView
         android:id="@+id/content_layout"
