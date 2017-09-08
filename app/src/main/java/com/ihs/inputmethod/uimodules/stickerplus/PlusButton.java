@@ -21,19 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
+
 /**
  * Created by fanxu.kong on 17/9/7.
  */
-
 
 public class PlusButton extends FrameLayout {
     private static final String KEY_SHOW_NEW_MARK = "key_show_new_mark";
     private static final String STICKER_NEW_NUMBER = "sticker_new_num";
     private AppCompatImageView plusImage;
     private View newTipView;
-    private final static int FUNCTION_VIEW_REAL_WIDTH = 18; // function real width 18dp
-    private final static int FUNCTION_VIEW_MARGIN_LEFT = 15; //margin value,unit dp
-    private boolean showNewMark;
+    private final static int FUNCTION_VIEW_REAL_WIDTH = 18;
     public static final String KEY_FIRST_INTO_APP = "key_first_into_app";
     private HSPreferenceHelper helper;
 
@@ -47,6 +46,7 @@ public class PlusButton extends FrameLayout {
 
     public PlusButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.setBackgroundDrawable(getTransparentRippleBackground());
 
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(HSDisplayUtils.dip2px(22), HSDisplayUtils.dip2px(22));
         lp.gravity = Gravity.CENTER;
@@ -57,20 +57,6 @@ public class PlusButton extends FrameLayout {
         plusImage.setLayoutParams(lp);
         plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
         addView(plusImage);
-
-//
-//        // 如果第一次进入app，这里返回true，进入
-//        if (getShowNewTipState()) {
-//            // 如果是第一次进入app，进入
-//            if (checkIsFirstIntoApp() || checkIsHaveNewSticker()) {
-//                showNewTip();
-//                Log.e("kong", "---------- show");
-//            }
-//        } else if (getShowNewTipState()) {
-//            hideNewTip();
-//            saveShowNewTip();
-//            Log.e("kong", "---------- hide");
-//        }
 
         /**
          * 1. 如果第一次进入app，显示new
@@ -184,13 +170,8 @@ public class PlusButton extends FrameLayout {
         }
     }
 
-
-//    public void saveNotShowNewTip() {
-//        helper.putBoolean(KEY_SHOW_NEW_MARK, true);
-//    }
-
     /**
-     * 已显示过new，下次不显示
+     * 已显示过new
      */
     public void saveShowNewTip() {
         helper.putBoolean(KEY_SHOW_NEW_MARK, false);

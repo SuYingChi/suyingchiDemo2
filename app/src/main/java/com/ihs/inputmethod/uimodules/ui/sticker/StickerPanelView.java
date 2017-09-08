@@ -107,42 +107,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             stickerTabRecyclerView.setAdapter(stickerTabAdapter);
 
-//            View footer = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.common_tab_footer, stickerTabRecyclerView, false);
-//            stickerTabAdapter.setFootView(footer);
             plusButton = new PlusButton((getContext()));
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.plus_container);
-            relativeLayout.addView(plusButton);
-
-
-
-//
-//            findViewById(R.id.sticker_home_plus).setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    final Bundle bundle = new Bundle();
-//                    int plusStickerEntry = ThemeHomeActivity.BUNDLE_KEY_STIKCER_HOME_PAGE;
-//                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_PLUSSTICKER_ENTRY, plusStickerEntry);
-//
-//                    HSInputMethod.hideWindow();
-//                    plusButton.hideNewTip();
-//
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            final Intent intent = new Intent();
-//                            intent.setClass(HSApplication.getContext(), com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.class);
-//
-//                            intent.putExtras(bundle);
-//
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            HSApplication.getContext().startActivity(intent);
-//                        }
-//                    }, 0);
-//
-//
-//                }
-//            });
-
             findViewById(R.id.plus_container).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -165,11 +130,10 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             HSApplication.getContext().startActivity(intent);
                         }
-                    }, 0);
+                    }, 200);
                 }
             });
         }
-
         final Resources res = getResources();
         final int height = HSResourceUtils.getDefaultKeyboardHeight(res)
                 - res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
@@ -309,6 +273,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             if (!tab.equals(stickerPanelManager.getCurrentTabName())) {
                 stickerPanelManager.setCurrentTabName(tab);
                 stickerTabAdapter.setTabSelected(tab);
+                stickerTabRecyclerView.scrollToPosition(stickerTabAdapter.getTabIndex(tab));
                 if (stickerPanelManager.isRecentTab(tab)) { // 滑到recent
                     stickerPanelManager.flushPendingRecentSticker();
                     stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());

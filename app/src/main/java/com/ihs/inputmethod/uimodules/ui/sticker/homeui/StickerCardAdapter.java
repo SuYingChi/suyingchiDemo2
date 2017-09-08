@@ -70,9 +70,6 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         }
 
         if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_MORE.ordinal()) {
-
-            Log.d("Kong", "ITEM_TYPE.ITEM_TYPE_MORE.ordinal(): " + ITEM_TYPE.ITEM_TYPE_MORE.ordinal());
-
             ((StickerCardHomeViewHolder) holder).moreStickersComing.setVisibility(View.VISIBLE);
             holder.stickerCardView.setVisibility(View.GONE);
             return;
