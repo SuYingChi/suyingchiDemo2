@@ -21,7 +21,6 @@ import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.customize.WallPaperConstant;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperPreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
@@ -204,8 +203,8 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
         WallpaperInfo clickedWallpaper = allWallpapers.get(positionInAllWallpapers);
         Intent intent = new Intent(mContext, WallpaperPreviewActivity.class);
 //        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_SCENARIO, mScenario.ordinal());
-//        intent.putParcelableArrayListExtra(WallpaperPreviewActivity.INTENT_KEY_WALLPAPERS, wallpapersToPreview);
-        WallPaperConstant.wallpaperInfoList.addAll(wallpapersToPreview);
+        intent.putParcelableArrayListExtra(WallpaperPreviewActivity.INTENT_KEY_WALLPAPERS, wallpapersToPreview);
+//        WallPaperConstant.wallpaperInfoList.addAll(wallpapersToPreview);
         intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_INDEX, positionInPreviewWallpapers);
         try {
             mContext.startActivity(intent);
