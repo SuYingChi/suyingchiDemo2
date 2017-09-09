@@ -69,12 +69,12 @@ public class KeyboardWakeUpActivity extends HSActivity {
                                     ((TextView) coverView.findViewById(R.id.tv_settings_item)).setText(R.string.access_set_up_success);
                                 }
 
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        HSFloatWindowManager.getInstance().removeAccessibilityCover();
-                                    }
-                                }, 1000);
+//                                new Handler().postDelayed(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        HSFloatWindowManager.getInstance().removeAccessibilityCover();
+//                                    }
+//                                }, 1000);
                                 finish();
                                 startThemeHomeActivity();
                             }

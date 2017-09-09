@@ -121,7 +121,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private AccessibilityEventListener accessibilityEventListener;
     private int listenerKey = -1;
     private LinearLayout dialogView;
-    private GivenSizeVideoView videoView;
+    private VideoView videoView;
     private CustomViewDialog customViewDialog;
     private boolean alertDialogShowing;
     private VideoView launchVideoView;
@@ -408,7 +408,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
         if (dialogView == null) {
             dialogView = (LinearLayout) View.inflate(getApplicationContext(), R.layout.dialog_enable_accessbility_guide, null);
-            videoView = (GivenSizeVideoView) dialogView.findViewById(R.id.videoview_guide);
+            videoView = (VideoView) dialogView.findViewById(R.id.videoview_guide);
             Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.accesibility_guide);
             videoView.setVideoURI(uri);
             videoView.setZOrderOnTop(true);
@@ -421,16 +421,16 @@ public class MainActivity extends HSDeepLinkActivity {
                     videoView.stopPlayback();
                 }
             });
-            customViewDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                @Override
-                public void onShow(DialogInterface dialog) {
-                    int width = dialogView.getMeasuredWidth();
-                    if (width != videoView.getMeasuredWidth()) {
-                        videoView.setViewSize(width, width * 588 / 948);
-                    }
-                    dialogView.forceLayout();
-                }
-            });
+//            customViewDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+//                @Override
+//                public void onShow(DialogInterface dialog) {
+//                    int width = dialogView.getMeasuredWidth();
+//                    if (width != videoView.getMeasuredWidth()) {
+//                        videoView.setViewSize(width, width * 588 / 948);
+//                    }
+//                    dialogView.forceLayout();
+//                }
+//            });
 
             dialogView.findViewById(R.id.tv_confirm).setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.selector_keyactive_enable));
             dialogView.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {

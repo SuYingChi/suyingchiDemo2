@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parentPanel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -53,19 +54,20 @@
     </LinearLayout>
 
 
-    <LinearLayout
+    <android.support.percent.PercentFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
-        <com.ihs.inputmethod.accessbility.GivenSizeVideoView
+        <VideoView
             android:id="@+id/videoview_guide"
             android:layout_width="match_parent"
-            android:layout_height="0dp" />
+            app:layout_aspectRatio="62%"
+            />
 
 
-    </LinearLayout>
+    </android.support.percent.PercentFrameLayout>
 
 
     <Button
