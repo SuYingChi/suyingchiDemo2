@@ -41,17 +41,15 @@ public class StickerPanelManager {
     }
 
     void loadData() {
-        Log.e("kong", "loadData: ");
         loadRecent();
         while (recentStickerPanelItems.size() > maxRecentCount) {
             recentStickerPanelItems.removeLastStickerPanelItem();
         }
         stickerPanelItemGroups.clear();
         stickerPanelItemGroups.add(recentStickerPanelItems);
-        for (StickerGroup stickerGroup : getSortedStickerGroup()) {
+        for (StickerGroup stickerGroup : getSortedExceptNeedDownloadStickerGroup()) {
             StickerPanelItemGroup stickerPanelItemGroup = new StickerPanelItemGroup(stickerGroup.getStickerGroupName());
             for (Sticker sticker : stickerGroup.getStickerList()) {
-                Log.e("kong", "sticker: " + sticker.getStickerUri());
                 stickerPanelItemGroup.addStickerPanelItem(new StickerPanelItem(sticker));
             }
             stickerPanelItemGroups.add(stickerPanelItemGroup);
@@ -63,7 +61,7 @@ public class StickerPanelManager {
     }
 
     private List<StickerGroup> getSortedStickerGroup() {
-        Log.e("kong", "                    getSortedStickerGroup()!!!!!!");
+        Log.e("kong", "getSortedStickerGroup()!!!!!!");
         List<StickerGroup> stickerSortedGroupList = new ArrayList<>();
         List<StickerGroup> stickerBuildInList = new ArrayList<>();
         List<StickerGroup> stickerDownloadedList = new ArrayList<>();
@@ -71,14 +69,11 @@ public class StickerPanelManager {
         for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
             if (stickerGroup.isInternalStickerGroup()) {
                 stickerBuildInList.add(stickerGroup);
-
             } else if (stickerGroup.isStickerGroupDownloaded()) {
-                Log.e("kong", "getSortedStickerGroup: " + "  stickerGroup.isStickerGroupDownloaded() --- reloadStickers()前 " + stickerGroup.getDownloadDisplayName());
+                stickerDownloadedList.add(stickerGroup);
                 if (stickerGroup.getStickerList().isEmpty()) {
                     stickerGroup.reloadStickers();
                 }
-                Log.e("kong", "getSortedStickerGroup: " + "  stickerGroup.isStickerGroupDownloaded() --- reloadStickers()后 " + stickerGroup.getDownloadDisplayName());
-                stickerDownloadedList.add(stickerGroup);
             } else {
                 stickerNeedDownloadList.add(stickerGroup);
             }
@@ -86,6 +81,30 @@ public class StickerPanelManager {
         stickerSortedGroupList.addAll(stickerBuildInList);
         stickerSortedGroupList.addAll(stickerDownloadedList);
         stickerSortedGroupList.addAll(stickerNeedDownloadList);
+        return stickerSortedGroupList;
+    }
+
+    /**
+     * 获取除了未下载的所有stickerGroup集合
+     * @return
+     */
+    private List<StickerGroup> getSortedExceptNeedDownloadStickerGroup() {
+        List<StickerGroup> stickerSortedGroupList = new ArrayList<>();
+        List<StickerGroup> stickerBuildInList = new ArrayList<>();
+        List<StickerGroup> stickerDownloadedList = new ArrayList<>();
+        for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
+            if (stickerGroup.isInternalStickerGroup()) {
+                stickerBuildInList.add(stickerGroup);
+
+            } else if (stickerGroup.isStickerGroupDownloaded()) {
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
+                stickerDownloadedList.add(stickerGroup);
+            }
+        }
+        stickerSortedGroupList.addAll(stickerBuildInList);
+        stickerSortedGroupList.addAll(stickerDownloadedList);
         return stickerSortedGroupList;
     }
 
@@ -117,7 +136,7 @@ public class StickerPanelManager {
      * 获取除了未下载的所有的StickerGroup名字
      * @return
      */
-    List<String> getSortedExceptNeedDownloadGroupNameList() {
+    List<String> getSortedExceptNeedDownloadStickerGroupNameList() {
         List<String> stickerSortedExceptNeedDownloadNameList = new ArrayList<>();
         List<String> stickerBuildInNameList = new ArrayList<>();
         List<String> stickerDownloadedNameList = new ArrayList<>();
@@ -126,7 +145,9 @@ public class StickerPanelManager {
                 stickerBuildInNameList.add(stickerGroup.getStickerGroupName());
             } else if (stickerGroup.isStickerGroupDownloaded()){
                 stickerDownloadedNameList.add(stickerGroup.getStickerGroupName());
-                Log.e("kong", "getSortedExceptNeedDownloadGroupNameList: "+ stickerGroup.getStickerGroupName());
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
             }
         }
         stickerSortedExceptNeedDownloadNameList.add(STICKER_RECENT);

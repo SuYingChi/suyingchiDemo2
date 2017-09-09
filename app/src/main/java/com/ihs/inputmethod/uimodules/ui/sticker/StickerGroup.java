@@ -67,7 +67,6 @@ public class StickerGroup {
     public void reloadStickers() {
         stickerList.clear();
         KCMap configMap = getStickerConfigMap();
-        Log.e("kong", "configMap == null ? " + configMap);
         if (configMap != null) {
             KCList contents = configMap.getList("contents");
             for (int i = 0; i < contents.size(); i++) {
@@ -79,14 +78,10 @@ public class StickerGroup {
                             .append("/").append(stickerGroupName).append("/").append(imageName);
                     stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.Assets);
                 } else if (isStickerGroupDownloaded()) {
-                    Log.e("kong", "isStickerGroupDownloaded(): " + "stickergroup     " + getDownloadDisplayName());
                     StringBuilder stickerImageFilePath = new StringBuilder(getStickerFolderPath(stickerGroupName))
                             .append("/").append(imageName);
                     stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.File);
                 }
-
-                Log.e("kong", "addSticker");
-
                 addSticker(new Sticker(stickerImageUri));
             }
         }

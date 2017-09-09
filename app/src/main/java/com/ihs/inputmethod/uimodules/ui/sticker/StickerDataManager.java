@@ -89,15 +89,11 @@ public class StickerDataManager {
         if (!isReady) {
             return;
         }
-
-        Log.e("Kong", "updateStickerGroupList:"+ "   stickerGroup     "+ stickerGroup.getDownloadDisplayName());
-
         stickerGroup.reloadStickers();
-
         HSGlobalNotificationCenter.sendNotificationOnMainThread(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION);
     }
 
-    List<StickerGroup> getStickerGroupList() {
+    public List<StickerGroup> getStickerGroupList() {
         if (!isReady) {
             return Collections.emptyList();
         } else {

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 
@@ -61,16 +62,20 @@ public class MyStickerFragment extends Fragment {
         if (downloadStickerNameList == null) {
             return;
         }
+        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
         for (int i = 0; i < downloadStickerNameList.size(); i++) {
             String downloadStickerName = downloadStickerNameList.get(i);
             if(!TextUtils.isEmpty(downloadStickerName)) {
-                StickerGroup stickerGroup = new StickerGroup(downloadStickerName);
-                StickerModel stickerModel = new StickerModel(stickerGroup);
-                stickerModel.setIsDownloaded(true);
-                stickerModelList.add(stickerModel);
+                for(StickerGroup stickerGroup : stickerGroupList){
+                    if (downloadStickerName.equals(stickerGroup.getStickerGroupName())){
+                        StickerModel stickerModel = new StickerModel(stickerGroup);
+                        stickerModel.setIsDownloaded(true);
+                        stickerModelList.add(stickerModel);
+                        break;
+                    }
+                }
             }
         }
-
     }
 
     @Override

@@ -91,17 +91,16 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private static final String SP_TREBLE_FUNCTION_ALERT_SHOWED = "sp_treble_function_alert_showed";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
-    public static final String BUNDLE_KEY_PLUSSTICKER_ENTRY = "plussticker_entry";
-
+    public static int HOME_VIEWPAGER_STICKER_PAGE = 1;
+    public static final String BUNDLE_KEY_HOME_INIT = "home_init_viewpager_page";
     private static final int keyboardActivationFromHome = 11;
+
     public static final int keyboardActivationFromHomeWithTrial = 12;
 
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
-
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
     private static int HANDLER_SHOW_UPDATE_DIALOG = 102;
     private static int HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG = 103;
-    public static int BUNDLE_KEY_STIKCER_HOME_PAGE = 1;
 
     private AppBarLayout appbarLayout;
     private NavigationView navigationView;
@@ -329,14 +328,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         // keyboard中点击sticker panel加号，设定viewpager当前页为sticker home页
         Bundle extras = intent.getExtras();
-//        if (extras != null) {
-//            page = extras.getInt(ThemeHomeActivity.BUNDLE_KEY_PLUSSTICKER_ENTRY);
-//        }
-//        if (page == ThemeHomeActivity.BUNDLE_KEY_STIKCER_HOME_PAGE ) {
-//            viewPager.setCurrentItem(page);
-//        }
-        if (extras != null && extras.getInt(ThemeHomeActivity.BUNDLE_KEY_PLUSSTICKER_ENTRY) == ThemeHomeActivity.BUNDLE_KEY_STIKCER_HOME_PAGE) {
-            viewPager.setCurrentItem(ThemeHomeActivity.BUNDLE_KEY_STIKCER_HOME_PAGE);
+        if (extras != null && extras.getInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INIT) == ThemeHomeActivity.HOME_VIEWPAGER_STICKER_PAGE) {
+            viewPager.setCurrentItem(ThemeHomeActivity.HOME_VIEWPAGER_STICKER_PAGE);
         }
     }
 

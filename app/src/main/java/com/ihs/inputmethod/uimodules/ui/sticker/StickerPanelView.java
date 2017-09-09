@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -67,7 +66,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         }
         if (stickerTabAdapter != null) {
             stickerExceptNeedDownloadNameList.clear();
-            stickerExceptNeedDownloadNameList.addAll(stickerPanelManager.getSortedExceptNeedDownloadGroupNameList());
+            stickerExceptNeedDownloadNameList.addAll(stickerPanelManager.getSortedExceptNeedDownloadStickerGroupNameList());
             stickerTabAdapter.setTabNameList(stickerExceptNeedDownloadNameList);
         }
 
@@ -101,33 +100,26 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         super.onFinishInflate();
         if (stickerTabAdapter == null) {
             stickerExceptNeedDownloadNameList = new ArrayList<>();
-            stickerExceptNeedDownloadNameList.addAll(stickerPanelManager.getSortedExceptNeedDownloadGroupNameList());
+            stickerExceptNeedDownloadNameList.addAll(stickerPanelManager.getSortedExceptNeedDownloadStickerGroupNameList());
             stickerTabAdapter = new StickerTabAdapter(stickerExceptNeedDownloadNameList, this);
             stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
             stickerTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             stickerTabRecyclerView.setAdapter(stickerTabAdapter);
 
-            plusButton = new PlusButton((getContext()));
-            findViewById(R.id.plus_container).setOnClickListener(new OnClickListener() {
+            plusButton = (PlusButton) findViewById(R.id.plus_container);
+            plusButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final Bundle bundle = new Bundle();
-                    int plusStickerEntry = ThemeHomeActivity.BUNDLE_KEY_STIKCER_HOME_PAGE;
-                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_PLUSSTICKER_ENTRY, plusStickerEntry);
-
+                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INIT, ThemeHomeActivity.HOME_VIEWPAGER_STICKER_PAGE);
                     HSInputMethod.hideWindow();
-                    plusButton.saveShowNewTip();// 已点击过，此后不再展示，除非服务端去增加new sticker数目
-                    plusButton.saveNewTipNum();
-
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             final Intent intent = new Intent();
                             intent.setClass(HSApplication.getContext(), com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.class);
-
                             intent.putExtras(bundle);
-
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             HSApplication.getContext().startActivity(intent);
                         }
                     }, 200);

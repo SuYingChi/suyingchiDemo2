@@ -56,6 +56,7 @@ public class StickerHomeFragment extends Fragment {
 
     private void initView() {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+
         loadStickerGroup();
         stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
             @Override
@@ -79,14 +80,13 @@ public class StickerHomeFragment extends Fragment {
                                     int position = stickerModelList.indexOf(stickerModel);
                                     stickerModelList.remove(position);
                                     removeStickerFromView(position);
+                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
                             }
                         }, new HSHttpConnection.OnConnectionFinishedListener() {
                             @Override
                             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-//                                HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
                                 HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName);
-                                StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                             }
 
                             @Override
@@ -113,22 +113,12 @@ public class StickerHomeFragment extends Fragment {
     }
 
     private void loadStickerGroup() {
-        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
+        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
 
-        for (Map<String, Object> map : stickerConfigList) {
-            String stickerGroupName = (String) map.get("name");
-            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if(stickerGroup.isStickerGroupDownloaded()) {
-                continue;
-            }
-            String stickerTag = (String) map.get("showNewMark");
-            String stickerGroupDownloadDisplayName = (String) map.get("showName");
-            stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
-            StickerModel stickerModel = new StickerModel(stickerGroup);
-            if(stickerTag != null) {
-                stickerModel.setStickTag(stickerTag);
-            }
-            stickerModelList.add(stickerModel);
+        for (StickerGroup stickerGroup : stickerGroupList) {
+           if (!stickerGroup.isStickerGroupDownloaded()) {
+               stickerModelList.add(new StickerModel(stickerGroup));
+           }
         }
     }
 

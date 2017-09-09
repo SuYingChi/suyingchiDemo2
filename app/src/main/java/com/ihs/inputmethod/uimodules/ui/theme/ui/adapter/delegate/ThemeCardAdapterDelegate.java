@@ -69,14 +69,12 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 
         themeCardViewHolder.themeRealImage.setImageDrawable(null);
 
-        Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
-        themeCardViewHolder.themeNewImage.setImageURI(uri);
 
 
         final HSKeyboardTheme keyboardTheme = items.get(position).keyboardTheme;
         holder.itemView.setTag(keyboardTheme.mThemeName);
         themeCardViewHolder.themeDelete.setVisibility(View.GONE);
-        // show animated mark
+        // show animated mark and new mark judgement
         boolean isShowAnimatedMark;
         if (keyboardTheme.getThemeData() == null || keyboardTheme.getThemeData().get("showAnimatedMark") == null) {
             isShowAnimatedMark = false;
@@ -89,6 +87,8 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
         } else {
             themeCardViewHolder.themeAnimatedImage.setVisibility(View.GONE);
             themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
+            Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
+            themeCardViewHolder.themeNewImage.setImageURI(uri);
         }
 
 
