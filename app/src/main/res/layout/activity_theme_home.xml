@@ -15,10 +15,10 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:background="@color/theme_navigation_draw_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/theme_navigation_draw_bg"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_theme_home"
         app:menu="@menu/activity_theme_home_drawer" />

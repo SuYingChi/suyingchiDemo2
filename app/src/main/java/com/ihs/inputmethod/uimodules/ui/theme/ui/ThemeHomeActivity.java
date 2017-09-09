@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -35,7 +34,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,8 +103,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
     private static final String SP_TREBLE_FUNCTION_ALERT_SHOWED = "sp_treble_function_alert_showed";
-    private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
-    private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
     public final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     public final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
@@ -270,10 +266,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         View adTriggerView = findViewById(R.id.download_page_trigger);
         adTriggerView.setVisibility(View.VISIBLE);
         adTriggerView.setOnClickListener(this);
-
-        tabLayout = (TabLayout)  findViewById(R.id.store_tab);
-
-        viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
+//
+//        tabLayout = (TabLayout)  findViewById(R.id.store_tab);
+//
+//        viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
@@ -289,18 +285,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         if (getIntent() != null && getIntent().getBooleanExtra(BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
             keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
         }
-        findViewById(R.id.home_create_theme_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Bundle bundle = new Bundle();
-                String customEntry =  "store_float_button";
-                bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                CustomThemeActivity.startCustomThemeActivity(bundle);
-
-                HSAnalytics.logEvent("customize_entry_clicked", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
-            }
-        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 context, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -330,7 +315,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         fragments.add(StickerHomeFragment.class);
         fragments.add(FontHomeFragment.class);
         //create storeFragment only if not exist
-        Fragment storeFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
+//        Fragment storeFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
 //        if (storeFragment == null) {
 //            storeFragment = new ThemeHomeFragment();
 //            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -338,17 +323,17 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 //        }
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
-        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
-        String[] tabTitles = new String[3];
-        tabTitles[0] = getApplicationContext().getString(R.string.tab_theme);
-        tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker);
-        tabTitles[2] = getApplicationContext().getString(R.string.tab_font);
-        tabFragmentPagerAdapter.setTabTitles(tabTitles);
-        viewPager.setOffscreenPageLimit(fragments.size());
-        viewPager.setAdapter(tabFragmentPagerAdapter);
-
-        tabLayout.setupWithViewPager(viewPager);
-        setTabListener();
+//        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+//        String[] tabTitles = new String[3];
+//        tabTitles[0] = getApplicationContext().getString(R.string.tab_theme);
+//        tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker);
+//        tabTitles[2] = getApplicationContext().getString(R.string.tab_font);
+//        tabFragmentPagerAdapter.setTabTitles(tabTitles);
+//        viewPager.setOffscreenPageLimit(fragments.size());
+//        viewPager.setAdapter(tabFragmentPagerAdapter);
+//
+//        tabLayout.setupWithViewPager(viewPager);
+//        setTabListener();
 
         //init locker function
         boolean lockerEnable = getResources().getBoolean(R.bool.config_locker_drawer_visiable_enable) && HSAppLockerUtils.isLockerEnabled();
@@ -566,31 +551,31 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     private void setTabListener() {
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                super.onTabSelected(tab);
-                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
-                if (tab.getPosition() == 0) {
-                    layout.setVisibility(View.VISIBLE);
-                } else {
-                    layout.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
-                if (position == 0) {
-                    layout.setVisibility(View.VISIBLE);
-                } else {
-                    layout.setVisibility(View.GONE);
-                }
-            }
-        });
+//        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                super.onTabSelected(tab);
+//                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+//                if (tab.getPosition() == 0) {
+//                    layout.setVisibility(View.VISIBLE);
+//                } else {
+//                    layout.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//
+//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+//                if (position == 0) {
+//                    layout.setVisibility(View.VISIBLE);
+//                } else {
+//                    layout.setVisibility(View.GONE);
+//                }
+//            }
+//        });
     }
 
     private void setMenuItemIconDrawable(Menu menu, @IdRes int itemId, @DrawableRes int drawableId) {
@@ -972,7 +957,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private void switchToDownloads() {
         Intent intent = new Intent(this, ThemeDownloadActivity.class);
-        intent.putExtra("currentTab", tabLayout.getSelectedTabPosition());
+//        intent.putExtra("currentTab", tabLayout.getSelectedTabPosition());
         startActivity(intent);
     }
 

@@ -41,6 +41,8 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
         } catch (InstantiationException e) {
             e.printStackTrace();
             return null;
+        } finally {
+
         }
     }
 

@@ -1,20 +1,20 @@
 package com.ihs.inputmethod.uimodules.ui.customize.view;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.LockerThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.OnlineWallpaperFragment;
+import com.ihs.inputmethod.uimodules.ui.customize.fragment.WrapFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
+import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 
 /**
  * Created by guonan.lv on 17/9/2.
@@ -43,13 +43,13 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         private Context mContext;
 
         private int[] CONTENT_VIEW_IDS = new int[]{
-                R.layout.fragment_theme_home,
+                R.layout.wrap_home_fragment,
                 R.layout.online_wallpaper_page,
                 R.layout.locker_themes_page,
         };
 
         private String[] FRAGMENT_TAG = new String[] {
-                "fragment_theme_home",
+                "wrap_fragment_home",
                 "online_wallpaper_page",
                 "locker_themes_page"
         };
@@ -70,8 +70,8 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
 
         private Fragment createFragmentByType(@LayoutRes int layoutId) {
             switch (layoutId) {
-                case R.layout.fragment_theme_home:
-                    return new ThemeHomeFragment();
+                case R.layout.wrap_home_fragment:
+                    return new WrapFragment();
                 case R.layout.online_wallpaper_page:
                     return new OnlineWallpaperFragment();
                 case R.layout.locker_themes_page:
@@ -94,11 +94,11 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         }
 
         private void setupWithInitialTabIndex(@LayoutRes int layoutId, int position) {
-            if (!(mContext instanceof Activity)) {
+            if (!(mContext instanceof HSAppCompatActivity)) {
                 return;
             }
             String tag = FRAGMENT_TAG[position];
-            FragmentManager fragmentManager = ((Activity)mContext).getFragmentManager();
+            FragmentManager fragmentManager = ((HSAppCompatActivity)mContext).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
 

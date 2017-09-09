@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 tools:context=".ui.theme.ui.ThemeHomeActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.theme.ui.ThemeHomeActivity">
 
 
     <android.support.design.widget.AppBarLayout
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <ImageView
                 android:id="@+id/apk_update_tip"
@@ -34,13 +34,13 @@
                 android:layout_centerVertical="true"
                 android:foregroundGravity="center"
                 android:src="@drawable/apk_update_tip"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
 
                 <ImageView
                     android:id="@+id/download_page_trigger"
@@ -58,28 +58,18 @@
 
 
             <!--<com.airbnb.lottie.LottieAnimationView-->
-                <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
-                <!--android:layout_width="36dp"-->
-                <!--android:layout_height="36dp"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:background="@drawable/gift_bg"-->
-                <!--android:paddingBottom="9dp"-->
-                <!--app:lottie_autoPlay="false"-->
-                <!--app:lottie_loop="true" />-->
+            <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
+            <!--android:layout_width="36dp"-->
+            <!--android:layout_height="36dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:background="@drawable/gift_bg"-->
+            <!--android:paddingBottom="9dp"-->
+            <!--app:lottie_autoPlay="false"-->
+            <!--app:lottie_loop="true" />-->
         </RelativeLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/store_tab"
-            app:tabIndicatorHeight="2dp"
-            app:tabIndicatorColor="@color/white"
-            android:layout_below="@+id/toolbar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
-
-        <!--android:background="#ffe92d"
-                android:background="#FBC02D"-->
         <TextView
             android:id="@+id/tv_enable_keyboard"
             android:layout_width="match_parent"
@@ -94,56 +84,16 @@
             android:textColor="@android:color/black"
             android:textSize="14sp"
             android:typeface="sans"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/fragment_view_pager"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="@color/theme_activity_bg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-
-    <!--<FrameLayout-->
-        <!--android:id="@+id/content_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@color/theme_activity_bg"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
 
     <com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/theme_activity_bg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-
-    <LinearLayout
-        android:id="@+id/home_create_theme_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/home_create_keyboard_bg"
-        android:clickable="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:drawableLeft="@drawable/home_create_keyboard"
-            android:drawablePadding="9dp"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="@string/home_create_keyboard"
-            android:textColor="#ffffff"
-            android:textSize="14sp"/>
-    </LinearLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_bar"
