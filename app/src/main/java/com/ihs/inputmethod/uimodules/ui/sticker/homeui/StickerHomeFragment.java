@@ -14,6 +14,9 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -29,6 +32,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION;
+import static com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager.STICKER_GROUP_ORIGINAL;
 import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 /**
@@ -42,12 +47,26 @@ public class StickerHomeFragment extends Fragment {
     private List<StickerModel> stickerModelList = new ArrayList<>();
     public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker);
 
+    private INotificationObserver observer = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION.equals(s)) {
+                StickerGroup stickerGroup = (StickerGroup) hsBundle.getObject(STICKER_GROUP_ORIGINAL);
+                StickerModel stickerModel = new StickerModel(stickerGroup);
+                int position = stickerModelList.indexOf(stickerModel);
+                stickerModelList.remove(position);
+                removeStickerFromView(position);
+            }
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sticker, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         initView();
+        HSGlobalNotificationCenter.addObserver(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION, observer);
         return view;
     }
 
@@ -73,16 +92,14 @@ public class StickerHomeFragment extends Fragment {
                             @Override
                             public void onDismiss(boolean success) {
                                 if (success) {
-                                    int position = stickerModelList.indexOf(stickerModel);
-                                    stickerModelList.remove(position);
-                                    removeStickerFromView(position);
+                                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
+                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
                             }
                         }, new HSHttpConnection.OnConnectionFinishedListener() {
                             @Override
                             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                                HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
-                                StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+
                             }
 
                             @Override
@@ -160,6 +177,7 @@ public class StickerHomeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        HSGlobalNotificationCenter.removeObserver(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION, observer);
     }
 
 }

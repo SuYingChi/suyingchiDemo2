@@ -38,4 +38,20 @@ public class StickerModel {
     public void setIsDownloaded(boolean download) {
         isDownloaded = download;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StickerModel that = (StickerModel) o;
+
+        return stickerGroup.equals(that.stickerGroup);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return stickerGroup.hashCode();
+    }
 }

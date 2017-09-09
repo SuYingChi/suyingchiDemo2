@@ -1,17 +1,14 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.os.AsyncTask;
-import android.support.v7.widget.util.SortedListAdapterCallback;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +19,7 @@ import java.util.Map;
 public class StickerDataManager {
     public static final String STICKER_DATA_LOAD_FINISH_NOTIFICATION = "sticker_data_load_finish";
     public static final String STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION = "sticker_data_change_finish";
+    public static final String STICKER_GROUP_ORIGINAL = "sticker_group_original_position";
     private static StickerDataManager instance;
     private List<StickerGroup> stickerGroups;
     private boolean isReady = false;
@@ -89,7 +87,9 @@ public class StickerDataManager {
             return;
         }
         stickerGroup.reloadStickers();
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION);
+        HSBundle bundle = new HSBundle();
+        bundle.putObject(STICKER_GROUP_ORIGINAL, stickerGroup);
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION, bundle);
     }
 
     List<StickerGroup> getStickerGroupList() {
