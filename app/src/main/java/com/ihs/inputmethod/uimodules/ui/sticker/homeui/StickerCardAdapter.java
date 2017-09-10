@@ -255,7 +255,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
             Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
             holder.stickerNewImage.setImageURI(uri);
         } else {
-            holder.stickerNewImage.setVisibility(TextUtils.equals(stickerModel.getStickerTag(), "YES") ? View.VISIBLE : View.GONE);
+            holder.stickerNewImage.setVisibility(View.GONE);
         }
     }
 

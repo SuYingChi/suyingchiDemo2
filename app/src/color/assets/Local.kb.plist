@@ -1613,8 +1613,6 @@
 					<string>BlueSmile</string>
 					<key>showName</key>
 					<string>Big Blue</string>
-					<key>showNewMark</key>
-					<string>YES</string>
 				</dict>
 				<dict>
 					<key>name</key>
@@ -1627,24 +1625,18 @@
 					<string>HealthyLife</string>
 					<key>showName</key>
 					<string>Healthy Life</string>
-					<key>showNewMark</key>
-					<string>YES</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>SportsWorld</string>
 					<key>showName</key>
 					<string>Sports World</string>
-					<key>showNewMark</key>
-					<string>YES</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>CrazyYolk</string>
 					<key>showName</key>
 					<string>Crazy Yolk</string>
-					<key>showNewMark</key>
-					<string>YES</string>
 				</dict>
 				<dict>
 					<key>name</key>
