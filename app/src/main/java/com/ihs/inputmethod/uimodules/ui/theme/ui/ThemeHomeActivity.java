@@ -310,10 +310,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
         item.setTitle(getString(R.string.theme_nav_theme_store, getString(R.string.app_name)));
 
-        fragments = new ArrayList<>();
-        fragments.add(ThemeHomeFragment.class);
-        fragments.add(StickerHomeFragment.class);
-        fragments.add(FontHomeFragment.class);
         //create storeFragment only if not exist
 //        Fragment storeFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
 //        if (storeFragment == null) {

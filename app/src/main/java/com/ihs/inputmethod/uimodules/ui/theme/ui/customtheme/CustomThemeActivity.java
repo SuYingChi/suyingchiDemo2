@@ -249,7 +249,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         shouldUseCamera = intent.getBooleanExtra(BUNDLE_KEY_BACKGROUND_USE_CAMERA, false);
         shouldUseGallery = intent.getBooleanExtra(BUNDLE_KEY_BACKGROUND_USE_GALLERY, false);
 
-
         String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
         if ("keyboard_create".equals(customEntry)) {
             HSAnalytics.logEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, "bundle_key", customEntry);

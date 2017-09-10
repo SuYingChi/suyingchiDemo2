@@ -17,5 +17,11 @@
             android:id="@+id/customize_bottom_bar_locker"
             android:icon="@drawable/customize_locker"
             android:title="@string/customize_locker_title" />
+
+        <item
+            android:id="@+id/customize_bottom_bar_setting"
+            android:icon="@drawable/customize_locker"
+            android:title="@string/customize_local_title" />
+
     </group>
 </menu>

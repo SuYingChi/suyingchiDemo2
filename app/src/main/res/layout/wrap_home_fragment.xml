@@ -1,21 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/store_tab"
+    <LinearLayout
+        android:id="@+id/tab_layout_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/MyCustomTabLayout" />
+        android:layout_height="@dimen/customize_toolbar_height"
+        android:background="@android:color/white"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/store_tab"
+                style="@style/MyCustomTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/download_button_container"
+            android:layout_width="42dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <LinearLayout
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="-1dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clipChildren="true">
+
+                    <ImageView
+                        android:id="@+id/tab_top_arrow_right"
+                        app:srcCompat="@drawable/download_icon_home_store"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-5dp"
+                        android:layout_marginStart="-5dp"
+                        android:rotation="0" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/fragment_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/tab_layout_container"
         android:background="@color/theme_activity_bg"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -23,8 +82,8 @@
         android:id="@+id/home_create_theme_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="56dp"
+        android:layout_below="@+id/fragment_view_pager"
+        android:layout_marginBottom="@dimen/bottom_bar_default_height"
         android:background="@drawable/home_create_keyboard_bg"
         android:clickable="true"
         android:orientation="vertical">
@@ -43,4 +102,4 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
