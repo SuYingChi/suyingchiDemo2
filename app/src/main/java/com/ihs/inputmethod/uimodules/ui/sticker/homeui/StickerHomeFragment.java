@@ -1,5 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +21,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSError;
 //import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.stickerplus.PlusButton;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -27,6 +31,7 @@ import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.StickerManager;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -71,6 +76,8 @@ public class StickerHomeFragment extends Fragment {
                 final String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
                 final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
+                removeNewStickerFromNewStickerList(stickerGroup);
+
                 DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                         drawable, new AdLoadingView.OnAdBufferingListener() {
@@ -94,6 +101,35 @@ public class StickerHomeFragment extends Fragment {
 
                             }
                         });
+            }
+
+            @Override
+            public void removeNewStickerFromNewStickerList(StickerGroup stickerGroup) {
+                String stickerGroupName = stickerGroup.getStickerGroupName();
+                SharedPreferences sharedPreferences = HSApplication.getContext().getSharedPreferences("sticker_new_list", Context.MODE_PRIVATE);
+                try {
+                    List<String> newStickersList = (ArrayList<String>)StickerCardAdapter.ListSaveUtil.String2SceneList(sharedPreferences.getString("new_sticker_list", null));
+                    if (newStickersList.contains(stickerGroupName)) {
+                        newStickersList.remove(stickerGroupName);
+
+                        // 持久化存储现在的newSticker状态
+                        SharedPreferences.Editor edit = sharedPreferences.edit();
+                        try {
+                            edit.putString("new_sticker_list", StickerCardAdapter.ListSaveUtil.SceneList2String(newStickersList));
+                            edit.apply();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        stickerCardAdapter.refreshNewStickersList(newStickersList);
+                        stickerCardAdapter.notifyDataSetChanged();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

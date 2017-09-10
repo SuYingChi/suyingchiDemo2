@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.stickerplus.PlusButton;
 import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -46,14 +47,19 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.StickerCardViewHolder> {
 
+    private static List<String> savedPreStickerGroupNamelist;
     private List<StickerModel> stickerModelList;
     private int imageWidth;
     private int imageHeight;
     private OnStickerCardClickListener onStickerCardClickListener;
     private String FROM_FRAGMENT_TYPE;
-    private SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences;
     private List<String> newStickersList;
     private List<StickerGroup> stickerGroupList;
+
+    public void refreshNewStickersList(List<String> newStickersList) {
+        this.newStickersList = newStickersList;
+    }
 
     public enum ITEM_TYPE {
         ITEM_TYPE_HOME,
@@ -68,12 +74,12 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         Resources resources = HSApplication.getContext().getResources();
         imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
         imageHeight = (int) (imageWidth / 1.6f);
-        Log.i("kong", "hahahahahahhahhahaha");
         this.onStickerCardClickListener = onStickerCardClickListener;
 
         stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
         sharedPreferences = HSApplication.getContext().getSharedPreferences("sticker_new_list", Context.MODE_PRIVATE);
         newStickersList = new ArrayList<>();
+        newStickersList = getNewStickersList();
 
         /**
          if (最新的list和以前的不一样){
@@ -82,55 +88,13 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
          }
          */
         List<String> preStickerGroupNameList = getPreStickerGroupNameList();
+        savePreStickerGroupNamelist(preStickerGroupNameList);
 
         List<String> currentStickerGroupNameList = new ArrayList<>();
-        for (StickerGroup stickerGroup : stickerGroupList) {
-            currentStickerGroupNameList.add(stickerGroup.getStickerGroupName());
-        }
 
-        for (String stickerGroupName : preStickerGroupNameList) {
-            if (!currentStickerGroupNameList.contains(stickerGroupName)) {
-                newStickersList.add(stickerGroupName);
-            }
-        }
-
-        
-        saveCurrentStickerGroupNameList(currentStickerGroupNameList);
-
-
-        String liststr = sharedPreferences.getString("new_sticker_list", "");
-
-
-        Log.i("kong", "liststr: " + liststr);
-
-        if (!TextUtils.isEmpty(liststr)) {
-            try {
-                newStickersList = (ArrayList<String>) ListSaveUtil.String2SceneList(liststr);
-                Log.i("kong", "newStickerList:" + newStickersList.toString());
-                for (StickerGroup stickerGroup : stickerGroupList) {
-                    if (!newStickersList.contains(stickerGroup.getStickerGroupName())) {
-                        newStickersList.add(stickerGroup.getStickerGroupName());
-                    }
-                }
-                SharedPreferences.Editor edit = sharedPreferences.edit();
-                try {
-                    //将list集合转成字符串
-                    String listStr = ListSaveUtil.SceneList2String(newStickersList);
-                    //存储
-                    edit.putString("new_sticker_list", listStr);
-                    edit.apply();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else { // 第一次进入将前两个sticker展示为new
+        if (preStickerGroupNameList == null) {
             newStickersList.add(stickerGroupList.get(0).getStickerGroupName());
             newStickersList.add(stickerGroupList.get(1).getStickerGroupName());
-
-            Log.i("kong", "第一次进入将前两个sticker展示为new");
-            Log.i("kong", "newStickersList: " + newStickersList.toString());
 
             SharedPreferences.Editor edit = sharedPreferences.edit();
             try {
@@ -139,28 +103,86 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
                 // 存储
                 edit.putString("new_sticker_list", listStr);
                 edit.apply();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-                Log.i("kong", "list 2 str: " + ListSaveUtil.String2SceneList(listStr).toString() + "");
+            currentStickerGroupNameList = getCurrentStickerGroupNameList(stickerGroupList);
+        } else {
+            currentStickerGroupNameList = getCurrentStickerGroupNameList(stickerGroupList);
+            for (String stickerGroupName : currentStickerGroupNameList) {
+                if (!preStickerGroupNameList.contains(stickerGroupName)) {
+                    newStickersList.add(stickerGroupName);
+                }
+            }
+        }
+        saveCurrentStickerGroupNameList(currentStickerGroupNameList);
+        saveNewStickerList(newStickersList);
+    }
+
+    public static void savePreStickerGroupNamelist(List<String> preStickerGroupNameList) {
+        savedPreStickerGroupNamelist = preStickerGroupNameList;
+    }
+
+    public static List<String> getSavedPreStickerGroupNamelist() {
+        return savedPreStickerGroupNamelist;
+    }
+
+    private List<String> getNewStickersList() {
+        List<String> newStickersList = new ArrayList<>();
+        if (sharedPreferences == null) {
+            newStickersList = null;
+        } else {
+            String liststr = sharedPreferences.getString("new_sticker_list", null);
+            try {
+                if (liststr != null) {
+                    newStickersList = (ArrayList<String>) ListSaveUtil.String2SceneList(liststr);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+        return newStickersList;
+    }
 
+    private void saveNewStickerList(List<String> newStickersList) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        try {
+            edit.putString("new_sticker_list", ListSaveUtil.SceneList2String(newStickersList));
+            edit.apply();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
 
-    private List<String> getPreStickerGroupNameList() {
+
+
+    public static List<String> getPreStickerGroupNameList() {
         List<String> preStickerGroupNameList = new ArrayList<>();
         try {
-            preStickerGroupNameList = (ArrayList<String>)ListSaveUtil.String2SceneList(sharedPreferences.getString("current_sticker_group_name_list", ""));
+            String liststr = sharedPreferences.getString("current_sticker_group_name_list", null);
+            if (liststr != null) {
+                preStickerGroupNameList = (ArrayList<String>) ListSaveUtil.String2SceneList(liststr);
+            } else {
+                preStickerGroupNameList = null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return preStickerGroupNameList;
+    }
+
+    public static List<String> getCurrentStickerGroupNameList(List<StickerGroup> stickerGroupList) {
+        List<String> currentStickerGroupNameList = new ArrayList<> ();
+        for (StickerGroup stickerGroup : stickerGroupList) {
+            currentStickerGroupNameList.add(stickerGroup.getStickerGroupName());
+        }
+        return currentStickerGroupNameList;
     }
 
     private void saveCurrentStickerGroupNameList(List<String> currentStickerGroupNameList) {
@@ -229,18 +251,12 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
          * 判断是否有当前sticker group 是否是new
          */
         if (isNewStickerGroup(stickerGroup)) {
-            Log.i("kong", "new sticker: " + stickerGroup.getStickerGroupName());
             holder.stickerNewImage.setVisibility(View.VISIBLE);
             Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
             holder.stickerNewImage.setImageURI(uri);
         } else {
             holder.stickerNewImage.setVisibility(TextUtils.equals(stickerModel.getStickerTag(), "YES") ? View.VISIBLE : View.GONE);
         }
-
-
-        Log.i("kong", "holder.stickerNewImage.getVisibility(): " + holder.stickerNewImage.getVisibility());
-        Log.i("kong", "stickerModel.getStickerTag(): " + stickerModel.getStickerTag());
-
     }
 
     private boolean isNewStickerGroup(StickerGroup stickerGroup) {
@@ -274,6 +290,8 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         void onCardViewClick(StickerModel stickerModel, Drawable drawable);
 
         void onDownloadButtonClick(StickerModel stickerModel, Drawable drawable);
+
+        void removeNewStickerFromNewStickerList(StickerGroup stickerGroup);
     }
 
     public class StickerCardViewHolder extends RecyclerView.ViewHolder {
@@ -314,7 +332,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
     /**
      * SharedPreferences 存储帮助类：list集合与字符串相互转化工具
      */
-    private static class ListSaveUtil {
+    public static class ListSaveUtil {
         //将list集合转换成字符串
 
         public static String SceneList2String(List SceneList) throws IOException {

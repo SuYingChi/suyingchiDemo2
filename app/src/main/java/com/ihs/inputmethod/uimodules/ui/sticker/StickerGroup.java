@@ -136,13 +136,10 @@ public class StickerGroup {
 
         }
 
-        Log.e("kong", "getStickerList: " + "stickerlist == null ? " + stickerList.isEmpty());
-
         return stickerList;
     }
 
     public void addSticker(final Sticker sticker) {
-        Log.e("kong", "sticker: " + sticker.getStickerUri());
         stickerList.add(sticker);
     }
 

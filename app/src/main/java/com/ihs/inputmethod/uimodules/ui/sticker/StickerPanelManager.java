@@ -61,7 +61,6 @@ public class StickerPanelManager {
     }
 
     private List<StickerGroup> getSortedStickerGroup() {
-        Log.e("kong", "getSortedStickerGroup()!!!!!!");
         List<StickerGroup> stickerSortedGroupList = new ArrayList<>();
         List<StickerGroup> stickerBuildInList = new ArrayList<>();
         List<StickerGroup> stickerDownloadedList = new ArrayList<>();

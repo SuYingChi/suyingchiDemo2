@@ -11,15 +11,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerCardAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -29,11 +28,11 @@ import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTranspa
 
 public class PlusButton extends FrameLayout {
     private static final String KEY_SHOW_NEW_MARK = "key_show_new_mark";
-    private static final String STICKER_NEW_NUMBER = "sticker_new_num";
     private View newTipView;
     private final static int FUNCTION_VIEW_REAL_WIDTH = 18;
-    public static final String KEY_FIRST_INTO_APP = "key_first_into_app";
+    public static final String KEY_FIRST_KEYBOARD_APPEAR = "keyboard_first_appear";
     private HSPreferenceHelper helper;
+    private List<String> preStickerGroupNamesList;
 
     public PlusButton(Context context) {
         this(context, null);
@@ -57,6 +56,9 @@ public class PlusButton extends FrameLayout {
         plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
         addView(plusImage);
 
+        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
+        preStickerGroupNamesList = StickerCardAdapter.getSavedPreStickerGroupNamelist();
+
         /**
          * 1. 如果第一次进入app，即使没有new，也显示小红点
          * 2. 如果检查有new，显示new
@@ -64,38 +66,16 @@ public class PlusButton extends FrameLayout {
          * 4. 如果有new更新后，重新进入时候将会显示new
          */
 
-
         if (checkIsFirstIntoApp()) {
             showNewTip();
-            saveNotFirstIntoAppState();
+            saveFirstEnterKeyboardState();
         } else if (getShowNewTipState()) {
             showNewTip();
-        } else if (checkStickerNewNumChange()) {//new sticker数目增加时候会显示小红点
+        } else if (checkStickerNewNumChange(stickerGroupList)) {//new sticker数目增加时候会显示小红点
             showNewTip();
         } else {
             hideNewTip();
         }
-    }
-
-    public void saveNewTipNum() {
-        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
-        List<StickerGroup> stickerGroups = new ArrayList<>();
-        for (Map<String, Object> map : stickerConfigList) {
-            String stickerGroupName = (String) map.get("name");
-            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if (stickerGroup.isStickerGroupDownloaded()) {
-                continue;
-            }
-            String stickerTag = (String) map.get("showNewMark");
-            if (android.text.TextUtils.equals(stickerTag, "YES")) {
-                stickerGroups.add(stickerGroup);
-            }
-        }
-        int num = stickerGroups.size();
-        if (helper == null) {
-            helper = HSPreferenceHelper.getDefault();
-        }
-        helper.putInt(STICKER_NEW_NUMBER, num);
     }
 
     private boolean checkIsFirstIntoApp() {
@@ -103,59 +83,24 @@ public class PlusButton extends FrameLayout {
             helper = HSPreferenceHelper.getDefault();
         }
 
-        return helper.getBoolean(KEY_FIRST_INTO_APP, true);
+        return helper.getBoolean(KEY_FIRST_KEYBOARD_APPEAR, true);
     }
 
-    public void saveNotFirstIntoAppState() {
+    public void saveFirstEnterKeyboardState() {
         if (helper == null) {
             helper = HSPreferenceHelper.getDefault();
         }
-        helper.putBoolean(KEY_FIRST_INTO_APP, false);
+        helper.putBoolean(KEY_FIRST_KEYBOARD_APPEAR, false);
     }
 
-    private boolean checkStickerNewNumChange() {
-        Log.e("dongdong", "checkStickerNewNumChange");
-        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
-        List<StickerGroup> stickerGroups = new ArrayList<>();
-        for (Map<String, Object> map : stickerConfigList) {
-            String stickerGroupName = (String) map.get("name");
-            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if (stickerGroup.isStickerGroupDownloaded()) {
-                continue;
-            }
-            String stickerTag = (String) map.get("showNewMark");
-            if (android.text.TextUtils.equals(stickerTag, "YES")) {
-                stickerGroups.add(stickerGroup);
-            }
+    private boolean checkStickerNewNumChange(List<StickerGroup> stickerGroupList) {
+        if (preStickerGroupNamesList == null) {// 没有进入过app且首次键盘弹出时
+            return false;
+        } else { // 如果不为空，说明已经在app对其进行了初始化，那么就比较现有的列表，看是否有增加的sticker
+            List<String> currentStickerGroupNameList = StickerCardAdapter.getCurrentStickerGroupNameList(stickerGroupList);
+            return currentStickerGroupNameList.size() > preStickerGroupNamesList.size();
         }
-        int num = stickerGroups.size();
-        if (helper == null) {
-            helper = HSPreferenceHelper.getDefault();
-        }
-
-        //当大于存储的数目的时候，有新的new
-        return num > helper.getInt(STICKER_NEW_NUMBER, num);
-
     }
-
-    private boolean checkIsHaveNewSticker() {
-        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
-        List<StickerGroup> stickerGroups = new ArrayList<>();
-        for (Map<String, Object> map : stickerConfigList) {
-            String stickerGroupName = (String) map.get("name");
-            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if (stickerGroup.isStickerGroupDownloaded()) {
-                continue;
-            }
-            String stickerTag = (String) map.get("showNewMark");
-            if (android.text.TextUtils.equals(stickerTag, "YES")) {
-                stickerGroups.add(stickerGroup);
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     public void showNewTip() {
         if (newTipView == null) {
