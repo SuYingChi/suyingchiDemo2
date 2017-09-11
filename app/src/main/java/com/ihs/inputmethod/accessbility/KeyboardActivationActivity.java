@@ -241,6 +241,8 @@ public class KeyboardActivationActivity extends HSActivity {
 
         if (dialogView == null) {
             dialogView = (LinearLayout) View.inflate(getApplicationContext(), R.layout.dialog_enable_accessbility_guide, null);
+            ((TextView)dialogView.findViewById(R.id.alertTitle)).setText(getString(R.string.alter_enable_access_title, getString(R.string.app_name)));
+            ((TextView)dialogView.findViewById(R.id.message)).setText(getString(R.string.alter_enable_access_content, getString(R.string.app_name)));
 
             videoView = (GivenSizeVideoView) dialogView.findViewById(R.id.videoview_guide);
             Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.accesibility_guide);

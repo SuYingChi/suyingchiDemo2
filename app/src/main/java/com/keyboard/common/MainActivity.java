@@ -193,6 +193,7 @@ public class MainActivity extends HSDeepLinkActivity {
         TextView textTwo = (TextView) findViewById(R.id.text_two);
         textOne.setText(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
         textTwo.setText(getString(R.string.toast_select_keyboard, getString(R.string.app_name)));
+        ((TextView)(findViewById(R.id.accessibility_button_container).findViewById(R.id.accessibility_text_one))).setText(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -409,6 +410,8 @@ public class MainActivity extends HSDeepLinkActivity {
         if (dialogView == null) {
             dialogView = (LinearLayout) View.inflate(getApplicationContext(), R.layout.dialog_enable_accessbility_guide, null);
             videoView = (VideoView) dialogView.findViewById(R.id.videoview_guide);
+            ((TextView)dialogView.findViewById(R.id.alertTitle)).setText(getString(R.string.alter_enable_access_title, getString(R.string.app_name)));
+            ((TextView)dialogView.findViewById(R.id.message)).setText(getString(R.string.alter_enable_access_content, getString(R.string.app_name)));
             Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.accesibility_guide);
             videoView.setVideoURI(uri);
             videoView.setZOrderOnTop(true);

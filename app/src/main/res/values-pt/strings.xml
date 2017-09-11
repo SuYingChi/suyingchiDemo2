@@ -24,9 +24,9 @@
     <string name="alert_find_keyboard_and_switch_on">Localize %1$s e ative</string>
 
     <!--main-->
-    <string name="alert_attention_messenger">O Teclado Arco-íris leva a sério a privacidade do usuário. NUNCA coletaremos nenhum dado, como senhas ou números de cartão de crédito. </string>
-    <string name="toast_enable_keyboard">Ativar o Teclado Arco-íris</string>
-    <string name="toast_select_keyboard">Selecione o Arco-íris</string>
+    <string name="alert_attention_messenger">O %1$s leva a sério a privacidade do usuário. NUNCA coletaremos nenhum dado, como senhas ou números de cartão de crédito. </string>
+    <string name="toast_enable_keyboard">Ativar o %1$s</string>
+    <string name="toast_select_keyboard">Selecione o %1$s</string>
     <string name="keyboard_guide_privacy_policy">By installing, you are agreeing to our %1$s\n and %2$s</string>
     <string name="text_terms_of_service">Termos de Serviço</string>
     <string name="text_privacy_policy">Política de Privacidade</string>
