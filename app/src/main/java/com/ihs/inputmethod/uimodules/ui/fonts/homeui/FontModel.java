@@ -62,4 +62,17 @@ public class FontModel {
         return file.exists() && file.length() > 0;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FontModel fontModel = (FontModel) o;
+        return hsSpecialCharacter.name.equals(fontModel.hsSpecialCharacter.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return hsSpecialCharacter.name.hashCode();
+    }
 }

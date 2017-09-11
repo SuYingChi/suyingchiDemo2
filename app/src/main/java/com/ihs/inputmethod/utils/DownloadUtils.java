@@ -40,7 +40,7 @@ public class DownloadUtils {
         return instance;
     }
 
-    public void saveJsonArrayToPref(String key, String value) {
+    public boolean saveJsonArrayToPref(String key, String value) {
         try {
             String originValue = HSPreferenceHelper.getDefault().getString(key, "");
             JSONArray jsonArray;
@@ -51,20 +51,18 @@ public class DownloadUtils {
             }
             jsonArray.put(value);
             HSPreferenceHelper.getDefault().putString(key, jsonArray.toString());
+            return true;
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    private void initConnection(final Resources resources, final AdLoadingView adLoadingView, final HSHttpConnection connection,
-                                final HSHttpConnection.OnConnectionFinishedListener onConnectionFinishedListener) {
+    private void initConnection(final Resources resources, final AdLoadingView adLoadingView, final HSHttpConnection connection) {
         connection.setDownloadFile(HSFileUtils.createNewFile(filePath));
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                if (onConnectionFinishedListener != null) {
-                    onConnectionFinishedListener.onConnectionFinished(hsHttpConnection);
-                }
             }
 
             @Override
@@ -72,9 +70,6 @@ public class DownloadUtils {
                 HSLog.e("startForegroundDownloading onConnectionFailed hsError" + hsError.getMessage());
                 adLoadingView.setConnectionStateText(resources.getString(R.string.foreground_download_failed));
                 adLoadingView.setConnectionProgressVisibility(View.INVISIBLE);
-                if (onConnectionFinishedListener != null) {
-                    onConnectionFinishedListener.onConnectionFailed(hsHttpConnection, hsError);
-                }
             }
         });
         connection.setHeaderReceivedListener(new HSHttpConnection.OnHeaderReceivedListener() {
@@ -107,8 +102,7 @@ public class DownloadUtils {
     }
 
     public void startForegroundDownloading(Context context, final String objectName, final String filePath, final String downloadUrl,
-                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener,
-                                           final HSHttpConnection.OnConnectionFinishedListener onConnectionFinishedListener) {
+                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
         HSHttpConnection connection;
         this.objectName = objectName;
         this.filePath = filePath;
@@ -139,7 +133,7 @@ public class DownloadUtils {
                 }, 2000, false);
         adLoadingView.showInDialog();
 
-        initConnection(resources, adLoadingView, connection, onConnectionFinishedListener);
+        initConnection(resources, adLoadingView, connection);
         adLoadingView.setTag(connection);
     }
 }

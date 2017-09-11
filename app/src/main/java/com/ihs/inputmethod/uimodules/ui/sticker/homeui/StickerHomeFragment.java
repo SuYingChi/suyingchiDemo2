@@ -13,12 +13,9 @@ import android.view.ViewGroup;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSError;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
@@ -92,19 +89,9 @@ public class StickerHomeFragment extends Fragment {
                             @Override
                             public void onDismiss(boolean success) {
                                 if (success) {
-                                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
+                                    HSAnalytics.logEvent("sticker_download_succeed", stickerGroupName);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
-                            }
-                        }, new HSHttpConnection.OnConnectionFinishedListener() {
-                            @Override
-                            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-
-                            }
-
-                            @Override
-                            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
-
                             }
                         });
             }

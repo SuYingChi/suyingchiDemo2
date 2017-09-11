@@ -10,11 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.connection.HSHttpConnection;
-import com.ihs.commons.utils.HSError;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
@@ -24,6 +25,8 @@ import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager.FONT_NAME_SAVE_TO_JSON_SUCCESS;
 
 /**
  * Created by guonan.lv on 17/8/14.
@@ -36,12 +39,29 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     private List<FontModel> fontModelList = new ArrayList<>();
     public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_font);
 
+    private INotificationObserver observer = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (FONT_NAME_SAVE_TO_JSON_SUCCESS.equals(s)) {
+                HSSpecialCharacter hsSpecialCharacter = (HSSpecialCharacter) hsBundle.getObject("HSSpecialCharacter");
+                if (hsSpecialCharacter != null) {
+                    FontModel fontModel = new FontModel(hsSpecialCharacter);
+                    int position = fontModelList.indexOf(fontModel);
+                    fontModelList.remove(position);
+                    fontCardAdapter.notifyItemRemoved(position);
+                    fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
+                }
+            }
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_font, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         initView();
+        HSGlobalNotificationCenter.addObserver(FONT_NAME_SAVE_TO_JSON_SUCCESS, observer);
         return view;
     }
 
@@ -97,6 +117,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     @Override
     public void onDestroy() {
         super.onDestroy();
+        HSGlobalNotificationCenter.removeObserver(observer);
     }
 
     @Override
@@ -108,22 +129,9 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                     @Override
                     public void onDismiss(boolean success) {
                         if (success) {
-                            int position = fontModelList.indexOf(fontModel);
-                            fontModelList.remove(position);
-                            fontCardAdapter.notifyItemRemoved(position);
-                            fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
+                            HSFontDownloadManager.getInstance().updateFontModel(fontModel);
+                            HSAnalytics.logEvent("font_download_succeed", fontName);
                         }
-                    }
-                }, new HSHttpConnection.OnConnectionFinishedListener() {
-                    @Override
-                    public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                        HSFontDownloadManager.getInstance().updateFontModel(fontModel);
-                        HSGoogleAnalyticsUtils.getInstance().logAppEvent("font_download_succeed", fontName);
-                    }
-
-                    @Override
-                    public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
-
                     }
                 });
     }

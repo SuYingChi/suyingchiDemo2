@@ -3,6 +3,8 @@ package com.ihs.inputmethod.uimodules.ui.fonts.common;
 import android.os.Build;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
@@ -26,6 +28,7 @@ public class HSFontDownloadManager {
     public static final String JSON_SUFFIX = ".json";
     public static final String ASSETS_FONT_FILE_PATH = "Fonts";
     private static final String DOWNLOADED_FONT_NAME_JOIN = "download_font_name_join";
+    public static final String FONT_NAME_SAVE_TO_JSON_SUCCESS = "font_name_save_to_json_success";
     private static HSFontDownloadManager instance;
 
     private HSFontDownloadManager() {
@@ -75,7 +78,12 @@ public class HSFontDownloadManager {
     public void updateSpecialCharacterList(HSSpecialCharacter hsSpecialCharacter) {
         HSSpecialCharacterManager.addSpecilCharacter(1, hsSpecialCharacter, Build.VERSION_CODES.ICE_CREAM_SANDWICH);
 
-        DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_FONT_NAME_JOIN, hsSpecialCharacter.name);
+        boolean saveJsonSuccess = DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_FONT_NAME_JOIN, hsSpecialCharacter.name);
+        if (saveJsonSuccess) {
+            HSBundle hsBundle = new HSBundle();
+            hsBundle.putObject("HSSpecialCharacter", hsSpecialCharacter);
+            HSGlobalNotificationCenter.sendNotificationOnMainThread(FONT_NAME_SAVE_TO_JSON_SUCCESS, hsBundle);
+        }
     }
 
     private HSSpecialCharacter readSpecialCharacterFromFile(String fontName) {

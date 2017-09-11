@@ -11,12 +11,10 @@ import android.widget.TextView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
-import com.ihs.commons.connection.HSHttpConnection;
-import com.ihs.commons.utils.HSError;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.utils.DownloadUtils;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -140,21 +138,16 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                     if (ClickUtils.isFastDoubleClick()) {
                         return;
                     }
-                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
+                    HSAnalytics.logEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
                     final String stickerGroupName = stickerGroup.getStickerGroupName();
                     final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
                     DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                             stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                            sticker_download_preview.getDrawable(), null, new HSHttpConnection.OnConnectionFinishedListener() {
+                            sticker_download_preview.getDrawable(), new AdLoadingView.OnAdBufferingListener() {
                                 @Override
-                                public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
+                                public void onDismiss(boolean b) {
+                                    HSAnalytics.logEvent("sticker_download_succeed", stickerGroupName);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-                                }
-
-                                @Override
-                                public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
-
                                 }
                             });
                 }
