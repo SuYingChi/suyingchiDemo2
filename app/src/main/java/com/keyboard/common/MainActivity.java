@@ -52,7 +52,6 @@ import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.accessbility.AccGALogger;
 import com.ihs.inputmethod.accessbility.AccessibilityEventListener;
 import com.ihs.inputmethod.accessbility.CustomViewDialog;
-import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -554,7 +553,7 @@ public class MainActivity extends HSDeepLinkActivity {
                         }
                     }
                 }
-            }, 6000);
+            }, 10000);
         } else {
             launchImageView.setVisibility(View.VISIBLE);
             launchVideoView.setVisibility(GONE);
