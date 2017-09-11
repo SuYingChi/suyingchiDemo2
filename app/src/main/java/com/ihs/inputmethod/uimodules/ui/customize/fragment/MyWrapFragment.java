@@ -3,7 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.customize.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +60,7 @@ public class MyWrapFragment extends Fragment {
         fragments.add(MyStickerFragment.class);
         fragments.add(MyFontFragment.class);
 
-        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getActivity().getSupportFragmentManager(), fragments);
+        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getActivity().getFragmentManager(), fragments);
         String[] tabTitles = new String[3];
         tabTitles[0] = getActivity().getString(R.string.tab_theme_my);
         tabTitles[1] = getActivity().getString(R.string.tab_sticker_my);

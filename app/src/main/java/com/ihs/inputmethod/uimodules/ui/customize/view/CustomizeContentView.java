@@ -1,10 +1,11 @@
 package com.ihs.inputmethod.uimodules.ui.customize.view;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -15,6 +16,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.fragment.WrapFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
 
 /**
  * Created by guonan.lv on 17/9/2.
@@ -46,12 +48,14 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
                 R.layout.wrap_home_fragment,
                 R.layout.online_wallpaper_page,
                 R.layout.locker_themes_page,
+                R.layout.fragment_theme_home
         };
 
         private String[] FRAGMENT_TAG = new String[] {
                 "wrap_fragment_home",
                 "online_wallpaper_page",
-                "locker_themes_page"
+                "locker_themes_page",
+                "pref_theme"
         };
 
         CustomizeContentAdapter(CustomizeContentView view) {
@@ -76,6 +80,8 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
                     return new OnlineWallpaperFragment();
                 case R.layout.locker_themes_page:
                     return new LockerThemeFragment();
+                case R.layout.fragment_theme_home:
+                    return new SettingsActivity2.GeneralHomePreferenceFragment();
                 default:
                     return null;
             }
@@ -98,7 +104,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
                 return;
             }
             String tag = FRAGMENT_TAG[position];
-            FragmentManager fragmentManager = ((HSAppCompatActivity)mContext).getSupportFragmentManager();
+            FragmentManager fragmentManager = ((AppCompatActivity)mContext).getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
 

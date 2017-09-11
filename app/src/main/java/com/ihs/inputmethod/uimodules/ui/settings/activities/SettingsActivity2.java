@@ -17,17 +17,22 @@
 package com.ihs.inputmethod.uimodules.ui.settings.activities;
 
 import android.annotation.TargetApi;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
-import android.app.FragmentManager;
+import android.provider.Browser;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
@@ -40,6 +45,8 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
+import com.ihs.commons.config.HSConfig;
+import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
@@ -206,13 +213,22 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             setLocker();
             setBoost();
             setCallAssistant();
-            ((SettingsActivity2)getActivity()).setupActionBar(getString(R.string.setting_item_more_settings));
+            setupActionBar(getString(R.string.setting_item_more_settings));
         }
 
         @Override
         public void onDestroy() {
             super.onDestroy();
-            ((SettingsActivity2)getActivity()).setupActionBar(getString(R.string.settings));
+            setupActionBar(getString(R.string.settings));
+        }
+
+        private void setupActionBar(String title) {
+            ActionBar actionBar = ((HSAppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                // Show the Up button in the action bar.
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setTitle(title);
+            }
         }
 
         @Override
@@ -326,6 +342,97 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     return true;
                 }
             });
+        }
+    }
+
+    /**
+     * This fragment shows general preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class GeneralHomePreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_settings_home);
+            setLanguage();
+            setup();
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            return super.onOptionsItemSelected(item);
+        }
+
+        private void setLanguage() {
+            StringBuilder languageSb = new StringBuilder();
+            final InputMethodInfo imi = HSInputMethod.getInputMethodInfoOfThisIme();
+            List<InputMethodSubtype> enabledList = HSImeSubtypeManager.getInputMethodSubtypeList(true);
+            CharSequence subtypeLabel;
+            for (int i = 0; i < enabledList.size(); i++) {
+                subtypeLabel = enabledList.get(i).getDisplayName(HSApplication.getContext(), imi.getPackageName(), imi.getServiceInfo().applicationInfo);
+                if (i < enabledList.size() - 1) {
+                    languageSb.append(subtypeLabel).append(", ");
+                } else {
+                    languageSb.append(subtypeLabel);
+                    if (i > 0) {
+                        languageSb.append(".");
+                    }
+                }
+            }
+            Preference languagePreference = findPreference("choose_language");
+            languagePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), MoreLanguageActivity2.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    return true;
+                }
+            });
+        }
+
+        private void setup() {
+            Preference keyboardSettingsPref = findPreference("keyboard_settings");
+            keyboardSettingsPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    HSUIInputMethod.launchSettingsActivity();
+                    HSAnalytics.logEvent("sidebar_settings_clicked");
+                    return true;
+                }
+            });
+
+            Preference removeAdPref = findPreference("removeAd");
+            removeAdPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    HSAnalytics.logEvent("sidebar_removeAds_clicked");
+                    RemoveAdsManager.getInstance().purchaseRemoveAds();
+                    return true;
+                }
+            });
+            
+            Preference privacyPolicy = findPreference("privacy_policy");
+            privacyPolicy.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    setPrivacy();
+                    return true;
+                }
+            });
+        }
+
+        private void setPrivacy() {
+            Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.putExtra(Browser.EXTRA_APPLICATION_ID, getActivity().getPackageName());
+            try {
+                getActivity().startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Log.w("URLSpan", "Actvity was not found for intent, " + intent.toString());
+            }
         }
     }
 }

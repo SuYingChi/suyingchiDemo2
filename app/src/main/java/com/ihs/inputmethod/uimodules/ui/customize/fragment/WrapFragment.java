@@ -3,7 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.customize.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,7 +85,7 @@ public class WrapFragment extends Fragment implements View.OnClickListener {
         myTabTitles[1] = getActivity().getString(R.string.tab_sticker_my);
         myTabTitles[2] = getActivity().getString(R.string.tab_font_my);
 
-        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getActivity().getSupportFragmentManager(), fragments);
+        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getActivity().getFragmentManager(), fragments);
         tabFragmentPagerAdapter.setTabTitles(homeTabTitles);
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(tabFragmentPagerAdapter);

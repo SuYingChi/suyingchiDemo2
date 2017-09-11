@@ -70,8 +70,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
-import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontHomeFragment;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
@@ -122,6 +120,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     public static final int TAB_INDEX_KEYBOARD = 0;
     public static final int TAB_INDEX_WALLPAPER = 1;
     public static final int TAB_INDEX_LOCKER = 2;
+    public static final int TAB_INDEX_SETTINGS = 3;
 
     private int currentTabIndex = 0;
 
@@ -129,10 +128,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_keyboard, TAB_INDEX_KEYBOARD);
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_wallpapers, TAB_INDEX_WALLPAPER);
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_locker, TAB_INDEX_LOCKER);
+        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_setting, TAB_INDEX_SETTINGS);
 
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_keyboard, "Keyboard");
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_wallpapers, "Wallpaper");
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_locker, "Locker");
+        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_setting, "Settings");
     }
 
     private CustomizeContentView mContent;

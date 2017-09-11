@@ -154,7 +154,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         fragments.add(MyStickerFragment.class);
         fragments.add(MyFontFragment.class);
 
-        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getFragmentManager(), fragments);
         String[] tabTitles = new String[3];
         tabTitles[0] = getApplicationContext().getString(R.string.tab_theme_my);
         tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker_my);

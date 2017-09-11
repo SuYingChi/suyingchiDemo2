@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="GENERAL">
+        <Preference
+            android:title="@string/theme_nav_languages"
+            android:key="choose_language"/>
+
+        <Preference
+            android:title="@string/theme_nav_settings"
+            android:key="keyboard_settings"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="MORE">
+        <Preference
+            android:title="@string/theme_nav_no_ads"
+            android:key="removeAd"/>
+        <Preference
+            android:title="@string/text_privacy_policy"
+            android:key="privacy_policy"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
