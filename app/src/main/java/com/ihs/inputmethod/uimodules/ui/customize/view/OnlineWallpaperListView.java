@@ -91,7 +91,7 @@ public class OnlineWallpaperListView extends FrameLayout {
         GridItemDecoration decoration = new GridItemDecoration(CommonUtils.pxFromDp(2));
         decoration.setAdapter(adapter);
         recyclerView.addItemDecoration(decoration);
-        ThemeHomeActivity.bindScrollListener(getContext(), recyclerView, false);
+        ThemeHomeActivity.bindScrollListener(getContext(), recyclerView, true);
 //        startLoading();
     }
 

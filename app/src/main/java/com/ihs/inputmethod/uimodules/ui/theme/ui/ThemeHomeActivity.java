@@ -70,6 +70,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
+import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
@@ -95,7 +96,7 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
  * Created by jixiang on 16/8/17.
  */
 public class ThemeHomeActivity extends BaseCustomizeActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener,
-        KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
+        KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener, SettingsActivity2.GeneralHomePreferenceFragment.OnUpdateClickListener {
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
 
@@ -508,15 +509,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             RemoveAdsManager.getInstance().purchaseRemoveAds();
         } else if ( id == R.id.nav_privacy){
             startBrowsePrivacy();
-        } else if (id == R.id.nav_privacy) {
-            Uri uri = Uri.parse(HSConfig.optString("", "Application", "Policy", "PrivacyPolicy"));
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
-            try {
-                startActivity(intent);
-            } catch (ActivityNotFoundException e) {
-                Log.w("URLSpan", "Actvity was not found for intent, " + intent.toString());
-            }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -993,4 +985,15 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 //        handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
     }
 
+    @Override
+    public void updateClick() {
+        handler.removeMessages(HANDLER_SHOW_UPDATE_DIALOG);
+        checkAndShowApkUpdateAlert(true);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                restoreNavigationView();
+            }
+        });
+    }
 }

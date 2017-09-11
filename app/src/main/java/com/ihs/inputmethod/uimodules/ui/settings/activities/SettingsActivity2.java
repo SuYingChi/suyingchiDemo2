@@ -27,7 +27,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Browser;
 import android.support.annotation.Nullable;
@@ -49,6 +51,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
+import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -119,7 +122,7 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                   || GeneralMorePreferenceFragment.class.getName().equals(fragmentName);
+                || GeneralMorePreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -350,7 +353,20 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralHomePreferenceFragment extends PreferenceFragment {
+    public static class GeneralHomePreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
+
+        private OnUpdateClickListener onUpdateClickListener;
+        private Preference updatePreference;
+        private PreferenceCategory preferenceCategory;
+
+        @Override
+        public void onAttach(Context context) {
+            super.onAttach(context);
+            if (context instanceof OnUpdateClickListener) {
+                onUpdateClickListener = (OnUpdateClickListener) context;
+            }
+        }
+
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -380,48 +396,21 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                     }
                 }
             }
-            Preference languagePreference = findPreference("choose_language");
-            languagePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), MoreLanguageActivity2.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    return true;
-                }
-            });
+            findPreference("choose_language").setOnPreferenceClickListener(this);
         }
 
         private void setup() {
-            Preference keyboardSettingsPref = findPreference("keyboard_settings");
-            keyboardSettingsPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    HSUIInputMethod.launchSettingsActivity();
-                    HSAnalytics.logEvent("sidebar_settings_clicked");
-                    return true;
-                }
-            });
-
-            Preference removeAdPref = findPreference("removeAd");
-            removeAdPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    HSAnalytics.logEvent("sidebar_removeAds_clicked");
-                    RemoveAdsManager.getInstance().purchaseRemoveAds();
-                    return true;
-                }
-            });
-            
-            Preference privacyPolicy = findPreference("privacy_policy");
-            privacyPolicy.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    setPrivacy();
-                    return true;
-                }
-            });
+            preferenceCategory = (PreferenceCategory) findPreference("more");
+            updatePreference = findPreference("update");
+            if (!ApkUtils.isUpdateEnabled()) {
+                preferenceCategory.removePreference(updatePreference);
+            } else {
+                preferenceCategory.addPreference(updatePreference);
+            }
+            findPreference("keyboard_settings").setOnPreferenceClickListener(this);
+            findPreference("removeAd").setOnPreferenceClickListener(this);
+            findPreference("privacy_policy").setOnPreferenceClickListener(this);
+            updatePreference.setOnPreferenceClickListener(this);
         }
 
         private void setPrivacy() {
@@ -431,8 +420,39 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             try {
                 getActivity().startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                Log.w("URLSpan", "Actvity was not found for intent, " + intent.toString());
+                Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
             }
+        }
+
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            if (preference == findPreference("choose_language")) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MoreLanguageActivity2.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            } else if (preference == findPreference("keyboard_settings")) {
+                HSUIInputMethod.launchSettingsActivity();
+                HSAnalytics.logEvent("sidebar_settings_clicked");
+                return true;
+            } else if (preference == findPreference("removeAd")) {
+                HSAnalytics.logEvent("sidebar_removeAds_clicked");
+                RemoveAdsManager.getInstance().purchaseRemoveAds();
+                return true;
+            } else if (preference == findPreference("privacy_policy")) {
+                setPrivacy();
+                return true;
+            } else if (preference == updatePreference) {
+                if (onUpdateClickListener != null) {
+                    onUpdateClickListener.updateClick();
+                }
+            }
+            return false;
+        }
+
+        public interface OnUpdateClickListener {
+            void updateClick();
         }
     }
 }

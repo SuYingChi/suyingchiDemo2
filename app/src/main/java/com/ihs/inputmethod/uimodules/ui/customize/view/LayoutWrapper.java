@@ -176,7 +176,7 @@ public class LayoutWrapper {
 
     public void attachToRecyclerView(RecyclerView recyclerView, boolean hasBottom) {
         if (hasBottom) {
-            recyclerView.addOnScrollListener(mScrollListener);
+        recyclerView.addOnScrollListener(mScrollListener);
         } else {
             recyclerView.addOnScrollListener(mNoBottomScrollListener);
         }
@@ -226,10 +226,10 @@ public class LayoutWrapper {
                     show(recyclerView, true);
                     mLayoutManagerBottom = true;
                 } else {
-                    // if (mLastVisibleItemPosition != mLastPos) {
-                    //  HSLog.i(TAG, "restoreSmoothly");
-                    restoreSmoothly(recyclerView);
-                    // }
+                    if (mLastVisibleItemPosition != mLastPos) {
+                        //  HSLog.i(TAG, "restoreSmoothly");
+                        restoreSmoothly(recyclerView);
+                    }
                     mLayoutManagerBottom = false;
                 }
             }
@@ -249,7 +249,7 @@ public class LayoutWrapper {
                 restore(recyclerView);
                 mLayoutManagerBottom = false;
             } else if (dy > mLeastScrollHeight && !mLayoutManagerBottom) {
-                hide(recyclerView);
+
             } else if (dy < -mLeastScrollHeight) {
                 show(recyclerView, false);
             }

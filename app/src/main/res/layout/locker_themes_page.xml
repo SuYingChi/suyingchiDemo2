@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/customize_toolbar_height"
-        android:background="@android:color/white"
+        android:background="@color/colorPrimary"
         android:elevation="@dimen/customize_toolbar_elevation"
         tools:ignore="UnusedAttribute">
 
@@ -21,8 +21,8 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:text="@string/customize_locker_title"
-            android:textColor="@color/material_text_black_primary"
-            android:textSize="14sp"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textSize="18sp"
             app:typeface="@string/proxima_nova_semibold"/>
     </FrameLayout>
 

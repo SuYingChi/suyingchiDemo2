@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="GENERAL">
         <Preference
             android:title="@string/theme_nav_languages"
@@ -10,13 +11,20 @@
             android:key="keyboard_settings"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="MORE">
+    <PreferenceCategory
+        android:title="MORE"
+        android:key="more">
         <Preference
             android:title="@string/theme_nav_no_ads"
             android:key="removeAd"/>
         <Preference
             android:title="@string/text_privacy_policy"
             android:key="privacy_policy"/>
+        <Preference
+            android:title="@string/theme_nav_update"
+            android:icon="@drawable/nav_update_icon"
+            app:actionLayout="@layout/apk_update_indication_icon"
+            android:key="update" />
     </PreferenceCategory>
 
 </PreferenceScreen>
