@@ -34,6 +34,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 import static android.content.Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
+import static com.ihs.app.framework.HSApplication.instance;
 
 
 /**
@@ -76,11 +77,11 @@ public class SetupKeyboardAccessibilityService {
     private boolean stopSelf = false;
 
     public SetupKeyboardAccessibilityService() {
-        context = HSApplication.getContext();
+        HSFloatWindowManager.getInstance().showAccessibilityCover();
 
+        context = HSApplication.getContext();
         context.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
                 settingsContentObserver);
-
         onServiceConnected();
     }
 
@@ -175,9 +176,6 @@ public class SetupKeyboardAccessibilityService {
 
     public void onServiceConnected() {
         HSLog.e("onServiceConnected");
-        HSFloatWindowManager instance = HSFloatWindowManager.getInstance();
-        instance.showAccessibilityCover(R.layout.layout_accessbility_cover);
-
         imeSettingState = IME_STATE_NOT_ENABLE;
         isScrolled = false;
         inputMethodEnabled = false;

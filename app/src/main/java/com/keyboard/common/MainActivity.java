@@ -67,6 +67,7 @@ import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.utils.Constants;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_guide_gotit_clicked;
@@ -420,7 +421,9 @@ public class MainActivity extends HSDeepLinkActivity {
             customViewDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    videoView.stopPlayback();
+                    if(videoView!=null){
+                        videoView.stopPlayback();
+                    }
                 }
             });
 //            customViewDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -540,6 +543,7 @@ public class MainActivity extends HSDeepLinkActivity {
             launchImageView.setVisibility(GONE);
             launchVideoView.setVisibility(View.VISIBLE);
             launchVideoView.start();
+            HSFloatWindowManager.getInstance().initAccessibilityCover();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -705,6 +709,8 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         HSLog.d("MainActivity startThemeHomeActivity start.");
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
+        startThemeHomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
+
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
@@ -721,7 +727,6 @@ public class MainActivity extends HSDeepLinkActivity {
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
-        finish();
     }
 
     private void playManualButtonShowAnimation() {
