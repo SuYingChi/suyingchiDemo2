@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
@@ -106,30 +107,15 @@ public class StickerHomeFragment extends Fragment {
             @Override
             public void removeNewStickerFromNewStickerList(StickerGroup stickerGroup) {
                 String stickerGroupName = stickerGroup.getStickerGroupName();
-                SharedPreferences sharedPreferences = HSApplication.getContext().getSharedPreferences("sticker_new_list", Context.MODE_PRIVATE);
-                try {
-                    List<String> newStickersList = (ArrayList<String>)StickerCardAdapter.ListSaveUtil.String2SceneList(sharedPreferences.getString("new_sticker_list", null));
-                    if (newStickersList.contains(stickerGroupName)) {
-                        newStickersList.remove(stickerGroupName);
+                Set<String> newStickerSet = StickerDataManager.getInstance().getCurrentNewStickerSet(HSApplication.getContext());
 
-                        // 持久化存储现在的newSticker状态
-                        SharedPreferences.Editor edit = sharedPreferences.edit();
-                        try {
-                            edit.putString("new_sticker_list", StickerCardAdapter.ListSaveUtil.SceneList2String(newStickersList));
-                            edit.apply();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        stickerCardAdapter.refreshNewStickersList(newStickersList);
-                        stickerCardAdapter.notifyDataSetChanged();
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                if (newStickerSet.contains(stickerGroupName)) {
+                    newStickerSet.remove(stickerGroupName);
+                    StickerDataManager.getInstance().saveCurrentNewStickerSet(HSApplication.getContext(), newStickerSet);
+                    stickerCardAdapter.refreshNewStickersList(newStickerSet);
+                    stickerCardAdapter.notifyDataSetChanged();
                 }
+
             }
         });
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -152,9 +138,9 @@ public class StickerHomeFragment extends Fragment {
         List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
 
         for (StickerGroup stickerGroup : stickerGroupList) {
-           if (!stickerGroup.isStickerGroupDownloaded()) {
-               stickerModelList.add(new StickerModel(stickerGroup));
-           }
+            if (!stickerGroup.isStickerGroupDownloaded()) {
+                stickerModelList.add(new StickerModel(stickerGroup));
+            }
         }
     }
 

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,9 +15,9 @@ import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerCardAdapter;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -32,7 +31,6 @@ public class PlusButton extends FrameLayout {
     private final static int FUNCTION_VIEW_REAL_WIDTH = 18;
     public static final String KEY_FIRST_KEYBOARD_APPEAR = "keyboard_first_appear";
     private HSPreferenceHelper helper;
-    private List<String> preStickerGroupNamesList;
 
     public PlusButton(Context context) {
         this(context, null);
@@ -56,29 +54,19 @@ public class PlusButton extends FrameLayout {
         plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
         addView(plusImage);
 
-        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
-        preStickerGroupNamesList = StickerCardAdapter.getSavedPreStickerGroupNamelist();
-
-        /**
-         * 1. 如果第一次进入app，即使没有new，也显示小红点
-         * 2. 如果检查有new，显示new
-         * 3. 只要一次hide后，再也不显示
-         * 4. 如果有new更新后，重新进入时候将会显示new
-         */
-
-        if (checkIsFirstIntoApp()) {
+        if (isFirstKeyboardAppear()) {
             showNewTip();
             saveFirstEnterKeyboardState();
-        } else if (getShowNewTipState()) {
+        } else if (isShowNewTip()) {// 控制点没有点击，如果点击了，则不再显示，默认情况是未点击的时候，是显示的
             showNewTip();
-        } else if (checkStickerNewNumChange(stickerGroupList)) {//new sticker数目增加时候会显示小红点
+        } else if (StickerDataManager.getInstance().getShowNewTipState()) { // 有没有更新，如果更新了则显示；没有更新，则不显示
             showNewTip();
         } else {
             hideNewTip();
         }
     }
 
-    private boolean checkIsFirstIntoApp() {
+    private boolean isFirstKeyboardAppear() {
         if (helper == null) {
             helper = HSPreferenceHelper.getDefault();
         }
@@ -91,15 +79,6 @@ public class PlusButton extends FrameLayout {
             helper = HSPreferenceHelper.getDefault();
         }
         helper.putBoolean(KEY_FIRST_KEYBOARD_APPEAR, false);
-    }
-
-    private boolean checkStickerNewNumChange(List<StickerGroup> stickerGroupList) {
-        if (preStickerGroupNamesList == null) {// 没有进入过app且首次键盘弹出时
-            return false;
-        } else { // 如果不为空，说明已经在app对其进行了初始化，那么就比较现有的列表，看是否有增加的sticker
-            List<String> currentStickerGroupNameList = StickerCardAdapter.getCurrentStickerGroupNameList(stickerGroupList);
-            return currentStickerGroupNameList.size() > preStickerGroupNamesList.size();
-        }
     }
 
     public void showNewTip() {
@@ -130,14 +109,11 @@ public class PlusButton extends FrameLayout {
         }
     }
 
-    /**
-     * 已显示过new
-     */
-    public void saveShowNewTip() {
+    public void saveUnshowNewTipState() {
         helper.putBoolean(KEY_SHOW_NEW_MARK, false);
     }
 
-    private boolean getShowNewTipState() {
+    private boolean isShowNewTip() {
         if (helper == null) {
             helper = HSPreferenceHelper.getDefault();
         }
