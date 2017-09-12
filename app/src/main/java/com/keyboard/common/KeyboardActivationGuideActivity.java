@@ -238,7 +238,7 @@ public class KeyboardActivationGuideActivity extends HSActivity {
         }
     };
 
-    private static class CustomViewDialog extends Dialog {
+    public static class CustomViewDialog extends Dialog {
         private int gravity, xOffset, yOffset;
 
         public CustomViewDialog(View contentView, int duration) {

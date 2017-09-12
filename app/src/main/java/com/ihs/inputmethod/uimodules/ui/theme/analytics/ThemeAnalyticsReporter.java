@@ -9,7 +9,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
 
 import java.util.ArrayList;
@@ -135,10 +134,6 @@ public final class ThemeAnalyticsReporter {
 		}
 	}
 
-	public void recordThemeApply(String theme) {
-		recordThemeApplyInDetailActivity(theme);
-	}
-
 	public void recordThemeDownload(String theme) {
 		recordThemeDownloadInDetailActivity(theme);
 	}
@@ -186,15 +181,6 @@ public final class ThemeAnalyticsReporter {
 		theme=theme.trim();
 		HSLog.d(theme+" shown in detail");
 		detailShown.add(theme.trim());
-	}
-
-	public void recordThemeApplyInDetailActivity(String theme) {
-		theme=theme.trim();
-		recordThemeUsage(theme);
-		if(!detailReported.contains(theme)){
-			detailReported.add(theme);
-			HSLog.d(theme+"_true");
-		}
 	}
 
 	public void recordThemeDownloadInDetailActivity(String theme) {

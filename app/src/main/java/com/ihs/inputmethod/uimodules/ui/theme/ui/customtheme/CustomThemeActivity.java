@@ -47,7 +47,6 @@ import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
@@ -535,7 +534,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         setResult(RESULT_OK);
         HSBundle bundle = new HSBundle();
         bundle.putString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, ThemeHomeActivity.class.getSimpleName());
-        bundle.putInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE, keyboardActivationFromCustom);
+        bundle.putInt(TrialKeyboardDialog.BUNDLE_ACTIVATION_CODE, keyboardActivationFromCustom);
         HSGlobalNotificationCenter.sendNotification(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
         if (!PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();

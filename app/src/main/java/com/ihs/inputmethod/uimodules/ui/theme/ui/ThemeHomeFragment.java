@@ -1,6 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,6 +25,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.ThemeHomeAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.ArrayList;
@@ -36,6 +39,8 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
 	public final static String NOTIFICATION_THEME_HOME_DESTROY="ThemeHomeFragment.destroy";
 	public final static String NOTIFICATION_THEME_HOME_STOP="ThemeHomeFragment.stop";
+
+    private static final int KEYBOARD_ACTIVIATION_FROM_CARD = 10;
 
 	private RecyclerView recyclerView;
 	private ThemeHomeAdapter adapter;
@@ -217,13 +222,6 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 	}
 
 	@Override
-	public void onMenuApplyClick(HSKeyboardTheme keyboardTheme) {
-		if (isThemeAnalyticsEnabled) {
-			ThemeAnalyticsReporter.getInstance().recordThemeApply(keyboardTheme.mThemeName);
-		}
-	}
-
-	@Override
 	public void onMenuShareClick(HSKeyboardTheme keyboardTheme) {
 	}
 
@@ -245,7 +243,22 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
 	}
 
-	public void onResume() {
+	@Override
+	public void onKeyboardActivationStart() {
+        Intent intent = new Intent(getActivity(), KeyboardActivationGuideActivity.class);
+        startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_CARD);
+	}
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == KEYBOARD_ACTIVIATION_FROM_CARD) {
+            adapter.finishKeyboardActivation(resultCode == Activity.RESULT_OK);
+        }
+    }
+
+    public void onResume() {
 		super.onResume();
 		currentResumeTime = System.currentTimeMillis();
 		adapter.notifyDataSetChanged();

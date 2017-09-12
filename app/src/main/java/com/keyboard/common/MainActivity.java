@@ -44,7 +44,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -62,7 +61,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
@@ -80,7 +78,7 @@ import static com.ihs.inputmethod.accessbility.AccGALogger.app_auto_setkey_click
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_manual_setkey_clicked;
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_setting_up_page_viewed;
 import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
-import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
+import static com.ihs.inputmethod.accessbility.KeyboardActivationActivity.PREF_THEME_HOME_SHOWED;
 
 
 public class MainActivity extends HSDeepLinkActivity {
@@ -471,7 +469,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
                 ImageView imageCodeProject = new ImageView(getApplicationContext());
                 imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-                final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                final KeyboardActivationGuideActivity.CustomViewDialog customViewDialog = new KeyboardActivationGuideActivity.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
 
                 handler.postDelayed(new Runnable() {
                     @Override

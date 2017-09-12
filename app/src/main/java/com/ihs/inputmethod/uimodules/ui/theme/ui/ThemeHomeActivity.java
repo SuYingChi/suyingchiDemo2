@@ -50,7 +50,6 @@ import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
@@ -75,7 +74,7 @@ import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
-public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, View.OnClickListener {
+public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
     public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
 
@@ -85,7 +84,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
     private static final int keyboardActivationFromHome = 11;
-    public static final int keyboardActivationFromHomeWithTrial = 12;
+    private static final int keyboardActivationFromHomeWithTrial = 12;
 
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
 
@@ -139,7 +138,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     .NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
                 if (hsBundle != null) {
                     String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
-                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
+                    int activationCode = hsBundle.getInt(TrialKeyboardDialog.BUNDLE_ACTIVATION_CODE);
                     if (ThemeHomeActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
                         showTrialKeyboardDialog(activationCode);
                     }
@@ -417,7 +416,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         } else if (id == R.id.nav_no_ads) {
             HSAnalytics.logEvent("sidebar_removeAds_clicked");
             RemoveAdsManager.getInstance().purchaseRemoveAds();
-        } else if ( id == R.id.nav_privacy){
+        } else if (id == R.id.nav_privacy) {
             startBrowsePrivacy();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -425,55 +424,36 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         return true;
     }
 
-    private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
-        final KeyboardActivationProcessor processor =
-                new KeyboardActivationProcessor(ThemeHomeActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
+    private void showTrialKeyboardDialog(final int activationCode) {
+        if (HSInputMethodListManager.isMyInputMethodSelected()) {
+            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
+                LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()), new LockerEnableDialog.OnLockerBgLoadingListener() {
                     @Override
-                    public void activeDialogShowing() {
-
-                    }
-
-                    @Override
-                    public void keyboardSelected(int requestCode) {
-                        if (requestCode == activationCode) {
-                            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
-                                LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()), new LockerEnableDialog.OnLockerBgLoadingListener() {
-                                    @Override
-                                    public void onFinish() {
-                                        if (trialKeyboardDialog == null) {
-                                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
-                                        }
-                                        if (activationCode == keyboardActivationFromCustom) {
-                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
-                                        } else {
-                                            trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
-                                        }
-                                    }
-                                });
-                            } else {
-                                if (trialKeyboardDialog == null) {
-                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
-                                }
-                                if (activationCode == keyboardActivationFromCustom) {
-                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
-                                } else {
-                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
-                                }
-                            }
+                    public void onFinish() {
+                        if (trialKeyboardDialog == null) {
+                            trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();
+                        }
+                        if (activationCode == keyboardActivationFromCustom) {
+                            trialKeyboardDialog.show(false);
+                        } else {
+                            trialKeyboardDialog.show(true);
                         }
                     }
-
-                    @Override
-                    public void activeDialogCanceled() {
-
-                    }
-
-                    @Override
-                    public void activeDialogDismissed() {
-
-                    }
                 });
-        processor.activateKeyboard(ThemeHomeActivity.this, true, activationCode);
+            } else {
+                if (trialKeyboardDialog == null) {
+                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();
+                }
+                if (activationCode == keyboardActivationFromCustom) {
+                    trialKeyboardDialog.show(false);
+                } else {
+                    trialKeyboardDialog.show(true);
+                }
+            }
+        } else {
+            Intent intent = new Intent(this, KeyboardActivationGuideActivity.class);
+            startActivityForResult(intent, 0);
+        }
     }
 
     @Override
@@ -527,30 +507,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             enableTipTV.setVisibility(View.VISIBLE);
         } else if (resultCode == RESULT_OK) {
             enableTipTV.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onTrialKeyShow(int requestCode) {
-        enableTipTV.setVisibility(GONE);
-
-        switch (requestCode) {
-            case keyboardActivationFromHomeWithTrial:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_home", "themePackage");
-                break;
-            case keyboardActivationFromCustom:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_custom", "customizetheme");
-                break;
-            default:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from", "apply");
-                break;
-        }
-    }
-
-    @Override
-    public void onTrailKeyPrevented() {
-        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-            enableTipTV.setVisibility(View.VISIBLE);
         }
     }
 
@@ -793,14 +749,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 getString(R.string.interstitial_ad_title_home_gift_button),
                 getString(R.string.interstitial_ad_subtitle_home_gift_button),
                 new KCInterstitialAd.OnAdShowListener() {
-            @Override
-            public void onAdShow(boolean b) {
-                fullscreenShowed = b;
-                dismissDialog(fullscreenAdLoadingDialog);
-                fullscreenAdLoadingDialog = null;
-                handler.removeMessages(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG);
-            }
-        }, null);
+                    @Override
+                    public void onAdShow(boolean b) {
+                        fullscreenShowed = b;
+                        dismissDialog(fullscreenAdLoadingDialog);
+                        fullscreenAdLoadingDialog = null;
+                        handler.removeMessages(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG);
+                    }
+                }, null);
 
         fullscreenAdLoadingDialog = HSAlertDialog.build(this).setView(R.layout.dialog_loading).setCancelable(false).create();
         fullscreenAdLoadingDialog.show();

@@ -49,13 +49,14 @@ import static com.ihs.inputmethod.accessbility.AccGALogger.app_setting_up_page_v
 import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
 import static com.ihs.inputmethod.uimodules.R.id.bt_step_one;
 import static com.ihs.inputmethod.uimodules.R.id.view_img_title;
-import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
 
 
 public class KeyboardActivationActivity extends HSActivity {
     public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
     private static final int GUIDE_DELAY = 300;
     private boolean shouldShowEnableDialog = false;
+
+    public final static String PREF_THEME_HOME_SHOWED = "pref_theme_home_showed";
 
     private AccessibilityEventListener accessibilityEventListener;
     private Handler handler = new Handler();

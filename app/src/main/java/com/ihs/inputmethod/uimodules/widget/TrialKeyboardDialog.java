@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.widget;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -19,19 +17,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ihs.app.alerts.HSAlertMgr;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
-import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.inputmethod.utils.TrialKeyboardDialogAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
@@ -41,47 +32,26 @@ import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD;
 
 
-public final class TrialKeyboardDialog extends Dialog implements OnClickListener, KeyboardActivationProcessor.OnKeyboardActivationChangedListener {
+public final class TrialKeyboardDialog extends Dialog {
 
+    public final static String BUNDLE_ACTIVATION_CODE = "bundle_activation_code";
     public final static String BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY = "bundle_key_show_trial_keyboard_activity";
-    Builder builder;
-    private OnTrialKeyboardStateChanged onTrialKeyboardStateChanged;
     private boolean isSoftKeyboardOpened;
     private ViewGroup rootView;
-    private String from;
-    private int activationRequestCode;
+    private EditText inputTextView;
     private boolean showAdOnDismiss;
-    private boolean onlyCloseKeyboard = true;
-    private long currentResumeTime;
     private KCNativeAdView nativeAdView;
 
-    private TrialKeyboardDialog(Context context, Builder build, String from, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
+    private TrialKeyboardDialog(Context context) {
         super(context, R.style.TrialKeyboardDialogStyle);
-        this.builder = build;
         setCancelable(true);
-        this.from = from;
-        this.onTrialKeyboardStateChanged = onTrialKeyboardStateChanged;
     }
 
     public static void sendShowTrialKeyboardDialogNotification(String activityName, int activationRequestCode) {
         HSBundle bundle = new HSBundle();
-        bundle.putInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE, activationRequestCode);
+        bundle.putInt(TrialKeyboardDialog.BUNDLE_ACTIVATION_CODE, activationRequestCode);
         bundle.putString(BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, activityName);
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
-    }
-
-    private void checkKeyboardState(Activity activity) {
-        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-            KeyboardActivationProcessor keyboardActivationProcessor;
-            try {
-                keyboardActivationProcessor = new KeyboardActivationProcessor(Class.forName(from), this);
-                keyboardActivationProcessor.activateKeyboard(activity, true, activationRequestCode);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            keyboardSelected(activationRequestCode);
-        }
     }
 
     @Override
@@ -89,7 +59,7 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trial_keyboard_dialog);
-        final EditText editText = (EditText) findViewById(R.id.edit_text_input);
+        inputTextView = (EditText) findViewById(R.id.edit_text_input);
         rootView = (ViewGroup) findViewById(R.id.root_view);
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,46 +68,14 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
             }
         });
 
-        editText.requestFocus();
+        inputTextView.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setCanceledOnTouchOutside(true);
 
         setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                editText.setText("");
-                long time = (System.currentTimeMillis() - currentResumeTime) / 1000;
-                HSLog.e("app_keyboardtest_view_show_time : " + time);
 
-                int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                if (currentapiVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    boolean isRateAlertShownThisTime = false;
-                    HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
-                    if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
-                        if (!HSAlertMgr.isAlertShown()) {
-                            //当前session未显示过
-                            HSLog.d("TrialKeyboardDialog", "RateAlert当前session未显示过");
-                            HSAlertMgr.showRateAlert();
-                            if (HSAlertMgr.isAlertShown()) {
-                                //本次弹出了RateAlert
-                                isRateAlertShownThisTime = true;
-                                HSLog.d("TrialKeyboardDialog", "本次弹出了RateAlert");
-                            }
-                        }
-
-                        PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
-                    } else {
-                        HSLog.e("CUSTOM_THEME_SAVE_NULL");
-                    }
-                    if (!isRateAlertShownThisTime) {
-                        showInterstitialAds();
-                    }
-                }
-
-                isSoftKeyboardOpened = false;
-                if (nativeAdView != null) {
-//                    nativeAdView.release();
-                }
             }
         });
     }
@@ -187,26 +125,12 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
         return nativeAdView;
     }
 
-    public void show(Activity activity, int keyboardActivationRequestCode, boolean showAdOnDismiss) {
-        switch (keyboardActivationRequestCode) {
-            case ThemeMenuUtils.keyboardActivationFromAdapter: // My Themes apply
-                HSAnalytics.logEvent("keyboard_try_viewed", "from", "appliedTheme");
-                HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "appliedTheme", null, null, null);
-                break;
-            case ThemeHomeActivity.keyboardActivationFromHomeWithTrial: // 新安装皮肤
-                HSAnalytics.logEvent("keyboard_try_viewed", "from", "externalTheme");
-                HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "externalTheme", null, null, null);
-                break;
-            case CustomThemeActivity.keyboardActivationFromCustom: // 自定义皮肤
-                HSAnalytics.logEvent("keyboard_try_viewed", "from", "customizedTheme");
-                HSAnalytics.logGoogleAnalyticsEvent("app", "TrialKeyboardDialog", "keyboard_try_viewed", "customizedTheme", null, null, null);
-                break;
-            default:
-                break;
-        }
-        activationRequestCode = keyboardActivationRequestCode;
+    public void show(boolean showAdOnDismiss) {
+        super.show();
+
         this.showAdOnDismiss = showAdOnDismiss;
-        checkKeyboardState(activity);
+
+        setLayoutListenerToRootView();
         if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
         }
@@ -218,26 +142,40 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
     }
 
     @Override
-    public void onClick(View v) {
-        if (builder.listener != null) {
-            if (v.getId() == R.id.dialog_cancel_button) {
-                builder.listener.onNegativeButtonClick();
-                dismiss();
-            } else if (v.getId() == R.id.dialog_ok_button) {
-                builder.listener.onPositiveButtonClick();
-                dismiss();
+    public void dismiss() {
+        super.dismiss();
+
+        inputTextView.setText(null);
+
+        int currentVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentVersion > android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            boolean isRateAlertShownThisTime = false;
+            HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
+            if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
+                if (!HSAlertMgr.isAlertShown()) {
+                    //当前session未显示过
+                    HSLog.d("TrialKeyboardDialog", "RateAlert当前session未显示过");
+                    HSAlertMgr.showRateAlert();
+                    if (HSAlertMgr.isAlertShown()) {
+                        //本次弹出了RateAlert
+                        isRateAlertShownThisTime = true;
+                        HSLog.d("TrialKeyboardDialog", "本次弹出了RateAlert");
+                    }
+                }
+
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", false).apply();
+            } else {
+                HSLog.e("CUSTOM_THEME_SAVE_NULL");
+            }
+            if (!isRateAlertShownThisTime) {
+                showInterstitialAds();
             }
         }
-    }
 
-    @Override
-    public void dismiss() {
-        if (getContext().getResources().getBoolean(R.bool.trail_key_show_ad_before_close) && onlyCloseKeyboard) {
-            onlyCloseKeyboard = false;
-            HSInputMethod.hideWindow();
-        } else {
-            onlyCloseKeyboard = true;
-            super.dismiss();
+        isSoftKeyboardOpened = false;
+        if (nativeAdView != null) {
+            nativeAdView.release();
+            nativeAdView = null;
         }
     }
 
@@ -264,62 +202,15 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
 
     }
 
-    @Override
-    public void activeDialogShowing() {
-
-    }
-
-    @Override
-    public void keyboardSelected(int requestCode) {
-        onTrialKeyboardStateChanged.onTrialKeyShow(requestCode);
-
-        try {
-//            getWindow().setType(WindowManager.LayoutParams.TYPE_S);
-            super.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        currentResumeTime = System.currentTimeMillis();
-        setLayoutListenerToRootView();
-
-    }
-
-    @Override
-    public void activeDialogCanceled() {
-        onTrialKeyboardStateChanged.onTrailKeyPrevented();
-    }
-
-    @Override
-    public void activeDialogDismissed() {
-
-    }
-
-    public interface OnTrialKeyboardStateChanged {
-
-        void onTrialKeyShow(int requestCode);
-
-        void onTrailKeyPrevented();
-
-    }
-
-    public interface DialogClickListener {
-        void onNegativeButtonClick();
-
-        void onPositiveButtonClick();
-    }
-
     public static class Builder {
-        DialogClickListener listener;
+        Context context;
 
-        String from;
-
-        public Builder(String from) {
-            this.from = from;
+        public Builder(Context context) {
+            this.context = context;
         }
 
-        public TrialKeyboardDialog create(Activity context, OnTrialKeyboardStateChanged onTrialKeyboardStateChanged) {
-            return new TrialKeyboardDialog(context, this, from, onTrialKeyboardStateChanged);
+        public TrialKeyboardDialog create() {
+            return new TrialKeyboardDialog(this.context);
         }
     }
 }
