@@ -16,11 +16,9 @@ import android.widget.LinearLayout;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSMatrixImageView;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
-import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -101,9 +99,10 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 Bitmap cropperBitmap = takeViewShot(cropperImageView, imageMaskViewLocation[0] - imageViewLocation[0], imageMaskViewLocation[1] - imageViewLocation[1], keyboardWidth, keyboardHeight);
                 //HSKeyboardThemeManager.getCustomThemeData().setCustomizedBitmap(cropperBitmap);
                 String cropperImagePath = KCCustomThemeData.saveCustomizedBackgroundBitmap(cropperBitmap, oldCropperImagePath);
-                Intent resultIntent = new Intent();
+                Intent resultIntent = new Intent(CustomThemeBackgroundCropperActivity.this, CustomThemeActivity.class);
                 resultIntent.putExtra("CropperImagePath", cropperImagePath);
-                setResult(Activity.RESULT_OK, resultIntent);
+                //setResult(Activity.RESULT_OK, resultIntent);
+                startActivity(resultIntent);
                 CustomThemeBackgroundCropperActivity.this.finish();
             }
         });

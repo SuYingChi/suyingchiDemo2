@@ -77,6 +77,7 @@ import java.util.List;
 
 import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 import static com.ihs.app.framework.HSApplication.getContext;
+import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background.BackgroundFragment.CROPPER_IMAGE_REQUEST_CODE;
 
 
 public class CustomThemeActivity extends HSAppCompatActivity implements INotificationObserver {
@@ -565,6 +566,9 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         if (initThemeResource()) {
             initView();
             showFragment(currentPageIndex);
+            if (currentFragment instanceof BackgroundFragment) {
+                ((BackgroundFragment) currentFragment).setKeyboardTheme(getIntent());
+            }
         } else {
             HSToastUtils.toastCenterLong(getResources().getString(R.string.theme_create_custom_theme_failed));
             finish();

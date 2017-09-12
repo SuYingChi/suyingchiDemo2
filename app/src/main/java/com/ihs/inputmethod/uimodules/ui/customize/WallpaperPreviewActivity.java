@@ -4,13 +4,16 @@ import android.animation.ValueAnimator;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -32,6 +35,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.feature.common.Thunk;
 import com.ihs.inputmethod.feature.common.ViewUtils;
@@ -42,6 +46,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperUtils;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.view.PreviewViewPage;
 import com.ihs.inputmethod.uimodules.ui.customize.view.ProgressDialog;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity;
 import com.ihs.keyboardutils.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -51,6 +56,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hugo.weaving.DebugLog;
+
+import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity.CopperImagePath;
+import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity.KeyboardHeight;
+import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity.KeyboardWidth;
 
 /**
  * Created by guonan.lv on 17/9/6.
@@ -133,6 +142,16 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         return intent;
     }
 
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg){
+            if(msg.what == 0x123){
+
+            }
+        }
+    };
+
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
@@ -169,7 +188,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 //        mWallpapers.addAll(getIntent().getParcelableArrayListExtra(INTENT_KEY_WALLPAPERS));
         mIsOnLineWallpaper = true;
         mInitialized = true;
-        mViewPager.setCurrentItem(mPaperIndex);
+        mViewPager.setCurrentItem(mPaperIndex, false);
     }
 
     @Override
@@ -242,8 +261,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     private void resetViewVisibility() {
         mSetWallpaperButton.setVisibility(View.VISIBLE);
-        mZoomBtn.setVisibility(View.VISIBLE);
-        mEdit.setVisibility(View.VISIBLE);
+//        mZoomBtn.setVisibility(View.VISIBLE);
+//        mEdit.setVisibility(View.VISIBLE);
         View draw = ViewUtils.findViewById(this, R.id.preview_guide_draw_view);
         if (draw != null) {
             draw.setVisibility(View.VISIBLE);
@@ -257,7 +276,28 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     @Override
     public void onPageSelected(int position) {
+        int index = position;
+        if (mWallpaperPackageInfo != null) {
+            if (position == 0) {
+                hideViews();
+                findViewById(R.id.wallpaper_view_return).setVisibility(View.VISIBLE);
+                mCurrentWallpaper = null;
+                return;
+            } else {
+                index = position - 1;
+            }
+        }
 
+        if (getWallpaperInfoByIndex(index) instanceof AcbNativeAd) {
+            hideViews();
+            mCurrentWallpaper = null;
+            return;
+        }
+        resetViewVisibility();
+        mPaperIndex = index;
+        mCurrentWallpaper = (WallpaperInfo) getWallpaperInfoByIndex(mPaperIndex);
+        refreshButtonState();
+        refreshButtonTint();
     }
 
     @Override
@@ -297,6 +337,33 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 applyWallpaper(mCurrentWallpaper.getType() != WallpaperInfo.WALLPAPER_TYPE_GALLERY, false);
                 break;
             case R.id.set_key_theme_button:
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            long t1 = System.currentTimeMillis();
+                            File file = Glide.with(WallpaperPreviewActivity.this)
+                                    .load(mCurrentWallpaper.getWallpaperUrl())
+                                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                                    .get();
+                            String path = file.getAbsolutePath();
+                            long t2 = System.currentTimeMillis();
+                            HSLog.e("eee", ""+(t2-t1));
+                            final Resources res = getResources();
+                            final int keyboardWidth = HSResourceUtils.getDefaultKeyboardWidth(res);
+                            final int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(res);
+                            Intent intent = new Intent(WallpaperPreviewActivity.this, CustomThemeBackgroundCropperActivity.class);
+                            intent.putExtra(CopperImagePath, path);
+                            intent.putExtra(KeyboardWidth, keyboardWidth);
+                            intent.putExtra(KeyboardHeight, keyboardHeight);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+                thread.start();
                 break;
         }
 
@@ -356,6 +423,11 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     @Override
     protected WallpaperInfo getCurrentWallpaper() {
         return mCurrentWallpaper;
+    }
+
+    private void refreshButtonTint() {
+        boolean textLight = mCurrentWallpaper.isTextLight();
+        onTintChanged(textLight);
     }
 
     private Object getWallpaperInfoByIndex(int index) {
