@@ -15,6 +15,7 @@
     <!-- wallpaper preview -->
     <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
     <string name="key_theme_set_btn">SET KEY THEME</string>
+    <string name="wallpaper_apply_success">Applied Successfully</string>
 
     <!--alert message-->
     <string name="locker_alert_title">Screen Locker</string>

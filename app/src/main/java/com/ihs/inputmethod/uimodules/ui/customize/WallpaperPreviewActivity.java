@@ -145,8 +145,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private Handler handler = new Handler() {
 
         @Override
-        public void handleMessage(Message msg){
-            if(msg.what == 0x123){
+        public void handleMessage(Message msg) {
+            if (msg.what == 0x123) {
 
             }
         }
@@ -348,11 +348,12 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                                     .get();
                             String path = file.getAbsolutePath();
                             long t2 = System.currentTimeMillis();
-                            HSLog.e("eee", ""+(t2-t1));
+                            HSLog.e("eee", "" + (t2 - t1));
                             final Resources res = getResources();
                             final int keyboardWidth = HSResourceUtils.getDefaultKeyboardWidth(res);
                             final int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(res);
                             Intent intent = new Intent(WallpaperPreviewActivity.this, CustomThemeBackgroundCropperActivity.class);
+                            intent.putExtra("from", TAG);
                             intent.putExtra(CopperImagePath, path);
                             intent.putExtra(KeyboardWidth, keyboardWidth);
                             intent.putExtra(KeyboardHeight, keyboardHeight);
@@ -501,8 +502,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 //                        imageView.setImageMatrix(WallpaperUtils.centerInside(bitmap.getWidth(), bitmap.getHeight(),
 //                                CommonUtils.pxFromDp(80) + TOP_MARGIN, getResources().getDisplayMetrics().heightPixels - CommonUtils.pxFromDp(68) - TOP_MARGIN));
 //                    } else {
-                        imageView.setImageMatrix(WallpaperUtils.centerInside(bitmap.getWidth(), bitmap.getHeight(),
-                                mReturnArrow.getBottom() + TOP_MARGIN, mSetWallpaperButton.getTop() - TOP_MARGIN));
+                    imageView.setImageMatrix(WallpaperUtils.centerInside(bitmap.getWidth(), bitmap.getHeight(),
+                            mReturnArrow.getBottom() + TOP_MARGIN, mSetWallpaperButton.getTop() - TOP_MARGIN));
 //                    }
                 }
                 return true;
@@ -631,17 +632,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             WallpaperInfo info = (WallpaperInfo) getWallpaperInfoByIndex((int) (page.getTag()));
 //            info.setTextLight(WallpaperUtils.textColorLightForWallPaper(bitmap));
 
-            if (false && mIsOnLineWallpaper) {
-                ((ImageView) view).setImageMatrix(WallpaperUtils.centerCrop(bitmap.getWidth(), bitmap.getHeight(), (ImageView) view));
-            } else {
-//                if (mEdit.getBottom() == 0 || mSetWallpaperButton.getTop() == 0) {
-//                    ((ImageView) view).setImageMatrix(WallpaperUtils.centerInside(bitmap.getWidth(), bitmap.getHeight(),
-//                            CommonUtils.pxFromDp(80) + TOP_MARGIN, getResources().getDisplayMetrics().heightPixels - CommonUtils.pxFromDp(68) - TOP_MARGIN));
-//                } else {
-                    ((ImageView) view).setImageMatrix(WallpaperUtils.centerInside(bitmap.getWidth(), bitmap.getHeight(),
-                            mReturnArrow.getBottom() + TOP_MARGIN, mLinearLayout.getTop() - TOP_MARGIN));
-//                }
-            }
+            ((ImageView) view).setImageMatrix(WallpaperUtils.centerCrop(bitmap.getWidth(), bitmap.getHeight(), (ImageView) view));
+
             mLoadMap.put((int) (page.getTag()), true);
             refreshButtonState();
             page.loadingView.setVisibility(View.INVISIBLE);
@@ -653,7 +645,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
         @Override
         public void setRequest(Request request) {
-            view.setTag(R.id.glide_tag_id,request);
+            view.setTag(R.id.glide_tag_id, request);
         }
 
         @Override

@@ -566,8 +566,10 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         if (initThemeResource()) {
             initView();
             showFragment(currentPageIndex);
-            if (currentFragment instanceof BackgroundFragment) {
-                ((BackgroundFragment) currentFragment).setKeyboardTheme(getIntent());
+            if (getIntent().getStringExtra("from") != null) {
+                if (currentFragment instanceof BackgroundFragment) {
+                    ((BackgroundFragment) currentFragment).setKeyboardTheme(getIntent());
+                }
             }
         } else {
             HSToastUtils.toastCenterLong(getResources().getString(R.string.theme_create_custom_theme_failed));
