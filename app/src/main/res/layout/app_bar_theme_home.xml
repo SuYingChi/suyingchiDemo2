@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.theme.ui.ThemeHomeActivity">
 
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"

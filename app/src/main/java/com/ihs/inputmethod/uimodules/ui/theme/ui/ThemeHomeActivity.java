@@ -20,10 +20,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +30,6 @@ import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +49,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -66,19 +61,16 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.customize.BaseCustomizeActivity;
-import com.ihs.inputmethod.uimodules.ui.customize.CustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.inputmethod.uimodules.utils.HSAppLockerUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.utils.CallAssistantConfigUtils;
 import com.ihs.inputmethod.utils.ScreenLockerConfigUtils;
 import com.ihs.keyboardutils.alerts.KCAlert;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
@@ -88,10 +80,8 @@ import com.kc.commons.utils.KCCommonUtils;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static android.R.id.toggle;
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
-import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 /**
  * Created by jixiang on 16/8/17.
@@ -149,7 +139,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private HomeKeyWatcher mHomeKeyWatcher;
 
     private AppBarLayout appbarLayout;
-    private NavigationView navigationView;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -205,9 +194,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                         showTrialKeyboardDialog(activationCode);
                     }
                 }
-            } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
-                Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.purchase_success), Toast.LENGTH_LONG).show();
-                navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
             }
         }
     };
@@ -261,14 +247,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         mLayoutWrapper = new LayoutWrapper(mBottomBar, getResources().getDimensionPixelSize(R.dimen.bottom_bar_default_height), CommonUtils.pxFromDp(3.3f));
 
         appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        String themeTitle = getResources().getString(R.string.theme_nav_theme_store, getResources().getString(R.string.app_name));
-//        toolbar.setTitle(HSLog.isDebugging() ? themeTitle + " (Debug)" : themeTitle);
-//        setSupportActionBar(toolbar);
-//
-//        tabLayout = (TabLayout)  findViewById(R.id.store_tab);
-//
-//        viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
@@ -285,60 +263,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
         }
 
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                context, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-////                clearApkUpdateTip();
-//                HSAnalytics.logEvent("sidebar_show", "fragment", THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag) ? "store" : "mythemes");
-//            }
-//        };
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setItemIconTintList(null);//去除自动染色，默认图标灰色，点击后变成colorAccent色
-        navigationView.setItemTextColor(null);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        ViewGroup.LayoutParams layoutParams = headerView.getLayoutParams();
-        layoutParams.height = (int) (getResources().getDisplayMetrics().widthPixels * 0.48f);
-
-        MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
-        item.setTitle(getString(R.string.theme_nav_theme_store, getString(R.string.app_name)));
-
-        //create storeFragment only if not exist
-//        Fragment storeFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-//        if (storeFragment == null) {
-//            storeFragment = new ThemeHomeFragment();
-//            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//            fragmentTransaction.add(R.id.content_layout, storeFragment, THEME_STORE_FRAGMENT_TAG).commit();
-//        }
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
-//        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
-//        String[] tabTitles = new String[3];
-//        tabTitles[0] = getApplicationContext().getString(R.string.tab_theme);
-//        tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker);
-//        tabTitles[2] = getApplicationContext().getString(R.string.tab_font);
-//        tabFragmentPagerAdapter.setTabTitles(tabTitles);
-//        viewPager.setOffscreenPageLimit(fragments.size());
-//        viewPager.setAdapter(tabFragmentPagerAdapter);
-//
-//        tabLayout.setupWithViewPager(viewPager);
-//        setTabListener();
-
-        //init locker function
-        boolean lockerEnable = getResources().getBoolean(R.bool.config_locker_drawer_visiable_enable) && HSAppLockerUtils.isLockerEnabled();
-        navigationView.getMenu().findItem(R.id.nav_app_locker).setVisible(lockerEnable);
-
-        // init update function
-        navigationView.getMenu().findItem(R.id.nav_update).setVisible(ApkUtils.isUpdateEnabled());
-        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(getResources().getBoolean(R.bool.show_remove_ads_menu) && !RemoveAdsManager.getInstance().isRemoveAdsPurchased());
         apkUpdateTip = findViewById(R.id.apk_update_tip);
-
 
         //界面被启动 请求 扫描权限
         if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !PermissionUtils.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
@@ -404,8 +331,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         if (mLayoutWrapper != null) {
             mLayoutWrapper.show();
         }
-//        MenuItem item = mBottomBar.getMenu().findItem(R.id.customize_bottom_bar_keyboard);
-//        onNavigationItemSelected(item);
     }
 
     @Override
@@ -466,49 +391,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_theme_store) {
-            if (!currentFragmentTag.equals(THEME_STORE_FRAGMENT_TAG)) {
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                Fragment myThemeFragment = getFragmentManager().findFragmentByTag(MY_THEME_FRAGMENT_TAG);
-//                Fragment themeStoreFragment = getFragmentManager().findFragmentByTag(THEME_STORE_FRAGMENT_TAG);
-//                if (myThemeFragment != null) {
-//                    transaction.hide(myThemeFragment);
-//                }
-////                if (themeStoreFragment == null) {
-////                    themeStoreFragment = new ThemeHomeFragment();
-////                    transaction.add(R.id.content_layout, themeStoreFragment, THEME_STORE_FRAGMENT_TAG);
-////                }
-//                transaction.show(themeStoreFragment).commit();
-//                appbarLayout.setExpanded(true);
-//                toolbar.setTitle(R.string.theme_nav_theme_store);
-//                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("sidebar_store_clicked");
-            }
-            currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
-        } else if (id == R.id.nav_language) {
-            HSUIInputMethod.launchMoreLanguageActivity();
-            HSAnalytics.logEvent("sidebar_languages_clicked");
-        } else if (id == R.id.nav_setting) {
-            HSUIInputMethod.launchSettingsActivity();
-            HSAnalytics.logEvent("sidebar_settings_clicked");
-        } else if (id == R.id.nav_app_locker) {
-            HSGlobalNotificationCenter.sendNotificationOnMainThread(HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK);
-        } else if (id == R.id.nav_update) {
-            handler.removeMessages(HANDLER_SHOW_UPDATE_DIALOG);
-            checkAndShowApkUpdateAlert(true);
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    restoreNavigationView();
-                }
-            });
-        } else if (id == R.id.nav_no_ads) {
-            HSAnalytics.logEvent("sidebar_removeAds_clicked");
-            RemoveAdsManager.getInstance().purchaseRemoveAds();
-        } else if ( id == R.id.nav_privacy){
-            startBrowsePrivacy();
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         currentTabIndex = ITEMS_INDEX_MAP.get(id);
         boolean viewIndexUpdated = false;
         if (mViewIndex != currentTabIndex) {
@@ -534,34 +416,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 break;
         }
         return true;
-    }
-
-    private void setTabListener() {
-//        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                super.onTabSelected(tab);
-//                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
-//                if (tab.getPosition() == 0) {
-//                    layout.setVisibility(View.VISIBLE);
-//                } else {
-//                    layout.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-//
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
-//                if (position == 0) {
-//                    layout.setVisibility(View.VISIBLE);
-//                } else {
-//                    layout.setVisibility(View.GONE);
-//                }
-//            }
-//        });
     }
 
     private void setMenuItemIconDrawable(Menu menu, @IdRes int itemId, @DrawableRes int drawableId) {
@@ -723,7 +577,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private void restoreNavigationView() {
         if (THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag)) {
-            navigationView.setCheckedItem(R.id.nav_theme_store);
             if (shouldShowActivationTip && !HSInputMethodListManager.isMyInputMethodSelected()) {
                 enableTipTV.setVisibility(View.VISIBLE);
             } else {
@@ -769,10 +622,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private void showApkUpdateTip() {
         apkUpdateTip.setVisibility(View.VISIBLE);
-    }
-
-    private void showApkUpdateMenuItemIndicationIcon() {
-        navigationView.getMenu().findItem(R.id.nav_update).getActionView().setVisibility(View.VISIBLE);
     }
 
     private boolean shouldShowApkUpdateTip(final int versionCode) {

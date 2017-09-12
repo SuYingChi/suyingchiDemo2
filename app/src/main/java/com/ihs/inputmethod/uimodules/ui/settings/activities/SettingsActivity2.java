@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Browser;
 import android.support.annotation.Nullable;
@@ -38,6 +37,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.Toast;
 
 import com.acb.call.InCallThemePreviewActivity;
 import com.acb.nativeads.AcbNativeAdManager;
@@ -48,6 +48,9 @@ import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.ChargingPrefsUtil;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
@@ -58,6 +61,8 @@ import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
+
+import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
     private static final String GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED = "app_setting_charging_firsttime_clicked";
@@ -357,7 +362,19 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
 
         private OnUpdateClickListener onUpdateClickListener;
         private Preference updatePreference;
-        private PreferenceCategory preferenceCategory;
+        private PreferenceCategory preferenceCategoryMore;
+
+        private INotificationObserver observer = new INotificationObserver() {
+            @Override
+            public void onReceive(String s, HSBundle hsBundle) {
+                if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.purchase_success), Toast.LENGTH_LONG).show();
+                    if (preferenceCategoryMore != null) {
+                        preferenceCategoryMore.removePreference(findPreference("removeAd"));
+                    }
+                }
+            }
+        };
 
         @Override
         public void onAttach(Context context) {
@@ -373,6 +390,13 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_settings_home);
             setLanguage();
             setup();
+            HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, observer);
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            HSGlobalNotificationCenter.removeObserver(observer);
         }
 
         @Override
@@ -400,12 +424,12 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
         }
 
         private void setup() {
-            preferenceCategory = (PreferenceCategory) findPreference("more");
+            preferenceCategoryMore = (PreferenceCategory) findPreference("more");
             updatePreference = findPreference("update");
             if (!ApkUtils.isUpdateEnabled()) {
-                preferenceCategory.removePreference(updatePreference);
+                preferenceCategoryMore.removePreference(updatePreference);
             } else {
-                preferenceCategory.addPreference(updatePreference);
+                preferenceCategoryMore.addPreference(updatePreference);
             }
             findPreference("keyboard_settings").setOnPreferenceClickListener(this);
             findPreference("removeAd").setOnPreferenceClickListener(this);

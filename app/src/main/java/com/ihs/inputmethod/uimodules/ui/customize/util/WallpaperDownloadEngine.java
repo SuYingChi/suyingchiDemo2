@@ -59,7 +59,7 @@ public class WallpaperDownloadEngine {
         }
         HSLog.d(TAG, url);
 //        final HSHttpConnection connection = new HSHttpConnection(url);
-        final HSServerAPIConnection connection = new HSServerAPIConnection(url, HttpRequest.Method.POST, jsonObject);
+        final HSServerAPIConnection connection = new HSServerAPIConnection(url, HttpRequest.Method.GET, jsonObject);
 
         connection.setConnectTimeout(30 * 1000);
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
