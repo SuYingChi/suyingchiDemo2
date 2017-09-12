@@ -110,8 +110,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         toolbar.setTitle(downloadTitle);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.download_page_trigger).setVisibility(View.GONE);
-
         tabLayout = (TabLayout) findViewById(R.id.store_tab);
 
         viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
@@ -135,19 +133,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         if (getIntent() != null && getIntent().getBooleanExtra(BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
             keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromDownload);
         }
-        findViewById(R.id.home_create_theme_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Bundle bundle = new Bundle();
-                String customEntry = "mytheme_float_button";
-                bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                CustomThemeActivity.startCustomThemeActivity(bundle);
-
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("customize_entry_clicked", "mythemes");
-                HSAnalytics.logEvent("customize_entry_clicked", "mythemes");
-            }
-        });
 
         fragments = new ArrayList<>();
         fragments.add(MyThemeFragment.class);

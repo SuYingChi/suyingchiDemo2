@@ -31,8 +31,8 @@
             android:id="@+id/download_button_container"
             android:layout_width="42dp"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:background="@color/colorPrimary"
+            android:gravity="center"
             android:paddingLeft="5dp"
             android:paddingRight="5dp">
 
@@ -57,12 +57,12 @@
 
                     <ImageView
                         android:id="@+id/tab_top_arrow_right"
-                        app:srcCompat="@drawable/download_icon_home_store"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="-5dp"
                         android:layout_marginStart="-5dp"
-                        android:rotation="0" />
+                        android:rotation="0"
+                        app:srcCompat="@drawable/download_icon_home_store" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -82,7 +82,7 @@
         android:id="@+id/home_create_theme_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_view_pager"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/bottom_bar_default_height"
         android:background="@drawable/home_create_keyboard_bg"
         android:clickable="true"
@@ -101,5 +101,6 @@
             android:textColor="#ffffff"
             android:textSize="14sp" />
     </LinearLayout>
+
 
 </RelativeLayout>

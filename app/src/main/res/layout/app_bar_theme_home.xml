@@ -14,62 +14,6 @@
         android:orientation="vertical"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-            <ImageView
-                android:id="@+id/apk_update_tip"
-                style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:foregroundGravity="center"
-                android:src="@drawable/apk_update_tip"
-                android:visibility="gone" />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true">
-
-                <ImageView
-                    android:id="@+id/download_page_trigger"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:srcCompat="@drawable/download_icon_home_store" />
-
-                <ImageView
-                    android:id="@+id/download_button_new_mark"
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:layout_centerInParent="true"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-
-            <!--<com.airbnb.lottie.LottieAnimationView-->
-            <!--android:id="@+id/theme_home_interstitial_ad_trigger_view"-->
-            <!--android:layout_width="36dp"-->
-            <!--android:layout_height="36dp"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:background="@drawable/gift_bg"-->
-            <!--android:paddingBottom="9dp"-->
-            <!--app:lottie_autoPlay="false"-->
-            <!--app:lottie_loop="true" />-->
-        </RelativeLayout>
-
         <TextView
             android:id="@+id/tv_enable_keyboard"
             android:layout_width="match_parent"
