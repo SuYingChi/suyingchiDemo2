@@ -7,18 +7,18 @@
     <string name="disabled">Disabilitata</string>
     <string name="language">Language</string>
     <string name="languages">Lingue</string>
-    <string name="next">Next</string>
+    <string name="next">Prossimo</string>
     <string name="back">Back</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Cancella</string>
     <string name="delete">Cancella</string>
-    <string name="save">Save</string>
+    <string name="save">Salva</string>
     <string name="saving">Saving&#8230;</string>
     <string name="allow">Allow</string>
     <string name="done">Done</string>
     <string name="locked">Locked</string>
     <string name="got_it">GOT IT</string>
     <string name="filter">Filter</string>
-    <string name="use">Use</string>
+    <string name="use">Utilizza</string>
     <string name="unknown">Unknown</string>
 
     <string name="alert_find_keyboard_and_switch_on">Cerca l\'applicazione %1$s e aprila</string>
@@ -230,8 +230,8 @@
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
-    <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
-    <string name="alter_enable_access_title">Enable %1$s</string>
+    <string name="tv_1_tap_to_set_up_keyboard">Abilitati %1$s</string>
+    <string name="alter_enable_access_title">Abilitati %1$s</string>
     <string name="alter_enable_access_content">To set up keyboard, please find and enable %1$s.</string>
     <string name="alter_enable_access_confirm">GOT IT</string>
     <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable %1$s manually.</string>
@@ -275,7 +275,7 @@
     <string name="sticker_share_toast">The app does not support stickers.</string>
     <string name="sticker_send_failed">Sticker send failed, please try again.</string>
     <string name="unzip_sticker_group_failed">Unzip stickers failed, please download again!</string>
-    <string name="foreground_download_failed">Download failed</string>
+    <string name="foreground_download_failed">Download Fallito</string>
 
     <string name="interstitial_ad_title_after_save_theme">Saved successfully</string>
     <string name="interstitial_ad_subtitle_after_save_theme">--------------- You May Like ---------------</string>

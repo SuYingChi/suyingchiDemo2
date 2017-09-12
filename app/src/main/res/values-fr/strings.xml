@@ -7,9 +7,9 @@
     <string name="disabled"> désactivée</string>
     <string name="language">Langue</string>
     <string name="languages">Langues</string>
-    <string name="next">Next</string>
+    <string name="next">Suivant</string>
     <string name="back">Back</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Annuler</string>
     <string name="delete">Supprimer</string>
     <string name="save">Save</string>
     <string name="saving">Saving&#8230;</string>
@@ -18,7 +18,7 @@
     <string name="locked">Locked</string>
     <string name="got_it">GOT IT</string>
     <string name="filter">Filter</string>
-    <string name="use">Use</string>
+    <string name="use">Utiliser</string>
     <string name="unknown">Unknown</string>
 
     <string name="alert_find_keyboard_and_switch_on">Trouver %1$s et l\'activer.</string>
@@ -219,8 +219,8 @@ s
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
-    <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
-    <string name="alter_enable_access_title">Enable %1$s</string>
+    <string name="tv_1_tap_to_set_up_keyboard">Activer %1$s</string>
+    <string name="alter_enable_access_title">Activer %1$s</string>
     <string name="alter_enable_access_content">To set up keyboard, please find and enable %1$s.</string>
     <string name="alter_enable_access_confirm">GOT IT</string>
     <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable %1$s manually.</string>
@@ -267,7 +267,7 @@ s
 	<string name="sticker_downloading_guide">Download for free now!</string>
     <string name="sticker_share_toast">The app does not support stickers.</string>
     <string name="unzip_sticker_group_failed">Unzip stickers failed, please download again!</string>
-    <string name="foreground_download_failed">Download failed</string>
+    <string name="foreground_download_failed">Une erreur s\'est produite lors du téléchargement</string>
     <string name="boost_noti_setting_desc" >Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
     <string name="boost_noti_setting_title" >Phone Boost</string>
     <string name="setting_key_call_assistant">setting_key_call_assistant</string>

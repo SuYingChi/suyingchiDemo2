@@ -69,7 +69,7 @@
     <string name="setting_item_my_theme">Design erstellen</string>
     <string name="setting_item_fonts">Schriftart</string>
     <string name="setting_item_correction">@string/setting_auto_correction</string>
-    <string name="setting_item_sounds">"Sounds"</string>
+    <string name="setting_item_sounds">"Klänge"</string>
     <string name="setting_item_capitalization">@string/setting_auto_capitalization</string>
     <string name="setting_item_word_prediction">@string/setting_word_prediction</string>
     <string name="setting_item_swipe">Wischen</string>
@@ -128,7 +128,7 @@
     <string name="theme_nav_my_themes">Meine Designs</string>
     <string name="theme_app_locker">App Locker</string>
     <string name="theme_nav_languages">Sprachen</string>
-    <string name="theme_nav_settings">Settings</string>
+    <string name="theme_nav_settings">Einstellungen</string>
     <string name="theme_nav_update">Aktualisieren</string>
     <string name="theme_nav_no_ads">Werbung entfernen</string>
 
@@ -223,8 +223,8 @@
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
-    <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
-    <string name="alter_enable_access_title">Enable %1$s</string>
+    <string name="tv_1_tap_to_set_up_keyboard">Aktiviere  %1$s</string>
+    <string name="alter_enable_access_title">Aktiviere  %1$s</string>
     <string name="alter_enable_access_content">To set up keyboard, please find and enable %1$s.</string>
     <string name="alter_enable_access_confirm">GOT IT</string>
     <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable %1$s manually.</string>
@@ -263,9 +263,21 @@
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
 
 	<!-- sticker download documents-->
-	<string name="sticker_download_button">DOWNLOAD</string>
-	<string name="sticker_downloading_label">Downloading</string>
-	<string name="sticker_downloading_successful">Download Successfully</string>
-	<string name="sticker_downloading_guide">Download for free now!</string>
+    <string name="sticker_download_button">Emliminar</string>
+    <string name="sticker_downloading_label">Downloading</string>
+    <string name="sticker_downloading_successful">Download Successfully</string>
+    <string name="sticker_downloading_guide">Download for free now!</string>
     <string name="sticker_share_toast">The app does not support stickers.</string>
+    <string name="sticker_send_failed">Sticker send failed, please try again.</string>
+    <string name="unzip_sticker_group_failed">Unzip stickers failed, please download again!</string>
+    <string name="foreground_download_failed">Error al descargar</string>
+
+    <string name="interstitial_ad_title_after_save_theme">Saved successfully</string>
+    <string name="interstitial_ad_subtitle_after_save_theme">--------------- You May Like ---------------</string>
+
+    <string name="interstitial_ad_title_after_try_keyboard">Applied successfully</string>
+    <string name="interstitial_ad_subtitle_after_try_keyboard">--------------- You May Like ---------------</string>
+
+    <string name="interstitial_ad_title_home_gift_button"> </string>
+    <string name="interstitial_ad_subtitle_home_gift_button">--------------- You May Like ---------------</string>
 </resources>

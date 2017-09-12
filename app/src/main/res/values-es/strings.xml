@@ -5,7 +5,7 @@
     <string name="enabled">activada</string>
     <string name="enable">OK</string>
     <string name="disabled">desactivada</string>
-    <string name="language">Language</string>
+    <string name="language">Idioma</string>
     <string name="languages">Idiomas</string>
     <string name="next">Siguiente</string>
     <string name="back">Anterior</string>
@@ -223,8 +223,8 @@
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
-    <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
-    <string name="alter_enable_access_title">Enable %1$s</string>
+    <string name="tv_1_tap_to_set_up_keyboard">Activa %1$s</string>
+    <string name="alter_enable_access_title">Activa %1$s</string>
     <string name="alter_enable_access_content">To set up keyboard, please find and enable %1$s.</string>
     <string name="alter_enable_access_confirm">GOT IT</string>
     <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable %1$s manually.</string>
