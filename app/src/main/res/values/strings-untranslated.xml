@@ -11,6 +11,11 @@
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
     <string name="item_font_more_coming">More fonts are coming soon</string>
 
+
+    <!-- wallpaper preview -->
+    <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
+    <string name="key_theme_set_btn">SET KEY THEME</string>
+
     <!--alert message-->
     <string name="locker_alert_title">Screen Locker</string>
     <string name="locker_alert_message">Add your favorite themes on lockscreen. May contain sponsored contents.</string>

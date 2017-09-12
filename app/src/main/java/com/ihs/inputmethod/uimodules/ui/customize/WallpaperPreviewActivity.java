@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.acb.adadapter.AcbNativeAd;
@@ -42,6 +43,8 @@ import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.view.PreviewViewPage;
 import com.ihs.inputmethod.uimodules.ui.customize.view.ProgressDialog;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -91,9 +94,11 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private List<Object> mWallpapers = new ArrayList<>();
     private WallpaperInfo mCurrentWallpaper;
     private TextView mSetWallpaperButton;
+    private TextView mSetKeyThemeButton;
     private ProgressDialog mDialog;
     private View mEdit;
     private View mReturnArrow;
+    private LinearLayout mLinearLayout;
     private PreviewViewPagerAdapter mAdapter;
     private SparseBooleanArray mLoadMap = new SparseBooleanArray();
 
@@ -137,6 +142,9 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             refreshButtonState();
         }
     }
+
+    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+            .cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
 
     @DebugLog
     @Override
@@ -197,6 +205,11 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 //        mReturnArrow.setBackgroundResource(R.drawable.moment_round_material_compat_dark);
         mSetWallpaperButton = (TextView) findViewById(R.id.set_wallpaper_button);
         mSetWallpaperButton.setOnClickListener(this);
+
+        mSetKeyThemeButton = (TextView) findViewById(R.id.set_key_theme_button);
+        mSetKeyThemeButton.setOnClickListener(this);
+
+        mLinearLayout = (LinearLayout) findViewById(R.id.wrap_linear_layout);
 
         mViewPager = (ViewPager) findViewById(R.id.preview_view_pager);
         mAdapter = new PreviewViewPagerAdapter();
@@ -282,6 +295,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                     mCurrentWallpaper.setCategory(mCategoryInfo);
                 }
                 applyWallpaper(mCurrentWallpaper.getType() != WallpaperInfo.WALLPAPER_TYPE_GALLERY, false);
+                break;
+            case R.id.set_key_theme_button:
                 break;
         }
 
@@ -422,7 +437,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             }
         }).diskCacheStrategy(DiskCacheStrategy.SOURCE);
 
-        Glide.with(WallpaperPreviewActivity.this).load(uri).asBitmap().thumbnail(thumbRequest).into(new CustomImageLoadingTarget(imageView));
+        Glide.with(WallpaperPreviewActivity.this).load(uri).asBitmap()
+                .thumbnail(thumbRequest).into(new CustomImageLoadingTarget(imageView));
     }
 
     private boolean isSucceed() {
@@ -551,7 +567,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 //                            CommonUtils.pxFromDp(80) + TOP_MARGIN, getResources().getDisplayMetrics().heightPixels - CommonUtils.pxFromDp(68) - TOP_MARGIN));
 //                } else {
                     ((ImageView) view).setImageMatrix(WallpaperUtils.centerInside(bitmap.getWidth(), bitmap.getHeight(),
-                            mReturnArrow.getBottom() + TOP_MARGIN, mSetWallpaperButton.getTop() - TOP_MARGIN));
+                            mReturnArrow.getBottom() + TOP_MARGIN, mLinearLayout.getTop() - TOP_MARGIN));
 //                }
             }
             mLoadMap.put((int) (page.getTag()), true);

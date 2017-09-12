@@ -36,7 +36,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/wrap_linear_layout"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:orientation="horizontal">
 
         <com.ihs.feature.common.TypefacedTextView
@@ -44,28 +47,30 @@
             android:layout_width="wrap_content"
             android:layout_height="68dp"
             android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="@string/online_wallpaper_apply_btn"
+            android:gravity="center"
+            android:text="@string/online_wallpaper_set_btn"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:typeface="@string/proxima_nova_semibold" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
 
         <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/set_key_theme_button"
             android:layout_width="wrap_content"
             android:layout_height="68dp"
             android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="@string/online_wallpaper_apply_btn"
+            android:gravity="center"
+            android:text="@string/key_theme_set_btn"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:typeface="@string/proxima_nova_semibold" />
+
     </LinearLayout>
 
 </RelativeLayout>
