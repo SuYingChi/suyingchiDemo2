@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.customize.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,10 +18,12 @@ import com.ihs.feature.common.PromotionTracker;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.customize.fragment.InComingCallThemePreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
 import com.ihs.inputmethod.uimodules.ui.customize.view.ImagePressedTouchListener;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LockerThemeInfo;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
@@ -130,7 +133,11 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
             case R.id.grid_root:
                 int pos = (int) v.getTag();
                 LockerThemeInfo themeInfo = mThemes.get(pos);
-//                LauncherAnalytics.logEvent("Theme_Locker_Theme_Clicked", "type", themeInfo.packageName);
+                if (mContext instanceof ThemeHomeActivity) {
+                    Intent intent = new Intent(mContext, InComingCallThemePreviewActivity.class);
+                    intent.putExtra("ThemeInfo", themeInfo.name);
+                    mContext.startActivity(intent);
+                }
                 break;
             case R.id.locker_install_btn:
             case R.id.locker_theme_gallery_banner:
@@ -197,5 +204,9 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
             }
             return 1;
         }
+    }
+
+    public interface callThemeClickListener {
+        void callThemeClick(LockerThemeInfo themeInfo);
     }
 }

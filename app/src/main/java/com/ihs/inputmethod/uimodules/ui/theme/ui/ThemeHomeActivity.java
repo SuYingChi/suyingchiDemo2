@@ -219,6 +219,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
     }
 
+    public void hideBottomBar() {
+        mBottomBar.setVisibility(View.GONE);
+    }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);

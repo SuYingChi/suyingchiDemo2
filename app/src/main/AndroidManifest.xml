@@ -77,6 +77,8 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <activity android:name=".ui.customize.fragment.InComingCallThemePreviewActivity"/>
+
 
         <!-- 给applovin配置sdk key，注意，master keyboard需要另外的key -->
         <meta-data

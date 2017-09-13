@@ -1,15 +1,15 @@
 package com.ihs.inputmethod.uimodules.ui.customize.fragment;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.adapter.LockerThemeGalleryAdapter;
 
@@ -17,34 +17,31 @@ import com.ihs.inputmethod.uimodules.ui.customize.adapter.LockerThemeGalleryAdap
  * Created by guonan.lv on 17/9/13.
  */
 
-public class InComingCallThemePreviewFragment extends Fragment implements View.OnClickListener{
+public class InComingCallThemePreviewActivity extends Activity implements View.OnClickListener{
 
     private View returnView;
     private ImageView callThemeGifPreview;
     private ProgressBar loadingProgressBar;
 
+    private String themeName;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.incoming_call_theme_preview, container, false);
-        returnView = view.findViewById(R.id.view_return);
+        setContentView(R.layout.incoming_call_theme_preview);
+        returnView = ViewUtils.findViewById(this, R.id.view_return);
         returnView.setOnClickListener(this);
-        callThemeGifPreview = (ImageView) view.findViewById(R.id.call_theme_gif_view);
+        callThemeGifPreview = ViewUtils.findViewById(this, R.id.call_theme_gif_view);
         callThemeGifPreview.setOnClickListener(this);
-        loadingProgressBar = (ProgressBar) view.findViewById(R.id.loading_progress);
+        loadingProgressBar = ViewUtils.findViewById(this, R.id.loading_progress);
         loadingProgressBar.setOnClickListener(this);
+        themeName = getIntent().getStringExtra("ThemeInfo");
         initView();
-        return view;
     }
 
     private void initView() {
-        Glide.with(getActivity()).load(LockerThemeGalleryAdapter.getInComingCallThemeThumbnailUrl("name")).into(callThemeGifPreview);
-
+        Glide.with(this).load(LockerThemeGalleryAdapter.getInComingCallThemeThumbnailUrl(themeName)).diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(callThemeGifPreview);
     }
 
     @Override
@@ -59,6 +56,12 @@ public class InComingCallThemePreviewFragment extends Fragment implements View.O
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.view_return:
+                this.finish();
+                break;
+            case R.id.call_theme_gif_view:
+                break;
+        }
     }
 }
