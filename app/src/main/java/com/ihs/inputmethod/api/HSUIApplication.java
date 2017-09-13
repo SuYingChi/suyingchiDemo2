@@ -61,6 +61,7 @@ import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.LauncherActivity;
 import com.keyboard.common.MainActivity;
 import com.keyboard.core.themes.ThemeDirManager;
+import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
@@ -267,6 +268,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, intentFilter);
 
         ScreenLockerManager.init();
+        FloatWindowCompat.initLockScreen(this);
         initIAP();
 
         if(Build.VERSION.SDK_INT >= 16){
