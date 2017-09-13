@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate;
 
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
@@ -66,11 +68,13 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
         ThemeCardViewHolder themeCardViewHolder = (ThemeCardViewHolder) holder;
 
         themeCardViewHolder.themeRealImage.setImageDrawable(null);
+
+
+
         final HSKeyboardTheme keyboardTheme = items.get(position).keyboardTheme;
         holder.itemView.setTag(keyboardTheme.mThemeName);
         themeCardViewHolder.themeDelete.setVisibility(View.GONE);
-
-        // show animated mark
+        // show animated mark and new mark judgement
         boolean isShowAnimatedMark;
         if (keyboardTheme.getThemeData() == null || keyboardTheme.getThemeData().get("showAnimatedMark") == null) {
             isShowAnimatedMark = false;
@@ -82,7 +86,14 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
             themeCardViewHolder.themeNewImage.setVisibility(View.GONE);
         } else {
             themeCardViewHolder.themeAnimatedImage.setVisibility(View.GONE);
-            themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
+
+            if (HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName)) {
+                themeCardViewHolder.themeNewImage.setVisibility(View.VISIBLE);
+                Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
+                themeCardViewHolder.themeNewImage.setImageURI(uri);
+            } else {
+                themeCardViewHolder.themeNewImage.setVisibility(View.GONE);
+            }
         }
 
         switch (keyboardTheme.getThemeType()) {

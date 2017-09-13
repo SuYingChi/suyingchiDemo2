@@ -132,7 +132,9 @@ public class StickerGroup {
     public List<Sticker> getStickerList() {
         if (stickerList == null) {
             stickerList = new ArrayList<>();
+
         }
+
         return stickerList;
     }
 

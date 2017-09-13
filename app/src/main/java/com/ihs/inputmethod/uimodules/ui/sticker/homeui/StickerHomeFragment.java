@@ -1,5 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -27,7 +29,6 @@ import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import static com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION;
 import static com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager.STICKER_GROUP_ORIGINAL;
@@ -69,6 +70,7 @@ public class StickerHomeFragment extends Fragment {
 
     private void initView() {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+
         loadStickerGroup();
         stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
             @Override
@@ -83,6 +85,11 @@ public class StickerHomeFragment extends Fragment {
                 final String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
                 final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
+                // 移除点击过的new角标
+                StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerModel);
+                stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerModel));
+
+
                 DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                         drawable, new AdLoadingView.OnAdBufferingListener() {
@@ -93,8 +100,10 @@ public class StickerHomeFragment extends Fragment {
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
                             }
+
                         });
             }
+
         });
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 
@@ -113,22 +122,12 @@ public class StickerHomeFragment extends Fragment {
     }
 
     private void loadStickerGroup() {
-        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
+        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
 
-        for (Map<String, Object> map : stickerConfigList) {
-            String stickerGroupName = (String) map.get("name");
-            StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
-            if (stickerGroup.isStickerGroupDownloaded()) {
-                continue;
+        for (StickerGroup stickerGroup : stickerGroupList) {
+            if (!stickerGroup.isStickerGroupDownloaded()) {
+                stickerModelList.add(new StickerModel(stickerGroup));
             }
-            String stickerTag = (String) map.get("tagName");
-            String stickerGroupDownloadDisplayName = (String) map.get("showName");
-            stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
-            StickerModel stickerModel = new StickerModel(stickerGroup);
-            if (stickerTag != null) {
-                stickerModel.setStickTag(stickerTag);
-            }
-            stickerModelList.add(stickerModel);
         }
     }
 

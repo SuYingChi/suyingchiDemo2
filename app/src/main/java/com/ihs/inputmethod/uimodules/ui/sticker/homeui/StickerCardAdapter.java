@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,6 +22,9 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
+import java.util.Set;
+
+import pl.droidsonroids.gif.GifImageView;
 
 
 /**
@@ -33,13 +38,14 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
     private int imageHeight;
     private OnStickerCardClickListener onStickerCardClickListener;
     private String FROM_FRAGMENT_TYPE;
+
     public enum ITEM_TYPE {
         ITEM_TYPE_HOME,
         ITEM_TYPE_MY,
         ITEM_TYPE_MORE
     }
 
-    private DisplayImageOptions options=new DisplayImageOptions.Builder().cacheInMemory(false).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
+    private DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(false).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
 
     public StickerCardAdapter(List<StickerModel> data, OnStickerCardClickListener onStickerCardClickListener) {
         stickerModelList = data;
@@ -78,12 +84,12 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         final StickerGroup stickerGroup = stickerModel.getStickerGroup();
         holder.stickerGroupName.setText(stickerGroup.getStickerGroupName());
         final String realImageUrl = stickerGroup.getStickerGroupDownloadPreviewImageUri();
-        if(realImageUrl != null) {
-            ImageSize imageSize = new ImageSize(imageWidth,imageHeight);
+        if (realImageUrl != null) {
+            ImageSize imageSize = new ImageSize(imageWidth, imageHeight);
             ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(holder.stickerRealImage), options, imageSize, null, null);
         }
         if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_HOME.ordinal()) {
-           ((StickerCardHomeViewHolder) holder).moreMenuImage.setVisibility(View.VISIBLE);
+            ((StickerCardHomeViewHolder) holder).moreMenuImage.setVisibility(View.VISIBLE);
             ((StickerCardHomeViewHolder) holder).moreMenuImage.setImageResource(R.drawable.ic_download_icon);
             ((StickerCardHomeViewHolder) holder).moreMenuImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,7 +106,21 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
                 onStickerCardClickListener.onCardViewClick(stickerModel, holder.stickerRealImage.getDrawable());
             }
         });
-        holder.stickerNewImage.setVisibility(stickerModel.getStickerTag() == null ? View.GONE : View.VISIBLE);
+
+        /**
+         * 判断是否有当前sticker group 是否是new
+         */
+        if (isNewStickerGroup(stickerGroup)) {
+            holder.stickerNewImage.setVisibility(View.VISIBLE);
+            Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
+            holder.stickerNewImage.setImageURI(uri);
+        } else {
+            holder.stickerNewImage.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean isNewStickerGroup(StickerGroup stickerGroup) {
+        return StickerDataManager.getInstance().isNewStickerGroup(stickerGroup);
     }
 
     private boolean isFromHomeType() {
@@ -109,7 +129,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
 
     @Override
     public int getItemViewType(int position) {
-        if (isFromHomeType() && position == getItemCount()-1) {
+        if (isFromHomeType() && position == getItemCount() - 1) {
             return ITEM_TYPE.ITEM_TYPE_MORE.ordinal();
         }
         return isFromHomeType() ? ITEM_TYPE.ITEM_TYPE_HOME.ordinal() : ITEM_TYPE.ITEM_TYPE_MY.ordinal();
@@ -118,13 +138,14 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
     @Override
     public int getItemCount() {
         if (isFromHomeType()) {
-            return stickerModelList.size()+1;
+            return stickerModelList.size() + 1;
         }
         return stickerModelList.size();
     }
 
     public interface OnStickerCardClickListener {
         void onCardViewClick(StickerModel stickerModel, Drawable drawable);
+
         void onDownloadButtonClick(StickerModel stickerModel, Drawable drawable);
     }
 
@@ -132,17 +153,17 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         View stickerCardView;
 
         TextView stickerGroupName;
-        ImageView stickerNewImage;
+        GifImageView stickerNewImage;
         ImageView stickerRealImage;
 
 
         public StickerCardViewHolder(View itemView) {
             super(itemView);
 
-            stickerCardView = itemView.findViewById(R.id.sticker_card_view) ;
+            stickerCardView = itemView.findViewById(R.id.sticker_card_view);
             stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
             stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
-            stickerNewImage = (ImageView) itemView.findViewById(R.id.sticker_new_view);
+            stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
         }
     }
 
@@ -156,11 +177,13 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
             moreStickersComing = (TextView) itemView.findViewById(R.id.more_sticker_coming);
         }
     }
+
     private class MyStickerCardViewHolder extends StickerCardViewHolder {
         public MyStickerCardViewHolder(View view) {
             super(view);
         }
     }
+
 
 }
 

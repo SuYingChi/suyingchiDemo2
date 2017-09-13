@@ -216,6 +216,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
         HSKeyboardThemeManager.init();
+        StickerDataManager.getInstance();
         ThemeDirManager.moveCustomAssetsToFileIfNecessary();
 
         CustomUIRateAlertUtils.initialize();

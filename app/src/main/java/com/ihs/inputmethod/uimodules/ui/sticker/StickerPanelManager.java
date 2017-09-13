@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.util.Log;
 import android.util.Pair;
 
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
@@ -46,7 +47,7 @@ public class StickerPanelManager {
         }
         stickerPanelItemGroups.clear();
         stickerPanelItemGroups.add(recentStickerPanelItems);
-        for (StickerGroup stickerGroup : getSortedStickerGroup()) {
+        for (StickerGroup stickerGroup : getSortedExceptNeedDownloadStickerGroup()) {
             StickerPanelItemGroup stickerPanelItemGroup = new StickerPanelItemGroup(stickerGroup.getStickerGroupName());
             for (Sticker sticker : stickerGroup.getStickerList()) {
                 stickerPanelItemGroup.addStickerPanelItem(new StickerPanelItem(sticker));
@@ -69,6 +70,9 @@ public class StickerPanelManager {
                 stickerBuildInList.add(stickerGroup);
             } else if (stickerGroup.isStickerGroupDownloaded()) {
                 stickerDownloadedList.add(stickerGroup);
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
             } else {
                 stickerNeedDownloadList.add(stickerGroup);
             }
@@ -76,6 +80,30 @@ public class StickerPanelManager {
         stickerSortedGroupList.addAll(stickerBuildInList);
         stickerSortedGroupList.addAll(stickerDownloadedList);
         stickerSortedGroupList.addAll(stickerNeedDownloadList);
+        return stickerSortedGroupList;
+    }
+
+    /**
+     * 获取除了未下载的所有stickerGroup集合
+     * @return
+     */
+    private List<StickerGroup> getSortedExceptNeedDownloadStickerGroup() {
+        List<StickerGroup> stickerSortedGroupList = new ArrayList<>();
+        List<StickerGroup> stickerBuildInList = new ArrayList<>();
+        List<StickerGroup> stickerDownloadedList = new ArrayList<>();
+        for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
+            if (stickerGroup.isInternalStickerGroup()) {
+                stickerBuildInList.add(stickerGroup);
+
+            } else if (stickerGroup.isStickerGroupDownloaded()) {
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
+                stickerDownloadedList.add(stickerGroup);
+            }
+        }
+        stickerSortedGroupList.addAll(stickerBuildInList);
+        stickerSortedGroupList.addAll(stickerDownloadedList);
         return stickerSortedGroupList;
     }
 
@@ -101,6 +129,31 @@ public class StickerPanelManager {
         stickerSortedNameList.addAll(stickerDownloadedNameList);
         stickerSortedNameList.addAll(stickerNeedDownloadNameList);
         return stickerSortedNameList;
+    }
+
+    /**
+     * 获取除了未下载的所有的StickerGroup名字
+     * @return
+     */
+    List<String> getSortedExceptNeedDownloadStickerGroupNameList() {
+        List<String> stickerSortedExceptNeedDownloadNameList = new ArrayList<>();
+        List<String> stickerBuildInNameList = new ArrayList<>();
+        List<String> stickerDownloadedNameList = new ArrayList<>();
+        for (StickerGroup stickerGroup :StickerDataManager.getInstance().getStickerGroupList()) {
+            if (stickerGroup.isInternalStickerGroup()) {
+                stickerBuildInNameList.add(stickerGroup.getStickerGroupName());
+            } else if (stickerGroup.isStickerGroupDownloaded()){
+                stickerDownloadedNameList.add(stickerGroup.getStickerGroupName());
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
+            }
+        }
+        stickerSortedExceptNeedDownloadNameList.add(STICKER_RECENT);
+        stickerSortedExceptNeedDownloadNameList.addAll(stickerBuildInNameList);
+        stickerSortedExceptNeedDownloadNameList.addAll(stickerDownloadedNameList);
+
+        return stickerSortedExceptNeedDownloadNameList;
     }
 
     private List<String> getStickerNeedDownloadList() {

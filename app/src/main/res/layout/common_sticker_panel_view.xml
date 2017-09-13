@@ -6,12 +6,27 @@
     android:clipChildren="false"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/sticker_category_tab_host"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/config_suggestions_strip_height"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/sticker_category_tab_host"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/config_suggestions_strip_height"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1" />
+
+        <com.ihs.inputmethod.uimodules.stickerplus.PlusButton
+            android:id="@+id/plus_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/sticker_panel_view_pager"

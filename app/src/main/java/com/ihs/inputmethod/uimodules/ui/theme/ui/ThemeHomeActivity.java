@@ -44,6 +44,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -91,12 +92,13 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private static final String SP_TREBLE_FUNCTION_ALERT_SHOWED = "sp_treble_function_alert_showed";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
-
+    public static int HOME_VIEWPAGER_STICKER_PAGE = 1;
+    public static final String BUNDLE_KEY_HOME_INIT = "home_init_viewpager_page";
     private static final int keyboardActivationFromHome = 11;
+
     public static final int keyboardActivationFromHomeWithTrial = 12;
 
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
-
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
     private static int HANDLER_SHOW_UPDATE_DIALOG = 102;
     private static int HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG = 103;
@@ -251,6 +253,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
+
         tabLayout.setupWithViewPager(viewPager);
         setTabListener();
 
@@ -327,7 +330,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
         MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
         onNavigationItemSelected(item);
+
+        // keyboard中点击sticker panel加号，设定viewpager当前页为sticker home页
+        Bundle extras = intent.getExtras();
+        if (extras != null && extras.getInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INIT) == ThemeHomeActivity.HOME_VIEWPAGER_STICKER_PAGE) {
+            viewPager.setCurrentItem(ThemeHomeActivity.HOME_VIEWPAGER_STICKER_PAGE);
+        }
     }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -366,6 +376,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             showOpenAlertIfNeeded();
         }
         isResumeOnCreate = false;
+
     }
 
     @Override
@@ -848,6 +859,5 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
 
         handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
     }
-
 
 }
