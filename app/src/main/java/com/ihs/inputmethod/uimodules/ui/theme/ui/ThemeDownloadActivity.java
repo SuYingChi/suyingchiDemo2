@@ -23,7 +23,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.analytics.HSGoogleAnalyticsUtils;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.uimodules.R;
@@ -128,7 +127,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         enableTipTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("activate_appbar_clicked");
                 keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromDownload);
             }
         });
@@ -144,7 +142,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                 CustomThemeActivity.startCustomThemeActivity(bundle);
 
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("customize_entry_clicked", "mythemes");
                 HSAnalytics.logEvent("customize_entry_clicked", "mythemes");
             }
         });
@@ -235,7 +232,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
             if (PermissionUtils.isUsageAccessGranted()) {
-                HSGoogleAnalyticsUtils.getInstance().logKeyboardEvent("permission_usage_access");
+                HSAnalytics.logEvent("permission_usage_access");
             }
         }
 
@@ -360,13 +357,13 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
 
         switch (requestCode) {
             case keyboardActivationFromDownloadWithTrial:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_download_try_viewed", "themepackage");
+                HSAnalytics.logEvent("keyboard_download_try_viewed", "themepackage");
                 break;
             case keyboardActivationFromCustom:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_download_try_viewed", "customizetheme");
+                HSAnalytics.logEvent("keyboard_download_try_viewed", "customizetheme");
                 break;
             default:
-                HSGoogleAnalyticsUtils.getInstance().logAppEvent("keyboard_download_try_viewed", "apply");
+                HSAnalytics.logEvent("keyboard_download_try_viewed", "apply");
                 break;
         }
     }
