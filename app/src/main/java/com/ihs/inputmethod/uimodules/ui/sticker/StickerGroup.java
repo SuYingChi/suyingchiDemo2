@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.res.AssetManager;
-import android.util.Log;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;

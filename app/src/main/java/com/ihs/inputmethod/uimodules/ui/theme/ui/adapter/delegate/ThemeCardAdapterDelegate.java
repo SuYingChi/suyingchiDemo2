@@ -86,11 +86,15 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
             themeCardViewHolder.themeNewImage.setVisibility(View.GONE);
         } else {
             themeCardViewHolder.themeAnimatedImage.setVisibility(View.GONE);
-            themeCardViewHolder.themeNewImage.setVisibility(HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName) ? View.VISIBLE : View.GONE);
-            Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
-            themeCardViewHolder.themeNewImage.setImageURI(uri);
-        }
 
+            if (HSThemeNewTipController.getInstance().isThemeNew(keyboardTheme.mThemeName)) {
+                themeCardViewHolder.themeNewImage.setVisibility(View.VISIBLE);
+                Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
+                themeCardViewHolder.themeNewImage.setImageURI(uri);
+            } else {
+                themeCardViewHolder.themeNewImage.setVisibility(View.GONE);
+            }
+        }
 
         switch (keyboardTheme.getThemeType()) {
             case CUSTOM:

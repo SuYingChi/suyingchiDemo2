@@ -59,8 +59,6 @@ public class StickerViewPagerAdapter extends PagerAdapter {
      */
     @Override
     public int getCount() {
-
-//        return needDownloadStickerGroupList.size() + 1;
         return 1;
     }
 
@@ -106,68 +104,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-
-//        if (position != 0 && !needDownloadStickerGroupList.isEmpty()) {
-//            StickerDownloadView stickerDownloadView = (StickerDownloadView) inflater.inflate(R.layout.common_sticker_panel_need_download_page, null);
-//            final StickerGroup stickerGroup = needDownloadStickerGroupList.get(position - 1);
-//            stickerDownloadView.setStickerGroup(stickerGroup);
-//            final ImageView sticker_download_preview = (ImageView) stickerDownloadView.findViewById(R.id.sticker_download_preview_image);
-//            final TextView stickerDownloadShowName = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_show_name);
-//            stickerDownloadShowName.setText(stickerGroup.getDownloadDisplayName());
-//            ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupDownloadPreviewImageUri(), new ImageViewAware(sticker_download_preview), displayImageOptions, new ImageLoadingListener() {
-//                @Override
-//                public void onLoadingStarted(String imageUri, View view) {
-//                    int padding = HSDisplayUtils.dip2px(40);
-//                    view.setPadding(padding, padding, padding, padding);
-//                }
-//
-//                @Override
-//                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//
-//                }
-//
-//                @Override
-//                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                    view.setPadding(0, 0, 0, 0);
-//                }
-//
-//                @Override
-//                public void onLoadingCancelled(String imageUri, View view) {
-//
-//                }
-//            });
-//            TextView downloadButton = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_button);
-//            downloadButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (ClickUtils.isFastDoubleClick()) {
-//                        return;
-//                    }
-//                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_clicked", stickerGroup.getStickerGroupName());
-//                    final String stickerGroupName = stickerGroup.getStickerGroupName();
-//                    final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
-//                    DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
-//                            stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-//                            sticker_download_preview.getDrawable(), null, new HSHttpConnection.OnConnectionFinishedListener() {
-//                                @Override
-//                                public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-//                                    HSGoogleAnalyticsUtils.getInstance().logAppEvent("sticker_download_succeed", stickerGroupName);
-//                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-//                                }
-//
-//                                @Override
-//                                public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
-//
-//                                }
-//                            });
-//                }
-//            });
-//            container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//            return stickerDownloadView;
-//        } else {
             container.addView(firstView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return firstView;
-//        }
-
     }
 }

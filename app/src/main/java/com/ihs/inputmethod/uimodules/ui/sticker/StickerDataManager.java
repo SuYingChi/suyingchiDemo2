@@ -27,7 +27,6 @@ public class StickerDataManager {
     public static final String PREFERENCE_KEY_NEW_STICKER_SET = "sp_key_new_sticker_set";
     private static final String PREFERENCE_SHOW_NEW_TIP_STATE = "sp_show_new_tip_state";
     private static final String PREFERENCE_STICKER_IS_FIRST_LOAD = "sp_sticker_is_first_load";
-    private static final String PREFERENCE_FIRST_KEYBOARD_APPEAR_NOT_CLICK_STICKER_NEW_STATE = "sp_sticker_first_keyboard_appear_not_click_new_tip_state";
     private static StickerDataManager instance;
     private List<StickerGroup> stickerGroups;
     private boolean isReady = false;
@@ -142,7 +141,6 @@ public class StickerDataManager {
 
         if (currentNewStickerSet.isEmpty()) {
             saveShowNewTipState(false);
-            savefirstKeyboardAppearAndNotClickState(false);
         }
     }
 
@@ -164,15 +162,6 @@ public class StickerDataManager {
         return PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean(PREFERENCE_SHOW_NEW_TIP_STATE, false);
     }
 
-    void savefirstKeyboardAppearAndNotClickState(boolean b) {
-        HSPreferenceHelper helper = HSPreferenceHelper.getDefault();
-        helper.putBoolean(PREFERENCE_FIRST_KEYBOARD_APPEAR_NOT_CLICK_STICKER_NEW_STATE, b);
-    }
-
-    public boolean isFirstKeyboardAppearAndNotClick() {
-        HSPreferenceHelper helper= HSPreferenceHelper.getDefault();
-        return helper.getBoolean(PREFERENCE_FIRST_KEYBOARD_APPEAR_NOT_CLICK_STICKER_NEW_STATE, true);
-    }
 
     boolean isStickersReady() {
         return isReady;
