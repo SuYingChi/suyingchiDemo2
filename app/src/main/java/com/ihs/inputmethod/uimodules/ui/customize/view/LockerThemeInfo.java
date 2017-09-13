@@ -14,8 +14,7 @@ import java.util.Map;
 
 public class LockerThemeInfo {
 
-    public String packageName;
-    public String thumbnailUrl;
+    public String name;
     public boolean installed;
 
     public static @Nullable
@@ -23,17 +22,15 @@ public class LockerThemeInfo {
         LockerThemeInfo info = new LockerThemeInfo();
 
         try {
-            String packageName = (String) config.get("packageName");
+            String name = (String) config.get("name");
 //            if (TextUtils.isEmpty(packageName)) {
 //                return null;
 //            }
-            info.packageName = packageName;
+            info.name = name;
 
-            String thumbnailUrl = (String) config.get("thumbnail");
-            if (TextUtils.isEmpty(thumbnailUrl)) {
+            if (TextUtils.isEmpty(name)) {
                 return null;
             }
-            info.thumbnailUrl = thumbnailUrl;
         } catch (Exception e) {
             HSLog.w("Theme.Locker", "Error loading locker theme config, please check config format");
             CrashlyticsCore.getInstance().logException(e);

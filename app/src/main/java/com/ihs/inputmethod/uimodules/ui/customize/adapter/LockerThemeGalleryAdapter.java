@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.customize.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.artw.lockscreen.common.NavUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -40,16 +38,21 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
     private static final int ITEM_TYPE_BANNER = 0;
     private static final int ITEM_TYPE_THEME_VIEW = 1;
 
+    private static final String INCOMING_THEME_THUMBNAIL_SUFFIX = ".jpg";
+    private static final String INCOMING_THEME_GIF_SUFFIX = ".gif";
+
     private Context mContext;
     private LayoutInflater mInflater;
     private List<LockerThemeInfo> mThemes = new ArrayList<>();
     private boolean mLockerInstalled = false;
+    private String mInComingCallThemeUrl;
 
     public LockerThemeGalleryAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
         mLockerInstalled = CommonUtils.isPackageInstalled(HSConfig.optString("",
                 "Application", "Promotions", "LockerPackage"));
+        mInComingCallThemeUrl = HSConfig.optString("", "Application", "Server", "IncomingCallThemeURL");
         populateData();
     }
 
@@ -62,7 +65,7 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
 
     @SuppressWarnings("unchecked")
     public void populateData() {
-        List<Map<String, ?>> configs = (List<Map<String, ?>>) HSConfig.getList("Application", "LockerThemes");
+        List<Map<String, ?>> configs = (List<Map<String, ?>>) HSConfig.getList("Application", "IncomingCallTheme");
         mThemes.clear();
         for (Map<String, ?> themeConfig : configs) {
             LockerThemeInfo theme = LockerThemeInfo.ofConfig(themeConfig);
@@ -96,6 +99,13 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
 
     }
 
+    public static String getInComingCallThemeThumbnailUrl(String name) {
+        return HSConfig.optString("", "Application", "Server", "IncomingCallThemeURL") + name + INCOMING_THEME_THUMBNAIL_SUFFIX;
+    }
+
+    public static String getInComingCallThemeGifUrl(String name) {
+        return HSConfig.optString("", "Application", "Server", "IncomingCallThemeURL") + name + INCOMING_THEME_GIF_SUFFIX;
+    }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -108,7 +118,7 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         holder.itemView.setTag(themeIndex);
         final LockerThemeInfo theme = mThemes.get(themeIndex);
 
-        Glide.with((themeHolder.itemView.getContext())).load(theme.thumbnailUrl).asBitmap().fitCenter()
+        Glide.with((themeHolder.itemView.getContext())).load(getInComingCallThemeThumbnailUrl(theme.name)).asBitmap().fitCenter()
                 .placeholder(R.drawable.locker_theme_thumbnail_loading).error(R.drawable.locker_theme_thumbnail_failed)
                 .format(DecodeFormat.PREFER_RGB_565).diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(themeHolder.themeThumbnail);
@@ -121,13 +131,6 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
                 int pos = (int) v.getTag();
                 LockerThemeInfo themeInfo = mThemes.get(pos);
 //                LauncherAnalytics.logEvent("Theme_Locker_Theme_Clicked", "type", themeInfo.packageName);
-                if (themeInfo.installed) {
-                    launchThemeApp(themeInfo.packageName);
-                } else {
-                    browseMarketApp(themeInfo.packageName);
-                    PromotionTracker.startTracking(getLockerPackageName(), PromotionTracker.EVENT_LOG_APP_NAME_LOCKER);
-                    PromotionTracker.startTracking(themeInfo.packageName, PromotionTracker.EVENT_LOG_APP_NAME_LOCKER_THEME);
-                }
                 break;
             case R.id.locker_install_btn:
             case R.id.locker_theme_gallery_banner:
@@ -141,11 +144,6 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
 
     private String getLockerPackageName() {
         return HSConfig.optString("", "Application", "Promotions", "LockerPackage");
-    }
-
-    private void launchThemeApp(String packageName) {
-        Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(packageName);
-        NavUtils.startActivitySafely(mContext, intent);
     }
 
     private void browseMarketApp(String packageName) {

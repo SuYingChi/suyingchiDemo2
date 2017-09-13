@@ -100,10 +100,10 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 //HSKeyboardThemeManager.getCustomThemeData().setCustomizedBitmap(cropperBitmap);
                 String cropperImagePath = KCCustomThemeData.saveCustomizedBackgroundBitmap(cropperBitmap, oldCropperImagePath);
 
-                if (getIntent().getStringExtra("from") != null) {
+                if (getIntent().getStringExtra("fromWallpaper") != null) {
                     Intent intent = new Intent(CustomThemeBackgroundCropperActivity.this, CustomThemeActivity.class);
                     intent.putExtra("CropperImagePath", cropperImagePath);
-                    intent.putExtra("from", CustomThemeBackgroundCropperActivity.class.getSimpleName());
+                    intent.putExtra("fromCropper", CustomThemeBackgroundCropperActivity.class.getSimpleName());
                     startActivity(intent);
                 } else {
                     Intent resultIntent = new Intent();

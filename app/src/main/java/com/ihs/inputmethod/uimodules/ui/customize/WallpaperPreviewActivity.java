@@ -11,9 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -27,6 +25,7 @@ import android.widget.TextView;
 
 import com.acb.adadapter.AcbNativeAd;
 import com.acb.nativeads.AcbNativeAdLoader;
+import com.artw.lockscreen.LockerSettings;
 import com.bumptech.glide.BitmapTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -107,7 +106,10 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private ProgressDialog mDialog;
     private View mEdit;
     private View mReturnArrow;
-    private LinearLayout mLinearLayout;
+    private LinearLayout setWallpaperDialog;
+    private LinearLayout setHomeScreen;
+    private LinearLayout setLockerScreen;
+    private LinearLayout setHomeAndLockerScreen;
     private PreviewViewPagerAdapter mAdapter;
     private SparseBooleanArray mLoadMap = new SparseBooleanArray();
 
@@ -142,16 +144,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         return intent;
     }
 
-    private Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 0x123) {
-
-            }
-        }
-    };
-
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         super.onServiceConnected(name, service);
@@ -185,7 +177,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mWallpapers.addAll(getIntent().getParcelableArrayListExtra(INTENT_KEY_WALLPAPERS));
         mCurrentWallpaper = (WallpaperInfo) getWallpaperInfoByIndex(mPaperIndex);
         mAdapter.notifyDataSetChanged();
-//        mWallpapers.addAll(getIntent().getParcelableArrayListExtra(INTENT_KEY_WALLPAPERS));
         mIsOnLineWallpaper = true;
         mInitialized = true;
         mViewPager.setCurrentItem(mPaperIndex, false);
@@ -228,7 +219,9 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mSetKeyThemeButton = (TextView) findViewById(R.id.set_key_theme_button);
         mSetKeyThemeButton.setOnClickListener(this);
 
-        mLinearLayout = (LinearLayout) findViewById(R.id.wrap_linear_layout);
+        setWallpaperDialog = (LinearLayout) findViewById(R.id.select_dialog_wallpaper);
+        setWallpaperDialog.setOnClickListener(this);
+        setWallpaperDialog.setVisibility(View.GONE);
 
         mViewPager = (ViewPager) findViewById(R.id.preview_view_pager);
         mAdapter = new PreviewViewPagerAdapter();
@@ -249,10 +242,18 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         });
     }
 
+    private void showSetWallpaperDialog() {
+        setWallpaperDialog.setVisibility(View.VISIBLE);
+        setHomeScreen = (LinearLayout) findViewById(R.id.set_home_screen);
+        setHomeScreen.setOnClickListener(this);
+        setLockerScreen = (LinearLayout) findViewById(R.id.set_locker_screen);
+        setLockerScreen.setOnClickListener(this);
+        setHomeAndLockerScreen = (LinearLayout) findViewById(R.id.set_home_and_locker_screen);
+        setHomeAndLockerScreen.setOnClickListener(this);
+    }
+
     private void hideViews() {
         mSetWallpaperButton.setVisibility(View.GONE);
-        mZoomBtn.setVisibility(View.GONE);
-        mEdit.setVisibility(View.GONE);
         View draw = ViewUtils.findViewById(this, R.id.preview_guide_draw_view);
         if (draw != null) {
             draw.setVisibility(View.GONE);
@@ -277,22 +278,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     @Override
     public void onPageSelected(int position) {
         int index = position;
-        if (mWallpaperPackageInfo != null) {
-            if (position == 0) {
-                hideViews();
-                findViewById(R.id.wallpaper_view_return).setVisibility(View.VISIBLE);
-                mCurrentWallpaper = null;
-                return;
-            } else {
-                index = position - 1;
-            }
-        }
-
-        if (getWallpaperInfoByIndex(index) instanceof AcbNativeAd) {
-            hideViews();
-            mCurrentWallpaper = null;
-            return;
-        }
         resetViewVisibility();
         mPaperIndex = index;
         mCurrentWallpaper = (WallpaperInfo) getWallpaperInfoByIndex(mPaperIndex);
@@ -321,39 +306,23 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                     ToastUtils.showToast(R.string.online_wallpaper_loading);
                     return;
                 }
-
-                if (mWallpaperPackageInfo != null) {
-                } else {
-                    if (mCurrentWallpaper.getType() == WallpaperInfo.WALLPAPER_TYPE_ONLINE) {
-                    }
-                }
-                mSetWallpaperButton.setTextColor(0x80ffffff);
-                mSetWallpaperButton.setClickable(false);
-                mCurrentWallpaper.setEdit("");
-                mCurrentWallpaper.setApplied(true);
-                if (mCurrentWallpaper.getCategory() == null) {
-                    mCurrentWallpaper.setCategory(mCategoryInfo);
-                }
-                applyWallpaper(mCurrentWallpaper.getType() != WallpaperInfo.WALLPAPER_TYPE_GALLERY, false);
+                showSetWallpaperDialog();
                 break;
             case R.id.set_key_theme_button:
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            long t1 = System.currentTimeMillis();
                             File file = Glide.with(WallpaperPreviewActivity.this)
                                     .load(mCurrentWallpaper.getWallpaperUrl())
                                     .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                                     .get();
                             String path = file.getAbsolutePath();
-                            long t2 = System.currentTimeMillis();
-                            HSLog.e("eee", "" + (t2 - t1));
                             final Resources res = getResources();
                             final int keyboardWidth = HSResourceUtils.getDefaultKeyboardWidth(res);
                             final int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(res);
                             Intent intent = new Intent(WallpaperPreviewActivity.this, CustomThemeBackgroundCropperActivity.class);
-                            intent.putExtra("from", TAG);
+                            intent.putExtra("fromWallpaper", TAG);
                             intent.putExtra(CopperImagePath, path);
                             intent.putExtra(KeyboardWidth, keyboardWidth);
                             intent.putExtra(KeyboardHeight, keyboardHeight);
@@ -366,8 +335,38 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 });
                 thread.start();
                 break;
+            case R.id.set_home_screen:
+                setHomeScreenWallpaper();
+                break;
+            case R.id.set_locker_screen:
+                setLockerScreenWallpaper();
+                break;
+            case R.id.set_home_and_locker_screen:
+                setHomeScreenWallpaper();
+                setLockerScreenWallpaper();
+                break;
+
         }
 
+    }
+
+    private void setHomeScreenWallpaper() {
+        mSetWallpaperButton.setTextColor(0x80ffffff);
+        mSetWallpaperButton.setClickable(false);
+        mCurrentWallpaper.setEdit("");
+        mCurrentWallpaper.setApplied(true);
+        if (mCurrentWallpaper.getCategory() == null) {
+            mCurrentWallpaper.setCategory(mCategoryInfo);
+        }
+        applyWallpaper(mCurrentWallpaper.getType() != WallpaperInfo.WALLPAPER_TYPE_GALLERY, false);
+    }
+
+    private void setLockerScreenWallpaper() {
+        LockerSettings.setLockerBgUrl(mCurrentWallpaper.getWallpaperUrl());
+        setWallpaperDialog.setVisibility(View.GONE);
+        mDialog = ProgressDialog.createDialog(this, getString(R.string.wallpaper_setting_progress_dialog_text));
+        mDialog.show();
+        mDialog.setCancelable(false);
     }
 
     @Override
@@ -490,22 +489,9 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 page.width = bitmap.getWidth();
                 page.height = bitmap.getHeight();
 
-                if (info.textLightUnkown()) {
-//                    info.setTextLight(WallpaperUtils.textColorLightForWallPaper(bitmap));
-                }
+                imageView.setImageMatrix(WallpaperUtils.centerCrop(bitmap.getWidth(), bitmap.getHeight(),
+                        imageView));
 
-                if (false && mIsOnLineWallpaper) {
-                    imageView.setImageMatrix(WallpaperUtils.centerCrop(bitmap.getWidth(), bitmap.getHeight(),
-                            imageView));
-                } else {
-//                    if (mEdit.getBottom() == 0 || mSetWallpaperButton.getTop() == 0) {
-//                        imageView.setImageMatrix(WallpaperUtils.centerInside(bitmap.getWidth(), bitmap.getHeight(),
-//                                CommonUtils.pxFromDp(80) + TOP_MARGIN, getResources().getDisplayMetrics().heightPixels - CommonUtils.pxFromDp(68) - TOP_MARGIN));
-//                    } else {
-                    imageView.setImageMatrix(WallpaperUtils.centerInside(bitmap.getWidth(), bitmap.getHeight(),
-                            mReturnArrow.getBottom() + TOP_MARGIN, mSetWallpaperButton.getTop() - TOP_MARGIN));
-//                    }
-                }
                 return true;
             }
         }).diskCacheStrategy(DiskCacheStrategy.SOURCE);

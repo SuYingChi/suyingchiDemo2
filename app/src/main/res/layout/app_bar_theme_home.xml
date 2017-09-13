@@ -30,19 +30,26 @@
             android:visibility="visible" />
 
     </android.support.design.widget.AppBarLayout>
-
-    <com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView
-        android:id="@+id/content_layout"
+    
+    <FrameLayout
+        android:id="@+id/loading_gif_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/theme_activity_bg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_bar_default_height"
-        android:layout_gravity="bottom"
-        android:background="@android:color/white"
-        app:menu="@menu/customize_bottom_bar" />
+        <com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/theme_activity_bg"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_bar_default_height"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            app:menu="@menu/customize_bottom_bar" />
+    </FrameLayout>
+
 </android.support.design.widget.CoordinatorLayout>

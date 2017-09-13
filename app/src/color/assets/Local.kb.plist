@@ -593,6 +593,73 @@
 				<key>UpdateIntervalInHour</key>
 				<string>2</string>
 			</dict>
+			<key>IncomingCallTheme</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>Color</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Comet</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>DJ</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Drop</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Flash</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Flow</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Gold</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Love</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Neon</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Rhyme</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Sporty</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Stars</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Sun</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Tech</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Tri</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Vitas</string>
+				</dict>
+			</array>
 			<key>InterstitialAds</key>
 			<dict>
 				<key>BackButton</key>
@@ -1711,6 +1778,8 @@
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/emoji_suggestion</string>
 				<key>FontDownloadBaseURL</key>
 				<string>http://s3.amazonaws.com/rainbowkey-dev/Fonts/</string>
+				<key>IncomingCallThemeURL</key>
+				<string>https://emojidevelop.s3.amazonaws.com/AndroidResource/download/incoming_call_themes/</string>
 				<key>LanguageBaseURL</key>
 				<string>http://cdn.api-alliance.com/keyboardarts/adaptxt/3.1.1</string>
 				<key>RemoteContentDownloadURL</key>

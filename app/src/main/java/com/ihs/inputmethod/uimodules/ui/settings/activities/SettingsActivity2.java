@@ -231,7 +231,7 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
         }
 
         private void setupActionBar(String title) {
-            ActionBar actionBar = ((HSAppCompatActivity) getActivity()).getSupportActionBar();
+            ActionBar actionBar = ((HSAppCompatPreferenceActivity) getActivity()).getSupportActionBar();
             if (actionBar != null) {
                 // Show the Up button in the action bar.
                 actionBar.setDisplayHomeAsUpEnabled(true);
