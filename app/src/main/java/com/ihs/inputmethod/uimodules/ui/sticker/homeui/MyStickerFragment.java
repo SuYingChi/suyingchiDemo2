@@ -52,11 +52,6 @@ public class MyStickerFragment extends Fragment {
             public void onDownloadButtonClick(StickerModel stickerModel, Drawable drawable) {
 
             }
-
-            @Override
-            public void removeNewStickerFromNewStickerList(StickerGroup stickerGroup) {
-
-            }
         });
         recyclerView.setAdapter(stickerCardAdapter);
         recyclerView.setLayoutManager(layoutManager);

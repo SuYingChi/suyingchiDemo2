@@ -77,7 +77,10 @@ public class StickerHomeFragment extends Fragment {
                 final String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
                 final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
-                removeNewStickerFromNewStickerList(stickerGroup);
+                // 移除点击过的new角标
+                StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerModel);
+                stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerModel));
+
 
                 DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
@@ -104,19 +107,6 @@ public class StickerHomeFragment extends Fragment {
                         });
             }
 
-            @Override
-            public void removeNewStickerFromNewStickerList(StickerGroup stickerGroup) {
-                String stickerGroupName = stickerGroup.getStickerGroupName();
-                Set<String> newStickerSet = StickerDataManager.getInstance().getCurrentNewStickerSet(HSApplication.getContext());
-
-                if (newStickerSet.contains(stickerGroupName)) {
-                    newStickerSet.remove(stickerGroupName);
-                    StickerDataManager.getInstance().saveCurrentNewStickerSet(HSApplication.getContext(), newStickerSet);
-                    stickerCardAdapter.refreshNewStickersList(newStickerSet);
-                    stickerCardAdapter.notifyDataSetChanged();
-                }
-
-            }
         });
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 

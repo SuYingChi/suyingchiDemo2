@@ -10,14 +10,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
-
-import java.util.List;
-import java.util.Set;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -26,11 +21,8 @@ import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTranspa
  */
 
 public class PlusButton extends FrameLayout {
-    private static final String KEY_SHOW_NEW_MARK = "key_show_new_mark";
     private View newTipView;
     private final static int FUNCTION_VIEW_REAL_WIDTH = 18;
-    public static final String KEY_FIRST_KEYBOARD_APPEAR = "keyboard_first_appear";
-    private HSPreferenceHelper helper;
 
     public PlusButton(Context context) {
         this(context, null);
@@ -54,32 +46,15 @@ public class PlusButton extends FrameLayout {
         plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
         addView(plusImage);
 
-        if (isFirstKeyboardAppear()) {
+        if (StickerDataManager.getInstance().isFirstKeyboardAppearAndNotClick()) {// 控制点没有点击，如果点击了，则不再显示，默认情况是未点击的时候，是显示的；同时也保证了键盘第一次出现的时候是显示红点的
             showNewTip();
-            saveFirstEnterKeyboardState();
-        } else if (isShowNewTip()) {// 控制点没有点击，如果点击了，则不再显示，默认情况是未点击的时候，是显示的
-            showNewTip();
-        } else if (StickerDataManager.getInstance().getShowNewTipState()) { // 有没有更新，如果更新了则显示；没有更新，则不显示
+        } else if (StickerDataManager.getInstance().isShowNewTipState()) { // 有没有更新，如果更新了则显示；没有更新，则不显示
             showNewTip();
         } else {
             hideNewTip();
         }
     }
 
-    private boolean isFirstKeyboardAppear() {
-        if (helper == null) {
-            helper = HSPreferenceHelper.getDefault();
-        }
-
-        return helper.getBoolean(KEY_FIRST_KEYBOARD_APPEAR, true);
-    }
-
-    public void saveFirstEnterKeyboardState() {
-        if (helper == null) {
-            helper = HSPreferenceHelper.getDefault();
-        }
-        helper.putBoolean(KEY_FIRST_KEYBOARD_APPEAR, false);
-    }
 
     public void showNewTip() {
         if (newTipView == null) {
@@ -108,18 +83,6 @@ public class PlusButton extends FrameLayout {
             newTipView = null;
         }
     }
-
-    public void saveUnshowNewTipState() {
-        helper.putBoolean(KEY_SHOW_NEW_MARK, false);
-    }
-
-    private boolean isShowNewTip() {
-        if (helper == null) {
-            helper = HSPreferenceHelper.getDefault();
-        }
-        return helper.getBoolean(KEY_SHOW_NEW_MARK, true);
-    }
-
 
 }
 

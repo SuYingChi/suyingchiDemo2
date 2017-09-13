@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -39,11 +38,6 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
     private int imageHeight;
     private OnStickerCardClickListener onStickerCardClickListener;
     private String FROM_FRAGMENT_TYPE;
-    private Set<String> newStickerSet;
-
-    public void refreshNewStickersList(Set<String> newStickerSet) {
-        this.newStickerSet = newStickerSet;
-    }
 
     public enum ITEM_TYPE {
         ITEM_TYPE_HOME,
@@ -59,7 +53,6 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
         imageHeight = (int) (imageWidth / 1.6f);
         this.onStickerCardClickListener = onStickerCardClickListener;
-        this.newStickerSet = StickerDataManager.getInstance().getCurrentNewStickerSet(HSApplication.getContext());
     }
 
     public void setFragmentType(String type) {
@@ -127,10 +120,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
     }
 
     private boolean isNewStickerGroup(StickerGroup stickerGroup) {
-        if (newStickerSet.contains(stickerGroup.getStickerGroupName())) {
-            return true;
-        }
-        return false;
+        return StickerDataManager.getInstance().isNewStickerGroup(stickerGroup);
     }
 
     private boolean isFromHomeType() {
@@ -157,8 +147,6 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         void onCardViewClick(StickerModel stickerModel, Drawable drawable);
 
         void onDownloadButtonClick(StickerModel stickerModel, Drawable drawable);
-
-        void removeNewStickerFromNewStickerList(StickerGroup stickerGroup);
     }
 
     public class StickerCardViewHolder extends RecyclerView.ViewHolder {
