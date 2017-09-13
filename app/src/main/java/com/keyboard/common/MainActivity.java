@@ -727,6 +727,7 @@ public class MainActivity extends HSDeepLinkActivity {
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
+        finish();
     }
 
     private void playManualButtonShowAnimation() {
