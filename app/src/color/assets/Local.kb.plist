@@ -15,6 +15,8 @@
 			</dict>
 			<key>AutoSetKeyEnable</key>
 			<false/>
+			<key>UseNewLockScreen</key>
+			<true/>
 			<key>BoostPlus</key>
 			<dict>
 				<key>AccCleanTimeoutSeconds</key>
@@ -480,6 +482,8 @@
 					<true/>
 				</dict>
 			</dict>
+			<key>LockerAutoRefreshAdsEnable</key>
+			<true/>
 			<key>FeaturesGuide</key>
 			<dict>
 				<key>ScreenFlashGuide</key>
