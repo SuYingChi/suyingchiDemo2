@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.feature.apkupdate;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -8,22 +9,27 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.utils.CommonUtils;
+import com.ihs.keyboardutils.alerts.HSAlertDialog;
 
 import java.io.File;
 
@@ -109,12 +115,16 @@ public class ApkUtils {
      * If current App not from Market, download directly.
      */
     public static void doUpdate() {
-        long downloadId;
-
-        if ((downloadId = ApkDownloadManager.getInstance().checkDownload(UpdateConfig.getDefault())) > 0) {
-            HSLog.d("Start to download update apk with downloadId: " + downloadId);
+        if (HSMarketUtils.isMarketInstalled("Google")) {
+            HSMarketUtils.browseAPP("Google", HSApplication.getContext().getPackageName());
         } else {
-            HSLog.e("Can't to download update apk with error code: " + downloadId);
+            long downloadId;
+
+            if ((downloadId = ApkDownloadManager.getInstance().checkDownload(UpdateConfig.getDefault())) > 0) {
+                HSLog.d("Start to download update apk with downloadId: " + downloadId);
+            } else {
+                HSLog.e("Can't to download update apk with error code: " + downloadId);
+            }
         }
     }
 
@@ -171,7 +181,12 @@ public class ApkUtils {
     }
 
     public static boolean shouldCheckUpdateNow() {
-        return isUpdateEnabled() && CommonUtils.isNetworkAvailable(ConnectivityManager.TYPE_WIFI);
+        return isUpdateEnabled() && (HSMarketUtils.isMarketInstalled("Google") /** 安装了google play则可以下载 */
+                || (CommonUtils.isNetworkAvailable(-1) && !TextUtils.isEmpty(UpdateConfig.getDefault().getDownLoadUrl())) /** 未安装google 则需要联网同时下载地址不为空 */);
+    }
+
+    public static boolean isGooglePlayAvailable() {
+        return (HSMarketUtils.isMarketInstalled("Google") && CommonUtils.isNetworkAvailable(-1));
     }
 
     public static boolean isUpdateEnabled() {
@@ -209,7 +224,7 @@ public class ApkUtils {
     }
 
     public static int getLatestVersionCode() {
-        final int latestVersionCode = HSConfig.optInteger(0, "Update", "LatestVersionCode");
+        final int latestVersionCode = HSConfig.optInteger(0, "Application", "Update", "LatestVersionCode");
         HSLog.d("latestVersionCode: " + latestVersionCode);
         return latestVersionCode;
     }
@@ -230,12 +245,43 @@ public class ApkUtils {
         HSPreferenceHelper.getDefault().putLong(PREF_KEY_UPDATE_ALERT_LAST_SHOWN_TIME, System.currentTimeMillis());
     }
 
-    private static void showUpdateAlert() {
+    @SuppressLint("InflateParams")
+    public static void showCustomRateAlert() {
+        LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.apk_custom_rate_alert, null, false);
+        final android.support.v7.app.AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
+        Button positiveBtn = (Button) view.findViewById(R.id.btn_rate);
+        positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
+                HSApplication.getContext().getResources().getColor(R.color.custom_rate_alert_button_bg),
+                HSApplication.getContext().getResources().getColor(R.color.guide_bg_disable_color),
+                HSApplication.getContext().getResources().getDimension(R.dimen.apk_update_alert_button_radius)));
+        positiveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (HSMarketUtils.isMarketInstalled("Google")) {
+                    HSMarketUtils.browseAPP("Google", HSApplication.getContext().getPackageName());
+                } else {
+                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.custom_rate_alert_toast_text), Toast.LENGTH_SHORT).show();
+                }
+                alertDialog.dismiss();
+            }
+        });
+        ImageView closeIcon = (ImageView) view.findViewById(R.id.iv_close_image);
+        closeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
+    public static void showUpdateAlert() {
         saveUpdateAlertLastShownTime();
 
         // Create custom dialog object
         final AlertDialog dialog = new AlertDialog.Builder(HSApplication.getContext()).create();
-        
+
         // hide to default title for Dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 

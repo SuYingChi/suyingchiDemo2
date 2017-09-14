@@ -12,14 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
+import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
@@ -255,7 +258,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 if (backgrounds.get(position) instanceof KCBackgroundElement) {
                     holder.backgroundContent.setVisibility(View.VISIBLE);
                     holder.backgroundNewMark.setVisibility(View.VISIBLE);
-                    KCBackgroundElement customThemeItemBase = (KCBackgroundElement) backgrounds.get(position);
+                    final KCBackgroundElement customThemeItemBase = (KCBackgroundElement) backgrounds.get(position);
                     holder.backgroundContent.setImageResource(R.drawable.image_placeholder);
 
                     boolean hasLocalGifPreview = customThemeItemBase.hasLocalGifPreview();
@@ -284,6 +287,21 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if (ClickUtils.isFastDoubleClick()) {
+                                return;
+                            }
+
+                            if (customThemeItemBase.isNotSupportCurrentAppVersion() /*&& ApkUtils.shouldUpdate()*/) {
+                                ApkUtils.showUpdateAlert();
+                                return;
+                            }
+
+                            if (ApkUtils.isGooglePlayAvailable()) {
+                                ApkUtils.showCustomRateAlert();
+                                customThemeItemBase.setRateToUnlockStatus(false);
+                                return;
+                            }
+
                             holder.setIsRecyclable(true);
                             KCBackgroundElement background = (KCBackgroundElement) backgrounds.get(position);
                             setNotNew(background);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- store home -->
     <string name="store_nav_download">My Downloads</string>
     <string name="tab_theme">THEME</string>
@@ -20,4 +20,9 @@
 
     <string name="multi_function_alert_title">Screen Locker / Caller Screen</string>
     <string name="multi_function_alert_message">Add stunning themes on lockscreen and incoming call screens. May contain sponsored contents.</string>
+
+    <string name="apk_update_alert_message">Your version is too low to be upgraded to use, please update and try again.</string>
+    <string name="custom_rate_alert_message" tools:ignore="Typos">Wanna unlock this item for FREE? \nJust rate us 5 Stars!</string>
+    <string name="custom_rate_alert_button_text">Rate 5 Stars to Unlock</string>
+    <string name="custom_rate_alert_toast_text">Please check your Google Play</string>
 </resources>
