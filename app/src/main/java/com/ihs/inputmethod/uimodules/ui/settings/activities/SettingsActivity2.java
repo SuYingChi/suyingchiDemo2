@@ -39,7 +39,7 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.Toast;
 
-import com.acb.call.InCallThemePreviewActivity;
+import com.acb.call.activity.InCallThemePreviewActivity;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;

@@ -524,7 +524,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 //                .thumbnail(Glide.with(this).load(thumbUrl)).into(new CustomImageLoadingTarget(imageView));
 
         RequestBuilder<Drawable> requestBuilder = Glide.with(this).load(uri).apply(requestOptions)
-                .thumbnail(Glide.with(this).load(thumbUrl)).listener(requestListener);
+                .thumbnail(Glide.with(this).load(thumbUrl).listener(requestListener));
         requestBuilder.into(new CustomImageLoadingTarget(imageView));
     }
 

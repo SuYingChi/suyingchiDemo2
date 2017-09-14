@@ -15,10 +15,9 @@
         android:id="@+id/view_return"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
+        android:layout_gravity="top|left"
         android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="36.3dp"
+        android:layout_marginTop="24dp"
         app:srcCompat="@drawable/wallpaper_back_svg" />
 
     <ProgressBar
@@ -30,5 +29,13 @@
         android:layout_marginBottom="20dp"
         android:max="100"
         android:progress="0"/>
+
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="51dp"
+        android:layout_height="54dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/wallpaper_back_svg" />
 
 </FrameLayout>
