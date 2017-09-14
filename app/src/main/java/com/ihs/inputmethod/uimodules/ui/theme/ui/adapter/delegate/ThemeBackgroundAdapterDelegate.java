@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -280,6 +279,11 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         } else {
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
+                            if (customThemeItemBase.isRateToUnlock()) {
+                                holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
+                            } else {
+                                holder.backgroundGiftIcon.setVisibility(View.GONE);
+                            }
                         }
                     } else {
                         downloadPreview(holder.itemView, position, customThemeItemBase);
@@ -296,9 +300,16 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                 return;
                             }
 
-                            if (ApkUtils.isGooglePlayAvailable()) {
-                                ApkUtils.showCustomRateAlert();
-                                customThemeItemBase.setRateToUnlockStatus(false);
+                            if (customThemeItemBase.isRateToUnlock() && ApkUtils.isGooglePlayAvailable()) {
+                                ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        customThemeItemBase.setRateToUnlockStatus(false);
+                                        if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
+                                            holder.backgroundGiftIcon.setVisibility(GONE);
+                                        }
+                                    }
+                                });
                                 return;
                             }
 
@@ -442,11 +453,13 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
         static class Holder extends RecyclerView.ViewHolder {
             ImageView backgroundContent;
             ImageView backgroundNewMark;
+            ImageView backgroundGiftIcon;
 
             public Holder(View itemView) {
                 super(itemView);
                 backgroundContent = (ImageView) itemView.findViewById(R.id.background_content);
                 backgroundNewMark = (ImageView) itemView.findViewById(R.id.background_new_mark);
+                backgroundGiftIcon = (ImageView) itemView.findViewById(R.id.background_gift_icon);
                 CompatUtils.setCardViewMaxElevation((CardView) itemView);
             }
         }

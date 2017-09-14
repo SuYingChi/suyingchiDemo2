@@ -246,7 +246,7 @@ public class ApkUtils {
     }
 
     @SuppressLint("InflateParams")
-    public static void showCustomRateAlert() {
+    public static void showCustomRateAlert(final View.OnClickListener rateButtonClickListener) {
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.apk_custom_rate_alert, null, false);
         final android.support.v7.app.AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
@@ -262,6 +262,9 @@ public class ApkUtils {
                     HSMarketUtils.browseAPP("Google", HSApplication.getContext().getPackageName());
                 } else {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.custom_rate_alert_toast_text), Toast.LENGTH_SHORT).show();
+                }
+                if (rateButtonClickListener != null) {
+                    rateButtonClickListener.onClick(v);
                 }
                 alertDialog.dismiss();
             }
