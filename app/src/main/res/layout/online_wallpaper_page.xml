@@ -92,58 +92,5 @@
                 android:visibility="gone"
                 app:typeface="@string/proxima_nova_semibold"/>
         </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/arrow_container"
-            android:layout_width="42dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-
-            <LinearLayout
-                android:layout_width="16dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="-1dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:baselineAligned="false"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clipChildren="true">
-
-                    <ImageView
-                        android:id="@+id/tab_top_arrow_left"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="-5dp"
-                        android:layout_marginRight="-5dp"
-                        android:rotation="0" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clipChildren="true">
-
-                    <ImageView
-                        android:id="@+id/tab_top_arrow_right"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="-5dp"
-                        android:layout_marginStart="-5dp"
-                        android:rotation="0" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 </com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperPage>

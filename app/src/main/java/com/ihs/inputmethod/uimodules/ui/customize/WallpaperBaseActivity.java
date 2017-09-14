@@ -42,6 +42,7 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
     protected ProgressDialog mDialog;
     protected WallpaperInfo mCurrentWallpaper;
     private boolean mIsSettingWallpaper = false;
+    private boolean mIsSettingKeyTheme = false;
     private static final String FROM_LOCAL_GALLERY = "Local";
     private static final String FROM_LOCAL_ONLINE = "Online";
     private static final String WALLPAPER_MODE_FIXED = "Fixed";

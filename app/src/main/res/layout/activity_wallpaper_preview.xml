@@ -30,13 +30,14 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="250dp"
-        android:background="#00000000"
+        android:background="#00ffffff"
         android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/wrap_linear_layout"
+        android:background="#80000000"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -55,9 +56,9 @@
             app:typeface="@string/proxima_nova_semibold" />
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.3dp"
             android:layout_height="match_parent"
-            android:background="@color/white" />
+            android:background="#33ffffff" />
 
         <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/set_key_theme_button"
@@ -79,15 +80,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <com.ihs.feature.common.TypefacedTextView
             android:id="@+id/set_wallpaper_title"
             android:layout_width="match_parent"
-            android:layout_height="28dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="24dp"
-            android:paddingLeft="24dp"
+            android:layout_marginBottom="30dp"
+            android:paddingLeft="37dp"
             android:text="@string/wallpaper_set_dialog_title"
             android:textColor="@color/black_primary"
             android:textSize="20sp"
@@ -96,12 +98,12 @@
         <LinearLayout
             android:id="@+id/set_home_screen"
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="24dp"
+                android:paddingLeft="37dp"
                 android:paddingRight="24dp"
                 app:srcCompat="@drawable/home_screen"/>
 
@@ -118,13 +120,14 @@
 
         <LinearLayout
             android:id="@+id/set_locker_screen"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="56dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="24dp"
+                android:paddingLeft="37dp"
                 android:paddingRight="24dp"
                 app:srcCompat="@drawable/lock_screen"/>
 
@@ -142,13 +145,14 @@
         <LinearLayout
             android:id="@+id/set_home_and_locker_screen"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="20dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="24dp"
+                android:paddingLeft="37dp"
                 android:paddingRight="24dp"
                 app:srcCompat="@drawable/home_and_lock_screen"/>
 
@@ -164,18 +168,19 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:layout_marginBottom="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.ihs.feature.common.TypefacedTextView
                 android:id="@+id/may_contain_ads"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="10dp"
                 android:text="@string/may_contains_ads"
-                android:textSize="16sp"
+                android:textSize="11sp"
                 android:textColor="@color/black_gray"
                 app:typeface="@string/proxima_nova_semibold" />
         </RelativeLayout>

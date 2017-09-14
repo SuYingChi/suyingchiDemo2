@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,8 +46,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
 
     private OnlineWallpaperTabLayout mTabs;
     private GridView mGridView;
-    private ImageView mArrowLeftPart;
-    private ImageView mArrowRightPart;
     private TextView mCategoriesTitle;
     private List<Integer> mScrollStates = new ArrayList<>();
     private boolean mIsTabNoClickSelected;
@@ -156,8 +153,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
         });
 
         mCategoriesTitle = ViewUtils.findViewById(this, R.id.categories_title);
-        mArrowLeftPart = ViewUtils.findViewById(this, R.id.tab_top_arrow_left);
-        mArrowRightPart = ViewUtils.findViewById(this, R.id.tab_top_arrow_right);
 //        setArrowOnClickAnimation(mGridView, mCategoriesTitle, mArrowLeftPart, mArrowRightPart);
 
         final CategoryViewAdapter categoryViewAdapter = new CategoryViewAdapter(getContext(), data);
@@ -204,9 +199,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (Math.abs((int) mArrowLeftPart.getRotation() % 360) != 0) {
-//            arrowClicked(mGridView, mCategoriesTitle, mArrowLeftPart, mArrowRightPart, "TabClicked");
-        }
     }
 
     private class WallpaperPagerAdapter extends PagerAdapter {

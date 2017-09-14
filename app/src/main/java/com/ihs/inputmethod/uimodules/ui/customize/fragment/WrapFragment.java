@@ -4,12 +4,12 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.inputmethod.uimodules.R;
@@ -33,7 +33,7 @@ public class WrapFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Class> fragments;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private LinearLayout createThemeLayout;
+    private FloatingActionButton createThemeLayout;
     private View downloadSwitchButton;
 
     private String[] homeTabTitles = new String[3];
@@ -59,7 +59,7 @@ public class WrapFragment extends Fragment implements View.OnClickListener {
         tabLayout = (TabLayout) view.findViewById(R.id.store_tab);
         viewPager = (ViewPager) view.findViewById(R.id.fragment_view_pager);
 
-        createThemeLayout = (LinearLayout) view.findViewById(R.id.home_create_theme_layout);
+        createThemeLayout = (FloatingActionButton) view.findViewById(R.id.home_create_theme_layout);
         createThemeLayout.setOnClickListener(this);
 
         downloadSwitchButton = view.findViewById(R.id.download_button_container);

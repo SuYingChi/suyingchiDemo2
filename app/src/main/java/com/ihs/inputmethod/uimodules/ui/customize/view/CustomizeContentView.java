@@ -12,11 +12,11 @@ import android.widget.FrameLayout;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.LockerThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.OnlineWallpaperFragment;
+import com.ihs.inputmethod.uimodules.ui.customize.fragment.SettingsFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.WrapFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
 
 /**
  * Created by guonan.lv on 17/9/2.
@@ -81,7 +81,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
                 case R.layout.locker_themes_page:
                     return new LockerThemeFragment();
                 case R.layout.fragment_theme_home:
-                    return new SettingsActivity2.GeneralHomePreferenceFragment();
+                    return new SettingsFragment();
                 default:
                     return null;
             }

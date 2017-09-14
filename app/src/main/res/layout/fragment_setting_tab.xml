@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ihs.inputmethod.uimodules.ui.customize.view.LockerThemePage
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <FrameLayout
+        android:id="@+id/tab_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/customize_toolbar_height"
         android:background="@color/colorPrimary"
@@ -20,16 +20,17 @@
             android:layout_gravity="center_vertical|start"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:text="@string/customize_locker_title"
+            android:text="@string/settings"
             android:textColor="@color/abc_primary_text_material_dark"
             android:textSize="18sp"
             app:typeface="@string/proxima_nova_semibold"/>
     </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/locker_theme_recyclerview"
+    <FrameLayout
+        android:id="@+id/settings_content"
+        android:layout_below="@+id/tab_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        android:theme="@style/Theme.CustomOverScroll"/>
-</com.ihs.inputmethod.uimodules.ui.customize.view.LockerThemePage>
+        android:layout_height="wrap_content">
+    </FrameLayout>
+
+</RelativeLayout>

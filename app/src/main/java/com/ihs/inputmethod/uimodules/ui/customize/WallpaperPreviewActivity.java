@@ -111,6 +111,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private ProgressDialog mDialog;
     private View mEdit;
     private View mReturnArrow;
+    private boolean mIsSettingKeyTheme = false;
     private LinearLayout setWallpaperDialog;
     private LinearLayout setHomeScreen;
     private LinearLayout setLockerScreen;
@@ -305,8 +306,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 if (mCurrentWallpaper == null) {
                     return;
                 }
-                boolean isWallpaperReady = mCurrentWallpaper.getType() == WallpaperInfo.WALLPAPER_TYPE_BUILT_IN
-                        || isSucceed() && !isSettingWallpaper();
+                boolean isWallpaperReady = isSucceed() && !isSettingWallpaper();
                 if (!isWallpaperReady) {
                     ToastUtils.showToast(R.string.online_wallpaper_loading);
                     return;
@@ -314,12 +314,23 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 showSetWallpaperDialog();
                 break;
             case R.id.set_key_theme_button:
+                if (mCurrentWallpaper == null) {
+                    return;
+                }
+                if (!isSucceed() || isSettingWallpaper()) {
+                    ToastUtils.showToast(R.string.online_wallpaper_loading);
+                    return;
+                }
+                mDialog = ProgressDialog.createDialog(WallpaperPreviewActivity.this, getString(R.string.key_theme_loading_progress_dialog_text));
+                mDialog.show();
+                mDialog.setCancelable(false);
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
                             File file = Glide.with(WallpaperPreviewActivity.this)
                                     .download(mCurrentWallpaper.getWallpaperUrl()).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+                            mDialog.dismiss();
                             String path = file.getAbsolutePath();
                             final Resources res = getResources();
                             final int keyboardWidth = HSResourceUtils.getDefaultKeyboardWidth(res);
@@ -351,6 +362,10 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
         }
 
+    }
+
+    protected boolean isSettingKeyTheme() {
+        return mIsSettingKeyTheme;
     }
 
     private void setHomeScreenWallpaper() {

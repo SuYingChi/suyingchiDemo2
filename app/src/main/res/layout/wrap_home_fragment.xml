@@ -9,66 +9,29 @@
         android:id="@+id/tab_layout_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/customize_toolbar_height"
-        android:background="@android:color/white"
-        android:baselineAligned="false"
-        android:gravity="center_vertical"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/store_tab"
+            style="@style/MyCustomTabLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/store_tab"
-                style="@style/MyCustomTabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
-        </FrameLayout>
-
-        <LinearLayout
+        <ImageView
             android:id="@+id/download_button_container"
-            android:layout_width="42dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-
-            <LinearLayout
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="-1dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:baselineAligned="false"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clipChildren="true">
-
-                    <ImageView
-                        android:id="@+id/tab_top_arrow_right"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="-5dp"
-                        android:layout_marginStart="-5dp"
-                        android:rotation="0"
-                        app:srcCompat="@drawable/download_icon_home_store" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:paddingRight="10dp"
+            app:srcCompat="@drawable/download_icon_home_store" />
 
     </LinearLayout>
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/fragment_view_pager"
@@ -78,29 +41,43 @@
         android:background="@color/theme_activity_bg"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <LinearLayout
+    <!--<LinearLayout-->
+        <!--android:id="@+id/home_create_theme_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="@dimen/bottom_bar_default_height"-->
+        <!--android:background="@drawable/home_create_keyboard_bg"-->
+        <!--android:clickable="true"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/fab"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:drawableLeft="@drawable/home_create_keyboard"-->
+            <!--android:drawablePadding="9dp"-->
+            <!--android:fontFamily="sans-serif-medium"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/home_create_keyboard"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="14sp" />-->
+
+       <!---->
+    <!--</LinearLayout>-->
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/home_create_theme_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/bottom_bar_default_height"
-        android:background="@drawable/home_create_keyboard_bg"
+        android:src="@drawable/home_create_keyboard"
+        app:fabSize="normal"
         android:clickable="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:drawableLeft="@drawable/home_create_keyboard"
-            android:drawablePadding="9dp"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="@string/home_create_keyboard"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-    </LinearLayout>
-
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="@dimen/create_theme_button_margin_bottom"
+        app:backgroundTint="@color/home_create_keyboard_bg_pressed"/>
 
 </RelativeLayout>
