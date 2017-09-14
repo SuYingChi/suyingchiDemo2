@@ -50,15 +50,21 @@
     <string name="keyboard_theme_white" translatable="false">White</string>
 
 
-    <string name="dialog_title_select_keyboard_apply_rain">"Activate %1$s"</string>
+    <string name="dialog_title_select_keyboard_apply_rain">Activate %1$s</string>
     <string name="dialog_msg_select_keyboard_apply_rain">You need to activate %1$s to use this theme.</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">Activate Now</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain">"Activate %1$s"</string>
+    <string name="dialog_title_enable_keyboard_home_rain">Activate %1$s</string>
     <string name="dialog_msg_enable_keyboard_home_rain">%1$s provides you with personalized keyboard themes and cute emojis.</string>
     <string name="dialog_confirm_enable_keyboard_home_rain">Activate Now</string>
 
     <!--deep link-->
     <string name="deeplink_key_word">EmojiKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
     <string name="deeplink_description">Emoji Keyboard description</string>
+
+    <!-- sync type Required by keep alive service -->
+    <string name="sync_account_type">com.masterkeyboard.emoji.sync</string>
+
+    <!-- Product Master's config -->
+    <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
 </resources>

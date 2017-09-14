@@ -31,15 +31,12 @@
     <string name="text_terms_of_service">Terms of Service</string>
     <string name="text_privacy_policy">Privacy Policy</string>
 
-    <!-- sync type Required by keep alive service -->
-    <string name="sync_account_type">com.masterkeyboard.emoji.sync</string>
-
     <!--dialog-->
-    <string name="dialog_title_select_keyboard_apply_rain">"Activate %1$s"</string>
+    <string name="dialog_title_select_keyboard_apply_rain">Activate %1$s</string>
     <string name="dialog_msg_select_keyboard_apply_rain">You need to activate %1$s keyboard to use this theme.</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">ACTIVATE</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain">"Activate %1$s"</string>
+    <string name="dialog_title_enable_keyboard_home_rain">Activate %1$s</string>
     <string name="dialog_msg_enable_keyboard_home_rain">%1$s provides you with personalized keyboard themes and cute emojis.</string>
 
     <!--language-->
@@ -62,18 +59,15 @@
     <string name="setting_word_prediction">Prediction</string>
     <string name="setting_emoji_prediction">Emoji Prediction</string>
     <string name="setting_swipe_input">Swipe</string>
-    <string name="setting_double_space_period">"." Shortcut</string>
+    <string name="setting_double_space_period">\":.\": Shortcut</string>
     <string name="setting_double_space_period_summary">Double tapping the space bar will insert a period followed by a space.</string>
     <string name="setting_sound_on_keypress">Sound on keypress</string>
     <string name="setting_vibrate_on_keypress">Vibrate on keypress</string>
 
     <!-- settings more page -->
-    <string name="setting_key_more" >setting_key_more</string>
     <string name="boost_noti_setting_desc" >Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
     <string name="boost_noti_setting_title" >Phone Boost</string>
-    <string name="setting_key_call_assistant">setting_key_call_assistant</string>
     <string name="setting_call_assistant_title">Screen Flash for Calls</string>
-    <string name="locker_switcher">locker_screen_enabled</string>
     <string name="enable_locker_detail">Displaying your favorite themes on lock screen. Contains sponsored contents.</string>
     <string name="screen_locker_enable_alert_toast">Screen Locker Enabled</string>
 
@@ -81,25 +75,16 @@
     <string name="setting_item_themes">Themes</string>
     <string name="setting_item_my_theme">Create Theme</string>
     <string name="setting_item_fonts">Fonts</string>
-    <string name="setting_item_correction">@string/setting_auto_correction</string>
-    <string name="setting_item_sounds">"Sounds"</string>
-    <string name="setting_item_capitalization">@string/setting_auto_capitalization</string>
-    <string name="setting_item_word_prediction">@string/setting_word_prediction</string>
+
+    <string name="setting_item_sounds">Sounds</string>
     <string name="setting_item_swipe">Swipe</string>
     <string name="setting_item_add_languages">Add Language</string>
     <string name="setting_item_more_settings">More Settings</string>
 
     <!--settings panel-->
-    <string name="settings_button_sound">@string/setting_item_sounds</string>
     <string name="settings_button_tell_a_friend">Tell a friend</string>
     <string name="settings_button_tell_a_friend_tip">Share your message now</string>
-    <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
-    <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
-    <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
-    <string name="settings_button_swipe">@string/setting_item_swipe</string>
-    <string name="settings_button_add_language">@string/setting_item_add_languages</string>
-    <string name="settings_button_more_settings">@string/setting_item_more_settings</string>
-    <string name="settings_button_fonts">@string/setting_item_fonts</string>
+
 
     <!-- gif panel -->
     <string name="result_no">No GIFs or stickers found.</string>
@@ -129,17 +114,14 @@
     <string name="theme_card_custom_theme_default_name">My Theme</string>
     <string name="theme_detail_common_title_name">%1$s Theme</string>
     <string name="theme_detail_custom_theme_title_name">Customized Keyboard</string>
-    <string name="theme_trial_keyboard_edit_text_hint">Try typing here now&#8230;</string>
+    <string name="theme_trial_keyboard_edit_text_hint">Try typing here now...</string>
 
     <string name="dialog_app_usage_tips">For better typing experience across different apps, we recommend you to turn on apps with usage access.</string>
-    <string name="dialog_agree">@string/allow</string>
-    <string name="dialog_disagree">@string/cancel</string>
     <string name="dialog_app_usage_title">Allow Apps with Usage Access</string>
 
     <!--theme home nav-->
     <string name="theme_nav_theme_store">%1$s Store</string>
     <string name="theme_nav_my_themes">My Themes</string>
-    <string name="theme_app_locker">App Locker</string>
     <string name="theme_nav_languages">Languages</string>
     <string name="theme_nav_settings">Settings</string>
     <string name="theme_nav_update">Update</string>
@@ -177,24 +159,8 @@
     <string name="custom_theme_sound_tip">To use click sound effect, please turn off the silent mode or enable Sound on keypress in the settings section.</string>
 
     <!--IAP Tip Info -->
-    <string name="purchase_error_message">Purchase Failed. Please try again later.</string>
-    <string name="purchase_google_play_unavailable">Google Play purchases are not available on your device.</string>
-    <string name="purchase_unavailable">Purchase is unavailable.</string>
-
-    <string name="current_theme_price">Unlock for %1$s</string>
-    <string name="all_theme_price">All %1$s for %2$s</string>
-    <string name="unlock_theme_element_via_watch_video">Watch Video to Unlock</string>
-
-    <string name="free_slots_used_up">Free Slots Used Up</string>
-    <string name="free_slots_tip">You can create a maximum of %1$d free themes. Unlock unlimited slots to create more themes.</string>
-    <string name="free_slots_price">Unlimited slots for %1$s</string>
-    <string name="free_slots_via_watch_video">Watch Video to Unlock One Slot</string>
 
     <string name="purchase_success">Your purchase was successful.</string>
-    <string name="purchase_error">ERROR:</string>
-    <string name="purchase_error_bill">BILLING UNAVAILABLE</string>
-    <string name="purchase_error_item">ITEM UNAVAILABLE</string>
-    <string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
 
     <!-- Theme new tip -->
     <string name="new_background_tip">New background</string>
@@ -216,13 +182,6 @@
 
     <string name="theme_create_custom_theme_failed">Failed to create theme, please make sure there\'s enough disk space on your device and try again.</string>
 
-
-    <string name="uninstall_complete">Uninstall Completed</string>
-    <string name="app_uninstalled_name">%1$s uninstalled</string>
-    <string name="app_free_storage">You now have %1$s more free storage.</string>
-    <string name="app_recommended">Recommended for you:</string>
-
-    <string name="key_uninstall">uninstall_key</string>
     <string name="home_create_keyboard">Create My Own Themes</string>
 
     <string name="charging_alert_title">Smart Charging</string>
@@ -247,25 +206,6 @@
     <string name="retry">RETRY</string>
     <string name="dialog_set_up_manual_message">Please try again or set up keyboard manually.</string>
     <!--Accessibility end-->
-
-    <!-- Product Master's config -->
-    <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
-
-
-    <string name="lucky_game_award_no_network_description">No network connection!</string>
-    <string name="lucky_game_award_chances_receive_btn">ACCEPT</string>
-    <string name="lucky_game_award_theme_action">DOWNLOAD</string>
-    <string name="lucky_game_chance_restore_timer">More grabs in %1$s</string>
-    <string name="lucky_game_award_wallpaper_description">Wonderful Wallpaper!</string>
-    <string name="lucky_game_award_wallpaper_action">SET AS WALLPAPER</string>
-    <string name="lucky_game_award_chances_description">Congratulations! +3 grabs!</string>
-    <string name="lucky_game_award_theme_description">Found a new theme!</string>
-    <string name="lucky_game_chance_counter">Grabs: %1$s</string>
-    <string name="lucky_game_award_boom_description">"GRABS: "</string>
-    <string name="lucky_game_award_ad_related_title">You’ve won a prize!</string>
-    <string name="launcher_widget_lucky_title">Lucky</string>
-    <string name="lucky_game_award_empty_action">TRY AGAIN</string>
-    <string name="no_network_connection">No network connection!</string>
 
     <!--guide-->
     <string name="guide_open_camera">Slide to open camera quickly</string>
