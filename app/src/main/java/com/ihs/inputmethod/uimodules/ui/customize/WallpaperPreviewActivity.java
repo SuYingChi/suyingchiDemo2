@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -26,13 +27,17 @@ import android.widget.TextView;
 import com.acb.adadapter.AcbNativeAd;
 import com.acb.nativeads.AcbNativeAdLoader;
 import com.artw.lockscreen.LockerSettings;
-import com.bumptech.glide.BitmapTypeRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
@@ -314,9 +319,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                     public void run() {
                         try {
                             File file = Glide.with(WallpaperPreviewActivity.this)
-                                    .load(mCurrentWallpaper.getWallpaperUrl())
-                                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                                    .get();
+                                    .download(mCurrentWallpaper.getWallpaperUrl()).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
                             String path = file.getAbsolutePath();
                             final Resources res = getResources();
                             final int keyboardWidth = HSResourceUtils.getDefaultKeyboardWidth(res);
@@ -475,29 +478,54 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             return;
         }
 
-        BitmapTypeRequest<String> thumbRequest = Glide.with(this).load(thumbUrl).asBitmap();
-        thumbRequest.listener(new RequestListener<String, Bitmap>() {
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+
+//        BitmapTypeRequest<String> thumbRequest = Glide.with(this).load(thumbUrl).asBitmap();
+//        thumbRequest.listener(new RequestListener<String, Bitmap>() {
+//            @Override
+//            public boolean onException(Exception e, String s, Target<Bitmap> target, boolean b) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onResourceReady(Bitmap bitmap, String s, Target<Bitmap> target, boolean b, boolean b1) {
+//                imageView.setImageBitmap(bitmap);
+//                PreviewViewPage page = (PreviewViewPage) imageView.getTag();
+//                page.width = bitmap.getWidth();
+//                page.height = bitmap.getHeight();
+//
+//                imageView.setImageMatrix(WallpaperUtils.centerCrop(bitmap.getWidth(), bitmap.getHeight(),
+//                        imageView));
+//
+//                return true;
+//            }
+//        }).diskCacheStrategy(DiskCacheStrategy.SOURCE);
+
+        RequestListener<Drawable> requestListener = new RequestListener<Drawable>() {
             @Override
-            public boolean onException(Exception e, String s, Target<Bitmap> target, boolean b) {
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 return false;
             }
 
             @Override
-            public boolean onResourceReady(Bitmap bitmap, String s, Target<Bitmap> target, boolean b, boolean b1) {
-                imageView.setImageBitmap(bitmap);
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                imageView.setImageDrawable(resource);
                 PreviewViewPage page = (PreviewViewPage) imageView.getTag();
-                page.width = bitmap.getWidth();
-                page.height = bitmap.getHeight();
-
-                imageView.setImageMatrix(WallpaperUtils.centerCrop(bitmap.getWidth(), bitmap.getHeight(),
+                page.width = resource.getIntrinsicWidth();
+                page.height = resource.getIntrinsicHeight();
+                imageView.setImageMatrix(WallpaperUtils.centerCrop(page.width, page.height,
                         imageView));
 
                 return true;
             }
-        }).diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        };
 
-        Glide.with(WallpaperPreviewActivity.this).load(uri).asBitmap()
-                .thumbnail(thumbRequest).into(new CustomImageLoadingTarget(imageView));
+//        Glide.with(WallpaperPreviewActivity.this).asBitmap().load(uri)
+//                .thumbnail(Glide.with(this).load(thumbUrl)).into(new CustomImageLoadingTarget(imageView));
+
+        RequestBuilder<Drawable> requestBuilder = Glide.with(this).load(uri).apply(requestOptions)
+                .thumbnail(Glide.with(this).load(thumbUrl)).listener(requestListener);
+        requestBuilder.into(new CustomImageLoadingTarget(imageView));
     }
 
     private boolean isSucceed() {
@@ -562,9 +590,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         }
     }
 
-    private class CustomImageLoadingTarget extends ImageViewTarget<Bitmap> {
-
-        private boolean mShouldLogEvent;
+    private class CustomImageLoadingTarget extends ImageViewTarget<Drawable> {
 
         public CustomImageLoadingTarget(ImageView view) {
             super(view);
@@ -580,12 +606,11 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             page.loadingView.setVisibility(View.VISIBLE);
             page.retryLayout.setVisibility(View.INVISIBLE);
             mLoadMap.put((int) (page.getTag()), false);
-            mShouldLogEvent = true;
         }
 
         @Override
-        public void onLoadFailed(Exception e, Drawable errorDrawable) {
-            super.onLoadFailed(e, errorDrawable);
+        public void onLoadFailed(Drawable errorDrawable) {
+            super.onLoadFailed(errorDrawable);
             if (view == null) {
                 return;
             }
@@ -600,33 +625,33 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                     mSetWallpaperButton.setVisibility(View.INVISIBLE);
                 }
             }, 600);
-            if (mShouldLogEvent) {
-                mShouldLogEvent = false;
-            }
         }
 
         @Override
-        protected void setResource(Bitmap bitmap) {
+        public void onResourceReady(Drawable resource, @Nullable Transition<? super Drawable> transition) {
+            super.onResourceReady(resource, transition);
             if (view == null) {
                 return;
             }
-            view.setImageBitmap(bitmap);
+            view.setImageDrawable(resource);
             PreviewViewPage page = (PreviewViewPage) view.getTag();
-            page.width = bitmap.getWidth();
-            page.height = bitmap.getHeight();
+            page.width = resource.getIntrinsicWidth();
+            page.height = resource.getIntrinsicHeight();
 
             WallpaperInfo info = (WallpaperInfo) getWallpaperInfoByIndex((int) (page.getTag()));
 //            info.setTextLight(WallpaperUtils.textColorLightForWallPaper(bitmap));
 
-            ((ImageView) view).setImageMatrix(WallpaperUtils.centerCrop(bitmap.getWidth(), bitmap.getHeight(), (ImageView) view));
+            ((ImageView) view).setImageMatrix(WallpaperUtils.centerCrop(page.width, page.height, (ImageView) view));
 
             mLoadMap.put((int) (page.getTag()), true);
             refreshButtonState();
             page.loadingView.setVisibility(View.INVISIBLE);
             page.retryLayout.setVisibility(View.INVISIBLE);
-            if (mShouldLogEvent) {
-                mShouldLogEvent = false;
-            }
+        }
+
+        @Override
+        protected void setResource(@Nullable Drawable resource) {
+
         }
 
         @Override

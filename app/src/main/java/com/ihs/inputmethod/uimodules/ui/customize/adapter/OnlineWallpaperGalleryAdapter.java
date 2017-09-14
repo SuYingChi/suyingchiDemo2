@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.CompatUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
@@ -29,6 +29,8 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.withCrossFade;
 
 
 /**
@@ -148,9 +150,11 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
             case WALLPAPER_IMAGE_VIEW:
                 mMaxVisiblePosition = Math.max(mMaxVisiblePosition, position);
                 WallpaperInfo info = (WallpaperInfo) mDataSet.get(position);
-                Glide.with(holder.itemView.getContext()).load(info.getThumbnailUrl()).asBitmap().placeholder(R.drawable.wallpaper_loading)
-                        .error(R.drawable.wallpaper_load_failed).crossFade(550).format(DecodeFormat.PREFER_RGB_565)
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE).into(((ImageViewHolder) holder).mImageView);
+                RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.wallpaper_loading)
+                        .error(R.drawable.wallpaper_load_failed).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+                Glide.with(holder.itemView.getContext()).asBitmap().apply(requestOptions)
+                        .load(info.getThumbnailUrl()).transition(withCrossFade(500))
+                        .into(((ImageViewHolder) holder).mImageView);
                 holder.itemView.setTag(position);
                 ImageViewHolder imageHolder = (ImageViewHolder) holder;
                 imageHolder.mTvPopularity.setVisibility(View.INVISIBLE);

@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.adapter.LockerThemeGalleryAdapter;
@@ -40,7 +41,8 @@ public class InComingCallThemePreviewActivity extends Activity implements View.O
     }
 
     private void initView() {
-        Glide.with(this).load(LockerThemeGalleryAdapter.getInComingCallThemeThumbnailUrl(themeName)).diskCacheStrategy(DiskCacheStrategy.SOURCE)
+        RequestOptions options = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+        Glide.with(this).load(LockerThemeGalleryAdapter.getInComingCallThemeThumbnailUrl(themeName)).apply(options)
                 .into(callThemeGifPreview);
     }
 

@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.feature.common.PromotionTracker;
 import com.ihs.feature.common.ViewUtils;
@@ -121,9 +121,11 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         holder.itemView.setTag(themeIndex);
         final LockerThemeInfo theme = mThemes.get(themeIndex);
 
-        Glide.with((themeHolder.itemView.getContext())).load(getInComingCallThemeThumbnailUrl(theme.name)).asBitmap().fitCenter()
-                .placeholder(R.drawable.locker_theme_thumbnail_loading).error(R.drawable.locker_theme_thumbnail_failed)
-                .format(DecodeFormat.PREFER_RGB_565).diskCacheStrategy(DiskCacheStrategy.SOURCE)
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).fitCenter()
+                .placeholder(R.drawable.locker_theme_thumbnail_loading).error(R.drawable.locker_theme_thumbnail_failed);
+
+        Glide.with((themeHolder.itemView.getContext())).asBitmap().load(getInComingCallThemeThumbnailUrl(theme.name))
+                .apply(requestOptions)
                 .into(themeHolder.themeThumbnail);
     }
 

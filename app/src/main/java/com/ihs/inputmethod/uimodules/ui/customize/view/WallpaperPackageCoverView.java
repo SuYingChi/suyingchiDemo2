@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.customize.view;
 
 import android.content.Context;
-import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -9,13 +8,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.customize.item.WallpaperPackageInfo;
 
 /**
  * First page of wallpaper package preview view pager.
@@ -52,13 +48,6 @@ public class WallpaperPackageCoverView extends RelativeLayout implements INotifi
         mAddress = (TextView) findViewById(R.id.profile_address);
         mQuotation = (TextView) findViewById(R.id.quotation);
         mAvatar = (ImageView) findViewById(R.id.avatar);
-    }
-
-    public void setPackageInfo(WallpaperPackageInfo packageInfo) {
-        mName.setText(packageInfo.mName);
-        mAddress.setText(packageInfo.mLocale);
-        mQuotation.setText(Html.fromHtml(packageInfo.mSlogan));
-        Glide.with(getContext()).load(packageInfo.mAvatar).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mAvatar);
     }
 
     @Override protected void onAttachedToWindow() {
