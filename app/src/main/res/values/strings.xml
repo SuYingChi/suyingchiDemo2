@@ -12,14 +12,12 @@
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
-    <string name="saving">Saving&#8230;</string>
+    <string name="saving">Saving...</string>
     <string name="allow">Allow</string>
     <string name="done">Done</string>
-    <string name="locked">Locked</string>
     <string name="got_it">GOT IT</string>
     <string name="filter">Filter</string>
     <string name="use">Use</string>
-    <string name="unknown">Unknown</string>
 
     <string name="alert_find_keyboard_and_switch_on">Switch on %1$s</string>
 
