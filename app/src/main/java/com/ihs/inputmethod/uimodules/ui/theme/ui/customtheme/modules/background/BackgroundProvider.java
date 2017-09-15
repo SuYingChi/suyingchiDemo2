@@ -152,8 +152,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                                     }
                                     fragment.addChosenItem(item);
                                     fragment.refreshHeaderNextButtonState();
-                                    fragment.notifyAdapterOnMainThread();
-                                    onItemClicked(holder, item, true);
+                                    onItemClicked(holder, item, false);
                                 }
                             });
                             return true;

@@ -92,14 +92,14 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
     }
 
-    protected void onItemClicked(final V holder, final I item, String adPlacementName) {
+    private void onItemClickedWithDownloading(final V holder, final I item, String adPlacementName) {
         if (holder == lastCheckedHolder) {
             return;
         }
         addCustomData((KCBaseElement) item);
 
         if (((KCBaseElement) item).getTypeName().equals("background")) {
-            HSAnalytics.logEvent("app_customize_background_background_clicked", "item",((KCBaseElement) item).getName() );
+            HSAnalytics.logEvent("app_customize_background_background_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("button_style")) {
             HSAnalytics.logEvent("app_customize_button_style_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("button_shape")) {
@@ -112,71 +112,70 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             HSAnalytics.logEvent("app_customize_sound_clicked", "item", ((KCBaseElement) item).getName());
         }
 
-        if (android.text.TextUtils.isEmpty(adPlacementName)) {
-            checkItemBaseOnDownloadAndPurchaseSate(holder, item);
-        } else {
-            final KCBaseElement baseElement = (KCBaseElement) item;
+        final KCBaseElement baseElement = (KCBaseElement) item;
 
-            boolean hasDownloadThemeContent = baseElement.hasLocalContent();
+        boolean hasDownloadThemeContent = baseElement.hasLocalContent();
 
-            int delayAfterDownloadComplete = 1000;
-            if (!hasDownloadThemeContent) {
-                delayAfterDownloadComplete = 4000;
-            }
+        int delayAfterDownloadComplete = 1000;
+        if (!hasDownloadThemeContent) {
+            delayAfterDownloadComplete = 4000;
+        }
 
-            Drawable backgroundDrawable = getBackgroundDrawable(item);
-            if (backgroundDrawable == null) {
-                backgroundDrawable = new ColorDrawable(Color.BLACK);
-            }
+        Drawable backgroundDrawable = getBackgroundDrawable(item);
+        if (backgroundDrawable == null) {
+            backgroundDrawable = new ColorDrawable(Color.BLACK);
+        }
 
-            setNotNew(holder, baseElement);
-            if (!hasDownloadThemeContent) {
-                final AdLoadingView adLoadingView = new AdLoadingView(fragment.getActivity());
-                adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip), HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard), adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+        setNotNew(holder, baseElement);
+        if (!hasDownloadThemeContent) {
+            final AdLoadingView adLoadingView = new AdLoadingView(fragment.getActivity());
+            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(),
+                    HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip),
+                    HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard),
+                    adPlacementName,
+                    new AdLoadingView.OnAdBufferingListener() {
 
-                    @Override
-                    public void onDismiss(boolean success) {
-                        if (holder.downloadingProgressListener != null) {
-                            onItemDownloadSucceeded(holder, item);
-                        } else {
-                            selectItem(holder, baseElement);
-                            fragment.refreshKeyboardView();
+                        @Override
+                        public void onDismiss(boolean success) {
+                            if (holder.downloadingProgressListener != null) {
+                                onItemDownloadSucceeded(holder, item);
+                            } else {
+                                selectItem(holder, baseElement);
+                                fragment.refreshKeyboardView();
+                            }
                         }
-                    }
 
-                }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
+                    }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
 
-                startDownloadContent(holder, item);
-                holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
-                    @Override
-                    public void onUpdate(int percent) {
-                        HSLog.e("onUpdate +" + percent);
-                        adLoadingView.updateProgressPercent(percent);
-                    }
+            startDownloadContent(holder, item);
+            holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
+                @Override
+                public void onUpdate(int percent) {
+                    HSLog.e("onUpdate +" + percent);
+                    adLoadingView.updateProgressPercent(percent);
+                }
 
-                    @Override
-                    public void onDownloadSucceeded() {
-                    }
+                @Override
+                public void onDownloadSucceeded() {
+                }
 
-                    @Override
-                    public void onDownloadFailed() {
-                        //// TODO: 17/4/14 applying failed ;
-                    }
-                };
-                adLoadingView.showInDialog();
-            } else {
-                selectItem(holder, baseElement);
-                fragment.refreshKeyboardView();
-            }
+                @Override
+                public void onDownloadFailed() {
+                    //// TODO: 17/4/14 applying failed ;
+                }
+            };
+            adLoadingView.showInDialog();
+        } else {
+            selectItem(holder, baseElement);
+            fragment.refreshKeyboardView();
         }
     }
 
     protected void onItemClicked(final V holder, final I item, boolean showApplyAd) {
         if (showApplyAd) {
-            onItemClicked(holder, item, HSApplication.getContext().getResources().getString(R.string.ad_placement_applying));
+            onItemClickedWithDownloading(holder, item, HSApplication.getContext().getResources().getString(R.string.ad_placement_applying));
         } else {
-            addCustomData((KCBaseElement) item);
-            checkItemBaseOnDownloadAndPurchaseSate(holder, item);
+            onItemClickedWithDownloading(holder, item, "");
         }
     }
 
@@ -256,7 +255,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected void updateItemSelection(@NonNull final V holder, @NonNull final KCBaseElement item) {
         if (isCustomThemeItemSelected(item)) {
             if (!hasDefaultItemSelectStateSet) {
-                onItemClicked(holder, (I) item, false);
+                addCustomData(item);
+                checkItemBaseOnDownloadAndPurchaseSate(holder, (I) item);
                 hasDefaultItemSelectStateSet = true;
             } else {
                 selectItem(holder, item);
@@ -512,8 +512,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                         }
                                         fragment.addChosenItem((KCBaseElement) item);
                                         fragment.refreshHeaderNextButtonState();
-                                        fragment.notifyDataSetChange();
-                                        onItemClicked((V) holder, item, true);
+                                        onItemClicked((V) holder, item, false);
                                         if (item instanceof KCButtonShapeElement) {
                                             fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
                                         }
