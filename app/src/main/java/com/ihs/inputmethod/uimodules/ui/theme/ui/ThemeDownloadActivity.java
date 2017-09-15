@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -58,6 +59,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private FloatingActionButton createThemeButton;
     private ArrayList<Class> fragments;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
 
@@ -152,13 +154,13 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         int position = getIntent().getIntExtra("currentTab", 0);
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         tab.select();
-        LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+        createThemeButton = (FloatingActionButton) findViewById(R.id.home_create_theme_layout);
         if (position == 0) {
-            layout.setVisibility(View.VISIBLE);
+            createThemeButton.setVisibility(View.VISIBLE);
         } else if (position == 1) { //my sticker
-            layout.setVisibility(View.GONE);
+            createThemeButton.setVisibility(View.GONE);
         } else if (position == 2) { // my font
-            layout.setVisibility(View.GONE);
+            createThemeButton.setVisibility(View.GONE);
         }
 
         setTabListener();
@@ -243,11 +245,10 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
-                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
                 if (tab.getPosition() == 0) {
-                    layout.setVisibility(View.VISIBLE);
+                    createThemeButton.setVisibility(View.VISIBLE);
                 } else {
-                    layout.setVisibility(View.GONE);
+                    createThemeButton.setVisibility(View.GONE);
                 }
             }
         });
@@ -256,11 +257,10 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
                 if (position == 0) {
-                    layout.setVisibility(View.VISIBLE);
+                    createThemeButton.setVisibility(View.VISIBLE);
                 } else {
-                    layout.setVisibility(View.GONE);
+                    createThemeButton.setVisibility(View.GONE);
                 }
             }
         });

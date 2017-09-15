@@ -77,6 +77,7 @@ import java.util.List;
 
 import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 import static com.ihs.app.framework.HSApplication.getContext;
+import static com.ihs.flashlight.R.id.finish;
 import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background.BackgroundFragment.CROPPER_IMAGE_REQUEST_CODE;
 
 
@@ -649,7 +650,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             if (savingDialog.isShowing() && !isFinishing()) {
                 savingDialog.dismiss();
             }
-            finish();
+            Intent intent = new Intent(CustomThemeActivity.this, ThemeHomeActivity.class);
+            startActivity(intent);
         }
     }
 }

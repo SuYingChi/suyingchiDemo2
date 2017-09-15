@@ -41,43 +41,19 @@
         android:background="@color/theme_activity_bg"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/home_create_theme_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_marginBottom="@dimen/bottom_bar_default_height"-->
-        <!--android:background="@drawable/home_create_keyboard_bg"-->
-        <!--android:clickable="true"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/fab"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:drawableLeft="@drawable/home_create_keyboard"-->
-            <!--android:drawablePadding="9dp"-->
-            <!--android:fontFamily="sans-serif-medium"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/home_create_keyboard"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="14sp" />-->
-
-       <!---->
-    <!--</LinearLayout>-->
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/home_create_theme_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/home_create_keyboard"
-        app:fabSize="normal"
         android:clickable="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="@dimen/create_theme_button_margin_bottom"
-        app:backgroundTint="@color/home_create_keyboard_bg_pressed"/>
+        app:fabSize="normal"
+        app:borderWidth="0dp"
+        app:backgroundTint="@color/home_create_keyboard_bg_normal"
+        app:rippleColor="@color/home_create_keyboard_bg_pressed"/>
 
 </RelativeLayout>
