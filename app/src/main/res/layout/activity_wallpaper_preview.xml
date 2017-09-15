@@ -93,7 +93,7 @@
             android:text="@string/wallpaper_set_dialog_title"
             android:textColor="@color/black_primary"
             android:textSize="20sp"
-            app:typeface="@string/proxima_nova_semibold" />
+            android:fontFamily="sans-serif-medium" />
 
         <LinearLayout
             android:id="@+id/set_home_screen"
@@ -114,7 +114,7 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 android:textColor="@color/black_standard"
-                app:typeface="@string/proxima_nova_semibold" />
+                android:fontFamily="sans-serif" />
 
         </LinearLayout>
 
@@ -138,7 +138,7 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 android:textColor="@color/black_standard"
-                app:typeface="@string/proxima_nova_semibold" />
+                android:fontFamily="sans-serif" />
 
         </LinearLayout>
 
@@ -163,7 +163,7 @@
                 android:textSize="16sp"
                 android:gravity="center"
                 android:textColor="@color/black_standard"
-                app:typeface="@string/proxima_nova_semibold" />
+                android:fontFamily="sans-serif" />
 
         </LinearLayout>
 
@@ -182,7 +182,7 @@
                 android:text="@string/may_contains_ads"
                 android:textSize="11sp"
                 android:textColor="@color/black_gray"
-                app:typeface="@string/proxima_nova_semibold" />
+                android:fontFamily="sans-serif" />
         </RelativeLayout>
 
     </LinearLayout>

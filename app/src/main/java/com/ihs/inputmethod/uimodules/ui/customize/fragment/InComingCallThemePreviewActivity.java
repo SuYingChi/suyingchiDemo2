@@ -65,7 +65,7 @@ public class InComingCallThemePreviewActivity extends Activity implements View.O
         returnView.setOnClickListener(this);
         callThemeGifPreview = ViewUtils.findViewById(this, R.id.call_theme_gif_view);
         callThemeGifPreview.setOnClickListener(this);
-        loadingProgressBar = ViewUtils.findViewById(this, R.id.loading_progress);
+        loadingProgressBar = ViewUtils.findViewById(this, R.id.theme_progress_bar);
         loadingProgressBar.setOnClickListener(this);
         button = ViewUtils.findViewById(this, R.id.button);
         button.setOnClickListener(this);

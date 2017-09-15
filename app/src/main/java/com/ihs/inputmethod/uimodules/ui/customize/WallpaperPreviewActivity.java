@@ -385,6 +385,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mDialog = ProgressDialog.createDialog(this, getString(R.string.wallpaper_setting_progress_dialog_text));
         mDialog.show();
         mDialog.setCancelable(false);
+        mDialog.dismiss();
     }
 
     @Override

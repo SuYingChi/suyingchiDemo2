@@ -20,15 +20,34 @@
         android:layout_marginTop="24dp"
         app:srcCompat="@drawable/wallpaper_back_svg" />
 
+
+    <com.acb.call.views.ThemePreviewWindow
+        android:id="@+id/flash_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/flash_settings_scroll_view"
+        android:background="#000000" />
+
+    <com.acb.call.views.InCallActionView
+        android:id="@+id/in_call_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/flash_settings_scroll_view"></com.acb.call.views.InCallActionView>
+
     <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:id="@+id/loading_progress"
+        android:id="@+id/theme_progress_bar"
+        style="@style/AcbProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_above="@id/flash_settings_scroll_view"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:max="100"
-        android:progress="0"/>
+        android:layout_marginEnd="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginStart="40dp"
+        android:progress="0"
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/button"

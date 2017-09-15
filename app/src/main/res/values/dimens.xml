@@ -206,7 +206,7 @@
 
 
     <!-- Customize -->
-    <dimen name="customize_toolbar_height">48dp</dimen>
+    <dimen name="customize_toolbar_height">30dp</dimen>
     <dimen name="customize_toolbar_elevation">1dp</dimen>
     <dimen name="customize_wallpaper_3d_mark">27dp</dimen>
 
