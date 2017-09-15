@@ -55,11 +55,11 @@ public class CustomizeActivity extends BaseCustomizeActivity implements INotific
     static {
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_keyboard, TAB_INDEX_KEYBOARD);
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_wallpapers, TAB_INDEX_WALLPAPER);
-        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_locker, TAB_INDEX_LOCKER);
+        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_call, TAB_INDEX_LOCKER);
 
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_keyboard, "Keyboard");
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_wallpapers, "Wallpaper");
-        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_locker, "Locker");
+        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_call, "Locker");
     }
 
     private CustomizeContentView mContent;
@@ -179,7 +179,7 @@ public class CustomizeActivity extends BaseCustomizeActivity implements INotific
         Menu menu = mBottomBar.getMenu();
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_wallpapers, R.drawable.customize_wallpaper);
 //        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_themes, R.drawable.customize_theme);
-        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_locker, R.drawable.customize_locker);
+//        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_call, R.drawable.customize_locker);
 
         switch (item.getItemId()) {
             case R.id.customize_bottom_bar_wallpapers:
@@ -188,8 +188,8 @@ public class CustomizeActivity extends BaseCustomizeActivity implements INotific
 //            case R.id.customize_bottom_bar_themes:
 //                item.setIcon(R.drawable.customize_theme_h);
 //                break;
-            case R.id.customize_bottom_bar_locker:
-                item.setIcon(R.drawable.customize_locker_h);
+            case R.id.customize_bottom_bar_call:
+//                item.setIcon(R.drawable.customize_locker_h);
                 break;
         }
         return true;

@@ -130,6 +130,7 @@ public class InComingCallThemePreviewActivity extends Activity implements View.O
                 Type themeType = Type.typeFromMap(item);
                 Type.addGifToTypes(themeType);
                 Intent intent = new Intent(this, InCallThemePreviewActivity.class);
+                intent.putExtra("CallThemeType", themeType);
                 startActivity(intent);
                 break;
         }

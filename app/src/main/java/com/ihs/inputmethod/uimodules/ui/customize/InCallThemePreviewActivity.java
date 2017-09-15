@@ -1,7 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.customize;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -28,10 +25,8 @@ import com.acb.call.customize.AcbCallManager;
 import com.acb.call.receiver.IncomingCallReceiver;
 import com.acb.call.themes.Type;
 import com.acb.call.utils.Utils;
-import com.acb.call.views.DownloadProgressBar;
 import com.acb.call.views.InCallActionView;
 import com.acb.call.views.ThemePreviewWindow;
-import com.airbnb.lottie.LottieAnimationView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -39,6 +34,8 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 
 import java.util.ArrayList;
+
+
 
 public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
@@ -204,81 +201,93 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     private void initThemesView() {
         mThemesScrollView = (HorizontalScrollView) findViewById(R.id.flash_settings_scroll_view);
         mThemesParent = (LinearLayout) findViewById(R.id.flash_settings_scroll_container);
-        addThemeChildren();
-        if (mThemesParent.getChildCount() <= 0) {
-            return;
+        mThemesScrollView.setVisibility(View.GONE);
+        mThemesParent.setVisibility(View.GONE);
+//        addThemeChildren();
+
+        Type themeType = (Type) getIntent().getSerializableExtra("CallThemeType");
+        int themeId = themeType.getValue();
+
+        resetThemeSelected(mThemesParent.getChildAt(getIndexOfTheme(mThemeCurrentSelectedId)));
+        setThemeSelected(themeType);
+        if (mThemeCurrentSelectedId == Type.NONE && themeId != Type.NONE) {
+            CPSettings.setScreenFlashModuleEnabled(true);
+        } else if (themeId == Type.NONE) {
+            CPSettings.setScreenFlashModuleEnabled(false);
         }
 
-        final View tempChild = mThemesParent.getChildAt(0);
-        tempChild.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (tempChild.getWidth() <= 0) {
-                    return;
-                }
-                tempChild.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+        mThemeCurrentSelectedId = themeId;
 
-                mThemeChildWidth = tempChild.getWidth();
-                if (sPhoneWidth <= 0) {
-                    sPhoneWidth = Utils.getPhoneWidth(HSApplication.getContext());
-                }
+//        final View tempChild = mThemesParent.getChildAt(0);
+//        tempChild.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                if (tempChild.getWidth() <= 0) {
+//                    return;
+//                }
+//                tempChild.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//
+//                mThemeChildWidth = tempChild.getWidth();
+//                if (sPhoneWidth <= 0) {
+//                    sPhoneWidth = Utils.getPhoneWidth(HSApplication.getContext());
+//                }
+//
+//                if (4.5f * mThemeChildWidth > sPhoneWidth) {
+//                    mThemeChildWidth = (int) (sPhoneWidth / 3.5f);
+//                } else {
+//                    mThemeChildWidth = (int) (sPhoneWidth / 4.5f);
+//                }
+//
+//                final int childCount = mThemesParent.getChildCount();
+//                for (int i = 0; i < childCount; i++) {
+//                    final View child = mThemesParent.getChildAt(i);
+//                    final int childIndex = i;
+//                    final int themeId = mThemeArray.get(childIndex).getValue();
+//                    setThemesChild(i);
+//                    child.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            if (!mThemeArray.get(childIndex).isGif()) {
+//                                if (themeId == mThemeCurrentSelectedId) {
+//                                    return;
+//                                }
+//                                HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeId);
+//                            }
+//
+//                            resetThemeSelected(mThemesParent.getChildAt(getIndexOfTheme(mThemeCurrentSelectedId)));
+//                            setThemeSelected(childIndex);
+//                            scrollToRightPosition(childIndex);
+//                            if (mThemeCurrentSelectedId == Type.NONE && themeId != Type.NONE) {
+//                                CPSettings.setScreenFlashModuleEnabled(true);
+//                            } else if (themeId == Type.NONE) {
+//                                CPSettings.setScreenFlashModuleEnabled(false);
+//                            }
+//
+//                            mThemeCurrentSelectedId = themeId;
+//                        }
+//                    });
+//                }
+//
+//                mThemePreviousSelectedId = HSPreferenceHelper.getDefault().getInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID,
+//                        CPSettings.isScreenFlashModuleEnabled() ? AcbCallManager.getInstance().getAcbCallFactory().getDefaultThemeId() : Type.NONE);
+//                mThemeCurrentSelectedId = mThemePreviousSelectedId;
+//                final int index = getIndexOfTheme(mThemeCurrentSelectedId);
+//                setThemeSelected(index);
+//                mThemesParent.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (mThemeCurrentSelectedId == Type.NONE) {
+//                            mThemesScrollView.smoothScrollTo(Utils.isRtl() ? mThemeArray.size() * mThemeChildWidth : 0, 0);
+//                        } else {
+//                            scrollToRightPosition(index);
+//                        }
+//                    }
+//                });
+//
+//            }
 
-                if (4.5f * mThemeChildWidth > sPhoneWidth) {
-                    mThemeChildWidth = (int) (sPhoneWidth / 3.5f);
-                } else {
-                    mThemeChildWidth = (int) (sPhoneWidth / 4.5f);
-                }
 
-                final int childCount = mThemesParent.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    final View child = mThemesParent.getChildAt(i);
-                    final int childIndex = i;
-                    final int themeId = mThemeArray.get(childIndex).getValue();
-                    setThemesChild(child, i);
-                    child.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (!mThemeArray.get(childIndex).isGif()) {
-                                if (themeId == mThemeCurrentSelectedId) {
-                                    return;
-                                }
-                                HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeId);
-                            }
-
-                            resetThemeSelected(mThemesParent.getChildAt(getIndexOfTheme(mThemeCurrentSelectedId)));
-                            setThemeSelected(child, childIndex);
-                            scrollToRightPosition(childIndex);
-                            if (mThemeCurrentSelectedId == Type.NONE && themeId != Type.NONE) {
-                                CPSettings.setScreenFlashModuleEnabled(true);
-                            } else if (themeId == Type.NONE) {
-                                CPSettings.setScreenFlashModuleEnabled(false);
-                            }
-
-                            mThemeCurrentSelectedId = themeId;
-                        }
-                    });
-                }
-
-                mThemePreviousSelectedId = HSPreferenceHelper.getDefault().getInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID,
-                        CPSettings.isScreenFlashModuleEnabled() ? AcbCallManager.getInstance().getAcbCallFactory().getDefaultThemeId() : Type.NONE);
-                mThemeCurrentSelectedId = mThemePreviousSelectedId;
-                final int index = getIndexOfTheme(mThemeCurrentSelectedId);
-                setThemeSelected(mThemesParent.getChildAt(index), index);
-                mThemesParent.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mThemeCurrentSelectedId == Type.NONE) {
-                            mThemesScrollView.smoothScrollTo(Utils.isRtl() ? mThemeArray.size() * mThemeChildWidth : 0, 0);
-                        } else {
-                            scrollToRightPosition(index);
-                        }
-                    }
-                });
-
-            }
-
-
-        });
+//        });
     }
 
     private void addThemeChildren() {
@@ -297,40 +306,17 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         return mThemeArray.size() - 1;
     }
 
-    private void setThemesChild(View view, int index) {
-        if (view == null) {
-            return;
-        }
+    private void setThemesChild(int index) {
         Type type = mThemeArray.get(index);
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
-        lp.width = mThemeChildWidth;
-        view.setLayoutParams(lp);
-        view.requestLayout();
+    }
 
-        ImageView img = (ImageView) view.findViewById(R.id.flash_settings_scroll_item_img);
-        TextView txt = (TextView) view.findViewById(R.id.flash_settings_scroll_item_txt);
-
-        AcbCallManager.getInstance().getImageLoader().load(type, type.getItemIcon(), type.getItemPlaceHolder(), img);
-        txt.setText(type.getName());
-
-        if (type.isGif()) {
-            AcbCallManager.getInstance().getImageLoader().load(type, type.getPreviewImage());
-            if (!mGifDownloader.isDownloaded(type.getGifFileName())) {
-                View download = view.findViewById(R.id.acb_phone_download);
-                download.setVisibility(View.VISIBLE);
-            }
-        }
+    private void setThemeSelected(final Type themeType) {
+        initThemeAnimation(themeType);
     }
 
 
-    private void setThemeSelected(final View view, final int index) {
-        if (view == null) {
-            return;
-        }
-        initThemeAnimation(view, index);
-
-        ImageView img = (ImageView) view.findViewById(R.id.flash_settings_scroll_item_img);
-        img.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.acb_phone_theme_item_selected_mark));
+    private void setThemeSelected(final int index) {
+        initThemeAnimation(index);
     }
 
     private void scrollToRightPosition(int index) {
@@ -368,10 +354,23 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         img.setBackgroundDrawable(null);
     }
 
-    private void initThemeAnimation(final View view, final int index) {
+    private void initThemeAnimation(final Type themeType) {
+        if (themeType.isGif()) {
+            prepareAndShowGif(themeType);
+        } else {
+            findViewById(R.id.theme_progress_bar).setVisibility(View.GONE);
+            findViewById(R.id.theme_progress_txt_holder).setVisibility(View.GONE);
+            mPreviewView.playAnimation(themeType);
+        }
+
+        mCallView.setAutoRun(themeType.getValue() != Type.NONE);
+    }
+
+    private void initThemeAnimation(final int index) {
         Type type = mThemeArray.get(index);
+
         if (type.isGif()) {
-            prepareAndShowGif(view, type);
+            prepareAndShowGif(type);
         } else {
             findViewById(R.id.theme_progress_bar).setVisibility(View.GONE);
             findViewById(R.id.theme_progress_txt_holder).setVisibility(View.GONE);
@@ -391,16 +390,16 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         findViewById(R.id.theme_progress_txt_holder).setVisibility(View.GONE);
     }
 
-    private void prepareAndShowGif(final View view, final Type type) {
+    private void prepareAndShowGif(final Type type) {
         if (mGifDownloader.isDownloaded(type.getGifFileName())) {
-            hideProgressViews(view);
+//            hideProgressViews(view);
             HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, type.getValue());
             mPreviewView.playAnimation(type);
         } else {
             mPreviewView.updateThemeLayout(type);
             AcbCallManager.getInstance().getImageLoader().load(type, type.getPreviewImage(), type.getPreviewPlaceHolder(), (ImageView) mPreviewView.findViewById(R.id.animation_view));
             if (!mGifDownloader.isDownloading(type.getGifFileName())) {
-                downloadGif(view, type);
+                downloadGif(type);
             } else {
                 findViewById(R.id.theme_progress_bar).setVisibility(View.VISIBLE);
                 findViewById(R.id.theme_progress_txt_holder).setVisibility(View.VISIBLE);
@@ -408,32 +407,17 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         }
     }
 
-    private void downloadGif(final View view, final Type type) {
-        final FrameLayout progressContainer = (FrameLayout) view.findViewById(R.id.acb_theme_gif_preview_loading_view);
-        final DownloadProgressBar progressBar = (DownloadProgressBar) progressContainer.findViewById(R.id.acb_theme_gif_loading_progressbar);
-        final TextView progressLabel = (TextView) progressContainer.findViewById(R.id.acb_theme_gif_loading_progress_label);
+    private void downloadGif(final Type type) {
         final ProgressBar horPro = (ProgressBar) findViewById(R.id.theme_progress_bar);
         final LinearLayout proHolder = (LinearLayout) findViewById(R.id.theme_progress_txt_holder);
-        final View downloadIcon = view.findViewById(R.id.acb_phone_download);
-        final LottieAnimationView checkAnimation = (LottieAnimationView) progressContainer.findViewById(R.id.acb_theme_gif_download_finished_anim);
 
         horPro.setVisibility(View.VISIBLE);
         proHolder.setVisibility(View.VISIBLE);
-        progressContainer.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
-        progressLabel.setVisibility(View.VISIBLE);
         ((TextView) proHolder.findViewById(R.id.theme_progress_txt)).setText("0 %");
-        progressBar.reset();
-        progressBar.setProgress(1);
-        downloadIcon.setVisibility(View.GONE);
-        checkAnimation.setVisibility(View.GONE);
-        checkAnimation.setProgress(0f);
         mGifDownloader.downloadGif(type.getGifUrl(), type.getGifFileName(),
                 new GifDownloadManager.SimpleDownloadCallback() {
                     @Override
                     public void onUpdate(final long progress) {
-                        progressBar.setProgress((int) progress);
-                        progressLabel.setText("" + progress + "%");
 
                         if (type.getValue() == mThemeCurrentSelectedId) {
                             horPro.setProgress((int) progress);
@@ -446,40 +430,15 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
                         if (mIsDestroyed) {
                             return;
                         }
-                        checkAnimation.setVisibility(View.VISIBLE);
-                        progressLabel.setVisibility(View.GONE);
-                        progressLabel.setText("0%");
-                        progressBar.setProgress(100);
 
                         if (type.getValue() == mThemeCurrentSelectedId) {
-                            ((TextView) proHolder.findViewById(R.id.theme_progress_txt)).setText("100 %");
-                            horPro.setProgress(100);
+                            horPro.setVisibility(View.GONE);
+                            proHolder.setVisibility(View.GONE);
+                            horPro.setProgress(0);
+                            ((TextView) proHolder.findViewById(R.id.theme_progress_txt)).setText("0 %");
+                            HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, type.getValue());
+                            mPreviewView.playAnimation(type);
                         }
-
-                        checkAnimation.addAnimatorListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                checkAnimation.setVisibility(View.GONE);
-                                progressBar.setVisibility(View.GONE);
-                                if (type.getValue() == mThemeCurrentSelectedId) {
-                                    horPro.setVisibility(View.GONE);
-                                    proHolder.setVisibility(View.GONE);
-                                    horPro.setProgress(0);
-                                    ((TextView) proHolder.findViewById(R.id.theme_progress_txt)).setText("0 %");
-                                }
-                                progressContainer.setVisibility(View.GONE);
-                                progressContainer.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (type.getValue() == mThemeCurrentSelectedId) {
-                                            HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, type.getValue());
-                                            mPreviewView.playAnimation(type);
-                                        }
-                                    }
-                                }, 100);
-                            }
-                        });
-                        checkAnimation.playAnimation();
                     }
 
                     @Override
@@ -488,12 +447,8 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
                             return;
                         }
 
-                        checkAnimation.setVisibility(View.GONE);
-                        progressBar.setVisibility(View.GONE);
-                        progressContainer.setVisibility(View.GONE);
                         proHolder.setVisibility(View.GONE);
                         horPro.setVisibility(View.GONE);
-                        downloadIcon.setVisibility(View.VISIBLE);
                         Toast.makeText(InCallThemePreviewActivity.this, R.string.acb_phone_theme_gif_download_failed_toast, Toast.LENGTH_LONG).show();
                     }
                 });

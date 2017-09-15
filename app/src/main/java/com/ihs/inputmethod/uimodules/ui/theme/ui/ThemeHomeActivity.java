@@ -119,12 +119,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     static {
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_keyboard, TAB_INDEX_KEYBOARD);
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_wallpapers, TAB_INDEX_WALLPAPER);
-        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_locker, TAB_INDEX_LOCKER);
+        ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_call, TAB_INDEX_LOCKER);
         ITEMS_INDEX_MAP.put(R.id.customize_bottom_bar_setting, TAB_INDEX_SETTINGS);
 
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_keyboard, "Keyboard");
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_wallpapers, "Wallpaper");
-        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_locker, "Locker");
+        ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_call, "Locker");
         ITEMS_FLURRY_NAME_MAP.put(R.id.customize_bottom_bar_setting, "Settings");
     }
 
@@ -406,7 +406,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         Menu menu = mBottomBar.getMenu();
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_wallpapers, R.drawable.customize_wallpaper);
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_keyboard, R.drawable.customize_keyboard);
-        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_locker, R.drawable.customize_locker);
+        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_call, R.drawable.customize_call);
+        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_setting, R.drawable.customize_settings);
 
         switch (item.getItemId()) {
             case R.id.customize_bottom_bar_wallpapers:
@@ -415,8 +416,11 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             case R.id.customize_bottom_bar_keyboard:
                 item.setIcon(R.drawable.customize_keyboard_h);
                 break;
-            case R.id.customize_bottom_bar_locker:
-                item.setIcon(R.drawable.customize_locker_h);
+            case R.id.customize_bottom_bar_call:
+                item.setIcon(R.drawable.customize_call_h);
+                break;
+            case R.id.customize_bottom_bar_setting:
+                item.setIcon(R.drawable.customize_settings_h);
                 break;
         }
         return true;
