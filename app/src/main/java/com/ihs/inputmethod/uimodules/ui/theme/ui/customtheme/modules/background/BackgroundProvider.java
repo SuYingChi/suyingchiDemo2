@@ -138,14 +138,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                         }
 
                         if (baseElement.isNotSupportCurrentAppVersion() /*&& ApkUtils.shouldUpdate()*/) {
-                            ApkUtils.showUpdateAlert(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    fragment.addChosenItem(item);
-                                    fragment.refreshHeaderNextButtonState();
-                                    onItemClicked(holder, item, true);
-                                }
-                            });
+                            ApkUtils.showUpdateAlert(null);
                             return true;
                         }
 

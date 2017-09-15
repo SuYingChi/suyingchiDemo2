@@ -498,17 +498,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             }
 
                             if (baseElement.isNotSupportCurrentAppVersion() /*&& ApkUtils.shouldUpdate()*/) {
-                                ApkUtils.showUpdateAlert(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        fragment.addChosenItem((KCBaseElement) item);
-                                        fragment.refreshHeaderNextButtonState();
-                                        onItemClicked((V) holder, item, true);
-                                        if (item instanceof KCButtonShapeElement) {
-                                            fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
-                                        }
-                                    }
-                                });
+                                ApkUtils.showUpdateAlert(null);
                                 return true;
                             }
 
