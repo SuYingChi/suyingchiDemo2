@@ -510,14 +510,29 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                             holder.mGiftIconImageView.setVisibility(View.GONE);
                                         }
-                                        fragment.addChosenItem((KCBaseElement) item);
-                                        fragment.refreshHeaderNextButtonState();
-                                        onItemClicked((V) holder, item, false);
-                                        if (item instanceof KCButtonShapeElement) {
-                                            fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
-                                        }
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                fragment.addChosenItem((KCBaseElement) item);
+                                                fragment.refreshHeaderNextButtonState();
+                                                onItemClicked((V) holder, item, false);
+                                                if (item instanceof KCButtonShapeElement) {
+                                                    fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
+                                                }
+                                            }
+                                        }, 1000);
                                     }
                                 });
+                                return true;
+                            }
+                            if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
+                                holder.mGiftIconImageView.setVisibility(View.GONE);
+                                fragment.addChosenItem((KCBaseElement) item);
+                                fragment.refreshHeaderNextButtonState();
+                                onItemClicked((V) holder, item, false);
+                                if (item instanceof KCButtonShapeElement) {
+                                    fragment.notifyAdapterOnMainThread();
+                                }
                                 return true;
                             }
                             fragment.addChosenItem((KCBaseElement) item);

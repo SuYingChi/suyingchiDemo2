@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -150,11 +151,23 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                                     if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                         holder.mGiftIconImageView.setVisibility(View.GONE);
                                     }
-                                    fragment.addChosenItem(item);
-                                    fragment.refreshHeaderNextButtonState();
-                                    onItemClicked(holder, item, false);
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            fragment.addChosenItem(item);
+                                            fragment.refreshHeaderNextButtonState();
+                                            onItemClicked(holder, item, false);
+                                        }
+                                    }, 1000);
                                 }
                             });
+                            return true;
+                        }
+                        if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
+                            holder.mGiftIconImageView.setVisibility(View.GONE);
+                            fragment.addChosenItem(item);
+                            fragment.refreshHeaderNextButtonState();
+                            onItemClicked(holder, item, false);
                             return true;
                         }
                         fragment.addChosenItem(item);
