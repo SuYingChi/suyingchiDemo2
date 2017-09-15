@@ -54,5 +54,14 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/custom_theme_item_gift_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_keyboard_custom_theme_background_gift"
+            android:visibility="gone" />
     </FrameLayout>
 </LinearLayout>

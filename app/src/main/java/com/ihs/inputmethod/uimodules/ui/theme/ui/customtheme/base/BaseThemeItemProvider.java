@@ -23,10 +23,12 @@ import android.widget.ImageView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -239,6 +241,11 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
+            if (item.isRateToUnlock()) {
+                holder.mGiftIconImageView.setVisibility(View.VISIBLE);
+            } else {
+                holder.mGiftIconImageView.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -485,6 +492,44 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             return true;
                         case MotionEvent.ACTION_UP:
                             doSelectAnimationOnItemViewRelease(v);
+                            final KCBaseElement baseElement = (KCBaseElement) item;
+                            if (ClickUtils.isFastDoubleClick()) {
+                                return true;
+                            }
+
+                            if (baseElement.isNotSupportCurrentAppVersion() /*&& ApkUtils.shouldUpdate()*/) {
+                                ApkUtils.showUpdateAlert(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        fragment.addChosenItem((KCBaseElement) item);
+                                        fragment.refreshHeaderNextButtonState();
+                                        onItemClicked((V) holder, item, true);
+                                        if (item instanceof KCButtonShapeElement) {
+                                            fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
+                                        }
+                                    }
+                                });
+                                return true;
+                            }
+
+                            if (baseElement.isRateToUnlock() && ApkUtils.isGooglePlayAvailable()) {
+                                ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        baseElement.setRateToUnlockStatus(false);
+                                        if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
+                                            holder.mGiftIconImageView.setVisibility(View.GONE);
+                                        }
+                                        fragment.addChosenItem((KCBaseElement) item);
+                                        fragment.refreshHeaderNextButtonState();
+                                        onItemClicked((V) holder, item, true);
+                                        if (item instanceof KCButtonShapeElement) {
+                                            fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
+                                        }
+                                    }
+                                });
+                                return true;
+                            }
                             fragment.addChosenItem((KCBaseElement) item);
                             fragment.refreshHeaderNextButtonState();
                             onItemClicked((V) holder, item, true);
@@ -570,6 +615,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         public ImageView mBackgroundImageView;
         public ImageView mNewMarkImageView;
         public ImageView mPlaceholderView;
+        public ImageView mGiftIconImageView;
         //        public SectorProgressView mProgressView;
         public View itemView;
         public OnDownloadingProgressListener downloadingProgressListener;
@@ -583,6 +629,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             mCheckImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_check_bg);
             mBackgroundImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_bg);
             mNewMarkImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
+            mGiftIconImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_gift_icon);
             mPlaceholderView = (ImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
 
         }

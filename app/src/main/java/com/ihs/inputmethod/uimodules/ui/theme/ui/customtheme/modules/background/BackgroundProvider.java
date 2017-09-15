@@ -10,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.chargingscreen.utils.ClickUtils;
+import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
@@ -130,6 +132,38 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                         return true;
                     case MotionEvent.ACTION_UP:
                         doSelectAnimationOnItemViewRelease(v);
+                        final KCBaseElement baseElement = (KCBaseElement) item;
+                        if (ClickUtils.isFastDoubleClick()) {
+                            return true;
+                        }
+
+                        if (baseElement.isNotSupportCurrentAppVersion() /*&& ApkUtils.shouldUpdate()*/) {
+                            ApkUtils.showUpdateAlert(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    fragment.addChosenItem(item);
+                                    fragment.refreshHeaderNextButtonState();
+                                    onItemClicked(holder, item, true);
+                                }
+                            });
+                            return true;
+                        }
+
+                        if (baseElement.isRateToUnlock() && ApkUtils.isGooglePlayAvailable()) {
+                            ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    baseElement.setRateToUnlockStatus(false);
+                                    if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
+                                        holder.mGiftIconImageView.setVisibility(View.GONE);
+                                    }
+                                    fragment.addChosenItem(item);
+                                    fragment.refreshHeaderNextButtonState();
+                                    onItemClicked(holder, item, true);
+                                }
+                            });
+                            return true;
+                        }
                         fragment.addChosenItem(item);
                         fragment.refreshHeaderNextButtonState();
                         onItemClicked(holder, item, true);

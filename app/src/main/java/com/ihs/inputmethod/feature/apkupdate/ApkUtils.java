@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,9 +92,9 @@ public class ApkUtils {
     public static boolean checkAndShowUpdateAlert(final boolean force) {
         if (shouldUpdate()) {
             if (force) {
-                showUpdateAlert();
+                showUpdateAlert(null);
             } else if (checkTimeout()) {
-                showUpdateAlert();
+                showUpdateAlert(null);
             }
 
             return true;
@@ -279,7 +280,7 @@ public class ApkUtils {
         alertDialog.show();
     }
 
-    public static void showUpdateAlert() {
+    public static void showUpdateAlert(@Nullable final View.OnClickListener updateButtonClickListener) {
         saveUpdateAlertLastShownTime();
 
         // Create custom dialog object
@@ -305,6 +306,9 @@ public class ApkUtils {
                     @Override
                     public void onClick(View v) {
                         doUpdate();
+                        if (updateButtonClickListener != null) {
+                            updateButtonClickListener.onClick(v);
+                        }
                         dialog.dismiss();
                     }
                 });

@@ -296,7 +296,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             }
 
                             if (customThemeItemBase.isNotSupportCurrentAppVersion() /*&& ApkUtils.shouldUpdate()*/) {
-                                ApkUtils.showUpdateAlert();
+                                ApkUtils.showUpdateAlert(null);
                                 return;
                             }
 
