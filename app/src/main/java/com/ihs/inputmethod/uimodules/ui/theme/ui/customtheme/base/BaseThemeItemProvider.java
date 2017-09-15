@@ -241,7 +241,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
-            if (item.isRateToUnlock()) {
+            if (item.isRateToUnlock() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                 holder.mGiftIconImageView.setVisibility(View.VISIBLE);
             } else {
                 holder.mGiftIconImageView.setVisibility(View.GONE);
@@ -512,7 +512,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                 return true;
                             }
 
-                            if (baseElement.isRateToUnlock() && ApkUtils.isGooglePlayAvailable()) {
+                            if (baseElement.isRateToUnlock() && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -522,6 +522,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                         }
                                         fragment.addChosenItem((KCBaseElement) item);
                                         fragment.refreshHeaderNextButtonState();
+                                        fragment.notifyDataSetChange();
                                         onItemClicked((V) holder, item, true);
                                         if (item instanceof KCButtonShapeElement) {
                                             fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用

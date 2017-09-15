@@ -226,6 +226,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 holder.backgroundContent.setVisibility(View.VISIBLE);
                 holder.backgroundContent.setImageResource(R.drawable.camera_icon);
                 holder.backgroundNewMark.setVisibility(GONE);
+                holder.backgroundGiftIcon.setVisibility(GONE);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -241,6 +242,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 holder.backgroundContent.setVisibility(View.VISIBLE);
                 holder.backgroundContent.setImageResource(R.drawable.gallery_icon);
                 holder.backgroundNewMark.setVisibility(GONE);
+                holder.backgroundGiftIcon.setVisibility(GONE);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -279,7 +281,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         } else {
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
-                            if (customThemeItemBase.isRateToUnlock()) {
+                            if (customThemeItemBase.isRateToUnlock() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
                             } else {
                                 holder.backgroundGiftIcon.setVisibility(View.GONE);
@@ -300,7 +302,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                 return;
                             }
 
-                            if (customThemeItemBase.isRateToUnlock() && ApkUtils.isGooglePlayAvailable()) {
+                            if (customThemeItemBase.isRateToUnlock() && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -308,6 +310,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                         if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
                                             holder.backgroundGiftIcon.setVisibility(GONE);
                                         }
+                                        notifyDataSetChanged();
                                     }
                                 });
                                 return;

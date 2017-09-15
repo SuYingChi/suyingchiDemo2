@@ -149,7 +149,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                             return true;
                         }
 
-                        if (baseElement.isRateToUnlock() && ApkUtils.isGooglePlayAvailable()) {
+                        if (baseElement.isRateToUnlock() && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                             ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -159,6 +159,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                                     }
                                     fragment.addChosenItem(item);
                                     fragment.refreshHeaderNextButtonState();
+                                    fragment.notifyAdapterOnMainThread();
                                     onItemClicked(holder, item, true);
                                 }
                             });
