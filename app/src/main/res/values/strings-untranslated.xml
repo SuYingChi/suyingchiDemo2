@@ -14,6 +14,10 @@
     <string name="keyboard_settings">Keyboard Settings</string>
 
 
+    <!-- home bottom tab-->
+    <string name="call_flash">Call Flash</string>
+
+
     <!-- wallpaper preview -->
     <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
     <string name="wallpaper_set_dialog_title">Set wallpaper</string>

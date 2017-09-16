@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.customize.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.acb.call.themes.Type;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.commons.config.HSConfig;
@@ -21,10 +21,12 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.InCallThemePreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
-import com.ihs.inputmethod.uimodules.ui.customize.view.ImagePressedTouchListener;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LockerThemeInfo;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +72,8 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
     }
 
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+            .showImageOnFail(R.drawable.locker_theme_thumbnail_failed)
+            .showImageOnLoading(R.drawable.locker_theme_thumbnail_loading)
             .cacheOnDisk(true).build();
 
     public boolean isLockerInstalled() {
@@ -131,9 +135,31 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).fitCenter()
                 .placeholder(R.drawable.locker_theme_thumbnail_loading).error(R.drawable.locker_theme_thumbnail_failed);
 
-        Glide.with((themeHolder.itemView.getContext())).asBitmap().load(getInComingCallThemeThumbnailUrl(theme.name))
-                .apply(requestOptions)
-                .into(themeHolder.themeThumbnail);
+//        Glide.with((themeHolder.itemView.getContext())).asBitmap().load(getInComingCallThemeThumbnailUrl(theme.name))
+//                .apply(requestOptions)
+//                .into(themeHolder.themeThumbnail);
+
+        ImageLoader.getInstance().displayImage(getInComingCallThemeThumbnailUrl(theme.name), themeHolder.themeThumbnail, displayImageOptions, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+
+            }
+        });
     }
 
     @Override

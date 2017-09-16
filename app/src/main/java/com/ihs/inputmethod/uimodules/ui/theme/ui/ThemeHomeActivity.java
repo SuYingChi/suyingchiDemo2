@@ -302,6 +302,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
 
         onNewIntent(getIntent());
+        Menu menu = mBottomBar.getMenu();
+        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_keyboard, R.drawable.customize_keyboard_h);
     }
 
     private void enableUsageAccessPermission() {

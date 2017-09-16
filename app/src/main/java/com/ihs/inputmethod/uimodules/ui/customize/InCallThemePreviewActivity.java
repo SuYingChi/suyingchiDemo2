@@ -32,10 +32,9 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-
-
 
 public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
@@ -98,6 +97,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
         mCallView = (InCallActionView) findViewById(R.id.in_call_view);
         mCallView.enableFullScreen(false);
+        mSetCallThemeButton = (TextView) findViewById(R.id.set_incoming_call_theme);
         initThemesView();
         requestPermissionsIfNeeded();
     }
@@ -219,7 +219,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
         initThemeAnimation(themeType);
 
-        mSetCallThemeButton = (TextView) findViewById(R.id.set_incoming_call_theme);
         mSetCallThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,7 +302,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
             mSetCallThemeButton.setVisibility(View.VISIBLE);
         } else {
             mPreviewView.updateThemeLayout(type);
-            AcbCallManager.getInstance().getImageLoader().load(type, type.getPreviewImage(), type.getPreviewPlaceHolder(), (ImageView) mPreviewView.findViewById(R.id.animation_view));
+            ImageLoader.getInstance().displayImage(type.getPreviewImage(), (ImageView) mPreviewView.findViewById(R.id.animation_view));
             if (!mGifDownloader.isDownloading(type.getGifFileName())) {
                 downloadGif(type);
             } else {

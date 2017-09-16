@@ -90,8 +90,8 @@
         android:layout_marginBottom="20dp"
         app:fabSize="normal"
         app:borderWidth="0dp"
-        app:backgroundTint="@color/home_create_keyboard_bg_normal"
-        app:rippleColor="@color/home_create_keyboard_bg_pressed"/>
+        app:backgroundTint="@color/colorPrimary"
+        app:rippleColor="@color/colorAccent"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
