@@ -50,10 +50,10 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/online_wallpaper_set_btn"
+            android:fontFamily="sans-serif-medium"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:typeface="@string/proxima_nova_semibold" />
+            android:textSize="18sp" />
 
         <View
             android:layout_width="0.3dp"
@@ -67,10 +67,10 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/key_theme_set_btn"
+            android:fontFamily="sans-serif-medium"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:typeface="@string/proxima_nova_semibold" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

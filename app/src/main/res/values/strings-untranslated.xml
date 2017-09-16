@@ -11,17 +11,23 @@
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
     <string name="item_font_more_coming">More fonts are coming soon</string>
 
+    <string name="keyboard_settings">Keyboard Settings</string>
+
 
     <!-- wallpaper preview -->
     <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
     <string name="wallpaper_set_dialog_title">Set wallpaper</string>
     <string name="key_theme_set_btn">SET KEY THEME</string>
     <string name="wallpaper_apply_success">Applied Successfully</string>
+    <string name="incoming_call_theme_success">Set Successfully</string>
     <string name="home_screen">Home screen</string>
     <string name="locker_screen">Locker screen</string>
     <string name="home_and_locker_screen">Home and lock screen</string>
     <string name="may_contains_ads">May Contains Ads.</string>
     <string name="key_theme_loading_progress_dialog_text">Loading Key Theme...</string>
+
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
 
     <!--alert message-->
     <string name="locker_alert_title">Screen Locker</string>

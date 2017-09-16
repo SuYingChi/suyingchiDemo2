@@ -28,7 +28,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperManagerProxy;
 import com.ihs.inputmethod.uimodules.ui.customize.view.DrawView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.EditWallpaperHintDrawer;
 import com.ihs.inputmethod.uimodules.ui.customize.view.ProgressDialog;
-import com.ihs.keyboardutils.utils.CommonUtils;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.io.IOException;
@@ -168,8 +167,6 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
     }
 
     private void applyWallPaperFinish(Close close) {
-        CommonUtils.startLauncherAndSelectWallpaper(WallpaperBaseActivity.this);
-
         if (close.isReady()) {
             close.run();
         } else {

@@ -36,7 +36,6 @@
 
     <ProgressBar
         android:id="@+id/theme_progress_bar"
-        style="@style/AcbProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/flash_settings_scroll_view"

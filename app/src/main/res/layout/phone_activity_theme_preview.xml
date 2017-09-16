@@ -19,36 +19,54 @@
         android:overScrollMode="never"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:scrollbarStyle="outsideOverlay"
-        android:scrollbarThumbHorizontal="@drawable/acb_phone_theme_scrollbar_thumb"
-        android:scrollbarTrackHorizontal="@drawable/acb_phone_theme_scrollbar_track_bg"
-        android:scrollbars="horizontal">
+        android:scrollbars="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/flash_settings_scroll_container"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"></LinearLayout>
+            android:orientation="horizontal">
+
+        </LinearLayout>
     </HorizontalScrollView>
 
     <com.acb.call.views.ThemePreviewWindow
         android:id="@+id/flash_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/flash_settings_scroll_view"
         android:background="#000000" />
 
     <com.acb.call.views.InCallActionView
         android:id="@+id/in_call_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/flash_settings_scroll_view"></com.acb.call.views.InCallActionView>
+        android:layout_above="@id/theme_progress_txt_holder">
+
+    </com.acb.call.views.InCallActionView>
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/set_incoming_call_theme"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="68dp"
+        android:gravity="center"
+        android:background="#80000000"
+        android:text="@string/set_incoming_call_theme"
+        android:fontFamily="sans-serif-medium"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/theme_progress_bar"
         style="@style/AcbProgressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/flash_settings_scroll_view"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="40dp"

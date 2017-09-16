@@ -30,7 +30,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.adapter.LockerThemeGalleryAdap
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.acb.call.themes.Type.CONFIG_KEY_DESC_ICON;
 import static com.acb.call.themes.Type.CONFIG_KEY_GIF_URL;
 import static com.acb.call.themes.Type.CONFIG_KEY_HOT;
 import static com.acb.call.themes.Type.CONFIG_KEY_ICON_ACCEPT;
@@ -126,7 +125,6 @@ public class InComingCallThemePreviewActivity extends Activity implements View.O
                 item.put(CONFIG_KEY_PREVIEW_IMAGE, LockerThemeGalleryAdapter.getInComingCallThemeThumbnailUrl(themeName));
                 item.put(CONFIG_KEY_ID, themeName.hashCode());
                 item.put(CONFIG_KEY_ID_NAME, themeName);
-                item.put(CONFIG_KEY_DESC_ICON, "http://cdn.appcloudbox.net/sunspotmix/thumbnail/flash/acb_phone_theme_item_flash.png");
                 Type themeType = Type.typeFromMap(item);
                 Type.addGifToTypes(themeType);
                 Intent intent = new Intent(this, InCallThemePreviewActivity.class);

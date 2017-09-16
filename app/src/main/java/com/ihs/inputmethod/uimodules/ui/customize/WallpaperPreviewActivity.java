@@ -382,10 +382,10 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private void setLockerScreenWallpaper() {
         LockerSettings.setLockerBgUrl(mCurrentWallpaper.getWallpaperUrl());
         setWallpaperDialog.setVisibility(View.GONE);
-        mDialog = ProgressDialog.createDialog(this, getString(R.string.wallpaper_setting_progress_dialog_text));
-        mDialog.show();
-        mDialog.setCancelable(false);
-        mDialog.dismiss();
+//        mDialog = ProgressDialog.createDialog(this, getString(R.string.wallpaper_setting_progress_dialog_text));
+//        mDialog.show();
+//        mDialog.setCancelable(false);
+//        mDialog.dismiss();
     }
 
     @Override
@@ -495,27 +495,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         }
 
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE);
-
-//        BitmapTypeRequest<String> thumbRequest = Glide.with(this).load(thumbUrl).asBitmap();
-//        thumbRequest.listener(new RequestListener<String, Bitmap>() {
-//            @Override
-//            public boolean onException(Exception e, String s, Target<Bitmap> target, boolean b) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onResourceReady(Bitmap bitmap, String s, Target<Bitmap> target, boolean b, boolean b1) {
-//                imageView.setImageBitmap(bitmap);
-//                PreviewViewPage page = (PreviewViewPage) imageView.getTag();
-//                page.width = bitmap.getWidth();
-//                page.height = bitmap.getHeight();
-//
-//                imageView.setImageMatrix(WallpaperUtils.centerCrop(bitmap.getWidth(), bitmap.getHeight(),
-//                        imageView));
-//
-//                return true;
-//            }
-//        }).diskCacheStrategy(DiskCacheStrategy.SOURCE);
 
         RequestListener<Drawable> requestListener = new RequestListener<Drawable>() {
             @Override

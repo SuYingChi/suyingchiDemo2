@@ -7,7 +7,7 @@
             android:key="choose_language"/>
 
         <Preference
-            android:title="@string/theme_nav_settings"
+            android:title="@string/keyboard_settings"
             android:key="keyboard_settings"/>
     </PreferenceCategory>
 
