@@ -311,6 +311,16 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                             holder.backgroundGiftIcon.setVisibility(GONE);
                                         }
                                         notifyDataSetChanged();
+                                        holder.setIsRecyclable(true);
+                                        KCBackgroundElement background = (KCBackgroundElement) backgrounds.get(position);
+                                        setNotNew(background);
+
+                                        Bundle bundle = new Bundle();
+                                        String customEntry = "store_bg";
+                                        String backgroundItemName = background.getName();
+                                        bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
+                                        bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
+                                        CustomThemeActivity.startCustomThemeActivity(bundle);
                                     }
                                 });
                                 return;
