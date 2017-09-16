@@ -1,79 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:id="@+id/main"
-    tools:ignore="ContentDescription">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/preview_view_pager"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-        android:id="@+id/wallpaper_view_return"
-        style="@style/WallpaperButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="36.3dp"
-        app:srcCompat="@drawable/wallpaper_back_svg" />
-
-    <com.ihs.inputmethod.uimodules.ui.customize.view.DrawView
-        android:id="@+id/preview_guide_draw_view"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"
-        android:background="#00ffffff"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/wrap_linear_layout"
-        android:background="#80000000"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:orientation="horizontal">
-
-        <com.ihs.feature.common.TypefacedTextView
-            android:id="@+id/set_wallpaper_button"
-            android:layout_width="wrap_content"
-            android:layout_height="68dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/online_wallpaper_set_btn"
-            android:fontFamily="sans-serif-medium"
-            android:textAllCaps="true"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="0.3dp"
-            android:layout_height="match_parent"
-            android:background="#33ffffff" />
-
-        <com.ihs.feature.common.TypefacedTextView
-            android:id="@+id/set_key_theme_button"
-            android:layout_width="wrap_content"
-            android:layout_height="68dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/key_theme_set_btn"
-            android:fontFamily="sans-serif-medium"
-            android:textAllCaps="true"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-
-    </LinearLayout>
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/select_dialog_wallpaper"
@@ -103,14 +33,14 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="37dp"
                 android:paddingRight="24dp"
                 app:srcCompat="@drawable/home_screen"/>
 
             <com.ihs.feature.common.TypefacedTextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/home_screen"
                 android:textSize="16sp"
                 android:gravity="center"
@@ -127,14 +57,14 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="37dp"
                 android:paddingRight="24dp"
                 app:srcCompat="@drawable/lock_screen"/>
 
             <com.ihs.feature.common.TypefacedTextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/locker_screen"
                 android:textSize="16sp"
                 android:gravity="center"
@@ -187,5 +117,6 @@
         </RelativeLayout>
 
     </LinearLayout>
+
 
 </RelativeLayout>
