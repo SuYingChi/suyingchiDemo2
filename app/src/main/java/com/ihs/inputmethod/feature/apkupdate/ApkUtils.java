@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.feature.apkupdate;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +8,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +36,7 @@ import com.ihs.keyboardutils.alerts.HSAlertDialog;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class ApkUtils {
@@ -270,7 +270,7 @@ public class ApkUtils {
     public static void showCustomRateAlert(final View.OnClickListener rateButtonClickListener) {
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.apk_custom_rate_alert, null, false);
-        final android.support.v7.app.AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
+        final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
         Button positiveBtn = (Button) view.findViewById(R.id.btn_rate);
         positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
                 HSApplication.getContext().getResources().getColor(R.color.custom_rate_alert_button_bg),
@@ -304,24 +304,23 @@ public class ApkUtils {
     public static void showUpdateAlert(@Nullable final View.OnClickListener updateButtonClickListener) {
         saveUpdateAlertLastShownTime();
 
-        // Create custom dialog object
-        final AlertDialog dialog = new AlertDialog.Builder(HSApplication.getContext()).create();
-
-        // hide to default title for Dialog
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        // inflate the layout dialog_layout.xml and set it as contentView
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.apk_update_alert, null, false);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.apk_update_alert, null, false);
+        final AlertDialog dialog = HSAlertDialog.build(R.style.AppCompactTransparentDialogStyle).setView(view).create();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(true);
-        dialog.setView(view);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
+        String preferredLanguageString = Locale.getDefault().getLanguage();
+        HSLog.d("preferredLanguageString: " + preferredLanguageString);
+        // Set title
+        TextView titleView = (TextView) view.findViewById(R.id.txt_dialog_title);
+        titleView.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.apk_update_alert_title), "Application", "Update", "UpdateAlert", "Title", preferredLanguageString));
         // Set message
         TextView message = (TextView) view.findViewById(R.id.txt_dialog_message);
-        message.setText(UpdateConfig.getDefault().getDescription());
+        message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.apk_update_alert_message), "Application", "Update", "UpdateAlert", "Message", preferredLanguageString));
 
         Button positiveBtn = (Button) view.findViewById(R.id.update_button);
+        positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.theme_button_text_color));
         positiveBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
