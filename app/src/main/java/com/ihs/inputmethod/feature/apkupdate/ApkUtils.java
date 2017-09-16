@@ -268,14 +268,20 @@ public class ApkUtils {
 
     @SuppressLint("InflateParams")
     public static void showCustomRateAlert(final View.OnClickListener rateButtonClickListener) {
+        String preferredLanguageString = Locale.getDefault().getLanguage();
+        HSLog.d("showCustomRateAlert preferredLanguageString: " + preferredLanguageString);
+
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.apk_custom_rate_alert, null, false);
         final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
+        TextView message = (TextView) view.findViewById(R.id.tv_rate_message);
+        message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_rate_alert_message), "Application", "Update", "RateAlert", "Message", preferredLanguageString));
         Button positiveBtn = (Button) view.findViewById(R.id.btn_rate);
         positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
                 HSApplication.getContext().getResources().getColor(R.color.custom_rate_alert_button_bg),
                 HSApplication.getContext().getResources().getColor(R.color.guide_bg_disable_color),
                 HSApplication.getContext().getResources().getDimension(R.dimen.apk_update_alert_button_radius)));
+        positiveBtn.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_rate_alert_button_text), "Application", "Update", "RateAlert", "ButtonText", preferredLanguageString));
         positiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
