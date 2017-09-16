@@ -498,7 +498,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             }
 
                             if (baseElement.needNewVersionToUnlock() && ApkUtils.shouldUpdate()) {
-                                ApkUtils.showUpdateAlert(null);
+                                ApkUtils.showUpdateAlert();
                                 return true;
                             }
 

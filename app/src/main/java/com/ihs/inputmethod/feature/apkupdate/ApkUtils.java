@@ -98,9 +98,9 @@ public class ApkUtils {
     public static boolean checkAndShowUpdateAlert(final boolean force) {
         if (shouldUpdate()) {
             if (force) {
-                showUpdateAlert(null);
+                showUpdateAlert();
             } else if (checkTimeout()) {
-                showUpdateAlert(null);
+                showUpdateAlert();
             }
 
             return true;
@@ -309,7 +309,7 @@ public class ApkUtils {
     }
 
     @SuppressWarnings({"deprecation"})
-    public static void showUpdateAlert(@Nullable final View.OnClickListener updateButtonClickListener) {
+    public static void showUpdateAlert() {
         saveUpdateAlertLastShownTime();
 
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -334,9 +334,6 @@ public class ApkUtils {
                     @Override
                     public void onClick(View v) {
                         doUpdate();
-                        if (updateButtonClickListener != null) {
-                            updateButtonClickListener.onClick(v);
-                        }
                         dialog.dismiss();
                     }
                 });

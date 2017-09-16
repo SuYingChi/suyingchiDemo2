@@ -298,7 +298,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             }
 
                             if (customThemeItemBase.needNewVersionToUnlock() /*&& ApkUtils.shouldUpdate()*/) {
-                                ApkUtils.showUpdateAlert(null);
+                                ApkUtils.showUpdateAlert();
                                 return;
                             }
 
