@@ -138,7 +138,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                             return true;
                         }
 
-                        if (baseElement.needNewVersionToUnlock() /*&& ApkUtils.shouldUpdate()*/) {
+                        if (baseElement.needNewVersionToUnlock() && ApkUtils.shouldUpdate()) {
                             ApkUtils.showUpdateAlert(null);
                             return true;
                         }
