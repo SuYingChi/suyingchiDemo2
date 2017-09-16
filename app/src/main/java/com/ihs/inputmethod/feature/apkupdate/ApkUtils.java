@@ -184,12 +184,13 @@ public class ApkUtils {
     }
 
     public static boolean shouldUpdate() {
-        return shouldCheckUpdateNow() && isNewVersionAvailable();
+        return isUpdateEnabled() && shouldCheckUpdateNow() && isNewVersionAvailable();
     }
 
-    public static boolean shouldCheckUpdateNow() {
-        return isUpdateEnabled() && (HSMarketUtils.isMarketInstalled("Google") /** 安装了google play则可以下载 */
-                || (CommonUtils.isNetworkAvailable(-1) && !TextUtils.isEmpty(UpdateConfig.getDefault().getDownLoadUrl())) /** 未安装google 则需要联网同时下载地址不为空 */);
+    private static boolean shouldCheckUpdateNow() {
+        return CommonUtils.isNetworkAvailable(-1) // 有网
+                && (HSMarketUtils.isMarketInstalled("Google") //安装了Google Play
+                || !TextUtils.isEmpty(UpdateConfig.getDefault().getDownLoadUrl()));
     }
 
     public static boolean isGooglePlayAvailable() {
@@ -307,6 +308,7 @@ public class ApkUtils {
         alertDialog.show();
     }
 
+    @SuppressWarnings({"deprecation"})
     public static void showUpdateAlert(@Nullable final View.OnClickListener updateButtonClickListener) {
         saveUpdateAlertLastShownTime();
 
