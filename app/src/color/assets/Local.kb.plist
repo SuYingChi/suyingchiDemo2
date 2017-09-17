@@ -1736,6 +1736,18 @@
 			</array>
 			<key>ThemeContents</key>
 			<dict>
+				<key>custom_theme_needNewVersionToUnlock</key>
+				<array>
+					<string>Fantasyland</string>
+					<string>Immortal</string>
+					<string>Future World</string>
+					<string>Summer Pond</string>
+					<string>Times</string>
+					<string>San Francisco Text</string>
+					<string>Flower Explosion</string>
+					<string>Shining Star</string>
+					<string>Snowing Night</string>
+				</array>
 				<key>BannerList</key>
 				<array>
 					<string>Galaxy</string>
@@ -4075,9 +4087,10 @@
 				<string>https://www.surveymonkey.com/r/GHW5WQV</string>
 			</dict>
 			<key>Update</key>
-			<dict/>
-			<key>LatestVersionCode</key>
-			<integer>60</integer>
+			<dict>
+				<key>LatestVersionCode</key>
+				<integer>53</integer>
+			</dict>
 			<key>WhiteAppsList</key>
 			<array>
 				<string>com.facebook.orca</string>
