@@ -1748,6 +1748,18 @@
 					<string>Shining Star</string>
 					<string>Snowing Night</string>
 				</array>
+				<key>custom_theme_needRateToUnlock</key>
+				<array>
+					<string>Bunny</string>
+					<string>Flare</string>
+					<string>Falling Stars</string>
+					<string>Fireball</string>
+					<string>Sword</string>
+					<string>Flower Explosion</string>
+					<string>Old Newspaper Types</string>
+					<string>Snowing Night</string>
+					<string>Cotton Candy</string>
+				</array>
 				<key>BannerList</key>
 				<array>
 					<string>Galaxy</string>
