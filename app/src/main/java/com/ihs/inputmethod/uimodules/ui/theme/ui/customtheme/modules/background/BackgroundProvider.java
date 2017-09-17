@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeUnlockManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -138,16 +139,16 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                             return true;
                         }
 
-                        if (baseElement.needNewVersionToUnlock() && ApkUtils.shouldUpdate()) {
+                        if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(baseElement.getName()) && ApkUtils.shouldUpdate()) {
                             ApkUtils.showUpdateAlert();
                             return true;
                         }
 
-                        if (baseElement.isRateToUnlock() && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                        if (false && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                             ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    baseElement.setRateToUnlockStatus(false);
+                                    //baseElement.setRateToUnlockStatus(false);
                                     if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                         holder.mGiftIconImageView.setVisibility(View.GONE);
                                     }

@@ -621,7 +621,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private void refreshApkUpdateViews() {
         resetApkUpdateViews();
 
-        if (ApkUtils.shouldUpdate()) {
+        if (ApkUtils.shouldUpdate() && ApkUtils.isUpdateEnabled()) {
             if (shouldShowApkUpdateTip(ApkUtils.getLatestVersionCode())) {
                 showApkUpdateTip();
             }

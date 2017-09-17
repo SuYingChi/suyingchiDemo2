@@ -96,7 +96,7 @@ public class ApkUtils {
     }
 
     public static boolean checkAndShowUpdateAlert(final boolean force) {
-        if (shouldUpdate()) {
+        if (shouldUpdate() && isUpdateEnabled()) {
             if (force) {
                 showUpdateAlert();
             } else if (checkTimeout()) {
@@ -184,7 +184,7 @@ public class ApkUtils {
     }
 
     public static boolean shouldUpdate() {
-        return isUpdateEnabled() && shouldCheckUpdateNow() && isNewVersionAvailable();
+        return shouldCheckUpdateNow() && isNewVersionAvailable();
     }
 
     private static boolean shouldCheckUpdateNow() {

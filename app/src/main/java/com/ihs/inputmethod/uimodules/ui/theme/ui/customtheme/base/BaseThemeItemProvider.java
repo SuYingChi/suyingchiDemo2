@@ -30,6 +30,7 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeUnlockManager;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.view.HSGifImageView;
@@ -240,7 +241,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
-            if (item.isRateToUnlock() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+            if (false && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                 holder.mGiftIconImageView.setVisibility(View.VISIBLE);
             } else {
                 holder.mGiftIconImageView.setVisibility(View.GONE);
@@ -497,16 +498,16 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                 return true;
                             }
 
-                            if (baseElement.needNewVersionToUnlock() && ApkUtils.shouldUpdate()) {
+                            if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(baseElement.getName()) && ApkUtils.shouldUpdate()) {
                                 ApkUtils.showUpdateAlert();
                                 return true;
                             }
 
-                            if (baseElement.isRateToUnlock() && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                            if (false && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        baseElement.setRateToUnlockStatus(false);
+                                        //baseElement.setRateToUnlockStatus(false);
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                             holder.mGiftIconImageView.setVisibility(View.GONE);
                                         }

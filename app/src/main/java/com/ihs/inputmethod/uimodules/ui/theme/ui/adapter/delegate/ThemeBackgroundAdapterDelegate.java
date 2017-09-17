@@ -26,6 +26,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeUnlockManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.decoration.BackgroundItemDecoration;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
@@ -281,7 +282,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         } else {
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
-                            if (customThemeItemBase.isRateToUnlock() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                            if (false && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
                             } else {
                                 holder.backgroundGiftIcon.setVisibility(View.GONE);
@@ -297,16 +298,16 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                 return;
                             }
 
-                            if (customThemeItemBase.needNewVersionToUnlock() /*&& ApkUtils.shouldUpdate()*/) {
+                            if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(customThemeItemBase.getName()) /*&& ApkUtils.shouldUpdate()*/) {
                                 ApkUtils.showUpdateAlert();
                                 return;
                             }
 
-                            if (customThemeItemBase.isRateToUnlock() && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                            if (false && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        customThemeItemBase.setRateToUnlockStatus(false);
+                                        //customThemeItemBase.setRateToUnlockStatus(false);
                                         if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
                                             holder.backgroundGiftIcon.setVisibility(GONE);
                                         }
