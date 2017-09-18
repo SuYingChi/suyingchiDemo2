@@ -282,7 +282,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         } else {
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
-                            if (HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
+                            if (!customThemeItemBase.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
                                     && !ApkUtils.isRateButtonClicked()) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
                             } else {
@@ -299,13 +300,17 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                 return;
                             }
 
-                            if (HSConfigUtils.toBoolean(customThemeItemBase.getData().get("needNewVersionToUnlock"), false) && ApkUtils.shouldUpdate()) {
+                            if (!customThemeItemBase.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getData().get("needNewVersionToUnlock"), false)
+                                    && ApkUtils.shouldUpdate()) {
                                 ApkUtils.showUpdateAlert();
                                 return;
                             }
 
-                            if (HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
-                                    && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateButtonClicked()) {
+                            if (!customThemeItemBase.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
+                                    && ApkUtils.isGooglePlayAvailable()
+                                    && !ApkUtils.isRateButtonClicked()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
