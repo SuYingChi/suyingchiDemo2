@@ -283,7 +283,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
                             if (HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
-                                    && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                                    && !ApkUtils.isRateButtonClicked()) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
                             } else {
                                 holder.backgroundGiftIcon.setVisibility(View.GONE);
@@ -305,7 +305,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             }
 
                             if (HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
-                                    && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                                    && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateButtonClicked()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {

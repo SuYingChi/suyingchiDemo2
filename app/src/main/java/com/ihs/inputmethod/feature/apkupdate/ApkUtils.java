@@ -4,14 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -28,23 +25,21 @@ import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 
 import java.io.File;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 public class ApkUtils {
 
     private static final String PREF_KEY_UPDATE_APK_VERSION_CODE = "update_apk_version_code";
     private static final String PREF_KEY_UPDATE_ALERT_LAST_SHOWN_TIME = "update_alert_last_shown_time";
-    private static final String PREF_KEY_RATE_ALERT_BUTTON_CLICKED_VERSION_CODE_SET = "perf_rate_alert_button_click_version_code_set";
+    private static final String PREF_KEY_RATE_BUTTON_CLICKED = "perf_rate_button_clicked";
     private static final long UPDATE_ALERT_SHOW_INTERVAL_IN_MILLIS = 24 * 60 * 60 * 1000;
+    private static final String PREF_APKUTILS_FILE_NAME = "pref_file_apkutils";
 
     public static void startInstall(Context context, Uri uri) {
         Intent install = new Intent(Intent.ACTION_VIEW);
@@ -253,18 +248,12 @@ public class ApkUtils {
         HSPreferenceHelper.getDefault().putLong(PREF_KEY_UPDATE_ALERT_LAST_SHOWN_TIME, System.currentTimeMillis());
     }
 
-    private static void setRateAlertButtonClickedInCurrentAppVersion() {
-        int currentVersionCode = Utils.getVersionCode();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
-        Set<String> ratedVersionCodeSet = new HashSet<>(sharedPreferences.getStringSet(PREF_KEY_RATE_ALERT_BUTTON_CLICKED_VERSION_CODE_SET, new HashSet<String>()));
-        ratedVersionCodeSet.add(String.valueOf(currentVersionCode));
-        sharedPreferences.edit().putStringSet(PREF_KEY_RATE_ALERT_BUTTON_CLICKED_VERSION_CODE_SET, ratedVersionCodeSet).apply();
+    private static void setRateButtonClicked() {
+        HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).putBoolean(PREF_KEY_RATE_BUTTON_CLICKED, true);
     }
 
-    public static boolean isRateAlertButtonClickedInCurrentAppVersion() {
-        int currentVersionCode = Utils.getVersionCode();
-        Set<String> ratedVersionCodeSet = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getStringSet(PREF_KEY_RATE_ALERT_BUTTON_CLICKED_VERSION_CODE_SET, new HashSet<String>());
-        return ratedVersionCodeSet.contains(String.valueOf(currentVersionCode));
+    public static boolean isRateButtonClicked() {
+        return HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).getBoolean(PREF_KEY_RATE_BUTTON_CLICKED, false);
     }
 
     @SuppressLint("InflateParams")
@@ -288,7 +277,7 @@ public class ApkUtils {
             public void onClick(View v) {
                 if (HSMarketUtils.isMarketInstalled("Google")) {
                     HSMarketUtils.browseAPP("Google", HSApplication.getContext().getPackageName());
-                    setRateAlertButtonClickedInCurrentAppVersion();
+                    setRateButtonClicked();
                 } else {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.custom_rate_alert_toast_text), Toast.LENGTH_SHORT).show();
                 }

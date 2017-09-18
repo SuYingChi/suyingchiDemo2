@@ -239,7 +239,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
             if (!item.hasLocalContent()
                     && HSConfigUtils.toBoolean(item.getData().get("rateToUnlock"), false)
-                    && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                    && !ApkUtils.isRateButtonClicked()) {
                 holder.mGiftIconImageView.setVisibility(View.VISIBLE);
             } else {
                 holder.mGiftIconImageView.setVisibility(View.GONE);
@@ -506,7 +506,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             if (!baseElement.hasLocalContent()
                                     && HSConfigUtils.toBoolean(baseElement.getData().get("rateToUnlock"), false)
                                     && ApkUtils.isGooglePlayAvailable()
-                                    && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                                    && !ApkUtils.isRateButtonClicked()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {

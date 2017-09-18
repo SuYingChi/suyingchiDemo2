@@ -149,7 +149,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                         if (!baseElement.hasLocalContent()
                                 &&HSConfigUtils.toBoolean(baseElement.getData().get("rateToUnlock"), false)
                                 && ApkUtils.isGooglePlayAvailable()
-                                && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                                && !ApkUtils.isRateButtonClicked()) {
                             ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
