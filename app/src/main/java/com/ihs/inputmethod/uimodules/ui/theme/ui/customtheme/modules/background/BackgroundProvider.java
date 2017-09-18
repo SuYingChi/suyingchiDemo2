@@ -140,14 +140,14 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                         }
 
                         if (!baseElement.hasLocalContent()
-                                && HSConfigUtils.toBoolean(baseElement.getData().get("needNewVersionToUnlock"), false)
+                                && HSConfigUtils.toBoolean(baseElement.getConfigData().get("needNewVersionToUnlock"), false)
                                 && ApkUtils.shouldUpdate()) {
                             ApkUtils.showUpdateAlert();
                             return true;
                         }
 
                         if (!baseElement.hasLocalContent()
-                                &&HSConfigUtils.toBoolean(baseElement.getData().get("rateToUnlock"), false)
+                                &&HSConfigUtils.toBoolean(baseElement.getConfigData().get("rateToUnlock"), false)
                                 && ApkUtils.isGooglePlayAvailable()
                                 && !ApkUtils.isRateButtonClicked()) {
                             ApkUtils.showCustomRateAlert(new View.OnClickListener() {

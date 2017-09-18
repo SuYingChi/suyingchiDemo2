@@ -283,7 +283,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
                             if (!customThemeItemBase.hasLocalContent()
-                                    && HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
                                     && !ApkUtils.isRateButtonClicked()) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
                             } else {
@@ -301,14 +301,14 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             }
 
                             if (!customThemeItemBase.hasLocalContent()
-                                    && HSConfigUtils.toBoolean(customThemeItemBase.getData().get("needNewVersionToUnlock"), false)
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.shouldUpdate()) {
                                 ApkUtils.showUpdateAlert();
                                 return;
                             }
 
                             if (!customThemeItemBase.hasLocalContent()
-                                    && HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
                                     && ApkUtils.isGooglePlayAvailable()
                                     && !ApkUtils.isRateButtonClicked()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {

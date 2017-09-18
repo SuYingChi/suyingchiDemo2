@@ -238,7 +238,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
             if (!item.hasLocalContent()
-                    && HSConfigUtils.toBoolean(item.getData().get("rateToUnlock"), false)
+                    && HSConfigUtils.toBoolean(item.getConfigData().get("rateToUnlock"), false)
                     && !ApkUtils.isRateButtonClicked()) {
                 holder.mGiftIconImageView.setVisibility(View.VISIBLE);
             } else {
@@ -497,14 +497,14 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             }
 
                             if (!baseElement.hasLocalContent()
-                                    && HSConfigUtils.toBoolean(baseElement.getData().get("needNewVersionToUnlock"), false)
+                                    && HSConfigUtils.toBoolean(baseElement.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.shouldUpdate()) {
                                 ApkUtils.showUpdateAlert();
                                 return true;
                             }
 
                             if (!baseElement.hasLocalContent()
-                                    && HSConfigUtils.toBoolean(baseElement.getData().get("rateToUnlock"), false)
+                                    && HSConfigUtils.toBoolean(baseElement.getConfigData().get("rateToUnlock"), false)
                                     && ApkUtils.isGooglePlayAvailable()
                                     && !ApkUtils.isRateButtonClicked()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
