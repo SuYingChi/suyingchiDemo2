@@ -302,14 +302,13 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
                             if (!customThemeItemBase.hasLocalContent()
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)
-                                    && ApkUtils.shouldUpdate()) {
+                                    && ApkUtils.isNewVersionAvailable()) {
                                 ApkUtils.showUpdateAlert();
                                 return;
                             }
 
                             if (!customThemeItemBase.hasLocalContent()
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
-                                    && ApkUtils.isGooglePlayAvailable()
                                     && !ApkUtils.isRateButtonClicked()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override

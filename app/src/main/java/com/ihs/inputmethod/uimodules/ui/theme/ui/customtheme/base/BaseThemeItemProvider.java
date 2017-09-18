@@ -498,14 +498,13 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
                             if (!baseElement.hasLocalContent()
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("needNewVersionToUnlock"), false)
-                                    && ApkUtils.shouldUpdate()) {
+                                    && ApkUtils.isNewVersionAvailable()) {
                                 ApkUtils.showUpdateAlert();
                                 return true;
                             }
 
                             if (!baseElement.hasLocalContent()
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("rateToUnlock"), false)
-                                    && ApkUtils.isGooglePlayAvailable()
                                     && !ApkUtils.isRateButtonClicked()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override

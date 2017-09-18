@@ -188,8 +188,8 @@ public class ApkUtils {
                 || !TextUtils.isEmpty(UpdateConfig.getDefault().getDownLoadUrl()));
     }
 
-    public static boolean isGooglePlayAvailable() {
-        return (HSMarketUtils.isMarketInstalled("Google") && CommonUtils.isNetworkAvailable(-1));
+    public static boolean isGooglePlayInstalled() {
+        return HSMarketUtils.isMarketInstalled("Google");
     }
 
     public static boolean isUpdateEnabled() {
@@ -275,11 +275,17 @@ public class ApkUtils {
         positiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!CommonUtils.isNetworkAvailable(-1)) {
+                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (HSMarketUtils.isMarketInstalled("Google")) {
                     HSMarketUtils.browseAPP("Google", HSApplication.getContext().getPackageName());
                     setRateButtonClicked();
                 } else {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.custom_rate_alert_toast_text), Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 if (rateButtonClickListener != null) {
                     rateButtonClickListener.onClick(v);
@@ -322,6 +328,10 @@ public class ApkUtils {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (!CommonUtils.isNetworkAvailable(-1)) {
+                            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         doUpdate();
                         dialog.dismiss();
                     }
