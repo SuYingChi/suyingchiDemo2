@@ -31,7 +31,7 @@
         android:fontFamily="sans-serif-medium"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:lineSpacingExtra="-3sp"
         android:visibility="gone"/>
 
