@@ -93,7 +93,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
     }
 
-    private void onItemClickedWithDownloading(final V holder, final I item, String adPlacementName) {
+    private void onItemClickedWithDownloading(final V holder, final I item, boolean showAd) {
         if (holder == lastCheckedHolder) {
             return;
         }
@@ -133,7 +133,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(),
                     HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip),
                     HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard),
-                    adPlacementName,
+                    HSApplication.getContext().getResources().getString(R.string.ad_placement_applying),
                     new AdLoadingView.OnAdBufferingListener() {
 
                         @Override
@@ -146,7 +146,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             }
                         }
 
-                    }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
+                    }, delayAfterDownloadComplete, (RemoveAdsManager.getInstance().isRemoveAdsPurchased() || !showAd));
 
             startDownloadContent(holder, item);
             holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
@@ -173,11 +173,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     }
 
     protected void onItemClicked(final V holder, final I item, boolean showApplyAd) {
-        if (showApplyAd) {
-            onItemClickedWithDownloading(holder, item, HSApplication.getContext().getResources().getString(R.string.ad_placement_applying));
-        } else {
-            onItemClickedWithDownloading(holder, item, "");
-        }
+        onItemClickedWithDownloading(holder, item, showApplyAd);
     }
 
     private void checkItemBaseOnDownloadAndPurchaseSate(final V holder, final I item) {
