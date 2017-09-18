@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeUnlockManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
+import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBackgroundElement;
@@ -139,19 +139,20 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                             return true;
                         }
 
-                        if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(baseElement.getName())
+                        if (!baseElement.hasLocalContent()
+                                && HSConfigUtils.toBoolean(baseElement.getData().get("needNewVersionToUnlock"), false)
                                 && ApkUtils.shouldUpdate()) {
                             ApkUtils.showUpdateAlert();
                             return true;
                         }
 
-                        if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(baseElement.getName())
+                        if (!baseElement.hasLocalContent()
+                                &&HSConfigUtils.toBoolean(baseElement.getData().get("rateToUnlock"), false)
                                 && ApkUtils.isGooglePlayAvailable()
                                 && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                             ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    CustomThemeUnlockManager.getInstance().setElementRateAlreadyUnlock(baseElement.getName());
                                     if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                         holder.mGiftIconImageView.setVisibility(View.GONE);
                                     }

@@ -30,7 +30,7 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeUnlockManager;
+import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.view.HSGifImageView;
@@ -237,7 +237,9 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
-            if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(item.getName()) && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+            if (!item.hasLocalContent()
+                    && HSConfigUtils.toBoolean(item.getData().get("rateToUnlock"), false)
+                    && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                 holder.mGiftIconImageView.setVisibility(View.VISIBLE);
             } else {
                 holder.mGiftIconImageView.setVisibility(View.GONE);
@@ -494,16 +496,20 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                 return true;
                             }
 
-                            if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(baseElement.getName()) && ApkUtils.shouldUpdate()) {
+                            if (!baseElement.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(baseElement.getData().get("needNewVersionToUnlock"), false)
+                                    && ApkUtils.shouldUpdate()) {
                                 ApkUtils.showUpdateAlert();
                                 return true;
                             }
 
-                            if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(baseElement.getName()) && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                            if (!baseElement.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(baseElement.getData().get("rateToUnlock"), false)
+                                    && ApkUtils.isGooglePlayAvailable()
+                                    && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        CustomThemeUnlockManager.getInstance().setElementRateAlreadyUnlock(baseElement.getName());
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                             holder.mGiftIconImageView.setVisibility(View.GONE);
                                         }

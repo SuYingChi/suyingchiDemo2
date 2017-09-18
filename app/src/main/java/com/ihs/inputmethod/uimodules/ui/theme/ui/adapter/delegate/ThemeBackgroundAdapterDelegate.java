@@ -26,10 +26,10 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeUnlockManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.decoration.BackgroundItemDecoration;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
+import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
@@ -282,7 +282,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         } else {
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
-                            if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(customThemeItemBase.getName())
+                            if (HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
                                     && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
                             } else {
@@ -299,17 +299,16 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                 return;
                             }
 
-                            if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(customThemeItemBase.getName()) && ApkUtils.shouldUpdate()) {
+                            if (HSConfigUtils.toBoolean(customThemeItemBase.getData().get("needNewVersionToUnlock"), false) && ApkUtils.shouldUpdate()) {
                                 ApkUtils.showUpdateAlert();
                                 return;
                             }
 
-                            if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(customThemeItemBase.getName())
+                            if (HSConfigUtils.toBoolean(customThemeItemBase.getData().get("rateToUnlock"), false)
                                     && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        CustomThemeUnlockManager.getInstance().setElementRateAlreadyUnlock(customThemeItemBase.getName());
                                         if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
                                             holder.backgroundGiftIcon.setVisibility(GONE);
                                         }
