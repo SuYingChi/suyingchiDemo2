@@ -23,6 +23,7 @@
     <string name="wallpaper_set_dialog_title">Set wallpaper</string>
     <string name="key_theme_set_btn">SET KEY THEME</string>
     <string name="wallpaper_apply_success">Applied Successfully</string>
+    <string name="wallpaper_apply_fail">Applied Failed</string>
     <string name="incoming_call_theme_success">Set Successfully</string>
     <string name="home_screen">Home screen</string>
     <string name="locker_screen">Locker screen</string>

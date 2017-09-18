@@ -2,13 +2,11 @@ package com.ihs.inputmethod.uimodules.ui.customize;
 
 import android.animation.ValueAnimator;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +23,6 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.acb.adadapter.AcbNativeAd;
@@ -116,7 +112,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private ProgressDialog mDialog;
     private View mEdit;
     private View mReturnArrow;
-    private SetSelectPopWin mSetSelectPopWin;
     private boolean mIsSettingKeyTheme = false;
     private LinearLayout setWallpaperDialog;
     private LinearLayout setHomeScreen;
@@ -222,7 +217,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     @SuppressWarnings("RestrictedApi")
     private void initView() {
-        mSetSelectPopWin = new SetSelectPopWin(this);
         mReturnArrow = findViewById(R.id.wallpaper_view_return);
         mReturnArrow.setOnClickListener(this);
 //        mReturnArrow.setBackgroundResource(R.drawable.moment_round_material_compat_dark);
@@ -257,20 +251,20 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     private void showSetWallpaperSelectDialog() {
         TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0);
-        translateAnimation.setDuration(500);
+        translateAnimation.setDuration(200);
         translateAnimation.setFillAfter(true);
         setWallpaperDialog.startAnimation(translateAnimation);
         setWallpaperDialog.setVisibility(View.VISIBLE);
-        mViewPager.setAlpha(0.5f);
+        mViewPager.setBackgroundColor(0x80000000);
     }
 
     private void hideSetWallpaperSelectDialog() {
         final TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1);
-        translateAnimation.setDuration(500);
+        translateAnimation.setDuration(200);
         translateAnimation.setFillAfter(true);
         setWallpaperDialog.startAnimation(translateAnimation);
         setWallpaperDialog.setVisibility(View.INVISIBLE);
-        mViewPager.setAlpha(0.5f);
+//        mViewPager.setAlpha(0);
         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -397,10 +391,12 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             case R.id.set_locker_screen:
                 hideSetWallpaperSelectDialog();
                 setLockerScreenWallpaper();
+                ToastUtils.showToast(R.string.wallpaper_apply_success);
+                finish();
                 break;
             case R.id.set_home_and_locker_screen:
-                setHomeScreenWallpaper();
                 setLockerScreenWallpaper();
+                setHomeScreenWallpaper();
                 break;
 
         }
@@ -423,12 +419,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     }
 
     private void setLockerScreenWallpaper() {
+        LockerSettings.setLockerEnabled(true);
         LockerSettings.setLockerBgUrl(mCurrentWallpaper.getWallpaperUrl());
-        setWallpaperDialog.setVisibility(View.GONE);
-//        mDialog = ProgressDialog.createDialog(this, getString(R.string.wallpaper_setting_progress_dialog_text));
-//        mDialog.show();
-//        mDialog.setCancelable(false);
-//        mDialog.dismiss();
     }
 
     @Override
@@ -557,9 +549,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 return true;
             }
         };
-
-//        Glide.with(WallpaperPreviewActivity.this).asBitmap().load(uri)
-//                .thumbnail(Glide.with(this).load(thumbUrl)).into(new CustomImageLoadingTarget(imageView));
 
         RequestBuilder<Drawable> requestBuilder = Glide.with(this).load(uri).apply(requestOptions)
                 .thumbnail(Glide.with(this).load(thumbUrl).listener(requestListener));
@@ -700,21 +689,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         @Override
         public Request getRequest() {
             return (Request) view.getTag(R.id.glide_tag_id);
-        }
-    }
-
-    public class SetSelectPopWin extends PopupWindow {
-
-        public SetSelectPopWin(Context context) {
-            super(context);
-
-            ColorDrawable dw = new ColorDrawable(0xb0000000);
-            // 设置弹出窗体的背景
-            this.setContentView(LayoutInflater.from(context).inflate(R.layout.set_wallpaper_select_dialog, null));
-            this.setBackgroundDrawable(dw);
-            this.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-            this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-            setAnimationStyle(R.style.select_wallpaper_dialog_anim);
         }
     }
 }

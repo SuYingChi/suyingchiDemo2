@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -26,8 +25,6 @@ import com.acb.call.themes.Type;
 import com.acb.call.utils.Utils;
 import com.acb.call.views.InCallActionView;
 import com.acb.call.views.ThemePreviewWindow;
-import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
@@ -43,8 +40,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     private static final int OVERLAY_REQUEST_CODE = 999;
     private ArrayList<Type> mThemeArray;
 
-    private HorizontalScrollView mThemesScrollView;
-    private LinearLayout mThemesParent;
     private ThemePreviewWindow mPreviewView;
     private InCallActionView mCallView;
     private Toolbar mToolbar;
@@ -53,10 +48,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     private int mThemeCurrentSelectedId = Type.NONE;
     private int mThemePreviousSelectedId = Type.NONE;
     private boolean mIsDestroyed;
-
-    private static int sPhoneWidth;
-    private int mThemeChildWidth = 0;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,9 +98,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         super.onResume();
     }
 
-    private boolean screenFlashSetting;
-    private boolean assistantSetting;
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -119,8 +107,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         if (mCallView != null) {
             mCallView.doAnimation();
         }
-        screenFlashSetting = CPSettings.isScreenFlashModuleEnabled();
-        assistantSetting = CPSettings.isCallAssistantModuleEnabled();
     }
 
     @Override
@@ -131,31 +117,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         }
         if (mCallView != null) {
             mCallView.stopAnimations();
-        }
-
-        Type curType = mThemeArray.get(getIndexOfTheme(mThemeCurrentSelectedId));
-        boolean curFlashEnabled = CPSettings.isScreenFlashModuleEnabled();
-        boolean curAssistantEnabled = CPSettings.isCallAssistantModuleEnabled();
-        if (screenFlashSetting != curFlashEnabled) {
-            if (curFlashEnabled) {
-                HSAnalytics.logEvent("Flashlight_ScreenFlashEnabled_FromSettings", "ThemeName",
-                        curType.getName());
-            } else {
-                HSAnalytics.logEvent("Flashlight_ScreenFlashDisabled_FromSettings");
-            }
-        }
-        if (curFlashEnabled) {
-            if (mThemePreviousSelectedId != 0 && mThemeCurrentSelectedId != mThemePreviousSelectedId) {
-                HSAnalytics.logEvent("Flashlight_ScreenFlashChangeTheme_FromSettings", "ThemeName",
-                        curType.getName());
-            }
-        }
-        if (assistantSetting != curAssistantEnabled) {
-            if (curAssistantEnabled) {
-                HSAnalytics.logEvent("Flashlight_CallAssistantEnabled_FromSettings");
-            } else {
-                HSAnalytics.logEvent("Flashlight_CallAssistantDisabled_FromSettings");
-            }
         }
     }
 
@@ -200,12 +161,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     }
 
     private void initThemesView() {
-        mThemesScrollView = (HorizontalScrollView) findViewById(R.id.flash_settings_scroll_view);
-        mThemesParent = (LinearLayout) findViewById(R.id.flash_settings_scroll_container);
-        mThemesScrollView.setVisibility(View.GONE);
-        mThemesParent.setVisibility(View.GONE);
-//        addThemeChildren();
-
         final Type themeType = (Type) getIntent().getSerializableExtra("CallThemeType");
         int themeId = themeType.getValue();
 
@@ -238,38 +193,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         return mThemeArray.size() - 1;
     }
 
-    private void setThemeSelected(final Type themeType) {
-        initThemeAnimation(themeType);
-    }
-
-
-    private void scrollToRightPosition(int index) {
-        if (sPhoneWidth <= 0) {
-            sPhoneWidth = Utils.getPhoneWidth(HSApplication.getContext());
-        }
-
-        int childCount = mThemeArray.size();
-
-        if (sPhoneWidth <= 0) {
-            sPhoneWidth = Utils.getPhoneWidth(HSApplication.getContext());
-        }
-        int scrollViewX = mThemesScrollView.getScrollX();
-        int viewRightPosition = (index + 1) * mThemeChildWidth;
-        int viewLeftPosition = index * mThemeChildWidth;
-        if (Utils.isRtl()) {
-            viewRightPosition = (childCount - index) * mThemeChildWidth;
-            viewLeftPosition = (childCount - 1 - index) * mThemeChildWidth;
-        }
-
-        if (viewLeftPosition - scrollViewX < sPhoneWidth / 3) {
-            mThemesScrollView.smoothScrollTo(viewLeftPosition - sPhoneWidth / 2, 0);
-        } else if (viewLeftPosition - scrollViewX >= sPhoneWidth) {
-            mThemesScrollView.scrollTo(viewLeftPosition - sPhoneWidth / 2, 0);
-        } else if (viewRightPosition - scrollViewX > sPhoneWidth * 2 / 3) {
-            mThemesScrollView.smoothScrollTo(viewRightPosition - sPhoneWidth / 2, 0);
-        }
-    }
-
     private void initThemeAnimation(final Type themeType) {
         if (themeType.isGif()) {
             prepareAndShowGif(themeType);
@@ -280,20 +203,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         }
 
         mCallView.setAutoRun(themeType.getValue() != Type.NONE);
-    }
-
-    private void initThemeAnimation(final int index) {
-        Type type = mThemeArray.get(index);
-
-        if (type.isGif()) {
-            prepareAndShowGif(type);
-        } else {
-            findViewById(R.id.theme_progress_bar).setVisibility(View.GONE);
-            findViewById(R.id.theme_progress_txt_holder).setVisibility(View.GONE);
-            mPreviewView.playAnimation(type);
-        }
-
-        mCallView.setAutoRun(type.getValue() != Type.NONE);
     }
 
     private void prepareAndShowGif(final Type type) {

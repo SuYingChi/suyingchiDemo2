@@ -6,31 +6,6 @@
     android:background="#000000"
     android:orientation="vertical">
 
-    <HorizontalScrollView
-        android:id="@+id/flash_settings_scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="103dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp"
-        android:fadeScrollbars="true"
-        android:fadingEdge="none"
-        android:overScrollMode="never"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="horizontal"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/flash_settings_scroll_container"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-    </HorizontalScrollView>
-
     <com.acb.call.views.ThemePreviewWindow
         android:id="@+id/flash_view"
         android:layout_width="match_parent"
@@ -41,22 +16,23 @@
         android:id="@+id/in_call_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/theme_progress_txt_holder">
+        android:layout_marginBottom="60dp">
 
     </com.acb.call.views.InCallActionView>
 
     <com.ihs.feature.common.TypefacedTextView
         android:id="@+id/set_incoming_call_theme"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
         android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
         android:background="#80000000"
         android:text="@string/set_incoming_call_theme"
         android:fontFamily="sans-serif-medium"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:lineSpacingExtra="-3sp"
         android:visibility="gone"/>
 
     <ProgressBar
