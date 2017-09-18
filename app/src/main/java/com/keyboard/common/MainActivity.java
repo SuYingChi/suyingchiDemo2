@@ -701,7 +701,7 @@ public class MainActivity extends HSDeepLinkActivity {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
             if (setThemeSucceed) {
-                startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+                startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
             } else {
                 HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
                 if (keyboardTheme != null) {

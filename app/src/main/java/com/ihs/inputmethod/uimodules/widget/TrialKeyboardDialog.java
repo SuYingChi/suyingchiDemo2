@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -28,8 +26,6 @@ import com.ihs.inputmethod.utils.TrialKeyboardDialogAlertUtils;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
-
-import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD;
 
 
 public final class TrialKeyboardDialog extends Dialog {
@@ -45,13 +41,6 @@ public final class TrialKeyboardDialog extends Dialog {
     private TrialKeyboardDialog(Context context) {
         super(context, R.style.TrialKeyboardDialogStyle);
         setCancelable(true);
-    }
-
-    public static void sendShowTrialKeyboardDialogNotification(String activityName, int activationRequestCode) {
-        HSBundle bundle = new HSBundle();
-        bundle.putInt(TrialKeyboardDialog.BUNDLE_ACTIVATION_CODE, activationRequestCode);
-        bundle.putString(BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, activityName);
-        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
     }
 
     @Override

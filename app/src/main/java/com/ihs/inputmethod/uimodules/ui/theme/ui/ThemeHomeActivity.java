@@ -4,7 +4,10 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
@@ -20,6 +23,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,21 +74,21 @@ import com.keyboard.common.KeyboardActivationGuideActivity;
 
 import java.util.Random;
 
-import static android.view.View.GONE;
-import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 public class ThemeHomeActivity extends HSAppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
-    public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
+    public final static String EXTRA_SHOW_TRIAL_KEYBOARD = "EXTRA_SHOW_TRIAL_KEYBOARD";
+    public final static String EXTRA_AUTO_ENABLE_KEYBOARD = "EXTRA_AUTO_ENABLE_KEYBOARD";
 
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
     private static final String SP_TREBLE_FUNCTION_ALERT_SHOWED = "sp_treble_function_alert_showed";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
 
-    private static final int keyboardActivationFromHome = 11;
-    private static final int keyboardActivationFromHomeWithTrial = 12;
+    private static final int KEYBOARD_ACTIVATION_FROM_HOME_ENTRY = 1;
+    private static final int KEYBOARD_ACTIVATION_FROM_ENABLE_TIP = 2;
+    private static final int KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT = 3;
+    private static final int KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH = 4;
 
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
 
@@ -99,7 +103,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     private TrialKeyboardDialog trialKeyboardDialog;
     private boolean isFromUsageAccessActivity;
     private View enableTipTV;
-    private boolean shouldShowActivationTip;
     private ThemeHomeActivity context = ThemeHomeActivity.this;
     private View apkUpdateTip;
     private boolean isResumeOnCreate = true;
@@ -113,7 +116,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         public void handleMessage(Message msg) {
             if (msg.what == HANDLER_SHOW_ACTIVE_DIALOG) {
                 if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-                    showActivateKeyboardDialog();
+                    Intent intent = new Intent(ThemeHomeActivity.this, KeyboardActivationGuideActivity.class);
+                    intent.putExtra(KeyboardActivationGuideActivity.EXTRA_ACTIVATION_PROMPT_MESSAGE, getString(R.string.dialog_msg_enable_keyboard_home_rain));
+                    startActivityForResult(intent, KEYBOARD_ACTIVATION_FROM_HOME_ENTRY);
                 }
             } else if (msg.what == HANDLER_SHOW_UPDATE_DIALOG) {
                 checkAndShowApkUpdateAlert(false);
@@ -131,21 +136,30 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
     };
 
+    private boolean shouldShowRateAfterTrialKeyboard = false;
+
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
             if (CustomThemeActivity
-                    .NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
+                    .NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS.equals(s)) {
                 if (hsBundle != null) {
-                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
-                    int activationCode = hsBundle.getInt(TrialKeyboardDialog.BUNDLE_ACTIVATION_CODE);
-                    if (ThemeHomeActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
-                        showTrialKeyboardDialog(activationCode);
-                    }
+                    shouldShowRateAfterTrialKeyboard = true;
+                    showTrialKeyboardDialog(KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH);
                 }
             } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.purchase_success), Toast.LENGTH_LONG).show();
                 navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
+            }
+        }
+    };
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), Intent.ACTION_INPUT_METHOD_CHANGED)) {
+                boolean isKeyboardSelected = HSInputMethodListManager.isMyInputMethodSelected();
+                enableTipTV.setVisibility(isKeyboardSelected ? View.GONE : View.VISIBLE);
             }
         }
     };
@@ -172,18 +186,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         enableTipTV = findViewById(R.id.tv_enable_keyboard);
-        enableTipTV.setVisibility(GONE);
+        enableTipTV.setVisibility(HSInputMethodListManager.isMyInputMethodSelected() ? View.GONE : View.VISIBLE);
         enableTipTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ThemeHomeActivity.this, KeyboardActivationGuideActivity.class);
-                startActivityForResult(intent, keyboardActivationFromHome);
+                startActivityForResult(intent, KEYBOARD_ACTIVATION_FROM_ENABLE_TIP);
             }
         });
-        if (getIntent() != null && getIntent().getBooleanExtra(BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
-            Intent intent = new Intent(ThemeHomeActivity.this, KeyboardActivationGuideActivity.class);
-            startActivityForResult(intent, keyboardActivationFromHome);
-        }
         findViewById(R.id.home_create_theme_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -263,7 +273,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                     .show();
         }
 
-        HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS, notificationObserver);
+
+        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED));
 
         //如果是第一次进入页面并且当前键盘没有被选为自己则弹框。
         if (!HSInputMethodListManager.isMyInputMethodSelected()) {
@@ -292,11 +304,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        boolean showTrial = intent.getBooleanExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
+        boolean showTrial = intent.getBooleanExtra(EXTRA_SHOW_TRIAL_KEYBOARD, false);
         if (showTrial) {
             handler.removeMessages(HANDLER_SHOW_ACTIVE_DIALOG);
-            showTrialKeyboardDialog(keyboardActivationFromHomeWithTrial);
-            getIntent().putExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
+            showTrialKeyboardDialog(KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT);
+            getIntent().putExtra(EXTRA_SHOW_TRIAL_KEYBOARD, false);
         } else {
             String from = intent.getStringExtra("From");
             if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
@@ -329,8 +341,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         super.onResume();
 
         restoreNavigationView();
-
-        shouldShowActivationTip = true;
 
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
@@ -433,7 +443,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                         if (trialKeyboardDialog == null) {
                             trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();
                         }
-                        if (activationCode == keyboardActivationFromCustom) {
+                        if (activationCode == KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH) {
                             trialKeyboardDialog.show(false);
                         } else {
                             trialKeyboardDialog.show(true);
@@ -444,7 +454,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
                 if (trialKeyboardDialog == null) {
                     trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();
                 }
-                if (activationCode == keyboardActivationFromCustom) {
+                if (activationCode == KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH) {
                     trialKeyboardDialog.show(false);
                 } else {
                     trialKeyboardDialog.show(true);
@@ -452,7 +462,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             }
         } else {
             Intent intent = new Intent(this, KeyboardActivationGuideActivity.class);
-            startActivityForResult(intent, 0);
+            startActivityForResult(intent, activationCode);
         }
     }
 
@@ -464,6 +474,7 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
+        unregisterReceiver(broadcastReceiver);
         super.onDestroy();
 
         KCCommonUtils.fixInputMethodManagerLeak(this);
@@ -500,25 +511,14 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (keyboardActivationFromHomeWithTrial == requestCode || keyboardActivationFromCustom == requestCode) {
+        if (KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT == requestCode || KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH == requestCode) {
             showTrialKeyboardDialog(requestCode);
-        }
-        if (resultCode == RESULT_CANCELED) {
-            enableTipTV.setVisibility(View.VISIBLE);
-        } else if (resultCode == RESULT_OK) {
-            enableTipTV.setVisibility(View.GONE);
         }
     }
 
     private void restoreNavigationView() {
         if (THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag)) {
             navigationView.setCheckedItem(R.id.nav_theme_store);
-            if (shouldShowActivationTip && !HSInputMethodListManager.isMyInputMethodSelected()) {
-                enableTipTV.setVisibility(View.VISIBLE);
-            } else {
-                enableTipTV.setVisibility(GONE);
-            }
-
         } else if (MY_THEME_FRAGMENT_TAG.equals(currentFragmentTag)) {
             navigationView.setCheckedItem(R.id.nav_my_themes);
         }
@@ -762,18 +762,5 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         fullscreenAdLoadingDialog.show();
 
         handler.sendEmptyMessageDelayed(HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG, LOAD_FULLSCREEN_AD_TIME);
-    }
-
-    private void showActivateKeyboardDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.dialog_title_enable_keyboard_home_rain));
-        builder.setMessage(getString(R.string.dialog_msg_enable_keyboard_home_rain));
-        builder.setPositiveButton(getString(R.string.dialog_confirm_select_keyboard_apply_rain), (dialog, which) -> {
-            Intent intent = new Intent(ThemeHomeActivity.this, KeyboardActivationGuideActivity.class);
-            startActivityForResult(intent, 0);
-        });
-        builder.setOnCancelListener(dialog -> enableTipTV.setVisibility(View.VISIBLE));
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 }

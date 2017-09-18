@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,7 +33,8 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 
 public class KeyboardActivationGuideActivity extends HSActivity {
-    public static final String EXTRA_SHOW_ACTIVATION_PROMPT = "show_activation_prompt";
+    public static final String EXTRA_DISABLE_ACTIVATION_PROMPT = "disable_activation_prompt";
+    public static final String EXTRA_ACTIVATION_PROMPT_MESSAGE = "activation_prompt_message";
 
     private Handler handler = new Handler(Looper.getMainLooper());
 
@@ -41,6 +43,8 @@ public class KeyboardActivationGuideActivity extends HSActivity {
     private boolean isShowingKeyboardSettings = false;
 
     private boolean isActivityStoppedWhenShowingKeyboardPicker = false;
+
+    private String activationPromptMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +56,19 @@ public class KeyboardActivationGuideActivity extends HSActivity {
             return;
         }
 
-        boolean shouldShowActivationPrompt = getIntent().getBooleanExtra(EXTRA_SHOW_ACTIVATION_PROMPT, false);
+        boolean shouldDisableActivationPrompt = getIntent().getBooleanExtra(EXTRA_DISABLE_ACTIVATION_PROMPT, false);
 
-        if (shouldShowActivationPrompt) {
-            showActivationPromptDialog();
+        String customMessage = getIntent().getStringExtra(EXTRA_ACTIVATION_PROMPT_MESSAGE);
+        if (TextUtils.isEmpty(customMessage)) {
+            activationPromptMessage = getString(R.string.dialog_msg_select_keyboard_apply_rain);
         } else {
+            activationPromptMessage = customMessage;
+        }
+
+        if (shouldDisableActivationPrompt) {
             enableOrSelectKeyboard();
+        } else {
+            showActivationPromptDialog();
         }
     }
 
@@ -141,7 +152,7 @@ public class KeyboardActivationGuideActivity extends HSActivity {
     private void showActivationPromptDialog() {
         AlertDialog alertDialog = HSAlertDialog.build(this)
                 .setTitle(getString(R.string.dialog_title_select_keyboard_apply_rain))
-                .setMessage(getString(R.string.dialog_msg_select_keyboard_apply_rain))
+                .setMessage(activationPromptMessage)
                 .setPositiveButton(getString(R.string.dialog_confirm_select_keyboard_apply_rain), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -156,6 +167,7 @@ public class KeyboardActivationGuideActivity extends HSActivity {
             @Override
             public void onCancel(DialogInterface dialog) {
                 KeyboardActivationGuideActivity.this.setResult(RESULT_CANCELED);
+                finish();
             }
         });
     }

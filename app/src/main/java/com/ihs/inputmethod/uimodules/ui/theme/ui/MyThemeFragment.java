@@ -226,6 +226,7 @@ public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.
     @Override
     public void onKeyboardActivationStart() {
         Intent intent = new Intent(getActivity(), KeyboardActivationGuideActivity.class);
+        intent.putExtra(KeyboardActivationGuideActivity.EXTRA_DISABLE_ACTIVATION_PROMPT, true);
         startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_CARD);
     }
 

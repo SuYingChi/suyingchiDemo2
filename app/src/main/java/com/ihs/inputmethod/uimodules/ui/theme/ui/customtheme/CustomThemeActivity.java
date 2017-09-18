@@ -79,13 +79,11 @@ import static com.ihs.app.framework.HSApplication.getContext;
 
 
 public class CustomThemeActivity extends HSAppCompatActivity implements INotificationObserver {
-    public static final String NOTIFICATION_SHOW_TRIAL_KEYBOARD = "hs.inputmethod.uimodules.ui.theme.ui.SHOW_TRIAL_KEYBOARD"; //显示试用键盘
+    public static final String NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS = "NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS";
     public static final String BUNDLE_KEY_BACKGROUND_NAME = "BUNDLE_KEY_BACKGROUND_NAME";
     public static final String BUNDLE_KEY_BACKGROUND_USE_CAMERA = "BUNDLE_KEY_BACKGROUND_USE_CAMERA";
     public static final String BUNDLE_KEY_BACKGROUND_USE_GALLERY = "BUNDLE_KEY_BACKGROUND_USE_GALLERY";
     public static final String BUNDLE_KEY_CUSTOMIZE_ENTRY = "customize_entry";
-
-    public static final int keyboardActivationFromCustom = 15;
 
     private static final int FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD = 1;
     private static List<Class<? extends BaseThemeFragment>> fragmentClasses = new ArrayList<>();
@@ -510,7 +508,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
     private void onNewThemeCreated() {
         if (!showInterstitialAdsAfterSaveTheme()) {
-            showTrialKeyboard();
+            HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS);
         }
     }
 
@@ -524,18 +522,13 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 new KCInterstitialAd.OnAdCloseListener() {
                     @Override
                     public void onAdClose() {
-                        showTrialKeyboard();
+                        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS);
                     }
                 }
         );
     }
 
     private void showTrialKeyboard() {
-        setResult(RESULT_OK);
-        HSBundle bundle = new HSBundle();
-        bundle.putString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, ThemeHomeActivity.class.getSimpleName());
-        bundle.putInt(TrialKeyboardDialog.BUNDLE_ACTIVATION_CODE, keyboardActivationFromCustom);
-        HSGlobalNotificationCenter.sendNotification(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
         if (!PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
             PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();
         }
@@ -634,6 +627,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 HSKeyboardThemeManager.setPreviewCustomTheme(false);
                 HSLog.e("custome ximu +" + name);
                 HSKeyboardThemeManager.setKeyboardTheme(name);
+                setResult(RESULT_OK);
                 onNewThemeCreated();
 
             } else {
