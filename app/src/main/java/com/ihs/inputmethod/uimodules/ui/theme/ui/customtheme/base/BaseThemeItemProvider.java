@@ -241,7 +241,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
-            if (false && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+            if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(item.getName()) && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                 holder.mGiftIconImageView.setVisibility(View.VISIBLE);
             } else {
                 holder.mGiftIconImageView.setVisibility(View.GONE);
@@ -503,11 +503,11 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                 return true;
                             }
 
-                            if (false && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                            if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(baseElement.getName()) && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        //baseElement.setRateToUnlockStatus(false);
+                                        CustomThemeUnlockManager.getInstance().setElementRateAlreadyUnlock(baseElement.getName());
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                             holder.mGiftIconImageView.setVisibility(View.GONE);
                                         }

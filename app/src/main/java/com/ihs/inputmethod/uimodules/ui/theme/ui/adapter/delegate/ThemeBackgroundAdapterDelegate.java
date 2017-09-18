@@ -282,7 +282,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         } else {
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
-                            if (false && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                            if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(customThemeItemBase.getName())
+                                    && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
                             } else {
                                 holder.backgroundGiftIcon.setVisibility(View.GONE);
@@ -298,16 +299,17 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                 return;
                             }
 
-                            if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(customThemeItemBase.getName()) /*&& ApkUtils.shouldUpdate()*/) {
+                            if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(customThemeItemBase.getName()) && ApkUtils.shouldUpdate()) {
                                 ApkUtils.showUpdateAlert();
                                 return;
                             }
 
-                            if (false && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                            if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(customThemeItemBase.getName())
+                                    && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                                 ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        //customThemeItemBase.setRateToUnlockStatus(false);
+                                        CustomThemeUnlockManager.getInstance().setElementRateAlreadyUnlock(customThemeItemBase.getName());
                                         if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
                                             holder.backgroundGiftIcon.setVisibility(GONE);
                                         }

@@ -139,16 +139,19 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
                             return true;
                         }
 
-                        if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(baseElement.getName()) && ApkUtils.shouldUpdate()) {
+                        if (CustomThemeUnlockManager.getInstance().isElementNeedNewAppVersionToUnlock(baseElement.getName())
+                                && ApkUtils.shouldUpdate()) {
                             ApkUtils.showUpdateAlert();
                             return true;
                         }
 
-                        if (false && ApkUtils.isGooglePlayAvailable() && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
+                        if (CustomThemeUnlockManager.getInstance().isElementNeedRateToUnlock(baseElement.getName())
+                                && ApkUtils.isGooglePlayAvailable()
+                                && !ApkUtils.isRateAlertButtonClickedInCurrentAppVersion()) {
                             ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //baseElement.setRateToUnlockStatus(false);
+                                    CustomThemeUnlockManager.getInstance().setElementRateAlreadyUnlock(baseElement.getName());
                                     if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                         holder.mGiftIconImageView.setVisibility(View.GONE);
                                     }
