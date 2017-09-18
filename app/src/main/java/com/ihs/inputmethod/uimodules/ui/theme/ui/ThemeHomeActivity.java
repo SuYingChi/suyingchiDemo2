@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.Browser;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
@@ -136,7 +137,6 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
     };
 
-    private boolean shouldShowRateAfterTrialKeyboard = false;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
@@ -144,7 +144,9 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             if (CustomThemeActivity
                     .NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS.equals(s)) {
                 if (hsBundle != null) {
-                    shouldShowRateAfterTrialKeyboard = true;
+                    if (!PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).getBoolean("CUSTOM_THEME_SAVE", false)) {
+                        PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();
+                    }
                     showTrialKeyboardDialog(KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH);
                 }
             } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
