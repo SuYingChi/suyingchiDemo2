@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
@@ -23,6 +24,15 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         app:riv_corner_radius="@dimen/common_round_corner"/>
+
+    <ImageView
+        android:id="@+id/background_gift_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_keyboard_custom_theme_background_gift"
+        android:visibility="gone"
+        tools:ignore="RtlHardcoded" />
 
     <ImageView
         android:id="@+id/ad_call_to_action"

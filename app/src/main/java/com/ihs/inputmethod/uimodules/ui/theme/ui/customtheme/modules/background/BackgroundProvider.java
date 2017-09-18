@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -117,32 +116,6 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
             holder.mGifView.setVisibility(View.GONE);
         }
     }
-
-    @Override
-    protected void setItemTouchListener(@NonNull final BaseItemHolder holder, @NonNull final KCBackgroundElement item) {
-        holder.itemView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        doSelectAnimationOnItemViewTouch(v);
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        doSelectAnimationOnItemViewRelease(v);
-                        fragment.addChosenItem(item);
-                        fragment.refreshHeaderNextButtonState();
-                        onItemClicked(holder, item, true);
-                        return true;
-                    case MotionEvent.ACTION_CANCEL:
-                        doSelectAnimationOnItemViewRelease(v);
-                        return true;
-                }
-                return false;
-            }
-        });
-    }
-
 
     @Override
     protected boolean isCustomThemeItemSelected(KCBaseElement item) {

@@ -23,11 +23,14 @@ import android.widget.ImageView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.view.HSGifImageView;
@@ -90,14 +93,14 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
     }
 
-    protected void onItemClicked(final V holder, final I item, String adPlacementName) {
+    private void onItemClickedWithDownloading(final V holder, final I item, boolean showAd) {
         if (holder == lastCheckedHolder) {
             return;
         }
         addCustomData((KCBaseElement) item);
 
         if (((KCBaseElement) item).getTypeName().equals("background")) {
-            HSAnalytics.logEvent("app_customize_background_background_clicked", "item",((KCBaseElement) item).getName() );
+            HSAnalytics.logEvent("app_customize_background_background_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("button_style")) {
             HSAnalytics.logEvent("app_customize_button_style_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("button_shape")) {
@@ -110,72 +113,67 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             HSAnalytics.logEvent("app_customize_sound_clicked", "item", ((KCBaseElement) item).getName());
         }
 
-        if (android.text.TextUtils.isEmpty(adPlacementName)) {
-            checkItemBaseOnDownloadAndPurchaseSate(holder, item);
-        } else {
-            final KCBaseElement baseElement = (KCBaseElement) item;
+        final KCBaseElement baseElement = (KCBaseElement) item;
 
-            boolean hasDownloadThemeContent = baseElement.hasLocalContent();
+        boolean hasDownloadThemeContent = baseElement.hasLocalContent();
 
-            int delayAfterDownloadComplete = 1000;
-            if (!hasDownloadThemeContent) {
-                delayAfterDownloadComplete = 4000;
-            }
+        int delayAfterDownloadComplete = 1000;
+        if (!hasDownloadThemeContent) {
+            delayAfterDownloadComplete = 4000;
+        }
 
-            Drawable backgroundDrawable = getBackgroundDrawable(item);
-            if (backgroundDrawable == null) {
-                backgroundDrawable = new ColorDrawable(Color.BLACK);
-            }
+        Drawable backgroundDrawable = getBackgroundDrawable(item);
+        if (backgroundDrawable == null) {
+            backgroundDrawable = new ColorDrawable(Color.BLACK);
+        }
 
-            setNotNew(holder, baseElement);
-            if (!hasDownloadThemeContent) {
-                final AdLoadingView adLoadingView = new AdLoadingView(fragment.getActivity());
-                adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(), HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip), HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard), adPlacementName, new AdLoadingView.OnAdBufferingListener() {
+        setNotNew(holder, baseElement);
+        if (!hasDownloadThemeContent) {
+            final AdLoadingView adLoadingView = new AdLoadingView(fragment.getActivity());
+            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(),
+                    HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip),
+                    HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard),
+                    HSApplication.getContext().getResources().getString(R.string.ad_placement_applying),
+                    new AdLoadingView.OnAdBufferingListener() {
 
-                    @Override
-                    public void onDismiss(boolean success) {
-                        if (holder.downloadingProgressListener != null) {
-                            onItemDownloadSucceeded(holder, item);
-                        } else {
-                            selectItem(holder, baseElement);
-                            fragment.refreshKeyboardView();
+                        @Override
+                        public void onDismiss(boolean success) {
+                            if (holder.downloadingProgressListener != null) {
+                                onItemDownloadSucceeded(holder, item);
+                            } else {
+                                selectItem(holder, baseElement);
+                                fragment.refreshKeyboardView();
+                            }
                         }
-                    }
 
-                }, delayAfterDownloadComplete, RemoveAdsManager.getInstance().isRemoveAdsPurchased());
+                    }, delayAfterDownloadComplete, (RemoveAdsManager.getInstance().isRemoveAdsPurchased() || !showAd));
 
-                startDownloadContent(holder, item);
-                holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
-                    @Override
-                    public void onUpdate(int percent) {
-                        HSLog.e("onUpdate +" + percent);
-                        adLoadingView.updateProgressPercent(percent);
-                    }
+            startDownloadContent(holder, item);
+            holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
+                @Override
+                public void onUpdate(int percent) {
+                    HSLog.e("onUpdate +" + percent);
+                    adLoadingView.updateProgressPercent(percent);
+                }
 
-                    @Override
-                    public void onDownloadSucceeded() {
-                    }
+                @Override
+                public void onDownloadSucceeded() {
+                }
 
-                    @Override
-                    public void onDownloadFailed() {
-                        //// TODO: 17/4/14 applying failed ;
-                    }
-                };
-                adLoadingView.showInDialog();
-            } else {
-                selectItem(holder, baseElement);
-                fragment.refreshKeyboardView();
-            }
+                @Override
+                public void onDownloadFailed() {
+                    //// TODO: 17/4/14 applying failed ;
+                }
+            };
+            adLoadingView.showInDialog();
+        } else {
+            selectItem(holder, baseElement);
+            fragment.refreshKeyboardView();
         }
     }
 
     protected void onItemClicked(final V holder, final I item, boolean showApplyAd) {
-        if (showApplyAd) {
-            onItemClicked(holder, item, HSApplication.getContext().getResources().getString(R.string.ad_placement_applying));
-        } else {
-            addCustomData((KCBaseElement) item);
-            checkItemBaseOnDownloadAndPurchaseSate(holder, item);
-        }
+        onItemClickedWithDownloading(holder, item, showApplyAd);
     }
 
     private void checkItemBaseOnDownloadAndPurchaseSate(final V holder, final I item) {
@@ -239,6 +237,13 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
+            if (!item.hasLocalContent()
+                    && HSConfigUtils.toBoolean(item.getConfigData().get("rateToUnlock"), false)
+                    && !ApkUtils.isRateButtonClicked()) {
+                holder.mGiftIconImageView.setVisibility(View.VISIBLE);
+            } else {
+                holder.mGiftIconImageView.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -249,7 +254,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected void updateItemSelection(@NonNull final V holder, @NonNull final KCBaseElement item) {
         if (isCustomThemeItemSelected(item)) {
             if (!hasDefaultItemSelectStateSet) {
-                onItemClicked(holder, (I) item, false);
+                addCustomData(item);
+                checkItemBaseOnDownloadAndPurchaseSate(holder, (I) item);
                 hasDefaultItemSelectStateSet = true;
             } else {
                 selectItem(holder, item);
@@ -485,6 +491,52 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             return true;
                         case MotionEvent.ACTION_UP:
                             doSelectAnimationOnItemViewRelease(v);
+                            final KCBaseElement baseElement = (KCBaseElement) item;
+                            if (ClickUtils.isFastDoubleClick()) {
+                                return true;
+                            }
+
+                            if (!baseElement.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(baseElement.getConfigData().get("needNewVersionToUnlock"), false)
+                                    && ApkUtils.isNewVersionAvailable()) {
+                                ApkUtils.showUpdateAlert();
+                                return true;
+                            }
+
+                            if (!baseElement.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(baseElement.getConfigData().get("rateToUnlock"), false)
+                                    && !ApkUtils.isRateButtonClicked()) {
+                                ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
+                                            holder.mGiftIconImageView.setVisibility(View.GONE);
+                                        }
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                fragment.addChosenItem((KCBaseElement) item);
+                                                fragment.refreshHeaderNextButtonState();
+                                                onItemClicked((V) holder, item, false);
+                                                if (item instanceof KCButtonShapeElement) {
+                                                    fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
+                                                }
+                                            }
+                                        }, 1000);
+                                    }
+                                });
+                                return true;
+                            }
+                            if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
+                                holder.mGiftIconImageView.setVisibility(View.GONE);
+                                fragment.addChosenItem((KCBaseElement) item);
+                                fragment.refreshHeaderNextButtonState();
+                                onItemClicked((V) holder, item, false);
+                                if (item instanceof KCButtonShapeElement) {
+                                    fragment.notifyAdapterOnMainThread();
+                                }
+                                return true;
+                            }
                             fragment.addChosenItem((KCBaseElement) item);
                             fragment.refreshHeaderNextButtonState();
                             onItemClicked((V) holder, item, true);
@@ -570,6 +622,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         public ImageView mBackgroundImageView;
         public ImageView mNewMarkImageView;
         public ImageView mPlaceholderView;
+        public ImageView mGiftIconImageView;
         //        public SectorProgressView mProgressView;
         public View itemView;
         public OnDownloadingProgressListener downloadingProgressListener;
@@ -583,6 +636,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             mCheckImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_check_bg);
             mBackgroundImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_bg);
             mNewMarkImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
+            mGiftIconImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_gift_icon);
             mPlaceholderView = (ImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
 
         }

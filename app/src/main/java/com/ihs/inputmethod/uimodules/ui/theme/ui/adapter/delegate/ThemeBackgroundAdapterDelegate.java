@@ -15,11 +15,13 @@ import android.widget.ImageView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
+import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
@@ -27,6 +29,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.ui.theme.ui.decoration.BackgroundItemDecoration;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
+import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
@@ -224,6 +227,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 holder.backgroundContent.setVisibility(View.VISIBLE);
                 holder.backgroundContent.setImageResource(R.drawable.camera_icon);
                 holder.backgroundNewMark.setVisibility(GONE);
+                holder.backgroundGiftIcon.setVisibility(GONE);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -239,6 +243,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 holder.backgroundContent.setVisibility(View.VISIBLE);
                 holder.backgroundContent.setImageResource(R.drawable.gallery_icon);
                 holder.backgroundNewMark.setVisibility(GONE);
+                holder.backgroundGiftIcon.setVisibility(GONE);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -255,7 +260,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 if (backgrounds.get(position) instanceof KCBackgroundElement) {
                     holder.backgroundContent.setVisibility(View.VISIBLE);
                     holder.backgroundNewMark.setVisibility(View.VISIBLE);
-                    KCBackgroundElement customThemeItemBase = (KCBackgroundElement) backgrounds.get(position);
+                    final KCBackgroundElement customThemeItemBase = (KCBackgroundElement) backgrounds.get(position);
                     holder.backgroundContent.setImageResource(R.drawable.image_placeholder);
 
                     boolean hasLocalGifPreview = customThemeItemBase.hasLocalGifPreview();
@@ -277,6 +282,13 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         } else {
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
+                            if (!customThemeItemBase.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
+                                    && !ApkUtils.isRateButtonClicked()) {
+                                holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
+                            } else {
+                                holder.backgroundGiftIcon.setVisibility(View.GONE);
+                            }
                         }
                     } else {
                         downloadPreview(holder.itemView, position, customThemeItemBase);
@@ -284,6 +296,42 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if (ClickUtils.isFastDoubleClick()) {
+                                return;
+                            }
+
+                            if (!customThemeItemBase.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)
+                                    && ApkUtils.isNewVersionAvailable()) {
+                                ApkUtils.showUpdateAlert();
+                                return;
+                            }
+
+                            if (!customThemeItemBase.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
+                                    && !ApkUtils.isRateButtonClicked()) {
+                                ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
+                                            holder.backgroundGiftIcon.setVisibility(GONE);
+                                        }
+                                        notifyDataSetChanged();
+                                        holder.setIsRecyclable(true);
+                                        KCBackgroundElement background = (KCBackgroundElement) backgrounds.get(position);
+                                        setNotNew(background);
+
+                                        Bundle bundle = new Bundle();
+                                        String customEntry = "store_bg";
+                                        String backgroundItemName = background.getName();
+                                        bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
+                                        bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
+                                        CustomThemeActivity.startCustomThemeActivity(bundle);
+                                    }
+                                });
+                                return;
+                            }
+
                             holder.setIsRecyclable(true);
                             KCBackgroundElement background = (KCBackgroundElement) backgrounds.get(position);
                             setNotNew(background);
@@ -424,11 +472,13 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
         static class Holder extends RecyclerView.ViewHolder {
             ImageView backgroundContent;
             ImageView backgroundNewMark;
+            ImageView backgroundGiftIcon;
 
             public Holder(View itemView) {
                 super(itemView);
                 backgroundContent = (ImageView) itemView.findViewById(R.id.background_content);
                 backgroundNewMark = (ImageView) itemView.findViewById(R.id.background_new_mark);
+                backgroundGiftIcon = (ImageView) itemView.findViewById(R.id.background_gift_icon);
                 CompatUtils.setCardViewMaxElevation((CardView) itemView);
             }
         }
