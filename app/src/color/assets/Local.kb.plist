@@ -1835,6 +1835,8 @@
 					<dict>
 						<key>lockerImgUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fantasyland.jpg</string>
+						<key>rateToUnlock</key>
+						<true/>
 						<key>name</key>
 						<string>Fantasyland</string>
 						<key>price</key>
@@ -1849,6 +1851,10 @@
 						<string>Immortal</string>
 						<key>price</key>
 						<string>$0.99</string>
+						<key>needNewVersionToUnlock</key>
+						<true/>
+						<key>rateToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1859,6 +1865,8 @@
 						<string>Mysterious Universe</string>
 						<key>price</key>
 						<string>$0.99</string>
+						<key>rateToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1867,6 +1875,8 @@
 						<string>Fiery Guitar</string>
 						<key>price</key>
 						<string>$0.99</string>
+						<key>rateToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1875,6 +1885,8 @@
 						<string>Bunny</string>
 						<key>price</key>
 						<string>$0.99</string>
+						<key>needNewVersionToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -1887,6 +1899,8 @@
 					<dict>
 						<key>name</key>
 						<string>Falling Stars</string>
+						<key>rateToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2286,16 +2300,22 @@
 					<dict>
 						<key>name</key>
 						<string>normal1</string>
+						<key>rateToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
 						<string>Summer Pond</string>
 						<key>showNewMark</key>
 						<true/>
+						<key>rateToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
 						<string>Future World</string>
+						<key>needNewVersionToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2450,10 +2470,14 @@
 					<dict>
 						<key>name</key>
 						<string>Times</string>
+						<key>rateToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
 						<string>San Francisco Text</string>
+						<key>needNewVersionToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -2463,6 +2487,8 @@
 						<key>price</key>
 						<string>$0.99</string>
 						<key>showNewMark</key>
+						<true/>
+						<key>needNewVersionToUnlock</key>
 						<true/>
 					</dict>
 					<dict>
@@ -2754,11 +2780,15 @@
 					<dict>
 						<key>builtIn</key>
 						<true/>
+						<key>needNewVersionToUnlock</key>
+						<true/>
 						<key>name</key>
 						<string>none</string>
 					</dict>
 					<dict>
 						<key>builtIn</key>
+						<true/>
+						<key>rateToUnlock</key>
 						<true/>
 						<key>iapID</key>
 						<string>com.keyboard.colorkeyboard.pid.tapeffect.tier1</string>
