@@ -2,20 +2,15 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.chargingscreen.utils.ClickUtils;
-import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
-import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBackgroundElement;
@@ -121,73 +116,6 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
             holder.mGifView.setVisibility(View.GONE);
         }
     }
-
-    @Override
-    protected void setItemTouchListener(@NonNull final BaseItemHolder holder, @NonNull final KCBackgroundElement item) {
-        holder.itemView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        doSelectAnimationOnItemViewTouch(v);
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        doSelectAnimationOnItemViewRelease(v);
-                        final KCBaseElement baseElement = (KCBaseElement) item;
-                        if (ClickUtils.isFastDoubleClick()) {
-                            return true;
-                        }
-
-                        if (!baseElement.hasLocalContent()
-                                && HSConfigUtils.toBoolean(baseElement.getConfigData().get("needNewVersionToUnlock"), false)
-                                && ApkUtils.shouldUpdate()) {
-                            ApkUtils.showUpdateAlert();
-                            return true;
-                        }
-
-                        if (!baseElement.hasLocalContent()
-                                &&HSConfigUtils.toBoolean(baseElement.getConfigData().get("rateToUnlock"), false)
-                                && ApkUtils.isGooglePlayAvailable()
-                                && !ApkUtils.isRateButtonClicked()) {
-                            ApkUtils.showCustomRateAlert(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
-                                        holder.mGiftIconImageView.setVisibility(View.GONE);
-                                    }
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            fragment.addChosenItem(item);
-                                            fragment.refreshHeaderNextButtonState();
-                                            onItemClicked(holder, item, false);
-                                        }
-                                    }, 1000);
-                                }
-                            });
-                            return true;
-                        }
-                        if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
-                            holder.mGiftIconImageView.setVisibility(View.GONE);
-                            fragment.addChosenItem(item);
-                            fragment.refreshHeaderNextButtonState();
-                            onItemClicked(holder, item, false);
-                            return true;
-                        }
-                        fragment.addChosenItem(item);
-                        fragment.refreshHeaderNextButtonState();
-                        onItemClicked(holder, item, true);
-                        return true;
-                    case MotionEvent.ACTION_CANCEL:
-                        doSelectAnimationOnItemViewRelease(v);
-                        return true;
-                }
-                return false;
-            }
-        });
-    }
-
 
     @Override
     protected boolean isCustomThemeItemSelected(KCBaseElement item) {
