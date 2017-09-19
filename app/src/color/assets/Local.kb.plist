@@ -4262,6 +4262,31 @@
 					<key>CategoryName</key>
 					<dict>
 						<key>Default</key>
+						<string>Love</string>
+						<key>ar</key>
+						<string>حب</string>
+						<key>es</key>
+						<string>Amor</string>
+						<key>hi</key>
+						<string>मोहब्बत</string>
+						<key>in</key>
+						<string>Cinta</string>
+						<key>pt</key>
+						<string>Amor</string>
+						<key>ru</key>
+						<string>Любовь</string>
+						<key>th</key>
+						<string>ความรัก</string>
+						<key>tr</key>
+						<string>Aşk</string>
+					</dict>
+					<key>Identifier</key>
+					<string>Love</string>
+				</dict>
+				<dict>
+					<key>CategoryName</key>
+					<dict>
+						<key>Default</key>
 						<string>Nature</string>
 						<key>ar</key>
 						<string>طبيعة</string>
@@ -4407,31 +4432,6 @@
 					</dict>
 					<key>Identifier</key>
 					<string>Seasons</string>
-				</dict>
-				<dict>
-					<key>CategoryName</key>
-					<dict>
-						<key>Default</key>
-						<string>Love</string>
-						<key>ar</key>
-						<string>حب</string>
-						<key>es</key>
-						<string>Amor</string>
-						<key>hi</key>
-						<string>मोहब्बत</string>
-						<key>in</key>
-						<string>Cinta</string>
-						<key>pt</key>
-						<string>Amor</string>
-						<key>ru</key>
-						<string>Любовь</string>
-						<key>th</key>
-						<string>ความรัก</string>
-						<key>tr</key>
-						<string>Aşk</string>
-					</dict>
-					<key>Identifier</key>
-					<string>Love</string>
 				</dict>
 				<dict>
 					<key>CategoryName</key>
