@@ -250,7 +250,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         BottomNavigationViewHelper.disableShiftMode(mBottomBar);
         mLayoutWrapper = new LayoutWrapper(mBottomBar, getResources().getDimensionPixelSize(R.dimen.bottom_bar_default_height), CommonUtils.pxFromDp(3.3f));
 
-        appbarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
 
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 

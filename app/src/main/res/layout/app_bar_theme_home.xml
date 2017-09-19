@@ -6,31 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.theme.ui.ThemeHomeActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <TextView
-            android:id="@+id/tv_enable_keyboard"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/button_activation_tip"
-            android:drawableRight="@drawable/tv_enable_keyboard_arrow"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingStart="16dp"
-            android:text="@string/tv_enable_keyboard_tip"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:typeface="sans"
-            android:visibility="visible" />
-
-    </android.support.design.widget.AppBarLayout>
-    
     <RelativeLayout
         android:id="@+id/loading_gif_fragment"
         android:layout_width="match_parent"
@@ -44,6 +19,23 @@
             android:layout_above="@+id/bottom_bar"
             android:background="@color/theme_activity_bg"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <TextView
+            android:id="@+id/tv_enable_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_activation_tip"
+            android:drawableRight="@drawable/tv_enable_keyboard_arrow"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/customize_toolbar_height"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingStart="16dp"
+            android:text="@string/tv_enable_keyboard_tip"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:typeface="sans"
+            android:visibility="visible" />
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_bar"
