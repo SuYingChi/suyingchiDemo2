@@ -16,12 +16,9 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.InCallThemePreviewActivity;
@@ -126,49 +123,11 @@ public class InComingCallThemePreviewActivity extends Activity implements View.O
                 item.put(CONFIG_KEY_ID, themeName.hashCode());
                 item.put(CONFIG_KEY_ID_NAME, themeName);
                 Type themeType = Type.typeFromMap(item);
-                Type.addGifToTypes(themeType);
+//                Type.addGifToTypes(themeType);
                 Intent intent = new Intent(this, InCallThemePreviewActivity.class);
                 intent.putExtra("CallThemeType", themeType);
-                startActivity(intent);
+//                startActivity(intent);
                 break;
         }
     }
-
-    private class CustomImageLoadingTarget extends ImageViewTarget<Drawable> {
-
-        public CustomImageLoadingTarget(ImageView view) {
-            super(view);
-        }
-
-        @Override
-        public void onLoadStarted(@Nullable Drawable placeholder) {
-            super.onLoadStarted(placeholder);
-        }
-
-        @Override
-        public void onLoadFailed(@Nullable Drawable errorDrawable) {
-            super.onLoadFailed(errorDrawable);
-        }
-
-        @Override
-        public void onResourceReady(Drawable resource, @Nullable Transition<? super Drawable> transition) {
-
-        }
-
-        @Override
-        protected void setResource(@Nullable Drawable resource) {
-
-        }
-
-        @Override
-        public void setRequest(Request request) {
-            view.setTag(R.id.glide_tag_id, request);
-        }
-
-        @Override
-        public Request getRequest() {
-            return (Request) view.getTag(R.id.glide_tag_id);
-        }
-    }
-
 }

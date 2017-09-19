@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="GENERAL">
+    <PreferenceCategory android:title="@string/general">
         <Preference
             android:title="@string/theme_nav_languages"
             android:key="choose_language"/>
@@ -12,7 +12,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="MORE"
+        android:title="@string/theme_store_more"
         android:key="more">
         <Preference
             android:title="@string/theme_nav_no_ads"

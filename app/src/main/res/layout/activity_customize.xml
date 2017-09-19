@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         app:menu="@menu/customize_bottom_bar" />
-        <!--app:itemIconTint="@color/selector_cutomize_bottom_navigation_color"-->
-        <!--app:itemTextColor="@color/selector_cutomize_bottom_navigation_color"-->
+        <!--app:itemIconTint="@color/selector_customize_bottom_navigation_color"-->
+        <!--app:itemTextColor="@color/selector_customize_bottom_navigation_color"-->
 
 </RelativeLayout>

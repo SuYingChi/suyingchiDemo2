@@ -88,6 +88,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
         mCallView = (InCallActionView) findViewById(R.id.in_call_view);
         mCallView.enableFullScreen(false);
+        mCallView.stopAnimations();
         mSetCallThemeButton = (TextView) findViewById(R.id.set_incoming_call_theme);
         initThemesView();
         requestPermissionsIfNeeded();
@@ -247,6 +248,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
                         proHolder.setVisibility(View.GONE);
                         horPro.setProgress(0);
                         ((TextView) proHolder.findViewById(R.id.theme_progress_txt)).setText("0 %");
+                        mCallView.doAnimation();
                         mPreviewView.playAnimation(type);
                         mSetCallThemeButton.setVisibility(View.VISIBLE);
                     }

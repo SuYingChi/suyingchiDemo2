@@ -155,6 +155,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         tab.select();
         createThemeButton = (FloatingActionButton) findViewById(R.id.home_create_theme_layout);
+        createThemeButton.setOnClickListener(this);
         if (position == 0) {
             createThemeButton.setVisibility(View.VISIBLE);
         } else if (position == 1) { //my sticker
@@ -366,6 +367,14 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.home_create_theme_layout:
+                Bundle bundle = new Bundle();
+                String customEntry = "my_float_button";
+                bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
+                CustomThemeActivity.startCustomThemeActivity(bundle);
+
+                HSAnalytics.logEvent("customize_entry_clicked", "my");
+                break;
             default:
         }
     }

@@ -146,9 +146,9 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
                     item.put(CONFIG_KEY_ID, themeName.hashCode());
                     item.put(CONFIG_KEY_ID_NAME, themeName);
                     Type themeType = Type.typeFromMap(item);
-                    Type.addGifToTypes(themeType);
+//                    Type.addGifToTypes(themeType);
                     intent.putExtra("CallThemeType", themeType);
-                    mContext.startActivity(intent);
+//                    mContext.startActivity(intent);
                 }
                 break;
             case R.id.locker_install_btn:

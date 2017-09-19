@@ -134,7 +134,8 @@
     <color name="wallpaper_local_add_btn_text">#666666</color>
     <color name="wallpaper_preview_background">#F2000000</color>
     <color name="customize_tab_highlight">#fff9224f</color>
-    <color name="customize_tab_normal">#ff333333</color>
+    <color name="customize_tab_normal">#ff000000</color>
+    <color name="customize_tab_text_normal">#4d000000</color>
     <color name="upload_wallpaper_container_normal">#ffeeeeee</color>
     <color name="upload_wallpaper_container_pressed">#ffdedede</color>
 </resources>

@@ -9,6 +9,7 @@
         android:id="@+id/tab_layout_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/customize_toolbar_height"
+        android:paddingLeft="12dp"
         android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
