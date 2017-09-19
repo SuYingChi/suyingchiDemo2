@@ -30,7 +30,3 @@ libFramework:
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
-
-MagicTrick:
-  get: "getComponentEnabledSetting"
-  set: "setComponentEnabledSetting"

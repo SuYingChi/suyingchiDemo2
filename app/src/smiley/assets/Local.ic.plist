@@ -648,11 +648,6 @@
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
-				<key>MagicTrick</key>
-				<dict>
-					<key>Always</key>
-					<true/>
-				</dict>
 			</dict>
 			<key>FeaturesGuide</key>
 			<dict>
