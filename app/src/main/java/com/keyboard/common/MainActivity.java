@@ -190,6 +190,7 @@ public class MainActivity extends HSDeepLinkActivity {
         setContentView(R.layout.activity_main);
         FrameLayout videoviewFrame = (FrameLayout) findViewById(R.id.launch_mp4_view);
         launchVideoView = HSUIApplication.getLaunchVideoView();
+        launchVideoView.setVisibility(View.VISIBLE);
         videoviewFrame.addView(launchVideoView);
 
         onNewIntent(getIntent());
@@ -562,7 +563,6 @@ public class MainActivity extends HSDeepLinkActivity {
             launchImageView.setVisibility(View.VISIBLE);
             launchVideoView.setVisibility(GONE);
         }
-        HSLog.e("MainActivity mp4 fake start");
 
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
