@@ -3,11 +3,9 @@ package com.ihs.inputmethod.api;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
@@ -62,7 +60,6 @@ import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.ActivityLifecycleMonitor;
-import com.keyboard.common.LauncherActivity;
 import com.keyboard.common.MainActivity;
 import com.keyboard.core.themes.ThemeDirManager;
 import com.launcher.FloatWindowCompat;
@@ -70,7 +67,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
@@ -262,21 +258,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerNotificationEvent();
 
-        // 更新应用在应用列表中的显示或隐藏
-        updateLauncherActivityEnabledState();
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
-        intentFilter.addAction(HSConfig.HS_NOTIFICATION_CONFIG_CHANGED);
-
-        // 输入法变化时或RemoteConfig变化时，更新应用在应用列表中的显示或隐藏
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                updateLauncherActivityEnabledState();
-            }
-        }, intentFilter);
-
         ScreenLockerManager.init();
         FloatWindowCompat.initLockScreen(this);
         initIAP();
@@ -380,40 +361,6 @@ public class HSUIApplication extends HSInputMethodApplication {
             HSAnalytics.logEvent("install_type", "install_type", installType);
 
             HSPreferenceHelper.getDefault().putBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, true);
-        }
-    }
-
-    private void updateLauncherActivityEnabledState() {
-        boolean enabledInRemoteConfig = !KCFeatureRestrictionConfig.isFeatureRestricted("MagicTrick");
-        boolean isKeyboardSelected = HSInputMethodListManager.isMyInputMethodSelected();
-
-        int status;
-        if (enabledInRemoteConfig && isKeyboardSelected) {
-            status = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-        } else {
-            status = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-        }
-
-        PackageManager manager = getPackageManager();
-
-        String getName = HSConfig.getString("MagicTrick", "get");
-        String setName = HSConfig.getString("MagicTrick", "set");
-
-        Class[] getArgTypes = new Class[]{ComponentName.class};
-        Class[] setArgTypes = new Class[]{ComponentName.class, int.class, int.class};
-
-        try {
-            Method getMethod = manager.getClass().getDeclaredMethod(getName, getArgTypes);
-            Method setMethod = manager.getClass().getDeclaredMethod(setName, setArgTypes);
-
-            ComponentName name = new ComponentName(getPackageName(),
-                    LauncherActivity.class.getName());
-            int oldStatus = (Integer) getMethod.invoke(manager, name);
-            if (status != oldStatus) {
-                setMethod.invoke(manager, name, status, PackageManager.DONT_KILL_APP);
-            }
-        } catch (Exception e) {
-
         }
     }
 
