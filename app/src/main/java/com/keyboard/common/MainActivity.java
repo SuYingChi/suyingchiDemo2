@@ -731,6 +731,7 @@ public class MainActivity extends HSDeepLinkActivity {
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
+        overridePendingTransition(0, 0);
         finish();
     }
 
