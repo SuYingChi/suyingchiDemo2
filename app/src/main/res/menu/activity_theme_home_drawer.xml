@@ -40,4 +40,14 @@
             android:title="@string/text_privacy_policy"/>
     </group>
 
+    <group
+        android:visible="false"
+        android:id="@+id/menu_debug"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_debug"
+            android:icon="@drawable/nav_debug_icon"
+            android:title ="@string/navigation_menu_item_debug" />
+    </group>
+
 </menu>

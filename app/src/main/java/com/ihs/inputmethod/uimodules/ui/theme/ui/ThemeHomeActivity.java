@@ -73,6 +73,7 @@ import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.keyboard.common.DebugActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -298,6 +299,11 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         }
 
         onNewIntent(getIntent());
+
+        // 添加测试用选项
+        if (HSApplication.isDebugging) {
+            navigationView.getMenu().setGroupVisible(R.id.menu_debug, true);
+        }
     }
 
     private void enableUsageAccessPermission() {
@@ -417,6 +423,8 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
             RemoveAdsManager.getInstance().purchaseRemoveAds();
         } else if ( id == R.id.nav_privacy){
             startBrowsePrivacy();
+        } else if (id == R.id.nav_debug) {
+            startActivity(new Intent(this, DebugActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

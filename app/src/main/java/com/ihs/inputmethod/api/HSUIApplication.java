@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.VideoView;
 
 import com.acb.call.AcbCallManager;
@@ -38,9 +37,6 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.device.permanent.HSPermanentUtils;
 import com.ihs.device.permanent.PermanentService;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
-import com.ihs.feature.battery.BatteryActivity;
-import com.ihs.feature.boost.plus.BoostPlusActivity;
-import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
 import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
@@ -87,7 +83,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 onSessionStart();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
-                Log.e("access", "config changed");
             } else if (RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(notificationName)) {
                 AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(AcbCallManager.getAdPlacement());
                 AcbCallManager.setAdPlacement("");
@@ -99,7 +94,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(intent.getAction())) {
-                Log.e("access", "appsflyer");
                 Intent configChangedIntent = new Intent(HSNotificationConstant.HS_CONFIG_CHANGED);
                 configChangedIntent.setPackage(HSApplication.getContext().getPackageName());
                 HSUIApplication.this.sendBroadcast(configChangedIntent, HSNotificationConstant.getSecurityPermission(HSApplication.getContext()));
@@ -139,7 +133,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     @Override
     public void onCreate() {
-        Log.e("time log", "time log application oncreated started");
         super.onCreate();
 
         /**
@@ -233,13 +226,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         CustomUIRateAlertUtils.initialize();
 
         if (!HSLog.isDebugging()) {
-            Fabric.with(this, new Crashlytics());//0,5s
-        } else {
-            BoostPlusActivity.initBoost();
-            CpuCoolerScanActivity.initBoost();
-            BatteryActivity.initBattery();
+            Fabric.with(this, new Crashlytics());
         }
-        Log.e("time log", "time log application oncreated finished");
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
