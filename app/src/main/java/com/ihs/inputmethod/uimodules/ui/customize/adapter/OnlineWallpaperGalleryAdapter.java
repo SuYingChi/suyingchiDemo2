@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.CompatUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
@@ -193,23 +194,22 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
         int positionInAllWallpapers = (int) v.getTag();
         ArrayList<WallpaperInfo> allWallpapers = new ArrayList<>();
         ArrayList<WallpaperInfo> wallpapersToPreview = new ArrayList<>();
-        int positionInPreviewWallpapers = positionInAllWallpapers;
         for (Object item : mDataSet) {
             if (item instanceof WallpaperInfo) {
                 allWallpapers.add((WallpaperInfo) item);
-                if (((WallpaperInfo) item).getType() != WallpaperInfo.WALLPAPER_TYPE_3D) {
-                    wallpapersToPreview.add((WallpaperInfo) item);
-                } else if (wallpapersToPreview.size() < positionInAllWallpapers) {
-                    positionInPreviewWallpapers--;
-               }
             }
         }
         WallpaperInfo clickedWallpaper = allWallpapers.get(positionInAllWallpapers);
+        if (clickedWallpaper.getCategory() == null) {
+            HSAnalytics.logEvent("app_wallpaper_clicked", clickedWallpaper.getName());
+        } else {
+            HSAnalytics.logEvent("app_wallpaper_clicked", clickedWallpaper.getName(), clickedWallpaper.getCategory().categoryName);
+        }
         Intent intent = new Intent(mContext, WallpaperPreviewActivity.class);
 //        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_SCENARIO, mScenario.ordinal());
         intent.putParcelableArrayListExtra(WallpaperPreviewActivity.INTENT_KEY_WALLPAPERS, wallpapersToPreview);
 //        WallPaperConstant.wallpaperInfoList.addAll(wallpapersToPreview);
-        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_INDEX, positionInPreviewWallpapers);
+        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_INDEX, positionInAllWallpapers);
         try {
             mContext.startActivity(intent);
         } catch (Exception e) {

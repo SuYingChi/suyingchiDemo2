@@ -23,6 +23,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,8 +36,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.acb.call.CPSettings;
@@ -332,7 +335,6 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
             chargingPreference.setChecked(chargingEnabled);
 //            if (!showChargeSetting || !ChargingConfigManager.getManager().enableChargingFunction()) {
 //                getPreferenceScreen().removePreference(chargingPreference);
-//            } else {
             chargingPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -378,6 +380,18 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                 }
             }
         };
+
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+
+            //set divider color
+            View rootView = getView();
+            ListView list = (ListView) rootView.findViewById(android.R.id.list);
+            list.setDivider(new ColorDrawable(0xef000000));
+            list.setDividerHeight(1);
+        }
+
 
         @Override
         public void onAttach(Context context) {

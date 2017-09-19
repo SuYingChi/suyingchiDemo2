@@ -98,6 +98,15 @@ public class WrapFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        tabLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = (int) v.getTag();
+                String title = (String) tabFragmentPagerAdapter.getPageTitle(position);
+                HSAnalytics.logEvent("app_tab_top_keyboard_clicked", title.toLowerCase());
+            }
+        });
+
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
             @Override
             public void onPageSelected(int position) {

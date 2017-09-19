@@ -25,6 +25,7 @@ import com.acb.call.themes.Type;
 import com.acb.call.utils.Utils;
 import com.acb.call.views.InCallActionView;
 import com.acb.call.views.ThemePreviewWindow;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
@@ -170,6 +171,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         mSetCallThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSAnalytics.logEvent("app_callflash_applied", themeType.getName());
                 HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeType.getValue());
                 ToastUtils.showToast(R.string.incoming_call_theme_success);
             }

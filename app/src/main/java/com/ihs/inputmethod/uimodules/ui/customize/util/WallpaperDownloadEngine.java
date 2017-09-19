@@ -12,6 +12,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.LauncherFiles;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
+import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,6 +86,10 @@ public class WallpaperDownloadEngine {
 //                        if (categoryInfo != null) {
 //                            wallpaperInfo.setCategory(categoryInfo);
 //                        }
+                        CategoryInfo category = CategoryInfo.ofConfig(sConfig.get(categoryIndex));
+                        if (category != null) {
+                            wallpaperInfo.setCategory(category);
+                        }
 
                         wallpaperInfoList.add(wallpaperInfo);
                     }

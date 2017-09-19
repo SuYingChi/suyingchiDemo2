@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.ViewUtils;
@@ -79,6 +80,15 @@ public class OnlineWallpaperPage extends RelativeLayout {
             @Override
             public void onScrollFinished(boolean isScrollLeft, boolean isScrollRight) {
 //                LauncherAnalytics.logEvent("Wallpaper_TopTab_Slided");
+            }
+        });
+
+        mTabs.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = (int) v.getTag();
+                String title = (String) mTabs.getTabAt(position).getText();
+                HSAnalytics.logEvent("app_tab_top_wallpaper_clicked", title.toLowerCase());
             }
         });
 
@@ -153,7 +163,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
         });
 
         mCategoriesTitle = ViewUtils.findViewById(this, R.id.categories_title);
-//        setArrowOnClickAnimation(mGridView, mCategoriesTitle, mArrowLeftPart, mArrowRightPart);
 
         final CategoryViewAdapter categoryViewAdapter = new CategoryViewAdapter(getContext(), data);
         mGridView.setAdapter(categoryViewAdapter);
@@ -164,7 +173,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
                     return;
                 }
 
-                String categoryName = ((CategoryItem) parent.getAdapter().getItem(position)).getItemName();
                 mIsTabNoClickSelected = true;
 
                 ((CategoryViewAdapter) parent.getAdapter()).setTextAnimationEnabled(false);
@@ -172,9 +180,7 @@ public class OnlineWallpaperPage extends RelativeLayout {
                 ((CategoryItem) parent.getAdapter().getItem(position)).setSelected(true);
                 ((CategoryViewAdapter) parent.getAdapter()).notifyDataSetChanged();
 
-//                resetCategoryGrids();
                 viewPage.setCurrentItem(position, true);
-//                arrowClicked(mGridView, mCategoriesTitle, mArrowLeftPart, mArrowRightPart, "TabClicked");
             }
         });
     }
