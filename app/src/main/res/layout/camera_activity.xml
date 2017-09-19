@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#10000000">
+
+        <SurfaceView
+            android:id="@+id/preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/photo_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="matrix" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/face_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/back_holder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".15"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/face_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back_button" />
+        </LinearLayout>
+
+
+        <com.ihs.inputmethod.uimodules.widget.CustomFontTextView
+            android:textColor="#ffffff"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:gravity="center"
+            android:text="Take a Selfie"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <LinearLayout
+            android:id="@+id/switcher_holder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".15"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/camera_switcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/change_camera" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/mask_view"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/face_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/mask_view"
+        android:gravity="center_vertical">
+
+        <HorizontalScrollView
+            android:id="@+id/face_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/facemoji_face_list_scroll_view_height"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/face_list_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"></LinearLayout>
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fill the oval space with your face"
+            android:textColor="#80000000"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:paddingTop="4dp"
+            android:background="@android:color/white"
+            android:layout_below="@id/face_list"
+            android:id="@+id/fill_text"/>
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/fill_text"
+            android:alpha="1"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gallery"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/show_picture"
+                    android:onClick="showGallery" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/camera_click_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/camera_button"
+                android:onClick="takePicture" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/synthesis_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/face_list"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gallery2"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/show_picture"
+                    android:onClick="showGallery" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/choose_pic_click_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/facemoji_choose_pic"
+                android:onClick="synthesisImage" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

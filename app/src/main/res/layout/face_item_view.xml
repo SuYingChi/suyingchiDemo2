@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/face_item_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#00000000"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:id="@+id/face_item_img"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/face_item_picker_icon"
+        android:layout_width="@dimen/facemoji_face_list_picker_size"
+        android:layout_height="@dimen/facemoji_face_list_picker_size"
+        android:layout_marginRight="@dimen/facemoji_face_list_picker_margin"
+        android:layout_marginBottom="@dimen/facemoji_face_list_picker_margin"
+        android:layout_gravity="bottom|right"/>
+
+</FrameLayout>

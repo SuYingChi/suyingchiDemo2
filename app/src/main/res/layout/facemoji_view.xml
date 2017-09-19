@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/facemoji_cell_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#00000000"
+    android:gravity="center">
+
+    <com.ihs.inputmethod.uimodules.ui.facemoji.ui.AnimationLayout
+        android:layout_width="match_parent"
+        app:enableClickScaleAnim="true"
+        android:layout_height="match_parent">
+
+        <com.ihs.inputmethod.uimodules.ui.facemoji.ui.FacemojiAnimationView
+            android:id="@+id/sticker_player_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            />
+    </com.ihs.inputmethod.uimodules.ui.facemoji.ui.AnimationLayout>
+</RelativeLayout>

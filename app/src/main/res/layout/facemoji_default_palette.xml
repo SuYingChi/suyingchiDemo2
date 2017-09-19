@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/facemoji_default_layout"
+    android:gravity="center"
+    android:layout_marginBottom="10dp">
+
+    <ImageView
+        android:id="@+id/face_arrow_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        android:src="@drawable/face_arrow"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/face_arrow_keyboard"
+            android:layout_toRightOf="@id/face_arrow_keyboard"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="13dp"
+            android:gravity="left|center_vertical"
+            android:text="Facemoji"
+            android:fontFamily="bold"
+            android:textColor="#ffffffff"
+            android:textSize="18sp"
+            android:id="@+id/facemoji_title"/>
+
+        <TextView
+            android:id="@+id/facemoji_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/facemoji_title"
+            android:layout_below="@id/facemoji_title"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="left|bottom"
+            android:text="Create your own FaceMoji with just a snap."
+            android:textColor="#7fffffff"
+            android:textSize="14sp" />
+
+        <Button
+            android:layout_marginTop="8dp"
+            android:id="@+id/facemoji_button_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/facemoji_title"
+            android:layout_below="@id/facemoji_text"
+            android:background="@drawable/facemoji_create_btn"
+            android:text="Create"
+            android:textAllCaps="false"
+            android:textColor="@color/key_text_color_white"
+            android:textSize="18sp"
+            android:fontFamily="bold"/>
+
+</RelativeLayout>
