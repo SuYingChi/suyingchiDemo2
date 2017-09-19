@@ -122,9 +122,20 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         keyboardGooglePlayAdManager = new KeyboardGooglePlayAdManager(HSApplication.getContext().getString(R.string.ad_placement_google_play_dialog_ad));
     }
 
+    private long lastBackAdShownTime = 0L;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if (lastBackAdShownTime > 0) {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastBackAdShownTime >= 2_000) {
+                    lastBackAdShownTime = 0L;
+                } else {
+                    return true;
+                }
+            }
 
             if (isInputViewShowing) {
                 getKeyboardPanelMananger().onBackPressed();
@@ -141,7 +152,11 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                     HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
                 }
 
-                showBackAdIfNeeded();
+                boolean adShown = showBackAdIfNeeded();
+                if (adShown) {
+                    lastBackAdShownTime = System.currentTimeMillis();
+                    return true;
+                }
             }
         }
 
