@@ -301,12 +301,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
         }
-        AcbCallManager.initWithDefaultFactory(callAdPlacement, new AcbCallManager.OnFeatureRestrictCallBack() {
-            @Override
-            public boolean isFeatureRestrict() {
-                return !KCFeatureRestrictionConfig.isFeatureRestricted("AdCallAssistant");
-            }
-        });
+        AcbCallManager.initWithDefaultFactory(callAdPlacement);
     }
 
     private void activeAdPlacements() {
