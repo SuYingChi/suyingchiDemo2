@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -143,6 +144,7 @@ public class StickerUtils {
             //HSInputMethod.inputText(sticker.getStickerRemoteUri());
             return;
         }
+        StickerPrefsUtil.getInstance().recordStickerSelect(sticker.getStickerName());
 
         final String targetExternalFilePath = DirectoryUtils.getImageExportFolder() + "/" + sticker.getStickerName() + sticker.getStickerFileSuffix();
         final String mimeType = "image/*";
@@ -346,6 +348,16 @@ public class StickerUtils {
                 }
             }
             return ERROR_COLOR;
+        }
+    }
+
+    public static String getGroupNameByStickerName(String stickerName){
+        int indexOfConnector = stickerName.indexOf('-');
+        if (indexOfConnector > 0) {
+            return stickerName.substring(0, indexOfConnector);
+        }else{
+            HSLog.e("tag sticker suggestion name wrong format");
+            return null;
         }
     }
 }

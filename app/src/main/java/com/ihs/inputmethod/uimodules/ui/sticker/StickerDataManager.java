@@ -100,12 +100,21 @@ public class StickerDataManager {
         }
     }
 
-    public boolean isStickerGroupDownloaded(String name){
+    public boolean isStickerGroupDownloaded(String name) {
         for (StickerGroup stickerGroup : getStickerGroupList()) {
             if (stickerGroup.getStickerGroupName().equals(name)) {
                 return stickerGroup.isStickerGroupDownloaded();
             }
         }
         return false;
+    }
+
+    public Sticker getSticker(String stickerName) {
+        for (StickerGroup stickerGroup : getStickerGroupList()) {
+            if(stickerGroup.getStickerGroupName().equals(StickerUtils.getGroupNameByStickerName(stickerName))){
+                return stickerGroup.getSticker(stickerName);
+            }
+        }
+        return null;
     }
 }

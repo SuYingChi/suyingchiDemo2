@@ -15,6 +15,7 @@ public class Sticker {
     private final String stickerGroupName;
     private final String stickerRemoteUri;
     private final String stickerFileSuffix;//file suffix,extension,like ".png",".gif"
+    private String filePath;
 
     public Sticker(String stickerUri) {
         this.stickerUri = stickerUri;
@@ -27,7 +28,7 @@ public class Sticker {
             this.stickerName = stickerUri;
             if (endIndex != -1) {
                 this.stickerFileSuffix = stickerUri.substring(endIndex);
-            }else {
+            } else {
                 this.stickerFileSuffix = "";//default is empty string.
             }
 
@@ -38,7 +39,6 @@ public class Sticker {
                 .append(stickerGroupName).append("/").append(stickerName).append(this.stickerFileSuffix);
         stickerRemoteUri = stringBuilder.toString();
     }
-
 
 
     private String getStickerDownloadBaseUrl() {
@@ -64,6 +64,7 @@ public class Sticker {
     public String getStickerFileSuffix() {
         return stickerFileSuffix;
     }
+
     @Override
     public String toString() {
         return stickerUri;
@@ -75,5 +76,13 @@ public class Sticker {
         if (obj == null || getClass() != obj.getClass()) return false;
         Sticker sticker = (Sticker) obj;
         return stickerUri != null ? stickerUri.equals(sticker.stickerUri) : sticker.stickerUri == null;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 }

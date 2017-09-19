@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
+import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -34,6 +36,8 @@ import com.ihs.inputmethod.framework.KeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
+import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerSuggestionAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.widget.bannerad.KeyboardBannerAdLayout;
@@ -42,7 +46,6 @@ import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
@@ -284,7 +287,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public void removeCustomizeBar(){
+    public void removeCustomizeBar() {
         if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
             keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
         }
@@ -349,8 +352,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
             @Override
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
-                if(HSConfig.optBoolean(false, "Application", "KeyboardToolBar", "GooglePlay", "ShowCameraAd")) {
-                    cameraAdInfoList = (List<Map<String, Object>>)HSConfig.getList("Application", "KeyboardToolBar", "GooglePlay", "CameraAd");
+                if (HSConfig.optBoolean(false, "Application", "KeyboardToolBar", "GooglePlay", "ShowCameraAd")) {
+                    cameraAdInfoList = (List<Map<String, Object>>) HSConfig.getList("Application", "KeyboardToolBar", "GooglePlay", "CameraAd");
 
                     Map<String, Object> item = cameraAdInfoList.get(random.nextInt(cameraAdInfoList.size()));
                     gpAdAdapter.addCameraInfo(item);
@@ -427,7 +430,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             return;
         }
 
-        boolean show = HSConfig.optBoolean(false,"Application", "NativeAds", "KeyboardBannerAd", "Show");
+        boolean show = HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardBannerAd", "Show");
 
         if (!show || !bannerAdSessionList.contains((int) KCKeyboardSession.getCurrentSessionIndexOfDay())
                 || KCFeatureRestrictionConfig.isFeatureRestricted("KeyboardBannerAd")) {
@@ -436,5 +439,29 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
         keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
         keyboardPanelSwitchContainer.setCustomizeBar(new KeyboardBannerAdLayout(HSApplication.getContext()));
+    }
+
+    private View inflate;
+
+    public void showSuggestedStickers(List<Sticker> stickerList) {
+        if (stickerList.size() > 0) {
+            if (inflate == null) {
+                inflate = View.inflate(HSApplication.getContext(), R.layout.view_sticker_suggestion, null);
+                RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.rv_sticker);
+                LinearLayoutManager linearLayoutManager
+                        = new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.HORIZONTAL, false);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                StickerSuggestionAdapter stickerSuggestionAdapter = new StickerSuggestionAdapter(stickerList);
+                recyclerView.setAdapter(stickerSuggestionAdapter);
+            } else {
+                RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.rv_sticker);
+                StickerSuggestionAdapter adapter = (StickerSuggestionAdapter) recyclerView.getAdapter();
+                adapter.refreshData(stickerList);
+            }
+            HSFloatWindowManager.getInstance().showFloatingWindow(inflate,
+                    keyboardPanelSwitchContainer.findViewById(R.id.container_group_wrapper).getHeight(), stickerList.size());
+        } else {
+            HSFloatWindowManager.getInstance().removeFloatingWindow();
+        }
     }
 }
