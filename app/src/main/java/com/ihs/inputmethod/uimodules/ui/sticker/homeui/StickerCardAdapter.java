@@ -22,7 +22,6 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
-import java.util.Set;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -85,6 +84,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
         holder.stickerGroupName.setText(stickerGroup.getStickerGroupName());
         final String realImageUrl = stickerGroup.getStickerGroupDownloadPreviewImageUri();
         if (realImageUrl != null) {
+            holder.stickerRealImage.setImageDrawable(null);
             ImageSize imageSize = new ImageSize(imageWidth, imageHeight);
             ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(holder.stickerRealImage), options, imageSize, null, null);
         }
