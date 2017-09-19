@@ -27,6 +27,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
@@ -114,8 +115,8 @@ public final class TrialKeyboardDialog extends Dialog implements OnClickListener
                     boolean isRateAlertShownThisTime = false;
                     HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
                     if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
-                        if (!HSAlertMgr.isAlertShown()) {
-                            //当前session未显示过
+                        if (!HSAlertMgr.isAlertShown() && !ApkUtils.isRateButtonClicked()) {
+                            //当前session未显示过且用户未点击rate button
                             HSLog.d("TrialKeyboardDialog", "RateAlert当前session未显示过");
                             HSAlertMgr.showRateAlert();
                             if (HSAlertMgr.isAlertShown()) {

@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme;
 
 import android.animation.ObjectAnimator;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -30,9 +29,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -44,7 +40,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
@@ -56,7 +51,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.button.Butt
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font.FontFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.sound.SoundFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView;
-import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
