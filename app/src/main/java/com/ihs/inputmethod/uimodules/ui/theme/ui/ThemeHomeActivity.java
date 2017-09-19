@@ -143,12 +143,10 @@ public class ThemeHomeActivity extends HSAppCompatActivity implements Navigation
         public void onReceive(String s, HSBundle hsBundle) {
             if (CustomThemeActivity
                     .NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS.equals(s)) {
-                if (hsBundle != null) {
-                    if (!PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).getBoolean("CUSTOM_THEME_SAVE", false)) {
-                        PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();
-                    }
-                    showTrialKeyboardDialog(KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH);
+                if (!PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).getBoolean("CUSTOM_THEME_SAVE", false)) {
+                    PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();
                 }
+                showTrialKeyboardDialog(KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH);
             } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.purchase_success), Toast.LENGTH_LONG).show();
                 navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(false);//setVisibility(View.GONE);
