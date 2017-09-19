@@ -19,7 +19,7 @@
         android:title="@string/boost_noti_setting_title" />
 
 
-    <Preference
+    <SwitchPreference
         android:key="@string/setting_key_call_assistant"
         android:title="@string/setting_call_assistant_title" />
 

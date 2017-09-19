@@ -39,7 +39,7 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.Toast;
 
-import com.acb.call.activity.InCallThemePreviewActivity;
+import com.acb.call.CPSettings;
 import com.acb.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
@@ -251,12 +251,15 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
         }
 
         private void setCallAssistant() {
-            Preference preference = findPreference(getResources().getString(R.string.setting_key_call_assistant));
-            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            SwitchPreference preference = (SwitchPreference) findPreference(getResources().getString(R.string.setting_key_call_assistant));
+            boolean defaultCallAssistantValue = HSConfig.getBoolean("Application", "ScreenFlash", "Enable");
+            preference.setDefaultValue(defaultCallAssistantValue);
+            CPSettings.setScreenFlashModuleEnabled(defaultCallAssistantValue);
+            preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent intent = new Intent(getActivity(), InCallThemePreviewActivity.class);
-                    startActivity(intent);
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    boolean isSwitchOn = (boolean) newValue;
+                    CPSettings.setScreenFlashModuleEnabled(isSwitchOn);
                     return true;
                 }
             });

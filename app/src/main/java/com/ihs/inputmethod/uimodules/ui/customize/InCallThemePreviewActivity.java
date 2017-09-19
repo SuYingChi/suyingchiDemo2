@@ -88,7 +88,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
         mCallView = (InCallActionView) findViewById(R.id.in_call_view);
         mCallView.enableFullScreen(false);
-        mCallView.stopAnimations();
         mSetCallThemeButton = (TextView) findViewById(R.id.set_incoming_call_theme);
         initThemesView();
         requestPermissionsIfNeeded();
@@ -104,9 +103,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         super.onStart();
         if (mPreviewView != null) {
             mPreviewView.startAnimations();
-        }
-        if (mCallView != null) {
-            mCallView.doAnimation();
         }
     }
 
@@ -165,11 +161,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         final Type themeType = (Type) getIntent().getSerializableExtra("CallThemeType");
         int themeId = themeType.getValue();
 
-        if (mThemeCurrentSelectedId == Type.NONE && themeId != Type.NONE) {
-            CPSettings.setScreenFlashModuleEnabled(true);
-        } else if (themeId == Type.NONE) {
-            CPSettings.setScreenFlashModuleEnabled(false);
-        }
+        CPSettings.setScreenFlashModuleEnabled(true);
 
         mThemeCurrentSelectedId = themeId;
 
@@ -184,16 +176,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         });
     }
 
-    private int getIndexOfTheme(int themeId) {
-        for (int i = 0; i < mThemeArray.size(); i++) {
-            if (mThemeArray.get(i).getValue() == themeId) {
-                return i;
-            }
-        }
-        // return index of NONE
-        return mThemeArray.size() - 1;
-    }
-
     private void initThemeAnimation(final Type themeType) {
         if (themeType.isGif()) {
             prepareAndShowGif(themeType);
@@ -202,15 +184,15 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
             findViewById(R.id.theme_progress_txt_holder).setVisibility(View.GONE);
             mPreviewView.playAnimation(themeType);
         }
-
-        mCallView.setAutoRun(themeType.getValue() != Type.NONE);
     }
 
     private void prepareAndShowGif(final Type type) {
         if (mGifDownloader.isDownloaded(type.getGifFileName())) {
             mPreviewView.playAnimation(type);
             mSetCallThemeButton.setVisibility(View.VISIBLE);
+            mCallView.setAutoRun(true);
         } else {
+            mCallView.setAutoRun(false);
             mPreviewView.updateThemeLayout(type);
             ImageLoader.getInstance().displayImage(type.getPreviewImage(), (ImageView) mPreviewView.findViewById(R.id.animation_view));
             if (!mGifDownloader.isDownloading(type.getGifFileName())) {

@@ -31,15 +31,17 @@
 
     </android.support.design.widget.AppBarLayout>
     
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/loading_gif_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView
             android:id="@+id/content_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_bar"
             android:background="@color/theme_activity_bg"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -47,11 +49,11 @@
             android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_bar_default_height"
-            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
             android:background="@android:color/white"
             app:itemIconTint="@color/selector_customize_bottom_navigation_color"
             app:itemTextColor="@color/selector_customize_bottom_navigation_color"
             app:menu="@menu/customize_bottom_bar" />
-    </FrameLayout>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

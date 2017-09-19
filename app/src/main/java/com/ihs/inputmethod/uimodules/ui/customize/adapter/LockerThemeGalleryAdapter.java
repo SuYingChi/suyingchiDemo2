@@ -10,32 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.acb.call.themes.Type;
-import com.ihs.commons.config.HSConfig;
-import com.ihs.feature.common.PromotionTracker;
 import com.ihs.feature.common.ViewUtils;
-import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.InCallThemePreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
-import com.ihs.inputmethod.uimodules.ui.customize.view.LockerThemeInfo;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.acb.call.themes.Type.CONFIG_KEY_GIF_URL;
-import static com.acb.call.themes.Type.CONFIG_KEY_HOT;
-import static com.acb.call.themes.Type.CONFIG_KEY_ICON_ACCEPT;
-import static com.acb.call.themes.Type.CONFIG_KEY_ICON_REJECT;
-import static com.acb.call.themes.Type.CONFIG_KEY_ID;
-import static com.acb.call.themes.Type.CONFIG_KEY_ID_NAME;
-import static com.acb.call.themes.Type.CONFIG_KEY_PREVIEW_IMAGE;
-import static com.acb.call.themes.Type.CONFIG_KEY_RES_TYPE;
 
 
 /**
@@ -48,21 +32,13 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
     private static final int ITEM_TYPE_BANNER = 0;
     private static final int ITEM_TYPE_THEME_VIEW = 1;
 
-    private static final String INCOMING_THEME_THUMBNAIL_SUFFIX = ".jpg";
-    private static final String INCOMING_THEME_GIF_SUFFIX = ".gif";
-
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<LockerThemeInfo> mThemes = new ArrayList<>();
-    private boolean mLockerInstalled = false;
-    private String mInComingCallThemeUrl;
+    private ArrayList<Type> mThemes = new ArrayList<>();
 
     public LockerThemeGalleryAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
-        mLockerInstalled = CommonUtils.isPackageInstalled(HSConfig.optString("",
-                "Application", "Promotions", "LockerPackage"));
-        mInComingCallThemeUrl = HSConfig.optString("", "Application", "Server", "IncomingCallThemeURL");
         populateData();
     }
 
@@ -73,15 +49,11 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
 
     @SuppressWarnings("unchecked")
     public void populateData() {
-        List<Map<String, ?>> configs = (List<Map<String, ?>>) HSConfig.getList("Application", "IncomingCallTheme");
         mThemes.clear();
-        for (Map<String, ?> themeConfig : configs) {
-            LockerThemeInfo theme = LockerThemeInfo.ofConfig(themeConfig);
-            if (theme != null) {
-                // Rule out built-in themes of locker. Only take themes with valid package name and thumbnail URL.
-//                theme.installed = CommonUtils.isPackageInstalled(theme.packageName);
-                mThemes.add(theme);
-            }
+        mThemes = Type.values();
+        if (!mThemes.isEmpty()) {
+            mThemes.remove(0);
+            mThemes.remove(mThemes.size()-1);
         }
         notifyDataSetChanged();
     }
@@ -104,26 +76,14 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         return themeHolder;
     }
 
-    public static String getInComingCallThemeThumbnailUrl(String name) {
-        return HSConfig.optString("", "Application", "Server", "IncomingCallThemeURL") + name + INCOMING_THEME_THUMBNAIL_SUFFIX;
-    }
-
-    public static String getInComingCallThemeGifUrl(String name) {
-        return HSConfig.optString("", "Application", "Server", "IncomingCallThemeURL") + name + INCOMING_THEME_GIF_SUFFIX;
-    }
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        int viewType = getItemViewType(position);
-        if (viewType == ITEM_TYPE_BANNER) {
-            return;
-        }
         int themeIndex = position;
         final ThemeViewHolder themeHolder = (ThemeViewHolder) holder;
         holder.itemView.setTag(themeIndex);
-        final LockerThemeInfo theme = mThemes.get(themeIndex);
+        final Type themeType = mThemes.get(themeIndex);
 
-        ImageLoader.getInstance().displayImage(getInComingCallThemeThumbnailUrl(theme.name), themeHolder.themeThumbnail, displayImageOptions);
+        ImageLoader.getInstance().displayImage(themeType.getPreviewImage(), themeHolder.themeThumbnail, displayImageOptions);
     }
 
     @Override
@@ -131,41 +91,16 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         switch (v.getId()) {
             case R.id.grid_root:
                 int pos = (int) v.getTag();
-                LockerThemeInfo themeInfo = mThemes.get(pos);
+                Type themeType = mThemes.get(pos);
                 if (mContext instanceof ThemeHomeActivity) {
                     Intent intent = new Intent(mContext, InCallThemePreviewActivity.class);
-                    String themeName = themeInfo.name;
-                    Map<String, Object> item = new HashMap<>();
-                    item.put(CONFIG_KEY_RES_TYPE, "url");
-                    item.put("Name", themeName);
-                    item.put(CONFIG_KEY_ICON_ACCEPT, "acb_phone_call_answer");
-                    item.put(CONFIG_KEY_ICON_REJECT, "acb_phone_call_refuse");
-                    item.put(CONFIG_KEY_HOT, false);
-                    item.put(CONFIG_KEY_GIF_URL, LockerThemeGalleryAdapter.getInComingCallThemeGifUrl(themeName));
-                    item.put(CONFIG_KEY_PREVIEW_IMAGE, LockerThemeGalleryAdapter.getInComingCallThemeThumbnailUrl(themeName));
-                    item.put(CONFIG_KEY_ID, themeName.hashCode());
-                    item.put(CONFIG_KEY_ID_NAME, themeName);
-                    Type themeType = Type.typeFromMap(item);
-//                    Type.addGifToTypes(themeType);
                     intent.putExtra("CallThemeType", themeType);
-//                    mContext.startActivity(intent);
+                    mContext.startActivity(intent);
                 }
                 break;
-            case R.id.locker_install_btn:
-            case R.id.locker_theme_gallery_banner:
-                String lockerPackage = getLockerPackageName();
-                browseMarketApp(lockerPackage);
-                PromotionTracker.startTracking(lockerPackage, PromotionTracker.EVENT_LOG_APP_NAME_LOCKER);
+            default:
                 break;
         }
-    }
-
-    private String getLockerPackageName() {
-        return HSConfig.optString("", "Application", "Promotions", "LockerPackage");
-    }
-
-    private void browseMarketApp(String packageName) {
-//        CustomizeUtils.browseMarketApp(mServiceHolder.getService(), packageName);
     }
 
     @Override
@@ -199,9 +134,6 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
 
         @Override
         public int getSpanSize(int position) {
-            if (mAdapter.getItemViewType(position) == ITEM_TYPE_BANNER) {
-                return 2;
-            }
             return 1;
         }
     }

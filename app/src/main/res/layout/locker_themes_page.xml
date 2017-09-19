@@ -29,7 +29,5 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/locker_theme_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        android:theme="@style/Theme.CustomOverScroll"/>
+        android:layout_height="match_parent" />
 </com.ihs.inputmethod.uimodules.ui.customize.view.LockerThemePage>
