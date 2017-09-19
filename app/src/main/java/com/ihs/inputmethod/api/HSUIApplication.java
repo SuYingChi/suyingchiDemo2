@@ -261,12 +261,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSInputMethodService.initResourcesBeforeOnCreate();
 
         registerNotificationEvent();
-//        LuckyActivity.installShortCut();
-
-        // 添加桌面入口
-        if (getCurrentLaunchInfo().launchId == 1) {
-            addShortcut();
-        }
 
         // 更新应用在应用列表中的显示或隐藏
         updateLauncherActivityEnabledState();
@@ -421,30 +415,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         } catch (Exception e) {
 
         }
-    }
-
-    private void addShortcut() {
-        if (getSplashActivityClass() == null) {
-            return;
-        }
-
-        CharSequence label = getApplicationInfo().loadLabel(getPackageManager());
-        int iconRes = getApplicationInfo().icon;
-
-        Intent shortcutIntent = new Intent();
-        shortcutIntent.setComponent(new ComponentName(getPackageName(), getSplashActivityClass().getName()));
-        int flags = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
-        shortcutIntent.addFlags(flags);
-        shortcutIntent.setAction(Intent.ACTION_MAIN);
-
-        Intent addIntent = new Intent();
-        addIntent.putExtra("duplicate", false);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, label);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource
-                .fromContext(getApplicationContext(), iconRes));
-        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        getApplicationContext().sendBroadcast(addIntent);
     }
 
     private void initIAP() {
