@@ -302,6 +302,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
         }
         AcbCallManager.initWithDefaultFactory(callAdPlacement);
+        AcbCallManager.setAdPlacement(callAdPlacement);
     }
 
     private void activeAdPlacements() {

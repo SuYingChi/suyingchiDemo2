@@ -41,8 +41,6 @@ Note: You may receive a system reminder about authorizing, RainbowKey will NEVER
     <string name="deeplink_key_word">RainbowKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
     <string name="deeplink_description">Rainbow Keyboard description</string>
 
-    <string name="ad_placement_call_assist">Colorkey_A(NativeAds)Lumen</string>
-
     <string name="theme_share_text_content">My personalized keyboard made with #%1$s \n http://rainbowkey.com</string>
     <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n http://rainbowkey.com</string>
     <string name="settings_button_tell_a_friend_content">Hey, you have to try the app %1$s keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #%2$s For Free:\n http://rainbowkey.com</string>
