@@ -256,7 +256,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         translateAnimation.setFillAfter(true);
         setWallpaperDialog.startAnimation(translateAnimation);
         setWallpaperDialog.setVisibility(View.VISIBLE);
-        mViewPager.setBackgroundColor(0x80000000);
     }
 
     private void hideSetWallpaperSelectDialog() {

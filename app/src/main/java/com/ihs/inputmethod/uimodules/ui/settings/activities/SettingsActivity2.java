@@ -255,9 +255,9 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
 
         private void setCallAssistant() {
             SwitchPreference preference = (SwitchPreference) findPreference(getResources().getString(R.string.setting_key_call_assistant));
-            boolean defaultCallAssistantValue = HSConfig.getBoolean("Application", "ScreenFlash", "Enable");
-            preference.setDefaultValue(defaultCallAssistantValue);
-            CPSettings.setScreenFlashModuleEnabled(defaultCallAssistantValue);
+            boolean screenFlashSetting = CPSettings.isScreenFlashModuleEnabled();
+            preference.setChecked(screenFlashSetting);
+            CPSettings.setScreenFlashModuleEnabled(screenFlashSetting);
             preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {

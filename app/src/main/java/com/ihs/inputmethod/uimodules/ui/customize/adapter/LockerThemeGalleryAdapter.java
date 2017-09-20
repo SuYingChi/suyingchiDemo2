@@ -51,10 +51,6 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
     public void populateData() {
         mThemes.clear();
         mThemes = Type.values();
-        if (!mThemes.isEmpty()) {
-            mThemes.remove(0);
-            mThemes.remove(mThemes.size()-1);
-        }
         notifyDataSetChanged();
     }
 

@@ -1683,7 +1683,7 @@
 							<string>走馬燈</string>
 						</dict>
 						<key>PreviewImage</key>
-						<string></string>
+						<string>https://emojidevelop.s3.amazonaws.com/AndroidResource/download/incoming_call_themes/Default.jpg</string>
 						<key>ResType</key>
 						<string>url</string>
 					</dict>

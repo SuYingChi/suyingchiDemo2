@@ -162,8 +162,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         final Type themeType = (Type) getIntent().getSerializableExtra("CallThemeType");
         int themeId = themeType.getValue();
 
-        CPSettings.setScreenFlashModuleEnabled(true);
-
         mThemeCurrentSelectedId = themeId;
 
         initThemeAnimation(themeType);
@@ -172,6 +170,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
             @Override
             public void onClick(View v) {
                 HSAnalytics.logEvent("app_callflash_applied", themeType.getName());
+                CPSettings.setScreenFlashModuleEnabled(true);
                 HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeType.getValue());
                 ToastUtils.showToast(R.string.incoming_call_theme_success);
             }
@@ -184,6 +183,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         } else {
             findViewById(R.id.theme_progress_bar).setVisibility(View.GONE);
             findViewById(R.id.theme_progress_txt_holder).setVisibility(View.GONE);
+            mSetCallThemeButton.setVisibility(View.VISIBLE);
             mPreviewView.playAnimation(themeType);
         }
     }

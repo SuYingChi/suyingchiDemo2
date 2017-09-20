@@ -51,7 +51,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="@dimen/create_theme_button_margin_bottom"
+        android:layout_marginBottom="5dp"
         app:fabSize="normal"
         app:borderWidth="0dp"
         app:backgroundTint="@color/colorPrimary"
