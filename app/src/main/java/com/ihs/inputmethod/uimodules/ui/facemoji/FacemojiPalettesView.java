@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -72,14 +71,13 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     public FacemojiPalettesView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
-        TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs, R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
-
+//        TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs, R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
 //		final StateListDrawable deleteKeyDrawable = new StateListDrawable();
 //		deleteKeyDrawable.addState(new int[] { android.R.attr.state_pressed }, HSKeyboardThemeManager.getStyledDrawable(null, "tabbar_gif_delete_pressed.png"));
 //		deleteKeyDrawable.addState(new int[] {}, HSKeyboardThemeManager.getStyledDrawable(null, "tabbar_gif_delete.png"));
 //		mDeleteKeyBackgroundDrawable = deleteKeyDrawable;
 
-        keyboardViewAttr.recycle();
+//        keyboardViewAttr.recycle();
 
         Resources res = context.getResources();
         mStickerLayoutParams = new FacemojiLayoutParams(res);

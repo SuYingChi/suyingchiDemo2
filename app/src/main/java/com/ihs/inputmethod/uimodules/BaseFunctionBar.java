@@ -25,7 +25,6 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -35,7 +34,6 @@ import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
-import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
@@ -107,6 +105,21 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         imageView.setOnClickListener(this);
         imageView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
         functionLayout.addView(imageView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
+
+        //站位View
+        View emptyView = new View(HSApplication.getContext());
+        LayoutParams emptyViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,0);
+        emptyViewLayoutParams.weight = 1;
+        functionLayout.addView(emptyView,emptyViewLayoutParams);
+
+        //FaceMojiView
+        ImageView facemojiView = new ImageView(getContext());
+        facemojiView.setImageResource(R.drawable.creating_thumbnail);
+        facemojiView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        facemojiView.setId(R.id.func_facemoji_button);
+        facemojiView.setOnClickListener(this);
+        facemojiView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+        functionLayout.addView(facemojiView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
 
@@ -199,10 +212,10 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         if (onFunctionBarClickListener != null) {
             onFunctionBarClickListener.onFunctionBarItemClick(view);
         }
-        if (view == imageView) {
-            KCAnalyticUtil.logEvent("FunctionBarGiftAd_click");
-            GiftInterstitialHelper.showInterstitialGiftAd(getResources().getString(R.string.ad_placement_gift_ad));
-        }
+//        if (view == imageView) {
+//            KCAnalyticUtil.logEvent("FunctionBarGiftAd_click");
+//            GiftInterstitialHelper.showInterstitialGiftAd(getResources().getString(R.string.ad_placement_gift_ad));
+//        }
     }
 
     public void setFunctionEnable(boolean enabled) {

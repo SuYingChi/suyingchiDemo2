@@ -34,6 +34,7 @@ import com.ihs.inputmethod.framework.KeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
+import com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.widget.bannerad.KeyboardBannerAdLayout;
@@ -42,7 +43,6 @@ import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
@@ -227,6 +227,11 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             intent.putExtra("From", "Keyboard");
             HSApplication.getContext().startActivity(intent);
             HSAnalytics.logEvent("keyboard_cloth_button_click");
+        }
+
+        if (view.getId() == R.id.func_facemoji_button){
+            keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSFacemojiPanel.class);
+            keyboardPanelSwitchContainer.setBarVisibility(GONE);
         }
     }
 

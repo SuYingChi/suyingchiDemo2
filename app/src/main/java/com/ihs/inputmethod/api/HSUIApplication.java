@@ -39,6 +39,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.device.permanent.HSPermanentUtils;
 import com.ihs.device.permanent.PermanentService;
+import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.feature.battery.BatteryActivity;
 import com.ihs.feature.boost.plus.BoostPlusActivity;
 import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
@@ -46,6 +47,7 @@ import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
+import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.managers.HSDirectoryManager;
@@ -55,7 +57,6 @@ import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.FacemojiHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
@@ -65,6 +66,7 @@ import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.LauncherActivity;
+import com.keyboard.common.MainActivity;
 import com.keyboard.core.themes.ThemeDirManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -124,22 +126,21 @@ public class HSUIApplication extends HSInputMethodApplication {
         if (intent == null) {
             intent = new Intent();
         }
-        intent.setClass(this, FacemojiHomeActivity.class);
 
-//        // need to pass the intent to the main activity
-//        if (!TextUtils.isEmpty(intent.getScheme())) {
-//            intent.setClass(this, MainActivity.class);
-//        } else if (isAccessibilityEnabled) {
-//            if (!HSAccessibilityService.isAvailable()) {
-//                intent.setClass(this, MainActivity.class);
-//            } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-//                intent.setClass(this, KeyboardWakeUpActivity.class);
-//            } else {
-//                intent.setClass(this, MainActivity.class);
-//            }
-//        } else {
-//            intent.setClass(this, MainActivity.class);
-//        }
+        // need to pass the intent to the main activity
+        if (!TextUtils.isEmpty(intent.getScheme())) {
+            intent.setClass(this, MainActivity.class);
+        } else if (isAccessibilityEnabled) {
+            if (!HSAccessibilityService.isAvailable()) {
+                intent.setClass(this, MainActivity.class);
+            } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
+                intent.setClass(this, KeyboardWakeUpActivity.class);
+            } else {
+                intent.setClass(this, MainActivity.class);
+            }
+        } else {
+            intent.setClass(this, MainActivity.class);
+        }
         splashActivity.startActivity(intent);
     }
 
