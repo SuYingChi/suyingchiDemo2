@@ -19,7 +19,12 @@ libCommons:
         AppPackage: "com.amazon.venezia"
         AppUrl: "amzn://apps/android?p="
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
-      
+  Connection:
+     SigKey: "801_1"
+     HashKey: "7x^;3l}]ia,K`O%bhp!e,YkbB]G4,YN2"
+     EncryptionKey: "<a?!?l'Ec\"_.}_<DUU~[b_~B\"~<?~?/<"
+     EncryptionKeyVersion: "1"
+
 libFramework:
   Push:
     SenderID: "805407701758"
