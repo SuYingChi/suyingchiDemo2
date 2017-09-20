@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+    <color name="input_security_check_ad_subtitle">@color/ad_engine_ad_subtitle</color>
+    <string name="input_security_check_alert_title">Input Security Check</string>
+    <string name="input_security_check_security_level">SECURITY LEVEL :</string>
+    <string name="input_security_check_security_level_value_default">HIGH</string>
+    <string name="input_security_check_setting_preference_key">ad_engine_input_security_check</string>
+    <string name="input_security_check_preference_key">input_security_check</string>
+</resources>
