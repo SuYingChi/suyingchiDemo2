@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -54,8 +55,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.view.PreviewViewPage;
 import com.ihs.inputmethod.uimodules.ui.customize.view.ProgressDialog;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity;
 import com.ihs.keyboardutils.utils.ToastUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -153,9 +152,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         }
     }
 
-    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
-
     @DebugLog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,7 +190,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     @Override
     public void onBackPressed() {
-        if(setWallpaperDialog.getVisibility() == View.VISIBLE) {
+        if (setWallpaperDialog.getVisibility() == View.VISIBLE) {
             hideSetWallpaperSelectDialog();
         } else {
             super.onBackPressed();
@@ -264,7 +260,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         translateAnimation.setFillAfter(true);
         setWallpaperDialog.startAnimation(translateAnimation);
         setWallpaperDialog.setVisibility(View.INVISIBLE);
-//        mViewPager.setAlpha(0);
         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -361,31 +356,9 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 }
                 mDialog = ProgressDialog.createDialog(WallpaperPreviewActivity.this, getString(R.string.key_theme_loading_progress_dialog_text));
                 mDialog.show();
-                mDialog.setCancelable(false);
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            File file = Glide.with(WallpaperPreviewActivity.this)
-                                    .download(mCurrentWallpaper.getWallpaperUrl()).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
-                            mDialog.dismiss();
-                            String path = file.getAbsolutePath();
-                            final Resources res = getResources();
-                            final int keyboardWidth = HSResourceUtils.getDefaultKeyboardWidth(res);
-                            final int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(res);
-                            Intent intent = new Intent(WallpaperPreviewActivity.this, CustomThemeBackgroundCropperActivity.class);
-                            intent.putExtra("fromWallpaper", TAG);
-                            intent.putExtra(CopperImagePath, path);
-                            intent.putExtra(KeyboardWidth, keyboardWidth);
-                            intent.putExtra(KeyboardHeight, keyboardHeight);
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-                thread.start();
+                mDialog.setCancelable(true);
+                GetFilePathTask getFilePathTask = new GetFilePathTask();
+                getFilePathTask.execute(mCurrentWallpaper.getWallpaperUrl());
                 break;
             case R.id.set_home_screen:
                 HSAnalytics.logEvent("app_wallpaper_setwallpaper_homescreen_clicked", mCurrentWallpaper.getName());
@@ -403,7 +376,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 setLockerScreenWallpaper();
                 setHomeScreenWallpaper();
                 break;
-
         }
 
     }
@@ -534,7 +506,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             return;
         }
 
-        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA);
 
         RequestListener<Drawable> requestListener = new RequestListener<Drawable>() {
             @Override
@@ -619,6 +591,39 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
+        }
+    }
+
+    class GetFilePathTask extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                File file = Glide.with(WallpaperPreviewActivity.this)
+                        .download(params[0]).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+                String path = file.getAbsolutePath();
+                return path;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            mDialog.dismiss();
+            if (result == null) {
+                ToastUtils.showToast(getString(R.string.key_theme_loading_fail));
+            }
+            final Resources res = getResources();
+            final int keyboardWidth = HSResourceUtils.getDefaultKeyboardWidth(res);
+            final int keyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(res);
+            Intent intent = new Intent(WallpaperPreviewActivity.this, CustomThemeBackgroundCropperActivity.class);
+            intent.putExtra("fromWallpaper", TAG);
+            intent.putExtra(CopperImagePath, result);
+            intent.putExtra(KeyboardWidth, keyboardWidth);
+            intent.putExtra(KeyboardHeight, keyboardHeight);
+            startActivity(intent);
         }
     }
 

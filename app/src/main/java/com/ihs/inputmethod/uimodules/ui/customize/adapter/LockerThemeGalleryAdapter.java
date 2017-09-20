@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.acb.call.themes.Type;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.InCallThemePreviewActivity;
@@ -17,9 +20,10 @@ import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+
+import static com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.withCrossFade;
 
 
 /**
@@ -47,7 +51,6 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
             .showImageOnLoading(R.drawable.locker_theme_thumbnail_loading)
             .cacheOnDisk(true).build();
 
-    @SuppressWarnings("unchecked")
     public void populateData() {
         mThemes.clear();
         mThemes = Type.values();
@@ -56,7 +59,7 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
 
     @Override
     public int getItemCount() {
-        return mThemes.size();
+        return mThemes.size()-1;
     }
 
     @Override
@@ -79,7 +82,13 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         holder.itemView.setTag(themeIndex);
         final Type themeType = mThemes.get(themeIndex);
 
-        ImageLoader.getInstance().displayImage(themeType.getPreviewImage(), themeHolder.themeThumbnail, displayImageOptions);
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.locker_theme_thumbnail_loading)
+                .error(R.drawable.locker_theme_thumbnail_failed).diskCacheStrategy(DiskCacheStrategy.DATA);
+        Glide.with(mContext).asBitmap().apply(requestOptions)
+                .load(themeType.getPreviewImage()).transition(withCrossFade(500))
+                .into(themeHolder.themeThumbnail);
+
+//        ImageLoader.getInstance().displayImage(themeType.getPreviewImage(), themeHolder.themeThumbnail, displayImageOptions);
     }
 
     @Override

@@ -25,12 +25,14 @@ import com.acb.call.themes.Type;
 import com.acb.call.utils.Utils;
 import com.acb.call.views.InCallActionView;
 import com.acb.call.views.ThemePreviewWindow;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.ToastUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -196,7 +198,11 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         } else {
             mCallView.setAutoRun(false);
             mPreviewView.updateThemeLayout(type);
-            ImageLoader.getInstance().displayImage(type.getPreviewImage(), (ImageView) mPreviewView.findViewById(R.id.animation_view));
+//            ImageLoader.getInstance().displayImage(type.getPreviewImage(), (ImageView) mPreviewView.findViewById(R.id.animation_view));
+            RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA);
+            Glide.with(this).asBitmap().apply(requestOptions)
+                    .load(type.getPreviewImage())
+                    .into((ImageView) mPreviewView.findViewById(R.id.animation_view));
             if (!mGifDownloader.isDownloading(type.getGifFileName())) {
                 downloadGif(type);
             } else {

@@ -135,12 +135,6 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
             case WALLPAPER_FOOTER_VIEW_LOAD_MORE:
                 mFooterViewHolder = new FooterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.load_more_auto, parent, false));
                 return mFooterViewHolder;
-//            case WALLPAPER_FOOTER_VIEW_NO_MORE:
-//                View noMoreView = LayoutInflater.from(parent.getContext()).inflate(
-//                        R.layout.gallery_no_more_foot_item, parent, false);
-//                FootViewHolder footHolder = new FootViewHolder(noMoreView);
-//                footHolder.tvFoot.setText(R.string.online_3d_wallpaper_foot_text);
-//                return footHolder;
         }
         return null;
     }
@@ -152,7 +146,7 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
                 mMaxVisiblePosition = Math.max(mMaxVisiblePosition, position);
                 WallpaperInfo info = (WallpaperInfo) mDataSet.get(position);
                 RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.wallpaper_loading)
-                        .error(R.drawable.wallpaper_load_failed).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+                        .error(R.drawable.wallpaper_load_failed).diskCacheStrategy(DiskCacheStrategy.DATA);
                 Glide.with(holder.itemView.getContext()).asBitmap().apply(requestOptions)
                         .load(info.getThumbnailUrl()).transition(withCrossFade(500))
                         .into(((ImageViewHolder) holder).mImageView);
@@ -197,6 +191,7 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
         for (Object item : mDataSet) {
             if (item instanceof WallpaperInfo) {
                 allWallpapers.add((WallpaperInfo) item);
+                wallpapersToPreview.add((WallpaperInfo) item);
             }
         }
         WallpaperInfo clickedWallpaper = allWallpapers.get(positionInAllWallpapers);

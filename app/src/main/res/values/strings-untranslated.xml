@@ -31,6 +31,7 @@
     <string name="home_and_locker_screen">Home and lock screens</string>
     <string name="may_contains_ads">May Contain Ads</string>
     <string name="key_theme_loading_progress_dialog_text">Loading Key Theme...</string>
+    <string name="key_theme_loading_fail">Loading key theme failed, please try again...</string>
 
     <!-- In Call Theme -->
     <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>

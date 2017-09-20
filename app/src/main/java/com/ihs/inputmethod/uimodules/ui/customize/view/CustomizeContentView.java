@@ -1,11 +1,11 @@
 package com.ihs.inputmethod.uimodules.ui.customize.view;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -104,7 +104,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
                 return;
             }
             String tag = FRAGMENT_TAG[position];
-            FragmentManager fragmentManager = ((AppCompatActivity)mContext).getFragmentManager();
+            FragmentManager fragmentManager = ((Activity)mContext).getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
 

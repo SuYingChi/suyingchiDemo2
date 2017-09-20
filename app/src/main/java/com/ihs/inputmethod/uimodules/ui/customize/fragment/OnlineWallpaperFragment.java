@@ -24,7 +24,7 @@ public class OnlineWallpaperFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = (OnlineWallpaperPage) inflater.inflate(R.layout.online_wallpaper_page, container, false);
+        View view = inflater.inflate(R.layout.online_wallpaper_page, container, false);
         ((OnlineWallpaperPage) view).setup(0);
         return view;
     }
