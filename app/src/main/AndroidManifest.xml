@@ -164,13 +164,6 @@
         </activity>
 
         <!-- FaceMoji -->
-        <activity android:name=".ui.facemoji.ui.FacemojiHomeActivity">
-            <intent-filter>
-                <action android:name="${applicationId}.keyboard.main" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
         <activity
             android:name="com.ihs.inputmethod.uimodules.ui.facemoji.ui.MyFacemojiActivity"
             android:label="@string/app_name"

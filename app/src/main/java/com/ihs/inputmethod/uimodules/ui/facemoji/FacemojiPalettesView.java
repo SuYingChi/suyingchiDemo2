@@ -81,7 +81,6 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
         Resources res = context.getResources();
         mStickerLayoutParams = new FacemojiLayoutParams(res);
-        this.setBackgroundColor(getResources().getColor(R.color.face_moji_panel_bg));
     }
 
     @Override

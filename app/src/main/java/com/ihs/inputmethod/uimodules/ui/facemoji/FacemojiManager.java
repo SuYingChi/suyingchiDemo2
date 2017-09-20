@@ -511,8 +511,8 @@ public class FacemojiManager {
     }
 
     static class FacemojiPalettesParam {
-        static final int SIZE = 8;
-        static final int COL = 4;
+        static final int SIZE = 6;
+        static final int COL = 3;
         static final int ROW = 2;
         static final int ROW_LANDSCAPE = 1;
     }
