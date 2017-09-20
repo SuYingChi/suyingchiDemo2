@@ -151,6 +151,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView ivProgress;
     private TextView tvProgress;
     private LinearLayout progressLayout;
+    private boolean hasPlayed = false;
 
     private static final int AD_LOAD_MAX_WAIT_TIME = HSConfig.optInteger(3000, "Application", "CurrentTheme", "LaunchDelayTime");
     private static final int NAVIGATION_MAIN_PAGE = 1;
@@ -298,6 +299,11 @@ public class MainActivity extends HSDeepLinkActivity {
         launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+                    progressLayout.setVisibility(View.VISIBLE);
+                    progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                    hasPlayed = true;
+                }
                 if (isSettingButtonAnimationPlayed) {
                     HSLog.w("setting button already showed.");
                     return;
@@ -603,8 +609,10 @@ public class MainActivity extends HSDeepLinkActivity {
                 @Override
                 public void run() {
                     if (!isSettingButtonAnimationPlayed) {
-                        progressLayout.setVisibility(View.VISIBLE);
-                        progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                        if (!hasPlayed) {
+                            progressLayout.setVisibility(View.VISIBLE);
+                            progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                        }
                         HSLog.w("show setting button in abnormal way");
                     }
                 }
