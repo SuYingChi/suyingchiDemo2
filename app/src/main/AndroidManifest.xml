@@ -32,6 +32,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <!-- 新增权限 -->
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <application>
         <activity
             android:name=".ui.theme.ui.ThemeHomeActivity"
@@ -40,6 +41,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".ui.customize.CustomizeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".ui.customize.WallpaperPreviewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name=".ui.theme.ui.ThemeDownloadActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
@@ -61,6 +73,10 @@
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity android:name=".ui.customize.InCallThemePreviewActivity"
+            android:theme="@style/CPSettingsActivityTheme"/>
+
 
         <!-- 给applovin配置sdk key，注意，master keyboard需要另外的key -->
         <meta-data
@@ -84,6 +100,12 @@
             android:theme="@style/BaseWallpaperTheme" />
 
         <service android:name="com.ihs.inputmethod.api.WakeKeyboardService" />
+        <service
+            android:name=".ui.customize.service.CustomizeService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
         <service
             android:name="com.ihs.devicemonitor.accessibility.HSAccessibilityService"
             android:label="@string/english_service_label"

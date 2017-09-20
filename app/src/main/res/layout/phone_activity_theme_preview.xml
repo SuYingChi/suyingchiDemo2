@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical">
+
+    <com.acb.call.views.ThemePreviewWindow
+        android:id="@+id/flash_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000" />
+
+    <com.acb.call.views.InCallActionView
+        android:id="@+id/in_call_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp">
+
+    </com.acb.call.views.InCallActionView>
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/set_incoming_call_theme"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:background="#80000000"
+        android:text="@string/set_incoming_call_theme"
+        android:fontFamily="sans-serif-medium"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:lineSpacingExtra="-3sp"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/theme_progress_bar"
+        style="@style/AcbProgressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginStart="40dp"
+        android:progress="0"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/theme_progress_txt_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/theme_progress_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/acb_theme_loading"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/theme_progress_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:minWidth="48dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/ScreenFlashSettingsPop">
+
+    </android.support.v7.widget.Toolbar>
+</RelativeLayout>

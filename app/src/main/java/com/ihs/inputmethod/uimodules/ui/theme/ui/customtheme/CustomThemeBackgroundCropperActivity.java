@@ -16,11 +16,9 @@ import android.widget.LinearLayout;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSMatrixImageView;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
-import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -101,10 +99,18 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 Bitmap cropperBitmap = takeViewShot(cropperImageView, imageMaskViewLocation[0] - imageViewLocation[0], imageMaskViewLocation[1] - imageViewLocation[1], keyboardWidth, keyboardHeight);
                 //HSKeyboardThemeManager.getCustomThemeData().setCustomizedBitmap(cropperBitmap);
                 String cropperImagePath = KCCustomThemeData.saveCustomizedBackgroundBitmap(cropperBitmap, oldCropperImagePath);
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("CropperImagePath", cropperImagePath);
-                setResult(Activity.RESULT_OK, resultIntent);
-                CustomThemeBackgroundCropperActivity.this.finish();
+
+                if (getIntent().getStringExtra("fromWallpaper") != null) {
+                    Intent intent = new Intent(CustomThemeBackgroundCropperActivity.this, CustomThemeActivity.class);
+                    intent.putExtra("CropperImagePath", cropperImagePath);
+                    intent.putExtra("fromCropper", CustomThemeBackgroundCropperActivity.class.getSimpleName());
+                    startActivity(intent);
+                } else {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("CropperImagePath", cropperImagePath);
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    CustomThemeBackgroundCropperActivity.this.finish();
+                }
             }
         });
     }

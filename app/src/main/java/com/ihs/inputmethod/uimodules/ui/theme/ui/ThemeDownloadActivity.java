@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -57,6 +58,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private FloatingActionButton createThemeButton;
     private ArrayList<Class> fragments;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
 
@@ -109,8 +111,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         toolbar.setTitle(downloadTitle);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.download_page_trigger).setVisibility(View.GONE);
-
         tabLayout = (TabLayout) findViewById(R.id.store_tab);
 
         viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
@@ -133,25 +133,13 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         if (getIntent() != null && getIntent().getBooleanExtra(BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
             keyboardActivationProcessor.activateKeyboard(ThemeDownloadActivity.this, false, keyboardActivationFromDownload);
         }
-        findViewById(R.id.home_create_theme_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Bundle bundle = new Bundle();
-                String customEntry = "mytheme_float_button";
-                bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                CustomThemeActivity.startCustomThemeActivity(bundle);
-
-                HSAnalytics.logEvent("customize_entry_clicked", "mythemes");
-            }
-        });
 
         fragments = new ArrayList<>();
         fragments.add(MyThemeFragment.class);
         fragments.add(MyStickerFragment.class);
         fragments.add(MyFontFragment.class);
 
-        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getFragmentManager(), fragments);
         String[] tabTitles = new String[3];
         tabTitles[0] = getApplicationContext().getString(R.string.tab_theme_my);
         tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker_my);
@@ -164,13 +152,14 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
         int position = getIntent().getIntExtra("currentTab", 0);
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         tab.select();
-        LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
+        createThemeButton = (FloatingActionButton) findViewById(R.id.home_create_theme_layout);
+        createThemeButton.setOnClickListener(this);
         if (position == 0) {
-            layout.setVisibility(View.VISIBLE);
+            createThemeButton.setVisibility(View.VISIBLE);
         } else if (position == 1) { //my sticker
-            layout.setVisibility(View.GONE);
+            createThemeButton.setVisibility(View.GONE);
         } else if (position == 2) { // my font
-            layout.setVisibility(View.GONE);
+            createThemeButton.setVisibility(View.GONE);
         }
 
         setTabListener();
@@ -255,11 +244,10 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
-                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
                 if (tab.getPosition() == 0) {
-                    layout.setVisibility(View.VISIBLE);
+                    createThemeButton.setVisibility(View.VISIBLE);
                 } else {
-                    layout.setVisibility(View.GONE);
+                    createThemeButton.setVisibility(View.GONE);
                 }
             }
         });
@@ -268,11 +256,10 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                LinearLayout layout = (LinearLayout) findViewById(R.id.home_create_theme_layout);
                 if (position == 0) {
-                    layout.setVisibility(View.VISIBLE);
+                    createThemeButton.setVisibility(View.VISIBLE);
                 } else {
-                    layout.setVisibility(View.GONE);
+                    createThemeButton.setVisibility(View.GONE);
                 }
             }
         });
@@ -378,6 +365,14 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements Keyboa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.home_create_theme_layout:
+                Bundle bundle = new Bundle();
+                String customEntry = "mytheme_float_button";
+                bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
+                CustomThemeActivity.startCustomThemeActivity(bundle);
+
+                HSAnalytics.logEvent("customize_entry_clicked", "mythemes");
+                break;
             default:
         }
     }
