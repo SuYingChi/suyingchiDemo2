@@ -48,6 +48,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -58,6 +59,7 @@ import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIApplication;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -290,7 +292,6 @@ public class MainActivity extends HSDeepLinkActivity {
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 HSLog.e("MainActivity mp4 play error: what = " + what + " extra = " + extra);
                 startThemeHomeActivity();
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
                 return true;
             }
         });
@@ -301,7 +302,7 @@ public class MainActivity extends HSDeepLinkActivity {
                     HSLog.w("setting button already showed.");
                     return;
                 }
-                if (shouldShowThemeHome()) {
+                if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
                     startThemeHomeActivity();
                 }
             }
@@ -601,7 +602,7 @@ public class MainActivity extends HSDeepLinkActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+                    if (!isSettingButtonAnimationPlayed) {
                         progressLayout.setVisibility(View.VISIBLE);
                         progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
                         HSLog.w("show setting button in abnormal way");
@@ -689,6 +690,7 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onDestroy();
         HSLog.d("MainActivity onDestroy.");
         needActiveThemePkName = null;
+        HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
 
 
         FrameLayout videoviewFrame = (FrameLayout) findViewById(R.id.launch_mp4_view);
@@ -762,8 +764,9 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         HSLog.d("MainActivity startThemeHomeActivity start.");
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-        startThemeHomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
-
+        if(!shouldShowThemeHome()){
+            startThemeHomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
+        }
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
@@ -780,7 +783,9 @@ public class MainActivity extends HSDeepLinkActivity {
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
-        overridePendingTransition(0, 0);
+        if(!shouldShowThemeHome()){
+            overridePendingTransition(0, 0);
+        }
         finish();
     }
 
@@ -806,7 +811,6 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
             }
         });
         set.setDuration(500).start();
@@ -836,7 +840,6 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
             }
         });
         set.setDuration(500).start();
