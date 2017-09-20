@@ -41,7 +41,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/text_one"
-            android:src="@drawable/app_button_guide_choose" />
+            android:src="@drawable/app_button_guide_choose"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/view_enter_one"
@@ -52,7 +53,8 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/text_one"
             android:padding="4dp"
-            android:src="@drawable/app_button_guide_enter" />
+            android:src="@drawable/app_button_guide_enter"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/text_one"
@@ -65,7 +67,8 @@
             android:text="@string/toast_enable_keyboard"
             android:textColor="#ffffff"
             android:textSize="@dimen/button_guide_textsize"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 
@@ -85,7 +88,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/text_two"
-            android:src="@drawable/app_button_guide_choose" />
+            android:src="@drawable/app_button_guide_choose"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/view_enter_two"
@@ -96,7 +100,8 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/text_two"
             android:padding="4dp"
-            android:src="@drawable/app_button_guide_enter" />
+            android:src="@drawable/app_button_guide_enter"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/text_two"
@@ -109,7 +114,8 @@
             android:text="@string/toast_select_keyboard"
             android:textColor="#ffffff"
             android:textSize="@dimen/button_guide_textsize"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -169,5 +175,31 @@
         android:textColor="#727272"
         android:textSize="12sp"
         android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="75dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="5.4dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="75dp"/>
+
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:textStyle="bold"
+            android:textSize="22sp"/>
+    </LinearLayout>
 
 </android.support.percent.PercentRelativeLayout>
