@@ -104,7 +104,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         mTabHost = (TabHost) findViewById(R.id.facemoji_category_tabhost);
         mTabHost.setup();
-        for (int i = 0; i < FacemojiManager.getCategories().size(); i++) {
+        for (int i = 0; i < FacemojiManager.getInstance().getClassicCategories().size(); i++) {
             addTab(mTabHost, i);
         }
         mTabHost.setOnTabChangedListener(this);
@@ -124,7 +124,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         mImagePager.setOffscreenPageLimit(0);
         mImagePager.setPersistentDrawingCache(ViewGroup.PERSISTENT_NO_CACHE);
 
-        setCurrentCategoryId(FacemojiManager.getCurrentCategoryId());
+        setCurrentCategoryId(FacemojiManager.getInstance().getCurrentCategoryId());
 
         navigation_bar = (RelativeLayout) findViewById(R.id.navigation_bar);
         LinearLayout.LayoutParams navigation_bar_param = (LinearLayout.LayoutParams) navigation_bar.getLayoutParams();
@@ -237,7 +237,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     }
 
     private void addTab(TabHost host, int categoryId) {
-        String tabId = FacemojiManager.getCategoryName(categoryId);
+        String tabId = FacemojiManager.getInstance().getCategoryName(FacemojiManager.FacemojiType.CLASSIC,categoryId);
         TabHost.TabSpec tspec = host.newTabSpec(tabId);
         tspec.setContent(R.id.facemoji_dummy);
         View v = LayoutInflater.from(this).inflate(R.layout.facemoji_tab_icon_app, null);
@@ -249,7 +249,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         int margin = (int) getResources().getDimension(R.dimen.facemoji_category_bar_icon_margin);
         iconParam.setMargins(0, margin, 0, margin);
         iconView.setLayoutParams(iconParam);
-        iconView.setImageDrawable(FacemojiManager.getCategories().get(categoryId).getCategoryIcon());
+        iconView.setImageDrawable(FacemojiManager.getInstance().getClassicCategories().get(categoryId).getCategoryIcon());
         iconView.setBackgroundDrawable(getTabbarCategoryIconBackground());
         tspec.setIndicator(v);
         host.addTab(tspec);
@@ -257,14 +257,14 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
     private void setCurrentCategoryId(int categoryId) {
 
-        int oldCategoryId = FacemojiManager.getCurrentCategoryId();
+        int oldCategoryId = FacemojiManager.getInstance().getCurrentCategoryId();
         if (oldCategoryId == categoryId) {
             return;
         }
 
         mImagePager.setCurrentItem(categoryId, true /* smoothScroll */);
         mTabHost.setCurrentTab(categoryId);
-        FacemojiManager.setCurrentCategoryId(categoryId);
+        FacemojiManager.getInstance().setCurrentCategoryId(categoryId);
     }
 
 
@@ -282,7 +282,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     @Override
     public void onPageSelected(int position) {
         setCurrentCategoryId(position);
-        FacemojiManager.setCurrentCategoryId(position);
+        FacemojiManager.getInstance().setCurrentCategoryId(position);
         mCurrentPagerPosition = position;
     }
 
@@ -360,7 +360,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         HSFileUtils.copyFile(srcFile, dstFile);
 
         // Reload faces collection
-        FacemojiManager.loadFaceList();
+        FacemojiManager.getInstance().loadFaceList();
         FacemojiManager.setCurrentFacePicUri(Uri.fromFile(dstFile));
     }
 

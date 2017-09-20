@@ -4,46 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/facemoji_keyboard_pager"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-    <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiViewPager
-        android:id="@+id/facemoji_keyboard_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!--<joykeyboard.inputmethod.panels.facemoji.FacemojiCategoryPageIndicatorView-->
-        <!--android:id="@+id/facemoji_category_page_id_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="2dp"/>-->
-
-        <com.ihs.inputmethod.uimodules.widget.KeyboardProgressView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
-            android:id="@+id/share_progress_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:background="@color/keyboard_progress_view_bg"
-            android:visibility="gone"/>
-
-    </FrameLayout>
-
-    <FrameLayout
-        style="?attr/suggestionStripViewStyle"
-        android:gravity="center_vertical"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TabHost
             android:id="@+id/facemoji_keyboard_category_tabhost"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
             android:layout_height="match_parent">
 
             <HorizontalScrollView
@@ -74,14 +44,103 @@
             </FrameLayout>
         </TabHost>
 
-        <ImageButton
-            android:id="@+id/facemoji_keyboard_delete"
+        <LinearLayout
+            android:id="@+id/switch_face"
+            android:background="@drawable/switch_face_bg"
             android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_gravity="center_vertical|right"
-            android:paddingRight="14dp"
-            android:hapticFeedbackEnabled="false"
-            android:soundEffectsEnabled="false" />
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="替换图片"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/icon_arrow_toward_bottom"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/facemoji_keyboard_pager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+    <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiViewPager
+        android:id="@+id/facemoji_keyboard_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--<joykeyboard.inputmethod.panels.facemoji.FacemojiCategoryPageIndicatorView-->
+        <!--android:id="@+id/facemoji_category_page_id_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="2dp"/>-->
+
+        <com.ihs.inputmethod.uimodules.widget.KeyboardProgressView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:id="@+id/share_progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/keyboard_progress_view_bg"
+            android:visibility="gone"/>
+
     </FrameLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/config_suggestions_strip_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/keyboard_alphabet_left"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/emoticon_panel_actionbar_height"
+            android:paddingLeft="15dp"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:hapticFeedbackEnabled="false"
+            android:soundEffectsEnabled="false" />
+
+        <ImageButton
+            android:id="@+id/new_facemoji_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tab_facemoji"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:id="@+id/classic_facemoji_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tab_facemoji"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            />
+
+        <ImageButton
+            android:id="@+id/facemoji_keyboard_delete"
+            android:layout_width="0dp"
+            android:scaleType="fitEnd"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingRight="15dp"
+            android:hapticFeedbackEnabled="false"
+            android:soundEffectsEnabled="false" />
+    </LinearLayout>
 </LinearLayout>

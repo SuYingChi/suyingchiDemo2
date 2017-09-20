@@ -20,6 +20,8 @@ class FacemojiPalettesAdapter extends PagerAdapter {
     private static final int GRID_COLUMN_NUMBER = 2;
     private static final int GRID_ROW_NUMBER = 3;
 
+    private FacemojiManager.FacemojiType facemojiType = FacemojiManager.FacemojiType.CLASSIC;
+
 
     private SparseArray<GridView> mActivePageViews = new SparseArray<>();
     private int stickerDimension;
@@ -33,9 +35,13 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         this.pagerHeight = pagerHeight;
     }
 
+    public void setFacemojiType(FacemojiManager.FacemojiType facemojiType) {
+        this.facemojiType = facemojiType;
+    }
+
     @Override
     public int getCount() {
-        return FacemojiManager.getCategories().size();
+        return FacemojiManager.getInstance().getClassicCategories().size();
     }
 
     @Override
@@ -68,7 +74,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
 
         stickerPageGridView.setVerticalScrollBarEnabled(false);
         setGridViewLayoutProperties(stickerPageGridView);
-        FacemojiGridAdapter adapter = new FacemojiGridAdapter(FacemojiManager.getStickerList(position), stickerDimension);
+        FacemojiGridAdapter adapter = new FacemojiGridAdapter(FacemojiManager.getInstance().getStickerList(facemojiType,position), stickerDimension);
         stickerPageGridView.setAdapter(adapter);
         container.addView(stickerPageGridView);
         mActivePageViews.put(position, stickerPageGridView);

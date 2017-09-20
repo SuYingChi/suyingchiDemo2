@@ -162,7 +162,7 @@ public class FaceGridAdapter extends BaseAdapter {
             FacemojiManager.setCurrentFacePicUri(FacemojiManager.getDefaultFacePicUri());
         }
         faceTobeDeleted.clear();
-        FacemojiManager.loadFaceList();
+        FacemojiManager.getInstance().loadFaceList();
         notifyDataSetChanged();
     }
 

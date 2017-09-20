@@ -47,32 +47,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Vector;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 
 public class FacemojiManager {
 
+    public enum FacemojiType{
+        CLASSIC,NEW
+    }
 
     private static final String FACE_PICTURE_URI = "face_picture_uri";
     private static final String UPLOAD_FILE_PATH = "upload_file_path";
     private static final String MOJIME_DIRECTORY = "Mojime";
     private static final String PREF_CATEGORY_LAST_PAGE_ID = "sticker_category_last_page_id ";
     private static int currentPageSize = FacemojiPalettesParam.SIZE;
+
+    private static FacemojiManager instance;
     private static Uri currentFacePicUri;
     private static String currentUploadFile;
-    private static List<FacemojiCategory> categories;
+    private List<FacemojiCategory> newCategories = new ArrayList<>();
+    private List<FacemojiCategory> classicCategories = new ArrayList<>();
     private static Bitmap originFace;
-    private static int currentCategoryId = 0;
-    private static int mCurrentCategoryPageId = 0;
+    private int currentClassicCategoryId = 0;
+    private static int mCurrentClassicCategoryPageId = 0;
     private static boolean mFaceSwitcherShowing;
     private static FacePalettesView mFacePalettesView;
-    private static List<FaceItem> faces;
-    private static final String[] categoryName = {
-
+    private static List<FaceItem> faces = new ArrayList<>();
+    private static final String[] classicCategoryNames = {
             "person",
+            "star",
+            "fruit"};
+    private static final String[] newCategoryNames = {
             "star",
             "fruit"};
 
@@ -86,22 +95,43 @@ public class FacemojiManager {
 
     }
 
+    public static FacemojiManager getInstance(){
+        if (instance == null){
+            synchronized (FacemojiManager.class){
+                if (instance == null){
+                    instance = new FacemojiManager();
+                }
+            }
+        }
+        return instance;
+    }
+
     public static void destroyTempFace() {
         setTempFacePicUri(null);
     }
 
-    public static void init() {
-
-        copyAssetFileToStorage("fruit");
-        copyAssetFileToStorage("person");
-        copyAssetFileToStorage("star");
-        categories = new Vector<>();
-        FacemojiManager.loadStickerList();
+    public void init() {
+        copyAssetStickersToStorage();
+        loadStickerList();
         getDefaultFacePicUri();
-        faces = new ArrayList<FaceItem>();
         loadFaceList();
         initFaceSwitchView();
         loadLastUploadPreviewPic();
+    }
+
+    private void copyAssetStickersToStorage() {
+        Set<String> allCategoryNames = new HashSet();
+        for(String category : classicCategoryNames){
+            allCategoryNames.add(category);
+        }
+
+        for(String category : newCategoryNames){
+            allCategoryNames.add(category);
+        }
+
+        for(String category :allCategoryNames){
+            copyAssetFileToStorage(category);
+        }
     }
 
     public static boolean isUsingTempFace() {
@@ -121,16 +151,25 @@ public class FacemojiManager {
         }
     }
 
-    public static int getCurrentCategoryId() {
-        return currentCategoryId;
+    public int getCurrentCategoryId() {
+        return currentClassicCategoryId;
     }
 
-    public static void setCurrentCategoryId(int currentId) {
-        currentCategoryId = currentId;
+    public void setCurrentCategoryId(int currentId) {
+        currentClassicCategoryId = currentId;
     }
 
-    public static List<FacemojiCategory> getCategories() {
-        return categories;
+    public List<FacemojiCategory> getCategories(FacemojiType facemojiType){
+        switch (facemojiType){
+            case NEW:
+                return newCategories;
+            default:
+                return classicCategories;
+        }
+    }
+
+    public List<FacemojiCategory> getClassicCategories() {
+        return classicCategories;
     }
 
     public static void setCurrentFacePicUri(Uri uri) {
@@ -260,7 +299,7 @@ public class FacemojiManager {
         HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.LOCAL_UPLOAD_DATA_CHANGE);
     }
 
-    private static boolean copyAssetFileToStorage(String fileName) {
+    private boolean copyAssetFileToStorage(String fileName) {
         String filePath = HSApplication.getContext().getFilesDir().getAbsolutePath();
         AssetManager assetMgr = HSApplication.getContext().getAssets();
         String path = filePath + "/" + MOJIME_DIRECTORY;
@@ -422,34 +461,38 @@ public class FacemojiManager {
     }
 
 
-    public static void loadStickerList() {
-        //List<String> localcategories = getCategoryNamesFromStorage();
-        categories.clear();
-        for (int i = 0; i < categoryName.length; i++) {
-            categories.add(i, new FacemojiCategory(categoryName[i], i));
+    private void loadStickerList() {
+        classicCategories.clear();
+        for (int i = 0; i < classicCategoryNames.length; i++) {
+            classicCategories.add(i, new FacemojiCategory(classicCategoryNames[i], i));
+        }
+
+        newCategories.clear();
+        for (int i = 0; i < newCategoryNames.length; i++) {
+            newCategories.add(i, new FacemojiCategory(classicCategoryNames[i], i));
         }
     }
 
-    public static List<FacemojiSticker> getStickerList(int postion) {
-        return categories.get(postion).getStickerList();
+    public List<FacemojiSticker> getStickerList(FacemojiType facemojiType,int postion) {
+        return getCategories(facemojiType).get(postion).getStickerList();
     }
 
 
     public static int getCategoryPosition(String name) {
-        for (int i = 0; i < categoryName.length; i++) {
-            if (name.equals(categoryName[i])) {
+        for (int i = 0; i < classicCategoryNames.length; i++) {
+            if (name.equals(classicCategoryNames[i])) {
                 return i;
             }
         }
         return -1;
     }
 
-    public static String getCategoryName(int id) {
-        return categories.get(id).getName();
+    public String getCategoryName(FacemojiType facemojiType,int id) {
+        return getCategories(facemojiType).get(id).getName();
     }
 
 
-    public static void loadFaceList(){
+    public void loadFaceList(){
 
         faces.clear();
         faces.add(new FaceItem(null));
@@ -522,17 +565,17 @@ public class FacemojiManager {
     }
 
 
-    public static List<FacemojiSticker> getDataFromPagePosition(int position) {
-        Pair<Integer, Integer> pair = getCategoryIdAndPageIdFromPagePosition(position);
+    public List<FacemojiSticker> getDataFromPagePosition(FacemojiType facemojiType,int position) {
+        Pair<Integer, Integer> pair = getCategoryIdAndPageIdFromPagePosition(facemojiType,position);
         if (pair == null) {
             return new ArrayList<>();
         }
-        return categories.get(pair.first).getStickerList(pair.second);
+        return getCategories(facemojiType).get(pair.first).getStickerList(pair.second);
     }
 
-    public static Pair<Integer, Integer> getCategoryIdAndPageIdFromPagePosition(final int position) {
+    public  Pair<Integer, Integer> getCategoryIdAndPageIdFromPagePosition(FacemojiType facemojiType,final int position) {
         int sum = 0;
-        for (final FacemojiCategory category : categories) {
+        for (final FacemojiCategory category : getCategories(facemojiType)) {
             final int temp = sum;
             sum += category.getPageCount();
             if (sum > position) {
@@ -542,8 +585,8 @@ public class FacemojiManager {
         return null;
     }
 
-    public static int getCategoryIdByName(String name) {
-        for (FacemojiCategory category : categories) {
+    public  int getCategoryIdByName(FacemojiType facemojiType,String name) {
+        for (FacemojiCategory category : getCategories(facemojiType)) {
             if (name.equals(category.getName())) {
                 return category.getCategoryId();
             }
@@ -551,12 +594,12 @@ public class FacemojiManager {
         return -1;
     }
 
-    public static int getCurrentCategoryPageSize() {
-        return getCategoryPageSize(currentCategoryId);
+    public int getCurrentCategoryPageSize(FacemojiType facemojiType) {
+        return getCategoryPageSize(facemojiType,currentClassicCategoryId);
     }
 
-    public static int getCategoryPageSize(final int categoryId) {
-        for (final FacemojiCategory category : categories) {
+    public int getCategoryPageSize(FacemojiType facemojiType,final int categoryId) {
+        for (final FacemojiCategory category : getCategories(facemojiType)) {
             if (category.getCategoryId() == categoryId) {
                 return category.getPageCount();
             }
@@ -565,18 +608,19 @@ public class FacemojiManager {
     }
 
     public static void setCurrentCategoryPageId(final int id) {
-        mCurrentCategoryPageId = id;
+        mCurrentClassicCategoryPageId = id;
     }
 
     public static int getCurrentCategoryPageId() {
-        return mCurrentCategoryPageId;
+        return mCurrentClassicCategoryPageId;
     }
 
-    public static int getPageIdFromCategoryId(final int categoryId) {
+    public int getPageIdFromCategoryId(FacemojiType facemojiType,final int categoryId) {
         String key = PREF_CATEGORY_LAST_PAGE_ID + categoryId;
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
         final int lastSavedCategoryPageId = mPrefs.getInt(key, 0);
         int sum = 0;
+        List<FacemojiCategory> categories = getCategories(facemojiType);
         for (int i = 0; i < categories.size(); ++i) {
             final FacemojiCategory category = categories.get(i);
             if (category.getCategoryId() == categoryId) {
@@ -587,9 +631,9 @@ public class FacemojiManager {
         return 0;
     }
 
-    public static int getTotalPageCount() {
+    public int getTotalPageCount(FacemojiType facemojiType) {
         int sum = 0;
-        for (FacemojiCategory category : categories) {
+        for (FacemojiCategory category : getCategories(facemojiType)) {
             sum += category.getPageCount();
         }
         return sum;

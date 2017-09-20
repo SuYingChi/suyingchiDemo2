@@ -238,7 +238,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSThreadUtils.execute(new Runnable() {
             @Override
             public void run() {
-                FacemojiManager.init();
+                FacemojiManager.getInstance().init();
             }
         });
         HSKeyboardThemeManager.init();

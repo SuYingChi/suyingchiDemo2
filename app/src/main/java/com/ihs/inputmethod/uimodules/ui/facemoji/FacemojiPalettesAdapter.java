@@ -10,6 +10,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 
 class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
+	private FacemojiManager.FacemojiType facemojiType = FacemojiManager.FacemojiType.CLASSIC;
 	private static String TAG = "FacemojiPalettesAdapter";
 	private SparseArray<FacemojiPageGridView> mActivePageViews = new SparseArray<>();
 	private FacemojiLayoutParams mImageLayoutParams;
@@ -23,9 +24,13 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
 		mImageLayoutParams = imageLayoutParams;
 	}
 
+	public void setFacemojiType(FacemojiManager.FacemojiType facemojiType) {
+		this.facemojiType = facemojiType;
+	}
+
 	@Override
 	public int getCount() {
-		return FacemojiManager.getTotalPageCount();
+		return FacemojiManager.getInstance().getTotalPageCount(facemojiType);
 	}
 
 	@Override
@@ -57,7 +62,7 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
 		final FacemojiPageGridView gifPageGridView = (FacemojiPageGridView)inflater.inflate(R.layout.facemoji_page_view, container, false);
 		mImageLayoutParams.setPageGridViewProperties(gifPageGridView);
 		FacemojiPageGridAdapter adapter=new FacemojiPageGridAdapter(
-											FacemojiManager.getDataFromPagePosition(position),
+											FacemojiManager.getInstance().getDataFromPagePosition(facemojiType,position),
 											mFacemojiPalettesView,
 											container.getContext(),
 											Math.min(mImageLayoutParams.getViewWidth(), mImageLayoutParams.getViewHeight()));

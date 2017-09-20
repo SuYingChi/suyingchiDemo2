@@ -744,7 +744,7 @@ public class CameraActivity extends HSAppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        FacemojiManager.loadFaceList();
+        FacemojiManager.getInstance().loadFaceList();
         FacemojiManager.setCurrentFacePicUri(Uri.fromFile(pngFile));
     }
 
