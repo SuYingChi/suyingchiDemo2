@@ -148,13 +148,13 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private ImageView ivProgress;
     private TextView tvProgress;
-    private LinearLayout loadingLayout;
+    private LinearLayout progressLayout;
 
     private static final int AD_LOAD_MAX_WAIT_TIME = HSConfig.optInteger(3000, "Application", "CurrentTheme", "LaunchDelayTime");
     private static final int NAVIGATION_MAIN_PAGE = 1;
     private int progress;
     int delayTime = AD_LOAD_MAX_WAIT_TIME / 100;
-    Handler handlerLoad = new Handler(Looper.getMainLooper()) {
+    Handler progressHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -253,7 +253,7 @@ public class MainActivity extends HSDeepLinkActivity {
         CustomProgressDrawable drawable = new CustomProgressDrawable();
         ivProgress.setImageDrawable(drawable);
 
-        loadingLayout = (LinearLayout) findViewById(R.id.loading_layout);
+        progressLayout = (LinearLayout) findViewById(R.id.loading_layout);
 
         img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
         img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
@@ -602,15 +602,9 @@ public class MainActivity extends HSDeepLinkActivity {
                 @Override
                 public void run() {
                     if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
-                        loadingLayout.setVisibility(View.VISIBLE);
-                        handlerLoad.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                        progressLayout.setVisibility(View.VISIBLE);
+                        progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
                         HSLog.w("show setting button in abnormal way");
-//                        // 开始渐变动画
-//                        if (isAccessibilityEnable()) {
-//                            playAccessibilityButtonShowAnimation();
-//                        } else {
-//                            playManualButtonShowAnimation();
-//                        }
                     }
                 }
             }, 10000);
