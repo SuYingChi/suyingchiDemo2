@@ -10,13 +10,12 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.customize.fragment.KeyboardFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.LockerThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.OnlineWallpaperFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.SettingsFragment;
-import com.ihs.inputmethod.uimodules.ui.customize.fragment.WrapFragment;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 
 /**
  * Created by guonan.lv on 17/9/2.
@@ -33,6 +32,10 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
 
     public void setChildSelected(int position) {
         mAdapter.setUpView(position);
+    }
+
+    public void setWithChildTabSelected(int position, int tabPosition) {
+        mAdapter.setupWithTabSelected(position, tabPosition);
     }
 
     @Override
@@ -75,7 +78,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         private Fragment createFragmentByType(@LayoutRes int layoutId) {
             switch (layoutId) {
                 case R.layout.wrap_home_fragment:
-                    return new WrapFragment();
+                    return new KeyboardFragment();
                 case R.layout.online_wallpaper_page:
                     return new OnlineWallpaperFragment();
                 case R.layout.locker_themes_page:
@@ -100,7 +103,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         }
 
         private void setupWithInitialTabIndex(@LayoutRes int layoutId, int position) {
-            if (!(mContext instanceof HSAppCompatActivity)) {
+            if (!(mContext instanceof Activity)) {
                 return;
             }
             String tag = FRAGMENT_TAG[position];
@@ -111,6 +114,30 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
             if (currentFragment == null) {
                 currentFragment = createFragmentByType(layoutId);
                 fragmentTransaction.add(R.id.content_layout, currentFragment, tag);
+            }
+            hideOtherFragment(position, fragmentTransaction, fragmentManager);
+            fragmentTransaction.show(currentFragment).commit();
+        }
+
+        private void setupWithTabSelected(int position, int tabPosition) {
+            if (!(mContext instanceof Activity)) {
+                return;
+            }
+            String tag = FRAGMENT_TAG[position];
+            FragmentManager fragmentManager = ((Activity)mContext).getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
+
+            if (currentFragment == null) {
+                currentFragment = createFragmentByType(CONTENT_VIEW_IDS[position]);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(KeyboardFragment.TAB_INDEX, tabPosition);
+//                currentFragment.setArguments(bundle);
+                fragmentTransaction.add(R.id.content_layout, currentFragment, tag);
+            } else {
+                if (currentFragment instanceof KeyboardFragment) {
+                    ((KeyboardFragment) currentFragment).scrollToTabByIndex(tabPosition);
+                }
             }
             hideOtherFragment(position, fragmentTransaction, fragmentManager);
             fragmentTransaction.show(currentFragment).commit();

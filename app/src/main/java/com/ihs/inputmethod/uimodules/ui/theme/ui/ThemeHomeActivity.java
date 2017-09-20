@@ -247,7 +247,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_theme_home);
-        getWindow().setBackgroundDrawable(null);
+//        getWindow().setBackgroundDrawable(null);
 
         mContent = ViewUtils.findViewById(this, R.id.content_layout);
         mContent.setChildSelected(currentTabIndex);
@@ -259,7 +259,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
 
         enableTipTV = findViewById(R.id.tv_enable_keyboard);
-        ((TextView)enableTipTV).setText(getString(R.string.tv_enable_keyboard_tip, getString(R.string.app_name)));
+        ((TextView) enableTipTV).setText(getString(R.string.tv_enable_keyboard_tip, getString(R.string.app_name)));
         enableTipTV.setVisibility(GONE);
         enableTipTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,29 +273,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
-//<<<<<<< HEAD
-//        tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragments);
-//        String[] tabTitles = new String[3];
-//        tabTitles[0] = getApplicationContext().getString(R.string.tab_theme);
-//        tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker);
-//        tabTitles[2] = getApplicationContext().getString(R.string.tab_font);
-//        tabFragmentPagerAdapter.setTabTitles(tabTitles);
-//        viewPager.setOffscreenPageLimit(fragments.size());
-//        viewPager.setAdapter(tabFragmentPagerAdapter);
-//
-//
-//        tabLayout.setupWithViewPager(viewPager);
-//        setTabListener();
-//
-//        //init locker function
-//        boolean lockerEnable = getResources().getBoolean(R.bool.config_locker_drawer_visiable_enable) && HSAppLockerUtils.isLockerEnabled();
-//        navigationView.getMenu().findItem(R.id.nav_app_locker).setVisible(lockerEnable);
-//
-//        // init update function
-//        navigationView.getMenu().findItem(R.id.nav_update).setVisible(ApkUtils.isUpdateEnabled());
-//        navigationView.getMenu().findItem(R.id.nav_no_ads).setVisible(getResources().getBoolean(R.bool.show_remove_ads_menu) && !RemoveAdsManager.getInstance().isRemoveAdsPurchased());
-//=======
-//>>>>>>> lv_devLaucherTab
         apkUpdateTip = findViewById(R.id.apk_update_tip);
 
         //界面被启动 请求 扫描权限
@@ -368,20 +345,15 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store, getResources().getString(R.string.app_name)), Toast.LENGTH_SHORT).show();
             }
         }
-//<<<<<<< HEAD
-//        MenuItem item = navigationView.getMenu().findItem(R.id.nav_theme_store);
-//        onNavigationItemSelected(item);
 
         //mark bug
+        if (mLayoutWrapper != null) {
+            mLayoutWrapper.show();
+        }
         // keyboard中点击sticker panel加号，设定viewpager当前页为sticker home页
         Bundle extras = intent.getExtras();
-        if (extras != null && extras.getInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INIT) == ThemeHomeActivity.HOME_VIEWPAGER_STICKER_PAGE) {
-            viewPager.setCurrentItem(ThemeHomeActivity.HOME_VIEWPAGER_STICKER_PAGE);
-//=======
-            if (mLayoutWrapper != null) {
-                mLayoutWrapper.show();
-//>>>>>>> lv_devLaucherTab
-            }
+        if (extras != null && extras.getInt(BUNDLE_KEY_HOME_INIT) == HOME_VIEWPAGER_STICKER_PAGE) {
+            currentTabIndex = TAB_INDEX_KEYBOARD;
         }
     }
 
@@ -440,55 +412,26 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(final MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-//<<<<<<< HEAD
-//        if (id == R.id.nav_theme_store) {
-//            currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
-//        } else if (id == R.id.nav_language) {
-//            HSUIInputMethod.launchMoreLanguageActivity();
-//            HSAnalytics.logEvent("sidebar_languages_clicked");
-//        } else if (id == R.id.nav_setting) {
-//            HSUIInputMethod.launchSettingsActivity();
-//            HSAnalytics.logEvent("sidebar_settings_clicked");
-//        } else if (id == R.id.nav_app_locker) {
-//            HSGlobalNotificationCenter.sendNotificationOnMainThread(HSUIInputMethod.HS_NOTIFICATION_LOCKER_CLICK);
-//        } else if (id == R.id.nav_update) {
-//            handler.removeMessages(HANDLER_SHOW_UPDATE_DIALOG);
-//            checkAndShowApkUpdateAlert(true);
-//            handler.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    restoreNavigationView();
-//                }
-//            });
-//        } else if (id == R.id.nav_no_ads) {
-//            HSAnalytics.logEvent("sidebar_removeAds_clicked");
-//            RemoveAdsManager.getInstance().purchaseRemoveAds();
-//        } else if ( id == R.id.nav_privacy){
-//            startBrowsePrivacy();
-//        } else if (id == R.id.nav_debug) {
-//            startActivity(new Intent(this, DebugActivity.class));
-//        }
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//=======
-        currentTabIndex = ITEMS_INDEX_MAP.get(id);
-        boolean viewIndexUpdated = false;
-        if (mViewIndex != currentTabIndex) {
-            mViewIndex = currentTabIndex;
-            viewIndexUpdated = true;
-        }
-        mContent.setChildSelected(currentTabIndex);
-        // reset icon to origins
+    private void resetBottomMenu() {
         Menu menu = mBottomBar.getMenu();
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_wallpapers, R.drawable.customize_wallpaper);
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_keyboard, R.drawable.customize_keyboard);
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_call, R.drawable.customize_call);
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_setting, R.drawable.customize_settings);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(final MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        currentTabIndex = ITEMS_INDEX_MAP.get(id);
+        if (mViewIndex != currentTabIndex) {
+            mViewIndex = currentTabIndex;
+        }
+        mContent.setChildSelected(currentTabIndex);
+        // reset icon to origins
+        resetBottomMenu();
 
         switch (item.getItemId()) {
             case R.id.customize_bottom_bar_wallpapers:
@@ -508,7 +451,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 item.setIcon(R.drawable.customize_settings_h);
                 break;
         }
-//>>>>>>> lv_devLaucherTab
         return true;
     }
 

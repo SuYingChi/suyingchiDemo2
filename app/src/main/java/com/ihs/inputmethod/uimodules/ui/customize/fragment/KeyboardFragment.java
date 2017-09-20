@@ -26,8 +26,9 @@ import java.util.ArrayList;
  * Created by guonan.lv on 17/9/9.
  */
 
-public class WrapFragment extends Fragment implements View.OnClickListener {
+public class KeyboardFragment extends Fragment implements View.OnClickListener {
 
+    public static final String TAB_INDEX = "tabIndex";
     private int tabIndex = 0;
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
     private ArrayList<Class> fragments;
@@ -41,14 +42,14 @@ public class WrapFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("tabIndex", tabIndex);
+        outState.putInt(TAB_INDEX, tabIndex);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            tabIndex = savedInstanceState.getInt("tabIndex");
+            tabIndex = savedInstanceState.getInt(TAB_INDEX);
         }
     }
 
@@ -81,6 +82,7 @@ public class WrapFragment extends Fragment implements View.OnClickListener {
 
         tabLayout.setupWithViewPager(viewPager);
         setTabListener();
+        viewPager.setCurrentItem(tabIndex);
         return view;
     }
 
@@ -124,7 +126,7 @@ public class WrapFragment extends Fragment implements View.OnClickListener {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
-            tabIndex = savedInstanceState.getInt("tabIndex");
+            tabIndex = savedInstanceState.getInt(TAB_INDEX);
         }
     }
 
@@ -155,6 +157,14 @@ public class WrapFragment extends Fragment implements View.OnClickListener {
             default:
                 return;
         }
+    }
+
+    public void scrollToTabByIndex(int index) {
+        if (viewPager == null) {
+            tabIndex = index;
+            return;
+        }
+        viewPager.setCurrentItem(index);
     }
 
     private void switchToDownload() {
