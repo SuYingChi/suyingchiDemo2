@@ -187,7 +187,7 @@ public final class GifHorizontalScrollViewAdapter extends RecyclerView.Adapter<G
 
             // progress
             progress = (ImageView) itemView.findViewById(R.id.progress);
-            progress.setImageDrawable(new CustomProgressDrawable());
+            progress.setImageDrawable(new CustomProgressDrawable(0));
 
             // tag
             tag = (TextView) itemView.findViewById(R.id.tag);

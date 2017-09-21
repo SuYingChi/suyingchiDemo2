@@ -6,6 +6,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -14,7 +15,12 @@ import android.graphics.drawable.Drawable;
 public final class CustomProgressDrawable extends Drawable {
 
     private static int progressColor = Color.parseColor("#1ea0cd");
+    private int type = 0;
 
+    public CustomProgressDrawable (int type) {
+        super();
+        this.type = type;
+    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -28,10 +34,28 @@ public final class CustomProgressDrawable extends Drawable {
         Rect bounds = getBounds();
         int length = (int) (bounds.width() * level * 0.01f);
         int xpos = bounds.left;
-        int mBarWidth = bounds.height();
-        int ypos = bounds.bottom - mBarWidth;
-        mPaint.setColor(color);
-        canvas.drawRect(xpos, ypos, xpos + length, ypos + mBarWidth, mPaint);
+        int mBarHeight = bounds.height();
+        int ypos = bounds.bottom - mBarHeight;
+        switch (type) {
+            case 0:
+                mPaint.setColor(color);
+                canvas.drawRect(xpos, ypos, xpos + length, ypos + mBarWidth, mPaint);
+                break;
+            case 1:
+                int radius = mBarHeight / 2;
+
+                mPaint.setColor(mBackgroundColor);
+                RectF rectF = new RectF(xpos, ypos, xpos + bounds.width(), ypos + mBarHeight);
+                canvas.drawRoundRect(rectF, radius, radius, mPaint);
+
+                mPaint.setColor(color);
+                rectF = new RectF(xpos, ypos, xpos + length, ypos + mBarHeight);
+                canvas.drawRoundRect(rectF, radius, radius, mPaint);
+                break;
+            default:
+                break;
+        }
+
     }
 
 

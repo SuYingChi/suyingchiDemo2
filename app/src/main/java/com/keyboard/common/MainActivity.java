@@ -253,7 +253,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
         ivProgress = (ImageView) findViewById(R.id.progress_bar);
         tvProgress = (TextView) findViewById(R.id.progress_text);
-        CustomProgressDrawable drawable = new CustomProgressDrawable();
+        CustomProgressDrawable drawable = new CustomProgressDrawable(1);
         ivProgress.setImageDrawable(drawable);
 
         progressLayout = (LinearLayout) findViewById(R.id.loading_layout);
