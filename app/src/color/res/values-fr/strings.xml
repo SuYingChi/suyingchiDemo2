@@ -4,10 +4,9 @@
     <string name="feedback_email">private.keyboardarts@gmail.com</string>
     <string name="fb_app_id">910238615719294</string>
 
-    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
-        With accessibility authorization, you'll get the best typing experience on different apps!
-        
-        Note: You may receive a system reminder about authorizing, RainbowKey will NEVER collect ANY of your information."</string>
+    <string name="accessibility_service_description">Activez l\'interrupteur en haut à droite.↗️⊙.⊙↗️
+Avec l\'autorisation d\'accès, vous obtiendrez une meilleure expérience de saisie dans toutes les applications !
+Remarque : vous recevrez peut-être un rappel système pour l\'autorisation. RainbowKey ne collecte JAMAIS vos informations.</string>
     <string name="theme_share_text_content">Mon clavier personnalisé créé avec #%1$s http://rainbowkey.com</string>
     <string name="theme_share_text_content_for_custom_theme">Personaliza tu propio teclado con tus fotos favoritas! Descárgate #%1$s gratis: http://rainbowkey.com</string>
     <string name="settings_button_tell_a_friend_content">Salut, vous devriez tester l’application de clavier %1$s. Elle vous permet de personnaliser votre clavier avec vos propres photos ! Quant aux polices et émoticônes, elles sont sublimes ! Téléchargez gratuitement #%2$s : http://rainbowkey.com</string>

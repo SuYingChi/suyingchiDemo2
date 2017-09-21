@@ -4,10 +4,9 @@
     <string name="feedback_email">private.keyboardarts@gmail.com</string>
     <string name="fb_app_id">910238615719294</string>
 
-    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
-        With accessibility authorization, you'll get the best typing experience on different apps!
-        
-        Note: You may receive a system reminder about authorizing, RainbowKey will NEVER collect ANY of your information."</string>
+    <string name="accessibility_service_description">حوّل مفتاح التبديل الموجود في أعلى اليمين إلى وضعية "مفعّل".  ↗️⊙.⊙↗️
+ستحصل على أفضل تجربة في استخدام لوحة المفاتيح عند السماح بأذونات الوصول!
+ملاحظة: قد تحصل على تذكير من النظام حول السماح ببعض الأذونات، لن يقوم RainbowKey بجمع أي من معلوماتك أبداً.</string>
     <string name="theme_share_text_content">خصّص لوحة المفاتيح الخاصة بك مع صورك المفضلة! تنزيل #%1$s مجانًا: http://rainbowkey.com</string>
     <string name="theme_share_text_content_for_custom_theme">خصّص لوحة المفاتيح الخاصة بك مع صورك المفضلة! تنزيل #%1$s مجانًا: http://rainbowkey.com</string>
     <string name="settings_button_tell_a_friend_content">مرحباً، عليك تجربة تطبيق لوحة المفاتيح %1$s. يمكنك ﭠﺧﺼﭕﺹ لوحة مفاتيحك بإضافة صورك الخاصة! واﻟﺧﻁ୨ﻁ والإيموجي رائعة. حمّل #%2$s مجاناً:  http://rainbowkey.com</string>
