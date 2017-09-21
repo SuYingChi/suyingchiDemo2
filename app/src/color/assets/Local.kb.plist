@@ -16,7 +16,7 @@
 			<key>AutoSetKeyEnable</key>
 			<false/>
 			<key>UseNewLockScreen</key>
-			<true/>
+			<false/>
 			<key>BoostPlus</key>
 			<dict>
 				<key>AccCleanTimeoutSeconds</key>
