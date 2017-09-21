@@ -1858,6 +1858,26 @@
 						<key>Description</key>
 						<string></string>
 						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rotate.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>18</integer>
+						<key>IdName</key>
+						<string>Rotate</string>
+						<key>Name</key>
+						<string>Rotate</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rotate.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
 						<string></string>
 						<key>Hot</key>
 						<false/>
