@@ -273,7 +273,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundContent.setImageDrawable(customThemeItemBase.getPreview());
                         }
 
-                        if (customThemeItemBase.isNew()) {
+                        if (customThemeItemBase.isNew() || HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)) {
                             Drawable newMarkDrawable = KCElementResourseHelper.getBackgroundNewMarkDrawable();
                             if (newMarkDrawable != null) {
                                 holder.backgroundNewMark.setImageDrawable(newMarkDrawable);
@@ -303,6 +303,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             if (!customThemeItemBase.hasLocalContent()
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.isNewVersionAvailable()) {
+                                holder.backgroundNewMark.setVisibility(GONE);
                                 ApkUtils.showUpdateAlert();
                                 return;
                             }

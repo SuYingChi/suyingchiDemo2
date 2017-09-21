@@ -229,7 +229,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     private void setNewState(@NonNull BaseItemHolder holder, @NonNull KCBaseElement item) {
         //new mark view
-        if (item.isNew()) {
+        if (item.isNew() || HSConfigUtils.toBoolean(item.getConfigData().get("needNewVersionToUnlock"), false)) {
             Drawable newMarkDrawable = getNewMarkDrawable();
             if (newMarkDrawable != null) {
                 holder.mNewMarkImageView.setImageDrawable(newMarkDrawable);
@@ -499,6 +499,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             if (!baseElement.hasLocalContent()
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.isNewVersionAvailable()) {
+                                holder.mNewMarkImageView.setVisibility(View.GONE);
                                 ApkUtils.showUpdateAlert();
                                 return true;
                             }
