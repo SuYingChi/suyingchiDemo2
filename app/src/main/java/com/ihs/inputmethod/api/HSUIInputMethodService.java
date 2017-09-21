@@ -332,6 +332,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 }
             }
         }
+
     }
 
     @Override
@@ -405,6 +406,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
+        if (!restarting) {
+            isAppSupportSticker = StickerUtils.isEditTextSupportSticker(currentAppPackageName);
+        }
     }
 
     @Override
@@ -430,6 +434,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         // Start clearing image loader cache
         handler.postDelayed(clearImageLoaderCacheRunnable, HSApplication.isDebugging ? 5 * 1000 : 5 * 60 * 1000);
         HSFloatWindowManager.getInstance().removeFloatingWindow();
+        isAppSupportSticker = false;
     }
 
     private boolean shouldShowGoogleAD() {
@@ -483,7 +488,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 //                    HSLog.e(StickerDataManager.getInstance().getSticker(stickerName).getStickerUri());
                 }
             }
+            getKeyboardPanelMananger().showSuggestedStickers(StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
+        } else {
+            HSFloatWindowManager.getInstance().removeFloatingWindow();
         }
-        getKeyboardPanelMananger().showSuggestedStickers(StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
     }
 }

@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="80dp"
-    android:background="@drawable/sticker_suggstion_bg"
+    android:background="@drawable/sticker_suggestion_bg"
     android:orientation="vertical">
 
     <ImageView
@@ -13,12 +13,12 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_sticker"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:layout_marginTop="8dp" />
 
 

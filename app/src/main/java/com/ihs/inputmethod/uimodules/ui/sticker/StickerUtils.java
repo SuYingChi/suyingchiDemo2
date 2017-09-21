@@ -66,6 +66,7 @@ public class StickerUtils {
     /**
      * get the sticker file local saved path:
      * example:/data/user/0/com.keyboard.colorkeyboard/files/Stickers/YellowSmile3-2.gif
+     *
      * @param sticker
      * @return
      */
@@ -80,6 +81,7 @@ public class StickerUtils {
     /**
      * get the sticker asset file path
      * example:Stickers/YellowSmile3/
+     *
      * @param sticker
      * @return
      */
@@ -138,6 +140,12 @@ public class StickerUtils {
         return stickerGroupTemp;
     }
 
+    public static boolean isEditTextSupportSticker(String packageName) {
+        Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);
+        return (boolean) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_SEND_DIRECTLY)
+                || (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE) == MediaShareUtils.IMAGE_SHARE_MODE_INTENT;
+    }
+
     public static void share(final Sticker sticker, final String packageName) {
         if (!DirectoryUtils.isSDCardEnabled()) {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
@@ -157,7 +165,7 @@ public class StickerUtils {
             String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
             boolean pngSupported = false;
             for (String mime_Type : mimeTypes) {
-                if (ClipDescription.compareMimeTypes(mime_Type, "image/png")||ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
+                if (ClipDescription.compareMimeTypes(mime_Type, "image/png") || ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
                     pngSupported = true;
                 }
             }
@@ -171,9 +179,9 @@ public class StickerUtils {
 
                 Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
                 if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX)) {
-                    commitStickerImage(uri,"","image/gif");
-                }else {
-                    commitStickerImage(uri, "","image/png");
+                    commitStickerImage(uri, "", "image/gif");
+                } else {
+                    commitStickerImage(uri, "", "image/png");
 
                 }
                 return;
@@ -207,7 +215,7 @@ public class StickerUtils {
         }
     }
 
-    private static void commitStickerImage(Uri contentUri, String imageDescription,String fileType) {
+    private static void commitStickerImage(Uri contentUri, String imageDescription, String fileType) {
         InputContentInfoCompat inputContentInfo = new InputContentInfoCompat(contentUri,
                 new ClipDescription(imageDescription, new String[]{fileType}), null);
         InputConnection inputConnection = HSInputMethodService.getInstance().getCurrentInputConnection();
@@ -351,11 +359,11 @@ public class StickerUtils {
         }
     }
 
-    public static String getGroupNameByStickerName(String stickerName){
+    public static String getGroupNameByStickerName(String stickerName) {
         int indexOfConnector = stickerName.indexOf('-');
         if (indexOfConnector > 0) {
             return stickerName.substring(0, indexOfConnector);
-        }else{
+        } else {
             HSLog.e("tag sticker suggestion name wrong format");
             return null;
         }

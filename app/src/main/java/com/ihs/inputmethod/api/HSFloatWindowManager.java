@@ -114,7 +114,7 @@ public class HSFloatWindowManager {
         return isGranted;
     }
 
-    public void showFloatingWindow(final View view, int height, int itemCount) {
+    public void showStickerSuggestionWindow(final View view, int yPos, int itemCount) {
         if (view == null) {
             return;
         }
@@ -138,7 +138,7 @@ public class HSFloatWindowManager {
         }
         layoutParams.height = DisplayUtils.dip2px(80);
         layoutParams.gravity = Gravity.END | Gravity.TOP;
-        layoutParams.y = DisplayUtils.getScreenHeightPixels() - DisplayUtils.getStatusBarHeight() - height - DisplayUtils.dip2px(80);
+        layoutParams.y = yPos - DisplayUtils.dip2px(80) - DisplayUtils.dip2px(55);
 
         view.setLayoutParams(layoutParams);
         view.setAnimation(null);

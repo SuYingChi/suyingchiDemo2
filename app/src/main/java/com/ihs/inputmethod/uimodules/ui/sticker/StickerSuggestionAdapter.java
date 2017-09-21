@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
+import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class StickerSuggestionAdapter extends RecyclerView.Adapter<StickerSugges
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSFloatWindowManager.getInstance().removeFloatingWindow();
                 StickerUtils.share(sticker, HSUIInputMethodService.getInstance().getCurrentInputEditorInfo().packageName);
             }
         });

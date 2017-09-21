@@ -458,8 +458,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 StickerSuggestionAdapter adapter = (StickerSuggestionAdapter) recyclerView.getAdapter();
                 adapter.refreshData(stickerList);
             }
-            HSFloatWindowManager.getInstance().showFloatingWindow(inflate,
-                    keyboardPanelSwitchContainer.findViewById(R.id.container_group_wrapper).getHeight(), stickerList.size());
+            HSFloatWindowManager.getInstance().showStickerSuggestionWindow(inflate,
+                    (int) keyboardPanelSwitchContainer.findViewById(R.id.container_group_wrapper).getY(), stickerList.size());
         } else {
             HSFloatWindowManager.getInstance().removeFloatingWindow();
         }
