@@ -196,9 +196,9 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
         }
         WallpaperInfo clickedWallpaper = allWallpapers.get(positionInAllWallpapers);
         if (clickedWallpaper.getCategory() == null) {
-            HSAnalytics.logEvent("app_wallpaper_clicked", clickedWallpaper.getName());
+            HSAnalytics.logEvent("app_wallpaper_clicked", "name", clickedWallpaper.getName());
         } else {
-            HSAnalytics.logEvent("app_wallpaper_clicked", clickedWallpaper.getName(), clickedWallpaper.getCategory().categoryName);
+            HSAnalytics.logEvent("app_wallpaper_clicked", "name", clickedWallpaper.getName(), "tabName", clickedWallpaper.getCategory().categoryName);
         }
         Intent intent = new Intent(mContext, WallpaperPreviewActivity.class);
 //        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_SCENARIO, mScenario.ordinal());

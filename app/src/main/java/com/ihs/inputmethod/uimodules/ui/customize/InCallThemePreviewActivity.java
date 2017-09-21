@@ -171,7 +171,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         mSetCallThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSAnalytics.logEvent("app_callflash_applied", themeType.getName());
+                HSAnalytics.logEvent("app_callflash_applied", "themeName", themeType.getName());
                 CPSettings.setScreenFlashModuleEnabled(true);
                 HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeType.getValue());
                 ToastUtils.showToast(R.string.incoming_call_theme_success);

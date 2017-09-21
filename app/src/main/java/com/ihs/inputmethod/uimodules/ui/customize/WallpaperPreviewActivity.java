@@ -336,7 +336,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 if (mCurrentWallpaper == null) {
                     return;
                 }
-                HSAnalytics.logEvent("app_wallpaper_setwallpaper_clicked", mCurrentWallpaper.getName());
+                HSAnalytics.logEvent("app_wallpaper_setwallpaper_clicked", "wallpaperName", mCurrentWallpaper.getName());
                 boolean isWallpaperReady = isSucceed() && !isSettingWallpaper();
                 if (!isWallpaperReady) {
                     ToastUtils.showToast(R.string.online_wallpaper_loading);
@@ -349,7 +349,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 if (mCurrentWallpaper == null) {
                     return;
                 }
-                HSAnalytics.logEvent("app_wallpaper_setkeytheme_clicked", mCurrentWallpaper.getName());
+                HSAnalytics.logEvent("app_wallpaper_setkeytheme_clicked", "wallpaperName", mCurrentWallpaper.getName());
                 if (!isSucceed() || isSettingWallpaper()) {
                     ToastUtils.showToast(R.string.online_wallpaper_loading);
                     return;
@@ -361,18 +361,18 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 getFilePathTask.execute(mCurrentWallpaper.getWallpaperUrl());
                 break;
             case R.id.set_home_screen:
-                HSAnalytics.logEvent("app_wallpaper_setwallpaper_homescreen_clicked", mCurrentWallpaper.getName());
+                HSAnalytics.logEvent("app_wallpaper_setwallpaper_homescreen_clicked", "wallpaperName", mCurrentWallpaper.getName());
                 setHomeScreenWallpaper();
                 break;
             case R.id.set_locker_screen:
-                HSAnalytics.logEvent("app_wallpaper_setwallpaper_lockscreen_clicked", mCurrentWallpaper.getName());
+                HSAnalytics.logEvent("app_wallpaper_setwallpaper_lockscreen_clicked", "wallpaperName", mCurrentWallpaper.getName());
                 hideSetWallpaperSelectDialog();
                 setLockerScreenWallpaper();
                 ToastUtils.showToast(R.string.wallpaper_apply_success);
                 finish();
                 break;
             case R.id.set_home_and_locker_screen:
-                HSAnalytics.logEvent("app_wallpaper_setwallpaper_bothscreen_clicked", mCurrentWallpaper.getName());
+                HSAnalytics.logEvent("app_wallpaper_setwallpaper_bothscreen_clicked", "wallpaperName", mCurrentWallpaper.getName());
                 setLockerScreenWallpaper();
                 setHomeScreenWallpaper();
                 break;

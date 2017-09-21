@@ -105,7 +105,7 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 int position = (int) v.getTag();
                 String title = (String) tabFragmentPagerAdapter.getPageTitle(position);
-                HSAnalytics.logEvent("app_tab_top_keyboard_clicked", title.toLowerCase());
+                HSAnalytics.logEvent("app_tab_top_keyboard_clicked", "tabName", title.toLowerCase());
             }
         });
 

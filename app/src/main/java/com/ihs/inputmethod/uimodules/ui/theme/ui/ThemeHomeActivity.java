@@ -78,7 +78,6 @@ import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
-import com.keyboard.common.DebugActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -435,19 +434,19 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
         switch (item.getItemId()) {
             case R.id.customize_bottom_bar_wallpapers:
-                HSAnalytics.logEvent("app_tab_bottom_clicked", "wallpaper");
+                HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "wallpaper");
                 item.setIcon(R.drawable.customize_wallpaper_h);
                 break;
             case R.id.customize_bottom_bar_keyboard:
-                HSAnalytics.logEvent("app_tab_bottom_clicked", "keyboard");
+                HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "keyboard");
                 item.setIcon(R.drawable.customize_keyboard_h);
                 break;
             case R.id.customize_bottom_bar_call:
-                HSAnalytics.logEvent("app_tab_bottom_clicked", "callflash");
+                HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "callflash");
                 item.setIcon(R.drawable.customize_call_h);
                 break;
             case R.id.customize_bottom_bar_setting:
-                HSAnalytics.logEvent("app_tab_bottom_clicked", "settings");
+                HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "settings");
                 item.setIcon(R.drawable.customize_settings_h);
                 break;
         }

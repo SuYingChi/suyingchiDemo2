@@ -88,7 +88,7 @@ public class OnlineWallpaperPage extends RelativeLayout {
             public void onClick(View v) {
                 int position = (int) v.getTag();
                 String title = (String) mTabs.getTabAt(position).getText();
-                HSAnalytics.logEvent("app_tab_top_wallpaper_clicked", title.toLowerCase());
+                HSAnalytics.logEvent("app_tab_top_wallpaper_clicked", "tabName", title.toLowerCase());
             }
         });
 
