@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.listeners;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,8 +9,6 @@ import android.view.View;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 
 import java.util.concurrent.TimeUnit;
-
-import static com.ihs.commons.connection.httplib.HttpRequest.Method.HEAD;
 
 public class DeleteKeyOnTouchListener implements View.OnTouchListener {
 
@@ -62,6 +59,7 @@ public class DeleteKeyOnTouchListener implements View.OnTouchListener {
 				if (x < 0.0f || v.getWidth() < x || y < 0.0f || v.getHeight() < y) {
 					// Stop generating key events once the finger moves away from the view area.
 					onTouchCanceled(v);
+					return false;
 				}
 				return true;
 			case MotionEvent.ACTION_CANCEL:
@@ -99,7 +97,7 @@ public class DeleteKeyOnTouchListener implements View.OnTouchListener {
 
 	private void onTouchCanceled(final View v) {
 		mTimer.cancel();
-		v.setBackgroundColor(Color.TRANSPARENT);
+		v.setPressed(false /* pressed */);
 		mState = KEY_REPEAT_STATE_INITIALIZED;
 	}
 

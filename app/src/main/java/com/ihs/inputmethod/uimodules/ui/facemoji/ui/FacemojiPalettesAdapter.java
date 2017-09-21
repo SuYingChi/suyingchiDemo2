@@ -41,7 +41,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return FacemojiManager.getInstance().getClassicCategories().size();
+        return FacemojiManager.getInstance().getCategories(facemojiType).size();
     }
 
     @Override

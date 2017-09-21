@@ -78,9 +78,10 @@ public class FacemojiManager {
     private static FacePalettesView mFacePalettesView;
     private static List<FaceItem> faces = new ArrayList<>();
     private static final String[] classicCategoryNames = {
-            "person",
-            "star",
-            "fruit"};
+//            "person",
+//            "star",
+            "fruit"
+    };
     private static final String[] newCategoryNames = {
             "star",
             "fruit"};
@@ -469,7 +470,7 @@ public class FacemojiManager {
 
         newCategories.clear();
         for (int i = 0; i < newCategoryNames.length; i++) {
-            newCategories.add(i, new FacemojiCategory(classicCategoryNames[i], i));
+            newCategories.add(i, new FacemojiCategory(newCategoryNames[i], i));
         }
     }
 
@@ -577,7 +578,6 @@ public class FacemojiManager {
         int sum = 0;
         for (final FacemojiCategory category : getCategories(facemojiType)) {
             final int temp = sum;
-            sum += category.getPageCount();
             if (sum > position) {
                 return new Pair<>(category.getCategoryId(), position - temp);
             }
