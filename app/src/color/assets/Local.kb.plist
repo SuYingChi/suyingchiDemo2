@@ -5261,7 +5261,7 @@
 		</dict>
 		<key>adAdapter</key>
 		<dict>
-			<key>admobexpress</key>
+			<key>admobbanner</key>
 			<dict>
 				<key>appid</key>
 				<string>ca-app-pub-7319126281585813~4171107486</string>
@@ -5292,7 +5292,7 @@
 				<key>frequencyTime</key>
 				<integer>5</integer>
 			</dict>
-			<key>adxexpress</key>
+			<key>adxbanner</key>
 			<dict>
 				<key>expireTime</key>
 				<integer>3600</integer>
@@ -5386,7 +5386,7 @@
 				<key>frequencyTime</key>
 				<integer>5</integer>
 			</dict>
-			<key>mopubexpress</key>
+			<key>mopubbanner</key>
 			<dict>
 				<key>expireTime</key>
 				<integer>3600</integer>
@@ -5626,7 +5626,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -5702,7 +5702,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -5750,7 +5750,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -5798,7 +5798,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Mopubexpress</string>
+						<string>Mopubbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -5836,7 +5836,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -5874,7 +5874,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6148,7 +6148,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Mopubexpress</string>
+						<string>Mopubbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6186,7 +6186,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6224,7 +6224,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6272,7 +6272,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6320,7 +6320,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6434,7 +6434,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Mopubexpress</string>
+						<string>Mopubbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -6747,7 +6747,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7154,7 +7154,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7230,7 +7230,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7278,7 +7278,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7364,7 +7364,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Mopubexpress</string>
+						<string>Mopubbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7587,7 +7587,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7625,7 +7625,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7663,7 +7663,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Mopubexpress</string>
+						<string>Mopubbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7701,7 +7701,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7749,7 +7749,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -7835,7 +7835,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -8186,7 +8186,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Mopubexpress</string>
+						<string>Mopubbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -8224,7 +8224,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Adxexpress</string>
+						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -8262,7 +8262,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Mopubexpress</string>
+						<string>Mopubbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -8351,7 +8351,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Mopubexpress</string>
+						<string>Mopubbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
@@ -8389,7 +8389,7 @@
 					</dict>
 					<dict>
 						<key>adType</key>
-						<string>Admobexpress</string>
+						<string>Admobbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
 						<key>cpmInfo</key>
