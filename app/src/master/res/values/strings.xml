@@ -67,4 +67,6 @@
 
     <!-- Product Master's config -->
     <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
+    <!-- TODO:分享的内容，需要把网址替换为master的网址 @yanan.jiang -->
+    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app %1$s keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #%2$s For Free:\n http://rainbowkey.com</string>
 </resources>
