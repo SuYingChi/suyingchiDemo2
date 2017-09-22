@@ -60,7 +60,7 @@ public class KeyboardActivationGuideActivity extends HSActivity {
 
         String customMessage = getIntent().getStringExtra(EXTRA_ACTIVATION_PROMPT_MESSAGE);
         if (TextUtils.isEmpty(customMessage)) {
-            activationPromptMessage = getString(R.string.dialog_msg_select_keyboard_apply_rain);
+            activationPromptMessage = getString(R.string.dialog_msg_select_keyboard_apply_rain, getString(R.string.app_name));
         } else {
             activationPromptMessage = customMessage;
         }
@@ -151,7 +151,7 @@ public class KeyboardActivationGuideActivity extends HSActivity {
 
     private void showActivationPromptDialog() {
         AlertDialog alertDialog = HSAlertDialog.build(this)
-                .setTitle(getString(R.string.dialog_title_select_keyboard_apply_rain))
+                .setTitle(getString(R.string.dialog_title_select_keyboard_apply_rain, getString(R.string.app_name)))
                 .setMessage(activationPromptMessage)
                 .setPositiveButton(getString(R.string.dialog_confirm_select_keyboard_apply_rain), new DialogInterface.OnClickListener() {
                     @Override
@@ -204,8 +204,8 @@ public class KeyboardActivationGuideActivity extends HSActivity {
 
     private void showKeyboardEnableDialog() {
         CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
-        dialog.setTitle(getString(R.string.toast_enable_keyboard));
-        dialog.setMessage(getString(R.string.alert_attention_messenger));
+        dialog.setTitle(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
+        dialog.setMessage(getString(R.string.alert_attention_messenger, getString(R.string.app_name)));
         dialog.setImageResource(R.drawable.enable_keyboard_alert_top_bg);
         dialog.setPositiveButton(getString(R.string.got_it), new View.OnClickListener() {
             @Override
@@ -225,7 +225,7 @@ public class KeyboardActivationGuideActivity extends HSActivity {
         InputMethodManager m = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         m.showInputMethodPicker();
 
-        Toast toast = Toast.makeText(KeyboardActivationGuideActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(KeyboardActivationGuideActivity.this, getString(R.string.toast_select_keyboard, getString(R.string.app_name)), Toast.LENGTH_LONG);
         toast.show();
     }
 

@@ -172,7 +172,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             if (msg.what == HANDLER_SHOW_ACTIVE_DIALOG) {
                 if (!HSInputMethodListManager.isMyInputMethodSelected()) {
                     Intent intent = new Intent(ThemeHomeActivity.this, KeyboardActivationGuideActivity.class);
-                    intent.putExtra(KeyboardActivationGuideActivity.EXTRA_ACTIVATION_PROMPT_MESSAGE, getString(R.string.dialog_msg_enable_keyboard_home_rain));
+                    intent.putExtra(KeyboardActivationGuideActivity.EXTRA_ACTIVATION_PROMPT_MESSAGE, getString(R.string.dialog_msg_enable_keyboard_home_rain, getString(R.string.app_name)));
                     startActivityForResult(intent, KEYBOARD_ACTIVATION_FROM_HOME_ENTRY);
                 }
             } else if (msg.what == HANDLER_SHOW_UPDATE_DIALOG) {
