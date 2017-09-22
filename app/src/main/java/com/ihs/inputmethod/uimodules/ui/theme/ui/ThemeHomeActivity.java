@@ -691,7 +691,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             CustomDesignAlert callAssistantDialog = new CustomDesignAlert(HSApplication.getContext());
             callAssistantDialog.setTitle(getString(R.string.call_assistant_alert_title));
             callAssistantDialog.setMessage(getString(R.string.call_assistant_alert_message));
-            callAssistantDialog.setImageResource(R.drawable.enable_charging_alert_top_image);// call image
+            callAssistantDialog.setImageResource(R.drawable.enable_callflash_alert_top_image);// call image
             callAssistantDialog.setCancelable(true);
             callAssistantDialog.setEnablePrivacy(true, new View.OnClickListener() {
                 @Override
