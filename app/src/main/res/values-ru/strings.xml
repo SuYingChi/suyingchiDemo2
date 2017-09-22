@@ -17,7 +17,7 @@
         <string name="got_it">ПОНЯТНО</string>
         <string name="filter">Фильтр</string>
         <string name="use">Использовать</string>
-        
+        <string name="customize_keyboard_title">Клавиатура</string>
         <string name="alert_find_keyboard_and_switch_on">Включить %1$s</string>
         
         <!--main-->

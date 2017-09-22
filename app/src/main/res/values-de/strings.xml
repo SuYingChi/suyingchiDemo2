@@ -17,7 +17,7 @@
         <string name="got_it">VERSTANDEN</string>
         <string name="filter">Crop</string>
         <string name="use">Benutzen</string>
-        
+        <string name="customize_keyboard_title">Tastatur</string>
         <string name="alert_find_keyboard_and_switch_on">Wechsel auf %1$s</string>
         
         <!--main-->
