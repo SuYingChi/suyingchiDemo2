@@ -28,7 +28,6 @@ import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -38,7 +37,6 @@ import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
@@ -49,6 +47,7 @@ import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
+import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -59,19 +58,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by jixiang on 16/8/24.
- */
-public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnClickListener, CommonThemeCardAdapter.ThemeCardItemClickListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged {
+public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnClickListener, CommonThemeCardAdapter.ThemeCardItemClickListener {
     public final static String INTENT_KEY_THEME_NAME = "themeName";
-    private static final int keyboardActivationFromDetail = 6;
     private NestedScrollView rootView;
     private View screenshotContainer;
     private ImageView keyboardThemeScreenShotImageView;
     private MdProgressBar screenshotLoading;
-    //    private TextView themeNameText;
-//    private TextView themeDescText;
     private TextView leftBtn;
     private TextView rightBtn;
     private RecyclerView recommendRecyclerView;
@@ -81,21 +73,15 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private HSKeyboardTheme.ThemeType themeType;
     private HSKeyboardTheme keyboardTheme;
     private KCNativeAdView nativeAdView;
-    private long currentResumeTime;
     private String themeLockerBgUrl;
+
+    private static final int KEYBOARD_ACTIVIATION_FROM_THEME_CARD = 1;
+    private static final int KEYBOARD_ACTIVIATION_FROM_APPLY_BUTTON = 2;
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
-                if (hsBundle != null) {
-                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
-                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
-                    if (ThemeDetailActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
-                        showTrialKeyboardDialog(activationCode);
-                    }
-                }
-            } else if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
+            if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
                 updateCurrentThemeStatus();
             }
         }
@@ -124,17 +110,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.CUSTOM) {
                 screenshotContainer.getLayoutParams().height = (int) (getResources().getDisplayMetrics().widthPixels * (HSResourceUtils.getDefaultKeyboardHeight(getResources()) * 1.0f / HSResourceUtils.getDefaultKeyboardWidth(getResources())));
                 getSupportActionBar().setTitle(R.string.theme_detail_custom_theme_title_name);
-//                themeNameText.setVisibility(View.GONE);
-//                themeDescText.setVisibility(View.GONE);
                 keyboardThemeScreenShotImageView.setImageURI(Uri.fromFile(new File(HSKeyboardThemeManager.getKeyboardThemeScreenshotFile(keyboardTheme.mThemeName))));
             } else {
                 screenshotContainer.getLayoutParams().height = (int) (getResources().getDisplayMetrics().widthPixels * 850 * 1.0f / 1080);
                 String themeNameTitle = keyboardTheme.getThemeShowName();
                 getSupportActionBar().setTitle(getString(R.string.theme_detail_common_title_name, getString(R.string.app_name)));
-//                themeNameText.setVisibility(View.VISIBLE);
-//                themeDescText.setVisibility(View.VISIBLE);
-//                themeNameText.setText(themeNameTitle);
-//                themeDescText.setText(keyboardTheme.getThemeDescription());
 
                 if (keyboardTheme.getLargePreivewImgUrl() != null) {
                     keyboardThemeScreenShotImageView.setImageDrawable(null);
@@ -225,7 +205,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        HSGlobalNotificationCenter.addObserver(com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
     }
 
@@ -281,19 +260,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        currentResumeTime = System.currentTimeMillis();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        long time = (System.currentTimeMillis() - currentResumeTime) / 1000;
-        HSLog.e("app_theme_preview_show_time : " + time);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         if (homeKeyTracker.isHomeKeyPressed() && trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
@@ -320,13 +286,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             case CUSTOM:
             case DOWNLOADED:
             case BUILD_IN:
-                if (themeName != null && HSKeyboardThemeManager.getCurrentTheme() != null && themeName.equals(HSKeyboardThemeManager.getCurrentTheme().mThemeName)) {
-                    rightBtn.setText(R.string.theme_card_menu_applied);
-                    rightBtn.setEnabled(false);
-                } else {
-                    rightBtn.setText(R.string.theme_card_menu_apply);
-                    rightBtn.setEnabled(true);
-                }
+                updateApplyButton();
                 if (TextUtils.isEmpty(themeLockerBgUrl)) {
                     leftBtn.setText(R.string.theme_card_menu_share);
                 } else {
@@ -379,66 +339,44 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName))));
             } else {
                 if (HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
-                    showTrialKeyboardDialog(keyboardActivationFromDetail);
+                    Intent intent = new Intent(this, KeyboardActivationGuideActivity.class);
+                    startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_APPLY_BUTTON);
                 } else {
                     String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
                     HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
                 }
             }
-            if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
-                ThemeAnalyticsReporter.getInstance().recordThemeApplyInDetailActivity(themeName);
-            }
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_applied).equalsIgnoreCase(text)) {
         }
     }
 
-    private void showTrialKeyboardDialog(final int activationCode) {
-        final KeyboardActivationProcessor processor =
-                new KeyboardActivationProcessor(ThemeDetailActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
-                    @Override
-                    public void activeDialogShowing() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-                    }
+        if (requestCode == KEYBOARD_ACTIVIATION_FROM_THEME_CARD) {
+            themeCardAdapter.finishKeyboardActivation(resultCode == RESULT_OK);
+        } else if (requestCode == KEYBOARD_ACTIVIATION_FROM_APPLY_BUTTON) {
+            if (resultCode == RESULT_OK) {
+                if (LockerSettings.isLockerEnableShowSatisfied()) {
+                    LockerEnableDialog.showLockerEnableDialog(ThemeDetailActivity.this,
+                            ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
+                            getString(R.string.locker_enable_title_has_text),
+                            "app_theme_detail",
+                            this::showTryKeyboardDialog);
+                } else {
+                    showTryKeyboardDialog();
+                }
+            }
+        }
+    }
 
-                    @Override
-                    public void keyboardSelected(int requestCode) {
-                        if (requestCode == activationCode) {
-                            if (LockerSettings.isLockerEnableShowSatisfied()) {
-                                LockerEnableDialog.showLockerEnableDialog(ThemeDetailActivity.this,
-                                        ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
-                                        getString(R.string.locker_enable_title_has_text),
-                                        "app_theme_detail",
-                                        new LockerEnableDialog.OnLockerBgLoadingListener() {
-                                            @Override
-                                            public void onFinish() {
-                                                if (trialKeyboardDialog == null) {
-                                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(ThemeDetailActivity.this, ThemeDetailActivity.this);
-
-                                                }
-                                                trialKeyboardDialog.show(ThemeDetailActivity.this, activationCode, true);
-                                            }
-                                        });
-                            } else {
-                                if (trialKeyboardDialog == null) {
-                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDetailActivity.class.getName()).create(ThemeDetailActivity.this, ThemeDetailActivity.this);
-
-                                }
-                                trialKeyboardDialog.show(ThemeDetailActivity.this, activationCode, true);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void activeDialogCanceled() {
-
-                    }
-
-                    @Override
-                    public void activeDialogDismissed() {
-
-                    }
-                });
-        processor.activateKeyboard(ThemeDetailActivity.this, true, activationCode);
+    private void showTryKeyboardDialog() {
+        if (trialKeyboardDialog == null) {
+            trialKeyboardDialog = new TrialKeyboardDialog.Builder(this).create();
+            trialKeyboardDialog.setOnDismissListener(dialog -> updateApplyButton());
+        }
+        trialKeyboardDialog.show(true);
     }
 
     @Override
@@ -516,10 +454,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     }
 
     @Override
-    public void onMenuApplyClick(HSKeyboardTheme keyboardTheme) {
-        if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
-            ThemeAnalyticsReporter.getInstance().recordThemeApplyInDetailActivity(keyboardTheme.mThemeName);
-        }
+    public void onKeyboardActivationStart() {
+        Intent intent = new Intent(this, KeyboardActivationGuideActivity.class);
+        startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_THEME_CARD);
     }
 
     @Override
@@ -544,31 +481,14 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     }
 
-    @Override
-    public void onTrialKeyShow(int requestCode) {
-        if (keyboardActivationFromDetail == requestCode || requestCode == ThemeMenuUtils.keyboardActivationFromAdapter) {
-            if (themeName != null && HSKeyboardThemeManager.getCurrentTheme() != null && themeName.equals(HSKeyboardThemeManager.getCurrentTheme().mThemeName)) {
-                rightBtn.setText(R.string.theme_card_menu_applied);
-                rightBtn.setEnabled(false);
-            } else {
-                rightBtn.setText(R.string.theme_card_menu_apply);
-                rightBtn.setEnabled(true);
-            }
+    private void updateApplyButton() {
+        if (TextUtils.equals(themeName, HSKeyboardThemeManager.getCurrentThemeName())) {
+            rightBtn.setText(R.string.theme_card_menu_applied);
+            rightBtn.setEnabled(false);
+        } else {
+            rightBtn.setText(R.string.theme_card_menu_apply);
+            rightBtn.setEnabled(true);
         }
-
-        switch (requestCode) {
-            case keyboardActivationFromDetail:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_detail", "apply");
-                break;
-            case ThemeMenuUtils.keyboardActivationFromAdapter:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_adapter", "apply");
-                break;
-        }
-    }
-
-    @Override
-    public void onTrailKeyPrevented() {
-
     }
 
 }

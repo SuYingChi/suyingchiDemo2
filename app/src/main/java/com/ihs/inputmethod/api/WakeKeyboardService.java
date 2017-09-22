@@ -205,7 +205,7 @@ public class WakeKeyboardService extends Service {
                         public void onClick(View v) {
                             Context context = WakeKeyboardService.this;
                             Intent intent = new Intent(context, ThemeHomeActivity.class);
-                            intent.putExtra(ThemeHomeActivity.BUNDLE_AUTO_ENABLE_KEYBOARD, true);
+                            intent.putExtra(ThemeHomeActivity.EXTRA_AUTO_ENABLE_KEYBOARD, true);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                         }

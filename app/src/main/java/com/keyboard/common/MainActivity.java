@@ -48,7 +48,6 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -59,14 +58,12 @@ import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIApplication;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.CustomProgressDrawable;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
@@ -88,7 +85,7 @@ import static com.ihs.inputmethod.accessbility.AccGALogger.app_auto_setkey_click
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_manual_setkey_clicked;
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_setting_up_page_viewed;
 import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
-import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
+import static com.ihs.inputmethod.accessbility.KeyboardActivationActivity.PREF_THEME_HOME_SHOWED;
 
 
 public class MainActivity extends HSDeepLinkActivity {
@@ -544,7 +541,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
                 ImageView imageCodeProject = new ImageView(getApplicationContext());
                 imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-                final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                final KeyboardActivationGuideActivity.CustomViewDialog customViewDialog = new KeyboardActivationGuideActivity.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
 
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -779,7 +776,7 @@ public class MainActivity extends HSDeepLinkActivity {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
             if (setThemeSucceed) {
-                startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+                startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
             } else {
                 HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
                 if (keyboardTheme != null) {

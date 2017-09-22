@@ -1,33 +1,32 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDownloadActivity;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.keyboard.common.KeyboardActivationGuideActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by guonan.lv on 17/8/14.
- */
 
 public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCardClickListener {
     private RecyclerView recyclerView;
     private FontCardAdapter fontCardAdapter;
     private List<FontModel> fontModelList = new ArrayList<>();
     private TrialKeyboardDialog trialKeyboardDialog;
+    private static final int REQUEST_CODE_ACTIVATION = 1;
+    private int fontIndexWhenActivating;
 
     @Nullable
     @Override
@@ -74,39 +73,30 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
 
     @Override
     public void onFontCardClick(int position) {
-        showTrialKeyboardDialog(ThemeDownloadActivity.keyboardActivationFromDownload, fontModelList.get(position));
+        showTrialKeyboardDialog(position);
     }
 
-    private void showTrialKeyboardDialog(final int activationCode, final FontModel fontModel) {
-        final int position = fontModelList.indexOf(fontModel);
-        final KeyboardActivationProcessor processor =
-                new KeyboardActivationProcessor(getActivity().getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
-                    @Override
-                    public void activeDialogShowing() {
+    private void showTrialKeyboardDialog(int fontIndex) {
+        fontIndexWhenActivating = fontIndex;
+        if (HSInputMethodListManager.isMyInputMethodSelected()) {
+            HSSpecialCharacterManager.selectSpecialCharacter(fontIndex);
+            if (trialKeyboardDialog == null) {
+                trialKeyboardDialog = new TrialKeyboardDialog.Builder(getActivity()).create();
+            }
+            trialKeyboardDialog.show(true);
+        } else {
+            Intent intent = new Intent(getActivity(), KeyboardActivationGuideActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_ACTIVATION);
 
-                    }
+        }
+    }
 
-                    @Override
-                    public void keyboardSelected(int requestCode) {
-                        if (requestCode == activationCode) {
-                            if (trialKeyboardDialog == null) {
-                                trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeDownloadActivity.class.getName()).create(getActivity(), (TrialKeyboardDialog.OnTrialKeyboardStateChanged) getActivity());
-                            }
-                            HSSpecialCharacterManager.selectSpecialCharacter(position);
-                            trialKeyboardDialog.show(getActivity(), activationCode, true);
-                        }
-                    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-                    @Override
-                    public void activeDialogCanceled() {
-
-                    }
-
-                    @Override
-                    public void activeDialogDismissed() {
-
-                    }
-                });
-        processor.activateKeyboard(getActivity(), true, activationCode);
+        if (requestCode == REQUEST_CODE_ACTIVATION) {
+            showTrialKeyboardDialog(fontIndexWhenActivating);
+        }
     }
 }

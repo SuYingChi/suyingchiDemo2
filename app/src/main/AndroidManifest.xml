@@ -217,7 +217,14 @@
 
         <!-- ShowQuietly Config End -->
 
+
         <activity android:name="com.keyboard.common.DebugActivity"></activity>
+
+        <activity
+            android:name="com.keyboard.common.KeyboardActivationGuideActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
     </application>
 
 </manifest>

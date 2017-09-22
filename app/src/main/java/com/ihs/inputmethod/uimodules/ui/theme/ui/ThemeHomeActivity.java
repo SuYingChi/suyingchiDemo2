@@ -2,9 +2,11 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.Browser;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
@@ -24,6 +27,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -49,8 +53,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIInputMethod;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -60,38 +62,40 @@ import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.customize.BaseCustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
+import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.utils.CallAssistantConfigUtils;
 import com.ihs.inputmethod.utils.ScreenLockerConfigUtils;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
+import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.keyboard.common.KeyboardActivationGuideActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static android.view.View.GONE;
-import static com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.keyboardActivationFromCustom;
 
 /**
  * Created by jixiang on 16/8/17.
  */
 public class ThemeHomeActivity extends BaseCustomizeActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener,
-        KeyboardActivationProcessor.OnKeyboardActivationChangedListener, TrialKeyboardDialog.OnTrialKeyboardStateChanged, SettingsActivity2.GeneralHomePreferenceFragment.OnUpdateClickListener {
-    public final static String INTENT_KEY_SHOW_TRIAL_KEYBOARD = "SHOW_TRIAL_KEYBOARD";
-    public final static String BUNDLE_AUTO_ENABLE_KEYBOARD = "BUNDLE_AUTO_ENABLE_KEYBOARD";
+        SettingsActivity2.GeneralHomePreferenceFragment.OnUpdateClickListener {
+    public final static String EXTRA_SHOW_TRIAL_KEYBOARD = "EXTRA_SHOW_TRIAL_KEYBOARD";
+    public final static String EXTRA_AUTO_ENABLE_KEYBOARD = "EXTRA_AUTO_ENABLE_KEYBOARD";
 
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
     private static final String SP_TREBLE_FUNCTION_ALERT_SHOWED = "sp_treble_function_alert_showed";
@@ -100,9 +104,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     public static int HOME_VIEWPAGER_STICKER_PAGE = 1;
     public static final String BUNDLE_KEY_HOME_INIT = "home_init_viewpager_page";
 
-    private static final int keyboardActivationFromHome = 11;
-
-    public static final int keyboardActivationFromHomeWithTrial = 12;
+    private static final int KEYBOARD_ACTIVATION_FROM_HOME_ENTRY = 1;
+    private static final int KEYBOARD_ACTIVATION_FROM_ENABLE_TIP = 2;
+    private static final int KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT = 3;
+    private static final int KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH = 4;
 
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
@@ -153,9 +158,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private TrialKeyboardDialog trialKeyboardDialog;
     private boolean isFromUsageAccessActivity;
     private View enableTipTV;
-    private boolean shouldShowActivationTip;
     private ThemeHomeActivity context = ThemeHomeActivity.this;
-    private KeyboardActivationProcessor keyboardActivationProcessor;
     private View apkUpdateTip;
     private boolean isResumeOnCreate = true;
 
@@ -168,7 +171,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         public void handleMessage(Message msg) {
             if (msg.what == HANDLER_SHOW_ACTIVE_DIALOG) {
                 if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-                    keyboardActivationProcessor.showHomePageActivationDialog(ThemeHomeActivity.this);
+                    Intent intent = new Intent(ThemeHomeActivity.this, KeyboardActivationGuideActivity.class);
+                    intent.putExtra(KeyboardActivationGuideActivity.EXTRA_ACTIVATION_PROMPT_MESSAGE, getString(R.string.dialog_msg_enable_keyboard_home_rain));
+                    startActivityForResult(intent, KEYBOARD_ACTIVATION_FROM_HOME_ENTRY);
                 }
             } else if (msg.what == HANDLER_SHOW_UPDATE_DIALOG) {
                 checkAndShowApkUpdateAlert(false);
@@ -186,18 +191,26 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
     };
 
+
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
             if (CustomThemeActivity
-                    .NOTIFICATION_SHOW_TRIAL_KEYBOARD.equals(s)) {
-                if (hsBundle != null) {
-                    String showTrialKeyboardActivityName = hsBundle.getString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, "");
-                    int activationCode = hsBundle.getInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE);
-                    if (ThemeHomeActivity.class.getSimpleName().equals(showTrialKeyboardActivityName)) {
-                        showTrialKeyboardDialog(activationCode);
-                    }
+                    .NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS.equals(s)) {
+                if (!PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).getBoolean("CUSTOM_THEME_SAVE", false)) {
+                    PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();
                 }
+                showTrialKeyboardDialog(KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH);
+            }
+        }
+    };
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), Intent.ACTION_INPUT_METHOD_CHANGED)) {
+                boolean isKeyboardSelected = HSInputMethodListManager.isMyInputMethodSelected();
+                enableTipTV.setVisibility(isKeyboardSelected ? View.GONE : View.VISIBLE);
             }
         }
     };
@@ -241,6 +254,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         mWallpaperTabIndex = bundle.getInt("wallpaperIndex");
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -254,21 +268,16 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         BottomNavigationViewHelper.disableShiftMode(mBottomBar);
         mLayoutWrapper = new LayoutWrapper(mBottomBar, getResources().getDimensionPixelSize(R.dimen.bottom_bar_default_height), CommonUtils.pxFromDp(3.3f));
 
-
-        keyboardActivationProcessor = new KeyboardActivationProcessor(ThemeHomeActivity.class, ThemeHomeActivity.this);
-
         enableTipTV = findViewById(R.id.tv_enable_keyboard);
         ((TextView) enableTipTV).setText(getString(R.string.tv_enable_keyboard_tip, getString(R.string.app_name)));
-        enableTipTV.setVisibility(GONE);
+        enableTipTV.setVisibility(HSInputMethodListManager.isMyInputMethodSelected() ? View.GONE : View.VISIBLE);
         enableTipTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
+                Intent intent = new Intent(ThemeHomeActivity.this, KeyboardActivationGuideActivity.class);
+                startActivityForResult(intent, KEYBOARD_ACTIVATION_FROM_ENABLE_TIP);
             }
         });
-        if (getIntent() != null && getIntent().getBooleanExtra(BUNDLE_AUTO_ENABLE_KEYBOARD, false)) {
-            keyboardActivationProcessor.activateKeyboard(ThemeHomeActivity.this, false, keyboardActivationFromHome);
-        }
 
         currentFragmentTag = THEME_STORE_FRAGMENT_TAG;
 
@@ -295,7 +304,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                     .show();
         }
 
-        HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS, notificationObserver);
+
+        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED));
 
         //如果是第一次进入页面并且当前键盘没有被选为自己则弹框。
         if (!HSInputMethodListManager.isMyInputMethodSelected()) {
@@ -305,13 +316,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
 
         onNewIntent(getIntent());
-//<<<<<<< HEAD
-//
-//        // 添加测试用选项
-//        if (HSApplication.isDebugging) {
-//            navigationView.getMenu().setGroupVisible(R.id.menu_debug, true);
-//        }
-//=======
         Menu menu = mBottomBar.getMenu();
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_keyboard, R.drawable.customize_keyboard_h);
     }
@@ -333,11 +337,11 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        boolean showTrial = intent.getBooleanExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
+        boolean showTrial = intent.getBooleanExtra(EXTRA_SHOW_TRIAL_KEYBOARD, false);
         if (showTrial) {
             handler.removeMessages(HANDLER_SHOW_ACTIVE_DIALOG);
-            showTrialKeyboardDialog(keyboardActivationFromHomeWithTrial);
-            getIntent().putExtra(INTENT_KEY_SHOW_TRIAL_KEYBOARD, false);
+            showTrialKeyboardDialog(KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT);
+            getIntent().putExtra(EXTRA_SHOW_TRIAL_KEYBOARD, false);
         } else {
             String from = intent.getStringExtra("From");
             if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
@@ -380,8 +384,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
         restoreNavigationView();
         mContent.setChildSelected(currentTabIndex);
-
-        shouldShowActivationTip = true;
 
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
@@ -460,64 +462,37 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
     }
 
-    private void showTrialKeyboardDialog(final int activationCode) { //在trialKeyboardDialog展示之前根据条件判断是否弹出一个全屏的Dialog来开启Locker
-        final KeyboardActivationProcessor processor =
-                new KeyboardActivationProcessor(ThemeHomeActivity.this.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
-                    @Override
-                    public void activeDialogShowing() {
+    private void showTrialKeyboardDialog(final int activationCode) {
+        if (HSInputMethodListManager.isMyInputMethodSelected()) {
+            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
 
+                LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
+                        getString(R.string.locker_enable_title_has_text),
+                        "from",
+                        (LockerEnableDialog.OnLockerBgLoadingListener) () -> {
+                    if (trialKeyboardDialog == null) {
+                        trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();
                     }
-
-                    @Override
-                    public void keyboardSelected(int requestCode) {
-                        if (requestCode == activationCode) {
-                            if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
-                                String from = "unknown";
-                                if (activationCode == CustomThemeActivity.keyboardActivationFromCustom) {
-                                    from = "app_save_customize_theme";
-                                } else if (activationCode == keyboardActivationFromHomeWithTrial) {
-                                    from = "theme_package_apply_button";
-                                }
-                                LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
-                                        getString(R.string.locker_enable_title_has_text),
-                                        from,
-                                        new LockerEnableDialog.OnLockerBgLoadingListener() {
-                                            @Override
-                                            public void onFinish() {
-                                                if (trialKeyboardDialog == null) {
-                                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
-                                                }
-                                                if (activationCode == keyboardActivationFromCustom) {
-                                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
-                                                } else {
-                                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
-                                                }
-                                            }
-                                        });
-                            } else {
-                                if (trialKeyboardDialog == null) {
-                                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.class.getName()).create(context, ThemeHomeActivity.this);
-                                }
-                                if (activationCode == keyboardActivationFromCustom) {
-                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, false);
-                                } else {
-                                    trialKeyboardDialog.show(ThemeHomeActivity.this, activationCode, true);
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void activeDialogCanceled() {
-
-                    }
-
-                    @Override
-                    public void activeDialogDismissed() {
-
+                    if (activationCode == KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH) {
+                        trialKeyboardDialog.show(false);
+                    } else {
+                        trialKeyboardDialog.show(true);
                     }
                 });
-        processor.activateKeyboard(ThemeHomeActivity.this, true, activationCode);
+            } else {
+                if (trialKeyboardDialog == null) {
+                    trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();
+                }
+                if (activationCode == KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH) {
+                    trialKeyboardDialog.show(false);
+                } else {
+                    trialKeyboardDialog.show(true);
+                }
+            }
+        } else {
+            Intent intent = new Intent(this, KeyboardActivationGuideActivity.class);
+            startActivityForResult(intent, activationCode);
+        }
     }
 
     @Override
@@ -528,8 +503,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
-        keyboardActivationProcessor.release();
-        keyboardActivationProcessor = null;
+        unregisterReceiver(broadcastReceiver);
         super.onDestroy();
 
         KCCommonUtils.fixInputMethodManagerLeak(this);
@@ -564,79 +538,16 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     @Override
-    public void activeDialogShowing() {
-        enableTipTV.setVisibility(GONE);
-    }
-
-    public void keyboardSelected(int requestCode) {
-        if (keyboardActivationFromHomeWithTrial == requestCode || keyboardActivationFromCustom == requestCode) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT == requestCode || KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH == requestCode) {
             showTrialKeyboardDialog(requestCode);
-        }
-        enableTipTV.setVisibility(GONE);
-    }
-
-    @Override
-    public void activeDialogCanceled() {
-    }
-
-    @Override
-    public void activeDialogDismissed() {
-        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-            enableTipTV.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onTrialKeyShow(int requestCode) {
-        enableTipTV.setVisibility(GONE);
-
-        switch (requestCode) {
-            case keyboardActivationFromHomeWithTrial:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_home", "themePackage");
-                break;
-            case keyboardActivationFromCustom:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from_custom", "customizetheme");
-                break;
-            default:
-                HSAnalytics.logEvent("keyboard_theme_try_viewed", "from", "apply");
-                break;
-        }
-    }
-
-    @Override
-    public void onTrailKeyPrevented() {
-        if (!HSInputMethodListManager.isMyInputMethodSelected()) {
-            enableTipTV.setVisibility(View.VISIBLE);
         }
     }
 
     private void restoreNavigationView() {
-        if (THEME_STORE_FRAGMENT_TAG.equals(currentFragmentTag)) {
-            if (shouldShowActivationTip && !HSInputMethodListManager.isMyInputMethodSelected()) {
-                enableTipTV.setVisibility(View.VISIBLE);
-            } else {
-                enableTipTV.setVisibility(GONE);
-            }
 
-        }
     }
-
-//    private void resetApkUpdateViews() {
-//        apkUpdateTip.setVisibility(View.GONE);
-//        navigationView.getMenu().findItem(R.id.nav_update).getActionView().setVisibility(View.GONE);
-//    }
-//
-//    private void refreshApkUpdateViews() {
-//        resetApkUpdateViews();
-//
-//        if (ApkUtils.shouldUpdate()) {
-//            if (shouldShowApkUpdateTip(ApkUtils.getLatestVersionCode())) {
-//                showApkUpdateTip();
-//            }
-//
-//            showApkUpdateMenuItemIndicationIcon();
-//        }
-//    }
 
     private void checkAndShowApkUpdateAlert(final boolean force) {
         if (ApkUtils.checkAndShowUpdateAlert(force)) {
@@ -647,13 +558,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             HSToastUtils.toastCenterLong(getResources().getString(R.string.apk_update_to_date_tip));
         }
     }
-//
-//    private void clearApkUpdateTip() {
-//        if (apkUpdateTip.getVisibility() == View.VISIBLE) {
-//            apkUpdateTip.setVisibility(View.GONE);
-//            ApkUtils.saveUpdateApkVersionCode();
-//        }
-//    }
 
     private void showApkUpdateTip() {
         apkUpdateTip.setVisibility(View.VISIBLE);
@@ -832,5 +736,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 restoreNavigationView();
             }
         });
+
     }
 }
