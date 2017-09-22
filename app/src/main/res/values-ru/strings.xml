@@ -15,7 +15,6 @@
     <string name="saving">Сохранение&#8230;</string>
     <string name="allow">Разрешить</string>
     <string name="done">Готово</string>
-    <string name="locked">Блокировано</string>
     <string name="got_it">ПОНЯТНО</string>
     <string name="filter">Фильтр</string>
     <string name="use">Использовать</string>
@@ -219,7 +218,6 @@
     <string name="app_free_storage">Объем свободной памяти увеличен на %1$s.</string>
     <string name="app_recommended">Recommended for you:</string>
 
-    <string name="key_uninstall">Удаление завершено</string>
     <string name="home_create_keyboard">Создать свои темы</string>
 
     <string name="charging_alert_title">Интеллектуальная зарядка</string>

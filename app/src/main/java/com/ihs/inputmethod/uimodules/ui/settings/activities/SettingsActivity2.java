@@ -61,7 +61,6 @@ import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
 
@@ -281,10 +280,10 @@ public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
                             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                                 AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
                             }
-                            KCAnalyticUtil.logEvent("phoneboost_enabled");
+                            HSAnalytics.logEvent("phoneboost_enabled");
                         } else {
                             AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(getString(R.string.ad_placement_result_page));
-                            KCAnalyticUtil.logEvent("phoneboost_disabled");
+                            HSAnalytics.logEvent("phoneboost_disabled");
                         }
                         return true;
                     }

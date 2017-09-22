@@ -125,7 +125,6 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                     if (enableShowed < HSConfig.optInteger(3, "Application", "Locker", "EnableAlertMaxShowCount") && LockerSettings.getLockerEnableStates() == 1 && !LockerSettings.isUserTouchedLockerSettings()) {
                         LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), ThemeLockerBgUtil.getInstance().getThemeBgUrl(model.themeName),
                                 HSApplication.getContext().getString(R.string.locker_enable_title_has_text),
-                                "switch_keyboard",
                                 new LockerEnableDialog.OnLockerBgLoadingListener() {
                             @Override
                             public void onFinish() {

@@ -218,7 +218,6 @@
     <string name="app_free_storage">You now have %1$s more free storage.</string>
     <string name="app_recommended">Recommended for you:</string>
 
-    <string name="key_uninstall">uninstall_key</string>
     <string name="home_create_keyboard">Crea la tua tastiera</string>
 
     <string name="charging_alert_title">Ricarica intelligente</string>

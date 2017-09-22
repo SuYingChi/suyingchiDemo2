@@ -328,7 +328,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             HSAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
             HSAnalytics.logEvent("keyboard_setaslockscreen_button_clicked", "occasion", "app_theme_detail");
-            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, getString(R.string.locker_enable_title_no_desc), "app_theme_detail", new LockerEnableDialog.OnLockerBgLoadingListener() {
+            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, getString(R.string.locker_enable_title_no_desc), new LockerEnableDialog.OnLockerBgLoadingListener() {
                 @Override
                 public void onFinish() {
                 }
@@ -362,7 +362,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     LockerEnableDialog.showLockerEnableDialog(ThemeDetailActivity.this,
                             ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
                             getString(R.string.locker_enable_title_has_text),
-                            "app_theme_detail",
                             this::showTryKeyboardDialog);
                 } else {
                     showTryKeyboardDialog();

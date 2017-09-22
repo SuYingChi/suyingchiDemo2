@@ -2,7 +2,6 @@ package com.keyboard.common;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -24,8 +23,7 @@ public class LockerEnableActivity extends HSActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String uri = intent.getStringExtra("lockerBgUri");
-            String launchOccasion = intent.getStringExtra("launchOccasion");
-            LockerEnableDialog.showLockerEnableDialog(this, uri, getString(R.string.locker_enable_title_no_desc), launchOccasion, new LockerEnableDialog.OnLockerBgLoadingListener() {
+            LockerEnableDialog.showLockerEnableDialog(this, uri, getString(R.string.locker_enable_title_no_desc), new LockerEnableDialog.OnLockerBgLoadingListener() {
                 @Override
                 public void onFinish() {
                     finish();

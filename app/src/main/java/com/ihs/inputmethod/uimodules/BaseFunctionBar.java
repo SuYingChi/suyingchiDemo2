@@ -20,12 +20,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -36,7 +36,6 @@ import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
 import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -115,7 +114,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     }
 
     public boolean startFunctionBarAdAnimation() {
-        KCAnalyticUtil.logEvent("FunctionBarGiftAd_show");
+        HSAnalytics.logEvent("FunctionBarGiftAd_show");
         if (isAdAnimating || imageView.getVisibility() == View.VISIBLE) {
             return false;
         }
@@ -200,7 +199,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
             onFunctionBarClickListener.onFunctionBarItemClick(view);
         }
         if (view == imageView) {
-            KCAnalyticUtil.logEvent("FunctionBarGiftAd_click");
+            HSAnalytics.logEvent("FunctionBarGiftAd_click");
             GiftInterstitialHelper.showInterstitialGiftAd(getResources().getString(R.string.ad_placement_gift_ad));
         }
     }

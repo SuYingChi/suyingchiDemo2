@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.artw.lockscreen.LockerSettings;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
@@ -14,7 +15,6 @@ import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         HSLog.e(intent.getStringExtra("actionType") + intent.toString());
-        KCAnalyticUtil.logEvent("notification_click",intent.getStringExtra("name"));
+        HSAnalytics.logEvent("notification_click","notification_click",intent.getStringExtra("name"));
         KCNotificationManager.logNotificationClick(intent.getStringExtra("actionType"),intent.getStringExtra("name"));
         String name = intent.getStringExtra("name");
         HSLog.e("notification name " + name);

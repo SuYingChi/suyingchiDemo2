@@ -15,7 +15,6 @@
     <string name="saving">جارٍ الحفظ&#8230;</string>
     <string name="allow">السماح</string>
     <string name="done">تم</string>
-    <string name="locked">مقفل</string>
     <string name="got_it">فهمت</string>
     <string name="filter">تصفية</string>
     <string name="use">استخدام</string>
@@ -219,7 +218,6 @@
     <string name="app_free_storage">لديك الآن %1$s مساحة تخزين إضافية</string>
     <string name="app_recommended">Recommended for you:</string>
 
-    <string name="key_uninstall">تم إلغاء التثبيت</string>
     <string name="home_create_keyboard">إنشاء نسقي الخاصة</string>
 
     <string name="charging_alert_title">الشحن الذكي</string>

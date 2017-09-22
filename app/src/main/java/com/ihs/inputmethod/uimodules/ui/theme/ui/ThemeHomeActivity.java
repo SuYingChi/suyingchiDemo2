@@ -468,7 +468,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
                 LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
                         getString(R.string.locker_enable_title_has_text),
-                        "from",
                         (LockerEnableDialog.OnLockerBgLoadingListener) () -> {
                     if (trialKeyboardDialog == null) {
                         trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();

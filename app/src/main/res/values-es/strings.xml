@@ -15,7 +15,6 @@
     <string name="saving">Guardando&#8230;</string>
     <string name="allow">Permitir</string>
     <string name="done">Hecho</string>
-    <string name="locked">Bloqueado</string>
     <string name="got_it">ENTENDIDO</string>
     <string name="filter">Filtro</string>
     <string name="use">Utilizar</string>
@@ -212,7 +211,6 @@
     <string name="app_free_storage">Ahora tienes más espacio libre para %1$s.</string>
     <string name="app_recommended">Recommended for you:</string>
 
-    <string name="key_uninstall">uninstall_key</string>
     <string name="home_create_keyboard">Crear mis propios temas</string>
 
     <string name="charging_alert_title">Carga inteligente</string>

@@ -18,6 +18,7 @@
     <string name="got_it">GOT IT</string>
     <string name="filter">Crop</string>
     <string name="use">USE</string>
+    <string name="unknown">Unknown</string>
 
     <string name="alert_find_keyboard_and_switch_on">Switch on %1$s</string>
 
@@ -158,8 +159,15 @@
     <string name="custom_theme_sound_tip">To use click sound effect, please turn off the silent mode or enable Sound on keypress in the settings section.</string>
 
     <!--IAP Tip Info -->
-
+    <string name="current_theme_price" formatted="true">Unlock for %1$s</string>
     <string name="purchase_success">Your purchase was successful.</string>
+    <string name="purchase_error">ERROR:</string>
+    <string name="purchase_error_message">Your purchase is now unavailable. Try again later.</string>
+    <string name="purchase_error_bill">BILLING UNAVAILABLE</string>
+    <string name="purchase_error_item">ITEM UNAVAILABLE</string>
+    <string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
+    <string name="purchase_google_play_unavailable">Google Play is not available on your device.</string>
+    <string name="purchase_unavailable">The purchase is not available.</string>
 
     <!-- Theme new tip -->
     <string name="new_background_tip">New background</string>

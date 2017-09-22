@@ -15,7 +15,6 @@
     <string name="saving">Opslaan&#8230;</string>
     <string name="allow">Toestaan</string>
     <string name="done">Klaar</string>
-    <string name="locked">Afgesloten</string>
     <string name="got_it">BEGREPEN</string>
     <string name="filter">Filteren</string>
     <string name="use">Gebruiken</string>
@@ -220,7 +219,6 @@
     <string name="app_free_storage">You now have %1$s more free storage.</string>
     <string name="app_recommended">Thema\'s Regenboogtoetsen</string>
 
-    <string name="key_uninstall">Verwijderen is voltooid</string>
     <string name="home_create_keyboard">Mijn Eigen Thema\'s Maken</string>
 
     <string name="charging_alert_title">Slim Opladeng</string>
