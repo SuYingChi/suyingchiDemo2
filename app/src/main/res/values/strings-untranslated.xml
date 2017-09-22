@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- store home -->
-    <string name="store_nav_download">My Downloads</string>
-    <string name="tab_theme">THEME</string>
-    <string name="tab_theme_my">MY THEME</string>
-    <string name="tab_sticker">STICKER</string>
-    <string name="tab_sticker_my">MY STICKER</string>
-    <string name="tab_font">FONT</string>
-    <string name="tab_font_my">MY FONT</string>
-    <string name="item_sticker_more_coming">More stickers are coming soon</string>
-    <string name="item_font_more_coming">More fonts are coming soon</string>
 
     <string name="keyboard_settings">Keyboard Settings</string>
     <string name="general">GENERAL</string>
 
-
     <!-- home bottom tab-->
     <string name="call_flash">Call Flash</string>
-
 
     <!-- wallpaper preview -->
     <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
@@ -37,18 +26,5 @@
     <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
 
     <!--alert message-->
-    <string name="locker_alert_title">Screen Locker</string>
-    <string name="locker_alert_message">Add your favorite themes on lock screen. May contain sponsored contents.</string>
-
-    <string name="call_assistant_alert_title">Animated Themes for Calls</string>
-    <string name="call_assistant_alert_message">Add animated themes on incoming call screens. May contain sponsored contents.</string>
-
-    <string name="multi_function_alert_title">Stunning Themes</string>
-    <string name="multi_function_alert_message">Add stunning themes on lock screen and incoming call screens. May contain sponsored contents.</string>
-
-    <string name="apk_update_alert_message">Your current version is too low, please update to lastest version to use it.</string>
-    <string name="custom_rate_alert_message" tools:ignore="Typos">Wanna unlock this item for FREE? \nJust rate us 5 Stars!</string>
-    <string name="custom_rate_alert_button_text">Rate 5 Stars to Unlock</string>
-    <string name="custom_rate_alert_toast_text">Please check your Google Play</string>
     <string name="online_wallpaper_loading">Loading HD wallpaper, please wait.</string>
 </resources>
