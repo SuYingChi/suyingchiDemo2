@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources
 	xmlns:tools="http://schemas.android.com/tools"
-	tools:ignore="MissingTranslation">
+	>
 
 	<string name="toast_enable_keyboard_1">1</string>
 	<string name="toast_enable_keyboard_2">2</string>

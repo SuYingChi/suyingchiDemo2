@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources
 	xmlns:tools="http://schemas.android.com/tools"
-	tools:ignore="MissingTranslation">
+	>
 	<!--no translation need-->
 	<string name="app_name">com.joykeyboard.gif</string>
 	<string name="english_ime_name_cap">Joy KEYBOARD</string>
