@@ -2222,8 +2222,6 @@
 						<string>Fiery Guitar</string>
 						<key>price</key>
 						<string>$0.99</string>
-						<key>needNewVersionToUnlock</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -2248,8 +2246,6 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fallingstars.jpg</string>
 						<key>name</key>
 						<string>Falling Stars</string>
-						<key>rateToUnlock</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2586,8 +2582,6 @@
 						<key>name</key>
 						<string>Pink Leopard</string>
 						<key>showNewMark</key>
-						<true/>
-						<key>rateToUnlock</key>
 						<true/>
 					</dict>
 					<dict>
@@ -8361,7 +8355,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13.5</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8818,6 +8812,44 @@
 				<false/>
 				<key>serialList</key>
 				<array>
+					<dict>
+						<key>adType</key>
+						<string>Facebookinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<real>18.5</real>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>527439780799121_704144583128639</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>networkType</key>
+						<integer>0</integer>
+						<key>osVersionException</key>
+						<array/>
+						<key>osVersionFilter</key>
+						<array/>
+						<key>priceRatio</key>
+						<integer>1</integer>
+						<key>primaryViewOption</key>
+						<string>imageView</string>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+						<key>url</key>
+						<string></string>
+					</dict>
 					<dict>
 						<key>adType</key>
 						<string>Facebooknative</string>
@@ -10356,7 +10388,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11195,7 +11227,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<integer>13</integer>
+								<real>14.7</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11233,7 +11265,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<real>14.3</real>
 							</dict>
 						</dict>
 						<key>ids</key>
