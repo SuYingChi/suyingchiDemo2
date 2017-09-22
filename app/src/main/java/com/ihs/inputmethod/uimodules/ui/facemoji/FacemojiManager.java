@@ -78,8 +78,8 @@ public class FacemojiManager {
     private static FacePalettesView mFacePalettesView;
     private static List<FaceItem> faces = new ArrayList<>();
     private static final String[] classicCategoryNames = {
-//            "person",
-//            "star",
+            "person",
+            "star",
             "fruit"
     };
     private static final String[] newCategoryNames = {
@@ -578,6 +578,7 @@ public class FacemojiManager {
         int sum = 0;
         for (final FacemojiCategory category : getCategories(facemojiType)) {
             final int temp = sum;
+            sum += category.getPageCount();
             if (sum > position) {
                 return new Pair<>(category.getCategoryId(), position - temp);
             }
