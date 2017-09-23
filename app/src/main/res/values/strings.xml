@@ -21,6 +21,7 @@
     <string name="customize_keyboard_title">Keyboard</string>
     <string name="customize_wallpapers_title">Wallpapers</string>
     <string name="may_contains_ads">May Contain Ads</string>
+    <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
     <string name="online_wallpaper_loading">Loading HD wallpaper, please wait.</string>
 
     <string name="unknown">Unknown</string>
