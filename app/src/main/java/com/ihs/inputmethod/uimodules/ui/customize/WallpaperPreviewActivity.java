@@ -233,6 +233,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mViewPager.setFocusable(true);
         mViewPager.setClickable(true);
         mViewPager.setLongClickable(true);
+        mViewPager.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(this);
         mViewPager.setCurrentItem(mPaperIndex, false);
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
@@ -376,6 +377,10 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 setLockerScreenWallpaper();
                 setHomeScreenWallpaper();
                 break;
+            default:
+                if (setWallpaperDialog.getVisibility() == View.VISIBLE) {
+                    hideSetWallpaperSelectDialog();
+                }
         }
 
     }
@@ -550,6 +555,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     private PreviewViewPage getPreviewPage(ViewGroup view, int paperIndex) {
         PreviewViewPage page = (PreviewViewPage) this.getLayoutInflater().inflate(R.layout.item_wallpaper_page, view, false);
+        page.setOnClickListener(this);
         page.setListener(this);
         page.setTag(paperIndex);
         page.largeWallpaperImageView.setTag(page);
