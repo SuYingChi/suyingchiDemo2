@@ -67,27 +67,22 @@ import com.ihs.inputmethod.uimodules.ui.customize.BaseCustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.utils.CallAssistantConfigUtils;
 import com.ihs.inputmethod.utils.ScreenLockerConfigUtils;
-import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
-import com.ihs.keyboardutils.utils.InterstitialGiftUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import static android.view.View.GONE;
 
 /**
  * Created by jixiang on 16/8/17.
@@ -101,8 +96,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private static final String SP_TREBLE_FUNCTION_ALERT_SHOWED = "sp_treble_function_alert_showed";
     private final static String MY_THEME_FRAGMENT_TAG = "fragment_tag_my_theme";
     private final static String THEME_STORE_FRAGMENT_TAG = "fragment_tag_theme_store";
-    public static int HOME_VIEWPAGER_STICKER_PAGE = 1;
-    public static final String BUNDLE_KEY_HOME_INIT = "home_init_viewpager_page";
+    public static final String BUNDLE_KEY_HOME_MAIN_PAGE_TAB = "home_main_page_tab";
+    public static final String BUNDLE_KEY_HOME_INNER_PAGE_TAB = "home_inner_page_tab";
 
     private static final int KEYBOARD_ACTIVATION_FROM_HOME_ENTRY = 1;
     private static final int KEYBOARD_ACTIVATION_FROM_ENABLE_TIP = 2;
@@ -263,7 +258,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 //        getWindow().setBackgroundDrawable(null);
 
         mContent = ViewUtils.findViewById(this, R.id.content_layout);
-        mContent.setChildSelected(currentTabIndex);
+
         mBottomBar = ViewUtils.findViewById(this, R.id.bottom_bar);
         BottomNavigationViewHelper.disableShiftMode(mBottomBar);
         mLayoutWrapper = new LayoutWrapper(mBottomBar, getResources().getDimensionPixelSize(R.dimen.bottom_bar_default_height), CommonUtils.pxFromDp(3.3f));
@@ -316,8 +311,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
 
         onNewIntent(getIntent());
-        Menu menu = mBottomBar.getMenu();
-        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_keyboard, R.drawable.customize_keyboard_h);
     }
 
     private void enableUsageAccessPermission() {
@@ -353,11 +346,21 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         if (mLayoutWrapper != null) {
             mLayoutWrapper.show();
         }
+
+        int innerTabIndex = 0;
         // keyboard中点击sticker panel加号，设定viewpager当前页为sticker home页
-        Bundle extras = intent.getExtras();
-        if (extras != null && extras.getInt(BUNDLE_KEY_HOME_INIT) == HOME_VIEWPAGER_STICKER_PAGE) {
-            currentTabIndex = TAB_INDEX_KEYBOARD;
+        Bundle bundle = intent.getExtras();
+        if (bundle != null ){
+            if (bundle.containsKey(BUNDLE_KEY_HOME_MAIN_PAGE_TAB)){
+                currentTabIndex = bundle.getInt(BUNDLE_KEY_HOME_MAIN_PAGE_TAB);
+            }
+            if (bundle.containsKey(BUNDLE_KEY_HOME_INNER_PAGE_TAB)){
+                innerTabIndex = bundle.getInt(BUNDLE_KEY_HOME_INNER_PAGE_TAB);
+            }
+
         }
+        mBottomBar.setSelectedItemId(ITEMS_FLURRY_NAME_MAP.keyAt(currentTabIndex));
+        mContent.setWithChildTabSelected(currentTabIndex,innerTabIndex);
     }
 
 

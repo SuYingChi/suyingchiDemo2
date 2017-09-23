@@ -28,8 +28,13 @@ import java.util.ArrayList;
 
 public class KeyboardFragment extends Fragment implements View.OnClickListener {
 
+    public static final int TAB_THEME = 0;
+    public static final int TAB_STICKER = 1;
+    public static final int TAB_FONT = 2;
+    private int tabIndex = TAB_THEME;
     public static final String TAB_INDEX = "tabIndex";
-    private int tabIndex = 0;
+
+
     private TabFragmentPagerAdapter tabFragmentPagerAdapter;
     private ArrayList<Class> fragments;
     private TabLayout tabLayout;
@@ -48,8 +53,8 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            tabIndex = savedInstanceState.getInt(TAB_INDEX);
+        if (getArguments() != null) {
+            tabIndex = getArguments().getInt(TAB_INDEX);
         }
     }
 

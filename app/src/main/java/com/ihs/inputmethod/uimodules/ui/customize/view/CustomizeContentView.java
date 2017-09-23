@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -75,7 +76,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
             setupWithInitialTabIndex(layoutId, position);
         }
 
-        private Fragment createFragmentByType(@LayoutRes int layoutId) {
+        private Fragment createFragmentByType(@LayoutRes int layoutId,Bundle bundle) {
             switch (layoutId) {
                 case R.layout.wrap_home_fragment:
                     return new KeyboardFragment();
@@ -112,7 +113,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
             Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
 
             if (currentFragment == null) {
-                currentFragment = createFragmentByType(layoutId);
+                currentFragment = createFragmentByType(layoutId,null);
                 fragmentTransaction.add(R.id.content_layout, currentFragment, tag);
             }
             hideOtherFragment(position, fragmentTransaction, fragmentManager);
@@ -129,10 +130,10 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
             Fragment currentFragment = fragmentManager.findFragmentByTag(tag);
 
             if (currentFragment == null) {
-                currentFragment = createFragmentByType(CONTENT_VIEW_IDS[position]);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(KeyboardFragment.TAB_INDEX, tabPosition);
-//                currentFragment.setArguments(bundle);
+                Bundle bundle = new Bundle();
+                bundle.putInt(KeyboardFragment.TAB_INDEX, tabPosition);
+                currentFragment = createFragmentByType(CONTENT_VIEW_IDS[position],bundle);
+                currentFragment.setArguments(bundle);
                 fragmentTransaction.add(R.id.content_layout, currentFragment, tag);
             } else {
                 if (currentFragment instanceof KeyboardFragment) {
