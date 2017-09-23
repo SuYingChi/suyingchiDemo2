@@ -16,11 +16,12 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/store_tab"
             style="@style/MyCustomTabLayout"
+            app:tabMode="scrollable"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
         <View
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
-            android:paddingRight="10dp"
+            android:layout_marginRight="10dp"
             app:srcCompat="@drawable/download_icon_home_store" />
 
     </LinearLayout>

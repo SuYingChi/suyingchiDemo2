@@ -84,6 +84,7 @@ import com.keyboard.common.KeyboardActivationGuideActivity;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 /**
  * Created by jixiang on 16/8/17.
  */
@@ -360,6 +361,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
         }
         mBottomBar.setSelectedItemId(ITEMS_FLURRY_NAME_MAP.keyAt(currentTabIndex));
+        setIconDrawable(mBottomBar.getMenu().getItem(currentTabIndex));
         mContent.setWithChildTabSelected(currentTabIndex,innerTabIndex);
     }
 
@@ -424,19 +426,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_setting, R.drawable.customize_settings);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(final MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        currentTabIndex = ITEMS_INDEX_MAP.get(id);
-        if (mViewIndex != currentTabIndex) {
-            mViewIndex = currentTabIndex;
-        }
-        mContent.setChildSelected(currentTabIndex);
-        // reset icon to origins
-        resetBottomMenu();
-
+    private void setIconDrawable(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.customize_bottom_bar_wallpapers:
                 HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "wallpaper");
@@ -455,6 +445,22 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 item.setIcon(R.drawable.customize_settings_h);
                 break;
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(final MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        currentTabIndex = ITEMS_INDEX_MAP.get(id);
+        if (mViewIndex != currentTabIndex) {
+            mViewIndex = currentTabIndex;
+        }
+        mContent.setChildSelected(currentTabIndex);
+        // reset icon to origins
+        resetBottomMenu();
+
+        setIconDrawable(item);
         return true;
     }
 
