@@ -19,8 +19,10 @@
         <string name="use">Gebruiken</string>
         <string name="customize_keyboard_title">Keyboard</string>
         <string name="alert_find_keyboard_and_switch_on">%1$s inschakelen</string>
-        
-        <!--main-->
+        <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
+        <string name="online_wallpaper_loading">Loading HD wallpaper, please wait.</string>
+
+    <!--main-->
         <string name="alert_attention_messenger">%1$s neemt de privacy van onze gebruikers zeer serieus.  We zullen NOOIT gegevens zoals wachtwoorden of creditcardnummers verzamelen.</string>
         <string name="toast_enable_keyboard">%1$s inschakelen.</string>
         <string name="toast_select_keyboard">%1$s selecteren</string>
@@ -104,13 +106,11 @@ Bevat gesponsorde inhoud.</string>
         
         <!--theme home-->
         <string name="theme_store_background_title">mijn eigen thema\'s maken</string>
-        <string name="theme_store_theme_title">Thema\'s %1$s</string>
         <string name="theme_store_more">Meer</string>
         <string name="my_theme_customized_theme_title">Aangepast toetsenbord</string>
         <string name="my_theme_downloaded_theme_title">Gedownload</string>
         <string name="theme_detail_recommend_title">Misschien vind je dit leuk</string>
         <string name="theme_card_custom_theme_default_name">Mijn thema</string>
-        <string name="theme_detail_common_title_name">Thema\'s %1$s</string>
         <string name="theme_detail_custom_theme_title_name">Aangepast toetsenbord</string>
         <string name="theme_trial_keyboard_edit_text_hint">Probeer nu hier te typen…</string>
         
@@ -118,7 +118,6 @@ Bevat gesponsorde inhoud.</string>
         <string name="dialog_app_usage_title">Apps met gebruikstoegang toestaan</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_theme_store">%1$s Store</string>
         <string name="theme_nav_my_themes">Mijn thema\'s</string>
         <string name="theme_nav_languages">Talen</string>
         <string name="theme_nav_settings">Instellingen</string>
@@ -227,11 +226,9 @@ Bevat gesponsorde inhoud.</string>
         
         <string name="interstitial_ad_subtitle_home_gift_button">---------------Misschien vind je dit leuk---------------</string>
         <string name="store_nav_download">Mijn downloads</string>
-        <string name="tab_theme">THEMA</string>
         <string name="tab_theme_my">Mijn thema\'s</string>
         <string name="tab_sticker">STICKER</string>
         <string name="tab_sticker_my">MIJN STICKER</string>
-        <string name="tab_font">Lettertypen</string>
         <string name="tab_font_my">MIJN LETTERTYPE</string>
         <string name="item_sticker_more_coming">Meer stickers volgen binnenkort</string>
         <string name="item_font_more_coming">Meer lettertypes volgen binnenkort</string>

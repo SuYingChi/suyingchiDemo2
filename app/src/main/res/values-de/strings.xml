@@ -19,8 +19,12 @@
         <string name="use">Benutzen</string>
         <string name="customize_keyboard_title">Tastatur</string>
         <string name="alert_find_keyboard_and_switch_on">Wechsel auf %1$s</string>
-        
-        <!--main-->
+        <string name="customize_wallpapers_title">Hintergründe</string>
+        <string name="may_contains_ads">Kann Werbung enthalten</string>
+        <string name="online_wallpaper_set_btn">ALS HINTERGRUND</string>
+        <string name="online_wallpaper_loading">HD-Hintergrundbild wird geladen. Bitte warten.</string>
+
+    <!--main-->
         <string name="alert_attention_messenger">Die %1$s-Tastatur nimmt die Privatsphäre der Nutzer sehr ernst. Wir werden ZU KEINEM ZEITPUNKT Daten wie Passwörter oder Kreditkartennummern sammeln.</string>
         <string name="toast_enable_keyboard">Aktiviere %1$s</string>
         <string name="toast_select_keyboard">Wähle %1$s aus</string>
@@ -104,13 +108,11 @@ Enthält Werbung.</string>
         
         <!--theme home-->
         <string name="theme_store_background_title">Eigene Designs erstellen</string>
-        <string name="theme_store_theme_title">%1$s Themes</string>
         <string name="theme_store_more">Mehr</string>
         <string name="my_theme_customized_theme_title">Individuell Anpassbare Themes</string>
         <string name="my_theme_downloaded_theme_title">Heruntergeladen</string>
         <string name="theme_detail_recommend_title">Vielleicht gefällt dir auch</string>
         <string name="theme_card_custom_theme_default_name">Meine Designs</string>
-        <string name="theme_detail_common_title_name">%1$s Shop</string>
         <string name="theme_detail_custom_theme_title_name">Individuell Anpassbare Themes</string>
         <string name="theme_trial_keyboard_edit_text_hint">Versuchen jetzt hier einzugeben…</string>
         
@@ -118,7 +120,6 @@ Enthält Werbung.</string>
         <string name="dialog_app_usage_title">Apps mit Nutzungszugang erlauben</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_theme_store">%1$s Shop</string>
         <string name="theme_nav_my_themes">Meine Designs</string>
         <string name="theme_nav_languages">Sprachen</string>
         <string name="theme_nav_settings">Einstellungen</string>
@@ -227,11 +228,9 @@ Enthält Werbung.</string>
         
         <string name="interstitial_ad_subtitle_home_gift_button">---------------Vielleicht gefällt dir auch---------------</string>
         <string name="store_nav_download">Meine Downloads</string>
-        <string name="tab_theme">THEME</string>
         <string name="tab_theme_my">Meine Designs</string>
         <string name="tab_sticker">STICKER</string>
         <string name="tab_sticker_my">MEINE STICKER</string>
-        <string name="tab_font">SCHRIFTART</string>
         <string name="tab_font_my">MEINE SCHRIFTART</string>
         <string name="item_sticker_more_coming">Mehr Sticker in Kürze</string>
         <string name="item_font_more_coming">Mehr Schriftarten in Kürze</string>

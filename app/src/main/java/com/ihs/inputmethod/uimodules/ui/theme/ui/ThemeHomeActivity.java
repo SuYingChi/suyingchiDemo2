@@ -345,7 +345,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         } else {
             String from = intent.getStringExtra("From");
             if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing() && from != null && from.equals("Keyboard")) {
-                Toast.makeText(this, "Already in " + getResources().getString(R.string.theme_nav_theme_store, getResources().getString(R.string.app_name)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Already in " + getResources().getString(R.string.default_themes, getResources().getString(R.string.app_name)), Toast.LENGTH_SHORT).show();
             }
         }
 

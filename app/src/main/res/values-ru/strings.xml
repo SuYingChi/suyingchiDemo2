@@ -19,8 +19,12 @@
         <string name="use">Использовать</string>
         <string name="customize_keyboard_title">Клавиатура</string>
         <string name="alert_find_keyboard_and_switch_on">Включить %1$s</string>
-        
-        <!--main-->
+        <string name="customize_wallpapers_title">Обои</string>
+        <string name="may_contains_ads">Может содержать рекламу</string>
+        <string name="online_wallpaper_set_btn">Установить в качестве обоев</string>
+        <string name="online_wallpaper_loading">Подождите, идет загрузка обоев в высоком разрешении.</string>
+
+    <!--main-->
         <string name="alert_attention_messenger">%1$s серьезно относится к конфиденциальности. Мы НИКОГДА не собираем такие данные, как пароли и номера кредитных карт.</string>
         <string name="toast_enable_keyboard">Включить %1$s</string>
         <string name="toast_select_keyboard">Выбрать %1$s</string>
@@ -104,13 +108,11 @@
         
         <!--theme home-->
         <string name="theme_store_background_title">Создать свои темы</string>
-        <string name="theme_store_theme_title">Темы %1$s</string>
         <string name="theme_store_more">Ещё</string>
         <string name="my_theme_customized_theme_title">настраиваемая клавиатура</string>
         <string name="my_theme_downloaded_theme_title">Скачано</string>
         <string name="theme_detail_recommend_title">Вам может понравиться</string>
         <string name="theme_card_custom_theme_default_name">Моя тема</string>
-        <string name="theme_detail_common_title_name">Магазин %1$s</string>
         <string name="theme_detail_custom_theme_title_name">настраиваемая клавиатура</string>
         <string name="theme_trial_keyboard_edit_text_hint">Попробуйте ввести текст…</string>
         
@@ -118,7 +120,6 @@
         <string name="dialog_app_usage_title">Предоставить доступ к приложениям</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_theme_store">Магазин %1$s</string>
         <string name="theme_nav_my_themes">Мои темы</string>
         <string name="theme_nav_languages">Языки</string>
         <string name="theme_nav_settings">Настройки</string>
@@ -227,11 +228,9 @@
         
         <string name="interstitial_ad_subtitle_home_gift_button">---------------Вам может понравиться---------------</string>
         <string name="store_nav_download">Мои загрузки</string>
-        <string name="tab_theme">Темы</string>
         <string name="tab_theme_my">Моя тема</string>
         <string name="tab_sticker">СТИКЕР</string>
         <string name="tab_sticker_my">МОЙ СТИКЕР</string>
-        <string name="tab_font">Шрифты</string>
         <string name="tab_font_my">МОЙ ШРИФТ</string>
         <string name="item_sticker_more_coming">Скоро появится больше стикеров</string>
         <string name="item_font_more_coming">Скоро появится больше шрифтов</string>

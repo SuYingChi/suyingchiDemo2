@@ -71,9 +71,9 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
         fragments.add(StickerHomeFragment.class);
         fragments.add(FontHomeFragment.class);
 
-        homeTabTitles[0] = getActivity().getString(R.string.tab_theme);
+        homeTabTitles[0] = getActivity().getString(R.string.setting_item_themes);
         homeTabTitles[1] = getActivity().getString(R.string.tab_sticker);
-        homeTabTitles[2] = getActivity().getString(R.string.tab_font);
+        homeTabTitles[2] = getActivity().getString(R.string.custom_theme_font);
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getActivity().getFragmentManager(), fragments);
         tabFragmentPagerAdapter.setTabTitles(homeTabTitles);

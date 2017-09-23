@@ -39,10 +39,7 @@
     <string name="language_activity_name">com.ihs.inputmethod.settings.MoreLanguageActivity2</string>
 
     <!-- theme text override -->
-    <string name="theme_nav_theme_store">%1$s Store</string>
-    <string name="theme_store_theme_title">%1$s Themes</string>
     <string name="share_keyboard_name">Emoji Keyboard</string>
-    <string name="theme_detail_common_title_name">%1$s Theme</string>
 
     <string name="tip_usage_access">Find %s. Switch it on to enable Apps with usage access.</string>
 

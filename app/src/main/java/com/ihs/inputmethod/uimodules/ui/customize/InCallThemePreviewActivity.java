@@ -174,7 +174,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
                 HSAnalytics.logEvent("app_callflash_applied", "themeName", themeType.getName());
                 CPSettings.setScreenFlashModuleEnabled(true);
                 HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeType.getValue());
-                ToastUtils.showToast(R.string.incoming_call_theme_success);
+                ToastUtils.showToast(R.string.interstitial_ad_title_after_try_keyboard);
             }
         });
     }

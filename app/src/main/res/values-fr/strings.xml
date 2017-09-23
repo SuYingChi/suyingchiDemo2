@@ -19,8 +19,12 @@
         <string name="use">Utiliser</string>
         <string name="customize_keyboard_title">Clavier</string>
         <string name="alert_find_keyboard_and_switch_on">Activez %1$s</string>
-        
-        <!--main-->
+        <string name="customize_wallpapers_title">Fonds d\'écran</string>
+        <string name="may_contains_ads">Peut contenir des publicités</string>
+        <string name="online_wallpaper_set_btn">DÉFINIR COMME FOND D\'ÉCRAN</string>
+        <string name="online_wallpaper_loading">Chargement de l\'arrière-plan HD, veuillez patienter.</string>
+
+    <!--main-->
         <string name="alert_attention_messenger">Le clavier %1$s prend la confidentialité des utilisateurs au sérieux. Nous ne collecterons JAMAIS de données comme des mots de passe ou des numéros de carte bancaires.</string>
         <string name="toast_enable_keyboard">Activer %1$s</string>
         <string name="toast_select_keyboard">Sélectionner %1$s</string>
@@ -103,13 +107,11 @@
         
         <!--theme home-->
         <string name="theme_store_background_title">Créer mes propres thèmes</string>
-        <string name="theme_store_theme_title">Thèmes %1$s</string>
         <string name="theme_store_more">Plus</string>
         <string name="my_theme_customized_theme_title">Clavier personnalisé</string>
         <string name="my_theme_downloaded_theme_title">Thèmes téléchargés</string>
         <string name="theme_detail_recommend_title">Vous pourriez aimer</string>
         <string name="theme_card_custom_theme_default_name">Mon thème</string>
-        <string name="theme_detail_common_title_name">Boutique %1$s</string>
         <string name="theme_detail_custom_theme_title_name">Clavier personnalisé</string>
         <string name="theme_trial_keyboard_edit_text_hint">Essayez d\'écrire ici…</string>
         
@@ -117,7 +119,6 @@
         <string name="dialog_app_usage_title">Autoriser l\'accès aux applications avec utilisation</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_theme_store">Boutique %1$s</string>
         <string name="theme_nav_my_themes">Mes thèmes</string>
         <string name="theme_nav_languages">Langues</string>
         <string name="theme_nav_settings">Paramètres</string>
@@ -226,11 +227,9 @@
         
         <string name="interstitial_ad_subtitle_home_gift_button">---------------Vous pourriez aimer---------------</string>
         <string name="store_nav_download">Mes téléchargements</string>
-        <string name="tab_theme">BOUTIQUE</string>
         <string name="tab_theme_my">Mon Thème</string>
         <string name="tab_sticker">AUTOCOLLANT</string>
         <string name="tab_sticker_my">MES AUTOCOLLANT</string>
-        <string name="tab_font">POLICE</string>
         <string name="tab_font_my">MA POLICE</string>
         <string name="item_sticker_more_coming">D\'autres autocollants arrivent prochainement</string>
         <string name="item_font_more_coming">D\'autres polices arrivent prochainement</string>

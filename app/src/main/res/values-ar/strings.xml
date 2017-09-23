@@ -17,7 +17,11 @@
         <string name="got_it">فهمت</string>
         <string name="filter">تصفية</string>
         <string name="use">استخدام</string>
-        
+        <string name="customize_wallpapers_title">الخلفيات</string>
+        <string name="may_contains_ads"> قد يحتوي على الإعلانات</string>
+        <string name="online_wallpaper_set_btn">تعيين كخلفية</string>
+        <string name="online_wallpaper_loading">جارٍ تحميل الخلفية عالية الدقة، يرجى الانتظار.</string>
+
         <string name="alert_find_keyboard_and_switch_on">تفعيل %1$s</string>
         
         <!--main-->
@@ -104,13 +108,11 @@
         
         <!--theme home-->
         <string name="theme_store_background_title">إنشاء نسقي الخاصة</string>
-        <string name="theme_store_theme_title">تصاميم %1$s</string>
         <string name="theme_store_more">المزيد</string>
         <string name="my_theme_customized_theme_title">لوحة مفاتيح مخصصة</string>
         <string name="my_theme_downloaded_theme_title">تم التنزيل</string>
         <string name="theme_detail_recommend_title">قد يعجبك</string>
         <string name="theme_card_custom_theme_default_name">تصميمي</string>
-        <string name="theme_detail_common_title_name">متجر %1$s</string>
         <string name="theme_detail_custom_theme_title_name">لوحة مفاتيح مخصصة</string>
         <string name="theme_trial_keyboard_edit_text_hint">جرّب الكتابة هنا الآن</string>
         
@@ -118,7 +120,6 @@
         <string name="dialog_app_usage_title">تفعيل Allow Apps with Usage Access</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_theme_store">متجر %1$s</string>
         <string name="theme_nav_my_themes">تصاميمي</string>
         <string name="theme_nav_languages">اللغات</string>
         <string name="theme_nav_settings">الإعدادات</string>
@@ -227,11 +228,9 @@
         
         <string name="interstitial_ad_subtitle_home_gift_button">---------------قد يعجبك---------------</string>
         <string name="store_nav_download">تنزيلاتي</string>
-        <string name="tab_theme">النسق</string>
         <string name="tab_theme_my">تصميمي</string>
         <string name="tab_sticker">ملصق</string>
         <string name="tab_sticker_my">ملصقي</string>
-        <string name="tab_font">الخطوط</string>
         <string name="tab_font_my">خطي</string>
         <string name="item_sticker_more_coming">ستصدر ملصقات جديدة قريباً</string>
         <string name="item_font_more_coming">ستصدر خطوط جديدة قريباً</string>

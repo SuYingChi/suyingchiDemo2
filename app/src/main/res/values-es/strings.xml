@@ -19,8 +19,12 @@
         <string name="use">Utilizar</string>
         <string name="customize_keyboard_title">Teclado</string>
         <string name="alert_find_keyboard_and_switch_on">Activar %1$s</string>
-        
-        <!--main-->
+        <string name="customize_wallpapers_title">Fondos de pantalla</string>
+        <string name="may_contains_ads">Puede contener publicidad</string>
+        <string name="online_wallpaper_set_btn">Establecer como fondo de pantalla</string>
+        <string name="online_wallpaper_loading">Cargando fondo de pantalla en HD, espera.</string>
+
+    <!--main-->
         <string name="alert_attention_messenger">%1$s se toma la privacidad de sus usuarios muy en serio. NUNCA almacenaremos datos personales como, por ejemplo, contraseñas o números de tarjetas de crédito.</string>
         <string name="toast_enable_keyboard">Activa %1$s</string>
         <string name="toast_select_keyboard">Selecciona %1$s</string>
@@ -104,13 +108,11 @@ Incluye contenido patrocinado.</string>
         
         <!--theme home-->
         <string name="theme_store_background_title">Crear mis propios temas　</string>
-        <string name="theme_store_theme_title">%1$s Temas</string>
         <string name="theme_store_more">Más</string>
         <string name="my_theme_customized_theme_title">Temas personalizados</string>
         <string name="my_theme_downloaded_theme_title">Descargado</string>
         <string name="theme_detail_recommend_title">Quizá te guste</string>
         <string name="theme_card_custom_theme_default_name">Mis temas </string>
-        <string name="theme_detail_common_title_name">Tienda %1$s</string>
         <string name="theme_detail_custom_theme_title_name">Temas personalizados</string>
         <string name="theme_trial_keyboard_edit_text_hint">Prueba a escribir aquí ahora…</string>
         
@@ -118,7 +120,6 @@ Incluye contenido patrocinado.</string>
         <string name="dialog_app_usage_title">Permitir aplicaciones con acceso de uso</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_theme_store">Tienda %1$s</string>
         <string name="theme_nav_my_themes">Mis temas </string>
         <string name="theme_nav_languages">Idiomas</string>
         <string name="theme_nav_settings">Ajustes</string>
@@ -227,11 +228,9 @@ Incluye contenido patrocinado.</string>
         
         <string name="interstitial_ad_subtitle_home_gift_button">---------------Quizá te guste---------------</string>
         <string name="store_nav_download">Mis descargas</string>
-        <string name="tab_theme">TEMA</string>
         <string name="tab_theme_my">MIS TEMAS </string>
         <string name="tab_sticker">PEGATINA</string>
         <string name="tab_sticker_my">MI PEGATINA</string>
-        <string name="tab_font">FUENTE</string>
         <string name="tab_font_my">MI FUENTE</string>
         <string name="item_sticker_more_coming">Próximamente habrá más pegatinas.</string>
         <string name="item_font_more_coming">Próximamente habrá más fuentes.</string>

@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_theme_store"
             android:icon="@drawable/nav_theme_store_icon"
-            android:title="@string/theme_nav_theme_store" />
+            android:title="@string/default_themes" />
         <item
             android:id="@+id/nav_app_locker"
             android:icon="@drawable/nav_app_locker_icon"

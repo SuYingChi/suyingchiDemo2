@@ -19,8 +19,11 @@
         <string name="use">Utilizza</string>
         <string name="customize_keyboard_title">Tastiere</string>
         <string name="alert_find_keyboard_and_switch_on">Accendi %1$s</string>
-        
-        <!--main-->
+        <string name="may_contains_ads">Potrebbe contenere annunci pubblicitari</string>
+        <string name="online_wallpaper_set_btn">IMPOSTA COME SFONDO</string>
+        <string name="online_wallpaper_loading">Caricamento degli sfondi HD. Attendere.</string>
+
+    <!--main-->
         <string name="alert_attention_messenger">La tastiera %1$s rispetta la privacy dei propri utenti: non raccoglieremo mai i dati personali quali password o numeri di carte di credito.</string>
         <string name="toast_enable_keyboard">Attiva %1$s</string>
         <string name="toast_select_keyboard">Seleziona %1$s</string>
@@ -104,13 +107,11 @@ Include contenuti sponsorizzati.</string>
         
         <!--theme home-->
         <string name="theme_store_background_title">Crea i tuoi temi</string>
-        <string name="theme_store_theme_title">%1$s Temi</string>
         <string name="theme_store_more">Di più</string>
         <string name="my_theme_customized_theme_title">Tastiera Personalizzata</string>
         <string name="my_theme_downloaded_theme_title">Temi scaricati</string>
         <string name="theme_detail_recommend_title">Consigliati per te</string>
         <string name="theme_card_custom_theme_default_name">Il mio tema</string>
-        <string name="theme_detail_common_title_name">Negozio %1$s</string>
         <string name="theme_detail_custom_theme_title_name">Tastiera Personalizzata</string>
         <string name="theme_trial_keyboard_edit_text_hint">Prova a digitare qui adesso…</string>
         
@@ -118,7 +119,6 @@ Include contenuti sponsorizzati.</string>
         <string name="dialog_app_usage_title">Autorizza app con accesso d\'uso</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_theme_store">Negozio %1$s</string>
         <string name="theme_nav_my_themes">I miei temi</string>
         <string name="theme_nav_languages">Lingue</string>
         <string name="theme_nav_settings">Impostazioni</string>
@@ -227,11 +227,9 @@ Include contenuti sponsorizzati.</string>
         
         <string name="interstitial_ad_subtitle_home_gift_button">---------------Consigliati per te---------------</string>
         <string name="store_nav_download">I miei download</string>
-        <string name="tab_theme">TEMA</string>
         <string name="tab_theme_my">Il mio tema</string>
         <string name="tab_sticker">ADESIVO</string>
         <string name="tab_sticker_my">I MIEI ADESIVO</string>
-        <string name="tab_font">CARATTERE</string>
         <string name="tab_font_my">IL MIO CARATTERE</string>
         <string name="item_sticker_more_coming">Altri sticker in arrivo prossimamente</string>
         <string name="item_font_more_coming">Altre fonti in arrivo prossimamente</string>

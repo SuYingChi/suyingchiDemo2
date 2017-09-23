@@ -122,7 +122,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
         ThemeHomeModel themeTitle = new ThemeHomeModel();
         themeTitle.isTitle = true;
-        themeTitle.title = getString(R.string.theme_store_theme_title, getString(R.string.app_name));
+        themeTitle.title = getString(R.string.default_themes, getString(R.string.app_name));
         themeHomeModelList.add(themeTitle);
 
 

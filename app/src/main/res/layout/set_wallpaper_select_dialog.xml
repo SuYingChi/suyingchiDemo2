@@ -20,7 +20,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="30dp"
             android:paddingLeft="37dp"
-            android:text="@string/wallpaper_set_dialog_title"
+            android:text="@string/online_wallpaper_set_btn"
             android:textColor="@color/black_primary"
             android:textSize="20sp"
             android:textStyle="bold"

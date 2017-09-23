@@ -114,7 +114,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             } else {
                 screenshotContainer.getLayoutParams().height = (int) (getResources().getDisplayMetrics().widthPixels * 850 * 1.0f / 1080);
                 String themeNameTitle = keyboardTheme.getThemeShowName();
-                getSupportActionBar().setTitle(getString(R.string.theme_detail_common_title_name, getString(R.string.app_name)));
+                getSupportActionBar().setTitle(getString(R.string.default_themes, getString(R.string.app_name)));
 
                 if (keyboardTheme.getLargePreivewImgUrl() != null) {
                     keyboardThemeScreenShotImageView.setImageDrawable(null);

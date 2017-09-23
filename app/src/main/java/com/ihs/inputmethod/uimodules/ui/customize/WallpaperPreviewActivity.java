@@ -368,7 +368,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                 HSAnalytics.logEvent("app_wallpaper_setwallpaper_lockscreen_clicked", "wallpaperName", mCurrentWallpaper.getName());
                 hideSetWallpaperSelectDialog();
                 setLockerScreenWallpaper();
-                ToastUtils.showToast(R.string.wallpaper_apply_success);
+                ToastUtils.showToast(R.string.interstitial_ad_title_after_try_keyboard);
                 finish();
                 break;
             case R.id.set_home_and_locker_screen:
@@ -613,7 +613,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         protected void onPostExecute(String result) {
             mDialog.dismiss();
             if (result == null) {
-                ToastUtils.showToast(getString(R.string.key_theme_loading_fail));
+                ToastUtils.showToast(getString(R.string.access_set_up_failed));
             }
             final Resources res = getResources();
             final int keyboardWidth = HSResourceUtils.getDefaultKeyboardWidth(res);

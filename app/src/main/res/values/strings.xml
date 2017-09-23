@@ -18,6 +18,11 @@
     <string name="got_it">GOT IT</string>
     <string name="filter">Crop</string>
     <string name="use">USE</string>
+    <string name="customize_keyboard_title">Keyboard</string>
+    <string name="customize_wallpapers_title">Wallpapers</string>
+    <string name="may_contains_ads">May Contain Ads</string>
+    <string name="online_wallpaper_loading">Loading HD wallpaper, please wait.</string>
+
     <string name="unknown">Unknown</string>
 
     <string name="alert_find_keyboard_and_switch_on">Switch on %1$s</string>
@@ -106,13 +111,11 @@
 
     <!--theme home-->
     <string name="theme_store_background_title">Create My Own Themes</string>
-    <string name="theme_store_theme_title">%1$s Themes</string>
     <string name="theme_store_more">MORE</string>
     <string name="my_theme_customized_theme_title">Customized Keyboard</string>
     <string name="my_theme_downloaded_theme_title">Downloaded</string>
     <string name="theme_detail_recommend_title">You May Like</string>
     <string name="theme_card_custom_theme_default_name">My Theme</string>
-    <string name="theme_detail_common_title_name">%1$s Theme</string>
     <string name="theme_detail_custom_theme_title_name">Customized Keyboard</string>
     <string name="theme_trial_keyboard_edit_text_hint">Try typing here now...</string>
 
@@ -120,7 +123,6 @@
     <string name="dialog_app_usage_title">Allow Apps with Usage Access</string>
 
     <!--theme home nav-->
-    <string name="theme_nav_theme_store">%1$s Store</string>
     <string name="theme_nav_my_themes">My Themes</string>
     <string name="theme_nav_languages">Languages</string>
     <string name="theme_nav_settings">Settings</string>
@@ -237,11 +239,9 @@
     <string name="interstitial_ad_title_home_gift_button"> </string>
     <string name="interstitial_ad_subtitle_home_gift_button">--------------- You May Like ---------------</string>
     <string name="store_nav_download">My Downloads</string>
-    <string name="tab_theme">THEME</string>
     <string name="tab_theme_my">MY THEME</string>
     <string name="tab_sticker">STICKER</string>
     <string name="tab_sticker_my">MY STICKER</string>
-    <string name="tab_font">FONT</string>
     <string name="tab_font_my">MY FONT</string>
     <string name="item_sticker_more_coming">More stickers are coming soon</string>
     <string name="item_font_more_coming">More fonts are coming soon</string>
