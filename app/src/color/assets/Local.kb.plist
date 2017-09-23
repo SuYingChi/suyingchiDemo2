@@ -2018,19 +2018,19 @@
 					<key>name</key>
 					<string>BigFace01</string>
 					<key>showName</key>
-					<string>BigFaceGif</string>
+					<string>Animated Smiley</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>LoveGif02</string>
 					<key>showName</key>
-					<string>LoveGif</string>
+					<string>Animated Lover</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>AngryFace</string>
 					<key>showName</key>
-					<string>AngryFace</string>
+					<string>Angry Face</string>
 				</dict>
 				<dict>
 					<key>name</key>
@@ -2090,7 +2090,7 @@
 					<key>name</key>
 					<string>YellowSmile3</string>
 					<key>showName</key>
-					<string>Big Yellow</string>
+					<string>Big Smiley</string>
 				</dict>
 			</array>
 			<key>ThemeContents</key>
