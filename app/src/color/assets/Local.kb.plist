@@ -15437,65 +15437,6 @@
 							<key>Show</key>
 							<true/>
 						</dict>
-						<key>KeyboardEmojiTopLeftTabAd</key>
-						<dict>
-							<key>SessionIndexOfDay</key>
-							<array/>
-							<key>Show</key>
-							<false/>
-						</dict>
-						<key>KeyboardFunctionBarGiftAd</key>
-						<dict>
-							<key>SessionIndexOfDay</key>
-							<array>
-								<integer>2</integer>
-								<integer>15</integer>
-								<integer>30</integer>
-								<integer>40</integer>
-							</array>
-							<key>Show</key>
-							<false/>
-						</dict>
-						<key>KeyboardSettingsPanelAds</key>
-						<dict>
-							<key>CurrentContent</key>
-							<string>lucky</string>
-							<key>description</key>
-							<string>选项：lucky</string>
-						</dict>
-						<key>NativeAdPosition</key>
-						<dict>
-							<key>HomeBackgroundAd</key>
-							<array>
-								<dict>
-									<key>NativeAd</key>
-									<string>Colorkey_A(NativeAds)ShortcutAd</string>
-									<key>Position</key>
-									<integer>2</integer>
-								</dict>
-							</array>
-							<key>ThemeAd</key>
-							<array>
-								<dict>
-									<key>NativeAd</key>
-									<string>Colorkey_A(NativeAds)ThemeAd</string>
-									<key>Position</key>
-									<integer>2</integer>
-									<key>Span</key>
-									<integer>2</integer>
-								</dict>
-							</array>
-						</dict>
-						<key>ShowIconAd</key>
-						<true/>
-						<key>isShowMainPageCardNativeAds</key>
-						<true/>
-						<key>isShowMainThemeNativeAds</key>
-						<true/>
-						<key>isShowThemeDetailNativeAds</key>
-						<true/>
-						<key>isShowThemeTryNativeAds</key>
-						<true/>
 					</dict>
 					<key>ScreenFlash</key>
 					<dict>
@@ -15801,65 +15742,6 @@
 							<key>Show</key>
 							<true/>
 						</dict>
-						<key>KeyboardEmojiTopLeftTabAd</key>
-						<dict>
-							<key>SessionIndexOfDay</key>
-							<array/>
-							<key>Show</key>
-							<false/>
-						</dict>
-						<key>KeyboardFunctionBarGiftAd</key>
-						<dict>
-							<key>SessionIndexOfDay</key>
-							<array>
-								<integer>2</integer>
-								<integer>15</integer>
-								<integer>30</integer>
-								<integer>40</integer>
-							</array>
-							<key>Show</key>
-							<true/>
-						</dict>
-						<key>KeyboardSettingsPanelAds</key>
-						<dict>
-							<key>CurrentContent</key>
-							<string>lucky</string>
-							<key>description</key>
-							<string>选项：lucky</string>
-						</dict>
-						<key>NativeAdPosition</key>
-						<dict>
-							<key>HomeBackgroundAd</key>
-							<array>
-								<dict>
-									<key>NativeAd</key>
-									<string>Colorkey_A(NativeAds)ShortcutAd</string>
-									<key>Position</key>
-									<integer>2</integer>
-								</dict>
-							</array>
-							<key>ThemeAd</key>
-							<array>
-								<dict>
-									<key>NativeAd</key>
-									<string>Colorkey_A(NativeAds)ThemeAd</string>
-									<key>Position</key>
-									<integer>2</integer>
-									<key>Span</key>
-									<integer>2</integer>
-								</dict>
-							</array>
-						</dict>
-						<key>ShowIconAd</key>
-						<true/>
-						<key>isShowMainPageCardNativeAds</key>
-						<true/>
-						<key>isShowMainThemeNativeAds</key>
-						<true/>
-						<key>isShowThemeDetailNativeAds</key>
-						<true/>
-						<key>isShowThemeTryNativeAds</key>
-						<true/>
 					</dict>
 					<key>ScreenFlash</key>
 					<dict>

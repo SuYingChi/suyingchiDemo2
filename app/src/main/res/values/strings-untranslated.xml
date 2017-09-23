@@ -9,7 +9,6 @@
     <string name="call_flash">Call Flash</string>
 
     <!-- wallpaper preview -->
-    <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
     <string name="key_theme_set_btn">SET KEY THEME</string>
     <string name="wallpaper_apply_fail">Applied Failed</string>
     <string name="home_screen">Home screen</string>
