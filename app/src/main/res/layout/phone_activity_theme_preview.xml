@@ -20,7 +20,7 @@
 
     </com.acb.call.views.InCallActionView>
 
-    <com.ihs.feature.common.TypefacedTextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/set_incoming_call_theme"
         android:layout_width="match_parent"
         android:layout_height="68dp"

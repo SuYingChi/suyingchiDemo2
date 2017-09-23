@@ -44,7 +44,7 @@
         android:layout_alignParentStart="true"
         android:orientation="horizontal">
 
-        <com.ihs.feature.common.TypefacedTextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/set_wallpaper_button"
             android:layout_width="wrap_content"
             android:layout_height="68dp"
@@ -61,7 +61,7 @@
             android:layout_height="match_parent"
             android:background="#33ffffff" />
 
-        <com.ihs.feature.common.TypefacedTextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/set_key_theme_button"
             android:layout_width="wrap_content"
             android:layout_height="68dp"
