@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSMatrixImageView;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 
@@ -40,6 +41,8 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
     private int keyboardWidth;
     private int keyboardHeight;
     private String oldCropperImagePath;
+
+    private static final int REQUEST_CODE_START_CUSTOM_THEME = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +107,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                     Intent intent = new Intent(CustomThemeBackgroundCropperActivity.this, CustomThemeActivity.class);
                     intent.putExtra("CropperImagePath", cropperImagePath);
                     intent.putExtra("fromCropper", CustomThemeBackgroundCropperActivity.class.getSimpleName());
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_CODE_START_CUSTOM_THEME);
                 } else {
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("CropperImagePath", cropperImagePath);
@@ -113,6 +116,19 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_START_CUSTOM_THEME) {
+            if (resultCode == RESULT_OK) {
+                Intent intent = new Intent(this, ThemeHomeActivity.class);
+                intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
+                intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS, false);
+                startActivity(intent);
+            }
+        }
     }
 
     @Override

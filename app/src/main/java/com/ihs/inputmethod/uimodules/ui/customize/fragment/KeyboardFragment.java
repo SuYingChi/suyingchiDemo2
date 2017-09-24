@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.customize.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontHomeFragment;
@@ -19,6 +21,8 @@ import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDownloadActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
+import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.keyboard.common.KeyboardActivationGuideActivity;
 
 import java.util.ArrayList;
 
@@ -43,6 +47,9 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
     private View downloadSwitchButton;
 
     private String[] homeTabTitles = new String[3];
+
+    private static final int REQUEST_CODE_START_CUSTOM_THEME = 1;
+    private static final int REQUEST_CODE_START_KEYBOARD_ACTIVATION = 2;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -152,7 +159,9 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
                 Bundle bundle = new Bundle();
                 String customEntry = "store_float_button";
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                CustomThemeActivity.startCustomThemeActivity(bundle);
+                final Intent intent = new Intent(getActivity(), CustomThemeActivity.class);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, REQUEST_CODE_START_CUSTOM_THEME);
 
                 HSAnalytics.logEvent("customize_entry_clicked", "store");
                 break;
@@ -174,7 +183,33 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
 
     private void switchToDownload() {
         Intent intent = new Intent(getActivity(), ThemeDownloadActivity.class);
-        intent.putExtra("currentTab", tabIndex);
+        intent.putExtra(ThemeDownloadActivity.EXTRA_INITIAL_TAB_INDEX, tabIndex);
         startActivity(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_START_CUSTOM_THEME) {
+            if (resultCode == Activity.RESULT_OK) {
+                showTrialKeyboardDialog();
+            }
+        } else if (requestCode == REQUEST_CODE_START_KEYBOARD_ACTIVATION) {
+            if (resultCode == Activity.RESULT_OK) {
+                showTrialKeyboardDialog();
+            }
+        }
+
+    }
+
+    private void showTrialKeyboardDialog() {
+        if (HSInputMethodListManager.isMyInputMethodSelected()) {
+            TrialKeyboardDialog trialKeyboardDialog = new TrialKeyboardDialog.Builder(getActivity()).create();
+            trialKeyboardDialog.show(false);
+        } else {
+            Intent intent = new Intent(getActivity(), KeyboardActivationGuideActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_START_KEYBOARD_ACTIVATION);
+        }
     }
 }

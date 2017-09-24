@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.provider.Browser;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
@@ -47,9 +46,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
@@ -68,7 +64,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelpe
 import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.utils.CallAssistantConfigUtils;
@@ -84,13 +79,13 @@ import com.keyboard.common.KeyboardActivationGuideActivity;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 /**
  * Created by jixiang on 16/8/17.
  */
 public class ThemeHomeActivity extends BaseCustomizeActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener,
         SettingsActivity2.GeneralHomePreferenceFragment.OnUpdateClickListener {
     public final static String EXTRA_SHOW_TRIAL_KEYBOARD = "EXTRA_SHOW_TRIAL_KEYBOARD";
+    public final static String EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS = "EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS";
     public final static String EXTRA_AUTO_ENABLE_KEYBOARD = "EXTRA_AUTO_ENABLE_KEYBOARD";
 
     private static final String SP_LAST_USAGE_ALERT_SESSION_ID = "SP_LAST_USAGE_ALERT_SESSION_ID";
@@ -103,7 +98,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private static final int KEYBOARD_ACTIVATION_FROM_HOME_ENTRY = 1;
     private static final int KEYBOARD_ACTIVATION_FROM_ENABLE_TIP = 2;
     private static final int KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT = 3;
-    private static final int KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH = 4;
 
     private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
@@ -183,20 +177,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                     fullscreenAdLoadingDialog = null;
                     Toast.makeText(ThemeHomeActivity.this, R.string.locker_wallpaper_network_error, Toast.LENGTH_LONG).show();
                 }
-            }
-        }
-    };
-
-
-    private INotificationObserver notificationObserver = new INotificationObserver() {
-        @Override
-        public void onReceive(String s, HSBundle hsBundle) {
-            if (CustomThemeActivity
-                    .NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS.equals(s)) {
-                if (!PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).getBoolean("CUSTOM_THEME_SAVE", false)) {
-                    PreferenceManager.getDefaultSharedPreferences(ThemeHomeActivity.this).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();
-                }
-                showTrialKeyboardDialog(KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH);
             }
         }
     };
@@ -299,8 +279,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                     .setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), null)
                     .show();
         }
-
-        HSGlobalNotificationCenter.addObserver(CustomThemeActivity.NOTIFICATION_CUSTOM_THEME_ACTIVITY_FINISH_SUCCESS, notificationObserver);
 
         registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED));
 
@@ -473,29 +451,23 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private void showTrialKeyboardDialog(final int activationCode) {
         if (HSInputMethodListManager.isMyInputMethodSelected()) {
+            boolean showAd = getIntent().getBooleanExtra(EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS, true);
             if (LockerSettings.isLockerEnableShowSatisfied() && !isFinishing()) {
 
                 LockerEnableDialog.showLockerEnableDialog(ThemeHomeActivity.this, ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
                         getString(R.string.locker_enable_title_has_text),
-                        (LockerEnableDialog.OnLockerBgLoadingListener) () -> {
+                        () -> {
                     if (trialKeyboardDialog == null) {
                         trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();
                     }
-                    if (activationCode == KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH) {
-                        trialKeyboardDialog.show(false);
-                    } else {
-                        trialKeyboardDialog.show(true);
-                    }
+
+                    trialKeyboardDialog.show(showAd);
                 });
             } else {
                 if (trialKeyboardDialog == null) {
                     trialKeyboardDialog = new TrialKeyboardDialog.Builder(ThemeHomeActivity.this).create();
                 }
-                if (activationCode == KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH) {
-                    trialKeyboardDialog.show(false);
-                } else {
-                    trialKeyboardDialog.show(true);
-                }
+                trialKeyboardDialog.show(showAd);
             }
         } else {
             Intent intent = new Intent(this, KeyboardActivationGuideActivity.class);
@@ -510,7 +482,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             trialKeyboardDialog = null;
         }
 
-        HSGlobalNotificationCenter.removeObserver(notificationObserver);
         unregisterReceiver(broadcastReceiver);
         super.onDestroy();
 
@@ -548,8 +519,11 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT == requestCode || KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME_FINISH == requestCode) {
-            showTrialKeyboardDialog(requestCode);
+        if (KEYBOARD_ACTIVATION_FROM_SHOW_TRIAL_KEYBOARD_INTENT == requestCode) {
+            if (resultCode == RESULT_OK) {
+                showTrialKeyboardDialog(requestCode);
+            }
+
         }
     }
 

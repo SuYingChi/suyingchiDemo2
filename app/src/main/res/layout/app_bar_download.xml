@@ -54,22 +54,6 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_enable_keyboard"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/button_activation_tip"
-            android:drawableRight="@drawable/tv_enable_keyboard_arrow"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingStart="16dp"
-            android:text="@string/tv_enable_keyboard_tip"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:typeface="sans"
-            android:visibility="visible" />
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

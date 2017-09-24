@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -96,7 +97,9 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_ACTIVATION) {
-            showTrialKeyboardDialog(fontIndexWhenActivating);
+            if (resultCode == Activity.RESULT_OK) {
+                showTrialKeyboardDialog(fontIndexWhenActivating);
+            }
         }
     }
 }
