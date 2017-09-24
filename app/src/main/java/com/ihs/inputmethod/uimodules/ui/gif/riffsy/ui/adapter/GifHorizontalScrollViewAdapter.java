@@ -184,6 +184,7 @@ public final class GifHorizontalScrollViewAdapter extends RecyclerView.Adapter<G
             lp.width  = mViewWidth;
             lp.height = mViewHeight;
             view.setLayoutParams(lp);
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             // progress
             progress = (ImageView) itemView.findViewById(R.id.progress);

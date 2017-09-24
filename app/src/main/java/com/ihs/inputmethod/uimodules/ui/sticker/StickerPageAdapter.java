@@ -13,8 +13,6 @@ import android.widget.ImageView;
 
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.DownloadManager;
-import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.GifView;
 import com.ihs.keyboardutils.view.HSGifImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,9 +20,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
-import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.download.DownloadTask;
-import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.download.GifDownloadTask;
 
 import java.io.File;
 import java.util.List;
@@ -239,6 +234,7 @@ public class StickerPageAdapter extends RecyclerView.Adapter<StickerPageAdapter.
             super(itemView);
             stickerImageView = (ImageView) itemView.findViewById(R.id.sticker_view);
             stickerGifView = (HSGifImageView) itemView.findViewById(R.id.sticker_gif_view);
+            stickerGifView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 }

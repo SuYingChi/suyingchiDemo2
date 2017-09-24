@@ -9,13 +9,8 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.view.HSGifImageView;
 
 import pl.droidsonroids.gif.GifImageView;
-
-/**
- * Created by wenbinduan on 2016/12/22.
- */
 
 public final class ThemeCardViewHolder extends RecyclerView.ViewHolder {
 
