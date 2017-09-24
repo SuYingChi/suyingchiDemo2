@@ -6,10 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
-import android.widget.VideoView;
 
 import com.acb.call.customize.AcbCallManager;
 import com.acb.expressads.AcbExpressAdManager;
@@ -25,7 +23,6 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.analytics.publisher.HSPublisherMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
@@ -40,7 +37,6 @@ import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
-import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
@@ -166,18 +162,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         });
     }
 
-    private static GivenSizeVideoView launchPreview;
-
-    public static VideoView getLaunchVideoView(){
-        return launchPreview;
-    }
-
-
     protected void onMainProcessApplicationCreate() {
-        launchPreview = new GivenSizeVideoView(this);
-        launchPreview.setViewSize((int) (DisplayUtils.getScreenWidthPixels() * 0.5), (int) (DisplayUtils.getScreenWidthPixels() * 0.5 / 0.856));
-        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
-        launchPreview.setVideoURI(uri);
 
         HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
             @Override

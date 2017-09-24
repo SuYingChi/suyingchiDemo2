@@ -39,7 +39,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -57,7 +56,6 @@ import com.ihs.inputmethod.accessbility.AccessibilityEventListener;
 import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -119,6 +117,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private TextView textOne;
     private TextView textTwo;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
+    private boolean isLaunchAnimationPlayed;
     private boolean isSettingButtonAnimationPlayed;
 
     private static final int TYPE_MANUAL = 0;
@@ -241,11 +240,6 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onCreate(savedInstanceState);
         HSLog.d("MainActivity onCreate.");
         setContentView(R.layout.activity_main);
-        FrameLayout videoviewFrame = (FrameLayout) findViewById(R.id.launch_mp4_view);
-        launchVideoView = HSUIApplication.getLaunchVideoView();
-        launchVideoView.setVisibility(View.VISIBLE);
-        videoviewFrame.addView(launchVideoView);
-
         onNewIntent(getIntent());
 
         ivProgress = (ImageView) findViewById(R.id.progress_bar);
@@ -283,7 +277,9 @@ public class MainActivity extends HSDeepLinkActivity {
         final int screenHeight = size.y;
 
         launchImageView = (ImageView) findViewById(R.id.launch_image_view);
-
+        launchVideoView = (VideoView) findViewById(R.id.launch_mp4_view);
+        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
+        launchVideoView.setVideoURI(uri);
         launchVideoView.setZOrderOnTop(true);
         launchVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
@@ -599,7 +595,11 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onResume() {
         super.onResume();
         HSLog.d("MainActivity onResume.");
-        if (!isSettingButtonAnimationPlayed) {
+
+        if (!isLaunchAnimationPlayed) {
+            isLaunchAnimationPlayed = true;
+            launchImageView.setVisibility(GONE);
+            launchVideoView.setVisibility(View.VISIBLE);
             launchVideoView.start();
             HSFloatWindowManager.getInstance().initAccessibilityCover();
             handler.postDelayed(new Runnable() {
@@ -613,12 +613,11 @@ public class MainActivity extends HSDeepLinkActivity {
                         HSLog.w("show setting button in abnormal way");
                     }
                 }
-            }, 10000);
+            }, 6000);
         } else {
             launchImageView.setVisibility(View.VISIBLE);
             launchVideoView.setVisibility(GONE);
         }
-
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                 getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
@@ -688,6 +687,9 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onStop() {
         super.onStop();
         HSLog.d("MainActivity onStop.");
+        launchVideoView.stopPlayback();
+        launchImageView.setVisibility(View.VISIBLE);
+        launchVideoView.setVisibility(GONE);
     }
 
     @Override
@@ -695,12 +697,6 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onDestroy();
         HSLog.d("MainActivity onDestroy.");
         needActiveThemePkName = null;
-        HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
-
-
-        FrameLayout videoviewFrame = (FrameLayout) findViewById(R.id.launch_mp4_view);
-        videoviewFrame.removeAllViews();
-
         try {
             if (settingsContentObserver != null) {
                 getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
@@ -769,7 +765,7 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         HSLog.d("MainActivity startThemeHomeActivity start.");
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-        if(!shouldShowThemeHome()){
+        if (!shouldShowThemeHome()) {
             startThemeHomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
         }
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
@@ -788,7 +784,7 @@ public class MainActivity extends HSDeepLinkActivity {
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
-        if(!shouldShowThemeHome()){
+        if (!shouldShowThemeHome()) {
             overridePendingTransition(0, 0);
         }
         finish();
