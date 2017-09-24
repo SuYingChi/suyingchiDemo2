@@ -4,13 +4,13 @@
         android:defaultValue="false"
         android:key="@string/config_charge_switchpreference_key"
         android:summary="@string/enable_charging_detail"
-        android:title="Fast Charger" />
+        android:title="@string/charging_alert_title" />
 
 
     <SwitchPreference
         android:key="@string/locker_switcher"
         android:summary="@string/enable_locker_detail"
-        android:title="Screen Locker" />
+        android:title="@string/locker_alert_title" />
 
     <SwitchPreference
         android:defaultValue="true"
