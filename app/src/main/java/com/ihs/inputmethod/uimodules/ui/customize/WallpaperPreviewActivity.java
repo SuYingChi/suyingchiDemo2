@@ -600,15 +600,14 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         }
     }
 
-    class GetFilePathTask extends AsyncTask<String, Integer, String> {
+    private class GetFilePathTask extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... params) {
             try {
                 File file = Glide.with(WallpaperPreviewActivity.this)
                         .download(params[0]).submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
-                String path = file.getAbsolutePath();
-                return path;
+                return file.getAbsolutePath();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -617,7 +616,9 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
         @Override
         protected void onPostExecute(String result) {
-            mDialog.dismiss();
+            if (mDialog != null) {
+                mDialog.dismiss();
+            }
             if (result == null) {
                 ToastUtils.showToast(getString(R.string.access_set_up_failed));
             }
