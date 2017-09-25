@@ -765,9 +765,6 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         HSLog.d("MainActivity startThemeHomeActivity start.");
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-        if (!shouldShowThemeHome()) {
-            startThemeHomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
-        }
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
@@ -784,9 +781,6 @@ public class MainActivity extends HSDeepLinkActivity {
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
-        if (!shouldShowThemeHome()) {
-            overridePendingTransition(0, 0);
-        }
         finish();
     }
 
