@@ -2036,7 +2036,7 @@
 					<key>name</key>
 					<string>FunnyEmoji</string>
 					<key>showName</key>
-					<string>FunnyEmoji</string>
+					<string>Funny Emoji</string>
 				</dict>
 				<dict>
 					<key>name</key>
@@ -2263,7 +2263,7 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>background13</string>
+						<string>background34</string>
 					</dict>
 					<dict>
 						<key>lockerImgUrl</key>
@@ -2513,7 +2513,7 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>background34</string>
+						<string>background13</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -5436,7 +5436,7 @@
 					<key>adCorner</key>
 					<dict>
 						<key>mode</key>
-						<string>allHide</string>
+						<string>allShow</string>
 					</dict>
 					<key>policybreaking</key>
 					<dict>
@@ -7015,7 +7015,7 @@
 					<key>adCorner</key>
 					<dict>
 						<key>mode</key>
-						<string>allHide</string>
+						<string>allShow</string>
 					</dict>
 					<key>policybreaking</key>
 					<dict>
