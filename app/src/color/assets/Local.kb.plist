@@ -503,7 +503,7 @@
 					<key>name</key>
 					<string>RUNES</string>
 					<key>sdkVersion</key>
-					<integer>21</integer>
+					<integer>23</integer>
 				</dict>
 				<dict>
 					<key>example</key>
@@ -511,7 +511,7 @@
 					<key>name</key>
 					<string>CURVED</string>
 					<key>sdkVersion</key>
-					<integer>21</integer>
+					<integer>23</integer>
 				</dict>
 				<dict>
 					<key>example</key>
