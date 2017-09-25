@@ -71,7 +71,6 @@ import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.text.MessageFormat;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_guide_gotit_clicked;
@@ -697,6 +696,7 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onDestroy();
         HSLog.d("MainActivity onDestroy.");
         needActiveThemePkName = null;
+        HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
         try {
             if (settingsContentObserver != null) {
                 getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
