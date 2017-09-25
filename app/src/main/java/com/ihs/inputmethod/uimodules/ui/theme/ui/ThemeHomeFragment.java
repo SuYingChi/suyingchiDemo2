@@ -110,7 +110,9 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
                 Bundle bundle = new Bundle();
                 String customEntry = "store_more";
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                CustomThemeActivity.startCustomThemeActivity(getActivity(), bundle);
+                if (getActivity() instanceof ThemeHomeActivity) {
+                    ((ThemeHomeActivity) getActivity()).showCustomThemeActivity(bundle);
+                }
             }
         };
         themeHomeModelList.add(backgroundTitle);

@@ -24,6 +24,7 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.decoration.BackgroundItemDecoration;
@@ -235,8 +236,10 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         String customEntry = "store_camera";
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_CAMERA, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                        CustomThemeActivity.startCustomThemeActivity(bundle);
-                        HSAnalytics.logEvent("shortcut_customize_background_clicked", "camera");
+                        if (activity instanceof ThemeHomeActivity) {
+                            ((ThemeHomeActivity) activity).showCustomThemeActivity(bundle);
+                            HSAnalytics.logEvent("shortcut_customize_background_clicked", "camera");
+                        }
                     }
                 });
             } else if (position == 1) {
