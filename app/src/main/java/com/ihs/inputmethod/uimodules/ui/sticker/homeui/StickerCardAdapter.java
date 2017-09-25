@@ -81,7 +81,7 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
 
         final StickerModel stickerModel = stickerModelList.get(position);
         final StickerGroup stickerGroup = stickerModel.getStickerGroup();
-        holder.stickerGroupName.setText(stickerGroup.getStickerGroupName());
+        holder.stickerGroupName.setText(stickerGroup.getDownloadDisplayName());
         final String realImageUrl = stickerGroup.getStickerGroupDownloadPreviewImageUri();
         if (realImageUrl != null) {
             holder.stickerRealImage.setImageDrawable(null);
