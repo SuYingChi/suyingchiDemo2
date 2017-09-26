@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -81,6 +82,7 @@ public class ActivityLifecycleMonitor {
         public void run() {
             try {
                 ImageLoader.getInstance().clearMemoryCache();
+                Glide.get(HSApplication.getContext()).clearMemory();
                 System.gc();
             } catch (Exception e) {
                 e.printStackTrace();
