@@ -1,5 +1,6 @@
 libCommons:
   RemoteConfig:
+    UpdateInterval: 10
     PlistFile: "Local.kb"
     PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-colorkeyboard-2.4.0.kb"
   Analytics:

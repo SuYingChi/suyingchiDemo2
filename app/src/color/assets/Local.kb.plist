@@ -2092,6 +2092,12 @@
 					<key>showName</key>
 					<string>Big Smiley</string>
 				</dict>
+				<dict>
+					<key>name</key>
+					<string>BigFace</string>
+					<key>showName</key>
+					<string>Big Face</string>
+				</dict>
 			</array>
 			<key>ThemeContents</key>
 			<dict>
