@@ -65,7 +65,7 @@
     <string name="setting_word_prediction">Prediction</string>
     <string name="setting_emoji_prediction">Emoji Prediction</string>
     <string name="setting_swipe_input">Swipe</string>
-    <string name="setting_double_space_period">\":.\": Shortcut</string>
+    <string name="setting_double_space_period">\".\" Shortcut</string>
     <string name="setting_double_space_period_summary">Double tapping the space bar will insert a period followed by a space.</string>
     <string name="setting_sound_on_keypress">Sound on keypress</string>
     <string name="setting_vibrate_on_keypress">Vibrate on keypress</string>
