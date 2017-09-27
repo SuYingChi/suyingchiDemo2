@@ -29,8 +29,8 @@ libCommons:
         AppUrl: "amzn://apps/android?p="
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
   Connection:
-    SigKey: "603_2"
-    HashKey: "m/dN3P!}k$k#fnn[O*0(CQO:A/D_CF{m"
+    SigKey: "603_3"
+    HashKey: "u)};]_4&ydQ4?`|!f?nziKZ/ho_L`on{"
   AppID: "603"
 libFramework:
   Push:
