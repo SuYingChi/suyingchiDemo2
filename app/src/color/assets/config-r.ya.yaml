@@ -48,3 +48,6 @@ libIAP:
 
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
+
+Application:
+  WallpaperAPIURL: "https://service.appcloudbox.net/wallpapers/"

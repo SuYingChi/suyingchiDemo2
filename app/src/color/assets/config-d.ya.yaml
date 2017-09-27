@@ -52,3 +52,6 @@ libIAP:
 
 libKeyboard:
   DictionaryUrl: "http://emojidevelop.s3.amazonaws.com/AndroidResource/languages/"
+
+Application:
+  WallpaperAPIURL: "https://dev-service.appcloudbox.net/wallpapers/"

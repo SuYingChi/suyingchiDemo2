@@ -43,7 +43,7 @@ public class WallpaperDownloadEngine {
     private static final String TAG = "WallpaperDownloadEngine";
     private static final int DEFAULT_PAGE_SIZE = 30;
 
-    private static final String WALLPAPER_URL = HSConfig.getString("Application", "Server", "WallpaperAPIURL");
+    private static final String WALLPAPER_URL = HSConfig.getString("Application", "WallpaperAPIURL");
     private static final String SUFFIX_CATEGORY = "categories/";
     private static List<Map<String, ?>> sConfig = (List<Map<String, ?>>) HSConfig.getList("Application", "Wallpapers");
 
