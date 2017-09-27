@@ -17,7 +17,6 @@ libCommons:
   ImageCache:
     CacheSize: 0
 
-
   Market:
     DefaultMarket: "Google"
     3rdChannel: "GP"
@@ -33,9 +32,7 @@ libCommons:
   Connection:
     SigKey: "1"
     HashKey: "x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!"
-    EncryptionKey: "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}"
-    EncryptionKeyVersion: "1"
-
+  AppID: "603"
 libFramework:
   Push:
     SenderID: ""
