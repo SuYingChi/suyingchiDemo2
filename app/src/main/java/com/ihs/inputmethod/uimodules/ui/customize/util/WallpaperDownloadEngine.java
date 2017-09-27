@@ -50,7 +50,7 @@ public class WallpaperDownloadEngine {
     public static void getNextCategoryWallpaperList(final int categoryIndex, final OnLoadWallpaperListener listener) {
         final List<WallpaperInfo> wallpaperInfoList = new ArrayList<>();
         final int nextPage = sPrefs.getInt(PREF_WALLPAPER_CATEGORY_NEXT_PAGE + categoryIndex, 1);
-        String url = WALLPAPER_URL + Uri.encode(sConfig.get(categoryIndex).get("Identifier").toString());
+        String url = WALLPAPER_URL + SUFFIX_CATEGORY + Uri.encode(sConfig.get(categoryIndex).get("Identifier").toString());
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("page", nextPage);
