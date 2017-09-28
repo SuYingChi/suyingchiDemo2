@@ -29,6 +29,7 @@ libCommons:
   Connection:
       SigKey: "610_1"
       HashKey: "f4ilz;_aePCR/qYYl05<Wgu)O[Y{ZQxo"
+  AppId: "610"
 libFramework:
   Push:
     SenderID: "805407701758"
@@ -39,3 +40,6 @@ libFramework:
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
+
+Application:
+  WallpaperAPIURL: "https://service.appcloudbox.net/wallpapers/"
