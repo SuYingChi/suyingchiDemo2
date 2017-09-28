@@ -200,4 +200,12 @@ public class StickerDataManager {
         return false;
     }
 
+    public Sticker getSticker(String stickerName) {
+        for (StickerGroup stickerGroup : getStickerGroupList()) {
+            if(stickerGroup.getStickerGroupName().equals(StickerUtils.getGroupNameByStickerName(stickerName))){
+                return stickerGroup.getSticker(stickerName);
+            }
+        }
+        return null;
+    }
 }

@@ -36,12 +36,17 @@ import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
+import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerPrefsUtil;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -342,6 +347,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 }
             }
         }
+
     }
 
     @Override
@@ -415,6 +421,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
+        if (!restarting) {
+            isAppSupportSticker = StickerUtils.isEditTextSupportSticker(currentAppPackageName);
+        }
     }
 
     @Override
@@ -439,6 +448,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         // Start clearing image loader cache
         handler.postDelayed(clearImageLoaderCacheRunnable, HSApplication.isDebugging ? 5 * 1000 : 5 * 60 * 1000);
+        HSFloatWindowManager.getInstance().removeFloatingWindow();
+        isAppSupportSticker = false;
     }
 
     private boolean shouldShowGoogleAD() {
@@ -479,5 +490,22 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
 
         super.onCodeInput(codePoint, x, y, isKeyRepeat);
+    }
+
+    @Override
+    protected void showStickerSuggestionByName(ArrayList<String> stickerNameByString) {
+        List<Sticker> stickerList = new ArrayList<>();
+        if (stickerNameByString != null && stickerNameByString.size() > 0) {
+            for (String stickerName : stickerNameByString) {
+                if (StickerDataManager.getInstance().isStickerGroupDownloaded(StickerUtils.getGroupNameByStickerName(stickerName))) {
+                    stickerList.add(StickerDataManager.getInstance().getSticker(stickerName));
+//                    StickerUtils.share(StickerDataManager.getInstance().getSticker(stickerName), HSInputMethod.getCurrentHostAppPackageName());
+//                    HSLog.e(StickerDataManager.getInstance().getSticker(stickerName).getStickerUri());
+                }
+            }
+            getKeyboardPanelMananger().showSuggestedStickers(StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
+        } else {
+            HSFloatWindowManager.getInstance().removeFloatingWindow();
+        }
     }
 }

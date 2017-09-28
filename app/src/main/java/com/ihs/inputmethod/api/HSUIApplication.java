@@ -42,6 +42,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
+import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -251,6 +252,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
         AcbCallManager.initWithDefaultFactory(callAdPlacement);
         AcbCallManager.setAdPlacement(callAdPlacement);
+        StickerSuggestionManager.getInstance();
     }
 
     private void activeAdPlacements() {

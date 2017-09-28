@@ -72,16 +72,23 @@ public class StickerGroup {
                 final Map<String, Object> contentMap = (Map<String, Object>) contents.get(i);
                 final String imageName = (String) contentMap.get("imageName");
                 String stickerImageUri = "";
+                StringBuilder stickerImageFilePath = null;
+                String filePath = "";
                 if (isInternalStickerGroup) {
-                    StringBuilder stickerImageFilePath = new StringBuilder(ASSETS_STICKER_FILE_NAME)
+                    stickerImageFilePath = new StringBuilder(ASSETS_STICKER_FILE_NAME)
                             .append("/").append(stickerGroupName).append("/").append(imageName);
                     stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.Assets);
+                    filePath = "file:///android_asset/"+ stickerImageFilePath;
                 } else if (isStickerGroupDownloaded()) {
-                    StringBuilder stickerImageFilePath = new StringBuilder(getStickerFolderPath(stickerGroupName))
+                    stickerImageFilePath = new StringBuilder(getStickerFolderPath(stickerGroupName))
                             .append("/").append(imageName);
                     stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.File);
+                    filePath = stickerImageUri;
                 }
-                addSticker(new Sticker(stickerImageUri));
+
+                Sticker sticker = new Sticker(stickerImageUri);
+                sticker.setFilePath(filePath);
+                addSticker(sticker);
             }
         }
     }
@@ -136,6 +143,15 @@ public class StickerGroup {
         }
 
         return stickerList;
+    }
+
+    public Sticker getSticker(String stickerName) {
+        for (Sticker sticker : getStickerList()) {
+            if (sticker.getStickerName().equals(stickerName)) {
+                return sticker;
+            }
+        }
+        return null;
     }
 
     public void addSticker(final Sticker sticker) {
