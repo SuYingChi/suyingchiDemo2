@@ -72,7 +72,7 @@ public class StickerDataManager {
         protected void onPostExecute(List<StickerGroup> stickerGroupList) {
             List<String> newGroupNameList = new ArrayList<>();
 
-            if (stickerGroups != null) {
+            if (stickerGroups.size() > 0) {
                 for (StickerGroup stickerGroup : stickerGroupList) {
                     if (!stickerGroups.contains(stickerGroup)) {
                         newGroupNameList.add(stickerGroup.getStickerGroupName());
