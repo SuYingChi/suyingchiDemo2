@@ -130,7 +130,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                     public void onDismiss(boolean success) {
                         if (success) {
                             HSFontDownloadManager.getInstance().updateFontModel(fontModel);
-                            HSAnalytics.logEvent("font_download_succeed", fontName);
+                            HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
                         }
                     }
                 });

@@ -95,7 +95,7 @@ public class StickerHomeFragment extends Fragment {
                             @Override
                             public void onDismiss(boolean success) {
                                 if (success) {
-                                    HSAnalytics.logEvent("sticker_download_succeed", stickerGroupName);
+                                    HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
                             }
