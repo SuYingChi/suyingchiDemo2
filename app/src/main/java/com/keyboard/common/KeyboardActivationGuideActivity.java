@@ -291,7 +291,11 @@ public class KeyboardActivationGuideActivity extends HSActivity {
                 params.x = xOffset;
                 window.setGravity(gravity);
                 window.setAttributes(params);
-                window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && !android.provider.Settings.canDrawOverlays(HSApplication.getContext())) {
+                    getWindow().setType(WindowManager.LayoutParams.TYPE_TOAST);
+                } else {
+                    getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                }
             }
             super.show();
         }

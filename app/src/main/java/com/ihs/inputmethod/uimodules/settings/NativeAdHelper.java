@@ -79,7 +79,7 @@ public class NativeAdHelper {
     }
 
     private void showAdFlashAnimation() {
-        if (nativeAdView.isAdLoaded()) {
+        if (nativeAdView != null && nativeAdView.isAdLoaded()) {
             flashAdContainer.startShimmerAnimation();
             isAdFlashAnimationPlayed = true;
         } else {
