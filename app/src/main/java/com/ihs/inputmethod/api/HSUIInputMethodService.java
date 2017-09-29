@@ -493,7 +493,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     }
 
     @Override
-    protected void showStickerSuggestionByName(ArrayList<String> stickerNameByString) {
+    protected void showStickerSuggestionByName(String stickerTag, ArrayList<String> stickerNameByString) {
         List<Sticker> stickerList = new ArrayList<>();
         if (stickerNameByString != null && stickerNameByString.size() > 0) {
             for (String stickerName : stickerNameByString) {
@@ -503,7 +503,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 //                    HSLog.e(StickerDataManager.getInstance().getSticker(stickerName).getStickerUri());
                 }
             }
-            getKeyboardPanelMananger().showSuggestedStickers(StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
+            getKeyboardPanelMananger().showSuggestedStickers(stickerTag, StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
+            HSAnalytics.logEvent("keyboard_sticker_prediction_show", "sticker tag", stickerTag);
         } else {
             HSFloatWindowManager.getInstance().removeFloatingWindow();
         }

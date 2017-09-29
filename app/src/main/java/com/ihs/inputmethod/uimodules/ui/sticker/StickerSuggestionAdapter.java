@@ -1,11 +1,13 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
@@ -16,10 +18,15 @@ import java.util.List;
 public class StickerSuggestionAdapter extends RecyclerView.Adapter<StickerSuggestionAdapter.ViewHolder> {
 
     private List<Sticker> stickerList;
+    private String stickerTag;
 
     // data is passed into the constructor
     public StickerSuggestionAdapter(List<Sticker> stickerList) {
         this.stickerList = stickerList;
+    }
+
+    public void setStickerTag(String stickerTag) {
+        this.stickerTag = stickerTag;
     }
 
     // inflates the row layout from xml when needed
@@ -41,6 +48,9 @@ public class StickerSuggestionAdapter extends RecyclerView.Adapter<StickerSugges
             public void onClick(View v) {
                 HSFloatWindowManager.getInstance().removeFloatingWindow();
                 StickerUtils.share(sticker, HSUIInputMethodService.getInstance().getCurrentInputEditorInfo().packageName);
+                if (!TextUtils.isEmpty(stickerTag)) {
+                    HSAnalytics.logEvent("keyboard_sticker_prediction_sent", "sticker tag", stickerTag, "sticker group", sticker.getStickerGroupName());
+                }
             }
         });
     }
