@@ -164,12 +164,16 @@ public class StickerUtils {
         if (canSendDirectly) {
             String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
             boolean pngSupported = false;
+            boolean gifSupported = false;
             for (String mime_Type : mimeTypes) {
-                if (ClipDescription.compareMimeTypes(mime_Type, "image/png") || ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
+                if (ClipDescription.compareMimeTypes(mime_Type, "image/png")) {
                     pngSupported = true;
                 }
+                if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
+                    gifSupported = true;
+                }
             }
-            if (pngSupported) {
+            if (pngSupported || gifSupported) {
                 addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
                 File externalImageFile = new File(targetExternalFilePath);
                 if (!externalImageFile.exists()) {
@@ -178,13 +182,19 @@ public class StickerUtils {
                 }
 
                 Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
-                if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX)) {
+                if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX) && gifSupported) {
                     commitStickerImage(uri, "", "image/gif");
-                } else {
+                    return;
+                } else if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_PNG_SUFFIX) && pngSupported) {
                     commitStickerImage(uri, "", "image/png");
-
+                    return;
+                } else if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_PNG_SUFFIX) && gifSupported) {
+                    // 如果图片是 PNG，而应用只支持 GIF，则发送时声称是 GIF，目前是可以发出去的；以后也许需要改成需要转成真实的 GIF 格式后再发送
+                    commitStickerImage(uri, "", "image/gif");
+                    return;
+                } else {
+                    // 如果找不到把图片直接发出去的格式支持，则走原来的逻辑
                 }
-                return;
             }
         }
 
