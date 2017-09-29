@@ -141,9 +141,14 @@ public class StickerUtils {
     }
 
     public static boolean isEditTextSupportSticker(String packageName) {
+        if (!DirectoryUtils.isSDCardEnabled()) {
+            return false;
+        }
+
         Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);
         return (boolean) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_SEND_DIRECTLY)
-                || (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE) == MediaShareUtils.IMAGE_SHARE_MODE_INTENT;
+                || (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE) == MediaShareUtils.IMAGE_SHARE_MODE_INTENT
+                || (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE) == MediaShareUtils.IMAGE_SHARE_MODE_EXPORT;
     }
 
     public static void share(final Sticker sticker, final String packageName) {
