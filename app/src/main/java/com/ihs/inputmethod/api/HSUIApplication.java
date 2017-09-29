@@ -211,9 +211,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         CustomUIRateAlertUtils.initialize();
 
-        if (!HSLog.isDebugging()) {
-            Fabric.with(this, new Crashlytics());
-        }
+        Fabric.with(this, new Crashlytics());
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);

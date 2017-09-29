@@ -46,6 +46,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt', 'proguard-d.txt', 'proguard.txt'
+            versionNameSuffix "-DEBUG"
         }
     }
 
@@ -118,6 +119,10 @@ repositories {
         dirs 'libs', 'libs/bin_chargingscreen_android'
     }
 
+}
+
+android.applicationVariants.all { variant ->
+    variant.generateBuildConfig.versionName = variant.mergedFlavor.versionName + (variant.buildType.versionNameSuffix != null ? variant.buildType.versionNameSuffix : "")
 }
 
 
