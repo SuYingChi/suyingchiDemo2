@@ -63,7 +63,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.BaseCustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
+import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
@@ -84,7 +84,7 @@ import java.util.Random;
  * Created by jixiang on 16/8/17.
  */
 public class ThemeHomeActivity extends BaseCustomizeActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener,
-        SettingsActivity2.GeneralHomePreferenceFragment.OnUpdateClickListener {
+        SettingsActivity.GeneralHomePreferenceFragment.OnUpdateClickListener {
     public final static String EXTRA_SHOW_TRIAL_KEYBOARD = "EXTRA_SHOW_TRIAL_KEYBOARD";
     public final static String EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS = "EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS";
     public final static String EXTRA_AUTO_ENABLE_KEYBOARD = "EXTRA_AUTO_ENABLE_KEYBOARD";

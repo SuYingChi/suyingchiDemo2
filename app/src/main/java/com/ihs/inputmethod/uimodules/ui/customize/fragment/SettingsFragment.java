@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2;
+import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity;
 
 /**
  * Created by guonan.lv on 17/9/14.
@@ -36,9 +36,9 @@ public class SettingsFragment extends Fragment {
     private void initSettings() {
         FragmentManager fragmentManager = getActivity().getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        SettingsActivity2.GeneralHomePreferenceFragment generalHomePreferenceFragment = (SettingsActivity2.GeneralHomePreferenceFragment) fragmentManager.findFragmentByTag(GENERAL_HOME_PREF);
+        SettingsActivity.GeneralHomePreferenceFragment generalHomePreferenceFragment = (SettingsActivity.GeneralHomePreferenceFragment) fragmentManager.findFragmentByTag(GENERAL_HOME_PREF);
         if (generalHomePreferenceFragment == null) {
-            generalHomePreferenceFragment = new SettingsActivity2.GeneralHomePreferenceFragment();
+            generalHomePreferenceFragment = new SettingsActivity.GeneralHomePreferenceFragment();
             fragmentTransaction.add(R.id.settings_content, generalHomePreferenceFragment, GENERAL_HOME_PREF);
         }
         fragmentTransaction.show(generalHomePreferenceFragment).commit();

@@ -66,7 +66,7 @@ import java.util.List;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
-public final class SettingsActivity2 extends HSAppCompatPreferenceActivity {
+public final class SettingsActivity extends HSAppCompatPreferenceActivity {
     private static final String GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED = "app_setting_charging_firsttime_clicked";
 
     /**
