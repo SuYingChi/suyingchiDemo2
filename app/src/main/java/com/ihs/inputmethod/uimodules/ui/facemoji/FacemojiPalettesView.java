@@ -6,33 +6,26 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
-import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.utils.HSColorUtils;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
-import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.converts.SyncWorkHandler;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
@@ -43,18 +36,14 @@ import com.ihs.inputmethod.uimodules.widget.KeyboardProgressView;
 public class FacemojiPalettesView extends LinearLayout implements OnTabChangeListener, ViewPager.OnPageChangeListener,
         FacemojiPageGridView.OnFacemojiClickListener, View.OnClickListener {
     private FacemojiManager.FacemojiType facemojiType = FacemojiManager.FacemojiType.CLASSIC;
-    private ImageButton mDeleteKey;
-
     private TabHost mTabHost;
     private FacemojiViewPager mViewPager;
+    private ImageView currentFaceImage;
 
     private FacemojiLayoutParams mStickerLayoutParams;
     private FacemojiPalettesAdapter mStickerPalettesAdapter;
 
     private int mCurrentPagerPosition = 0;
-    private Drawable transparentDrawable;
-
-    private AlphaKeyboardClickListener alphaKeyboardClickListener;
 
     // Share progress
     private KeyboardProgressView mShareProgressView;
@@ -70,11 +59,6 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             mStickerPalettesAdapter.resumeAnimation();
         }
     };
-    private ImageButton newFacemojiBtn;
-    private ImageButton classicFacemojiBtn;
-
-    private final int themeDominantColor;
-    private final int themeDominantDarkColor;
 
     public FacemojiPalettesView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -82,47 +66,38 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
     public FacemojiPalettesView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
-//        TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs, R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
-//		final StateListDrawable deleteKeyDrawable = new StateListDrawable();
-//		deleteKeyDrawable.addState(new int[] { android.R.attr.state_pressed }, HSKeyboardThemeManager.getStyledDrawable(null, "tabbar_gif_delete_pressed.png"));
-//		deleteKeyDrawable.addState(new int[] {}, HSKeyboardThemeManager.getStyledDrawable(null, "tabbar_gif_delete.png"));
-//		mDeleteKeyBackgroundDrawable = deleteKeyDrawable;
-
-//        keyboardViewAttr.recycle();
-
         Resources res = context.getResources();
         mStickerLayoutParams = new FacemojiLayoutParams(res);
 
-        themeDominantColor = HSKeyboardThemeManager.getCurrentTheme().getDominantColor();
-        themeDominantDarkColor = HSColorUtils.darkerColor(themeDominantColor);
+        HSGlobalNotificationCenter.addObserver(CameraActivity.FACE_CHANGED,notificationObserver);
     }
 
+    private INotificationObserver notificationObserver = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (CameraActivity.FACE_CHANGED.equals(s)){
+                if (currentFaceImage != null) {
+                    currentFaceImage.setImageURI(FacemojiManager.getCurrentFacePicUri());
+                }
+            }
+        }
+    };
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        Resources res = getContext().getResources();
-//        int panelWidth = HSResourceUtils.getDefaultKeyboardWidth(res)
-//                + getPaddingLeft() + getPaddingRight();
-//        int panelHeight = HSResourceUtils.getDefaultKeyboardHeight(res) + getPaddingTop() + getPaddingBottom();
-//        setMeasuredDimension(panelWidth, panelHeight);
-//    }
 
     private void addTab(TabHost host, int categoryId) {
         String tabId = FacemojiManager.getInstance().getCategoryName(facemojiType,categoryId);
         TabHost.TabSpec tspec = host.newTabSpec(tabId);
         tspec.setContent(R.id.facemoji_keyboard_dummy);
         ImageView iconView = new ImageView(HSApplication.getContext());
-        int height = (int) getResources().getDimension(R.dimen.config_suggestions_strip_height) - 10;
+        int height = (int) (getResources().getDimension(R.dimen.config_suggestions_strip_height) - getResources().getDimension(R.dimen.facemoji_panel_tab_margin_top) * 2);
         LayoutParams iconParam = new LayoutParams(height, height);
         iconParam.gravity = Gravity.LEFT;
         iconParam.setMargins(10, 5, 10, 5);
         iconView.setLayoutParams(iconParam);
         iconView.setPadding(10, 10, 10, 10);
-        iconView.setScaleType(ImageView.ScaleType.FIT_XY);
+        iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         iconView.setImageDrawable(FacemojiManager.getInstance().getCategories(facemojiType).get(categoryId).getCategoryIcon());
-        iconView.setBackgroundDrawable(getTabbarCategoryIconBackground());
+        iconView.setBackgroundResource(R.drawable.facemoji_tab_bg);
         tspec.setIndicator(iconView);
         host.addTab(tspec);
     }
@@ -132,29 +107,6 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             mShareProgressView.stop();
         }
     }
-
-    public Drawable getTabbarCategoryIconBackground() {
-        StateListDrawable tabbarCategoryStatesDrawable = new StateListDrawable();
-        Drawable defaultbg = getResources().getDrawable(R.drawable.facemoji_pack_bg);
-        tabbarCategoryStatesDrawable.addState(new int[]{android.R.attr.state_focused}, defaultbg);
-        tabbarCategoryStatesDrawable.addState(new int[]{android.R.attr.state_pressed}, defaultbg);
-        tabbarCategoryStatesDrawable.addState(new int[]{android.R.attr.state_selected}, defaultbg);
-        tabbarCategoryStatesDrawable.addState(new int[]{}, transparentDrawable);
-        return tabbarCategoryStatesDrawable;
-    }
-
-
-    private Drawable getBottomTabbarIconBackground() {
-        StateListDrawable stateListDrawable = new StateListDrawable();
-        int pressedColor = themeDominantColor;
-        int normalColor = themeDominantDarkColor;
-        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(pressedColor));
-        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, new ColorDrawable(pressedColor));
-        stateListDrawable.addState(new int[]{}, new ColorDrawable(normalColor));
-        return stateListDrawable;
-    }
-
-
 
     @Override
     protected void onFinishInflate() {
@@ -180,11 +132,16 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
             mTabHost = (TabHost) (panelView.findViewById(R.id.facemoji_keyboard_category_tabhost));
             mTabHost.setup();
-            addTabs();
+            for (int i = 0; i < FacemojiManager.getInstance().getCategories(facemojiType).size(); i++) {
+                addTab(mTabHost, i);
+            }
             mTabHost.setOnTabChangedListener(this);
             TabWidget tabWidget = mTabHost.getTabWidget();
             tabWidget.setStripEnabled(false);
             tabWidget.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            currentFaceImage = (ImageView) panelView.findViewById(R.id.current_face_image);
+            currentFaceImage.setImageURI(FacemojiManager.getCurrentFacePicUri());
 
             mStickerPalettesAdapter = new FacemojiPalettesAdapter(this, mStickerLayoutParams);
             mStickerPalettesAdapter.setFacemojiType(facemojiType);
@@ -195,13 +152,6 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             mViewPager.setPersistentDrawingCache(PERSISTENT_NO_CACHE);
             mStickerLayoutParams.setPagerProperties(mViewPager);
 
-//			mStickerCategoryPageIndicatorView = (FacemojiCategoryPageIndicatorView) (panelView.findViewById(R.id.facemoji_category_page_id_view));
-//			mStickerCategoryPageIndicatorView.setColors(mCategoryPageIndicatorColor, mCategoryPageIndicatorBackground);
-//			mStickerLayoutParams.setCategoryPageIdViewProperties(mStickerCategoryPageIndicatorView);
-
-
-            initBottomTabButtons(panelView);
-
             panelView.findViewById(R.id.switch_face).setOnClickListener(this);
 
             // Find share progress view
@@ -210,55 +160,8 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
             addView(panelView);
 
-            setInitStatus();
-
             setCurrentCategoryId(FacemojiManager.getInstance().getCurrentCategoryId(), true /* force */);
         }
-    }
-
-    private void addTabs() {
-        mTabHost.getTabWidget().removeAllViews();
-        for (int i = 0; i < FacemojiManager.getInstance().getCategories(facemojiType).size(); i++) {
-            addTab(mTabHost, i);
-        }
-    }
-
-    private void initBottomTabButtons(LinearLayout panelView) {
-        final StateListDrawable deleteKeyDrawable = new StateListDrawable();
-        Drawable deleteDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("emoji_delete");
-        Drawable deleteHL = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("emoji_delete_hl");
-        deleteKeyDrawable.addState(new int[]{android.R.attr.state_pressed}, deleteHL);
-        deleteKeyDrawable.addState(new int[]{android.R.attr.state_focused}, deleteHL);
-        deleteKeyDrawable.addState(new int[]{android.R.attr.state_selected}, deleteHL);
-        deleteKeyDrawable.addState(new int[]{}, deleteDrawable);
-
-        mDeleteKey = (ImageButton) (panelView.findViewById(R.id.facemoji_keyboard_delete));
-        mDeleteKey.setTag(Constants.CODE_DELETE);
-        mDeleteKey.setImageDrawable(deleteKeyDrawable);
-        mDeleteKey.setBackgroundDrawable(new ColorDrawable(themeDominantDarkColor));
-        // deleteKey depends only on OnTouchListener.
-        mDeleteKey.setOnTouchListener(new DeleteKeyOnTouchListener(getContext()));
-
-
-        TextView alphabetLeft = (TextView) panelView.findViewById(R.id.keyboard_alphabet_left);
-        alphabetLeft.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getFuncKeyTextColor());
-        alphabetLeft.setTextSize(TypedValue.COMPLEX_UNIT_PX, HSKeyboardThemeManager.getCurrentTheme().getFuncKeyLabelSize());
-        alphabetLeft.setText(HSInputMethod.getSwitchToAlphaKeyLabel());
-        alphabetLeft.setBackgroundDrawable(getBottomTabbarIconBackground());
-        alphabetLeft.setOnClickListener(this);
-
-        newFacemojiBtn = (ImageButton) panelView.findViewById(R.id.new_facemoji_btn);
-        newFacemojiBtn.setBackgroundDrawable(getBottomTabbarIconBackground());
-        newFacemojiBtn.setOnClickListener(this);
-
-        classicFacemojiBtn = (ImageButton) panelView.findViewById(R.id.classic_facemoji_btn);
-        classicFacemojiBtn.setBackgroundDrawable(getBottomTabbarIconBackground());
-        classicFacemojiBtn.setOnClickListener(this);
-    }
-
-    private void setInitStatus() {
-        //默认选中classicFacemoji
-        classicFacemojiBtn.setSelected(true);
     }
 
     private void initDefualtFacemojiPanel() {
@@ -287,11 +190,6 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             RelativeLayout.LayoutParams imageParam = (RelativeLayout.LayoutParams) image.getLayoutParams();
             imageParam.height = (int) (panelHeight * 0.8);
             image.setLayoutParams(imageParam);
-//
-//			RelativeLayout.LayoutParams buttonParam = (RelativeLayout.LayoutParams) facemojiEntrance.getLayoutParams();
-//			buttonParam.width = (int) (panelWidth * 0.35);
-//			buttonParam.height = (int) (panelHeight * 0.16);
-//			facemojiEntrance.setLayoutParams(buttonParam);
         }
 
         facemojiEntrance.setOnClickListener(new OnClickListener() {
@@ -309,22 +207,13 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
         int categoryId = FacemojiManager.getInstance().getCategoryIdByName(facemojiType,tabId);
         setCurrentCategoryId(categoryId, false);
-        //uploadStickerCategoryPageIdView();
     }
-
-//	private void uploadStickerCategoryPageIdView() {
-//		if (mStickerCategoryPageIndicatorView == null) {
-//			return;
-//		}
-//		mStickerCategoryPageIndicatorView.setCategoryPageId(FacemojiManager.getCurrentCategoryPageSize(), FacemojiManager.getCurrentCategoryPageId(), 0.0f);
-//	}
 
     @Override
     public void onPageSelected(int position) {
         final Pair<Integer, Integer> newPos = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(facemojiType,position);
         setCurrentCategoryId(newPos.first /* categoryId */, false /* force */);
         FacemojiManager.setCurrentCategoryPageId(newPos.second /* categoryPageId */);
-        //uploadStickerCategoryPageIdView();
     }
 
     @Override
@@ -334,23 +223,6 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//		Pair<Integer, Integer> newPos = FacemojiManager.getCategoryIdAndPageIdFromPagePosition(position);
-//		int newCategoryId = newPos.first;
-//		int newCategorySize = FacemojiManager.getCategoryPageSize(newCategoryId);
-//		int currentCategoryId = FacemojiManager.getCurrentCategoryId();
-//		int currentCategoryPageId = FacemojiManager.getCurrentCategoryPageId();
-//		int currentCategorySize = FacemojiManager.getCurrentCategoryPageSize();
-//		if (newCategoryId == currentCategoryId) {
-//			mStickerCategoryPageIndicatorView.setCategoryPageId(
-//					newCategorySize, newPos.second, positionOffset);
-//		} else if (newCategoryId > currentCategoryId) {
-//			mStickerCategoryPageIndicatorView.setCategoryPageId(
-//					currentCategorySize, currentCategoryPageId, positionOffset);
-//		} else if (newCategoryId < currentCategoryId) {
-//			mStickerCategoryPageIndicatorView.setCategoryPageId(
-//					currentCategorySize, currentCategoryPageId, positionOffset - 1);
-//		}
-
         if (positionOffset == 0) {
             mStickerPalettesAdapter.stopAllAnimations();
             mCurrentPagerPosition = position;
@@ -394,10 +266,6 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         MediaController.getShareManager().shareFacemojiWithKeyboard(item, mProgressListener);
     }
 
-    public int getCurrentCategoryId() {
-        return FacemojiManager.getInstance().getCurrentCategoryId();
-    }
-
     public int getCurrentPagerPosition() {
         return mCurrentPagerPosition;
     }
@@ -405,17 +273,6 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.keyboard_alphabet_left:
-                if (alphaKeyboardClickListener != null){
-                    alphaKeyboardClickListener.onAlphaClick();
-                }
-                break;
-            case R.id.new_facemoji_btn:
-                updateFacemojiType(FacemojiManager.FacemojiType.NEW);
-                break;
-            case R.id.classic_facemoji_btn:
-                updateFacemojiType(FacemojiManager.FacemojiType.CLASSIC);
-                break;
             case R.id.switch_face:
                 FacemojiManager.showFaceSwitchView();
                 break;
@@ -423,31 +280,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         }
     }
 
-    private void updateFacemojiType(FacemojiManager.FacemojiType facemojiType) {
-        this.facemojiType = facemojiType;
-
-        switch (facemojiType){
-            case CLASSIC:
-                classicFacemojiBtn.setSelected(true);
-                newFacemojiBtn.setSelected(false);
-                break;
-
-            case NEW:
-                newFacemojiBtn.setSelected(true);
-                classicFacemojiBtn.setSelected(false);
-                break;
-        }
-        addTabs();
-        mStickerPalettesAdapter.setFacemojiType(facemojiType);
-        mStickerPalettesAdapter.notifyDataSetChanged();
-        mViewPager.setCurrentItem(0);
-    }
-
-    public interface AlphaKeyboardClickListener{
-        void onAlphaClick();
-    }
-
-    public void setAlphaKeyboardClickListener(AlphaKeyboardClickListener alphaKeyboardClickListener) {
-        this.alphaKeyboardClickListener = alphaKeyboardClickListener;
+    public void onDestory() {
+        HSGlobalNotificationCenter.removeObserver(notificationObserver);
     }
 }

@@ -33,6 +33,7 @@ import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
+import com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanel;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
@@ -100,12 +101,14 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         final String[] panelNames = {
                 "emoji",
                 "sticker",
+                "facemoji",
                 "gif",
                 "text"
         };
         final Class[] panelClassNames = {
                 HSEmojiPanel.class,
                 StickerPanel.class,
+                HSFacemojiPanel.class,
                 GifPanel.class,
                 HSTextPanel.class
         };

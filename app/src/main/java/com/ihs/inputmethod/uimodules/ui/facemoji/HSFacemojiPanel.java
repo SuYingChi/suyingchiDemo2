@@ -9,7 +9,6 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.panelcontainer.BasePanel;
-import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -17,7 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  * Created by jixiang on 17/9/19.
  */
 
-public class HSFacemojiPanel extends BasePanel implements FacemojiPalettesView.AlphaKeyboardClickListener {
+public class HSFacemojiPanel extends BasePanel{
     private FacemojiPalettesView panelView;
 
     @Override
@@ -25,12 +24,10 @@ public class HSFacemojiPanel extends BasePanel implements FacemojiPalettesView.A
         if (panelView == null) {
             panelView = (FacemojiPalettesView) View.inflate(HSApplication.getContext(), R.layout.panel_facemoji, null);
             panelView.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
-            panelView.setAlphaKeyboardClickListener(this);
             init();
         }
         return panelView;
     }
-
 
     private void init() {
         if (!ImageLoader.getInstance().isInited()) {
@@ -50,8 +47,8 @@ public class HSFacemojiPanel extends BasePanel implements FacemojiPalettesView.A
     }
 
     @Override
-    public void onAlphaClick() {
-        getPanelActionListener().showPanel(KeyboardPanel.class);
-        getPanelActionListener().setBarVisibility(View.VISIBLE);
+    protected void onDestroy() {
+        panelView.onDestory();
+        super.onDestroy();
     }
 }

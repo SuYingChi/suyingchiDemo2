@@ -31,7 +31,7 @@ class FacemojiLayoutParams {
 	public FacemojiLayoutParams(Resources res) {
 		orientation=res.getConfiguration().orientation;
 
-		int defaultKeyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(res)- (int) HSApplication.getContext().getResources().getDimension(R.dimen.config_suggestions_strip_height) ;
+		int defaultKeyboardHeight = HSResourceUtils.getDefaultKeyboardHeight(res)- (int) HSApplication.getContext().getResources().getDimension(R.dimen.emoticon_panel_actionbar_height);
 		int defaultKeyboardWidth = res.getDisplayMetrics().widthPixels<res.getDisplayMetrics().heightPixels?res.getDisplayMetrics().widthPixels:res.getDisplayMetrics().heightPixels;
 
 		mKeyVerticalGap = (int) res.getFraction(R.fraction.config_key_vertical_gap_pink,
