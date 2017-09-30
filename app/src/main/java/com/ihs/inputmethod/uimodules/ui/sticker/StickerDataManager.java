@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -82,7 +83,7 @@ public class StickerDataManager {
             stickerGroups = stickerGroupList;
 
             // 如果是第一次加载，则将StickerGroups中前两个位置置为new
-            if (isFirstLoad() && stickerGroups.size() > 1 ) {
+            if (isFirstLoad() && stickerGroups.size() > 1) {
                 Set<String> firstNewStickerSet = new HashSet<>();
                 firstNewStickerSet.add(stickerGroups.get(0).getStickerGroupName());
                 firstNewStickerSet.add(stickerGroups.get(1).getStickerGroupName());
@@ -103,6 +104,7 @@ public class StickerDataManager {
         }
 
     }
+
     private List<StickerGroup> loadStickers() {
 
         List<StickerGroup> stickerGroups = new ArrayList<>();
@@ -152,6 +154,7 @@ public class StickerDataManager {
 
     /**
      * stickerCardAdapter中调用
+     *
      * @param stickerGroup
      * @return
      */
@@ -202,7 +205,10 @@ public class StickerDataManager {
 
     public Sticker getSticker(String stickerName) {
         for (StickerGroup stickerGroup : getStickerGroupList()) {
-            if(stickerGroup.getStickerGroupName().equals(StickerUtils.getGroupNameByStickerName(stickerName))){
+            if (stickerGroup.getStickerGroupName().equals(StickerUtils.getGroupNameByStickerName(stickerName))) {
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
                 return stickerGroup.getSticker(stickerName);
             }
         }

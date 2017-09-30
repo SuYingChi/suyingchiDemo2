@@ -46,7 +46,9 @@ public class StickerPrefsUtil {
         List<Sticker> resultList = new ArrayList<>();
         List<String> stickerNames = new ArrayList<>();
         for (Sticker sticker : stickerList) {
-            stickerNames.add(sticker.getStickerName());
+            if (sticker != null) {
+                stickerNames.add(sticker.getStickerName());
+            }
         }
         String[] stickerRecentlyUsed = getStickerUsedTimes().split(";");
         for (String stickerName : stickerRecentlyUsed) {
@@ -59,9 +61,10 @@ public class StickerPrefsUtil {
         }
 
         for (Sticker sticker : stickerList) {
-            resultList.add(sticker);
+            if (sticker != null) {
+                resultList.add(sticker);
+            }
         }
-
         return resultList;
 
 

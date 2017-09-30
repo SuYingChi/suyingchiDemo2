@@ -499,8 +499,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             for (String stickerName : stickerNameByString) {
                 if (StickerDataManager.getInstance().isStickerGroupDownloaded(StickerUtils.getGroupNameByStickerName(stickerName))) {
                     stickerList.add(StickerDataManager.getInstance().getSticker(stickerName));
-//                    StickerUtils.share(StickerDataManager.getInstance().getSticker(stickerName), HSInputMethod.getCurrentHostAppPackageName());
-//                    HSLog.e(StickerDataManager.getInstance().getSticker(stickerName).getStickerUri());
                 }
             }
             getKeyboardPanelMananger().showSuggestedStickers(stickerTag, StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
