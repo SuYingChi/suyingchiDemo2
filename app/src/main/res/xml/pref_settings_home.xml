@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:key="pref_screen">
     <PreferenceCategory android:title="@string/general">
         <Preference
             android:title="@string/theme_nav_languages"
@@ -25,6 +26,14 @@
             android:icon="@drawable/nav_update_icon"
             app:actionLayout="@layout/apk_update_indication_icon"
             android:key="update" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_category_debug"
+        android:title="@string/text_debug">
+        <Preference
+            android:title="@string/text_debug"
+            android:key="pref_debug" />
     </PreferenceCategory>
 
 </PreferenceScreen>

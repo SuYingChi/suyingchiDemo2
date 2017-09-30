@@ -35,7 +35,7 @@
     <string name="keyboard_guide_privacy_policy">By installing, you are agreeing to our %1$s\n and %2$s</string>
     <string name="text_terms_of_service">Terms of Service</string>
     <string name="text_privacy_policy">Privacy Policy</string>
-    <string name="navigation_menu_item_debug" translatable="false">Debug</string>
+    <string name="text_debug" translatable="false">Debug</string>
 
     <!--dialog-->
     <string name="dialog_title_select_keyboard_apply_rain">Activate %1$s</string>

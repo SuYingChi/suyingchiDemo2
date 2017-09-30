@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Browser;
 import android.support.annotation.Nullable;
@@ -61,6 +62,7 @@ import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.keyboard.common.DebugActivity;
 
 import java.util.List;
 
@@ -451,6 +453,16 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
             findPreference("removeAd").setOnPreferenceClickListener(this);
             findPreference("privacy_policy").setOnPreferenceClickListener(this);
             updatePreference.setOnPreferenceClickListener(this);
+
+            // 如果当前不在 Debug 模式下，则删除 Debug 组
+            PreferenceScreen preferenceScreen = (PreferenceScreen) findPreference("pref_screen");
+            PreferenceCategory debugCategory = (PreferenceCategory) findPreference("pref_category_debug");
+
+            if (!HSApplication.isDebugging) {
+                preferenceScreen.removePreference(debugCategory);
+            } else {
+                findPreference("pref_debug").setOnPreferenceClickListener(this);
+            }
         }
 
         private void setPrivacy() {
@@ -487,6 +499,12 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                 if (onUpdateClickListener != null) {
                     onUpdateClickListener.updateClick();
                 }
+            } else if (preference == findPreference("pref_debug")) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), DebugActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
             }
             return false;
         }
