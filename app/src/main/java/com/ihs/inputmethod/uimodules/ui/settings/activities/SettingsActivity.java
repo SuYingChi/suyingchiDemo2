@@ -264,6 +264,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     boolean isSwitchOn = (boolean) newValue;
                     CPSettings.setScreenFlashModuleEnabled(isSwitchOn);
+                    CPSettings.setCallAssistantModuleEnabled(isSwitchOn);
                     return true;
                 }
             });
