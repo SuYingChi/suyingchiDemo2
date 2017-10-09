@@ -87,6 +87,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             } else if (HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD.equals(s)) {
                 showKeyboardWithMenu();
                 functionBar.showNewMarkIfNeed();
+                functionBar.showMakeFacemojiTipIfNeed(keyboardPanelSwitchContainer);
             }
         }
     };
@@ -232,6 +233,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (view.getId() == R.id.func_facemoji_button){
             keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSFacemojiPanel.class);
             keyboardPanelSwitchContainer.setBarVisibility(GONE);
+            functionBar.dismissMakeFacemojiTip();
         }
     }
 
@@ -255,6 +257,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     public void showEmojiPanel() {
         keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
+        functionBar.dismissMakeFacemojiTip();
     }
 
     public void beforeStartInputView() {

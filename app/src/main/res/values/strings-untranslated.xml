@@ -25,4 +25,6 @@
     <string name="custom_rate_alert_message" tools:ignore="Typos">Wanna unlock this item for FREE? \nJust rate us 5 Stars!</string>
     <string name="custom_rate_alert_button_text">Rate 5 Stars to Unlock</string>
     <string name="custom_rate_alert_toast_text">Please check your Google Play</string>
+
+    <string name="keyboard_make_facemoji_tip">Tap here to make \n your own Mojis!</string>
 </resources>

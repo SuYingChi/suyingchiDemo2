@@ -9,10 +9,14 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -35,6 +39,7 @@ import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
 import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -47,7 +52,21 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     private RelativeLayout clothButtonVG;
     private boolean isAdAnimating = false;
     private ImageView imageView;
+    private ImageView facemojiView;
+    private View makeFacemojiTip;
 
+    private final static int MSG_DISMISS_MAKE_FACEMOJI_TIP = 1;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case MSG_DISMISS_MAKE_FACEMOJI_TIP:
+                    dismissMakeFacemojiTip();
+                    break;
+            }
+        }
+    };
 
     public BaseFunctionBar(Context context) {
         this(context, null);
@@ -113,7 +132,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         functionLayout.addView(emptyView,emptyViewLayoutParams);
 
         //FaceMojiView
-        ImageView facemojiView = new ImageView(getContext());
+        facemojiView = new ImageView(getContext());
         facemojiView.setImageResource(R.drawable.creating_thumbnail);
         facemojiView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         facemojiView.setId(R.id.func_facemoji_button);
@@ -247,6 +266,33 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
     public void hideNewMark() {
         baseFunction.hideNewTip();
+    }
+
+    public void showMakeFacemojiTipIfNeed(KeyboardPanelSwitchContainer keyboardPanelSwitchContainer) {
+        makeFacemojiTip = LayoutInflater.from(getContext()).inflate(R.layout.layout_make_facemoji_tip, this, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            makeFacemojiTip.setElevation(DisplayUtils.dip2px(6));
+        }
+
+        makeFacemojiTip.measure(0,0);
+
+        int[] location = new int[2];
+        facemojiView.getLocationInWindow(location);
+
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, location[1] - makeFacemojiTip.getMeasuredHeight(), 0, 0);
+        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+        keyboardPanelSwitchContainer.addView(makeFacemojiTip, lp);
+
+        handler.removeMessages(MSG_DISMISS_MAKE_FACEMOJI_TIP);
+        handler.sendEmptyMessageDelayed(MSG_DISMISS_MAKE_FACEMOJI_TIP,5000);
+    }
+
+    public void dismissMakeFacemojiTip() {
+        if (makeFacemojiTip != null && makeFacemojiTip.getParent()!=null){
+            ((ViewGroup)makeFacemojiTip.getParent()).removeView(makeFacemojiTip);
+        }
     }
 
     public interface OnFunctionBarItemClickListener {
