@@ -275,9 +275,12 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         }
 
         makeFacemojiTip.measure(0,0);
-
         int[] location = new int[2];
         facemojiView.getLocationInWindow(location);
+
+        View triangleView = makeFacemojiTip.findViewById(R.id.triangle_view);
+        LinearLayout.LayoutParams layoutParams = (LayoutParams) triangleView.getLayoutParams();
+        layoutParams.rightMargin = keyboardPanelSwitchContainer.getWidth() - (location[0] +  facemojiView.getWidth() / 2) - triangleView.getMeasuredWidth() / 2;
 
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, location[1] - makeFacemojiTip.getMeasuredHeight(), 0, 0);
