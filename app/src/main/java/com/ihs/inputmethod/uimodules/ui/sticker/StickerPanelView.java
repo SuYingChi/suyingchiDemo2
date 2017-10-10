@@ -52,7 +52,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
     private ViewPager stickerPanelViewPager;
     private StickerViewPagerAdapter stickerViewPagerAdapter;
-    private List<String> stickerExceptNeedDownloadNameList;
+    private List<String> stickerNameList;
     private INotificationObserver observer = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
@@ -66,9 +66,9 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerViewPagerAdapter.setNeedDownloadStickerGroupList(stickerPanelManager.getNeedDownloadStickerGroupList());
         }
         if (stickerTabAdapter != null) {
-            stickerExceptNeedDownloadNameList.clear();
-            stickerExceptNeedDownloadNameList.addAll(stickerPanelManager.getSortedExceptNeedDownloadStickerGroupNameList());
-            stickerTabAdapter.setTabNameList(stickerExceptNeedDownloadNameList);
+            stickerNameList.clear();
+            stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameList());
+            stickerTabAdapter.setTabNameList(stickerNameList);
         }
 
 
@@ -100,36 +100,30 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
     protected void onFinishInflate() {
         super.onFinishInflate();
         if (stickerTabAdapter == null) {
-            stickerExceptNeedDownloadNameList = new ArrayList<>();
-            stickerExceptNeedDownloadNameList.addAll(stickerPanelManager.getSortedExceptNeedDownloadStickerGroupNameList());
-            stickerTabAdapter = new StickerTabAdapter(stickerExceptNeedDownloadNameList, this);
+            stickerNameList = new ArrayList<>();
+            stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameList());
+            stickerTabAdapter = new StickerTabAdapter(stickerNameList, this);
             stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
             stickerTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             stickerTabRecyclerView.setAdapter(stickerTabAdapter);
 
             plusButton = (PlusButton) findViewById(R.id.plus_container);
-            plusButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Bundle bundle = new Bundle();
-                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_MAIN_PAGE_TAB, ThemeHomeActivity.TAB_INDEX_KEYBOARD);
-                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INNER_PAGE_TAB, KeyboardFragment.TAB_STICKER);
-                    HSInputMethod.hideWindow();
-                    plusButton.hideNewTip();
-                    plusButton.savefirstKeyboardAppearAndNotClickState(false);
-                    StickerDataManager.getInstance().saveShowNewTipState(false);
+            plusButton.setOnClickListener(v -> {
+                final Bundle bundle = new Bundle();
+                bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_MAIN_PAGE_TAB, ThemeHomeActivity.TAB_INDEX_KEYBOARD);
+                bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INNER_PAGE_TAB, KeyboardFragment.TAB_STICKER);
+                HSInputMethod.hideWindow();
+                plusButton.hideNewTip();
+                plusButton.savefirstKeyboardAppearAndNotClickState(false);
+                StickerDataManager.getInstance().saveShowNewTipState(false);
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            final Intent intent = new Intent();
-                            intent.setClass(HSApplication.getContext(), com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.class);
-                            intent.putExtras(bundle);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            HSApplication.getContext().startActivity(intent);
-                        }
-                    }, 200);
-                }
+                new Handler().postDelayed(() -> {
+                    final Intent intent = new Intent();
+                    intent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
+                    intent.putExtras(bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    HSApplication.getContext().startActivity(intent);
+                }, 200);
             });
         }
         final Resources res = getResources();
