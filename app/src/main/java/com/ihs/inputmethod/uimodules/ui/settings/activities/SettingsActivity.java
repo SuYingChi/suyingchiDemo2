@@ -55,6 +55,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
@@ -70,6 +71,7 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
 
 public final class SettingsActivity extends HSAppCompatPreferenceActivity {
     private static final String GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED = "app_setting_charging_firsttime_clicked";
+    public static final String CALL_ASSISTANT_HAS_SWITCHED_ON = "callAssistantHasSwitchedOn";
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -263,6 +265,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     boolean isSwitchOn = (boolean) newValue;
+                    HSPreferenceHelper.getDefault().putBoolean(CALL_ASSISTANT_HAS_SWITCHED_ON, true);
                     CPSettings.setScreenFlashModuleEnabled(isSwitchOn);
                     CPSettings.setCallAssistantModuleEnabled(isSwitchOn);
                     return true;
