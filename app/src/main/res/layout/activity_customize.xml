@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.ihs.inputmethod.uimodules.ui.customize.view.CustomizeContentView
+        android:id="@+id/customize_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        app:menu="@menu/customize_bottom_bar" />
+        <!--app:itemIconTint="@color/selector_customize_bottom_navigation_color"-->
+        <!--app:itemTextColor="@color/selector_customize_bottom_navigation_color"-->
+
+</RelativeLayout>

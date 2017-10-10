@@ -1,12 +1,9 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
+import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,8 +49,10 @@ public class StickerHomeFragment extends Fragment {
                 StickerGroup stickerGroup = (StickerGroup) hsBundle.getObject(STICKER_GROUP_ORIGINAL);
                 StickerModel stickerModel = new StickerModel(stickerGroup);
                 int position = stickerModelList.indexOf(stickerModel);
-                stickerModelList.remove(position);
-                removeStickerFromView(position);
+                if (position >= 0) {
+                    stickerModelList.remove(position);
+                    removeStickerFromView(position);
+                }
             }
         }
     };
@@ -96,7 +95,7 @@ public class StickerHomeFragment extends Fragment {
                             @Override
                             public void onDismiss(boolean success) {
                                 if (success) {
-                                    HSAnalytics.logEvent("sticker_download_succeed", stickerGroupName);
+                                    HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
                             }

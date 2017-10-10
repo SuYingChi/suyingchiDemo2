@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="emoticon_panel_ad_label_bg_radius">6dp</dimen>
+    <dimen name="emoticon_panel_ad_label_text_size">12sp</dimen>
+    <dimen name="emoticon_panel_progressbar_size">26dp</dimen>
+
+</resources>

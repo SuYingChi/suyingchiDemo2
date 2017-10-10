@@ -32,7 +32,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class BackgroundFragment extends BaseThemeFragment {
-    static final int CROPPER_IMAGE_REQUEST_CODE = 102;
+    public static final int CROPPER_IMAGE_REQUEST_CODE = 102;
     private final static int TYPE_OPEN_CAMERA = 1000;
     private final static int TYPE_OPEN_GALLERY = 1001;
     int lastTakePicType = -1;
@@ -82,6 +82,22 @@ public class BackgroundFragment extends BaseThemeFragment {
             EasyImage.openDocuments(this, TYPE_OPEN_GALLERY);
         }
         this.callback = callback;
+    }
+
+    public void setKeyboardTheme(Intent data) {
+        if (callback != null) {
+            callback.onSelectItem(TYPE_OPEN_GALLERY);
+        }
+        if (data != null) {
+            getCustomThemeData().setCustomizedBackgroundImagePath(data.getStringExtra("CropperImagePath"));
+            KCCustomThemeData.ImageSource preImageSource = getCustomThemeData().getBackgroundImageSource();
+            getCustomThemeData().setBackgroundImageSource(KCCustomThemeData.ImageSource.Album);
+            getCustomThemeData().setBackgroundImageSource(KCCustomThemeData.ImageSource.Album);
+            if (preImageSource == KCCustomThemeData.ImageSource.Official) {
+                notifyAdapterOnMainThread();
+            }
+            refreshKeyboardView();
+        }
     }
 
     @Override

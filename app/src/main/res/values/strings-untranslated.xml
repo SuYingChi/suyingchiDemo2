@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- store home -->
-    <string name="store_nav_download">My Downloads</string>
-    <string name="tab_theme">THEME</string>
-    <string name="tab_theme_my">MY THEME</string>
-    <string name="tab_sticker">STICKER</string>
-    <string name="tab_sticker_my">MY STICKER</string>
-    <string name="tab_font">FONT</string>
-    <string name="tab_font_my">MY FONT</string>
-    <string name="item_sticker_more_coming">More stickers are coming soon</string>
-    <string name="item_font_more_coming">More fonts are coming soon</string>
 
-    <!--alert message-->
-    <string name="locker_alert_title">Screen Locker</string>
-    <string name="locker_alert_message">Add your favorite themes on lockscreen. May contain sponsored contents.</string>
+    <string name="keyboard_settings">Keyboard Settings</string>
+    <string name="general">GENERAL</string>
 
-    <string name="call_assistant_alert_title">Animated Themes for Calls</string>
-    <string name="call_assistant_alert_message">Add animated themes on incoming call screens. May contain sponsored contents.</string>
+    <!-- home bottom tab-->
+    <string name="call_flash">Call Flash</string>
 
-    <string name="multi_function_alert_title">Stunning Themes</string>
-    <string name="multi_function_alert_message">Add stunning themes on lockscreen and incoming call screens. May contain sponsored contents.</string>
-
-    <string name="apk_update_alert_message">Your version is too low to be upgraded to use, please update and try again.</string>
-    <string name="custom_rate_alert_message" tools:ignore="Typos">Wanna unlock this item for FREE? \nJust rate us 5 Stars!</string>
-    <string name="custom_rate_alert_button_text">Rate 5 Stars to Unlock</string>
-    <string name="custom_rate_alert_toast_text">Please check your Google Play</string>
+    <!-- wallpaper preview -->
+    <string name="key_theme_set_btn">SET KEY THEME</string>
+    <string name="wallpaper_apply_fail">Applied Failed</string>
+    <string name="home_screen">Home screen</string>
+    <string name="locker_screen">Lock screen</string>
+    <string name="home_and_locker_screen">Home and lock screens</string>
+    <string name="key_theme_loading_progress_dialog_text">Loading Key Theme...</string>
 
     <string name="keyboard_make_facemoji_tip">Tap here to make \n your own Mojis!</string>
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
+
 </resources>

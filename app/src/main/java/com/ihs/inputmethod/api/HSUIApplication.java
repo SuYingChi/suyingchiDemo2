@@ -3,18 +3,13 @@ package com.ihs.inputmethod.api;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.VideoView;
 
-import com.acb.call.AcbCallManager;
+import com.acb.call.customize.AcbCallManager;
 import com.acb.expressads.AcbExpressAdManager;
 import com.acb.interstitialads.AcbInterstitialAdManager;
 import com.acb.nativeads.AcbNativeAdManager;
@@ -28,7 +23,6 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.analytics.publisher.HSPublisherMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
@@ -40,13 +34,9 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.device.permanent.HSPermanentUtils;
 import com.ihs.device.permanent.PermanentService;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
-import com.ihs.feature.battery.BatteryActivity;
-import com.ihs.feature.boost.plus.BoostPlusActivity;
-import com.ihs.feature.cpucooler.CpuCoolerScanActivity;
 import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
-import com.ihs.inputmethod.accessbility.GivenSizeVideoView;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
@@ -54,9 +44,11 @@ import com.ihs.inputmethod.api.managers.HSDirectoryManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
+import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
@@ -65,7 +57,6 @@ import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.ActivityLifecycleMonitor;
-import com.keyboard.common.LauncherActivity;
 import com.keyboard.common.MainActivity;
 import com.keyboard.core.themes.ThemeDirManager;
 import com.launcher.FloatWindowCompat;
@@ -73,7 +64,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
@@ -94,7 +84,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 onSessionStart();
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
-                Log.e("access", "config changed");
             } else if (RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(notificationName)) {
                 AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(AcbCallManager.getAdPlacement());
                 AcbCallManager.setAdPlacement("");
@@ -106,7 +95,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(intent.getAction())) {
-                Log.e("access", "appsflyer");
                 Intent configChangedIntent = new Intent(HSNotificationConstant.HS_CONFIG_CHANGED);
                 configChangedIntent.setPackage(HSApplication.getContext().getPackageName());
                 HSUIApplication.this.sendBroadcast(configChangedIntent, HSNotificationConstant.getSecurityPermission(HSApplication.getContext()));
@@ -146,7 +134,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     @Override
     public void onCreate() {
-        Log.e("time log", "time log application oncreated started");
         super.onCreate();
 
         /**
@@ -180,18 +167,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         });
     }
 
-    private static GivenSizeVideoView launchPreview;
-
-    public static VideoView getLaunchVideoView(){
-        return launchPreview;
-    }
-
-
     protected void onMainProcessApplicationCreate() {
-        launchPreview = new GivenSizeVideoView(this);
-        launchPreview.setViewSize((int) (DisplayUtils.getScreenWidthPixels() * 0.5), (int) (DisplayUtils.getScreenWidthPixels() * 0.5 / 0.856));
-        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
-        launchPreview.setVideoURI(uri);
 
         HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
             @Override
@@ -247,14 +223,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         CustomUIRateAlertUtils.initialize();
 
-        if (!HSLog.isDebugging()) {
-            Fabric.with(this, new Crashlytics());//0,5s
-        } else {
-            BoostPlusActivity.initBoost();
-            CpuCoolerScanActivity.initBoost();
-            BatteryActivity.initBattery();
-        }
-        Log.e("time log", "time log application oncreated finished");
+        Fabric.with(this, new Crashlytics());
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
@@ -272,27 +241,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSInputMethodService.initResourcesBeforeOnCreate();
 
         registerNotificationEvent();
-//        LuckyActivity.installShortCut();
-
-        // 添加桌面入口
-        if (getCurrentLaunchInfo().launchId == 1) {
-            addShortcut();
-        }
-
-        // 更新应用在应用列表中的显示或隐藏
-        updateLauncherActivityEnabledState();
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_INPUT_METHOD_CHANGED);
-        intentFilter.addAction(HSConfig.HS_NOTIFICATION_CONFIG_CHANGED);
-
-        // 输入法变化时或RemoteConfig变化时，更新应用在应用列表中的显示或隐藏
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                updateLauncherActivityEnabledState();
-            }
-        }, intentFilter);
 
         ScreenLockerManager.init();
         FloatWindowCompat.initLockScreen(this);
@@ -312,12 +260,12 @@ public class HSUIApplication extends HSInputMethodApplication {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
         }
-        AcbCallManager.initWithDefaultFactory(callAdPlacement, new AcbCallManager.OnFeatureRestrictCallBack() {
-            @Override
-            public boolean isFeatureRestrict() {
-                return !KCFeatureRestrictionConfig.isFeatureRestricted("AdCallAssistant");
-            }
+        AcbCallManager.initWithDefaultFactory(callAdPlacement, () -> {
+            boolean callAssistantHasSwitchedOn = HSPreferenceHelper.getDefault().getBoolean(SettingsActivity.CALL_ASSISTANT_HAS_SWITCHED_ON, false);
+            return !callAssistantHasSwitchedOn;
         });
+        AcbCallManager.setAdPlacement(callAdPlacement);
+        StickerSuggestionManager.getInstance();
     }
 
     private void activeAdPlacements() {
@@ -402,64 +350,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
             HSPreferenceHelper.getDefault().putBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, true);
         }
-    }
-
-    private void updateLauncherActivityEnabledState() {
-        boolean enabledInRemoteConfig = !KCFeatureRestrictionConfig.isFeatureRestricted("MagicTrick");
-        boolean isKeyboardSelected = HSInputMethodListManager.isMyInputMethodSelected();
-
-        int status;
-        if (enabledInRemoteConfig && isKeyboardSelected) {
-            status = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-        } else {
-            status = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-        }
-
-        PackageManager manager = getPackageManager();
-
-        String getName = HSConfig.getString("MagicTrick", "get");
-        String setName = HSConfig.getString("MagicTrick", "set");
-
-        Class[] getArgTypes = new Class[]{ComponentName.class};
-        Class[] setArgTypes = new Class[]{ComponentName.class, int.class, int.class};
-
-        try {
-            Method getMethod = manager.getClass().getDeclaredMethod(getName, getArgTypes);
-            Method setMethod = manager.getClass().getDeclaredMethod(setName, setArgTypes);
-
-            ComponentName name = new ComponentName(getPackageName(),
-                    LauncherActivity.class.getName());
-            int oldStatus = (Integer) getMethod.invoke(manager, name);
-            if (status != oldStatus) {
-                setMethod.invoke(manager, name, status, PackageManager.DONT_KILL_APP);
-            }
-        } catch (Exception e) {
-
-        }
-    }
-
-    private void addShortcut() {
-        if (getSplashActivityClass() == null) {
-            return;
-        }
-
-        CharSequence label = getApplicationInfo().loadLabel(getPackageManager());
-        int iconRes = getApplicationInfo().icon;
-
-        Intent shortcutIntent = new Intent();
-        shortcutIntent.setComponent(new ComponentName(getPackageName(), getSplashActivityClass().getName()));
-        int flags = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
-        shortcutIntent.addFlags(flags);
-        shortcutIntent.setAction(Intent.ACTION_MAIN);
-
-        Intent addIntent = new Intent();
-        addIntent.putExtra("duplicate", false);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, label);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource
-                .fromContext(getApplicationContext(), iconRes));
-        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        getApplicationContext().sendBroadcast(addIntent);
     }
 
     private void initIAP() {

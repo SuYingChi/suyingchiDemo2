@@ -20,6 +20,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -37,7 +39,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -55,21 +56,21 @@ import com.ihs.inputmethod.accessbility.AccessibilityEventListener;
 import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIApplication;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
+import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.CustomProgressDrawable;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.utils.Constants;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import java.text.MessageFormat;
+
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.view.View.GONE;
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_accessibility_guide_gotit_clicked;
@@ -81,7 +82,7 @@ import static com.ihs.inputmethod.accessbility.AccGALogger.app_auto_setkey_click
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_manual_setkey_clicked;
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_setting_up_page_viewed;
 import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
-import static com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor.PREF_THEME_HOME_SHOWED;
+import static com.ihs.inputmethod.accessbility.KeyboardActivationActivity.PREF_THEME_HOME_SHOWED;
 
 
 public class MainActivity extends HSDeepLinkActivity {
@@ -112,7 +113,10 @@ public class MainActivity extends HSDeepLinkActivity {
     private ImageView img_enter_two;
     private ImageView img_choose_one;
     private ImageView img_choose_two;
+    private TextView textOne;
+    private TextView textTwo;
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver(new Handler());
+    private boolean isLaunchAnimationPlayed;
     private boolean isSettingButtonAnimationPlayed;
 
     private static final int TYPE_MANUAL = 0;
@@ -138,6 +142,53 @@ public class MainActivity extends HSDeepLinkActivity {
     private CurrentUIStyle style;
 
     private Handler handler = new Handler();
+
+    private ImageView ivProgress;
+    private TextView tvProgress;
+    private LinearLayout progressLayout;
+    private boolean hasPlayed = false;
+
+    private static final int AD_LOAD_MAX_WAIT_TIME = HSConfig.optInteger(3000, "Application", "CurrentTheme", "LaunchDelayTime");
+    private static final int NAVIGATION_MAIN_PAGE = 1;
+    private int progress;
+    int delayTime = AD_LOAD_MAX_WAIT_TIME / 100;
+    Handler progressHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case NAVIGATION_MAIN_PAGE:
+                    progress++;
+                    if (progress <= 100) {
+                        ivProgress.getDrawable().setLevel(progress);
+                        tvProgress.setText(MessageFormat.format("{0}%", progress));
+
+                        if (progress == 100) {
+                            removeMessages(msg.what);
+
+                            ivProgress.setVisibility(GONE);
+                            tvProgress.setVisibility(GONE);
+                            img_choose_one.setVisibility(View.VISIBLE);
+                            img_choose_two.setVisibility(View.VISIBLE);
+                            img_enter_one.setVisibility(View.VISIBLE);
+                            img_enter_two.setVisibility(View.VISIBLE);
+                            textOne.setVisibility(View.VISIBLE);
+                            textTwo.setVisibility(View.VISIBLE);
+
+                            // 开始渐变动画
+                            if (isAccessibilityEnable()) {
+                                playAccessibilityButtonShowAnimation();
+                            } else {
+                                playManualButtonShowAnimation();
+                            }
+                        } else {
+                            sendEmptyMessageDelayed(msg.what, delayTime);
+                        }
+                    }
+                    break;
+            }
+        }
+    };
 
     private BroadcastReceiver imeChangeReceiver = new BroadcastReceiver() {
 
@@ -188,14 +239,22 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onCreate(savedInstanceState);
         HSLog.d("MainActivity onCreate.");
         setContentView(R.layout.activity_main);
-        FrameLayout videoviewFrame = (FrameLayout) findViewById(R.id.launch_mp4_view);
-        launchVideoView = HSUIApplication.getLaunchVideoView();
-        videoviewFrame.addView(launchVideoView);
-
         onNewIntent(getIntent());
 
-        TextView textOne = (TextView) findViewById(R.id.text_one);
-        TextView textTwo = (TextView) findViewById(R.id.text_two);
+        ivProgress = (ImageView) findViewById(R.id.progress_bar);
+        tvProgress = (TextView) findViewById(R.id.progress_text);
+        CustomProgressDrawable drawable = new CustomProgressDrawable(1);
+        ivProgress.setImageDrawable(drawable);
+
+        progressLayout = (LinearLayout) findViewById(R.id.loading_layout);
+
+        img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
+        img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
+        img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
+        img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
+
+        textOne = (TextView) findViewById(R.id.text_one);
+        textTwo = (TextView) findViewById(R.id.text_two);
         textOne.setText(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
         textTwo.setText(getString(R.string.toast_select_keyboard, getString(R.string.app_name)));
         ((TextView) (findViewById(R.id.accessibility_button_container).findViewById(R.id.accessibility_text_one))).setText(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
@@ -217,41 +276,35 @@ public class MainActivity extends HSDeepLinkActivity {
         final int screenHeight = size.y;
 
         launchImageView = (ImageView) findViewById(R.id.launch_image_view);
-
+        launchVideoView = (VideoView) findViewById(R.id.launch_mp4_view);
+        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
+        launchVideoView.setVideoURI(uri);
         launchVideoView.setZOrderOnTop(true);
         launchVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 HSLog.e("MainActivity mp4 play error: what = " + what + " extra = " + extra);
                 startThemeHomeActivity();
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
                 return true;
             }
         });
         launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+                    progressLayout.setVisibility(View.VISIBLE);
+                    progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                    hasPlayed = true;
+                }
                 if (isSettingButtonAnimationPlayed) {
                     HSLog.w("setting button already showed.");
                     return;
                 }
-                if (shouldShowThemeHome()) {
+                if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
                     startThemeHomeActivity();
-                } else {
-                    // 开始渐变动画
-                    if (isAccessibilityEnable()) {
-                        playAccessibilityButtonShowAnimation();
-                    } else {
-                        playManualButtonShowAnimation();
-                    }
                 }
             }
         });
-
-        img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
-        img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
-        img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
-        img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
 
         protocolText = (TextView) findViewById(R.id.privacy_policy_text);
         String serviceKeyText = getString(R.string.text_terms_of_service);
@@ -483,7 +536,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
                 ImageView imageCodeProject = new ImageView(getApplicationContext());
                 imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-                final KeyboardActivationProcessor.CustomViewDialog customViewDialog = new KeyboardActivationProcessor.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+                final KeyboardActivationGuideActivity.CustomViewDialog customViewDialog = new KeyboardActivationGuideActivity.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
 
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -541,29 +594,29 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onResume() {
         super.onResume();
         HSLog.d("MainActivity onResume.");
-        if (!isSettingButtonAnimationPlayed) {
+
+        if (!isLaunchAnimationPlayed) {
+            isLaunchAnimationPlayed = true;
+            launchImageView.setVisibility(GONE);
+            launchVideoView.setVisibility(View.VISIBLE);
             launchVideoView.start();
             HSFloatWindowManager.getInstance().initAccessibilityCover();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
-                        HSLog.w("show setting button in abnormal way");
-                        // 开始渐变动画
-                        if (isAccessibilityEnable()) {
-                            playAccessibilityButtonShowAnimation();
-                        } else {
-                            playManualButtonShowAnimation();
+                    if (!isSettingButtonAnimationPlayed) {
+                        if (!hasPlayed) {
+                            progressLayout.setVisibility(View.VISIBLE);
+                            progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
                         }
+                        HSLog.w("show setting button in abnormal way");
                     }
                 }
-            }, 10000);
+            }, 6000);
         } else {
             launchImageView.setVisibility(View.VISIBLE);
             launchVideoView.setVisibility(GONE);
         }
-        HSLog.e("MainActivity mp4 fake start");
-
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                 getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
@@ -633,6 +686,9 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onStop() {
         super.onStop();
         HSLog.d("MainActivity onStop.");
+        launchVideoView.stopPlayback();
+        launchImageView.setVisibility(View.VISIBLE);
+        launchVideoView.setVisibility(GONE);
     }
 
     @Override
@@ -640,11 +696,7 @@ public class MainActivity extends HSDeepLinkActivity {
         super.onDestroy();
         HSLog.d("MainActivity onDestroy.");
         needActiveThemePkName = null;
-
-
-        FrameLayout videoviewFrame = (FrameLayout) findViewById(R.id.launch_mp4_view);
-        videoviewFrame.removeAllViews();
-
+        HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
         try {
             if (settingsContentObserver != null) {
                 getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
@@ -713,13 +765,11 @@ public class MainActivity extends HSDeepLinkActivity {
     private void startThemeHomeActivity() {
         HSLog.d("MainActivity startThemeHomeActivity start.");
         Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-        startThemeHomeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
-
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
             if (setThemeSucceed) {
-                startThemeHomeIntent.putExtra(ThemeHomeActivity.INTENT_KEY_SHOW_TRIAL_KEYBOARD, true);
+                startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
             } else {
                 HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
                 if (keyboardTheme != null) {
@@ -731,6 +781,7 @@ public class MainActivity extends HSDeepLinkActivity {
             needActiveThemePkName = null;
         }
         startActivity(startThemeHomeIntent);
+        overridePendingTransition(0, 0);
         finish();
     }
 
@@ -756,7 +807,6 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
             }
         });
         set.setDuration(500).start();
@@ -786,7 +836,6 @@ public class MainActivity extends HSDeepLinkActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
             }
         });
         set.setDuration(500).start();

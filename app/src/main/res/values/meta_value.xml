@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+    >
     <string name="applovin_sdk_key">m8XPVG9H8ipqX5ViD8eBNktnG5S9uRAdah25zBM6v9wQFQ8TTnewUVglb7vUZ378m9EiLapFlkf_8oSgZ5a2bG</string>
 </resources>

@@ -30,6 +30,7 @@ import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.stickerplus.PlusButton;
 import com.ihs.inputmethod.uimodules.ui.common.BaseTabViewAdapter;
+import com.ihs.inputmethod.uimodules.ui.customize.fragment.KeyboardFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 
 import java.util.ArrayList;
@@ -111,7 +112,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                 @Override
                 public void onClick(View v) {
                     final Bundle bundle = new Bundle();
-                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INIT, ThemeHomeActivity.HOME_VIEWPAGER_STICKER_PAGE);
+                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_MAIN_PAGE_TAB, ThemeHomeActivity.TAB_INDEX_KEYBOARD);
+                    bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INNER_PAGE_TAB, KeyboardFragment.TAB_STICKER);
                     HSInputMethod.hideWindow();
                     plusButton.hideNewTip();
                     plusButton.savefirstKeyboardAppearAndNotClickState(false);

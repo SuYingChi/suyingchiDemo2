@@ -1,8 +1,13 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
+import com.ihs.inputmethod.uimodules.R;
+
+import java.util.ArrayList;
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,10 +24,13 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.MyThemeAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
+import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.ThemeCardItemClickListener, View.OnClickListener {
 
@@ -37,6 +45,8 @@ public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.
 
     private boolean showCustomTheme = false;
     private boolean isDeleteEnable = false;
+
+    private static final int KEYBOARD_ACTIVIATION_FROM_CARD = 10;
 
     @Nullable
     @Override
@@ -194,12 +204,6 @@ public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.
 
     @Override
     public void onCardClick(HSKeyboardTheme keyboardTheme) {
-        HSAnalytics.logEvent("mythemes_preview_clicked", "themeType", keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.CUSTOM ? getString(R.string.theme_card_custom_theme_default_name) : keyboardTheme.mThemeName);
-    }
-
-    @Override
-    public void onMenuApplyClick(HSKeyboardTheme keyboardTheme) {
-        HSAnalytics.logEvent("mythemes_apply_clicked", "themeName", keyboardTheme.mThemeName);
     }
 
     @Override
@@ -220,6 +224,22 @@ public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.
     @Override
     public void onMenuAppliedClick(HSKeyboardTheme keyboardTheme) {
 
+    }
+
+    @Override
+    public void onKeyboardActivationStart() {
+        Intent intent = new Intent(getActivity(), KeyboardActivationGuideActivity.class);
+        intent.putExtra(KeyboardActivationGuideActivity.EXTRA_DISABLE_ACTIVATION_PROMPT, true);
+        startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_CARD);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == KEYBOARD_ACTIVIATION_FROM_CARD) {
+            adapter.finishKeyboardActivation(resultCode == RESULT_OK);
+        }
     }
 
     @Override

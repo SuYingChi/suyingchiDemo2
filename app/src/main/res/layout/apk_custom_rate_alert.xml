@@ -35,7 +35,8 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
-        android:text="@string/custom_rate_alert_button_text" />
+        android:text="@string/custom_rate_alert_button_text"
+        android:textColor="@android:color/white" />
 
     <ImageView
         android:id="@+id/iv_close_image"

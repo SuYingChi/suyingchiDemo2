@@ -3,7 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,7 +37,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     private RecyclerView recyclerView;
     private FontCardAdapter fontCardAdapter;
     private List<FontModel> fontModelList = new ArrayList<>();
-    public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_font);
+    public static final String tabTitle = HSApplication.getContext().getString(R.string.custom_theme_font);
 
     private INotificationObserver observer = new INotificationObserver() {
         @Override
@@ -130,7 +130,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                     public void onDismiss(boolean success) {
                         if (success) {
                             HSFontDownloadManager.getInstance().updateFontModel(fontModel);
-                            HSAnalytics.logEvent("font_download_succeed", fontName);
+                            HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
                         }
                     }
                 });

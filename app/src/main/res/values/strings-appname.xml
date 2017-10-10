@@ -20,7 +20,7 @@
 
 <resources
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+    >
 
     <!--
          Application name for opensource Android keyboard. AOSP(Android Open Source Project) should not be translated.

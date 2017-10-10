@@ -16,11 +16,10 @@ import android.widget.LinearLayout;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSMatrixImageView;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
-import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,6 +41,8 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
     private int keyboardWidth;
     private int keyboardHeight;
     private String oldCropperImagePath;
+
+    private static final int REQUEST_CODE_START_CUSTOM_THEME = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +102,33 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 Bitmap cropperBitmap = takeViewShot(cropperImageView, imageMaskViewLocation[0] - imageViewLocation[0], imageMaskViewLocation[1] - imageViewLocation[1], keyboardWidth, keyboardHeight);
                 //HSKeyboardThemeManager.getCustomThemeData().setCustomizedBitmap(cropperBitmap);
                 String cropperImagePath = KCCustomThemeData.saveCustomizedBackgroundBitmap(cropperBitmap, oldCropperImagePath);
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("CropperImagePath", cropperImagePath);
-                setResult(Activity.RESULT_OK, resultIntent);
-                CustomThemeBackgroundCropperActivity.this.finish();
+
+                if (getIntent().getStringExtra("fromWallpaper") != null) {
+                    Intent intent = new Intent(CustomThemeBackgroundCropperActivity.this, CustomThemeActivity.class);
+                    intent.putExtra("CropperImagePath", cropperImagePath);
+                    intent.putExtra("fromCropper", CustomThemeBackgroundCropperActivity.class.getSimpleName());
+                    startActivityForResult(intent, REQUEST_CODE_START_CUSTOM_THEME);
+                } else {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("CropperImagePath", cropperImagePath);
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    CustomThemeBackgroundCropperActivity.this.finish();
+                }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_START_CUSTOM_THEME) {
+            if (resultCode == RESULT_OK) {
+                Intent intent = new Intent(this, ThemeHomeActivity.class);
+                intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
+                intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS, false);
+                startActivity(intent);
+            }
+        }
     }
 
     @Override

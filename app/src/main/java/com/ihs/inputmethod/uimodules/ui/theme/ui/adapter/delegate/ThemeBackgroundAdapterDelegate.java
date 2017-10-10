@@ -24,6 +24,7 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.decoration.BackgroundItemDecoration;
@@ -219,6 +220,12 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             return new Holder(item);
         }
 
+        private void startCustomThemeActivity(Bundle bundle) {
+            if (activity instanceof ThemeHomeActivity) {
+                ((ThemeHomeActivity) activity).showCustomThemeActivity(bundle);
+            }
+        }
+
         @Override
         public void onBindViewHolder(final Holder holder, final int position) {
             removeNativeAdViewFromHolder(holder);
@@ -235,8 +242,9 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         String customEntry = "store_camera";
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_CAMERA, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                        CustomThemeActivity.startCustomThemeActivity(bundle);
+                        startCustomThemeActivity(bundle);
                         HSAnalytics.logEvent("shortcut_customize_background_clicked", "camera");
+
                     }
                 });
             } else if (position == 1) {
@@ -251,7 +259,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         String customEntry = "store_album";
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_GALLERY, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                        CustomThemeActivity.startCustomThemeActivity(bundle);
+                        startCustomThemeActivity(bundle);
                         HSAnalytics.logEvent("shortcut_customize_background_clicked", "album");
                     }
                 });
@@ -273,7 +281,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundContent.setImageDrawable(customThemeItemBase.getPreview());
                         }
 
-                        if (customThemeItemBase.isNew()) {
+                        if (customThemeItemBase.isNew() || HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)) {
                             Drawable newMarkDrawable = KCElementResourseHelper.getBackgroundNewMarkDrawable();
                             if (newMarkDrawable != null) {
                                 holder.backgroundNewMark.setImageDrawable(newMarkDrawable);
@@ -303,6 +311,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             if (!customThemeItemBase.hasLocalContent()
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.isNewVersionAvailable()) {
+                                holder.backgroundNewMark.setVisibility(GONE);
                                 ApkUtils.showUpdateAlert();
                                 return;
                             }
@@ -326,7 +335,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                         String backgroundItemName = background.getName();
                                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
                                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                                        CustomThemeActivity.startCustomThemeActivity(bundle);
+                                        startCustomThemeActivity(bundle);
                                     }
                                 });
                                 return;
@@ -342,7 +351,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             String backgroundItemName = background.getName();
                             bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
                             bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                            CustomThemeActivity.startCustomThemeActivity(bundle);
+                            startCustomThemeActivity(bundle);
                             HSAnalytics.logEvent("shortcut_customize_background_clicked", background.getName());
                         }
                     });

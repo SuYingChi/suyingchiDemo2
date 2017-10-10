@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/customize_toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/customize_toolbar_elevation"
+        android:paddingLeft="12dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:text="@string/settings"
+            android:lineSpacingExtra="5sp"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
+            android:textColor="@color/primary_text_default_material_dark"
+            android:textSize="14sp"
+            android:textAllCaps="true"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/settings_content"
+        android:layout_below="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+
+</RelativeLayout>

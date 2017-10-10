@@ -3,4 +3,5 @@
     <item name="func_setting_button" type="id" />
     <item name="func_cloth_button" type="id" />
     <item name="func_facemoji_button" type="id" />
+    <item name="glide_tag_id" type="id"/>
 </resources>

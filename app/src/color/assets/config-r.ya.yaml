@@ -1,7 +1,7 @@
 libCommons:
   RemoteConfig:
     PlistFile: "Local.kb"
-    PlistUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/configs/config-colorkeyboard-2.3.8.kb"
+    PlistUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/configs/config-colorkeyboard-2.4.0.kb"
   Analytics:
       FlurryKey: "GTJN395TKWN6T8T6YKC3"
       FacebookID: "910238615719294"
@@ -29,8 +29,8 @@ libCommons:
         AppUrl: "amzn://apps/android?p="
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
   Connection:
-    SigKey: "603_2"
-    HashKey: "m/dN3P!}k$k#fnn[O*0(CQO:A/D_CF{m"
+    SigKey: "603_3"
+    HashKey: "u)};]_4&ydQ4?`|!f?nziKZ/ho_L`on{"
   AppID: "603"
 libFramework:
   Push:
@@ -38,7 +38,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.kb"
-    RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/alerts/colorkeyboard-2.3.8-alerts.kb"
+    RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/colorkeyboard/alerts/colorkeyboard-2.4.0-alerts.kb"
 
 libIAP:
   Verify:
@@ -49,6 +49,5 @@ libIAP:
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
 
-MagicTrick:
-  get: "getComponentEnabledSetting"
-  set: "setComponentEnabledSetting"
+Application:
+  WallpaperAPIURL: "https://service.appcloudbox.net/wallpapers/"

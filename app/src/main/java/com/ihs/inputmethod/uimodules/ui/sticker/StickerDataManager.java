@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -59,30 +60,54 @@ public class StickerDataManager {
         new LoadDataTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private class LoadDataTask extends AsyncTask<Void, Void, Void> {
+    private class LoadDataTask extends AsyncTask<Void, Void, List<StickerGroup>> {
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected List<StickerGroup> doInBackground(Void... params) {
             isReady = false;
-            loadStickers();
-            return null;
+
+            return loadStickers();
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(List<StickerGroup> stickerGroupList) {
+            List<String> newGroupNameList = new ArrayList<>();
+
+            if (stickerGroups.size() > 0) {
+                for (StickerGroup stickerGroup : stickerGroupList) {
+                    if (!stickerGroups.contains(stickerGroup)) {
+                        newGroupNameList.add(stickerGroup.getStickerGroupName());
+                    }
+                }
+            }
+            stickerGroups = stickerGroupList;
+
+            // 如果是第一次加载，则将StickerGroups中前两个位置置为new
+            if (isFirstLoad() && stickerGroups.size() > 1) {
+                Set<String> firstNewStickerSet = new HashSet<>();
+                firstNewStickerSet.add(stickerGroups.get(0).getStickerGroupName());
+                firstNewStickerSet.add(stickerGroups.get(1).getStickerGroupName());
+                saveCurrentNewStickerSet(HSApplication.getContext(), firstNewStickerSet);
+                saveFirstLoadState();
+            }
+
+            // 有新的Sticker
+            if (newGroupNameList.size() > 0) {
+                Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
+                currentNewStickerSet.addAll(newGroupNameList);
+                saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
+                saveShowNewTipState(true);
+            }
+
             isReady = true;
             HSGlobalNotificationCenter.sendNotificationOnMainThread(STICKER_DATA_LOAD_FINISH_NOTIFICATION);
         }
 
     }
-    private synchronized void loadStickers() {
-        List<StickerGroup> oldStickerGroupList = new ArrayList<>();
-        oldStickerGroupList.addAll(stickerGroups);
 
-        Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
-        Set<String> newStickerSet = new HashSet<>();
+    private List<StickerGroup> loadStickers() {
 
-        stickerGroups.clear();
+        List<StickerGroup> stickerGroups = new ArrayList<>();
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
@@ -90,28 +115,9 @@ public class StickerDataManager {
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
             stickerGroups.add(stickerGroup);
-            if (oldStickerGroupList.size() > 0) {
-                if (!oldStickerGroupList.contains(stickerGroup)) {
-                    newStickerSet.add(stickerGroup.getStickerGroupName());
-                }
-            }
         }
 
-        // 如果是第一次加载，则将StickerGroups中前两个位置置为new
-        if (isFirstLoad() && stickerGroups.size() > 1 ) {
-            Set<String> firstNewStickerSet = new HashSet<>();
-            firstNewStickerSet.add(stickerGroups.get(0).getStickerGroupName());
-            firstNewStickerSet.add(stickerGroups.get(1).getStickerGroupName());
-            saveCurrentNewStickerSet(HSApplication.getContext(), firstNewStickerSet);
-            saveFirstLoadState();
-        }
-
-        // 有新的Sticker
-        if (newStickerSet.size() > 0) {
-            currentNewStickerSet.addAll(newStickerSet);
-            saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
-            saveShowNewTipState(true);
-        }
+        return stickerGroups;
     }
 
     private boolean isFirstLoad() {
@@ -148,6 +154,7 @@ public class StickerDataManager {
 
     /**
      * stickerCardAdapter中调用
+     *
      * @param stickerGroup
      * @return
      */
@@ -196,4 +203,15 @@ public class StickerDataManager {
         return false;
     }
 
+    public Sticker getSticker(String stickerName) {
+        for (StickerGroup stickerGroup : getStickerGroupList()) {
+            if (stickerGroup.getStickerGroupName().equals(StickerUtils.getGroupNameByStickerName(stickerName))) {
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
+                return stickerGroup.getSticker(stickerName);
+            }
+        }
+        return null;
+    }
 }

@@ -1,7 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme;
 
 import android.animation.ObjectAnimator;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -30,9 +30,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.activity.ChargingFullScreenAlertDialogActivity;
-import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -44,10 +41,8 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
@@ -56,8 +51,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.button.Butt
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.font.FontFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.sound.SoundFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView;
-import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
-import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -80,15 +73,10 @@ import static com.ihs.app.framework.HSApplication.getContext;
 
 
 public class CustomThemeActivity extends HSAppCompatActivity implements INotificationObserver {
-    public static final String NOTIFICATION_SHOW_TRIAL_KEYBOARD = "hs.inputmethod.uimodules.ui.theme.ui.SHOW_TRIAL_KEYBOARD"; //显示试用键盘
     public static final String BUNDLE_KEY_BACKGROUND_NAME = "BUNDLE_KEY_BACKGROUND_NAME";
     public static final String BUNDLE_KEY_BACKGROUND_USE_CAMERA = "BUNDLE_KEY_BACKGROUND_USE_CAMERA";
     public static final String BUNDLE_KEY_BACKGROUND_USE_GALLERY = "BUNDLE_KEY_BACKGROUND_USE_GALLERY";
     public static final String BUNDLE_KEY_CUSTOMIZE_ENTRY = "customize_entry";
-
-
-
-    public static final int keyboardActivationFromCustom = 15;
 
     private static final int FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD = 1;
     private static List<Class<? extends BaseThemeFragment>> fragmentClasses = new ArrayList<>();
@@ -134,14 +122,10 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         }
     };
 
-    public static void startCustomThemeActivity(final Bundle bundle) {
-        if (!ThemeDirManager.moveCustomAssetsToFileIfNecessary()) {
-            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.theme_create_custom_theme_failed), Toast.LENGTH_SHORT).show();
-            return;
-        }
+    public static void startCustomThemeActivity(Context context, final Bundle bundle) {
         HSInputMethod.hideWindow();
         String currentAppName = HSInputMethod.getCurrentHostAppPackageName();
-        String myPkName = HSApplication.getContext().getPackageName();
+        String myPkName = context.getPackageName();
         int delay = 0;
         if (myPkName != null && myPkName.equals(currentAppName)) { //延迟100ms，让试用键盘可以有足够时间消失掉
             delay = 100;
@@ -150,19 +134,29 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             @Override
             public void run() {
                 final Intent intent = new Intent();
-                intent.setClass(HSApplication.getContext(), com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.class);
+                intent.setClass(context, com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.class);
                 if (bundle != null) {
                     intent.putExtras(bundle);
                 }
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                HSApplication.getContext().startActivity(intent);
+                context.startActivity(intent);
             }
         }, delay);
+    }
+
+    public static void startCustomThemeActivity(final Bundle bundle) {
+        startCustomThemeActivity(HSApplication.getContext(), bundle);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!ThemeDirManager.moveCustomAssetsToFileIfNecessary()) {
+            Toast.makeText(this, getString(R.string.theme_create_custom_theme_failed), Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         getWindow().setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         setContentView(R.layout.activity_custom_theme);
         customThemeData = KCCustomThemeManager.getInstance().newCustomThemeData();
@@ -250,7 +244,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
         shouldUseCamera = intent.getBooleanExtra(BUNDLE_KEY_BACKGROUND_USE_CAMERA, false);
         shouldUseGallery = intent.getBooleanExtra(BUNDLE_KEY_BACKGROUND_USE_GALLERY, false);
-
 
         String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
         if ("keyboard_create".equals(customEntry)) {
@@ -513,7 +506,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
     private void onNewThemeCreated() {
         if (!showInterstitialAdsAfterSaveTheme()) {
-            showTrialKeyboard();
+            finishSuccess();
         }
     }
 
@@ -527,21 +520,18 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 new KCInterstitialAd.OnAdCloseListener() {
                     @Override
                     public void onAdClose() {
-                        showTrialKeyboard();
+                        finishSuccess();
                     }
                 }
         );
     }
 
-    private void showTrialKeyboard() {
-        setResult(RESULT_OK);
-        HSBundle bundle = new HSBundle();
-        bundle.putString(TrialKeyboardDialog.BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY, ThemeHomeActivity.class.getSimpleName());
-        bundle.putInt(KeyboardActivationProcessor.BUNDLE_ACTIVATION_CODE, keyboardActivationFromCustom);
-        HSGlobalNotificationCenter.sendNotification(CustomThemeActivity.NOTIFICATION_SHOW_TRIAL_KEYBOARD, bundle);
-        if (!PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
-            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();
+    private void finishSuccess() {
+        if (!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("CUSTOM_THEME_SAVE", false)) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("CUSTOM_THEME_SAVE", true).apply();
         }
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
@@ -568,6 +558,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         if (initThemeResource()) {
             initView();
             showFragment(currentPageIndex);
+            if (getIntent().getStringExtra("fromCropper") != null) {
+                if (currentFragment instanceof BackgroundFragment) {
+                    ((BackgroundFragment) currentFragment).setKeyboardTheme(getIntent());
+                }
+            }
         } else {
             HSToastUtils.toastCenterLong(getResources().getString(R.string.theme_create_custom_theme_failed));
             finish();
@@ -637,16 +632,18 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 HSKeyboardThemeManager.setPreviewCustomTheme(false);
                 HSLog.e("custome ximu +" + name);
                 HSKeyboardThemeManager.setKeyboardTheme(name);
+                setResult(RESULT_OK);
                 onNewThemeCreated();
 
             } else {
                 setResult(RESULT_CANCELED);
                 HSLog.e("generate custom theme failed.");
+                finish();
             }
+
             if (savingDialog.isShowing() && !isFinishing()) {
                 savingDialog.dismiss();
             }
-            finish();
         }
     }
 }

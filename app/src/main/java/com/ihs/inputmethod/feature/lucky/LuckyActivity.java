@@ -131,28 +131,6 @@ public class LuckyActivity extends HSAppCompatActivity
 
     private ViewState mViewState = ViewState.GAME;
 
-
-    public static void installShortCut() {
-        if (Build.VERSION.SDK_INT < JELLY_BEAN) {
-            return;
-        }
-
-        if (!HSPreferenceHelper.getDefault().contains(PREF_KEY_LUCKY_CREATED)) {
-            HSPreferenceHelper.getDefault().putBoolean(PREF_KEY_LUCKY_CREATED, true);
-        } else {
-            return;
-        }
-
-        Intent shortcutIntent = new Intent(HSApplication.getContext(), LuckyActivity.class);
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        Intent addIntent = new Intent();
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Lucky");
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(HSApplication.getContext(), R.drawable.ic_lucky));
-        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        HSApplication.getContext().sendBroadcast(addIntent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

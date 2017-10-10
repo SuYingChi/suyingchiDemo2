@@ -1,8 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.common.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +11,11 @@ import java.util.Arrays;
  * Created by guonan.lv on 17/8/10.
  */
 
-public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
+public class TabFragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+    public void setFragmentClasses(ArrayList<Class> fragmentClasses) {
+        this.fragmentClasses = fragmentClasses;
+    }
 
     private ArrayList<Class> fragmentClasses;
     private String[] tabTitle;
@@ -41,6 +45,8 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
         } catch (InstantiationException e) {
             e.printStackTrace();
             return null;
+        } finally {
+
         }
     }
 
@@ -51,7 +57,7 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        return POSITION_UNCHANGED;
+        return POSITION_NONE;
     }
 
     @Override

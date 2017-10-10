@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -40,7 +41,7 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
-import com.ihs.keyboardutils.utils.KCAnalyticUtil;
+import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
@@ -149,7 +150,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     }
 
     public boolean startFunctionBarAdAnimation() {
-        KCAnalyticUtil.logEvent("FunctionBarGiftAd_show");
+        HSAnalytics.logEvent("FunctionBarGiftAd_show");
         if (isAdAnimating || imageView.getVisibility() == View.VISIBLE) {
             return false;
         }
@@ -233,10 +234,10 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         if (onFunctionBarClickListener != null) {
             onFunctionBarClickListener.onFunctionBarItemClick(view);
         }
-//        if (view == imageView) {
-//            KCAnalyticUtil.logEvent("FunctionBarGiftAd_click");
-//            GiftInterstitialHelper.showInterstitialGiftAd(getResources().getString(R.string.ad_placement_gift_ad));
-//        }
+        if (view == imageView) {
+            HSAnalytics.logEvent("FunctionBarGiftAd_click");
+            GiftInterstitialHelper.showInterstitialGiftAd(getResources().getString(R.string.ad_placement_gift_ad));
+        }
     }
 
     public void setFunctionEnable(boolean enabled) {

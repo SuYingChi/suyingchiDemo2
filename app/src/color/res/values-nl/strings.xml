@@ -4,10 +4,9 @@
     <string name="feedback_email">private.keyboardarts@gmail.com</string>
     <string name="fb_app_id">910238615719294</string>
 
-    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
-        With accessibility authorization, you'll get the best typing experience on different apps!
-        
-        Note: You may receive a system reminder about authorizing, RainbowKey will NEVER collect ANY of your information."</string>
+    <string name="accessibility_service_description">Zet de schakelaar rechtsboven \'AAN\'. ↗️⊙.⊙↗️
+Door machtiging voor toegang te verlenen, krijg je de beste ervaring met typen in verschillende apps.
+Opmerking: mogelijk ontvang je een systeemwaarschuwing over de machtiging. RainbowKey zal NOOIT persoonlijke gegevens over je verzamelen.</string>
     <string name="theme_share_text_content">Mijn aangepaste toetsenbord gemaakt met #%1$s http://rainbowkey.com</string>
     <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free: http://rainbowkey.com</string>
     <string name="settings_button_tell_a_friend_content">Hé, je moet echt de app %1$s keyboard proberen! Je kunt je toetsenbord aanpassen met je eigen plaatjes! En de ⒻⓄⓃⓉⓈ en emoticons zijn geweldig. Download #%2$s gratis: http://rainbowkey.com</string>

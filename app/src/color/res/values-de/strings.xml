@@ -4,10 +4,10 @@
     <string name="feedback_email">private.keyboardarts@gmail.com</string>
     <string name="fb_app_id">910238615719294</string>
 
-    <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
-        With accessibility authorization, you'll get the best typing experience on different apps!
-        
-        Note: You may receive a system reminder about authorizing, RainbowKey will NEVER collect ANY of your information."</string>
+    <string name="accessibility_service_description">Schalter oben rechts ‚EINSCHALTEN‘. ↗️⊙.⊙↗️
+Profitieren Sie vom besten Eingabeerlebnis in verschiedenen Apps, wenn die Eingabehilfe aktiviert wurde!
+Hinweis: Sie erhalten ggf. eine Systemmitteilung über die Autorisierung. RainbowKey wird NIEMALS Informationen über Sie erfassen.
+</string>
     <string name="theme_share_text_content">Meine personalisierte Tastatur, gemacht mit #%1$s: http://rainbowkey.com</string>
     <string name="theme_share_text_content_for_custom_theme">Passe deine Tastatur mit deinen eigenen Lieblingsbildern an! Downloade #%1$s gratis: http://rainbowkey.com</string>
     <string name="settings_button_tell_a_friend_content">Hey, Du musst die Tastatur-App %1$s ausprobieren. Du kannst deine Tastatur mit deinen eigenen Bildern ausstatten! Ausserdem sind die Schriftarten und Emojis der Wahnsinn! Lade #%2$s gratis herunter: http://rainbowkey.com</string>

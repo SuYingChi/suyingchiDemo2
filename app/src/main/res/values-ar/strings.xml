@@ -1,297 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <!--base-->
-    <string name="settings">الإعدادات</string>
-    <string name="enabled">Enabled</string>
-    <string name="enable">OK</string>
-    <string name="disabled">حذف</string>
-    <string name="language">العنصر غير متاح</string>
-    <string name="languages">اللغات</string>
-    <string name="next">التالي</string>
-    <string name="back">السابق</string>
-    <string name="cancel">إلغاء</string>
-    <string name="delete">حذف</string>
-    <string name="save">حفظ</string>
-    <string name="saving">جارٍ الحفظ&#8230;</string>
-    <string name="allow">السماح</string>
-    <string name="done">تم</string>
-    <string name="locked">مقفل</string>
-    <string name="got_it">فهمت</string>
-    <string name="filter">تصفية</string>
-    <string name="use">استخدام</string>
-    <string name="unknown">غير معروف</string>
+    <resources xmlns:tools="http://schemas.android.com/tools">
+        <!--base-->
+        <string name="settings">الإعدادات</string>
+        <string name="enabled">مفعّل</string>
+        <string name="disabled">حذف</string>
+        <string name="language">العنصر غير متاح</string>
+        <string name="languages">اللغات</string>
+        <string name="next">التالي</string>
+        <string name="back">السابق</string>
+        <string name="cancel">إلغاء</string>
+        <string name="delete">حذف</string>
+        <string name="save">حفظ</string>
+        <string name="saving">جارٍ الحفظ</string>
+        <string name="allow">السماح</string>
+        <string name="done">تم</string>
+        <string name="got_it">فهمت</string>
+        <string name="filter">تصفية</string>
+        <string name="use">استخدام</string>
+        <string name="customize_wallpapers_title">الخلفيات</string>
+        <string name="may_contains_ads"> قد يحتوي على الإعلانات</string>
+        <string name="online_wallpaper_set_btn">تعيين كخلفية</string>
+        <string name="online_wallpaper_loading">جارٍ تحميل الخلفية عالية الدقة، يرجى الانتظار.</string>
 
-    <string name="alert_find_keyboard_and_switch_on">تفعيل %1$s</string>
-
-    <!--main-->
-    <string name="alert_attention_messenger">تأخذ لوحة المفاتيح %1$s خصوصية المستخدمين على محمل الجد. لن نقوم أبداً بجمع أي بيانات مثل كلمات السر أو أرقام بطاقات الائتمان.</string>
-    <string name="toast_enable_keyboard">تفعيل %1$s</string>
-    <string name="toast_select_keyboard">اخت %1$s</string>
-    <string name="keyboard_guide_privacy_policy">بتثبيت هذا التطبيق، تقر بأنك توافق على %1$s\nو %2$s</string>
-    <string name="text_terms_of_service">شروط الخدمة</string>
-    <string name="text_privacy_policy">سياسة الخصوصية</string>
-
-    <!--dialog-->
-    <string name="dialog_title_select_keyboard_apply_rain">"تفعيل  %1$s"</string>
-    <string name="dialog_msg_select_keyboard_apply_rain">عليك تفعيل لوحة مفاتيح RainbowKey لاستخدام هذا التصميم.</string>
-    <string name="dialog_confirm_select_keyboard_apply_rain">تفعيل</string>
-
-    <string name="dialog_title_enable_keyboard_home_rain">"تفعيل  %1$s"</string>
-    <string name="dialog_msg_enable_keyboard_home_rain">يوفر لك RainbowKey عدة تصاميم لوحة مفاتيح مخصصة وإيموجي لطيفة.</string>
-
-    <!--language-->
-    <string name="add">إضافة</string>
-    <string name="key_layout_dialog_title">تخطيط ذو 26 زراً</string>
-    <string name="current_languages">اللغات الحالية</string>
-    <string name="available_languages">اللغات المتاحة</string>
-    <string name="switch_language_tip">للتبديل بين اللغات من لوحة المفاتيح، اضغط مطولًا على مفتاح المسافة.</string>
-
-    <!--lib-->
-    <string name="choose_language">اختر اللغة</string>
-    <string name="more_language">إضافة لغة</string>
-
-    <!--settings-->
-    <string name="language_dict">اللغات</string>
-
-    <string name="setting_preference_title">التفضيلات</string>
-    <string name="setting_auto_correction">التصحيح التلقائي</string>
-    <string name="setting_auto_capitalization">التحول التلقائي للأحرف الإنجليزية الكبيرة</string>
-    <string name="setting_word_prediction">التوقع</string>
-    <string name="setting_emoji_prediction">توقع Emoji</string>
-    <string name="setting_swipe_input">سحب</string>
-    <string name="setting_double_space_period">"." Shortcut</string>
-    <string name="setting_double_space_period_summary">سيؤدي الضغط مرتين على شريط المسافات إلى إدخال نقطة تليها مسافة.</string>
-    <string name="setting_sound_on_keypress">صوت عند ضغط الأزرار</string>
-    <string name="setting_vibrate_on_keypress">اهتزاز عند ضغط الأزرار</string>
-
-    <!-- settings more page -->
-    <string name="setting_key_more" >setting_key_more</string>
-    <string name="boost_noti_setting_desc" >Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
-    <string name="boost_noti_setting_title" >Phone Boost</string>
-    <string name="setting_key_call_assistant">setting_key_call_assistant</string>
-    <string name="setting_call_assistant_title">Screen Flash for Calls</string>
-    <string name="locker_switcher">locker_screen_enabled</string>
-    <string name="enable_locker_detail">Displaying your favorite themes on lock screen. Contains sponsored contents.</string>
-    <string name="screen_locker_enable_alert_toast">Screen Locker Enabled</string>
-
-    <!--new settings panel-->
-    <string name="setting_item_themes">النسق</string>
-    <string name="setting_item_my_theme">إنشاء تصميم</string>
-    <string name="setting_item_fonts">Fonts</string>
-    <string name="setting_item_correction">@string/setting_auto_correction</string>
-    <string name="setting_item_sounds">"Sounds"</string>
-    <string name="setting_item_capitalization">@string/setting_auto_capitalization</string>
-    <string name="setting_item_word_prediction">@string/setting_word_prediction</string>
-    <string name="setting_item_swipe">سحب</string>
-    <string name="setting_item_add_languages">إضافة لغة</string>
-    <string name="setting_item_more_settings">المزيد من الإعدادات</string>
-
-    <!--settings panel-->
-    <string name="settings_button_sound">@string/setting_item_sounds</string>
-    <string name="settings_button_tell_a_friend">أبلغ صديق</string>
-    <string name="settings_button_tell_a_friend_tip">مشاركة رسالتك الآن</string>
-    <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
-    <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
-    <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
-    <string name="settings_button_swipe">@string/setting_item_swipe</string>
-    <string name="settings_button_add_language">@string/setting_item_add_languages</string>
-    <string name="settings_button_more_settings">@string/setting_item_more_settings</string>
-    <string name="settings_button_fonts">@string/setting_item_fonts</string>
-
-    <!-- gif panel -->
-    <string name="result_no">تعذر العثور على أي صور GIF أو ملصقات.</string>
-    <string name="result_no_recent">لا توجد مدخلات حديثة.</string>
-    <string name="result_no_suggestion">لا توجد صور GIF أو ملصقات مقترحة.</string>
-    <string name="result_no_favorites">لا توجد مفضلات.</string>
-    <string name="result_no_data_on_fail">يرجى التحقق من اتصالك وإعادة المحاولة.</string>
-    <string name="result_no_data_on_complete">تعذر العثور على أي صور GIF أو ملصقات.</string>
-
-    <!--gif strip-->
-    <string name="emoji_search_title">اختر الإيموجي للبحث</string>
-    <string name="emoji_search_hint">ابحث عن صور GIF بالنص أو بالإيموجي</string>
-
-    <!--theme panel-->
-    <string name="customized_themes"> مفاتيح مخصصة</string>
-    <string name="default_themes">%1$s تصاميم </string>
-    <string name="custom_theme_create">إنشاء</string>
-    <string name="theme_more">المزيد</string>
-
-    <!--theme home-->
-    <string name="theme_store_background_title">إنشاء نسقي الخاصة</string>
-    <string name="theme_store_theme_title">%1$s تصاميم </string>
-    <string name="theme_store_more">المزيد</string>
-    <string name="my_theme_customized_theme_title"> مفاتيح مخصصة</string>
-    <string name="my_theme_downloaded_theme_title">تم التنزيل</string>
-    <string name="theme_detail_recommend_title">قد يعجبك</string>
-    <string name="theme_card_custom_theme_default_name">تصميمي</string>
-    <string name="theme_detail_common_title_name">%1$s متجر</string>
-    <string name="theme_detail_custom_theme_title_name"> مفاتيح مخصصة</string>
-    <string name="theme_trial_keyboard_edit_text_hint">Try typing here now&#8230;</string>
-
-    <string name="dialog_app_usage_tips">For better typing experience across different apps, we recommend you to turn on apps with usage access.</string>
-    <string name="dialog_agree">@string/allow</string>
-    <string name="dialog_disagree">@string/cancel</string>
-    <string name="dialog_app_usage_title">Allow Apps with Usage Access</string>
-
-    <!--theme home nav-->
-    <string name="theme_nav_theme_store">%1$s متجر </string>
-    <string name="theme_nav_my_themes">تصاميمي</string>
-    <string name="theme_app_locker">App Locker</string>
-    <string name="theme_nav_languages">اللغات</string>
-    <string name="theme_nav_settings">الإعدادات</string>
-    <string name="theme_nav_update">تحديث</string>
-    <string name="theme_nav_no_ads">إزالة الإعلانات</string>
-
-    <!--theme card-->
-    <string name="theme_card_menu_download">تنزيل</string>
-    <string name="theme_card_menu_downloading">جارٍ التنزيل</string>
-    <string name="theme_card_downloading_tip">جارٍ التنزيل...</string>
-    <string name="theme_card_menu_share">مشاركة</string>
-    <string name="theme_card_set_locker_bg">Set As Lockscreen</string>
-    <string name="theme_card_menu_apply">تطبيق</string>
-    <string name="theme_card_menu_applied">مطبّق</string>
-    <string name="theme_card_menu_delete">حذف</string>
-
-    <!--custom theme-->
-    <string name="custom_theme_background">السابق</string>
-    <string name="custom_theme_font">Font</string>
-    <string name="custom_theme_sound">اختر تأثير الضغطة</string>
-    <string name="custom_theme_effect">Tap Effect</string>
-
-    <string name="custom_theme_backgrounds">السابق</string>
-    <string name="custom_theme_fonts">fonts</string>
-    <string name="custom_theme_sounds">اختر تأثير الضغطة</string>
-    <string name="custom_theme_effects">tap effects</string>
-
-    <string name="custom_theme_title">إنشاء لوحة مفاتيح</string>
-    <string name="custom_theme_title_background">اختر خلفية</string>
-    <string name="custom_theme_title_button_shape">اختر شكل الزر</string>
-    <string name="custom_theme_title_button_style">اختر نمط الزر</string>
-    <string name="custom_theme_title_font">اختر الخط</string>
-    <string name="custom_theme_title_font_color">اختر لون الخط</string>
-    <string name="custom_theme_title_sound">اختر صوت النقرة</string>
-    <string name="custom_theme_title_effect">اختر تأثير الضغطة</string>
-    <string name="custom_theme_sound_tip">لاستخدام التأثير الصوتي للمفاتيح، يرجى إلغاء تفعيل نمط كتم الصوت أو تفعيل الصوت عند ضغط الأزرار في قسم الإعدادات.</string>
-
-    <!--IAP Tip Info -->
-    <string name="purchase_error_message">فشل الشراء. يرجى إعادة المحاولة لاحقاً.</string>
-    <string name="purchase_google_play_unavailable">عمليات شراء Google Play غير متاحة على جهازك.</string>
-    <string name="purchase_unavailable">عملية الشراء غير متاحة.</string>
-
-    <string name="current_theme_price">Unlock for %1$s</string>
-    <string name="all_theme_price">All %1$s for %2$s</string>
-    <string name="unlock_theme_element_via_watch_video">Watch Video to Unlock</string>
-
-    <string name="free_slots_used_up">Free Slots Used Up</string>
-    <string name="free_slots_tip">You can create a maximum of %1$d free themes. Unlock unlimited slots to create more themes.</string>
-    <string name="free_slots_price">Unlimited slots for %1$s</string>
-    <string name="free_slots_via_watch_video">Watch Video to Unlock One Slot</string>
-
-    <string name="purchase_success">تمت عملية الشراء بنجاح.</string>
-    <string name="purchase_error">ERROR:</string>
-    <string name="purchase_error_bill">BILLING UNAVAILABLE</string>
-    <string name="purchase_error_item">ITEM UNAVAILABLE</string>
-    <string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
-
-    <!-- Theme new tip -->
-    <string name="new_background_tip">خلفية جديدة</string>
-    <string name="new_font_tip">خط جديد</string>
-    <string name="new_tap_effect_tip">تأثير ضغط جديد</string>
-    <string name="new_click_sound_tip">صوت ضغط جديد</string>
-    <string name="new_theme_tip">تتوفر تصاميم جديدة</string>
-
-    <!--apk update-->
-    <string name="apk_update_to_date_tip">تطبيقك حديث</string>
-    <string name="apk_update_alert_title">تنزيل آخر إصدار</string>
-    <string name="apk_update_alert_negative_btn">لاحقًا</string>
-    <string name="apk_update_alert_positive_btn">تحديث</string>
-    <string name="apk_update_downloading">Update downloading</string>
-    <string name="apk_update_downloading_notification_title">جارٍ التنزيل</string>
-
-
-    <string name="sd_card_unavailable_tip">بطاقة SD غير متاحة!</string>
-
-    <string name="theme_create_custom_theme_failed">قم بتفعيل الشحن الذكي لتجنب فرط الشحن بفعالية. يحتوي على إعلانات.</string>
-
-
-    <string name="uninstall_complete">تم إلغاء التثبيت</string>
-    <string name="app_uninstalled_name">تم إلغاء تثبيت %1$s</string>
-    <string name="app_free_storage">لديك الآن %1$s مساحة تخزين إضافية</string>
-    <string name="app_recommended">Recommended for you:</string>
-
-    <string name="key_uninstall">تم إلغاء التثبيت</string>
-    <string name="home_create_keyboard">إنشاء نسقي الخاصة</string>
-
-    <string name="charging_alert_title">الشحن الذكي</string>
-    <string name="charging_alert_message">قم بتفعيل الشحن الذكي لتجنب فرط الشحن بفعالية. يحتوي على إعلانات.</string>
-  
-    <string name="enable_charging_detail">فعّل الشحن الذكي لتحسين أمثلية البطارية. يشمل محتوى مدعوم.</string>
-
-    <string name="locker_alert_title">Screen Locker</string>
-    <string name="locker_alert_message">Add your favorite themes on lockscreen. May contain sponsored contents.</string>
-
-    <string name="call_assistant_alert_title">Animated Themes for Calls</string>
-    <string name="call_assistant_alert_message">Add animated themes on incoming call screens. May contain sponsored contents.</string>
-
-    <string name="multi_function_alert_title">Screen Locker / Caller Screen</string>
-    <string name="multi_function_alert_message">Add stunning themes on lockscreen and incoming call screens. May contain sponsored contents.</string>
-
-    <!--Accessibility-->
-    <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
-    <string name="tv_set_up_manually">SET UP MANUALLY</string>
-    <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
-    <string name="alter_enable_access_title">Enable %1$s</string>
-    <string name="alter_enable_access_content">To set up keyboard, please find and enable %1$s.</string>
-    <string name="alter_enable_access_confirm">فهمت</string>
-    <string name="alert_enable_access_warn_content">Without Accessibility permission, you can still enable %1$s manually.</string>
-    <string name="alert_enable_access_warn_confirm">SET UP MANUALLY</string>
-    <string name="alert_enable_access_warn_title">Enable Keyboard Manually</string>
-    <string name="access_set_up_success">Set up Successfully!</string>
-    <string name="access_set_up_failed">Failed to Set up</string>
-    <string name="dialog_access_setup_manual">SET UP MANUALLY</string>
-    <string name="retry">RETRY</string>
-    <string name="dialog_set_up_manual_message">Please try again or set up keyboard manually.</string>
-    <!--Accessibility end-->
-
-    <!-- Product Master's config -->
-    <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
-
-
-    <string name="lucky_game_award_no_network_description">No network connection!</string>
-    <string name="lucky_game_award_chances_receive_btn">ACCEPT</string>
-    <string name="lucky_game_award_theme_action">تنزيل</string>
-    <string name="lucky_game_chance_restore_timer">More grabs in %1$s</string>
-    <string name="lucky_game_award_wallpaper_description">Wonderful Wallpaper!</string>
-    <string name="lucky_game_award_wallpaper_action">SET AS WALLPAPER</string>
-    <string name="lucky_game_award_chances_description">Congratulations! +3 grabs!</string>
-    <string name="lucky_game_award_theme_description">Found a new theme!</string>
-    <string name="lucky_game_chance_counter">Grabs: %1$s</string>
-    <string name="lucky_game_award_boom_description">"GRABS: "</string>
-    <string name="lucky_game_award_ad_related_title">You’ve won a prize!</string>
-    <string name="launcher_widget_lucky_title">Lucky</string>
-    <string name="lucky_game_award_empty_action">TRY AGAIN</string>
-    <string name="no_network_connection">No network connection!</string>
-
-    <!--guide-->
-    <string name="guide_open_camera">Slide to open camera quickly</string>
-    <string name="guide_open_control_centre">Slide to open Control Centre</string>
-
-	<!-- sticker download documents-->
-	<string name="sticker_download_button">تنزيل</string>
-	<string name="sticker_downloading_label">جارٍ التنزيل</string>
-	<string name="sticker_downloading_successful">Download Successfully</string>
-	<string name="sticker_downloading_guide">Download for free now!</string>
-    <string name="sticker_share_toast">The app does not support stickers.</string>
-    <string name="sticker_send_failed">Sticker send failed, please try again.</string>
-    <string name="unzip_sticker_group_failed">Unzip stickers failed, please download again!</string>
-    <string name="foreground_download_failed">Download failed</string>
-
-    <string name="interstitial_ad_title_after_save_theme">Saved successfully</string>
-    <string name="interstitial_ad_subtitle_after_save_theme">--------------- قد يعجبك ---------------</string>
-
-    <string name="interstitial_ad_title_after_try_keyboard">Applied successfully</string>
-    <string name="interstitial_ad_subtitle_after_try_keyboard">--------------- قد يعجبك ---------------</string>
-
-    <string name="interstitial_ad_title_home_gift_button"> </string>
-    <string name="interstitial_ad_subtitle_home_gift_button">--------------- قد يعجبك ---------------</string>
+        <string name="alert_find_keyboard_and_switch_on">تفعيل %1$s</string>
+        
+        <!--main-->
+        <string name="alert_attention_messenger">تأخذ لوحة المفاتيح %1$s خصوصية المستخدمين على محمل الجد. لن نقوم أبداً بجمع أي بيانات مثل كلمات السر أو أرقام بطاقات الائتمان.</string>
+        <string name="toast_enable_keyboard">تفعيل %1$s</string>
+        <string name="toast_select_keyboard">اختر %1$s</string>
+        <string name="keyboard_guide_privacy_policy">بتثبيت هذا التطبيق، تقر بأنك توافق على %1$snو %2$s</string>
+        <string name="text_terms_of_service">شروط الخدمة</string>
+        <string name="text_privacy_policy">سياسة الخصوصية</string>
+        
+        <!--dialog-->
+        <string name="dialog_title_select_keyboard_apply_rain">تفعيل %1$s</string>
+        <string name="dialog_msg_select_keyboard_apply_rain">عليك تفعيل لوحة مفاتيح %1$s لاستخدام هذا التصميم.</string>
+        <string name="dialog_confirm_select_keyboard_apply_rain">تفعيل</string>
+        
+        <string name="dialog_title_enable_keyboard_home_rain">تفعيل %1$s</string>
+        <string name="dialog_msg_enable_keyboard_home_rain">يوفر لك %1$s عدة تصاميم لوحة مفاتيح مخصصة وإيموجي لطيفة.</string>
+        
+        <!--language-->
+        <string name="add">إضافة</string>
+        <string name="key_layout_dialog_title">تخطيط ذو 26 زراً</string>
+        <string name="current_languages">اللغات الحالية</string>
+        <string name="available_languages">اللغات المتاحة</string>
+        <string name="switch_language_tip">للتبديل بين اللغات من لوحة المفاتيح، اضغط مطولًا على مفتاح المسافة.</string>
+        
+        <!--lib-->
+        <string name="choose_language">اختر اللغة</string>
+        <string name="more_language">إضافة لغة</string>
+        
+        <!--settings-->
+        <string name="language_dict">اللغات</string>
+        
+        <string name="setting_preference_title">التفضيلات</string>
+        <string name="setting_auto_correction">التصحيح التلقائي</string>
+        <string name="setting_auto_capitalization">التحول التلقائي للأحرف الإنجليزية الكبيرة</string>
+        <string name="setting_word_prediction">التوقع</string>
+        <string name="setting_emoji_prediction">توقع Emoji</string>
+        <string name="setting_swipe_input">سحب</string>
+        <string name="setting_double_space_period_summary">سيؤدي الضغط مرتين على شريط المسافات إلى إدخال نقطة تليها مسافة.</string>
+        <string name="setting_double_space_period">\".\" اختصار</string>
+        <string name="setting_sound_on_keypress">صوت عند ضغط الأزرار</string>
+        <string name="setting_vibrate_on_keypress">اهتزاز عند ضغط الأزرار</string>
+        
+        <!-- settings more page -->
+        <string name="boost_noti_setting_desc">حرر مساحة التخزين والذاكرة لتحسين سرعة وأداء هاتفك.
+يتضمن محتوى مدعوم.</string>
+        <string name="boost_noti_setting_title">تسريع الهاتف</string>
+        <string name="setting_call_assistant_title">شاشة تتوهج عن استلام المكالمات</string>
+        <string name="enable_locker_detail">اعرض تصاميمك المفضلة على شاشة القفل. يتضمن محتوى مدعوم.</string>
+        <string name="screen_locker_enable_alert_toast">قافل الشاشة مفعّل</string>
+        
+        <!--new settings panel-->
+        <string name="setting_item_themes">النسق</string>
+        <string name="setting_item_my_theme">إنشاء تصميم</string>
+        <string name="setting_item_fonts">الخطوط</string>
+        
+        <string name="setting_item_sounds">اختر تأثير الضغطة</string>
+        <string name="setting_item_swipe">سحب</string>
+        <string name="setting_item_add_languages">إضافة لغة</string>
+        <string name="setting_item_more_settings">المزيد من الإعدادات</string>
+        
+        <!--settings panel-->
+        <string name="settings_button_tell_a_friend">أبلغ صديق</string>
+        <string name="settings_button_tell_a_friend_tip">مشاركة رسالتك الآن</string>
+        
+        
+        <!-- gif panel -->
+        <string name="result_no">تعذر العثور على أي صور GIF أو ملصقات.</string>
+        <string name="result_no_recent">لا توجد مدخلات حديثة.</string>
+        <string name="result_no_suggestion">لا توجد صور GIF أو ملصقات مقترحة.</string>
+        <string name="result_no_favorites">لا توجد مفضلات.</string>
+        <string name="result_no_data_on_fail">يرجى التحقق من اتصالك وإعادة المحاولة.</string>
+        <string name="result_no_data_on_complete">تعذر العثور على أي صور GIF أو ملصقات.</string>
+        
+        <!--gif strip-->
+        <string name="emoji_search_title">اختر الإيموجي للبحث</string>
+        <string name="emoji_search_hint">ابحث عن صور GIF بالنص أو بالإيموجي</string>
+        
+        <!--theme panel-->
+        <string name="customized_themes">لوحة مفاتيح مخصصة</string>
+        <string name="default_themes">تصاميم %1$s</string>
+        <string name="custom_theme_create">إنشاء</string>
+        <string name="theme_more">المزيد</string>
+        
+        <!--theme home-->
+        <string name="theme_store_background_title">إنشاء نسقي الخاصة</string>
+        <string name="theme_store_more">المزيد</string>
+        <string name="my_theme_customized_theme_title">لوحة مفاتيح مخصصة</string>
+        <string name="my_theme_downloaded_theme_title">تم التنزيل</string>
+        <string name="theme_detail_recommend_title">قد يعجبك</string>
+        <string name="theme_card_custom_theme_default_name">تصميمي</string>
+        <string name="theme_detail_custom_theme_title_name">لوحة مفاتيح مخصصة</string>
+        <string name="theme_trial_keyboard_edit_text_hint">جرّب الكتابة هنا الآن</string>
+        
+        <string name="dialog_app_usage_tips">لتكون تجربة كتابتك أفضل، ننصحك بتفعيل وظيفة Allow Apps with Usage Access.</string>
+        <string name="dialog_app_usage_title">تفعيل Allow Apps with Usage Access</string>
+        
+        <!--theme home nav-->
+        <string name="theme_nav_my_themes">تصاميمي</string>
+        <string name="theme_nav_languages">اللغات</string>
+        <string name="theme_nav_settings">الإعدادات</string>
+        <string name="theme_nav_update">تحديث</string>
+        <string name="theme_nav_no_ads">إزالة الإعلانات</string>
+        
+        <!--theme card-->
+        <string name="theme_card_menu_download">تنزيل</string>
+        <string name="theme_card_menu_downloading">جارٍ التنزيل</string>
+        <string name="theme_card_downloading_tip">جارٍ التنزيل</string>
+        <string name="theme_card_menu_share">مشاركة</string>
+        <string name="theme_card_set_locker_bg">تعيين كشاشة قفل</string>
+        <string name="theme_card_menu_apply">تطبيق</string>
+        <string name="theme_card_menu_applied">مطبّق</string>
+        <string name="theme_card_menu_delete">حذف</string>
+        
+        <!--custom theme-->
+        <string name="custom_theme_background">السابق</string>
+        <string name="custom_theme_font">اختر تأثير الضغطة</string>
+        <string name="custom_theme_sound">اختر تأثير الضغطة</string>
+        <string name="custom_theme_effect">تأثير الأزرار</string>
+        
+        <string name="custom_theme_backgrounds">السابق</string>
+        <string name="custom_theme_fonts">اختر تأثير الضغطة</string>
+        <string name="custom_theme_sounds">اختر تأثير الضغطة</string>
+        <string name="custom_theme_effects">تأثيرات الأزرار</string>
+        
+        <string name="custom_theme_title">إنشاء لوحة مفاتيح</string>
+        <string name="custom_theme_title_background">اختر خلفية</string>
+        <string name="custom_theme_title_button_shape">اختر شكل الزر</string>
+        <string name="custom_theme_title_button_style">اختر نمط الزر</string>
+        <string name="custom_theme_title_font">اختر الخط</string>
+        <string name="custom_theme_title_font_color">اختر لون الخط</string>
+        <string name="custom_theme_title_sound">اختر صوت النقرة</string>
+        <string name="custom_theme_title_effect">اختر تأثير الضغطة</string>
+        <string name="custom_theme_sound_tip">لاستخدام التأثير الصوتي للمفاتيح، يرجى إلغاء تفعيل نمط كتم الصوت أو تفعيل الصوت عند ضغط الأزرار في قسم الإعدادات.</string>
+        
+        <!--IAP Tip Info -->
+        
+        <string name="purchase_success">تمت عملية الشراء بنجاح.</string>
+        
+        <!-- Theme new tip -->
+        <string name="new_background_tip">خلفية جديدة</string>
+        <string name="new_font_tip">خط جديد</string>
+        <string name="new_tap_effect_tip">تأثير ضغط جديد</string>
+        <string name="new_click_sound_tip">صوت ضغط جديد</string>
+        <string name="new_theme_tip">تتوفر تصاميم جديدة</string>
+        
+        <!--apk update-->
+        <string name="apk_update_to_date_tip">تطبيقك حديث</string>
+        <string name="apk_update_alert_title">تنزيل آخر إصدار</string>
+        <string name="apk_update_alert_negative_btn">لاحقًا</string>
+        <string name="apk_update_alert_positive_btn">تحديث</string>
+        <string name="apk_update_downloading">جارٍ تنزيل التحديث</string>
+        <string name="apk_update_downloading_notification_title">جارٍ التنزيل</string>
+        
+        
+        <string name="sd_card_unavailable_tip">بطاقة SD غير متاحة!</string>
+        
+        <string name="theme_create_custom_theme_failed">قم بتفعيل الشحن الذكي لتجنب فرط الشحن بفعالية. يحتوي على إعلانات.</string>
+        
+        <string name="home_create_keyboard">إنشاء نسقي الخاصة</string>
+        
+        <string name="charging_alert_title">الشحن الذكي</string>
+        <string name="charging_alert_message">قم بتفعيل الشحن الذكي لتجنب فرط الشحن بفعالية. يحتوي على إعلانات.</string>
+        
+        <string name="enable_charging_detail">فعّل الشحن الذكي لتحسين أمثلية البطارية. يشمل محتوى مدعوم.</string>
+        
+        <!--Accessibility-->
+        <string name="tv_enable_keyboard_tip">فعّل %1$s، تمتع بالمزيد من التصاميم!</string>
+        <string name="accessibility_service_label">%1$s</string>
+        <string name="tv_set_up_manually">الإعداد يدوياً</string>
+        <string name="tv_1_tap_to_set_up_keyboard">تفعيل %1$s</string>
+        <string name="alter_enable_access_title">تفعيل %1$s</string>
+        <string name="alter_enable_access_content">لإعداد لوحة المفاتيح، يرجى العثور على %1$s وتفعيله.</string>
+        <string name="alter_enable_access_confirm">فهمت</string>
+        <string name="alert_enable_access_warn_content">يمكنك تفعيل %1$s يدوياً دون الحاجة إلة منح أذونات الوصول.</string>
+        <string name="alert_enable_access_warn_confirm">الإعداد يدوياً</string>
+        <string name="alert_enable_access_warn_title">تفعيل لوحة المفاتيح يدوياً</string>
+        <string name="access_set_up_success">تم الإعداد بنجاح!</string>
+        <string name="access_set_up_failed">فشل الإعداد</string>
+        <string name="dialog_access_setup_manual">الإعداد يدوياً</string>
+        <string name="retry">إعادة المحاولة</string>
+        <string name="dialog_set_up_manual_message">يرجى المحاولة مرة أخرى أو إعداد لوحة المفاتيح يدوياً.</string>
+        <!--Accessibility end-->
+        
+        <!--guide-->
+        <string name="guide_open_camera">اسحب لفتح الكاميرا بسرعة</string>
+        <string name="guide_open_control_centre">اسحب لفتح مركز التحكم</string>
+        
+        <!-- sticker download documents-->
+        <string name="sticker_download_button">تنزيل</string>
+        <string name="sticker_downloading_label">جارٍ التنزيل</string>
+        <string name="sticker_downloading_successful">تم التنزيل بنجاح</string>
+        <string name="sticker_downloading_guide">نزل الآن مجاناً!</string>
+        <string name="sticker_share_toast">هذا التطبيق لا يدعم الملصقات</string>
+        <string name="sticker_send_failed">فشل إرسال الملصق. يرجى إعادة المحاولة.</string>
+        <string name="unzip_sticker_group_failed">فشل فك ضغط الملصقات، يرجى إعادة تنزيلها!</string>
+        <string name="foreground_download_failed">فشل التنزيل</string>
+        
+        <string name="interstitial_ad_title_after_save_theme">تم الحفظ بنجاح</string>
+        <string name="interstitial_ad_subtitle_after_save_theme">---------------قد يعجبك---------------</string>
+        
+        <string name="interstitial_ad_title_after_try_keyboard">تم التطبيق بنجاح</string>
+        <string name="interstitial_ad_subtitle_after_try_keyboard">---------------قد يعجبك---------------</string>
+        
+        <string name="interstitial_ad_subtitle_home_gift_button">---------------قد يعجبك---------------</string>
+        <string name="store_nav_download">تنزيلاتي</string>
+        <string name="tab_theme_my">تصميمي</string>
+        <string name="tab_sticker">ملصق</string>
+        <string name="tab_sticker_my">ملصقي</string>
+        <string name="tab_font_my">خطي</string>
+        <string name="item_sticker_more_coming">ستصدر ملصقات جديدة قريباً</string>
+        <string name="item_font_more_coming">ستصدر خطوط جديدة قريباً</string>
+        
+        <!--alert message-->
+        <string name="locker_alert_title">قافل الشاشة</string>
+        <string name="locker_alert_message">أضف تصاميمك المفضلة إلى شاشة القفل. قد يتضمن محتوى مدعوم.</string>
+        
+        <string name="call_assistant_alert_title">تصاميم متحركة للمكالمات</string>
+        <string name="call_assistant_alert_message">أضف تصاميم متحركة إلى شاشة المكالمة الواردة. قد يتضمن محتوى مدعوم.</string>
+        
+        <string name="multi_function_alert_title">قافل الشاشة  شاشة المكالمة</string>
+        <string name="multi_function_alert_message">أضف تصاميم مذهلة إلى شاشة القفل وشاشة المكالمات. قد يتضمن محتوى مدعوم.</string>
+        <string name="apk_update_alert_message">إصدارك أقدم من أن تتم ترقيته، يرجى تحديث التطبيق وإعادة المحاولة.</string>
+        <string name="custom_rate_alert_message" tools:ignore="Typos">هل ترغب في فتح هذا العنصر مجاناً؟ ما عليك سوى تقييمنا بـ 5 نجوم!</string>
+        <string name="custom_rate_alert_button_text">قيّم بـ 5 نجوم لفتحه</string>
+        <string name="custom_rate_alert_toast_text">يرجى تفقد Google Play</string>
 </resources>

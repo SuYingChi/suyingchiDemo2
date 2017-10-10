@@ -21,7 +21,6 @@ import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.constants.KeyboardActivationProcessor;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegatesManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate.BlankViewAdapterDelegate;
@@ -44,8 +43,6 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public interface ThemeCardItemClickListener {
         void onCardClick(HSKeyboardTheme keyboardTheme);
 
-        void onMenuApplyClick(HSKeyboardTheme keyboardTheme);
-
         void onMenuShareClick(HSKeyboardTheme keyboardTheme);
 
         void onMenuDownloadClick(HSKeyboardTheme keyboardTheme);
@@ -53,6 +50,8 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         void onMenuDeleteClick(HSKeyboardTheme keyboardTheme);
 
         void onMenuAppliedClick(HSKeyboardTheme keyboardTheme);
+
+        void onKeyboardActivationStart();
     }
 
 
@@ -60,6 +59,7 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private ThemeCardItemClickListener themeCardItemClickListener;
     protected AdapterDelegatesManager<List<ThemeHomeModel>> delegatesManager;
     private List<ThemeHomeModel> items;
+    private HSKeyboardTheme keyboardThemeOnKeyboardActivation;
 
     public CommonThemeCardAdapter(Activity activity, ThemeCardItemClickListener themeCardItemClickListener, boolean themeAnalyticsEnabled) {
         this.activity = activity;
@@ -145,45 +145,10 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 break;
             case ThemeCardAdapterDelegate.TAG_DELETE:
                 KCCustomThemeManager.getInstance().removeCustomTheme(keyboardTheme.getThemeId());
-//				HSKeyboardThemeManager.removeCustomTheme(keyboardTheme);
                 break;
             case ThemeCardAdapterDelegate.TAG_MENU:
                 v.setSelected(true);
                 PopupMenu popMenu = ThemeMenuUtils.createPopMenu(v, keyboardTheme);
-                final KeyboardActivationProcessor procceser =
-                        new KeyboardActivationProcessor(activity.getClass(), new KeyboardActivationProcessor.OnKeyboardActivationChangedListener() {
-                            @Override
-                            public void activeDialogShowing() {
-
-                            }
-
-                            @Override
-                            public void keyboardSelected(int requestCode) {
-                                if (requestCode == ThemeMenuUtils.keyboardActivationFromAdapter) {
-                                    if (!HSKeyboardThemeManager.setKeyboardTheme(keyboardTheme.mThemeName)) {
-                                        String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
-                                        HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
-                                        return;
-                                    }
-
-                                    TrialKeyboardDialog.sendShowTrialKeyboardDialogNotification(activity.getClass().getSimpleName(), requestCode);
-                                    if (themeCardItemClickListener != null) {
-                                        themeCardItemClickListener.onMenuApplyClick(keyboardTheme);
-                                    }
-                                }
-
-                            }
-
-                            @Override
-                            public void activeDialogCanceled() {
-
-                            }
-
-                            @Override
-                            public void activeDialogDismissed() {
-
-                            }
-                        });
 
                 popMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -221,7 +186,10 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName())) {
                                 ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName))));
                             } else {
-                                procceser.activateKeyboard(activity, true, ThemeMenuUtils.keyboardActivationFromAdapter);
+                                if (themeCardItemClickListener != null) {
+                                    themeCardItemClickListener.onKeyboardActivationStart();
+                                }
+                                keyboardThemeOnKeyboardActivation = keyboardTheme;
                             }
 
                         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_applied).equals(title)) {
@@ -253,6 +221,20 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
+    public void finishKeyboardActivation(boolean success) {
+        if (success && keyboardThemeOnKeyboardActivation != null) {
+            HSKeyboardTheme keyboardTheme = keyboardThemeOnKeyboardActivation;
+            keyboardThemeOnKeyboardActivation = null;
+            if (!HSKeyboardThemeManager.setKeyboardTheme(keyboardTheme.mThemeName)) {
+                String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                return;
+            }
+
+            TrialKeyboardDialog trialKeyboardDialog = new TrialKeyboardDialog.Builder(activity).create();
+            trialKeyboardDialog.show(true);
+        }
+    }
 
     private void setThemeNotNew(HSKeyboardTheme keyboardTheme) {
         HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);

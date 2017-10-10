@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--base-->
     <string name="settings">Settings</string>
     <string name="enabled">Enabled</string>
@@ -9,25 +9,33 @@
     <string name="languages">Languages</string>
     <string name="next">Next</string>
     <string name="back">Back</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">CANCEL</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="saving">Saving...</string>
     <string name="allow">Allow</string>
     <string name="done">Done</string>
     <string name="got_it">GOT IT</string>
-    <string name="filter">Filter</string>
-    <string name="use">Use</string>
+    <string name="filter">Crop</string>
+    <string name="use">USE</string>
+    <string name="customize_keyboard_title">Keyboard</string>
+    <string name="customize_wallpapers_title">Wallpaper</string>
+    <string name="may_contains_ads">May Contain Ads</string>
+    <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
+    <string name="online_wallpaper_loading">Loading HD wallpaper, please wait.</string>
+
+    <string name="unknown">Unknown</string>
 
     <string name="alert_find_keyboard_and_switch_on">Switch on %1$s</string>
 
     <!--main-->
-    <string name="alert_attention_messenger">%1$s keyboard treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
+    <string name="alert_attention_messenger">%1$s treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
     <string name="toast_enable_keyboard">Enable %1$s</string>
     <string name="toast_select_keyboard">Select %1$s</string>
     <string name="keyboard_guide_privacy_policy">By installing, you are agreeing to our %1$s\n and %2$s</string>
     <string name="text_terms_of_service">Terms of Service</string>
     <string name="text_privacy_policy">Privacy Policy</string>
+    <string name="text_debug" translatable="false">Debug</string>
 
     <!--dialog-->
     <string name="dialog_title_select_keyboard_apply_rain">Activate %1$s</string>
@@ -57,14 +65,14 @@
     <string name="setting_word_prediction">Prediction</string>
     <string name="setting_emoji_prediction">Emoji Prediction</string>
     <string name="setting_swipe_input">Swipe</string>
-    <string name="setting_double_space_period">\":.\": Shortcut</string>
+    <string name="setting_double_space_period">\".\" Shortcut</string>
     <string name="setting_double_space_period_summary">Double tapping the space bar will insert a period followed by a space.</string>
     <string name="setting_sound_on_keypress">Sound on keypress</string>
     <string name="setting_vibrate_on_keypress">Vibrate on keypress</string>
 
     <!-- settings more page -->
-    <string name="boost_noti_setting_desc" >Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
-    <string name="boost_noti_setting_title" >Phone Boost</string>
+    <string name="boost_noti_setting_desc">Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
+    <string name="boost_noti_setting_title">Phone Boost</string>
     <string name="setting_call_assistant_title">Screen Flash for Calls</string>
     <string name="enable_locker_detail">Displaying your favorite themes on lock screen. Contains sponsored contents.</string>
     <string name="screen_locker_enable_alert_toast">Screen Locker Enabled</string>
@@ -104,13 +112,11 @@
 
     <!--theme home-->
     <string name="theme_store_background_title">Create My Own Themes</string>
-    <string name="theme_store_theme_title">%1$s Themes</string>
     <string name="theme_store_more">MORE</string>
     <string name="my_theme_customized_theme_title">Customized Keyboard</string>
     <string name="my_theme_downloaded_theme_title">Downloaded</string>
     <string name="theme_detail_recommend_title">You May Like</string>
     <string name="theme_card_custom_theme_default_name">My Theme</string>
-    <string name="theme_detail_common_title_name">%1$s Theme</string>
     <string name="theme_detail_custom_theme_title_name">Customized Keyboard</string>
     <string name="theme_trial_keyboard_edit_text_hint">Try typing here now...</string>
 
@@ -118,7 +124,6 @@
     <string name="dialog_app_usage_title">Allow Apps with Usage Access</string>
 
     <!--theme home nav-->
-    <string name="theme_nav_theme_store">%1$s Store</string>
     <string name="theme_nav_my_themes">My Themes</string>
     <string name="theme_nav_languages">Languages</string>
     <string name="theme_nav_settings">Settings</string>
@@ -157,8 +162,15 @@
     <string name="custom_theme_sound_tip">To use click sound effect, please turn off the silent mode or enable Sound on keypress in the settings section.</string>
 
     <!--IAP Tip Info -->
-
+    <string name="current_theme_price" formatted="true">Unlock for %1$s</string>
     <string name="purchase_success">Your purchase was successful.</string>
+    <string name="purchase_error">ERROR:</string>
+    <string name="purchase_error_message">Your purchase is now unavailable. Try again later.</string>
+    <string name="purchase_error_bill">BILLING UNAVAILABLE</string>
+    <string name="purchase_error_item">ITEM UNAVAILABLE</string>
+    <string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
+    <string name="purchase_google_play_unavailable">Google Play is not available on your device.</string>
+    <string name="purchase_unavailable">The purchase is not available.</string>
 
     <!-- Theme new tip -->
     <string name="new_background_tip">New background</string>
@@ -184,7 +196,7 @@
 
     <string name="charging_alert_title">Smart Charging</string>
     <string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains sponsored contents.</string>
-  
+
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
     <!--Accessibility-->
@@ -209,11 +221,11 @@
     <string name="guide_open_camera">Slide to open camera quickly</string>
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
 
-	<!-- sticker download documents-->
-	<string name="sticker_download_button">DOWNLOAD</string>
-	<string name="sticker_downloading_label">Downloading</string>
-	<string name="sticker_downloading_successful">Download Successfully</string>
-	<string name="sticker_downloading_guide">Download for free now!</string>
+    <!-- sticker download documents-->
+    <string name="sticker_download_button">DOWNLOAD</string>
+    <string name="sticker_downloading_label">Downloading</string>
+    <string name="sticker_downloading_successful">Download Successfully</string>
+    <string name="sticker_downloading_guide">Download for free now!</string>
     <string name="sticker_share_toast">The app does not support stickers.</string>
     <string name="sticker_send_failed">Sticker send failed, please try again.</string>
     <string name="unzip_sticker_group_failed">Unzip stickers failed, please download again!</string>
@@ -227,4 +239,25 @@
 
     <string name="interstitial_ad_title_home_gift_button"> </string>
     <string name="interstitial_ad_subtitle_home_gift_button">--------------- You May Like ---------------</string>
+    <string name="store_nav_download">My Downloads</string>
+    <string name="tab_theme_my">MY THEME</string>
+    <string name="tab_sticker">STICKER</string>
+    <string name="tab_sticker_my">MY STICKER</string>
+    <string name="tab_font_my">MY FONT</string>
+    <string name="item_sticker_more_coming">More stickers are coming soon</string>
+    <string name="item_font_more_coming">More fonts are coming soon</string>
+
+    <string name="locker_alert_title">Screen Locker</string>
+    <string name="locker_alert_message">Add your favorite themes on lock screen. May contain sponsored contents.</string>
+
+    <string name="call_assistant_alert_title">Animated Themes for Calls</string>
+    <string name="call_assistant_alert_message">Add animated themes on incoming call screens. May contain sponsored contents.</string>
+
+    <string name="multi_function_alert_title">Stunning Themes</string>
+    <string name="multi_function_alert_message">Add stunning themes on lock screen and incoming call screens. May contain sponsored contents.</string>
+
+    <string name="apk_update_alert_message">Your current version is too low, please update to lastest version to use it.</string>
+    <string name="custom_rate_alert_message" tools:ignore="Typos">Wanna unlock this item for FREE? \nJust rate us 5 Stars!</string>
+    <string name="custom_rate_alert_button_text">Rate 5 Stars to Unlock</string>
+    <string name="custom_rate_alert_toast_text">Please check your Google Play</string>
 </resources>

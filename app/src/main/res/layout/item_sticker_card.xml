@@ -39,8 +39,9 @@
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/sticker_new_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="41dp"
+                    android:layout_height="28dp"
+                    android:scaleType="fitCenter"
                     android:layout_gravity="right|top"
                     android:visibility="invisible" />
             </android.support.percent.PercentFrameLayout>

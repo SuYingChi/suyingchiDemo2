@@ -36,12 +36,17 @@ import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
+import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerPrefsUtil;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -122,9 +127,20 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         keyboardGooglePlayAdManager = new KeyboardGooglePlayAdManager(HSApplication.getContext().getString(R.string.ad_placement_google_play_dialog_ad));
     }
 
+    private long lastBackAdShownTime = 0L;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if (lastBackAdShownTime > 0) {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastBackAdShownTime >= 2_000) {
+                    lastBackAdShownTime = 0L;
+                } else {
+                    return true;
+                }
+            }
 
             if (isInputViewShowing) {
                 getKeyboardPanelMananger().onBackPressed();
@@ -141,7 +157,11 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                     HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
                 }
 
-                showBackAdIfNeeded();
+                boolean adShown = showBackAdIfNeeded();
+                if (adShown) {
+                    lastBackAdShownTime = System.currentTimeMillis();
+                    return true;
+                }
             }
         }
 
@@ -327,6 +347,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 }
             }
         }
+
     }
 
     @Override
@@ -400,6 +421,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
+        if (!restarting) {
+            isAppSupportSticker = StickerUtils.isEditTextSupportSticker(currentAppPackageName);
+        }
     }
 
     @Override
@@ -424,6 +448,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
         // Start clearing image loader cache
         handler.postDelayed(clearImageLoaderCacheRunnable, HSApplication.isDebugging ? 5 * 1000 : 5 * 60 * 1000);
+        HSFloatWindowManager.getInstance().removeFloatingWindow();
+        isAppSupportSticker = false;
     }
 
     private boolean shouldShowGoogleAD() {
@@ -464,5 +490,21 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
 
         super.onCodeInput(codePoint, x, y, isKeyRepeat);
+    }
+
+    @Override
+    protected void showStickerSuggestionByName(String stickerTag, ArrayList<String> stickerNameByString) {
+        List<Sticker> stickerList = new ArrayList<>();
+        if (stickerNameByString != null && stickerNameByString.size() > 0) {
+            for (String stickerName : stickerNameByString) {
+                if (StickerDataManager.getInstance().isStickerGroupDownloaded(StickerUtils.getGroupNameByStickerName(stickerName))) {
+                    stickerList.add(StickerDataManager.getInstance().getSticker(stickerName));
+                }
+            }
+            getKeyboardPanelMananger().showSuggestedStickers(stickerTag, StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
+            HSAnalytics.logEvent("keyboard_sticker_prediction_show", "sticker tag", stickerTag);
+        } else {
+            HSFloatWindowManager.getInstance().removeFloatingWindow();
+        }
     }
 }

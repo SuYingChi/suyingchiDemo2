@@ -1,7 +1,8 @@
 libCommons:
   RemoteConfig:
+    UpdateInterval: 10
     PlistFile: "Local.kb"
-    PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-colorkeyboard-2.3.8.kb"
+    PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-colorkeyboard-2.4.0.kb"
   Analytics:
       FlurryKey: "GTJN395TKWN6XXXXXXXX"
       FacebookID: "910238615719294"
@@ -16,7 +17,6 @@ libCommons:
   ImageCache:
     CacheSize: 0
 
-
   Market:
     DefaultMarket: "Google"
     3rdChannel: "GP"
@@ -30,15 +30,16 @@ libCommons:
         AppUrl: "amzn://apps/android?p="
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
   Connection:
-    SigKey: "603_2"
+    SigKey: "1"
     HashKey: "x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!"
+  AppID: "603"
 libFramework:
   Push:
     SenderID: ""
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.kb"
-    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/colorkeyboard-2.3.8-alerts.kb"
+    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/colorkeyboard-2.4.0-alerts.kb"
 
 libIAP:
   Verify:
@@ -49,6 +50,5 @@ libIAP:
 libKeyboard:
   DictionaryUrl: "http://emojidevelop.s3.amazonaws.com/AndroidResource/languages/"
 
-MagicTrick:
-  get: "getComponentEnabledSetting"
-  set: "setComponentEnabledSetting"
+Application:
+  WallpaperAPIURL: "https://dev-service.appcloudbox.net/wallpapers/"
