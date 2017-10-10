@@ -54,6 +54,12 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
 
 public final class HSEmoticonActionBar extends LinearLayout implements View.OnClickListener {
 
+    public final static String PANEL_EMOJI = "emoji";
+    public final static String PANEL_STICKER = "sticker";
+    public final static String PANEL_FACEEMOJI = "facemoji";
+    public final static String PANEL_GIF = "gif";
+    public final static String PANEL_TEXT = "text";
+
     private BasePanel.OnPanelActionListener containerListener;
     private BasePanel.OnPanelActionListener keyboardActionListener;
     private TextView alphabet_left;
@@ -95,15 +101,25 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         containerListener = null;
     }
 
+    public static void saveLastPanelName(String panelName){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
+        sp.edit().putString("emoticon_last_show_panel_name", panelName).apply();
+    }
+
+    public static String getLastPanelName(){
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
+        return sp.getString("emoticon_last_show_panel_name",PANEL_EMOJI);
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         final String[] panelNames = {
-                "emoji",
-                "sticker",
-                "facemoji",
-                "gif",
-                "text"
+                PANEL_EMOJI,
+                PANEL_STICKER,
+                PANEL_FACEEMOJI,
+                PANEL_GIF,
+                PANEL_TEXT
         };
         final Class[] panelClassNames = {
                 HSEmojiPanel.class,
@@ -272,8 +288,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         if (tag != null && tag instanceof String) {
             Class panel = panels.get(tag);
             if (containerListener != null && panel != null) {
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-                sp.edit().putString("emoticon_last_show_panel_name", tag.toString()).apply();
+                saveLastPanelName(tag.toString());
                 containerListener.showPanel(panel);
                 HSAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
             }

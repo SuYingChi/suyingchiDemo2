@@ -9,9 +9,9 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
@@ -19,6 +19,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
@@ -268,33 +270,49 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         baseFunction.hideNewTip();
     }
 
-    public void showMakeFacemojiTipIfNeed(KeyboardPanelSwitchContainer keyboardPanelSwitchContainer) {
-        makeFacemojiTip = LayoutInflater.from(getContext()).inflate(R.layout.layout_make_facemoji_tip, this, false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            makeFacemojiTip.setElevation(DisplayUtils.dip2px(6));
+    public void showMakeFacemojiTipIfNeed(final KeyboardPanelSwitchContainer keyboardPanelSwitchContainer) {
+        if (shouldShowMakeFacmojiTip()) {
+            getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (facemojiView.getWidth() > 0 && facemojiView.getHeight() > 0){
+                        getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                        makeFacemojiTip = LayoutInflater.from(getContext()).inflate(R.layout.layout_make_facemoji_tip, BaseFunctionBar.this, false);
+                        makeFacemojiTip.measure(0, 0);
+                        int[] location = new int[2];
+                        facemojiView.getLocationInWindow(location);
+
+                        View triangleView = makeFacemojiTip.findViewById(R.id.triangle_view);
+                        LinearLayout.LayoutParams layoutParams = (LayoutParams) triangleView.getLayoutParams();
+                        layoutParams.rightMargin = keyboardPanelSwitchContainer.getWidth() - (location[0] + facemojiView.getWidth() / 2) - triangleView.getMeasuredWidth() / 2;
+
+                        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        lp.setMargins(0, location[1] - makeFacemojiTip.getMeasuredHeight(), 0, 0);
+                        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+                        keyboardPanelSwitchContainer.addView(makeFacemojiTip, lp);
+
+                        handler.removeMessages(MSG_DISMISS_MAKE_FACEMOJI_TIP);
+                        handler.sendEmptyMessageDelayed(MSG_DISMISS_MAKE_FACEMOJI_TIP, 5000);
+                    }
+                }
+            });
         }
+    }
 
-        makeFacemojiTip.measure(0,0);
-        int[] location = new int[2];
-        facemojiView.getLocationInWindow(location);
-
-        View triangleView = makeFacemojiTip.findViewById(R.id.triangle_view);
-        LinearLayout.LayoutParams layoutParams = (LayoutParams) triangleView.getLayoutParams();
-        layoutParams.rightMargin = keyboardPanelSwitchContainer.getWidth() - (location[0] +  facemojiView.getWidth() / 2) - triangleView.getMeasuredWidth() / 2;
-
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, location[1] - makeFacemojiTip.getMeasuredHeight(), 0, 0);
-        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-        keyboardPanelSwitchContainer.addView(makeFacemojiTip, lp);
-
-        handler.removeMessages(MSG_DISMISS_MAKE_FACEMOJI_TIP);
-        handler.sendEmptyMessageDelayed(MSG_DISMISS_MAKE_FACEMOJI_TIP,5000);
+    private boolean shouldShowMakeFacmojiTip(){
+        if (FacemojiManager.getDefaultFacePicUri() == null && (System.currentTimeMillis() - PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getLong("lastShowMakeFacemojiTipTime",0) > 24*60*60*1000)){
+            PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putLong("lastShowMakeFacemojiTipTime",System.currentTimeMillis()).apply();
+            return true;
+        }
+        return false;
     }
 
     public void dismissMakeFacemojiTip() {
         if (makeFacemojiTip != null && makeFacemojiTip.getParent()!=null){
             ((ViewGroup)makeFacemojiTip.getParent()).removeView(makeFacemojiTip);
+            makeFacemojiTip = null;
         }
     }
 

@@ -33,8 +33,10 @@ import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.framework.KeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
+import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonActionBar;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
-import com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.widget.bannerad.KeyboardBannerAdLayout;
@@ -231,9 +233,17 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         if (view.getId() == R.id.func_facemoji_button){
-            keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSFacemojiPanel.class);
-            keyboardPanelSwitchContainer.setBarVisibility(GONE);
-            functionBar.dismissMakeFacemojiTip();
+            if (FacemojiManager.getDefaultFacePicUri() == null){
+                functionBar.dismissMakeFacemojiTip();
+
+                Intent i = new Intent(HSApplication.getContext(), CameraActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                HSApplication.getContext().startActivity(i);
+            }else {
+                HSEmoticonActionBar.saveLastPanelName(HSEmoticonActionBar.PANEL_FACEEMOJI);
+                keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
+                keyboardPanelSwitchContainer.setBarVisibility(GONE);
+            }
         }
     }
 

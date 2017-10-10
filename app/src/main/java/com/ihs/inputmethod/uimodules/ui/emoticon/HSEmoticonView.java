@@ -1,8 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.emoticon;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -45,9 +43,7 @@ public final class HSEmoticonView extends KeyboardPanelSwitchContainer {
 	}
 
 	public void showLastPanel() {
-		SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(getContext());
-		String lastPanel=sp.getString("emoticon_last_show_panel_name","emoji");
-		Class<?> clazz=actionBar.getPanelClass(lastPanel);
+		Class<?> clazz=actionBar.getPanelClass(HSEmoticonActionBar.getLastPanelName());
 		showPanel(clazz);
 	}
 
