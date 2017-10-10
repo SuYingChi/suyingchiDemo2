@@ -26,6 +26,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
@@ -38,6 +39,7 @@ public class ApkUtils {
     private static final String PREF_KEY_UPDATE_APK_VERSION_CODE = "update_apk_version_code";
     private static final String PREF_KEY_UPDATE_ALERT_LAST_SHOWN_TIME = "update_alert_last_shown_time";
     private static final String PREF_KEY_RATE_BUTTON_CLICKED = "perf_rate_button_clicked";
+    private static final String PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM = "perf_shared_keyboard_on_instagram";
     private static final long UPDATE_ALERT_SHOW_INTERVAL_IN_MILLIS = 24 * 60 * 60 * 1000;
     private static final String PREF_APKUTILS_FILE_NAME = "pref_file_apkutils";
 
@@ -254,6 +256,49 @@ public class ApkUtils {
 
     public static boolean isRateButtonClicked() {
         return HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).getBoolean(PREF_KEY_RATE_BUTTON_CLICKED, false);
+    }
+
+    public static boolean isSharedKeyboardOnInstagramBefore() {
+        return HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).getBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, false);
+    }
+
+    public static boolean isInstagramInstalled() {
+        return isInstalled("com.instagram.android");
+    }
+
+    public static boolean isInstalled(String packageName) {
+        try {
+            PackageInfo packageInfo = HSApplication.getContext().getPackageManager().getPackageInfo(packageName.trim(),
+                    PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+            if (packageInfo != null) {
+                // 说明某个应用使用了该包名
+                return true;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+    public static void shareKeyboardToInstagram(Context context) {
+        Intent intent = HSApplication.getContext().getPackageManager().getLaunchIntentForPackage("com.instagram.android");
+        if (intent != null) {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.setPackage("com.instagram.android");
+            // Create the URI from the media
+            String mediaPath = ThemeMenuUtils.getDefaultShareFile();
+            if (mediaPath == null) {
+                return;
+            }
+            File media = new File(mediaPath);
+            Uri uri = Uri.fromFile(media);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/*");
+            context.startActivity(shareIntent);
+            HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).putBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, true);
+        }
     }
 
     @SuppressLint("InflateParams")

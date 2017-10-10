@@ -528,6 +528,15 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                 });
                                 return true;
                             }
+
+                            if (!baseElement.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(baseElement.getConfigData().get("shareToUnlock"), false)
+                                    && ApkUtils.isInstagramInstalled()
+                                    && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
+                                ApkUtils.shareKeyboardToInstagram(fragment.getActivity());
+                                return true;
+                            }
+
                             if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                 holder.mGiftIconImageView.setVisibility(View.GONE);
                                 fragment.addChosenItem((KCBaseElement) item);

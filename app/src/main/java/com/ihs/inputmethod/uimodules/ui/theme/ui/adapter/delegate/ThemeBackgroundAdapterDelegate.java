@@ -341,6 +341,14 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                 return;
                             }
 
+                            if (!customThemeItemBase.hasLocalContent()
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("shareToUnlock"), false)
+                                    && ApkUtils.isInstagramInstalled()
+                                    && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
+                                ApkUtils.shareKeyboardToInstagram(activity);
+                                return;
+                            }
+
                             holder.setIsRecyclable(true);
                             KCBackgroundElement background = (KCBackgroundElement) backgrounds.get(position);
                             setNotNew(background);

@@ -2186,6 +2186,8 @@
 					<dict>
 						<key>name</key>
 						<string>Rosy Galaxy</string>
+						<key>shareToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>lockerImgUrl</key>
@@ -2206,6 +2208,8 @@
 						<string>Immortal</string>
 						<key>price</key>
 						<string>$0.99</string>
+						<key>shareToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>iapID</key>
@@ -2718,6 +2722,8 @@
 					<dict>
 						<key>name</key>
 						<string>normal1</string>
+						<key>shareToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2889,6 +2895,8 @@
 					<dict>
 						<key>name</key>
 						<string>Times</string>
+						<key>shareToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
