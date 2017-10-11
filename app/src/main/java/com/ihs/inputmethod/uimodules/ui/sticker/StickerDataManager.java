@@ -10,7 +10,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -139,8 +138,8 @@ public class StickerDataManager {
         return PreferenceManager.getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_NEW_STICKER_SET, new HashSet());
     }
 
-    public void removeNewTipOfStickerGroup(StickerModel stickerModel) {
-        String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
+    public void removeNewTipOfStickerGroup(StickerGroup stickerGroup) {
+        String stickerGroupName = stickerGroup.getStickerGroupName();
         Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
         if (currentNewStickerSet.contains(stickerGroupName)) {
             currentNewStickerSet.remove(stickerGroupName);

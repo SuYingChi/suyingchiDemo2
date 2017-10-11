@@ -1,7 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
 import android.app.Fragment;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,19 +16,21 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION;
-import static com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager.STICKER_GROUP_ORIGINAL;
 import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 /**
@@ -38,21 +40,14 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
 public class StickerHomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private StickerCardAdapter stickerCardAdapter;
-    private List<StickerModel> stickerModelList = new ArrayList<>();
-    public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker);
+    private HomeStickerAdapter stickerCardAdapter;
+    private List<StickerHomeModel> stickerModelList = new ArrayList<>();
 
     private INotificationObserver observer = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION.equals(s)) {
-                StickerGroup stickerGroup = (StickerGroup) hsBundle.getObject(STICKER_GROUP_ORIGINAL);
-                StickerModel stickerModel = new StickerModel(stickerGroup);
-                int position = stickerModelList.indexOf(stickerModel);
-                if (position >= 0) {
-                    stickerModelList.remove(position);
-                    removeStickerFromView(position);
-                }
+            if (CameraActivity.FACEMOJI_SAVED.equals(s)){
+                loadDatas();
             }
         }
     };
@@ -63,40 +58,41 @@ public class StickerHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sticker, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         initView();
-        HSGlobalNotificationCenter.addObserver(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION, observer);
+        HSGlobalNotificationCenter.addObserver(CameraActivity.FACEMOJI_SAVED, observer);
         return view;
     }
 
     private void initView() {
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-
-        loadStickerGroup();
-        stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
+        stickerCardAdapter = new HomeStickerAdapter(new CommonStickerAdapter.OnStickerItemClickListener() {
             @Override
-            public void onCardViewClick(StickerModel stickerModel, Drawable drawable) {
-                HSAnalytics.logEvent(stickerModel.getStickerGroup().getStickerGroupName(), "sticker_download_clicked");
-                onDownloadButtonClick(stickerModel, drawable);
+            public void onCardClick(StickerHomeModel stickerHomeModel) {
+                HSAnalytics.logEvent(stickerHomeModel.stickerGroup.getStickerGroupName(), "sticker_download_clicked");
+                onDownloadClick(stickerHomeModel);
             }
 
             @Override
-            public void onDownloadButtonClick(final StickerModel stickerModel, Drawable drawable) {
-                final StickerGroup stickerGroup = stickerModel.getStickerGroup();
-                final String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
+            public void onDownloadClick(final StickerHomeModel stickerHomeModel) {
+                final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
+                final String stickerGroupName =stickerGroup.getStickerGroupName();
                 final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
                 // 移除点击过的new角标
-                StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerModel);
-                stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerModel));
+                StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
+                stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
 
 
                 DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                        drawable, new AdLoadingView.OnAdBufferingListener() {
+                        new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
                             @Override
                             public void onDismiss(boolean success) {
                                 if (success) {
                                     HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+
+                                    int position = stickerModelList.indexOf(stickerHomeModel);
+                                    stickerModelList.remove(position);
+                                    stickerCardAdapter.notifyItemRemoved(position);
                                 }
                             }
 
@@ -104,52 +100,78 @@ public class StickerHomeFragment extends Fragment {
             }
 
         });
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 6);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (stickerCardAdapter.getItemViewType(position) == StickerCardAdapter.ITEM_TYPE.ITEM_TYPE_MORE.ordinal()) {
-                    return 2;
-                }
-                return 1;
+                return stickerCardAdapter.getSpanSize(position);
             }
         });
-        stickerCardAdapter.setFragmentType(StickerHomeFragment.class.getSimpleName());
         recyclerView.setAdapter(stickerCardAdapter);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
+        loadDatas();
     }
 
-    private void loadStickerGroup() {
-        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
+    private void loadDatas() {
+        stickerModelList.clear();
 
+        StickerHomeModel stickerHomeModel = new StickerHomeModel();
+        stickerHomeModel.isTitle = true;
+        if (FacemojiManager.getDefaultFacePicUri() != null){
+            stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_my_facemojis);
+            stickerHomeModel.rightButton = HSApplication.getContext().getResources().getString(R.string.theme_store_more);
+            stickerHomeModel.titleClickable = true;
+            stickerModelList.add(stickerHomeModel);
+
+            stickerHomeModel = new StickerHomeModel();
+            stickerHomeModel.isSmallCreateFacemoji = true;
+            stickerModelList.add(stickerHomeModel);
+
+            stickerHomeModel = new StickerHomeModel();
+            stickerHomeModel.isFacemoji = true;
+            stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,0).get(0);
+            stickerModelList.add(stickerHomeModel);
+            if (FacemojiManager.getFaceList().size() >= 2){
+                stickerHomeModel = new StickerHomeModel();
+                stickerHomeModel.isFacemoji = true;
+                stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,1).get(0);
+                stickerModelList.add(stickerHomeModel);
+            }
+        }else {
+            stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_create_my_facemojis);
+            stickerHomeModel.titleClickable = false;
+            stickerModelList.add(stickerHomeModel);
+
+            stickerHomeModel = new StickerHomeModel();
+            stickerHomeModel.isBigCreateFacemoji = true;
+            stickerModelList.add(stickerHomeModel);
+        }
+
+        stickerHomeModel = new StickerHomeModel();
+        stickerHomeModel.isTitle = true;
+        stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_funny_stickers);
+        stickerModelList.add(stickerHomeModel);
+
+        List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
         for (StickerGroup stickerGroup : stickerGroupList) {
             if (!stickerGroup.isStickerGroupDownloaded()) {
-                stickerModelList.add(new StickerModel(stickerGroup));
+                stickerHomeModel = new StickerHomeModel();
+                stickerHomeModel.stickerGroup = stickerGroup;
+                stickerModelList.add(stickerHomeModel);
             }
         }
-    }
 
-    private void reloadStickerGroup() {
-        Iterator<StickerModel> iterator = stickerModelList.iterator();
-        while (iterator.hasNext()) {
-            StickerModel stickerModel = iterator.next();
-            if (StickerDataManager.getInstance().isStickerGroupDownloaded(stickerModel.getStickerGroup().getStickerGroupName())) {
-                int position = stickerModelList.indexOf(stickerModel);
-                iterator.remove();
-                removeStickerFromView(position);
-            }
-        }
-    }
+        stickerHomeModel = new StickerHomeModel();
+        stickerHomeModel.isMoreComing = true;
+        stickerModelList.add(stickerHomeModel);
 
-    private void removeStickerFromView(int position) {
-        stickerCardAdapter.notifyItemRemoved(position);
-        stickerCardAdapter.notifyItemRangeChanged(position, stickerModelList.size());
+        stickerCardAdapter.setItems(stickerModelList);
+        stickerCardAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onResume() {
-        reloadStickerGroup();
         super.onResume();
     }
 
