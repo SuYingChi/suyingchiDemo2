@@ -13,12 +13,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 
 import java.util.List;
 
-/**
- * Created by wenbinduan on 2016/12/22.
- */
-
 public final class StickerTitleAdapterDelegate extends AdapterDelegate<List<StickerHomeModel>> {
-
     @Override
     protected boolean isForViewType(@NonNull List<StickerHomeModel> items, int position) {
         return items.get(position).isTitle;

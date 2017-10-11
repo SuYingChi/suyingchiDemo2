@@ -97,33 +97,24 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
         return StickerDataManager.getInstance().isNewStickerGroup(stickerGroup);
     }
 
-    public class StickerCardViewHolder extends RecyclerView.ViewHolder {
+    public class StickerCardHomeViewHolder extends RecyclerView.ViewHolder {
         View stickerCardView;
+        ImageView moreMenuImage;
 
         TextView stickerGroupName;
         GifImageView stickerNewImage;
         ImageView stickerRealImage;
 
 
-        public StickerCardViewHolder(View itemView) {
+        public StickerCardHomeViewHolder(View itemView) {
             super(itemView);
 
             stickerCardView = itemView.findViewById(R.id.sticker_card_view);
             stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
             stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
             stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
-        }
-    }
-
-    private class StickerCardHomeViewHolder extends StickerCardViewHolder {
-        TextView moreStickersComing;
-        ImageView moreMenuImage;
-
-        public StickerCardHomeViewHolder(View view) {
-            super(view);
             moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
-            moreStickersComing = (TextView) itemView.findViewById(R.id.more_sticker_coming);
+
         }
     }
-
 }

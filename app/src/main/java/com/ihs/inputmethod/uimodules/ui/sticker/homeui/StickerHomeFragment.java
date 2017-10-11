@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
+import com.ihs.inputmethod.uimodules.ui.facemoji.ui.MyFacemojiActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -123,6 +125,12 @@ public class StickerHomeFragment extends Fragment {
             stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_my_facemojis);
             stickerHomeModel.rightButton = HSApplication.getContext().getResources().getString(R.string.theme_store_more);
             stickerHomeModel.titleClickable = true;
+            stickerHomeModel.titleClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), MyFacemojiActivity.class));
+                }
+            };
             stickerModelList.add(stickerHomeModel);
 
             stickerHomeModel = new StickerHomeModel();

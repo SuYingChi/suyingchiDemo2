@@ -56,7 +56,7 @@ public final class StickerMyCardAdapterDelegate extends AdapterDelegate<List<Sti
     protected void onBindViewHolder(@NonNull List<StickerHomeModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
         final StickerHomeModel stickerModel = items.get(position);
         final StickerGroup stickerGroup = stickerModel.stickerGroup;
-        StickerCardHomeViewHolder stickerCardViewHolder = (StickerCardHomeViewHolder) holder;
+        MyStickerCardViewHolder stickerCardViewHolder = (MyStickerCardViewHolder) holder;
         stickerCardViewHolder.stickerGroupName.setText(stickerGroup.getDownloadDisplayName());
         final String realImageUrl = stickerGroup.getStickerGroupDownloadPreviewImageUri();
         if (realImageUrl != null) {
@@ -66,37 +66,24 @@ public final class StickerMyCardAdapterDelegate extends AdapterDelegate<List<Sti
         }
     }
 
-    public class StickerCardViewHolder extends RecyclerView.ViewHolder {
+    public class MyStickerCardViewHolder extends RecyclerView.ViewHolder {
         View stickerCardView;
+        ImageView moreMenuImage;
 
         TextView stickerGroupName;
         GifImageView stickerNewImage;
         ImageView stickerRealImage;
 
 
-        public StickerCardViewHolder(View itemView) {
+        public MyStickerCardViewHolder(View itemView) {
             super(itemView);
 
             stickerCardView = itemView.findViewById(R.id.sticker_card_view);
             stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
             stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
             stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
-        }
-    }
-
-    private class StickerCardHomeViewHolder extends StickerCardViewHolder {
-        TextView moreStickersComing;
-        ImageView moreMenuImage;
-
-        public StickerCardHomeViewHolder(View view) {
-            super(view);
             moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
-            moreStickersComing = (TextView) itemView.findViewById(R.id.more_sticker_coming);
-        }
-    }
-    private class MyStickerCardViewHolder extends StickerCardViewHolder {
-        public MyStickerCardViewHolder(View view) {
-            super(view);
+
         }
     }
 
