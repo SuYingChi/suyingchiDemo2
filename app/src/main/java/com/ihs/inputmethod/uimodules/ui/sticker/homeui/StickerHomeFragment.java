@@ -46,7 +46,7 @@ public class StickerHomeFragment extends Fragment {
     private INotificationObserver observer = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (CameraActivity.FACEMOJI_SAVED.equals(s)){
+            if (CameraActivity.FACEMOJI_SAVED.equals(s) || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)){
                 loadDatas();
             }
         }
@@ -59,6 +59,7 @@ public class StickerHomeFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         initView();
         HSGlobalNotificationCenter.addObserver(CameraActivity.FACEMOJI_SAVED, observer);
+        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
         return view;
     }
 
