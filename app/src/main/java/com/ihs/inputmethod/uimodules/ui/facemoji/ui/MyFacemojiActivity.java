@@ -10,15 +10,16 @@ import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 
@@ -49,8 +50,6 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     private Drawable transparentDrawable;
     private int screenWidth;
     private int screenHeight;
-    private ImageView top_bar_bg;
-    private RelativeLayout navigation_bar;
     private ImageView back_button;
     private ImageView face_icon;
     private ImageView triangle;
@@ -98,6 +97,13 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.my_facemoji_activity);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getResources().getString(R.string.my_facemoji_toolbar_title));
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         screenWidth = DisplayUtils.getScreenWidthForContent();
         screenHeight = DisplayUtils.getScreenHeightForContent() - DisplayUtils.getStatusBarHeight(getWindow());
         transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
@@ -126,30 +132,12 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
         setCurrentCategoryId(FacemojiManager.getInstance().getCurrentCategoryId());
 
-        navigation_bar = (RelativeLayout) findViewById(R.id.navigation_bar);
-        LinearLayout.LayoutParams navigation_bar_param = (LinearLayout.LayoutParams) navigation_bar.getLayoutParams();
-        navigation_bar_param.height = getNavigateBarHeight();
-        navigation_bar.setLayoutParams(navigation_bar_param);
-
         LinearLayout.LayoutParams tab_host_param = (LinearLayout.LayoutParams) mTabHost.getLayoutParams();
         tab_host_param.height = getTabBarHeight();
         mTabHost.setLayoutParams(tab_host_param);
 
-        back_button = (ImageView) findViewById(R.id.back_button);
-        LinearLayout.LayoutParams back_param = (LinearLayout.LayoutParams) back_button.getLayoutParams();
-        back_param.height = (int) (getResources().getDrawable(R.drawable.back_button).getIntrinsicHeight() * 0.8);
-        back_param.width = (int) (getResources().getDrawable(R.drawable.back_button).getIntrinsicWidth() * 0.8);
-        back_button.setLayoutParams(back_param);
-
-        View backButtonHolder = findViewById(R.id.back_button_holder);
-        RelativeLayout.LayoutParams hoderPara = (RelativeLayout.LayoutParams) backButtonHolder.getLayoutParams();
-        hoderPara.width = (int) (back_param.width * 2.5f);
-        hoderPara.height = getTabBarHeight();
-        backButtonHolder.setLayoutParams(hoderPara);
-        backButtonHolder.setOnClickListener(this);
-
         face_icon = (ImageView) findViewById(R.id.face_menu_icon);
-        RelativeLayout.LayoutParams face_param = (RelativeLayout.LayoutParams) face_icon.getLayoutParams();
+        ViewGroup.LayoutParams face_param = face_icon.getLayoutParams();
         face_param.height = (int) (getNavigateBarHeight() * 0.7);
         face_param.width = face_param.height;
         face_icon.setLayoutParams(face_param);
@@ -170,7 +158,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         });
 
         mSaveButtonHolder = findViewById(R.id.face_save_btn_holder);
-        RelativeLayout.LayoutParams saveHolderPara = (RelativeLayout.LayoutParams) mSaveButtonHolder.getLayoutParams();
+        ViewGroup.LayoutParams saveHolderPara = mSaveButtonHolder.getLayoutParams();
         saveHolderPara.height = getNavigateBarHeight();
         mSaveButtonHolder.setLayoutParams(saveHolderPara);
         mSaveButtonHolder.setOnClickListener(this);
@@ -183,6 +171,17 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
                 return;
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
