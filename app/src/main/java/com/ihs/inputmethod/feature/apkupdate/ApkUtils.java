@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
@@ -280,6 +281,7 @@ public class ApkUtils {
                     return;
                 }
 
+                HSAnalytics.logEvent("customizeTheme_rateToUnlock_clicked");
                 if (HSMarketUtils.isMarketInstalled("Google")) {
                     HSMarketUtils.browseAPP("Google", HSApplication.getContext().getPackageName());
                     setRateButtonClicked();
@@ -301,6 +303,7 @@ public class ApkUtils {
             }
         });
         alertDialog.show();
+        HSAnalytics.logEvent("customizeTheme_rateToUnlock_show");
     }
 
     @SuppressWarnings({"deprecation"})
