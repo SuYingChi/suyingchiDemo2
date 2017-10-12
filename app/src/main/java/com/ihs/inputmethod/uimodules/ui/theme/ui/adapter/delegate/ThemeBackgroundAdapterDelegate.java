@@ -291,8 +291,10 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
                             if (!customThemeItemBase.hasLocalContent()
-                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
-                                    && !ApkUtils.isRateButtonClicked()) {
+                                    && ((HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
+                                    && !ApkUtils.isRateButtonClicked())
+                                    || (HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("shareToUnlock"), false)
+                                    && ApkUtils.isInstagramInstalled() && !ApkUtils.isSharedKeyboardOnInstagramBefore()))) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);
                             } else {
                                 holder.backgroundGiftIcon.setVisibility(View.GONE);
@@ -345,7 +347,25 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled()
                                     && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-                                ApkUtils.showCustomShareAlert(activity, null);
+                                ApkUtils.showCustomShareAlert(activity, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
+                                            holder.backgroundGiftIcon.setVisibility(GONE);
+                                        }
+                                        notifyDataSetChanged();
+                                        holder.setIsRecyclable(true);
+                                        KCBackgroundElement background = (KCBackgroundElement) backgrounds.get(position);
+                                        setNotNew(background);
+
+                                        Bundle bundle = new Bundle();
+                                        String customEntry = "store_bg";
+                                        String backgroundItemName = background.getName();
+                                        bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
+                                        bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
+                                        startCustomThemeActivity(bundle);
+                                    }
+                                });
                                 return;
                             }
 

@@ -238,8 +238,10 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
             if (!item.hasLocalContent()
-                    && HSConfigUtils.toBoolean(item.getConfigData().get("rateToUnlock"), false)
-                    && !ApkUtils.isRateButtonClicked()) {
+                    && ((HSConfigUtils.toBoolean(item.getConfigData().get("rateToUnlock"), false)
+                    && !ApkUtils.isRateButtonClicked())
+                    || (HSConfigUtils.toBoolean(item.getConfigData().get("shareToUnlock"), false)
+                    && ApkUtils.isInstagramInstalled() && !ApkUtils.isSharedKeyboardOnInstagramBefore()))) {
                 holder.mGiftIconImageView.setVisibility(View.VISIBLE);
             } else {
                 holder.mGiftIconImageView.setVisibility(View.GONE);
@@ -533,19 +535,30 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled()
                                     && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-                                ApkUtils.showCustomShareAlert(fragment.getActivity(), null);
+                                ApkUtils.showCustomShareAlert(fragment.getActivity(), new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
+                                            holder.mGiftIconImageView.setVisibility(View.GONE);
+                                        }
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                fragment.addChosenItem((KCBaseElement) item);
+                                                fragment.refreshHeaderNextButtonState();
+                                                onItemClicked((V) holder, item, false);
+                                                if (item instanceof KCButtonShapeElement) {
+                                                    fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
+                                                }
+                                            }
+                                        }, 1000);
+                                    }
+                                });
                                 return true;
                             }
 
                             if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                 holder.mGiftIconImageView.setVisibility(View.GONE);
-                                fragment.addChosenItem((KCBaseElement) item);
-                                fragment.refreshHeaderNextButtonState();
-                                onItemClicked((V) holder, item, false);
-                                if (item instanceof KCButtonShapeElement) {
-                                    fragment.notifyAdapterOnMainThread();
-                                }
-                                return true;
                             }
                             fragment.addChosenItem((KCBaseElement) item);
                             fragment.refreshHeaderNextButtonState();
