@@ -135,7 +135,7 @@ public final class TrialKeyboardDialog extends Dialog {
             boolean isRateAlertShownThisTime = false;
             HSLog.d("should delay rate alert for sdk version between 4.0 and 4.2");
             if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean("CUSTOM_THEME_SAVE", false)) {
-                if (!HSAlertMgr.isAlertShown()) {
+                if (!HSAlertMgr.isAlertShown() && !ApkUtils.isRateButtonClicked()) {
                     //当前session未显示过
                     HSLog.d("TrialKeyboardDialog", "RateAlert当前session未显示过");
                     HSAlertMgr.showRateAlert();
