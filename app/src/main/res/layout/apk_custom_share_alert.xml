@@ -10,10 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
-        android:src="@drawable/ic_keyboard_custom_theme_rate_alert" />
+        android:src="@drawable/ic_keyboard_custom_theme_share_alert" />
 
     <TextView
-        android:id="@+id/tv_rate_message"
+        android:id="@+id/tv_share_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_top_image"
@@ -21,21 +21,26 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="6dp"
         android:gravity="center"
-        android:text="Want Unlock this? Share our keyboard to Instagram!"
+        android:text="@string/custom_share_alert_message"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
     <Button
-        android:id="@+id/btn_rate"
+        android:id="@+id/btn_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_rate_message"
+        android:layout_below="@+id/tv_share_message"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="8dp"
-        android:text="Share To Instagram"
-        android:textColor="@android:color/white" />
+        android:drawableStart="@drawable/ic_instagram"
+        android:drawableLeft="@drawable/ic_instagram"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="@string/custom_share_alert_button_text"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_close_image"

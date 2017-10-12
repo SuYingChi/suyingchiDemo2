@@ -26,8 +26,8 @@ import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
@@ -282,6 +282,26 @@ public class ApkUtils {
         return false;
     }
 
+    public static String getShareFileDir() {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            return Environment.getExternalStorageDirectory() + File.separator + HSApplication.getContext().getPackageName() + File.separator + "shareApp";
+        }
+        Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sd_card_unavailable_tip), Toast.LENGTH_SHORT).show();
+        return null;
+    }
+
+    public static String getInstagramShareFile() {
+        if (getShareFileDir() == null) {
+            return null;
+        }
+        File file = new File(getShareFileDir(), "share_keyboard_to_instagram.jpg");
+        if (!file.exists() || file.length() == 0) {
+            file.getParentFile().mkdirs();
+            HSFileUtils.copyFile(HSApplication.getContext().getResources().openRawResource(R.raw.share_keyboard_to_instagram), file);
+        }
+        return file.getAbsolutePath();
+    }
+
     public static void shareKeyboardToInstagram(Context context) {
         Intent intent = HSApplication.getContext().getPackageManager().getLaunchIntentForPackage("com.instagram.android");
         if (intent != null) {
@@ -289,7 +309,7 @@ public class ApkUtils {
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.setPackage("com.instagram.android");
             // Create the URI from the media
-            String mediaPath = ThemeMenuUtils.getDefaultShareFile();
+            String mediaPath = getInstagramShareFile();
             if (mediaPath == null) {
                 return;
             }
@@ -310,9 +330,9 @@ public class ApkUtils {
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.apk_custom_share_alert, null);
         final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
-        TextView message = (TextView) view.findViewById(R.id.tv_rate_message);
+        TextView message = (TextView) view.findViewById(R.id.tv_share_message);
         message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_message), "Application", "Update", "ShareAlert", "Message", preferredLanguageString));
-        Button positiveBtn = (Button) view.findViewById(R.id.btn_rate);
+        Button positiveBtn = (Button) view.findViewById(R.id.btn_share);
         positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
                 HSApplication.getContext().getResources().getColor(R.color.custom_rate_alert_button_bg),
                 HSApplication.getContext().getResources().getColor(R.color.guide_bg_disable_color),
