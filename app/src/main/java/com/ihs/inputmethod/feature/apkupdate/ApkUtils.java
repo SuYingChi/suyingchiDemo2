@@ -282,7 +282,7 @@ public class ApkUtils {
         return false;
     }
 
-    public static String getShareFileDir() {
+    private static String getShareFileDir() {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             return Environment.getExternalStorageDirectory() + File.separator + HSApplication.getContext().getPackageName() + File.separator + "shareApp";
         }
@@ -290,11 +290,12 @@ public class ApkUtils {
         return null;
     }
 
-    public static String getInstagramShareFile() {
-        if (getShareFileDir() == null) {
+    private static String getInstagramShareFile() {
+        String shareFileDirPath = getShareFileDir();
+        if (shareFileDirPath == null) {
             return null;
         }
-        File file = new File(getShareFileDir(), "share_keyboard_to_instagram.jpg");
+        File file = new File(shareFileDirPath, "share_keyboard_to_instagram.jpg");
         if (!file.exists() || file.length() == 0) {
             file.getParentFile().mkdirs();
             HSFileUtils.copyFile(HSApplication.getContext().getResources().openRawResource(R.raw.share_keyboard_to_instagram), file);
@@ -302,6 +303,7 @@ public class ApkUtils {
         return file.getAbsolutePath();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static void shareKeyboardToInstagram(Context context) {
         Intent intent = HSApplication.getContext().getPackageManager().getLaunchIntentForPackage("com.instagram.android");
         if (intent != null) {
