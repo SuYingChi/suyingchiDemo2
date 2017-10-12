@@ -6,8 +6,6 @@
 	<dict>
 		<key>Application</key>
 		<dict>
-			<key>LaunchDelayTime</key>
-			<integer>4000</integer>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -16,8 +14,6 @@
 				<false/>
 			</dict>
 			<key>AutoSetKeyEnable</key>
-			<false/>
-			<key>UseNewLockScreen</key>
 			<false/>
 			<key>BoostPlus</key>
 			<dict>
@@ -468,8 +464,6 @@
 					<array/>
 				</dict>
 			</dict>
-			<key>LockerAutoRefreshAdsEnable</key>
-			<false/>
 			<key>FeaturesGuide</key>
 			<dict>
 				<key>ScreenFlashGuide</key>
@@ -594,8 +588,6 @@
 					<key>PackageNameExclude</key>
 					<array>
 						<string>android</string>
-						<string>facebook</string>
-						<string>com.whatsapp</string>
 					</array>
 					<key>Show</key>
 					<false/>
@@ -644,6 +636,8 @@
 					<true/>
 				</dict>
 			</dict>
+			<key>LaunchDelayTime</key>
+			<integer>4000</integer>
 			<key>LocalNotifications</key>
 			<array>
 				<dict>
@@ -1310,6 +1304,8 @@
 				<key>state</key>
 				<integer>1</integer>
 			</dict>
+			<key>LockerAutoRefreshAdsEnable</key>
+			<false/>
 			<key>Lucky</key>
 			<dict>
 				<key>ChanceIncrementPeriodSeconds</key>
@@ -1426,7 +1422,6 @@
 				<dict>
 					<key>SessionIndexOfDay</key>
 					<array>
-						<integer>6</integer>
 						<integer>10</integer>
 						<integer>20</integer>
 					</array>
@@ -2160,6 +2155,18 @@
 				<array>
 					<dict>
 						<key>name</key>
+						<string>Green Nebula</string>
+						<key>showNewMark</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Tropical Forest</string>
+						<key>showNewMark</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>Pink Leopard</string>
 						<key>showNewMark</key>
 						<true/>
@@ -2571,6 +2578,14 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>Green Nebula</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Tropical Forest</string>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>Pink Leopard</string>
 						<key>showNewMark</key>
 						<true/>
@@ -2705,6 +2720,12 @@
 					<dict>
 						<key>name</key>
 						<string>normal1</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Interstellar</string>
+						<key>showNewMark</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2872,6 +2893,12 @@
 					<dict>
 						<key>name</key>
 						<string>normal</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Sprinkles</string>
+						<key>showNewMark</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -3182,6 +3209,46 @@
 				<array>
 					<dict>
 						<key>apkUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/FutureTech.apk</string>
+						<key>bannerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/FutureTech.jpg</string>
+						<key>largePreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/FutureTech.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/futuretech.jpg</string>
+						<key>mediumPreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/FutureTech.jpg</string>
+						<key>showName</key>
+						<string>Future Tech</string>
+						<key>showNewMark</key>
+						<true/>
+						<key>themePkName</key>
+						<string>com.keyboard.theme.futuretech</string>
+						<key>zipName</key>
+						<string>futuretech</string>
+					</dict>
+					<dict>
+						<key>apkUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/KeyboardforOs11.apk</string>
+						<key>bannerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/KeyboardforOs11.jpg</string>
+						<key>largePreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/KeyboardforOs11.jpg</string>
+						<key>lockerImgUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/keyboardforos11.jpg</string>
+						<key>mediumPreviewUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/KeyboardforOs11.jpg</string>
+						<key>showName</key>
+						<string>Os11</string>
+						<key>showNewMark</key>
+						<true/>
+						<key>themePkName</key>
+						<string>com.keyboard.theme.keyboardforos11</string>
+						<key>zipName</key>
+						<string>KeyboardforOs11</string>
+					</dict>
+					<dict>
+						<key>apkUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/AmericanFootball.apk</string>
 						<key>bannerImgUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/AmericanFootball.jpg</string>
@@ -3211,11 +3278,11 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/lightning.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Lightning.jpg</string>
+						<key>showAnimatedMark</key>
+						<true/>
 						<key>showName</key>
 						<string>Lightning</string>
 						<key>showNewMark</key>
-						<true/>
-						<key>showAnimatedMark</key>
 						<true/>
 						<key>themePkName</key>
 						<string>com.keyboard.theme.lightning</string>
@@ -3233,10 +3300,10 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/lovebirds.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/LoveBirds.jpg</string>
-						<key>showName</key>
-						<string>Love Birds</string>
 						<key>showAnimatedMark</key>
 						<true/>
+						<key>showName</key>
+						<string>Love Birds</string>
 						<key>showNewMark</key>
 						<true/>
 						<key>themePkName</key>
@@ -3275,10 +3342,10 @@
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/flame.jpg</string>
 						<key>mediumPreviewUrl</key>
 						<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Flame.jpg</string>
-						<key>showName</key>
-						<string>Flame</string>
 						<key>showAnimatedMark</key>
 						<true/>
+						<key>showName</key>
+						<string>Flame</string>
 						<key>showNewMark</key>
 						<true/>
 						<key>themePkName</key>
@@ -4670,27 +4737,8 @@
 				<key>LatestVersionCode</key>
 				<integer>18</integer>
 			</dict>
-			<key>WhiteAppsList</key>
-			<array>
-				<string>com.facebook.orca</string>
-				<string>com.facebook.katana</string>
-				<string>com.instagram.android</string>
-				<string>com.whatsapp</string>
-				<string>com.twitter.android</string>
-				<string>com.skype.polaris</string>
-				<string>com.snapchat.android</string>
-				<string>com.pinterest</string>
-				<string>co.vine.android</string>
-				<string>com.tencent.mm</string>
-				<string>com.tumblr</string>
-				<string>com.linkedin.android</string>
-				<string>com.immomo.momo</string>
-				<string>jp.naver.line.android</string>
-				<string>com.google.android.apps.messaging</string>
-				<string>com.google.android.talk</string>
-				<string>kik.android</string>
-				<string>me.dingtone.app.im</string>
-			</array>
+			<key>UseNewLockScreen</key>
+			<false/>
 			<key>Wallpapers</key>
 			<array>
 				<dict>
@@ -5245,6 +5293,27 @@
 					<string>Others</string>
 				</dict>
 			</array>
+			<key>WhiteAppsList</key>
+			<array>
+				<string>com.facebook.orca</string>
+				<string>com.facebook.katana</string>
+				<string>com.instagram.android</string>
+				<string>com.whatsapp</string>
+				<string>com.twitter.android</string>
+				<string>com.skype.polaris</string>
+				<string>com.snapchat.android</string>
+				<string>com.pinterest</string>
+				<string>co.vine.android</string>
+				<string>com.tencent.mm</string>
+				<string>com.tumblr</string>
+				<string>com.linkedin.android</string>
+				<string>com.immomo.momo</string>
+				<string>jp.naver.line.android</string>
+				<string>com.google.android.apps.messaging</string>
+				<string>com.google.android.talk</string>
+				<string>kik.android</string>
+				<string>me.dingtone.app.im</string>
+			</array>
 		</dict>
 		<key>adAdapter</key>
 		<dict>
@@ -5409,19 +5478,6 @@
 		<dict>
 			<key>Smiley_A(NativeAds)Charging</key>
 			<dict>
-				<key>policy</key>
-				<dict>
-					<key>adCorner</key>
-					<dict>
-						<key>mode</key>
-						<string>allShow</string>
-					</dict>
-					<key>policybreaking</key>
-					<dict>
-						<key>mode</key>
-						<string>toast</string>
-					</dict>
-				</dict>
 				<key>autoRefresh</key>
 				<dict>
 					<key>enable</key>
@@ -5437,6 +5493,19 @@
 				<integer>0</integer>
 				<key>parallelList</key>
 				<array/>
+				<key>policy</key>
+				<dict>
+					<key>adCorner</key>
+					<dict>
+						<key>mode</key>
+						<string>allShow</string>
+					</dict>
+					<key>policybreaking</key>
+					<dict>
+						<key>mode</key>
+						<string>toast</string>
+					</dict>
+				</dict>
 				<key>preload</key>
 				<dict>
 					<key>inventory</key>
@@ -5542,7 +5611,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>21.2</real>
+								<real>21.199999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5902,19 +5971,6 @@
 			</dict>
 			<key>Smiley_A(NativeAds)Fuse</key>
 			<dict>
-				<key>policy</key>
-				<dict>
-					<key>adCorner</key>
-					<dict>
-						<key>mode</key>
-						<string>allShow</string>
-					</dict>
-					<key>policybreaking</key>
-					<dict>
-						<key>mode</key>
-						<string>toast</string>
-					</dict>
-				</dict>
 				<key>autoRefresh</key>
 				<dict>
 					<key>enable</key>
@@ -5930,6 +5986,19 @@
 				<integer>0</integer>
 				<key>parallelList</key>
 				<array/>
+				<key>policy</key>
+				<dict>
+					<key>adCorner</key>
+					<dict>
+						<key>mode</key>
+						<string>allShow</string>
+					</dict>
+					<key>policybreaking</key>
+					<dict>
+						<key>mode</key>
+						<string>toast</string>
+					</dict>
+				</dict>
 				<key>preload</key>
 				<dict>
 					<key>inventory</key>
@@ -6035,7 +6104,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>21.2</real>
+								<real>21.199999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6175,7 +6244,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17.7</real>
+								<real>17.699999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7478,7 +7547,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>19.7</real>
+								<real>19.699999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7514,7 +7583,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>19.3</real>
+								<real>19.300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9589,6 +9658,420 @@
 						<key>state</key>
 						<integer>2</integer>
 					</dict>
+					<key>ThemeContents</key>
+					<dict>
+						<key>custom_theme_backgrounds</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>Tropical Forest</string>
+								<key>showNewMark</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>Pink Leopard</string>
+								<key>showNewMark</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>Giant Panda</string>
+								<key>showNewMark</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>Rosy Galaxy</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fantasyland.jpg</string>
+								<key>name</key>
+								<string>Fantasyland</string>
+								<key>price</key>
+								<string>$0.99</string>
+								<key>showNewMark</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier31</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/immortal.jpg</string>
+								<key>name</key>
+								<string>Immortal</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier30</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mysteriousuniverse.jpg</string>
+								<key>name</key>
+								<string>Mysterious Universe</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier29</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fieryguitar.jpg</string>
+								<key>name</key>
+								<string>Fiery Guitar</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier28</string>
+								<key>name</key>
+								<string>Bunny</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier27</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/flare.jpg</string>
+								<key>name</key>
+								<string>Flare</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fallingstars.jpg</string>
+								<key>name</key>
+								<string>Falling Stars</string>
+								<key>rateToUnlock</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background30</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lightningfootball.jpg</string>
+								<key>name</key>
+								<string>Lightning Football</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background33</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background34</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/warmnight.jpg</string>
+								<key>name</key>
+								<string>Warm Night</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/autumnleaves.jpg</string>
+								<key>name</key>
+								<string>Autumn Leaves</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/moonlightride.jpg</string>
+								<key>name</key>
+								<string>Moonlight Ride</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier17</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/marshmallow.jpg</string>
+								<key>name</key>
+								<string>Marshmallow</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier12</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/kisses.jpg</string>
+								<key>name</key>
+								<string>Kisses</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier26</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/superhero.jpg</string>
+								<key>name</key>
+								<string>Superhero</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier24</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/donuts.jpg</string>
+								<key>name</key>
+								<string>Donuts</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier7</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/valentines.jpg</string>
+								<key>name</key>
+								<string>Valentines</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>2017NewYear</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier15</string>
+								<key>name</key>
+								<string>Burning Earth</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier2</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainbowswirl.jpg</string>
+								<key>name</key>
+								<string>Rainbow Swirl</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier10</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/diamond.jpg</string>
+								<key>name</key>
+								<string>Diamonds</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier6</string>
+								<key>name</key>
+								<string>Green Graffiti</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier21</string>
+								<key>name</key>
+								<string>Dolphins</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier5</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lasers.jpg</string>
+								<key>name</key>
+								<string>Lasers</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier11</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/babybanana.jpg</string>
+								<key>name</key>
+								<string>Baby Banana</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier14</string>
+								<key>name</key>
+								<string>Popsicles</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier1</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mountainbreeze.jpg</string>
+								<key>name</key>
+								<string>Mountain Breeze</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier3</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainyday.jpg</string>
+								<key>name</key>
+								<string>Rainy Day</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier22</string>
+								<key>name</key>
+								<string>Rainbow Beam</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier4</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/galaxy.jpg</string>
+								<key>name</key>
+								<string>Galaxy</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier16</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/crystalrainbow.jpg</string>
+								<key>name</key>
+								<string>Crystal Rainbow</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier13</string>
+								<key>name</key>
+								<string>Cherry Gelato</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier8</string>
+								<key>name</key>
+								<string>Comets</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier19</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/goldenpetal.jpg</string>
+								<key>name</key>
+								<string>Golden Petal</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier9</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/beachball.jpg</string>
+								<key>name</key>
+								<string>Beach Ball</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier20</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/desert.jpg</string>
+								<key>name</key>
+								<string>Desert</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background05</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background14</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background13</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background23</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background09</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background12</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background19</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background10</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background07</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background08</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background00</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background01</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background57</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background03</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background11</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background56</string>
+							</dict>
+						</array>
+					</dict>
 				</dict>
 			</dict>
 		</dict>
@@ -9825,6 +10308,420 @@
 						</array>
 						<key>state</key>
 						<integer>2</integer>
+					</dict>
+					<key>ThemeContents</key>
+					<dict>
+						<key>custom_theme_backgrounds</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>Tropical Forest</string>
+								<key>showNewMark</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>Pink Leopard</string>
+								<key>showNewMark</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>Giant Panda</string>
+								<key>showNewMark</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>Rosy Galaxy</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fantasyland.jpg</string>
+								<key>name</key>
+								<string>Fantasyland</string>
+								<key>price</key>
+								<string>$0.99</string>
+								<key>showNewMark</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier31</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/immortal.jpg</string>
+								<key>name</key>
+								<string>Immortal</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier30</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mysteriousuniverse.jpg</string>
+								<key>name</key>
+								<string>Mysterious Universe</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier29</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fieryguitar.jpg</string>
+								<key>name</key>
+								<string>Fiery Guitar</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier28</string>
+								<key>name</key>
+								<string>Bunny</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier27</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/flare.jpg</string>
+								<key>name</key>
+								<string>Flare</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fallingstars.jpg</string>
+								<key>name</key>
+								<string>Falling Stars</string>
+								<key>rateToUnlock</key>
+								<true/>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background30</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lightningfootball.jpg</string>
+								<key>name</key>
+								<string>Lightning Football</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background33</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background34</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/warmnight.jpg</string>
+								<key>name</key>
+								<string>Warm Night</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/autumnleaves.jpg</string>
+								<key>name</key>
+								<string>Autumn Leaves</string>
+							</dict>
+							<dict>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/moonlightride.jpg</string>
+								<key>name</key>
+								<string>Moonlight Ride</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier17</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/marshmallow.jpg</string>
+								<key>name</key>
+								<string>Marshmallow</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier12</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/kisses.jpg</string>
+								<key>name</key>
+								<string>Kisses</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier26</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/superhero.jpg</string>
+								<key>name</key>
+								<string>Superhero</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier24</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/donuts.jpg</string>
+								<key>name</key>
+								<string>Donuts</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier7</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/valentines.jpg</string>
+								<key>name</key>
+								<string>Valentines</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>2017NewYear</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier15</string>
+								<key>name</key>
+								<string>Burning Earth</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier2</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainbowswirl.jpg</string>
+								<key>name</key>
+								<string>Rainbow Swirl</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier10</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/diamond.jpg</string>
+								<key>name</key>
+								<string>Diamonds</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier6</string>
+								<key>name</key>
+								<string>Green Graffiti</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier21</string>
+								<key>name</key>
+								<string>Dolphins</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier5</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/lasers.jpg</string>
+								<key>name</key>
+								<string>Lasers</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier11</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/babybanana.jpg</string>
+								<key>name</key>
+								<string>Baby Banana</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier14</string>
+								<key>name</key>
+								<string>Popsicles</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier1</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/mountainbreeze.jpg</string>
+								<key>name</key>
+								<string>Mountain Breeze</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier3</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/rainyday.jpg</string>
+								<key>name</key>
+								<string>Rainy Day</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier22</string>
+								<key>name</key>
+								<string>Rainbow Beam</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier4</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/galaxy.jpg</string>
+								<key>name</key>
+								<string>Galaxy</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier16</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/crystalrainbow.jpg</string>
+								<key>name</key>
+								<string>Crystal Rainbow</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier13</string>
+								<key>name</key>
+								<string>Cherry Gelato</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier8</string>
+								<key>name</key>
+								<string>Comets</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier19</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/goldenpetal.jpg</string>
+								<key>name</key>
+								<string>Golden Petal</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier9</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/beachball.jpg</string>
+								<key>name</key>
+								<string>Beach Ball</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>iapID</key>
+								<string>com.keyboard.colorkeyboard.pid.background.tier20</string>
+								<key>lockerImgUrl</key>
+								<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/desert.jpg</string>
+								<key>name</key>
+								<string>Desert</string>
+								<key>price</key>
+								<string>$0.99</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background05</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background14</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background13</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background23</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background09</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background12</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background19</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background10</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background07</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background08</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background00</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background01</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background57</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background03</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background11</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>background56</string>
+							</dict>
+						</array>
 					</dict>
 				</dict>
 			</dict>
