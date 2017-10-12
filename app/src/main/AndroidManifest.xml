@@ -5,6 +5,8 @@
 
     <uses-sdk tools:overrideLibrary="com.facebook,com.facebook.shimmer,android.support.customtabs,com.facebook.ads,com.google.android.gms,com.mopub.mobileads.banner,com.mopub.mobileads.base,com.mopub.mobileads.native_static" />
 
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+
     <!-- permission add same with kika.2017.4.26 liuyu -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
