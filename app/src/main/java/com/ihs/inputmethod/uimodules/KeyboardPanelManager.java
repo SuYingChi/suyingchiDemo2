@@ -160,12 +160,13 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     public void showKeyboardPanel() {
         keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
 
-        if (HSPreferenceHelper.getDefault().getBoolean("eee", false)) {
+        if (HSPreferenceHelper.getDefault().getBoolean("show_emoji_panel", false)) {
             Handler handler = new Handler();
             handler.post(this::showEmojiPanel);
         } else {
             keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
         }
+        HSPreferenceHelper.getDefault().putBoolean("show_emoji_panel", false);
 //        showEmojiPanel();
     }
 

@@ -143,7 +143,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                         DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                                 sticker_download_preview.getDrawable(), success -> {
-                                    HSPreferenceHelper.getDefault().putBoolean("eee", true);
+                                    HSPreferenceHelper.getDefault().putBoolean("show_emoji_panel", true);
                                     HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 

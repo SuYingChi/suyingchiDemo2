@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -22,7 +23,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -49,16 +49,20 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
     private StickerPanelManager stickerPanelManager;
 
     private PlusButton plusButton;
+    private String currentTab;
 
     private ViewPager stickerPanelViewPager;
     private StickerViewPagerAdapter stickerViewPagerAdapter;
     private List<String> stickerNameList;
-    private INotificationObserver observer = new INotificationObserver() {
-        @Override
-        public void onReceive(String s, HSBundle hsBundle) {
-            HSLog.d("sticker regainDataAndNotifyDataSetChange...");
-            regainDataAndNotifyDataSetChange();
+    private INotificationObserver observer = (s, hsBundle) -> {
+        if (StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION.equals(s)) {
+            StickerGroup stickerGroup = (StickerGroup) hsBundle.getObject(StickerDataManager.STICKER_GROUP_ORIGINAL);
+            if (stickerGroup != null) {
+                currentTab = stickerGroup.getStickerGroupName();
+            }
         }
+        HSLog.d("sticker regainDataAndNotifyDataSetChange...");
+        regainDataAndNotifyDataSetChange();
     };
 
     private void regainDataAndNotifyDataSetChange() {
@@ -235,7 +239,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
     void onDataLoaded() {
         stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());
-        stickerTabAdapter.setCurrentTab(stickerPanelManager.getLastDownloadedTabName(), stickerPanelManager.getDefaultTab());
+        stickerTabAdapter.setCurrentTab(TextUtils.isEmpty(currentTab) ? stickerPanelManager.getDefaultTab() : currentTab, stickerPanelManager.getDefaultTab());
     }
 
     public void saveRecent() {
