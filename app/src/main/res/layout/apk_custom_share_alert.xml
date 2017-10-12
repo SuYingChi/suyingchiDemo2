@@ -19,11 +19,12 @@
         android:layout_below="@+id/iv_top_image"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="18.3dp"
+        android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="@string/custom_share_alert_message"
-        android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:textColor="#343434"
+        android:textSize="15.3sp" />
 
     <Button
         android:id="@+id/btn_share"
@@ -33,9 +34,9 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="8dp"
-        android:drawableStart="@drawable/ic_instagram"
+        android:layout_marginTop="23.3dp"
         android:drawableLeft="@drawable/ic_instagram"
+        android:drawableStart="@drawable/ic_instagram"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/custom_share_alert_button_text"
