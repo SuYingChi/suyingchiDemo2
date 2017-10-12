@@ -533,7 +533,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled()
                                     && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-                                ApkUtils.shareKeyboardToInstagram(fragment.getActivity());
+                                ApkUtils.showCustomShareAlert(fragment.getActivity(), null);
                                 return true;
                             }
 

@@ -345,7 +345,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled()
                                     && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-                                ApkUtils.shareKeyboardToInstagram(activity);
+                                ApkUtils.showCustomShareAlert(activity, null);
                                 return;
                             }
 

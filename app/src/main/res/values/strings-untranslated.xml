@@ -19,4 +19,6 @@
     <!-- In Call Theme -->
     <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
 
+    <string name="custom_share_alert_message" tools:ignore="Typos">Wanna unlock this item for FREE? \nJust share this keyboard on Instagram!</string>
+    <string name="custom_share_alert_button_text">Share this keyboard to Unlock</string>
 </resources>

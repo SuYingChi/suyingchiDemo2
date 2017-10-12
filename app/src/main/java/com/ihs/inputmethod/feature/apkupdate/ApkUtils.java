@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
@@ -299,6 +300,49 @@ public class ApkUtils {
             context.startActivity(shareIntent);
             HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).putBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, true);
         }
+    }
+
+    @SuppressLint("InflateParams")
+    public static void showCustomShareAlert(Context context, final View.OnClickListener shareButtonClickListener) {
+        String preferredLanguageString = Locale.getDefault().getLanguage();
+        HSLog.d("showCustomShareAlert preferredLanguageString: " + preferredLanguageString);
+
+        LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.apk_custom_share_alert, null);
+        final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
+        TextView message = (TextView) view.findViewById(R.id.tv_rate_message);
+        message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_message), "Application", "Update", "ShareAlert", "Message", preferredLanguageString));
+        Button positiveBtn = (Button) view.findViewById(R.id.btn_rate);
+        positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
+                HSApplication.getContext().getResources().getColor(R.color.custom_rate_alert_button_bg),
+                HSApplication.getContext().getResources().getColor(R.color.guide_bg_disable_color),
+                HSApplication.getContext().getResources().getDimension(R.dimen.apk_update_alert_button_radius)));
+        positiveBtn.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_button_text), "Application", "Update", "ShareAlert", "ButtonText", preferredLanguageString));
+        positiveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!CommonUtils.isNetworkAvailable(-1)) {
+                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                HSAnalytics.logEvent("customizeTheme_shareToUnlock_clicked");
+                shareKeyboardToInstagram(context);
+                if (shareButtonClickListener != null) {
+                    shareButtonClickListener.onClick(v);
+                }
+                alertDialog.dismiss();
+            }
+        });
+        ImageView closeIcon = (ImageView) view.findViewById(R.id.iv_close_image);
+        closeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+        HSAnalytics.logEvent("customizeTheme_shareToUnlock_show");
     }
 
     @SuppressLint("InflateParams")
