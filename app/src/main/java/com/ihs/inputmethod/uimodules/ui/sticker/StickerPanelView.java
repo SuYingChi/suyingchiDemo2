@@ -71,7 +71,6 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerTabAdapter.setTabNameList(stickerNameList);
         }
 
-
         stickerPanelManager.loadData();
     }
 
@@ -236,7 +235,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
     void onDataLoaded() {
         stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());
-        stickerTabAdapter.setCurrentTab(stickerPanelManager.getDefaultTab(), stickerPanelManager.getDefaultTab());
+        stickerTabAdapter.setCurrentTab(stickerPanelManager.getLastDownloadedTabName(), stickerPanelManager.getDefaultTab());
     }
 
     public void saveRecent() {

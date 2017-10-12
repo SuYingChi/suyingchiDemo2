@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.util.Log;
 import android.util.Pair;
 
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
@@ -47,7 +46,7 @@ public class StickerPanelManager {
         }
         stickerPanelItemGroups.clear();
         stickerPanelItemGroups.add(recentStickerPanelItems);
-        for (StickerGroup stickerGroup : getSortedExceptNeedDownloadStickerGroup()) {
+        for (StickerGroup stickerGroup : getSortedStickerGroup()) {
             StickerPanelItemGroup stickerPanelItemGroup = new StickerPanelItemGroup(stickerGroup.getStickerGroupName());
             for (Sticker sticker : stickerGroup.getStickerList()) {
                 stickerPanelItemGroup.addStickerPanelItem(new StickerPanelItem(sticker));
