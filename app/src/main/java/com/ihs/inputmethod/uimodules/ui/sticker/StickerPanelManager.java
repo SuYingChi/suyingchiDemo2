@@ -130,6 +130,31 @@ public class StickerPanelManager {
         return stickerSortedNameList;
     }
 
+    List<String> getSortedStickerGroupNameInKeyboardList() {
+        List<String> stickerSortedNameList = new ArrayList<>();
+        List<String> stickerBuildInNameList = new ArrayList<>();
+        List<String> stickerDownloadedNameList = new ArrayList<>();
+        List<String> stickerNeedDownloadNameList = new ArrayList<>();
+        List<StickerGroup> stickerGroupInKeyboardList = StickerDataManager.getInstance().getStickerGroupsInKeyboardList();
+        for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
+            if (stickerGroup.isInternalStickerGroup()) {
+                stickerBuildInNameList.add(stickerGroup.getStickerGroupName());
+            } else if (stickerGroup.isStickerGroupDownloaded()) {
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
+                stickerDownloadedNameList.add(stickerGroup.getStickerGroupName());
+            } else if (stickerGroupInKeyboardList.contains(stickerGroup)) {
+                stickerNeedDownloadNameList.add(stickerGroup.getStickerGroupName());
+            }
+        }
+        stickerSortedNameList.add(STICKER_RECENT);
+        stickerSortedNameList.addAll(stickerBuildInNameList);
+        stickerSortedNameList.addAll(stickerDownloadedNameList);
+        stickerSortedNameList.addAll(stickerNeedDownloadNameList);
+        return stickerSortedNameList;
+    }
+
     /**
      * 获取除了未下载的所有的StickerGroup名字
      * @return
@@ -168,6 +193,16 @@ public class StickerPanelManager {
     List<StickerGroup> getNeedDownloadStickerGroupList() {
         List<StickerGroup> stickerGroups = new ArrayList<>();
         for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
+            if (!stickerGroup.isInternalStickerGroup() && !stickerGroup.isStickerGroupDownloaded()) {
+                stickerGroups.add(stickerGroup);
+            }
+        }
+        return stickerGroups;
+    }
+
+    List<StickerGroup> getNeedDownloadStickerGroupInKeyboardList() {
+        List<StickerGroup> stickerGroups = new ArrayList<>();
+        for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupsInKeyboardList()) {
             if (!stickerGroup.isInternalStickerGroup() && !stickerGroup.isStickerGroupDownloaded()) {
                 stickerGroups.add(stickerGroup);
             }

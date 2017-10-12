@@ -24,6 +24,7 @@ import java.util.Map;
 public class StickerGroup {
 
     private final String stickerGroupName;
+    private boolean showInKeyboard = false;
     private String downloadDisplayName;
     private String stickerGroupPreviewImageUri;
     private String stickerGroupDownloadPreviewImageUri;
@@ -184,6 +185,14 @@ public class StickerGroup {
 
     public void setDownloadDisplayName(String downloadDisplayName) {
         this.downloadDisplayName = downloadDisplayName;
+    }
+
+    public void setShowInKeyboard(boolean showInKeyboard) {
+        this.showInKeyboard = showInKeyboard;
+    }
+
+    public boolean isShowInKeyboard() {
+        return showInKeyboard;
     }
 
     public String getStickerGroupPreviewImageUri() {

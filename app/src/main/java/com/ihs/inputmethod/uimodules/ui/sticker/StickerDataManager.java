@@ -32,10 +32,12 @@ public class StickerDataManager {
     private static final String PREFERENCE_STICKER_IS_FIRST_LOAD = "sp_sticker_is_first_load";
     private static StickerDataManager instance;
     private List<StickerGroup> stickerGroups;
+    private List<StickerGroup> stickerGroupsInKeyboard;
     private boolean isReady = false;
 
     private StickerDataManager() {
         stickerGroups = new ArrayList<>();
+        stickerGroupsInKeyboard = new ArrayList<>();
         loadStickersAsync();
     }
 
@@ -82,6 +84,16 @@ public class StickerDataManager {
             }
             stickerGroups = stickerGroupList;
 
+            for (StickerGroup stickerGroup : stickerGroups) {
+                if (stickerGroup.isShowInKeyboard() || stickerGroup.isInternalStickerGroup()) {
+                    if (!stickerGroupsInKeyboard.contains(stickerGroup)) {
+                        stickerGroupsInKeyboard.add(stickerGroup);
+                    }
+                }
+            }
+
+            HSLog.e("eee", "" + stickerGroupsInKeyboard.size());
+
             // 如果是第一次加载，则将StickerGroups中前两个位置置为new
             if (isFirstLoad() && stickerGroups.size() > 1) {
                 Set<String> firstNewStickerSet = new HashSet<>();
@@ -110,10 +122,14 @@ public class StickerDataManager {
         List<StickerGroup> stickerGroups = new ArrayList<>();
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
         for (Map<String, Object> map : stickerConfigList) {
+            Boolean showInKeyboard = (Boolean) map.get("KeyboardStickerGroupList");
             String stickerGroupName = (String) map.get("name");
             String stickerGroupDownloadDisplayName = (String) map.get("showName");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
+            if (showInKeyboard != null) {
+                stickerGroup.setShowInKeyboard(showInKeyboard);
+            }
             stickerGroups.add(stickerGroup);
         }
 
@@ -191,6 +207,14 @@ public class StickerDataManager {
             return Collections.emptyList();
         } else {
             return stickerGroups;
+        }
+    }
+
+    public List<StickerGroup> getStickerGroupsInKeyboardList() {
+        if (!isReady) {
+            return Collections.emptyList();
+        } else {
+            return stickerGroupsInKeyboard;
         }
     }
 

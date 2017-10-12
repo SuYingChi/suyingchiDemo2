@@ -67,11 +67,11 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
     private void regainDataAndNotifyDataSetChange() {
         if (stickerViewPagerAdapter != null) {
-            stickerViewPagerAdapter.setNeedDownloadStickerGroupList(stickerPanelManager.getNeedDownloadStickerGroupList());
+            stickerViewPagerAdapter.setNeedDownloadStickerGroupList(stickerPanelManager.getNeedDownloadStickerGroupInKeyboardList());
         }
         if (stickerTabAdapter != null) {
             stickerNameList.clear();
-            stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameList());
+            stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameInKeyboardList());
             stickerTabAdapter.setTabNameList(stickerNameList);
         }
 
@@ -104,7 +104,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         super.onFinishInflate();
         if (stickerTabAdapter == null) {
             stickerNameList = new ArrayList<>();
-            stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameList());
+            stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameInKeyboardList());
             stickerTabAdapter = new StickerTabAdapter(stickerNameList, this);
             stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
             stickerTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -141,7 +141,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         LayoutInflater inflater = LayoutInflater.from(HSApplication.getContext());
         View sticker_panel_first_page = inflater.inflate(R.layout.common_sticker_panel_first_page, null);
         stickerViewPagerAdapter = new StickerViewPagerAdapter(sticker_panel_first_page);
-        stickerViewPagerAdapter.setNeedDownloadStickerGroupList(stickerPanelManager.getNeedDownloadStickerGroupList());
+        stickerViewPagerAdapter.setNeedDownloadStickerGroupList(stickerPanelManager.getNeedDownloadStickerGroupInKeyboardList());
         stickerPanelViewPager = (ViewPager) findViewById(R.id.sticker_panel_view_pager);
         stickerPanelViewPager.setAdapter(stickerViewPagerAdapter);
         stickerPanelViewPager.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
@@ -155,7 +155,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             public void onPageSelected(int position) {
                 if (position != 0) { // 下载页之间的滑动
                     stickerTabRecyclerView.getLayoutManager().scrollToPosition(position + 1);
-                    final String stickerGroupName = stickerPanelManager.getNeedDownloadStickerGroupList().get(position - 1).getStickerGroupName();
+                    final String stickerGroupName = stickerPanelManager.getNeedDownloadStickerGroupInKeyboardList().get(position - 1).getStickerGroupName();
                     stickerTabAdapter.setTabSelected(stickerGroupName);
                 } else { //从下载页面滑到首页，先滑动到下载好的最后一项
                     stickerTabRecyclerView.getLayoutManager().scrollToPosition(0);
@@ -195,7 +195,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());
             setCurrentItemPosition(0, 0);
         } else if (StickerUtils.getStickerGroupByName(nextTab) != null && !StickerUtils.getStickerGroupByName(nextTab).isStickerGroupDownloaded()) { // 如果是需要下载的
-            List<StickerGroup> stickerGroups = stickerPanelManager.getNeedDownloadStickerGroupList();
+            List<StickerGroup> stickerGroups = stickerPanelManager.getNeedDownloadStickerGroupInKeyboardList();
             for (int i = 0; i < stickerGroups.size(); i++) {
                 if (stickerGroups.get(i).getStickerGroupName().equals(nextTab)) {
                     stickerPanelViewPager.setCurrentItem(i + 1);
