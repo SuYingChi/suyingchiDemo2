@@ -638,8 +638,11 @@
 					<true/>
 				</dict>
 			</dict>
-			<key>LaunchDelayTime</key>
-			<integer>4000</integer>
+			<key>CurrentTheme</key>
+			<dict>
+				<key>LaunchDelayTime</key>
+				<real>4000</real>
+			</dict>
 			<key>LocalNotifications</key>
 			<array>
 				<dict>
