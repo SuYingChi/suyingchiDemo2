@@ -70,6 +70,16 @@ public class RippleDrawableUtils {
         }
     }
 
+    public static Drawable getCompatCircleRippleDrawable(
+            int normalColor, float radius) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor, DEFAULT_RIPPLE_COLOR_LEVEL)),
+                    getCircleStateListDrawable(normalColor, -1, -1, radius), getCircleRippleMask(normalColor, radius));
+        } else {
+            return getCircleStateListDrawable(normalColor, getRippleColor(normalColor, DEFAULT_RIPPLE_COLOR_LEVEL), -1, radius);
+        }
+    }
+
     public static Drawable getContainDisableStatusCompatRippleDrawable(int normalColor, int disableColor, float radius) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return new RippleDrawable(ColorStateList.valueOf(getRippleColor(normalColor, 0.5f))
@@ -96,6 +106,12 @@ public class RippleDrawableUtils {
         shapeDrawable.getPaint().setColor(color);
         return shapeDrawable;
     }
+    private static Drawable getCircleRippleMask(int color, float radius) {
+        GradientDrawable shape = new GradientDrawable();
+        shape.setShape(GradientDrawable.OVAL);
+        shape.setColor(color);
+        return shape;
+    }
 
     public static StateListDrawable getStateListDrawable(
             int normalColor, int pressedColor, int disableColor, float radius) {
@@ -117,9 +133,35 @@ public class RippleDrawableUtils {
         return states;
     }
 
+    private static StateListDrawable getCircleStateListDrawable(
+            int normalColor, int pressedColor, int disableColor, float radius) {
+        StateListDrawable states = new StateListDrawable();
+        if (disableColor != -1) {
+            states.addState(new int[]{-android.R.attr.state_enabled},
+                    getCircleShapeDrawable(disableColor, radius));
+        }
+        if (pressedColor != -1) {
+            states.addState(new int[]{android.R.attr.state_pressed},
+                    getCircleShapeDrawable(pressedColor, radius));
+            states.addState(new int[]{android.R.attr.state_focused},
+                    getCircleShapeDrawable(pressedColor, radius));
+            states.addState(new int[]{android.R.attr.state_activated},
+                    getCircleShapeDrawable(pressedColor, radius));
+        }
+        states.addState(new int[]{},
+                getCircleShapeDrawable(normalColor, radius));
+        return states;
+    }
+
     public static GradientDrawable getShapeDrawable(int color, float radius) {
         GradientDrawable shape = new GradientDrawable();
         shape.setCornerRadius(radius);
+        shape.setColor(color);
+        return shape;
+    }
+    private static GradientDrawable getCircleShapeDrawable(int color, float radius) {
+        GradientDrawable shape = new GradientDrawable();
+        shape.setShape(GradientDrawable.OVAL);
         shape.setColor(color);
         return shape;
     }

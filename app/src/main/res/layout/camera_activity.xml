@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
@@ -46,28 +45,14 @@
 
 
         <com.ihs.inputmethod.uimodules.widget.CustomFontTextView
-            android:textColor="#ffffff"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:gravity="center"
             android:text="Take a Selfie"
+            android:textColor="#ffffff"
             android:textSize="18sp"
             android:textStyle="normal" />
-
-        <LinearLayout
-            android:id="@+id/switcher_holder"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".15"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/camera_switcher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/change_camera" />
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -96,21 +81,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal" />
 
         </HorizontalScrollView>
 
         <TextView
+            android:id="@+id/fill_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fill the oval space with your face"
-            android:textColor="#80000000"
-            android:textSize="14sp"
+            android:layout_below="@id/face_list"
+            android:background="@android:color/white"
             android:gravity="center"
             android:paddingTop="4dp"
-            android:background="@android:color/white"
-            android:layout_below="@id/face_list"
-            android:id="@+id/fill_text"/>
+            android:text="Fill the oval space with your face"
+            android:textColor="#80000000"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:id="@+id/container"
@@ -130,27 +115,43 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/gallery"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/show_picture"
-                    android:onClick="showGallery" />
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:onClick="showGallery"
+                    android:src="@drawable/ic_gallery" />
             </LinearLayout>
 
-            <Button
+            <ImageView
                 android:id="@+id/camera_click_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/camera_button"
-                android:onClick="takePicture" />
+                android:background="@drawable/camera_capture_button_bg"
+                android:onClick="takePicture"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_camera" />
 
-            <View
+            <LinearLayout
+                android:id="@+id/switcher_holder"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/camera_switcher"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_switch_camera" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -158,7 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@id/face_list"
+            android:layout_below="@id/fill_text"
             android:background="@android:color/white"
             android:gravity="center"
             android:orientation="horizontal"
@@ -168,30 +169,45 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="invisible">
 
                 <ImageView
+                    android:id="@+id/gallery2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/gallery2"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/show_picture"
                     android:onClick="showGallery" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/choose_pic_click_button"
+            <ImageView
+                android:id="@+id/confirm_make_face"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/facemoji_choose_pic"
-                android:onClick="synthesisImage" />
+                android:background="@drawable/camera_capture_button_bg"
+                android:layout_gravity="center"
+                android:onClick="synthesisImage"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_tick" />
 
-            <View
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="invisible" />
+                android:gravity="center">
 
+
+                <ImageView
+                    android:id="@+id/beauty_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:onClick="useBeauty"
+                    android:src="@drawable/ic_beauty" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

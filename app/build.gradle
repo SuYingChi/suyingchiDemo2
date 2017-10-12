@@ -9,7 +9,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -178,6 +178,7 @@ dependencies {
 
     compile "com.ihandy.iap:iap.gm:4.0.+"
 
+    compile project(':gpuimage')
     //ihs related
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')

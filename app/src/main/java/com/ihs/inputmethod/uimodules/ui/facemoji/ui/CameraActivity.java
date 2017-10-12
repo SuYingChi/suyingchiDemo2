@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.facemoji.ui;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -29,7 +31,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -56,6 +57,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import jp.co.cyberagent.android.gpuimage.GPUImage;
+import jp.co.cyberagent.android.gpuimage.MagicBeautyFilter;
 import pl.droidsonroids.gif.GifImageView;
 
 
@@ -63,6 +66,9 @@ public class CameraActivity extends HSAppCompatActivity {
     public static final String FACEMOJI_SAVED = "FACEMOJI_SAVED";
     public static final String FACE_CHANGED = "FACE_CHANGED";
     private static final int SAMPLE_SIZE = 8;
+    private boolean useBeautyNow = true;
+    private Bitmap srcBitmap;
+    private Bitmap beautyBitmap;
 
     private INotificationObserver mImeActionObserver = new INotificationObserver() {
         @Override
@@ -81,26 +87,33 @@ public class CameraActivity extends HSAppCompatActivity {
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            final ImageView maskView = (ImageView) findViewById(R.id.mask_view);
-            String index = maskView.getTag().toString();
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = SAMPLE_SIZE;
 
-            View faceTitleBar = findViewById(R.id.face_title_bar);
-            RelativeLayout.LayoutParams faceTitlePara = (RelativeLayout.LayoutParams) faceTitleBar.getLayoutParams();
+            Bitmap src = BitmapFactory.decodeByteArray(data, 0, data.length);
+            Bitmap des;
+            Matrix matrix = new Matrix();
 
-            final Camera.Parameters parameters = camera.getParameters();
+            //adjust picture
+            if (currentCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                //front camera   scale and rotate picture
+                matrix.postTranslate(src.getWidth(), 0);
+                matrix.setScale(-1, 1);
+                Bitmap modifiedBitmap = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+                src.recycle();
 
-            int cropHeight1 = parameters.getPictureSize().width * faceTitlePara.height / parameters.getPreviewSize().width;
-            int cropHeight2 = faceTitlePara.height;
-            int cropHeight3 = parameters.getPictureSize().width * faceTitlePara.height / surfaceView.getHeight();
-            int cropHeight4 = parameters.getPictureSize().width * faceTitlePara.height / DisplayUtils.getScreenHeightForContent();
+                matrix.reset();
+                matrix.setRotate(getPreviewDegree(), modifiedBitmap.getWidth() / 2, modifiedBitmap.getHeight() / 2);
+                des = Bitmap.createBitmap(modifiedBitmap, 0, 0, modifiedBitmap.getWidth(), modifiedBitmap.getHeight(), matrix, true);
+                modifiedBitmap.recycle();
+            } else {
+                //back camera  rotate picture
+                matrix.setRotate(getPreviewDegree(), src.getWidth() / 2, src.getHeight() / 2);
+                des = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+                src.recycle();
+            }
 
-            int cropHeight = (int) (4.0f / (1.0f / cropHeight1 + 1.0f / cropHeight2 + 1.0f / cropHeight3 + 1.0f / cropHeight4));
-
-            new PictureProcessor().execute(data,
-                    index.getBytes(),
-                    String.valueOf(cropHeight).getBytes());
-
-
+            synthesisingPhoto(des);
         }
     }
 
@@ -300,7 +313,7 @@ public class CameraActivity extends HSAppCompatActivity {
     private Dialog mCreatingDialog;
     private GifImageView mCreatingView;
     private boolean isSynthesisingImage;
-    private Button choose_pic_click_button;
+    private ImageView confirmMakeFaceBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -311,7 +324,13 @@ public class CameraActivity extends HSAppCompatActivity {
         }
         setContentView(R.layout.camera_activity);
         hideStatusBar();
+        initView();
 
+
+        HSGlobalNotificationCenter.addObserver(FACEMOJI_SAVED, mImeActionObserver);
+    }
+
+    private void initView() {
         // 照相预览界面
         surfaceView = (SurfaceView) findViewById(R.id.preview);
         surfaceView.getHolder().setKeepScreenOn(true);// 屏幕常亮
@@ -320,8 +339,8 @@ public class CameraActivity extends HSAppCompatActivity {
         photoView = (ImageView) findViewById(R.id.photo_view);
         photoView.setVisibility(View.INVISIBLE);
 
-        choose_pic_click_button = (Button) findViewById(R.id.choose_pic_click_button);
-        choose_pic_click_button.setOnClickListener(new View.OnClickListener() {
+        confirmMakeFaceBtn = (ImageView) findViewById(R.id.confirm_make_face);
+        confirmMakeFaceBtn.setOnClickListener(new View.OnClickListener() {
                                                        @Override
                                                        public void onClick(View v) {
                                                            showProcessingDialog();
@@ -338,12 +357,6 @@ public class CameraActivity extends HSAppCompatActivity {
         RelativeLayout.LayoutParams faceTitlePara = (RelativeLayout.LayoutParams) faceTitleBar.getLayoutParams();
         faceTitlePara.height = (DisplayUtils.getScreenHeightForContent() - DisplayUtils.getStatusBarHeight(getWindow())) / 10;
         faceTitleBar.setLayoutParams(faceTitlePara);
-
-        ImageView switcher = (ImageView) findViewById(R.id.camera_switcher);
-        LinearLayout.LayoutParams switcherPara = (LinearLayout.LayoutParams) switcher.getLayoutParams();
-        switcherPara.height = (int) (getResources().getDrawable(R.drawable.change_camera).getIntrinsicHeight() * 0.8f);
-        switcherPara.width = (int) (getResources().getDrawable(R.drawable.change_camera).getIntrinsicWidth() * 0.8f);
-        switcher.setLayoutParams(switcherPara);
 
         View switcherHolder = findViewById(R.id.switcher_holder);
         switcherHolder.setOnClickListener(new View.OnClickListener() {
@@ -402,19 +415,15 @@ public class CameraActivity extends HSAppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.fill_text);
         RelativeLayout.LayoutParams textPara = (RelativeLayout.LayoutParams) textView.getLayoutParams();
 
+        int captureBtnHeight = (int) (0.65f * (screenHeight - statusBarHeight - faceTitlePara.height - lp.height - scrollViewPara.height - textPara.height));
 
-        Button camera = (Button) findViewById(R.id.camera_click_button);
+        View camera = findViewById(R.id.camera_click_button);
         LinearLayout.LayoutParams cameraPara = (LinearLayout.LayoutParams) camera.getLayoutParams();
-        cameraPara.height = (int) (0.65f * (screenHeight - statusBarHeight - faceTitlePara.height - lp.height - scrollViewPara.height - textPara.height));
-        cameraPara.width = cameraPara.height;
+        cameraPara.height = captureBtnHeight;
+        cameraPara.width = captureBtnHeight;
+        camera.setBackgroundDrawable(com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getCompatCircleRippleDrawable(getResources().getColor(R.color.colorPrimary), 0));
         camera.setLayoutParams(cameraPara);
         camera.setClickable(true);
-
-        ImageView gallery = (ImageView) findViewById(R.id.gallery);
-        LinearLayout.LayoutParams galleryPara = (LinearLayout.LayoutParams) gallery.getLayoutParams();
-        galleryPara.height = (int) (0.25f * (screenHeight - statusBarHeight - faceTitlePara.height - lp.height - scrollViewPara.height - textPara.height));
-        galleryPara.width = galleryPara.height * gallery.getBackground().getIntrinsicWidth() / gallery.getBackground().getIntrinsicHeight();
-        gallery.setLayoutParams(galleryPara);
 
         ImageView gallery2 = (ImageView) findViewById(R.id.gallery2);
         LinearLayout.LayoutParams galleryPara2 = (LinearLayout.LayoutParams) gallery2.getLayoutParams();
@@ -422,21 +431,21 @@ public class CameraActivity extends HSAppCompatActivity {
         galleryPara2.width = galleryPara2.height * gallery2.getBackground().getIntrinsicWidth() / gallery2.getBackground().getIntrinsicHeight();
         gallery2.setLayoutParams(galleryPara2);
 
-        Button choosePic = (Button) findViewById(R.id.choose_pic_click_button);
+        View choosePic = findViewById(R.id.confirm_make_face);
         LinearLayout.LayoutParams choosePicPram = (LinearLayout.LayoutParams) choosePic.getLayoutParams();
-        choosePicPram.height = (int) (0.65f * (screenHeight - statusBarHeight - faceTitlePara.height - lp.height - scrollViewPara.height - textPara.height));
-        choosePicPram.width = choosePicPram.height;
+        choosePicPram.height = captureBtnHeight;
+        choosePicPram.width = captureBtnHeight;
         choosePic.setLayoutParams(choosePicPram);
+        choosePic.setBackgroundDrawable(com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getCompatCircleRippleDrawable(getResources().getColor(R.color.colorPrimary), 0));
 
         initFaceListView();
 
         surfaceView.setVisibility(View.VISIBLE);
         photoView.setVisibility(View.INVISIBLE);
+        photoView.setOnTouchListener(new FaceTouchListener(photoView));
         photoView.setImageDrawable(null);
         View synthesis = findViewById(R.id.synthesis_picture);
         synthesis.setVisibility(View.INVISIBLE);
-
-        HSGlobalNotificationCenter.addObserver(FACEMOJI_SAVED, mImeActionObserver);
     }
 
     @Override
@@ -526,10 +535,7 @@ public class CameraActivity extends HSAppCompatActivity {
 
                 //压缩图片到屏幕尺寸
                 Bitmap bitmap = BitmapUtils.compressBitmap(filePath, DisplayUtils.getScreenWidthForContent(), DisplayUtils.getScreenHeightForContent());
-
-                photoView.setImageBitmap(bitmap);
-                photoView.setOnTouchListener(new FaceTouchListener(photoView));
-
+                synthesisingPhoto(bitmap);
                 break;
             default:
                 break;
@@ -883,9 +889,38 @@ public class CameraActivity extends HSAppCompatActivity {
             startActivityForResult(openAlbumIntent, CameraActivity.SELECT_PIC);
         }
 
+        releaseCamera();
+    }
+
+    private void synthesisingPhoto(Bitmap bitmap) {
+        ImageView beautyBtn = (ImageView) findViewById(R.id.beauty_button);
+        Drawable beautyDrawable = getResources().getDrawable(R.drawable.ic_beauty);
+        DrawableCompat.setTintList(beautyDrawable, new ColorStateList(
+                new int[][]
+                        {
+                                new int[]{android.R.attr.state_selected},
+                                new int[]{}
+                        },
+                new int[]
+                        {
+                                getResources().getColor(R.color.colorPrimary),
+                                Color.GRAY,
+                        }
+        ));
+        beautyBtn.setImageDrawable(beautyDrawable);
+        beautyBtn.setSelected(useBeautyNow);
+
+        GPUImage gpuImage = new GPUImage(CameraActivity.this);
+        MagicBeautyFilter magicBeautyFilter = new MagicBeautyFilter(CameraActivity.this);
+        magicBeautyFilter.setBeautyLevel(3);
+        gpuImage.setFilter(magicBeautyFilter);
+        srcBitmap = bitmap;
+        beautyBitmap = gpuImage.getBitmapWithFilterApplied(srcBitmap);
+
+        photoView.setImageMatrix(new Matrix());
+        photoView.setImageBitmap(useBeautyNow?beautyBitmap:srcBitmap);
         photoView.setVisibility(View.VISIBLE);
 
-        releaseCamera();
         View synthesis = findViewById(R.id.synthesis_picture);
         synthesis.setVisibility(View.VISIBLE);
         View switcherHolder = findViewById(R.id.switcher_holder);
@@ -901,7 +936,7 @@ public class CameraActivity extends HSAppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    synthesisImage(choose_pic_click_button);
+                    synthesisImage(confirmMakeFaceBtn);
                     break;
             }
         }
@@ -956,5 +991,11 @@ public class CameraActivity extends HSAppCompatActivity {
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         isSynthesisingImage = false;
+    }
+
+    public void useBeauty(View v) {
+        useBeautyNow = !useBeautyNow;
+        v.setSelected(useBeautyNow);
+        photoView.setImageBitmap(useBeautyNow?beautyBitmap:srcBitmap);
     }
 }
