@@ -84,7 +84,7 @@ public class DownloadUtils {
     }
 
     public void startForegroundDownloading(Context context, final String objectName, final String filePath, final String downloadUrl,
-                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener, boolean showInDialog) {
         HSHttpConnection connection;
         this.objectName = objectName;
         this.filePath = filePath;
@@ -110,9 +110,20 @@ public class DownloadUtils {
                         onAdBufferingListener.onDismiss(downloadSuccess);
                     }
                 }, 2000, false);
+//        if (showInDialog) {
         adLoadingView.showInDialog();
+//        } else {
+//            HSInputMethod.getInputArea().addView(adLoadingView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+//            HSInputMethodService.getInstance().setVisibleTopY(DisplayUtils.getScreenHeightPixels() - adLoadingView.getRootViewHeight() >> 1);
+//        }
+
 
         initConnection(resources, adLoadingView, connection);
         adLoadingView.setTag(connection);
+    }
+
+    public void startForegroundDownloading(Context context, final String objectName, final String filePath, final String downloadUrl,
+                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+        startForegroundDownloading(context, objectName, filePath, downloadUrl, thumbnailDrawable, onAdBufferingListener, true);
     }
 }

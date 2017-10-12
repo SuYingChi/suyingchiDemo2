@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.utils.DownloadUtils;
@@ -142,10 +143,11 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                         DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                                 sticker_download_preview.getDrawable(), success -> {
+                                    HSPreferenceHelper.getDefault().putBoolean("eee", true);
                                     HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
-                                });
+                                }, false);
                     });
             container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return stickerDownloadView;
