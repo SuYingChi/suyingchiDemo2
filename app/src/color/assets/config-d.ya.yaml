@@ -2,7 +2,7 @@ libCommons:
   RemoteConfig:
     UpdateInterval: 10
     PlistFile: "Local.kb"
-    PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-colorkeyboard-2.4.0.kb"
+    PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-colorkeyboard-2.4.1.kb"
   Analytics:
       FlurryKey: "GTJN395TKWN6XXXXXXXX"
       FacebookID: "910238615719294"
@@ -39,7 +39,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.kb"
-    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/colorkeyboard-2.4.0-alerts.kb"
+    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/colorkeyboard-2.4.1-alerts.kb"
 
 libIAP:
   Verify:
