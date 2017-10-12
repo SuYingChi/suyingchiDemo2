@@ -36,6 +36,8 @@ import com.ihs.keyboardutils.utils.ToastUtils;
 
 import java.util.ArrayList;
 
+import static com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity.CALL_ASSISTANT_HAS_SWITCHED_ON;
+
 public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
     public static final String TAG = InCallThemePreviewActivity.class.getSimpleName();
@@ -162,9 +164,8 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
     private void initThemesView() {
         final Type themeType = (Type) getIntent().getSerializableExtra("CallThemeType");
-        int themeId = themeType.getValue();
 
-        mThemeCurrentSelectedId = themeId;
+        mThemeCurrentSelectedId = themeType.getValue();
 
         initThemeAnimation(themeType);
 
@@ -172,11 +173,17 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
             @Override
             public void onClick(View v) {
                 HSAnalytics.logEvent("app_callflash_applied", "themeName", themeType.getName());
-                CPSettings.setScreenFlashModuleEnabled(true);
+                enableCallFlash();
                 HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeType.getValue());
                 ToastUtils.showToast(R.string.interstitial_ad_title_after_try_keyboard);
             }
         });
+    }
+
+    private void enableCallFlash() {
+        HSPreferenceHelper.getDefault().putBoolean(CALL_ASSISTANT_HAS_SWITCHED_ON, true);
+        CPSettings.setScreenFlashModuleEnabled(true);
+        CPSettings.setCallAssistantModuleEnabled(true);
     }
 
     private void initThemeAnimation(final Type themeType) {
