@@ -10,6 +10,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerModel;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class StickerDataManager {
     public static final String STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION = "sticker_data_change_finish";
     public static final String STICKER_GROUP_ORIGINAL = "sticker_group_original_position";
     public static final String PREFERENCE_KEY_NEW_STICKER_SET = "sp_key_new_sticker_set";
-    private static final String PREFERENCE_SHOW_NEW_TIP_STATE = "sp_show_new_tip_state";
     private static final String PREFERENCE_STICKER_IS_FIRST_LOAD = "sp_sticker_is_first_load";
     private static StickerDataManager instance;
     private List<StickerGroup> stickerGroups;
@@ -164,11 +164,11 @@ public class StickerDataManager {
     }
 
     public void saveShowNewTipState(boolean flag) {
-        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putBoolean(PREFERENCE_SHOW_NEW_TIP_STATE, flag).commit();
+        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putBoolean(Constants.PREFERENCE_SHOW_NEW_TIP_STATE, flag).commit();
     }
 
     public boolean isShowNewTipState() {
-        return PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean(PREFERENCE_SHOW_NEW_TIP_STATE, false);
+        return PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean(Constants.PREFERENCE_SHOW_NEW_TIP_STATE, false);
     }
 
 

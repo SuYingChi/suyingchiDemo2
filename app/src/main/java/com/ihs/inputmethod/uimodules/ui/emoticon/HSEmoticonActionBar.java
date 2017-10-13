@@ -6,13 +6,16 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,7 +33,9 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanel;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -96,15 +101,40 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                 HSTextPanel.class
         };
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
+        final int actionBarAmount = panelNames.length;
         for (int i = 0; i < panelNames.length; i++) {
             final String panelName = panelNames[i];
             final Class<?> clazz = panelClassNames[i];
             final ImageView btn = getBtnImage(panelName);
             final LayoutParams params = new LayoutParams(0, height, 1.0f);
+            final int actionBarWidth = (getContext().getResources().getDisplayMetrics().widthPixels - HSDisplayUtils.dip2px(56) * 2) / actionBarAmount;
+
+            FrameLayout wrapLayout = new FrameLayout(getContext());
             params.gravity = Gravity.CENTER_VERTICAL;
-            addView(btn, params);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, height);
+            layoutParams.gravity = Gravity.CENTER;
+            wrapLayout.addView(btn, layoutParams);
             btn.setTag(panelName);
             btn.setOnClickListener(this);
+
+            if (TextUtils.equals(panelName, "sticker") &&
+                    (StickerUtils.isFirstKeyboardAppearAndNotClick() || StickerDataManager.getInstance().isShowNewTipState())) {
+                View newTipView = new View(getContext());
+                GradientDrawable redPointDrawable = new GradientDrawable();
+                redPointDrawable.setColor(Color.RED);
+                redPointDrawable.setShape(GradientDrawable.OVAL);
+                newTipView.setBackgroundDrawable(redPointDrawable);
+
+                int width = HSDisplayUtils.dip2px(5);
+                int dotHeight = HSDisplayUtils.dip2px(5);
+                layoutParams = new FrameLayout.LayoutParams(width, dotHeight);
+                layoutParams.topMargin = height * 4 / 15;
+                layoutParams.leftMargin = actionBarWidth / 2 + height / 5;
+                wrapLayout.addView(newTipView, layoutParams);
+            }
+
+            addView(wrapLayout, params);
+
             panels.put(panelName, clazz);
             btnMap.put(clazz, btn);
         }

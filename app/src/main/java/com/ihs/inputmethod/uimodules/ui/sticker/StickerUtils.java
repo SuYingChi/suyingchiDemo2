@@ -24,8 +24,10 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
@@ -382,5 +384,15 @@ public class StickerUtils {
             HSLog.e("tag sticker suggestion name wrong format");
             return null;
         }
+    }
+
+    public static void saveFirstKeyboardAppearAndNotClickState(boolean b) {
+        HSPreferenceHelper helper = HSPreferenceHelper.getDefault();
+        helper.putBoolean(Constants.PREFERENCE_FIRST_KEYBOARD_APPEAR_NOT_CLICK_STICKER_NEW_STATE, b);
+    }
+
+    public static boolean isFirstKeyboardAppearAndNotClick() {
+        HSPreferenceHelper helper= HSPreferenceHelper.getDefault();
+        return helper.getBoolean(Constants.PREFERENCE_FIRST_KEYBOARD_APPEAR_NOT_CLICK_STICKER_NEW_STATE, true);
     }
 }

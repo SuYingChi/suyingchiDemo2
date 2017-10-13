@@ -116,7 +116,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                     bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INNER_PAGE_TAB, KeyboardFragment.TAB_STICKER);
                     HSInputMethod.hideWindow();
                     plusButton.hideNewTip();
-                    plusButton.savefirstKeyboardAppearAndNotClickState(false);
+                    StickerUtils.saveFirstKeyboardAppearAndNotClickState(false);
                     StickerDataManager.getInstance().saveShowNewTipState(false);
 
                     new Handler().postDelayed(new Runnable() {

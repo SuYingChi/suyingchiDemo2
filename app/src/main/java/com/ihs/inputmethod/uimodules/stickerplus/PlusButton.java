@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -48,7 +48,7 @@ public class PlusButton extends FrameLayout {
         plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
         addView(plusImage);
 
-        if (isFirstKeyboardAppearAndNotClick()) {// 控制点没有点击，如果点击了，则不再显示，默认情况是未点击的时候，是显示的；同时也保证了键盘第一次出现的时候是显示红点的
+        if (StickerUtils.isFirstKeyboardAppearAndNotClick()) {// 控制点没有点击，如果点击了，则不再显示，默认情况是未点击的时候，是显示的；同时也保证了键盘第一次出现的时候是显示红点的
             showNewTip();
         } else if (StickerDataManager.getInstance().isShowNewTipState()) { // 有没有更新，如果更新了则显示；没有更新，则不显示
             showNewTip();
@@ -85,17 +85,6 @@ public class PlusButton extends FrameLayout {
             newTipView = null;
         }
     }
-
-    public void savefirstKeyboardAppearAndNotClickState(boolean b) {
-        HSPreferenceHelper helper = HSPreferenceHelper.getDefault();
-        helper.putBoolean(PREFERENCE_FIRST_KEYBOARD_APPEAR_NOT_CLICK_STICKER_NEW_STATE, b);
-    }
-
-    private boolean isFirstKeyboardAppearAndNotClick() {
-        HSPreferenceHelper helper= HSPreferenceHelper.getDefault();
-        return helper.getBoolean(PREFERENCE_FIRST_KEYBOARD_APPEAR_NOT_CLICK_STICKER_NEW_STATE, true);
-    }
-
 
 }
 
