@@ -535,7 +535,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled()
                                     && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-                                ApkUtils.showCustomShareAlert(new View.OnClickListener() {
+                                ApkUtils.showCustomShareAlert(fragment.getActivity(), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
