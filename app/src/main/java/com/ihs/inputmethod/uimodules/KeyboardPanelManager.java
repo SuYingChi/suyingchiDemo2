@@ -341,8 +341,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
             @Override
             public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
-                if (HSConfig.optBoolean(false, "Application", "KeyboardToolBar", "GooglePlay", "ShowCameraAd")) {
-                    cameraAdInfoList = (List<Map<String, Object>>) HSConfig.getList("Application", "KeyboardToolBar", "GooglePlay", "CameraAd");
+                if (HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowCameraAd")) {
+                    cameraAdInfoList = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "CameraAd");
 
                     Map<String, Object> item = cameraAdInfoList.get(random.nextInt(cameraAdInfoList.size()));
                     gpAdAdapter.addCameraInfo(item);
@@ -363,7 +363,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
-                || !HSConfig.optBoolean(true, "Application", "KeyboardToolBar", "GooglePlay", "ShowAd")
+                || !HSConfig.optBoolean(true, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowAd")
                 || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")) {
             return;
         }

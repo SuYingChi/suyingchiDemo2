@@ -33,8 +33,6 @@ public final class MediaShareUtils {
     public static final String MIME_MP4 = "video/mpeg";
 
     // remote config path
-    private static final String RMTCFG_KEY_L1_APPLICATION = "Application";
-    private static final String RMTCFG_KEY_L2_SEND_STRATEGY = "SendStrategy";
     private static final String RMTCFG_KEY_L4_PACKAGE_NAME = "PackageName";
     private static final String RMTCFG_KEY_L4_SEND_MODE = "SendMode";
     private static final String RMTCFG_KEY_L4_SOURCE_FORMAT = "SourceFormat";
@@ -44,7 +42,7 @@ public final class MediaShareUtils {
     private static final String[] SUPPORTTED_PACKAGE_NAMES = { PACKAGE_NAME_ANDROID_MMS };
 
     public static Map<String, Object> getShareModeMap(final String packageName) {
-        final List<?> smList = HSConfig.getList(RMTCFG_KEY_L1_APPLICATION, RMTCFG_KEY_L2_SEND_STRATEGY);
+        final List<?> smList = HSConfig.getList("Application", "StickersGifs", "SendStrategy");
         for (Object o : smList) {
             final String supportPackageName = HSMapUtils.getString((Map<String, ?>) o, RMTCFG_KEY_L4_PACKAGE_NAME);
             if (supportPackageName.equals(packageName)) {

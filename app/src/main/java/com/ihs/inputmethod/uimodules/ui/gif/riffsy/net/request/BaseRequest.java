@@ -24,7 +24,7 @@ public class BaseRequest {
 
 	public String getUrl(){
 		if(addedParams!=null&&addedParams.length()>0){
-			final String keyValue= HSConfig.optString(REQUEST_VALUE_KEY,"Application","RiffsyKey");
+			final String keyValue= HSConfig.optString(REQUEST_VALUE_KEY,"Application", "StickersGifs", "RiffsyKey");
 			addedParams.append("&").append(REQUEST_KEY_KEY).append("=").append(keyValue);
 			addedParams.append("&").append(REQUEST_KEY_LOCALE).append("=").append(LanguageDao.getCurrentLanguageForDB());
 			final String strParams=addedParams.toString();
@@ -41,7 +41,7 @@ public class BaseRequest {
 
 	public BaseRequest(final UICallback callback) {
 		this.callback=callback;
-		final String keyValue= HSConfig.optString(REQUEST_VALUE_KEY,"Application","RiffsyKey");
+		final String keyValue= HSConfig.optString(REQUEST_VALUE_KEY,"Application", "StickersGifs", "RiffsyKey");
 		params.put(REQUEST_KEY_KEY, keyValue);
 		params.put(REQUEST_KEY_LOCALE, LanguageDao.getCurrentLanguageForDB());
 	}

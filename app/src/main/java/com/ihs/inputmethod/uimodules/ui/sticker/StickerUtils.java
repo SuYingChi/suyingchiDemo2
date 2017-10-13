@@ -361,7 +361,7 @@ public class StickerUtils {
         if (map.containsKey(packageName)) {
             return map.get(packageName);
         } else {
-            List<Map<String, Object>> configList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerBackground");
+            List<Map<String, Object>> configList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickersGifs", "Sticker", "StickerBackground");
             for (Map<String, Object> configMap : configList) {
                 String configPackageName = (String) configMap.get("packageName");
                 if (configPackageName.equals(packageName)) {

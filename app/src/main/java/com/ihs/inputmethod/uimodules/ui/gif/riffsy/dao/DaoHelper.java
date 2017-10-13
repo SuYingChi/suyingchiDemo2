@@ -20,9 +20,6 @@ import java.util.List;
  * Created by dsapphire on 16/1/20.
  */
 public final class DaoHelper {
-	private static final String APPLICATION = "Application";
-	private static final String CONFIG = "GifConfig";
-	private static final String INTERVAL_IN_HOUR = "UpdateIntervalInHour";
 	private static final float UPDATE_INTERVAL_IN_HOUR_DEFAULT = 2.0f;
 
 	private static DaoHelper instance;
@@ -97,7 +94,7 @@ public final class DaoHelper {
 
 
 	public boolean isRequestOutOfDate(String request){
-		float intervalInHour = HSConfig.optFloat(UPDATE_INTERVAL_IN_HOUR_DEFAULT, APPLICATION, CONFIG, INTERVAL_IN_HOUR);
+		float intervalInHour = HSConfig.optFloat(UPDATE_INTERVAL_IN_HOUR_DEFAULT, "Application", "StickersGifs", "GifConfig", "UpdateIntervalInHour");
 		final long last= RequestDao.getCurrentLanguageLastUpdateTime(request);
 		final long now=System.currentTimeMillis();
 		return now - last > intervalInHour * 60 * 60 * 1000;

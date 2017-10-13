@@ -108,7 +108,7 @@ public class StickerDataManager {
     private List<StickerGroup> loadStickers() {
 
         List<StickerGroup> stickerGroups = new ArrayList<>();
-        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickerGroupList");
+        List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickersGifs", "Sticker", "StickerGroupList");
         for (Map<String, Object> map : stickerConfigList) {
             String stickerGroupName = (String) map.get("name");
             String stickerGroupDownloadDisplayName = (String) map.get("showName");

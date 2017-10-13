@@ -128,8 +128,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             final boolean showAd = HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardEmojiAd", "ShowAd");
             if (showAd) {
                 final boolean showIconAd = HSConfig.optBoolean(true, "Application", "NativeAds", "ShowIconAd");
-                final boolean hideAdTitle = HSConfig.optBoolean(false, "Application", "KeyboardEmoji", "HideAdTitle");
-                final LayoutParams params = new LayoutParams(0, height, hideAdTitle ? 1.0f : 1.6f);
+                final LayoutParams params = new LayoutParams(0, height, 1.0f);
                 params.gravity = Gravity.CENTER_VERTICAL;
                 final RelativeLayout adContainer = new RelativeLayout(getContext());
                 adContainer.setTag("NativeAd");
@@ -149,7 +148,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                 loadingImageView.setImageDrawable(drawable);
 
                 int adHeight = height - HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
-                final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(hideAdTitle ? adHeight : ViewGroup.LayoutParams.MATCH_PARENT, adHeight);
+                final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(adHeight, adHeight);
                 adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                 adContainer.addView(flashAdContainer, adLayoutParams);
                 flashAdContainer.addView(adLoadingView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -162,9 +161,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                             if (!showIconAd) {
                                 adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
                             }
-                            if (hideAdTitle) {
-                                adLayoutView.findViewById(R.id.ad_title).setVisibility(GONE);
-                            }
+                            adLayoutView.findViewById(R.id.ad_title).setVisibility(GONE);
                             adView = new KCNativeAdView(HSApplication.getContext());
                             adView.setAdLayoutView(adLayoutView);
                             adView.setNativeAdType(KCNativeAdView.NativeAdType.ICON);
