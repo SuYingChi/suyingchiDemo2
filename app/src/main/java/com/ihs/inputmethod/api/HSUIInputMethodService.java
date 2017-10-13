@@ -321,9 +321,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         boolean isFromText = editorInfo != null && (editorInfo.inputType & InputType.TYPE_CLASS_TEXT) > 0
                 && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) > 0
                 && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_CAP_SENTENCES) > 0;
-        if (restarting && isFromText) {
-            getKeyboardPanelMananger().showFunctionBarAd();
-        }
 
         mHandler.postDelayed(new Runnable() {
             @Override

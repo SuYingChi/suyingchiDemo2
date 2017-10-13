@@ -31,25 +31,20 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.DrawFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Debug;
-import android.os.LocaleList;
 import android.os.SystemClock;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -59,7 +54,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
@@ -120,28 +114,13 @@ public final class Utils {
      */
     private static final int DOUBLE_CLICK_TIMEOUT = 500;
 
-    private static final String PREF_KEY_UNINSTALLED_APPS = "uninstalled_apps";
-
-    private static final Rect sOldBounds = new Rect();
-    private static final DrawFilter sIconDrawFilter = new PaintFlagsDrawFilter(Paint.DITHER_FLAG, Paint.FILTER_BITMAP_FLAG);
-
     private static final Pattern sTrimPattern = Pattern.compile("^[\\s|\\p{javaSpaceChar}]*(.*)[\\s|\\p{javaSpaceChar}]*$");
 
-    private static int sColors[] = {0xffff0000, 0xff00ff00, 0xff0000ff};
-    private static int sColorIndex = 0;
-
     private static final int[] sLoc0 = new int[2];
-    private static final int[] sLoc1 = new int[2];
-
-    public static final int LDPI_DEVICE_SCREEN_HEIGHT = 320;
-    private static final long USE_DND_DURATION = 2 * DateUtils.HOUR_IN_MILLIS; // 2 hour don not disturb
 
     // To turn on these properties, type
     // adb shell setprop log.tag.PROPERTY_NAME [VERBOSE | SUPPRESS]
     private static final String FORCE_ENABLE_ROTATION_PROPERTY = "launcher_force_rotate";
-    private static boolean sForceEnableRotation = isPropertyEnabled(FORCE_ENABLE_ROTATION_PROPERTY);
-
-    public static final String ALLOW_ROTATION_PREFERENCE_KEY = "pref_allowRotation";
 
     private static long sLastClickTimeForDoubleClickCheck;
 
@@ -159,76 +138,6 @@ public final class Utils {
 
     public static boolean isPropertyEnabled(String propertyName) {
         return Log.isLoggable(propertyName, Log.VERBOSE);
-    }
-
-    public static long getPackageLastModifiedTime(String packageName) {
-        ApplicationInfo appInfo;
-        try {
-            appInfo = HSApplication.getContext().getPackageManager().getApplicationInfo(packageName, 0);
-        } catch (Exception e) {
-            return -1;
-        }
-        String appFile = appInfo.sourceDir;
-        return new File(appFile).lastModified();
-    }
-
-    public static List<String> getStringList(String listCsv) {
-        List<String> strings = new ArrayList<>();
-        for (String string : listCsv.split(",")) {
-            if (!string.isEmpty()) {
-                strings.add(string);
-            }
-        }
-        return strings;
-    }
-
-    public static String getStringListCsv(List<String> strings) {
-        if (strings.isEmpty()) {
-            return "";
-        }
-        StringBuilder builder = new StringBuilder(strings.get(0));
-        for (int i = 1, upperBound = strings.size(); i < upperBound; i++) {
-            builder.append(",").append(strings.get(i));
-        }
-        return builder.toString();
-    }
-
-    public static int validateIndex(List<? extends Object> sizeLimit, int rawIndex) {
-        return Math.max(0, Math.min(rawIndex, sizeLimit.size() - 1));
-    }
-
-    @SuppressWarnings("deprecation")
-    public static Resources getEnglishResources(Context context) {
-        Configuration conf = new Configuration();
-        Locale englishLocale = new Locale("en");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            conf.setLocales(new LocaleList(englishLocale));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            conf.setLocale(englishLocale);
-        } else {
-            conf.locale = englishLocale;
-        }
-        Resources resourcesEn;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            resourcesEn = context.createConfigurationContext(conf).getResources();
-        } else {
-            resourcesEn = new Resources(context.getAssets(), new DisplayMetrics(), conf);
-        }
-        return resourcesEn;
-    }
-
-    public static final int FLASHLIGHT_STATUS_FAIL = -1;
-    public static final int FLASHLIGHT_STATUS_OFF = 0;
-    public static final int FLASHLIGHT_STATUS_ON = 1;
-
-
-    public static boolean isWifiEnabled() {
-        WifiManager wifiManager = (WifiManager) HSApplication.getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        return wifiManager.isWifiEnabled();
-    }
-
-    public static int getDayDifference(long epoch1, long epoch2) {
-        return getDayDifference(epoch1, epoch2, 0);
     }
 
     public static int getDayDifference(long epoch1, long epoch2, int dateLineHour) {

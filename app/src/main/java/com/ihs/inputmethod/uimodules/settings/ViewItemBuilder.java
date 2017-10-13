@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.settings;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -11,15 +10,11 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
-import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.R;
-
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 
 /**
@@ -81,51 +76,21 @@ final class ViewItemBuilder {
     }
 
     static ViewItem getSoundsPositionItem() {
-        String item = HSConfig.optString("sound", "Application", "NativeAds", "KeyboardSettingsPanelAds", "CurrentContent").toLowerCase();
-        if (Build.VERSION.SDK_INT < JELLY_BEAN) {
-            item = "sound";
-        }
+        return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_sounds),
+                getStateListDrawable(SETTINGS_KEY_SOUND_ON, SETTINGS_KEY_SOUND_OFF)
+                , new ViewItem.ViewItemListener() {
+            @Override
+            public void onItemClick(ViewItem item) {
+                HSInputMethodSettings.setKeySoundEnabled(!HSInputMethodSettings.getKeySoundEnabled());
+                updateSoundsSettings(item);
 
-        switch (item) {
-            default:
-            case "sound":
-                return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_sounds),
-                        getStateListDrawable(SETTINGS_KEY_SOUND_ON, SETTINGS_KEY_SOUND_OFF)
-                        , new ViewItem.ViewItemListener() {
-                    @Override
-                    public void onItemClick(ViewItem item) {
-                        HSInputMethodSettings.setKeySoundEnabled(!HSInputMethodSettings.getKeySoundEnabled());
-                        updateSoundsSettings(item);
+            }
 
-                    }
-
-
-                    @Override
-                    void onItemViewInvalidate(ViewItem item) {
-                        item.updateSelectedStatus(!HSInputMethodSettings.getKeySoundEnabled());
-                    }
-                }, !HSInputMethodSettings.getKeySoundEnabled());
-
-
-            case "lucky":
-                return new ViewItem("Lucky", HSApplication.getContext().getResources().getDrawable(R.drawable.ic_lucky_selector)
-                        , new ViewItem.ViewItemListener() {
-                    @Override
-                    public void onItemClick(ViewItem item) {
-                        Intent shortcutIntent = new Intent(HSApplication.getContext(), LuckyActivity.class);
-                        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-                        HSApplication.getContext().startActivity(shortcutIntent);
-                    }
-
-                    @Override
-                    void onItemViewInvalidate(ViewItem item) {
-//                        item.updateSelectedStatus(!HSInputMethodSettings.getKeySoundEnabled());
-                    }
-                }, false);
-
-        }
-
-
+            @Override
+            void onItemViewInvalidate(ViewItem item) {
+                item.updateSelectedStatus(!HSInputMethodSettings.getKeySoundEnabled());
+            }
+        }, !HSInputMethodSettings.getKeySoundEnabled());
     }
 
     private static void updateSoundsSettings(ViewItem item) {

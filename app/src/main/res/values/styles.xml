@@ -115,17 +115,6 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="uninstallDialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="LuckyBannerImage">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">12dp</item>
-        <item name="android:layout_marginRight">12dp</item>
-    </style>
-
     <style name="BaseWallpaperTheme" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowShowWallpaper">true</item>

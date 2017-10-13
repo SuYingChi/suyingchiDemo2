@@ -66,15 +66,9 @@ final class ViewItem {
         }
         if (HSApplication.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             int padding_portrait = DisplayUtils.dip2px(20);
-            if(name.equals("Lucky")){
-                padding_portrait = DisplayUtils.dip2px(6);
-            }
             imageView.setPadding(padding_portrait, padding_portrait, padding_portrait, padding_portrait);
         } else {
             int padding_land = DisplayUtils.dip2px(12);
-            if(name.equals("Lucky")){
-                padding_land = DisplayUtils.dip2px(3);
-            }
             imageView.setPadding(padding_land, padding_land, padding_land, padding_land);
         }
         imageView.setImageDrawable(drawable);

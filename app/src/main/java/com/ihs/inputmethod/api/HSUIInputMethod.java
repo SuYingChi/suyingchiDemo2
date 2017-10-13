@@ -6,7 +6,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSActivityUtils;
 
 public class HSUIInputMethod {
-    public static final String HS_NOTIFICATION_LOCKER_CLICK = "hs.keyboard.LOCKER_CLICK"; //App Locker被点击
     public static final String HS_LAUNCH_LANGUAGE_SETTINGS="LAUNCH_LANGUAGE_SETTINGS";
     public static final String HS_LAUNCH_SETTINGS="LAUNCH_SETTINGS";
 

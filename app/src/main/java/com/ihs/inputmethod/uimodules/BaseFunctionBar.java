@@ -1,11 +1,7 @@
 package com.ihs.inputmethod.uimodules;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -18,11 +14,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -33,9 +26,7 @@ import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
-import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
-import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -45,10 +36,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     private SettingsButton settingsButton;
     private OnFunctionBarItemClickListener onFunctionBarClickListener;
     private BaseFunction baseFunction;
-    private RelativeLayout clothButtonVG;
-    private boolean isAdAnimating = false;
-    private ImageView imageView;
-
 
     public BaseFunctionBar(Context context) {
         this(context, null);
@@ -99,60 +86,11 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         this.setBackgroundDrawable(getTransparentRippleBackground());
 
         functionLayout.addView(clothView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        imageView = new ImageView(getContext());
-        imageView.setImageResource(R.drawable.functionbar_gift_ad_selector);
-        imageView.setVisibility(View.INVISIBLE);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setOnClickListener(this);
-        imageView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
-        functionLayout.addView(imageView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
 
     public void setOnFunctionBarClickListener(OnFunctionBarItemClickListener onFunctionBarClickListener) {
         this.onFunctionBarClickListener = onFunctionBarClickListener;
-    }
-
-    public boolean startFunctionBarAdAnimation() {
-        HSAnalytics.logEvent("FunctionBarGiftAd_show");
-        if (isAdAnimating || imageView.getVisibility() == View.VISIBLE) {
-            return false;
-        }
-        int screenWidth;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            screenWidth = DisplayUtils.getScreenHeightPixels();
-        } else {
-            screenWidth = DisplayUtils.getScreenWidthPixels();
-        }
-        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationX",
-                screenWidth - imageView.getLeft(),
-                screenWidth - imageView.getLeft() - imageView.getWidth());
-        animator.addListener(new AnimatorListenerAdapter() {
-            /**
-             * {@inheritDoc}
-             *
-             * @param animation
-             */
-            @Override
-            public void onAnimationStart(Animator animation) {
-                imageView.setVisibility(VISIBLE);
-                isAdAnimating = true;
-                super.onAnimationStart(animation);
-            }
-
-            /**
-             * {@inheritDoc}
-             *
-             * @param animation
-             */
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                isAdAnimating = false;
-                super.onAnimationEnd(animation);
-            }
-        });
-        animator.setDuration(500).start();
-        return true;
     }
 
     @Override
@@ -181,10 +119,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
                 resetSettingButtonType();
             } else if (HSFontSelectViewAdapter.HS_NOTIFICATION_FONT_CHANGED.equals(s)) {
                 resetSettingButtonType();
-            } else if (HSInputMethod.HS_NOTIFICATION_HIDE_WINDOW.equals(s)) {
-                if (!isAdAnimating) {
-                    imageView.setVisibility(View.INVISIBLE);
-                }
             }
         }
     };
@@ -197,10 +131,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     public void onClick(View view) {
         if (onFunctionBarClickListener != null) {
             onFunctionBarClickListener.onFunctionBarItemClick(view);
-        }
-        if (view == imageView) {
-            HSAnalytics.logEvent("FunctionBarGiftAd_click");
-            GiftInterstitialHelper.showInterstitialGiftAd(getResources().getString(R.string.ad_placement_gift_ad));
         }
     }
 

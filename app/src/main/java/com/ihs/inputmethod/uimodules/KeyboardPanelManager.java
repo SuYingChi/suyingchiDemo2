@@ -26,7 +26,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -75,7 +74,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private CustomBarGPAdAdapter gpAdAdapter;
     private AcbNativeAdLoader acbNativeAdLoader;
     private RecyclerView gpAdRecyclerView;
-    private KeyboardPanelAdManager keyboardPanelAdManager;
     private List<Integer> bannerAdSessionList;
     private List<Map<String, Object>> cameraAdInfoList;
     private Random random = new Random();
@@ -142,7 +140,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         hsBackgroundVedioView.init();
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
-        keyboardPanelAdManager = new KeyboardPanelAdManager("FunctionBarGiftAd");
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);
@@ -239,14 +236,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
         if (functionBar != null) {
             functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
-        }
-    }
-
-    public void showFunctionBarAd() {
-        if (keyboardPanelAdManager.isShowAdConditionSatisfied()) {
-            if (functionBar.startFunctionBarAdAnimation()) {
-                keyboardPanelAdManager.hasShowedAd();
-            }
         }
     }
 

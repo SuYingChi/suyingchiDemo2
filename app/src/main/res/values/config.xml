@@ -19,6 +19,4 @@
     <fraction name="config_image_page_image_size">30%p</fraction>
     <fraction name="config_image_page_image_width">33%p</fraction>
     <fraction name="config_image_page_image_height">50%p</fraction>
-    <!-- Lucky -->
-    <integer name="config_luckyGoButtonDownUpDuration">100</integer>
 </resources>

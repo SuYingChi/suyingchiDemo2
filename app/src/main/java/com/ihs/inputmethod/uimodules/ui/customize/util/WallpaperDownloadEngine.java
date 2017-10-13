@@ -10,7 +10,6 @@ import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.feature.common.LauncherFiles;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryInfo;
 
@@ -27,6 +26,8 @@ import java.util.Map;
  */
 
 public class WallpaperDownloadEngine {
+    private static final String CUSTOMIZE_PREFS = "com.honeycomb.launcher.customize.prefs"; // Process ":customize"
+
 
     public interface OnLoadWallpaperListener {
         void onLoadFinished(List<WallpaperInfo> wallpaperInfoList);
@@ -35,7 +36,7 @@ public class WallpaperDownloadEngine {
     }
 
     private static final HSPreferenceHelper sPrefs = HSPreferenceHelper.create(HSApplication.getContext(),
-            LauncherFiles.CUSTOMIZE_PREFS);
+            CUSTOMIZE_PREFS);
 
     private static final String PREF_WALLPAPER_HOT_NEXT_PAGE = "pref_wallpaper_hot_next_page";
     private static final String PREF_WALLPAPER_CATEGORY_NEXT_PAGE = "pref_wallpaper_category_next_page_";

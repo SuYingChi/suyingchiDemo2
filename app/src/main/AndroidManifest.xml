@@ -96,14 +96,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="com.ihs.inputmethod.feature.lucky.LuckyActivity"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:taskAffinity=".keyboard.lucky"
-            android:theme="@style/BaseWallpaperTheme" />
-
         <service android:name="com.ihs.inputmethod.api.WakeKeyboardService" />
         <service
             android:name=".ui.customize.service.CustomizeService"

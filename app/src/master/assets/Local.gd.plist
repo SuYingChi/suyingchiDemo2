@@ -93,39 +93,6 @@
 						<key>ShowToRestrictedUser</key>
 						<true/>
 					</dict>
-					<key>AppUninstall</key>
-					<dict>
-						<key>ActionData</key>
-						<integer>0</integer>
-						<key>ActionType</key>
-						<integer>4</integer>
-						<key>Delay</key>
-						<integer>0</integer>
-						<key>Description1</key>
-						<string>Filter:白名单，Exception:黑名单</string>
-						<key>Description2</key>
-						<string>ActionType: 0对应TypeBoostHalfScreen; 1对应BoostHalfScreen; 2对应TypeBoostFullScreen; 3对应BoostFullScreen; 4对应AdFullScreen; 5对应AdNotification; 6对应PopUpAlert; 7对应SetKey</string>
-						<key>Description3</key>
-						<string>ActionData: TypeBoostHalfScreen：0对应xx,1对应xx; BoostHalfScreen：0对应Boost,1对应InputSecurityCheck, 2对应Uninstall; TypeBoostFullScreen:0对应xx ; BoostFullScreen:0对应Optimize</string>
-						<key>Description4</key>
-						<string>MaxShowCount:每天最多显示多少次；MinShowInterval：最小间隔，单位Min；</string>
-						<key>HoursFromFirstUse</key>
-						<integer>2</integer>
-						<key>MaxShowCount</key>
-						<integer>200</integer>
-						<key>MinShowInterval</key>
-						<integer>0</integer>
-						<key>PackageNameExclude</key>
-						<array/>
-						<key>PackageNameInclude</key>
-						<array/>
-						<key>Probability</key>
-						<integer>100</integer>
-						<key>RegionException</key>
-						<array/>
-						<key>ShowToRestrictedUser</key>
-						<true/>
-					</dict>
 					<key>PhoneUnlock</key>
 					<dict>
 						<key>ActionData</key>
@@ -515,13 +482,6 @@
 			<dict>
 				<key>FetchAdInterval</key>
 				<real>15000</real>
-				<key>KeyboardSettingsPanelAds</key>
-				<dict>
-					<key>CurrentContent</key>
-					<string>lucky</string>
-					<key>description</key>
-					<string>选项：lucky</string>
-				</dict>
 				<key>NativeAdPosition</key>
 				<dict>
 					<key>ThemeAd</key>

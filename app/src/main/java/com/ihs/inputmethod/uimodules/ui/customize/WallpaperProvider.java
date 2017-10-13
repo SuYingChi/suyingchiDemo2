@@ -17,8 +17,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
-import com.ihs.feature.common.LauncherFiles;
-
 import java.util.ArrayList;
 
 /**
@@ -211,9 +209,11 @@ public class WallpaperProvider extends ContentProvider {
      */
     private static class WallpaperDB extends SQLiteOpenHelper {
         private final static int DB_VERSION = 1;
+        private static final String WALLPAPER_DB = "wallpaper.db";
+
 
         WallpaperDB(Context context) {
-            super(context, LauncherFiles.WALLPAPER_DB, null, DB_VERSION);
+            super(context, WALLPAPER_DB, null, DB_VERSION);
         }
 
         @Override
