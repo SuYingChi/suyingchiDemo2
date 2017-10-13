@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_marginLeft="@dimen/theme_card_recycler_view_card_margin"
+    app:cardPreventCornerOverlap="false"
     app:cardCornerRadius="@dimen/corner_radius">
 
     <LinearLayout

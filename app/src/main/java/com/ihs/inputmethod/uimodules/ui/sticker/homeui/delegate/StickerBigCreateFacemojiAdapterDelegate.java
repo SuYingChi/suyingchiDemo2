@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,7 +37,7 @@ public class StickerBigCreateFacemojiAdapterDelegate extends AdapterDelegate<Lis
         //整个图片占据空间屏幕宽的一半，让其左右边距是屏幕宽一半的10%，控件大小为屏幕宽的一半的80%
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.faceImage.getLayoutParams();
         layoutParams.leftMargin = (int) (width * 0.05);
-        layoutParams.leftMargin = (int) (width * 0.05);
+        layoutParams.rightMargin = (int) (width * 0.05);
         layoutParams.width = (int) (width * 0.4);
         layoutParams.height = layoutParams.width;
 
@@ -46,10 +45,9 @@ public class StickerBigCreateFacemojiAdapterDelegate extends AdapterDelegate<Lis
         layoutParams.topMargin = (int) (height * 0.2);
 
         layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.createBtn.getLayoutParams();
-        layoutParams.topMargin = (int) (height * 0.2);
         layoutParams.bottomMargin = (int) (height * 0.2);
 
-        stickerBigCreateFacemojiViewHolder.createBtn.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xFFF5B431,HSApplication.getContext().getResources().getDimension(R.dimen.corner_radius)));
+        stickerBigCreateFacemojiViewHolder.createBtn.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xFFFFD582,HSApplication.getContext().getResources().getDimension(R.dimen.corner_radius)));
 
         return stickerBigCreateFacemojiViewHolder;
     }
@@ -76,12 +74,12 @@ public class StickerBigCreateFacemojiAdapterDelegate extends AdapterDelegate<Lis
     public final class StickerBigCreateFacemojiViewHolder extends RecyclerView.ViewHolder {
         ImageView faceImage;
         TextView tipText;
-        Button createBtn;
+        TextView createBtn;
 
         public StickerBigCreateFacemojiViewHolder(View itemView) {
             super(itemView);
             tipText = (TextView) itemView.findViewById(R.id.facemoji_text);
-            createBtn = (Button) itemView.findViewById(R.id.facemoji_create);
+            createBtn = (TextView) itemView.findViewById(R.id.facemoji_create);
             faceImage = (ImageView) itemView.findViewById(R.id.face_arrow);
         }
     }
