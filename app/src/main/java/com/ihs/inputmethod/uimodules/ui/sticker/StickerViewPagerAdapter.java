@@ -32,6 +32,7 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
  */
 
 public class StickerViewPagerAdapter extends PagerAdapter {
+    private final String CLICK_FROM = "keyboard";
     private View firstView;
     private List<StickerGroup> needDownloadStickerGroupList;
     private LayoutInflater inflater;
@@ -137,14 +138,14 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                         if (ClickUtils.isFastDoubleClick()) {
                             return;
                         }
-                        HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName());
+                        HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
                         final String stickerGroupName = stickerGroup.getStickerGroupName();
                         final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
                         DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                                 sticker_download_preview.getDrawable(), success -> {
                                     HSPreferenceHelper.getDefault().putBoolean("show_emoji_panel", true);
-                                    HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName);
+                                    HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
                                 }, false);
