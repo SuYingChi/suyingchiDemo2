@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -44,6 +45,8 @@ import com.ihs.inputmethod.uimodules.widget.ClothButton;
 import com.ihs.keyboardutils.giftad.GiftInterstitialHelper;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 
+import pl.droidsonroids.gif.GifImageView;
+
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
 
@@ -55,7 +58,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     private RelativeLayout clothButtonVG;
     private boolean isAdAnimating = false;
     private ImageView imageView;
-    private ImageView facemojiView;
+    private GifImageView facemojiView;
     private View makeFacemojiTip;
 
     private final static int MSG_DISMISS_MAKE_FACEMOJI_TIP = 1;
@@ -135,8 +138,8 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         functionLayout.addView(emptyView,emptyViewLayoutParams);
 
         //FaceMojiView
-        facemojiView = new ImageView(getContext());
-        facemojiView.setImageResource(R.drawable.creating_thumbnail);
+        facemojiView = new GifImageView(getContext());
+        facemojiView.setImageURI(Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.keyboard_facemoji));
         facemojiView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         facemojiView.setId(R.id.func_facemoji_button);
         facemojiView.setOnClickListener(this);
