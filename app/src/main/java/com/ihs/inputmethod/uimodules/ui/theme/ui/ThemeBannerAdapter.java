@@ -92,7 +92,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                         }
                         int delayTime = AUTO_SCROLL_DELAY > 0 ? AUTO_SCROLL_DELAY : AUTO_SCROLL_DELAY_DEFAULT;
                         if (adCardView != null && keyboardThemeList.get(position % getRealCount()) == null) {
-                            delayTime = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "ThemeContents", "themeConfig", "BannerNativeAdAutoScrollDelay");
+                            delayTime = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "BannerNativeAdAutoScrollDelay");
                         }
                         viewPager.setCurrentItem(position);
                         if (isLoop) {
@@ -174,7 +174,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         allKeyboardThemesExceptCustomTheme.removeAll(KCCustomThemeManager.getInstance().getAllCustomThemes());
 
         // 获取banner主题
-        List<String> bannerThemeNames = (List<String>) HSConfig.getList("Application", "ThemeContents", "BannerList");
+        List<String> bannerThemeNames = (List<String>) HSConfig.getList("Application", "KeyboardTheme", "ThemeContents", "BannerList");
         for (String bannerThemeName : bannerThemeNames) {
             for (HSKeyboardTheme keyboardTheme : allKeyboardThemesExceptCustomTheme) {
                 if (keyboardTheme.mThemeName.equals(bannerThemeName)) {
@@ -222,7 +222,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         allKeyboardThemesExceptCustomTheme.removeAll(KCCustomThemeManager.getInstance().getAllCustomThemes());
 
         // 获取banner主题
-        List<String> bannerThemeNames = (List<String>) HSConfig.getList("Application", "ThemeContents", "BannerList");
+        List<String> bannerThemeNames = (List<String>) HSConfig.getList("Application", "KeyboardTheme", "ThemeContents", "BannerList");
         for (String bannerThemeName : bannerThemeNames) {
             for (HSKeyboardTheme keyboardTheme : allKeyboardThemesExceptCustomTheme) {
                 if (keyboardTheme.mThemeName.equals(bannerThemeName)) {
@@ -334,7 +334,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         this.activity = activity;
         this.bannerWidth = bannerWidth;
         this.bannerHeight = bannerHeight;
-        AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
+        AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
