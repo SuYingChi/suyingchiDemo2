@@ -13,16 +13,12 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -36,9 +32,6 @@ import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanel;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.KCNativeAdView;
-import com.ihs.keyboardutils.view.FlashFrameLayout;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 
@@ -58,8 +51,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     private TextView alphabet_left;
     private Map<Class, View> btnMap = new HashMap<>();
     private Map<String, Class> panels = new HashMap<>();
-    private KCNativeAdView adView;
-    private boolean released;
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
@@ -85,12 +76,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     }
 
     public void release() {
-        released = true;
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
-        if (adView != null) {
-            adView.release();
-            adView = null;
-        }
         containerListener = null;
     }
 
@@ -121,66 +107,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             btn.setOnClickListener(this);
             panels.put(panelName, clazz);
             btnMap.put(clazz, btn);
-        }
-
-
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            final boolean showAd = HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardEmojiAd", "ShowAd");
-            if (showAd) {
-                final boolean showIconAd = HSConfig.optBoolean(true, "Application", "NativeAds", "ShowIconAd");
-                final LayoutParams params = new LayoutParams(0, height, 1.0f);
-                params.gravity = Gravity.CENTER_VERTICAL;
-                final RelativeLayout adContainer = new RelativeLayout(getContext());
-                adContainer.setTag("NativeAd");
-                addView(adContainer, params);
-                final FlashFrameLayout flashAdContainer = new FlashFrameLayout(getContext());
-                flashAdContainer.setAngle(FlashFrameLayout.MaskAngle.CW_0);
-                flashAdContainer.setDuration(1000);
-                flashAdContainer.setRepeatCount(0);
-                flashAdContainer.setAutoStart(false);
-
-                final View adLoadingView = View.inflate(getContext(), R.layout.ad_icon_style_loading, null);
-                if (!showIconAd) {
-                    adLoadingView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-                }
-                ImageView loadingImageView = (ImageView) adLoadingView.findViewById(R.id.ad_loading_image);
-                Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_gift");
-                loadingImageView.setImageDrawable(drawable);
-
-                int adHeight = height - HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.emoticon_panel_ad_margin_top) * 2;
-                final RelativeLayout.LayoutParams adLayoutParams = new RelativeLayout.LayoutParams(adHeight, adHeight);
-                adLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-                adContainer.addView(flashAdContainer, adLayoutParams);
-                flashAdContainer.addView(adLoadingView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-                postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!released) {
-                            View adLayoutView = View.inflate(getContext(), R.layout.ad_icon_style, null);
-                            if (!showIconAd) {
-                                adLayoutView.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-                            }
-                            adLayoutView.findViewById(R.id.ad_title).setVisibility(GONE);
-                            adView = new KCNativeAdView(HSApplication.getContext());
-                            adView.setAdLayoutView(adLayoutView);
-                            adView.setNativeAdType(KCNativeAdView.NativeAdType.ICON);
-                            adView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
-                                @Override
-                                public void onAdLoaded(KCNativeAdView nativeAdView) {
-                                    flashAdContainer.removeView(adLoadingView);
-                                    if (!released) {
-                                        flashAdContainer.startShimmerAnimation();
-                                    }
-                                    adView.setOnAdLoadedListener(null);
-                                }
-                            });
-                            adView.load(getContext().getString(R.string.ad_placement_keyboardemojiad));
-                            flashAdContainer.addView(adView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                        }
-                    }
-                }, 500);
-            }
         }
 
         alphabet_left = (TextView) findViewById(R.id.emoji_keyboard_alphabet_left);
