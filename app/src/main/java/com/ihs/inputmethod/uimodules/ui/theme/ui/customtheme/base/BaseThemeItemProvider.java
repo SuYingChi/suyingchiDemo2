@@ -557,12 +557,14 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                 return true;
                             }
 
+                            boolean showApplyAd = true;
                             if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                 holder.mGiftIconImageView.setVisibility(View.GONE);
+                                showApplyAd = false;
                             }
                             fragment.addChosenItem((KCBaseElement) item);
                             fragment.refreshHeaderNextButtonState();
-                            onItemClicked((V) holder, item, true);
+                            onItemClicked((V) holder, item, showApplyAd);
                             if (item instanceof KCButtonShapeElement) {
                                 fragment.notifyAdapterOnMainThread();//shape选择none以后，需要刷新style为不可用
                             }
