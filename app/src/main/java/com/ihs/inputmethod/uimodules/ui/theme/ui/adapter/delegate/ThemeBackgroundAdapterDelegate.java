@@ -347,7 +347,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled()
                                     && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-                                ApkUtils.showCustomShareAlert(activity, new View.OnClickListener() {
+                                ApkUtils.showCustomShareAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {

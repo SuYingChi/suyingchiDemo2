@@ -304,12 +304,13 @@ public class ApkUtils {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static void shareKeyboardToInstagram(Context context) {
+    public static void shareKeyboardToInstagram() {
         Intent intent = HSApplication.getContext().getPackageManager().getLaunchIntentForPackage("com.instagram.android");
         if (intent != null) {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.setPackage("com.instagram.android");
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
             // Create the URI from the media
             String mediaPath = getInstagramShareFile();
             if (mediaPath == null) {
@@ -319,13 +320,13 @@ public class ApkUtils {
             Uri uri = Uri.fromFile(media);
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
             shareIntent.setType("image/*");
-            context.startActivity(shareIntent);
+            HSApplication.getContext().startActivity(shareIntent);
             HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).putBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, true);
         }
     }
 
     @SuppressLint("InflateParams")
-    public static void showCustomShareAlert(Context context, final View.OnClickListener shareButtonClickListener) {
+    public static void showCustomShareAlert(final View.OnClickListener shareButtonClickListener) {
         String preferredLanguageString = Locale.getDefault().getLanguage();
         HSLog.d("showCustomShareAlert preferredLanguageString: " + preferredLanguageString);
 
@@ -349,10 +350,10 @@ public class ApkUtils {
                 }
 
                 HSAnalytics.logEvent("customizeTheme_shareToUnlock_clicked");
-                shareKeyboardToInstagram(context);
                 if (shareButtonClickListener != null) {
                     shareButtonClickListener.onClick(v);
                 }
+                shareKeyboardToInstagram();
                 alertDialog.dismiss();
             }
         });
