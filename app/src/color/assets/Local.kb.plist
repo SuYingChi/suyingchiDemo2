@@ -2597,6 +2597,8 @@
 						<string>Giant Panda</string>
 						<key>showNewMark</key>
 						<true/>
+						<key>shareToUnlock</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
