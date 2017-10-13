@@ -371,14 +371,8 @@ public class CameraActivity extends HSAppCompatActivity {
             }
         });
 
-        ImageView back = (ImageView) findViewById(R.id.face_back);
-        LinearLayout.LayoutParams backPara = (LinearLayout.LayoutParams) back.getLayoutParams();
-        backPara.height = (int) (getResources().getDrawable(R.drawable.back_button).getIntrinsicHeight() * 0.8f);
-        backPara.width = (int) (getResources().getDrawable(R.drawable.back_button).getIntrinsicWidth() * 0.8f);
-        back.setLayoutParams(backPara);
-
-        View backHolder = findViewById(R.id.back_holder);
-        backHolder.setOnClickListener(new View.OnClickListener() {
+        View backBtn = findViewById(R.id.back);
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent pre = getIntent();

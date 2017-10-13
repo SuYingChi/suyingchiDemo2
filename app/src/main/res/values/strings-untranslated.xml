@@ -20,6 +20,7 @@
     <!-- In Call Theme -->
     <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
 
+    <string name="camera_activity_title">Take a Selfie</string>
     <string name="my_facemoji_toolbar_title">MY FACEMOJI</string>
     <string name="switch_facemoji_toolbar_title">Switch Face</string>
 
@@ -27,5 +28,5 @@
     <string name="sticker_title_my_facemojis">My Facemojis</string>
     <string name="sticker_title_funny_stickers">Funny Stickers</string>
     <string name="label_create_funny_facemoji">Create your own \n funny Facemoji!</string>
-    <string name="label_try_now">Try now</string>
+    <string name="label_create">Create</string>
 </resources>

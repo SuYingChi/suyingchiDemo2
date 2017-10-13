@@ -22,39 +22,30 @@
 
     </FrameLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/face_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="50dp">
 
-        <LinearLayout
-            android:id="@+id/back_holder"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".15"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/face_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/back_button" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/back"
+            android:layout_centerVertical="true"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/back_button"
+            android:padding="12dp" />
 
 
         <com.ihs.inputmethod.uimodules.widget.CustomFontTextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".7"
-            android:gravity="center"
-            android:text="Take a Selfie"
+            android:layout_centerInParent="true"
+            android:text="@string/camera_activity_title"
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:textStyle="normal" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <ImageView
@@ -118,11 +109,11 @@
                     android:id="@+id/gallery"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:padding="10dp"
-                    android:scaleType="fitCenter"
                     android:layout_gravity="center_vertical"
                     android:background="?selectableItemBackgroundBorderless"
                     android:onClick="showGallery"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_gallery" />
             </LinearLayout>
 
@@ -147,9 +138,9 @@
                     android:id="@+id/camera_switcher"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:padding="10dp"
                     android:scaleType="fitCenter"
-                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_switch_camera" />
             </LinearLayout>
         </LinearLayout>
@@ -185,8 +176,8 @@
                 android:id="@+id/confirm_make_face"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/camera_capture_button_bg"
                 android:layout_gravity="center"
+                android:background="@drawable/camera_capture_button_bg"
                 android:onClick="synthesisImage"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_tick" />
@@ -202,10 +193,10 @@
                     android:id="@+id/beauty_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:padding="10dp"
-                    android:scaleType="fitCenter"
                     android:background="?selectableItemBackgroundBorderless"
                     android:onClick="useBeauty"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_beauty" />
             </LinearLayout>
         </LinearLayout>

@@ -175,7 +175,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         int orientation = HSApplication.getContext().getResources().getConfiguration().orientation;
         Button facemojiEntrance = (Button) defaultView.findViewById(R.id.facemoji_button_keyboard);
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            ImageView image = (ImageView) defaultView.findViewById(R.id.face_arrow_keyboard);
+            ImageView image = (ImageView) defaultView.findViewById(R.id.face_arrow);
             RelativeLayout.LayoutParams imageParam = (RelativeLayout.LayoutParams) image.getLayoutParams();
             imageParam.width = (int) (panelWidth * 0.5);
             imageParam.height = (int) (panelHeight * 0.6);
@@ -186,7 +186,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             buttonParam.height = (int) (panelHeight * 0.18);
             facemojiEntrance.setLayoutParams(buttonParam);
         } else {
-            ImageView image = (ImageView) defaultView.findViewById(R.id.face_arrow_keyboard);
+            ImageView image = (ImageView) defaultView.findViewById(R.id.face_arrow);
             RelativeLayout.LayoutParams imageParam = (RelativeLayout.LayoutParams) image.getLayoutParams();
             imageParam.height = (int) (panelHeight * 0.8);
             image.setLayoutParams(imageParam);

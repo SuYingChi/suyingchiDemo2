@@ -8,11 +8,11 @@
     android:layout_marginBottom="10dp">
 
     <ImageView
-        android:id="@+id/face_arrow_keyboard"
+        android:id="@+id/face_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
-        android:src="@drawable/face_arrow"
+        android:src="@drawable/create_facemoji_large"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:paddingLeft="10dp"
@@ -22,8 +22,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/face_arrow_keyboard"
-            android:layout_toRightOf="@id/face_arrow_keyboard"
+            android:layout_alignTop="@id/face_arrow"
+            android:layout_toRightOf="@id/face_arrow"
             android:layout_marginRight="10dp"
             android:layout_marginTop="13dp"
             android:gravity="left|center_vertical"
