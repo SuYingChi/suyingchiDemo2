@@ -292,6 +292,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         }
     }
 
+
     private void setCurrentItemPosition(final int position, final int offset) {
         if (stickerMainPagerRecyclerView == null) {
             return;

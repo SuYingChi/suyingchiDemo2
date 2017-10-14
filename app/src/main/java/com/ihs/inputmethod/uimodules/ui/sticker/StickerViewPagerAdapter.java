@@ -35,6 +35,7 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
 public class StickerViewPagerAdapter extends PagerAdapter {
     private final String CLICK_FROM = "keyboard";
     private View firstView;
+    private int lastDownloadPosition = -1;
     private List<StickerGroup> needDownloadStickerGroupList = new ArrayList<>();
     private LayoutInflater inflater;
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
@@ -147,16 +148,18 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                                 sticker_download_preview.getDrawable(), success -> {
                                     HSPreferenceHelper.getDefault().putBoolean("show_emoji_panel", true);
-                                    HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
-                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-
+                                    if (success) {
+                                        lastDownloadPosition = position;
+                                        HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
+                                        StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+                                    }
                                 }, false);
                     });
-            stickerDownloadView.setTag(stickerGroup.getStickerGroupName());
+            stickerDownloadView.setTag(position);
             container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return stickerDownloadView;
         } else {
-            firstView.setTag("firstView");
+            firstView.setTag(position);
             container.addView(firstView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return firstView;
         }
@@ -164,6 +167,10 @@ public class StickerViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        return POSITION_NONE;
+        if (lastDownloadPosition == 1) {
+            return POSITION_NONE;
+        } else {
+            return POSITION_UNCHANGED;
+        }
     }
 }
