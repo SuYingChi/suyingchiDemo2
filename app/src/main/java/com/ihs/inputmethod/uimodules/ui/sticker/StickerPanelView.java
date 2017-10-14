@@ -268,7 +268,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             if (!tab.equals(stickerPanelManager.getCurrentTabName())) {
                 stickerPanelManager.setCurrentTabName(tab);
                 stickerTabAdapter.setTabSelected(tab);
-                stickerTabRecyclerView.scrollToPosition(stickerTabAdapter.getTabIndex(tab));
+//                stickerTabRecyclerView.scrollToPosition(stickerTabAdapter.getTabIndex(tab));
                 if (stickerPanelManager.isRecentTab(tab)) { // 滑到recent
                     stickerPanelManager.flushPendingRecentSticker();
                     stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());

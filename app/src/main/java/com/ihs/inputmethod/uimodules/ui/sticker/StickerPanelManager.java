@@ -135,7 +135,9 @@ public class StickerPanelManager {
         List<String> stickerBuildInNameList = new ArrayList<>();
         List<String> stickerDownloadedNameList = new ArrayList<>();
         List<String> stickerNeedDownloadNameList = new ArrayList<>();
-        List<StickerGroup> stickerGroupInKeyboardList = StickerDataManager.getInstance().getStickerGroupsInKeyboardList();
+
+        List<StickerGroup> stickerGroupInKeyboardList = getNeedDownloadStickerGroupInKeyboardList();
+
         for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
             if (stickerGroup.isInternalStickerGroup()) {
                 stickerBuildInNameList.add(stickerGroup.getStickerGroupName());

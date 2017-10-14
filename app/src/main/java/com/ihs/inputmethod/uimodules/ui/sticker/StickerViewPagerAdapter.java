@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
@@ -34,7 +35,7 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
 public class StickerViewPagerAdapter extends PagerAdapter {
     private final String CLICK_FROM = "keyboard";
     private View firstView;
-    private List<StickerGroup> needDownloadStickerGroupList;
+    private List<StickerGroup> needDownloadStickerGroupList = new ArrayList<>();
     private LayoutInflater inflater;
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
@@ -49,8 +50,9 @@ public class StickerViewPagerAdapter extends PagerAdapter {
 
     public void setNeedDownloadStickerGroupList(List<StickerGroup> needDownloadStickerGroupList) {
         if (needDownloadStickerGroupList != null) {
-            this.needDownloadStickerGroupList = needDownloadStickerGroupList;
-            notifyDataSetChanged();
+            this.needDownloadStickerGroupList.clear();
+            this.needDownloadStickerGroupList.addAll(needDownloadStickerGroupList);
+            this.notifyDataSetChanged();
         }
     }
 
@@ -150,11 +152,18 @@ public class StickerViewPagerAdapter extends PagerAdapter {
 
                                 }, false);
                     });
+            stickerDownloadView.setTag(stickerGroup.getStickerGroupName());
             container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return stickerDownloadView;
         } else {
+            firstView.setTag("firstView");
             container.addView(firstView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return firstView;
         }
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }
