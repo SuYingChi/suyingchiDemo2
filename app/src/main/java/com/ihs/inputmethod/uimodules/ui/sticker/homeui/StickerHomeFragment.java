@@ -14,14 +14,12 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
-import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,17 +40,14 @@ public class StickerHomeFragment extends Fragment {
     private List<StickerModel> stickerModelList = new ArrayList<>();
     public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker);
 
-    private INotificationObserver observer = new INotificationObserver() {
-        @Override
-        public void onReceive(String s, HSBundle hsBundle) {
-            if (STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION.equals(s)) {
-                StickerGroup stickerGroup = (StickerGroup) hsBundle.getObject(STICKER_GROUP_ORIGINAL);
-                StickerModel stickerModel = new StickerModel(stickerGroup);
-                int position = stickerModelList.indexOf(stickerModel);
-                if (position >= 0) {
-                    stickerModelList.remove(position);
-                    removeStickerFromView(position);
-                }
+    private INotificationObserver observer = (s, hsBundle) -> {
+        if (STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION.equals(s)) {
+            StickerGroup stickerGroup = (StickerGroup) hsBundle.getObject(STICKER_GROUP_ORIGINAL);
+            StickerModel stickerModel = new StickerModel(stickerGroup);
+            int position = stickerModelList.indexOf(stickerModel);
+            if (position >= 0) {
+                stickerModelList.remove(position);
+                removeStickerFromView(position);
             }
         }
     };
@@ -91,15 +86,11 @@ public class StickerHomeFragment extends Fragment {
 
                 DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                        drawable, new AdLoadingView.OnAdBufferingListener() {
-                            @Override
-                            public void onDismiss(boolean success) {
-                                if (success) {
-                                    HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
-                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-                                }
+                        drawable, success -> {
+                            if (success) {
+                                HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                                StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                             }
-
                         });
             }
 

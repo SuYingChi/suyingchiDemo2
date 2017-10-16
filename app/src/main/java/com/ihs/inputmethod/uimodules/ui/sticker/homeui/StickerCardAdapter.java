@@ -89,9 +89,9 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
             ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(holder.stickerRealImage), options, imageSize, null, null);
         }
         if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_HOME.ordinal()) {
-            ((StickerCardHomeViewHolder) holder).moreMenuImage.setVisibility(View.VISIBLE);
-            ((StickerCardHomeViewHolder) holder).moreMenuImage.setImageResource(R.drawable.ic_download_icon);
-            ((StickerCardHomeViewHolder) holder).moreMenuImage.setOnClickListener(new View.OnClickListener() {
+            ((StickerCardHomeViewHolder) holder).downloadIcon.setVisibility(View.VISIBLE);
+            ((StickerCardHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.ic_download_icon);
+            ((StickerCardHomeViewHolder) holder).downloadIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onStickerCardClickListener.onDownloadButtonClick(stickerModel, holder.stickerRealImage.getDrawable());
@@ -169,11 +169,11 @@ public class StickerCardAdapter extends RecyclerView.Adapter<StickerCardAdapter.
 
     private class StickerCardHomeViewHolder extends StickerCardViewHolder {
         TextView moreStickersComing;
-        ImageView moreMenuImage;
+        ImageView downloadIcon;
 
         public StickerCardHomeViewHolder(View view) {
             super(view);
-            moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
+            downloadIcon = (ImageView) itemView.findViewById(R.id.download_icon);
             moreStickersComing = (TextView) itemView.findViewById(R.id.more_sticker_coming);
         }
     }

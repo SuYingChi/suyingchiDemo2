@@ -1,13 +1,32 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
+import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.ClickUtils;
+import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
+import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.utils.DownloadUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 
 /**
@@ -15,8 +34,10 @@ import java.util.List;
  */
 
 public class StickerViewPagerAdapter extends PagerAdapter {
+    private final String CLICK_FROM = "keyboard";
     private View firstView;
-    private List<StickerGroup> needDownloadStickerGroupList;
+    private int lastDownloadPosition = -1;
+    private List<StickerGroup> needDownloadStickerGroupList = new ArrayList<>();
     private LayoutInflater inflater;
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
@@ -31,8 +52,9 @@ public class StickerViewPagerAdapter extends PagerAdapter {
 
     public void setNeedDownloadStickerGroupList(List<StickerGroup> needDownloadStickerGroupList) {
         if (needDownloadStickerGroupList != null) {
-            this.needDownloadStickerGroupList = needDownloadStickerGroupList;
-            notifyDataSetChanged();
+            this.needDownloadStickerGroupList.clear();
+            this.needDownloadStickerGroupList.addAll(needDownloadStickerGroupList);
+            this.notifyDataSetChanged();
         }
     }
 
@@ -41,7 +63,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
      */
     @Override
     public int getCount() {
-        return 1;
+        return needDownloadStickerGroupList.size() + 1;
     }
 
     /**
@@ -86,7 +108,70 @@ public class StickerViewPagerAdapter extends PagerAdapter {
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        container.addView(firstView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        return firstView;
+        if (position != 0 && !needDownloadStickerGroupList.isEmpty()) {
+            StickerDownloadView stickerDownloadView = (StickerDownloadView) inflater.inflate(R.layout.common_sticker_panel_need_download_page, null);
+            final StickerGroup stickerGroup = needDownloadStickerGroupList.get(position - 1);
+            stickerDownloadView.setStickerGroup(stickerGroup);
+            final ImageView sticker_download_preview = (ImageView) stickerDownloadView.findViewById(R.id.sticker_download_preview_image);
+            final TextView stickerDownloadShowName = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_show_name);
+            stickerDownloadShowName.setText(stickerGroup.getDownloadDisplayName());
+            ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupDownloadPreviewImageUri(), new ImageViewAware(sticker_download_preview), displayImageOptions, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+                    int padding = HSDisplayUtils.dip2px(40);
+                    view.setPadding(padding, padding, padding, padding);
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    view.setPadding(0, 0, 0, 0);
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            });
+            TextView downloadButton = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_button);
+            downloadButton.setOnClickListener(v -> {
+                        if (ClickUtils.isFastDoubleClick()) {
+                            return;
+                        }
+                        HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
+                        final String stickerGroupName = stickerGroup.getStickerGroupName();
+                        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+                        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
+                                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                                sticker_download_preview.getDrawable(), success -> {
+                                    HSPreferenceHelper.getDefault().putBoolean(KeyboardPanelManager.SHOW_EMOJI_PANEL, true);
+                                    if (success) {
+                                        lastDownloadPosition = position;
+                                        HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
+                                        StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+                                    }
+                                }, false);
+                    });
+            stickerDownloadView.setTag(position);
+            container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            return stickerDownloadView;
+        } else {
+            firstView.setTag(position);
+            container.addView(firstView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            return firstView;
+        }
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        if (lastDownloadPosition == 1) {
+            return POSITION_NONE;
+        } else {
+            return POSITION_UNCHANGED;
+        }
     }
 }

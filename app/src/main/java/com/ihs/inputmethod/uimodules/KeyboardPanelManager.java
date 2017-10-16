@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,8 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -62,6 +65,7 @@ import static android.view.View.VISIBLE;
 
 public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseFunctionBar.OnFunctionBarItemClickListener {
 
+    public static final String SHOW_EMOJI_PANEL = "show_emoji_panel";
 
     public KeyboardPanelManager() {
     }
@@ -69,7 +73,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     private KeyboardPanelSwitchContainer keyboardPanelSwitchContainer;
     private BaseFunctionBar functionBar;
-    private HSMediaView hsBackgroundVedioView;
+    private HSMediaView hsBackgroundVideoView;
     private List<AcbNativeAd> gpNativeAdList = new ArrayList<>();
     private CustomBarGPAdAdapter gpAdAdapter;
     private AcbNativeAdLoader acbNativeAdLoader;
@@ -134,11 +138,11 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         //todo 改为东哥backgroundView
 //        keyboardPanelSwitchContainer.setThemeBackground(HSKeyboardThemeManager.getKeyboardBackgroundDrawable());
         ThemeAnalyticsReporter.getInstance().recordThemeUsage(HSKeyboardThemeManager.getCurrentThemeName());
-        hsBackgroundVedioView = new HSMediaView(HSApplication.getContext());
-        hsBackgroundVedioView.setTag("BackgroundView");
-        hsBackgroundVedioView.setSupportSmoothScroll(false);
-        hsBackgroundVedioView.init();
-        keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVedioView);
+        hsBackgroundVideoView = new HSMediaView(HSApplication.getContext());
+        hsBackgroundVideoView.setTag("BackgroundView");
+        hsBackgroundVideoView.setSupportSmoothScroll(false);
+        hsBackgroundVideoView.init();
+        keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVideoView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
 
         createDefaultFunctionBar();
@@ -154,7 +158,14 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     @Override
     public void showKeyboardPanel() {
         keyboardPanelSwitchContainer.setKeyboardPanel(KeyboardPanel.class, KeyboardSwitcher.getInstance().getKeyboardPanelView());
-        keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
+
+        if (HSPreferenceHelper.getDefault().getBoolean(SHOW_EMOJI_PANEL, false)) {
+            Handler handler = new Handler();
+            handler.post(this::showEmojiPanel);
+        } else {
+            keyboardPanelSwitchContainer.showPanel(KeyboardPanel.class);
+        }
+        HSPreferenceHelper.getDefault().putBoolean(SHOW_EMOJI_PANEL, false);
     }
 
     private void createDefaultFunctionBar() {
@@ -245,8 +256,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void beforeStartInputView() {
-        if (hsBackgroundVedioView != null) {
-            hsBackgroundVedioView.setHSBackground(HSKeyboardThemeManager.getCurrentThemeBackgroundPath());
+        if (hsBackgroundVideoView != null) {
+            hsBackgroundVideoView.setHSBackground(HSKeyboardThemeManager.getCurrentThemeBackgroundPath());
         }
 
         if (FeatureDelayReleaseUtil.checkFeatureReadyToWork("feature_clipboard_bar", 1)) {
@@ -255,14 +266,14 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void onBackPressed() {
-        if (hsBackgroundVedioView != null) {
-            hsBackgroundVedioView.stopHSMedia();
+        if (hsBackgroundVideoView != null) {
+            hsBackgroundVideoView.stopHSMedia();
         }
     }
 
     public void onHomePressed() {
-        if (hsBackgroundVedioView != null) {
-            hsBackgroundVedioView.stopHSMedia();
+        if (hsBackgroundVideoView != null) {
+            hsBackgroundVideoView.stopHSMedia();
         }
     }
 

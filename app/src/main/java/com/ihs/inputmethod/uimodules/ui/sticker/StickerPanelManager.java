@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.util.Log;
 import android.util.Pair;
 
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
@@ -47,7 +46,7 @@ public class StickerPanelManager {
         }
         stickerPanelItemGroups.clear();
         stickerPanelItemGroups.add(recentStickerPanelItems);
-        for (StickerGroup stickerGroup : getSortedExceptNeedDownloadStickerGroup()) {
+        for (StickerGroup stickerGroup : getSortedStickerGroup()) {
             StickerPanelItemGroup stickerPanelItemGroup = new StickerPanelItemGroup(stickerGroup.getStickerGroupName());
             for (Sticker sticker : stickerGroup.getStickerList()) {
                 stickerPanelItemGroup.addStickerPanelItem(new StickerPanelItem(sticker));
@@ -131,6 +130,33 @@ public class StickerPanelManager {
         return stickerSortedNameList;
     }
 
+    List<String> getSortedStickerGroupNameInKeyboardList() {
+        List<String> stickerSortedNameList = new ArrayList<>();
+        List<String> stickerBuildInNameList = new ArrayList<>();
+        List<String> stickerDownloadedNameList = new ArrayList<>();
+        List<String> stickerNeedDownloadNameList = new ArrayList<>();
+
+        List<StickerGroup> stickerGroupInKeyboardList = getNeedDownloadStickerGroupInKeyboardList();
+
+        for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
+            if (stickerGroup.isInternalStickerGroup()) {
+                stickerBuildInNameList.add(stickerGroup.getStickerGroupName());
+            } else if (stickerGroup.isStickerGroupDownloaded()) {
+                if (stickerGroup.getStickerList().isEmpty()) {
+                    stickerGroup.reloadStickers();
+                }
+                stickerDownloadedNameList.add(stickerGroup.getStickerGroupName());
+            } else if (stickerGroupInKeyboardList.contains(stickerGroup)) {
+                stickerNeedDownloadNameList.add(stickerGroup.getStickerGroupName());
+            }
+        }
+        stickerSortedNameList.add(STICKER_RECENT);
+        stickerSortedNameList.addAll(stickerBuildInNameList);
+        stickerSortedNameList.addAll(stickerDownloadedNameList);
+        stickerSortedNameList.addAll(stickerNeedDownloadNameList);
+        return stickerSortedNameList;
+    }
+
     /**
      * 获取除了未下载的所有的StickerGroup名字
      * @return
@@ -169,6 +195,16 @@ public class StickerPanelManager {
     List<StickerGroup> getNeedDownloadStickerGroupList() {
         List<StickerGroup> stickerGroups = new ArrayList<>();
         for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupList()) {
+            if (!stickerGroup.isInternalStickerGroup() && !stickerGroup.isStickerGroupDownloaded()) {
+                stickerGroups.add(stickerGroup);
+            }
+        }
+        return stickerGroups;
+    }
+
+    List<StickerGroup> getNeedDownloadStickerGroupInKeyboardList() {
+        List<StickerGroup> stickerGroups = new ArrayList<>();
+        for (StickerGroup stickerGroup : StickerDataManager.getInstance().getStickerGroupsInKeyboardList()) {
             if (!stickerGroup.isInternalStickerGroup() && !stickerGroup.isStickerGroupDownloaded()) {
                 stickerGroups.add(stickerGroup);
             }

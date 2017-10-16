@@ -72,37 +72,19 @@ public class DownloadUtils {
                 adLoadingView.setConnectionProgressVisibility(View.INVISIBLE);
             }
         });
-        connection.setHeaderReceivedListener(new HSHttpConnection.OnHeaderReceivedListener() {
-            @Override
-            public void onHeaderReceived(HSHttpConnection hsHttpConnection) {
-                new Handler().post(new Runnable() {
-                    int initialProgress = 1;
-                    @Override
-                    public void run() {
-                        adLoadingView.updateProgressPercent(initialProgress);
-                    }
-                });
-            }
-        });
-        connection.setDataReceivedListener(new HSHttpConnection.OnDataReceivedListener() {
-            @Override
-            public void onDataReceived(HSHttpConnection hsHttpConnection, byte[] bytes, long received, long totalSize) {
-                if (totalSize > 0) {
-                    final float percent = (float) received * 100 / totalSize;
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            adLoadingView.updateProgressPercent((int) percent);
-                        }
-                    });
-                }
+        int initialProgress = 1;
+        connection.setHeaderReceivedListener(hsHttpConnection -> new Handler().post(() -> adLoadingView.updateProgressPercent(initialProgress)));
+        connection.setDataReceivedListener((hsHttpConnection, bytes, received, totalSize) -> {
+            if (totalSize > 0) {
+                final float percent = (float) received * 100 / totalSize;
+                new Handler().post(() -> adLoadingView.updateProgressPercent((int) percent));
             }
         });
         connection.startAsync();
     }
 
     public void startForegroundDownloading(Context context, final String objectName, final String filePath, final String downloadUrl,
-                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener, boolean showInDialog) {
         HSHttpConnection connection;
         this.objectName = objectName;
         this.filePath = filePath;
@@ -114,26 +96,34 @@ public class DownloadUtils {
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
                 resources.getString(R.string.ad_placement_lucky),
-                new AdLoadingView.OnAdBufferingListener() {
-                    @Override
-                    public void onDismiss(boolean downloadSuccess) {
-                        if (downloadSuccess) {
-                        } else {
-                            // 没下载成功
-                            HSHttpConnection connection = (HSHttpConnection) adLoadingView.getTag();
-                            if (connection != null) {
-                                connection.cancel();
-                                HSFileUtils.delete(new File(filePath));
-                            }
-                        }
-                        if (onAdBufferingListener != null) {
-                            onAdBufferingListener.onDismiss(downloadSuccess);
+                downloadSuccess -> {
+                    if (downloadSuccess) {
+                    } else {
+                        // 没下载成功
+                        HSHttpConnection connection1 = (HSHttpConnection) adLoadingView.getTag();
+                        if (connection1 != null) {
+                            connection1.cancel();
+                            HSFileUtils.delete(new File(filePath));
                         }
                     }
+                    if (onAdBufferingListener != null) {
+                        onAdBufferingListener.onDismiss(downloadSuccess);
+                    }
                 }, 2000, false);
+//        if (showInDialog) {
         adLoadingView.showInDialog();
+//        } else {
+//            HSInputMethod.getInputArea().addView(adLoadingView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+//            HSInputMethodService.getInstance().setVisibleTopY(DisplayUtils.getScreenHeightPixels() - adLoadingView.getRootViewHeight() >> 1);
+//        }
+
 
         initConnection(resources, adLoadingView, connection);
         adLoadingView.setTag(connection);
+    }
+
+    public void startForegroundDownloading(Context context, final String objectName, final String filePath, final String downloadUrl,
+                                           final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+        startForegroundDownloading(context, objectName, filePath, downloadUrl, thumbnailDrawable, onAdBufferingListener, true);
     }
 }
