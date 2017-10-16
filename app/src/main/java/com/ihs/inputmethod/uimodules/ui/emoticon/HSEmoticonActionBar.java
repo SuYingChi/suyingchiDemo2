@@ -33,9 +33,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanel;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -118,7 +116,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             btn.setOnClickListener(this);
 
             if (TextUtils.equals(panelName, "sticker") &&
-                    (StickerUtils.isFirstKeyboardAppearAndNotClick() || StickerDataManager.getInstance().isShowNewTipState())) {
+                    Constants.isShowNewMask()) {
                 View newTipView = new View(getContext());
                 GradientDrawable redPointDrawable = new GradientDrawable();
                 redPointDrawable.setColor(Color.RED);

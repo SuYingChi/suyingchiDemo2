@@ -11,9 +11,8 @@ import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -24,7 +23,6 @@ import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTranspa
 public class PlusButton extends FrameLayout {
     private View newTipView;
     private final static int FUNCTION_VIEW_REAL_WIDTH = 18;
-    private static final String PREFERENCE_FIRST_KEYBOARD_APPEAR_NOT_CLICK_STICKER_NEW_STATE = "sp_sticker_first_keyboard_appear_not_click_new_tip_state";
 
     public PlusButton(Context context) {
         this(context, null);
@@ -48,9 +46,7 @@ public class PlusButton extends FrameLayout {
         plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
         addView(plusImage);
 
-        if (StickerUtils.isFirstKeyboardAppearAndNotClick()) {// 控制点没有点击，如果点击了，则不再显示，默认情况是未点击的时候，是显示的；同时也保证了键盘第一次出现的时候是显示红点的
-            showNewTip();
-        } else if (StickerDataManager.getInstance().isShowNewTipState()) { // 有没有更新，如果更新了则显示；没有更新，则不显示
+        if (Constants.isShowNewMask()) {
             showNewTip();
         } else {
             hideNewTip();

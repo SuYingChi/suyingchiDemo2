@@ -27,6 +27,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
+import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.stickerplus.PlusButton;
 import com.ihs.inputmethod.uimodules.ui.common.BaseTabViewAdapter;
@@ -116,8 +117,9 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                     bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INNER_PAGE_TAB, KeyboardFragment.TAB_STICKER);
                     HSInputMethod.hideWindow();
                     plusButton.hideNewTip();
-                    StickerUtils.saveFirstKeyboardAppearAndNotClickState(false);
-                    StickerDataManager.getInstance().saveShowNewTipState(false);
+//                    StickerUtils.saveFirstKeyboardAppearAndNotClickState(false);
+//                    StickerDataManager.getInstance().saveShowNewTipState(false);
+                    Constants.setShowNewMask(false);
 
                     new Handler().postDelayed(new Runnable() {
                         @Override

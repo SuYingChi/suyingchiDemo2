@@ -96,7 +96,7 @@ public class StickerDataManager {
                 Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
                 currentNewStickerSet.addAll(newGroupNameList);
                 saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
-                saveShowNewTipState(true);
+                Constants.setShowNewMask(true);
             }
 
             isReady = true;
@@ -148,7 +148,7 @@ public class StickerDataManager {
         }
 
         if (currentNewStickerSet.isEmpty()) {
-            saveShowNewTipState(false);
+            Constants.setShowNewMask(false);
         }
     }
 
@@ -162,15 +162,6 @@ public class StickerDataManager {
         return getCurrentNewStickerSet(HSApplication.getContext()).contains(stickerGroup.getStickerGroupName());
 
     }
-
-    public void saveShowNewTipState(boolean flag) {
-        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putBoolean(Constants.PREFERENCE_SHOW_NEW_TIP_STATE, flag).commit();
-    }
-
-    public boolean isShowNewTipState() {
-        return PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean(Constants.PREFERENCE_SHOW_NEW_TIP_STATE, false);
-    }
-
 
     boolean isStickersReady() {
         return isReady;
