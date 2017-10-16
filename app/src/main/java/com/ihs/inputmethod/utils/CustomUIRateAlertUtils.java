@@ -5,8 +5,13 @@ import android.content.DialogInterface;
 import android.view.View;
 
 import com.ihs.app.alerts.HSAlertMgr;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.keyboardutils.alerts.CustomUIRateAlert;
+import com.ihs.keyboardutils.alerts.CustomUIRateBaseAlert;
+import com.ihs.keyboardutils.alerts.CustomUIRateOneAlert;
+import com.ihs.keyboardutils.alerts.CustomUIRateThreeAlert;
+import com.ihs.keyboardutils.alerts.CustomUIRateTwoAlert;
 
 import java.util.List;
 
@@ -16,6 +21,10 @@ public class CustomUIRateAlertUtils {
     public static String message;
     private static List<String> actionTextList;
     private static List<DialogInterface.OnClickListener> actionListenerList;
+    final private static String RATE_ALERT_TYPE_DEFAULT = "0";
+    final private static String RATE_ALERT_TYPE_ONE = "1";
+    final private static String RATE_ALERT_TYPE_TWO = "2";
+    final private static String RATE_ALERT_TYPE_THREE = "3";
 
     public static void initialize() {
         HSAlertMgr.setShowCustomUIForAlert(new HSAlertMgr.IShowCustomUIForAlert() {
@@ -83,33 +92,77 @@ public class CustomUIRateAlertUtils {
     private static void showRateAlert(Activity activity,String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {
         updateRateAlertInfo(s1, s2, list1, list2);
 
-        final CustomUIRateAlert dialog = new CustomUIRateAlert(activity);
+        String rateAlertType = HSConfig.optString("0", "Application", "RateAlert", "CurrentType");
 
-        dialog.setPositiveButtonOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onPositiveButtonClick(dialog);
-            }
-        });
-        dialog.setNegativeButtonOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onNegativeButtonClick(dialog);
-            }
-        });
-        dialog.setNeutralButtonOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onNeutralButtonClick(dialog);
-            }
-        });
+        final CustomUIRateBaseAlert dialog;
 
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                onNegativeButtonClick(dialog);
-            }
-        });
+        switch (rateAlertType) {
+            case RATE_ALERT_TYPE_DEFAULT:
+                dialog = new CustomUIRateAlert(activity);
+
+                ((CustomUIRateAlert)dialog).setPositiveButtonOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onPositiveButtonClick(dialog);
+                    }
+                });
+                ((CustomUIRateAlert)dialog).setNegativeButtonOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onNegativeButtonClick(dialog);
+                    }
+                });
+                ((CustomUIRateAlert)dialog).setNeutralButtonOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onNeutralButtonClick(dialog);
+                    }
+                });
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        onNegativeButtonClick(dialog);
+                    }
+                });
+                break;
+            case RATE_ALERT_TYPE_ONE:
+                dialog = new CustomUIRateOneAlert(activity);
+                break;
+            case RATE_ALERT_TYPE_TWO:
+                dialog = new CustomUIRateTwoAlert(activity);
+                break;
+            case RATE_ALERT_TYPE_THREE:
+                dialog = new CustomUIRateThreeAlert(activity);
+                break;
+            default:
+                dialog = new CustomUIRateAlert(activity);
+
+                ((CustomUIRateAlert)dialog).setPositiveButtonOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onPositiveButtonClick(dialog);
+                    }
+                });
+                ((CustomUIRateAlert)dialog).setNegativeButtonOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onNegativeButtonClick(dialog);
+                    }
+                });
+                ((CustomUIRateAlert)dialog).setNeutralButtonOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onNeutralButtonClick(dialog);
+                    }
+                });
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        onNegativeButtonClick(dialog);
+                    }
+                });
+                break;
+        }
 
         dialog.show();
     }
