@@ -47,7 +47,7 @@ public class StickerBigCreateFacemojiAdapterDelegate extends AdapterDelegate<Lis
         layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.createBtn.getLayoutParams();
         layoutParams.bottomMargin = (int) (height * 0.2);
 
-        stickerBigCreateFacemojiViewHolder.createBtn.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xFFFFD582,HSApplication.getContext().getResources().getDimension(R.dimen.corner_radius)));
+        stickerBigCreateFacemojiViewHolder.createBtn.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xffffe011,HSApplication.getContext().getResources().getDimension(R.dimen.corner_radius)));
 
         return stickerBigCreateFacemojiViewHolder;
     }

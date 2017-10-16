@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/custom_theme_create"
-            android:textColor="#7fffffff"
+            android:textColor="@color/white"
             android:textSize="18sp" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

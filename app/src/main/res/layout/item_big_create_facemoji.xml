@@ -44,9 +44,9 @@
             android:layout_toRightOf="@id/face_arrow"
             android:fontFamily="bold"
             android:gravity="center"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:text="@string/label_create"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/label_try_now"
             android:textColor="@color/black_primary"
             android:textSize="18sp" />
 

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -124,6 +126,13 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             }
         });
 
+        TextView sendFacemojiTipView = (TextView) findViewById(R.id.send_facemoji_tip);
+
+        GradientDrawable shape = new GradientDrawable();
+        shape.setShape(GradientDrawable.RECTANGLE);
+        shape.setCornerRadius(getResources().getDimension(R.dimen.corner_radius));
+        shape.setColor(0x77888888);
+        sendFacemojiTipView.setBackgroundDrawable(shape);
 
         mImagePager.setAdapter(mFacemojiPalettesAdapter);
         mImagePager.addOnPageChangeListener(this);
@@ -138,7 +147,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
         face_icon = (ImageView) findViewById(R.id.face_menu_icon);
         ViewGroup.LayoutParams face_param = face_icon.getLayoutParams();
-        face_param.height = (int) (getNavigateBarHeight() * 0.7);
+        face_param.height = (int) (getNavigateBarHeight() * 0.6);
         face_param.width = face_param.height;
         face_icon.setLayoutParams(face_param);
         face_icon.setOnClickListener(this);

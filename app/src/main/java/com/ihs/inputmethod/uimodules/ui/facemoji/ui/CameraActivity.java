@@ -147,13 +147,6 @@ public class CameraActivity extends HSAppCompatActivity {
 
 
     /**
-     * 播放 GIF
-     */
-    private void playAnimation() {
-        mCreatingView.setImageURI(Uri.parse("res://" + HSApplication.getContext().getPackageName() + "/" + R.raw.creating));
-    }
-
-    /**
      * 显示处理等待对话框
      */
     private void showProcessingDialog() {
@@ -166,31 +159,19 @@ public class CameraActivity extends HSAppCompatActivity {
             mCreatingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
             if (mCreatingView == null) {
                 mCreatingView = (GifImageView) mCreatingDialog.findViewById(R.id.creating_view);
-                ImageView creatingBar = (ImageView) mCreatingDialog.findViewById(R.id.creating_bar_bg);
-                FrameLayout.LayoutParams param = (FrameLayout.LayoutParams) creatingBar.getLayoutParams();
-                Drawable bg = getResources().getDrawable(R.drawable.facemoji_creating);
-                param.width = (int) (bg.getIntrinsicWidth() * 0.8);
-                param.height = (int) (bg.getIntrinsicHeight() * 0.8);
-                creatingBar.setLayoutParams(param);
                 WindowManager manager = getWindowManager();
                 DisplayMetrics outMetrics = new DisplayMetrics();
                 manager.getDefaultDisplay().getMetrics(outMetrics);
                 ViewGroup.LayoutParams lp = mCreatingView.getLayoutParams();
                 lp.height = lp.width = outMetrics.widthPixels / 2;
                 mCreatingView.setLayoutParams(lp);
-
-                // Creating thumbnail view
-                View creatingThumbnailView = mCreatingDialog.findViewById(R.id.iv_creating_thumbnail);
-                lp = creatingThumbnailView.getLayoutParams();
-                lp.height = lp.width = outMetrics.widthPixels / 2;
-                creatingThumbnailView.setLayoutParams(lp);
             }
-            playAnimation();
+            mCreatingView.setImageURI(Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.creating));
             mCreatingDialog.show();
         } else {
             if (!mCreatingDialog.isShowing()) {
+                mCreatingView.setImageURI(Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.creating));
                 mCreatingDialog.show();
-                playAnimation();
             }
         }
     }

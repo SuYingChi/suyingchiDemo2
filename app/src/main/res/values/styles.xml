@@ -202,4 +202,10 @@
     <style name="ListSeperatorColor" parent="android:Widget.TextView">
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="CaptureImageViewStyle">
+        <item name="android:layout_width">@dimen/camera_capture_view_width</item>
+        <item name="android:layout_height">@dimen/camera_capture_view_width</item>
+        <item name="android:padding">@dimen/camera_capture_view_padding</item>
+    </style>
 </resources>

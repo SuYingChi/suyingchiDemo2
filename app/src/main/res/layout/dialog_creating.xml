@@ -3,17 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/creating_bg"
-    android:gravity="center"
-    >
+    android:gravity="center">
+
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/creating_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id = "@+id/creating_text"
+        android:layout_above="@id/creating_view"
         android:layout_centerHorizontal="true">
 
         <ImageView
-            android:id="@+id/creating_bar_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/facemoji_creating" />
@@ -21,30 +26,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:text="Creating..."
-            android:textStyle="bold"
-            android:gravity="center_horizontal"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
+            android:text="@string/facemoji_in_progress"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
     </FrameLayout>
-
-    <ImageView
-        android:id="@+id/iv_creating_thumbnail"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/creating_thumbnail"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/creating_text"/>
-
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/creating_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/creating_text"/>
 
 
 </RelativeLayout>
