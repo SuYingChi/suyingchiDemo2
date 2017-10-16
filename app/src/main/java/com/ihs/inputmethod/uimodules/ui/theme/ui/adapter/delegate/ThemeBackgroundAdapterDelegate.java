@@ -420,27 +420,11 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
         private void addNativeAdViewToHolder(final Holder holder, final NativeAdInfo nativeAdInfo) {
             holder.itemView.setClickable(false);
-//            if (nativeAdViewCached.get(nativeAdInfo.nativeAd) == null) {
-//                nativeAdView.setOnAdLoadedListener(new NativeAdView.OnAdLoadedListener() {
-//                    @Override
-//                    public void onAdLoaded(NativeAdView adView) {
-//                        if (!HSConfig.getBoolean("Application", "NativeAds", "ShowIconAd")) {
-//                            view.findViewById(R.id.ad_call_to_action).setVisibility(GONE);
-//                        } else {
-//                            view.findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
-//                        }
-//                    }
-//                });
-
-//                ((ViewGroup) holder.itemView).addView(nativeAdInfo.nativeAdView);
-//                nativeAdViewCached.put(nativeAdInfo.nativeAd, nativeAdInfo.nativeAdView);
-//            } else {
             ViewGroup parent = (ViewGroup) nativeAdInfo.nativeAdView.getParent();
             if (parent != null) {
                 parent.removeView(nativeAdInfo.nativeAdView);
             }
             ((ViewGroup) holder.itemView).addView(nativeAdInfo.nativeAdView);
-//            }
         }
 
         private void downloadPreview(final View holder, final int position, final KCBackgroundElement item) {

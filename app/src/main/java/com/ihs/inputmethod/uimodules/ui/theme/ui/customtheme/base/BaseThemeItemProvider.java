@@ -58,7 +58,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     public BaseItemHolder lastCheckedHolder;
     public Object lastCheckedItem;
     protected F fragment;
-    DisplayImageOptions options;
+    private DisplayImageOptions options;
     private boolean hasDefaultItemSelectStateSet = false;
 
     public BaseThemeItemProvider(F fragment) {
@@ -80,7 +80,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     @Override
     protected void onBindViewHolder(@NonNull final BaseItemHolder holder, @NonNull final Object item) {
-//        adjustLayoutForDevice88(holder, (KCBaseElement) item);
         setItemTouchListener(holder, (I) item);
         setItemDrawable(holder, (KCBaseElement) item);
         setNewState(holder, (KCBaseElement) item);
@@ -162,7 +161,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
                 @Override
                 public void onDownloadFailed() {
-                    //// TODO: 17/4/14 applying failed ;
+                    adLoadingView.setConnectionStateText(HSApplication.getContext().getString(R.string.foreground_download_failed));
+                    adLoadingView.updateProgressPercent(0);
                 }
             };
             adLoadingView.showInDialog();
@@ -369,8 +369,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
 
     private void startDownloadContent(BaseItemHolder holder, I item) {
-//        holder.mProgressView.setVisibility(View.VISIBLE);
-//        setLayoutParams(holder.mContentImageView, holder.mProgressView);
         downloadContent(holder, item);
     }
 
@@ -418,9 +416,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-//                        holder.mProgressView.setVisibility(View.VISIBLE);
-//                        holder.mProgressView.setPercent((int) (percent * 100));
-//                        holder.mProgressView.postInvalidate();
                         if (holder.downloadingProgressListener != null) {
                             holder.downloadingProgressListener.onUpdate((int) (percent * 100));
                         }
@@ -447,7 +442,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-//                        holder.mProgressView.setVisibility(View.INVISIBLE);
                         holder.setIsRecyclable(true);
                     }
                 });
@@ -460,7 +454,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         handler.post(new Runnable() {
             @Override
             public void run() {
-//                holder.mProgressView.setVisibility(View.INVISIBLE);
                 if (fragment.getCustomThemeData() != null && fragment.getCustomThemeData().isElementChecked(item)) {
                     selectItem(holder, (KCBaseElement) item);
                     fragment.refreshKeyboardView();
@@ -577,7 +570,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                 return false;
             }
         });
-
     }
 
     protected void doSelectAnimationOnItemViewRelease(final View view) {
@@ -604,26 +596,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             }
         };
 
-//        Animation.AnimationListener resetAnimationListener = new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        };
-
-
         bigScale.setAnimationListener(bigScaleAnimationListener);
-//        reset.setAnimationListener(resetAnimationListener);
         view.startAnimation(bigScale);
     }
 
@@ -648,7 +621,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         public ImageView mNewMarkImageView;
         public ImageView mPlaceholderView;
         public ImageView mGiftIconImageView;
-        //        public SectorProgressView mProgressView;
         public View itemView;
         public OnDownloadingProgressListener downloadingProgressListener;
 
