@@ -508,7 +508,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                             holder.mGiftIconImageView.setVisibility(View.GONE);
                                         }
-                                        new Handler().postDelayed(new Runnable() {
+                                        handler.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
                                                 fragment.addChosenItem((KCBaseElement) item);
@@ -534,7 +534,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
                                             holder.mGiftIconImageView.setVisibility(View.GONE);
                                         }
-                                        new Handler().postDelayed(new Runnable() {
+                                        handler.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
                                                 fragment.addChosenItem((KCBaseElement) item);
