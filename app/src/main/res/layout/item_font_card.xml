@@ -30,7 +30,7 @@
                 android:textSize="23sp" />
 
             <ImageView
-                android:id="@+id/more_menu_image"
+                android:id="@+id/download_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

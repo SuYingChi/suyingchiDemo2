@@ -165,7 +165,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
         public FontHomeViewHolder(View itemView) {
             super(itemView);
-            downloadIcon = (ImageView) itemView.findViewById(R.id.more_menu_image);
+            downloadIcon = (ImageView) itemView.findViewById(R.id.download_icon);
             moreFontHint = (TextView) itemView.findViewById(R.id.more_font_coming);
         }
     }
