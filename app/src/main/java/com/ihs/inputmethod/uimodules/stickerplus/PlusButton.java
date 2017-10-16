@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.R;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
@@ -46,7 +46,7 @@ public class PlusButton extends FrameLayout {
         plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
         addView(plusImage);
 
-        if (Constants.isShowNewMask()) {
+        if (HSInputMethodService.getInstance().isShowNewMask()) {
             showNewTip();
         } else {
             hideNewTip();

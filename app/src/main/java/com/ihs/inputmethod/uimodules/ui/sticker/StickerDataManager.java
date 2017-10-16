@@ -10,7 +10,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.framework.Constants;
+import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerModel;
 
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class StickerDataManager {
                 Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
                 currentNewStickerSet.addAll(newGroupNameList);
                 saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
-                Constants.setShowNewMask(true);
+                HSInputMethodService.getInstance().setShowNewMask(true);
             }
 
             isReady = true;
@@ -148,7 +148,7 @@ public class StickerDataManager {
         }
 
         if (currentNewStickerSet.isEmpty()) {
-            Constants.setShowNewMask(false);
+            HSInputMethodService.getInstance().setShowNewMask(false);
         }
     }
 

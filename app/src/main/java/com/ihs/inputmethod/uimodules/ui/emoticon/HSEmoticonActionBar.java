@@ -26,6 +26,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.framework.Constants;
@@ -116,7 +117,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             btn.setOnClickListener(this);
 
             if (TextUtils.equals(panelName, "sticker") &&
-                    Constants.isShowNewMask()) {
+                    HSInputMethodService.getInstance().isShowNewMask()) {
                 View newTipView = new View(getContext());
                 GradientDrawable redPointDrawable = new GradientDrawable();
                 redPointDrawable.setColor(Color.RED);

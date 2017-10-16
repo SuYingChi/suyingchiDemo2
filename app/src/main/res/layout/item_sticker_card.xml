@@ -68,12 +68,11 @@
 
                 <ImageView
                     android:id="@+id/more_menu_image"
-                    style="?attr/actionButtonStyle"
                     android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingLeft="22dp"
-                    android:paddingRight="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/menu_more_selector" />
 
             </LinearLayout>
