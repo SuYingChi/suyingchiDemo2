@@ -95,7 +95,7 @@ public class FacemojiSticker implements ISequenceFramesImageItem {
         height = HSMapUtils.getInteger(mStyleMap, "size", "height");
         HSLog.d("stickername is " + stickername + " version " + version + " width " + width + " height " + height);
         List<?> frames = HSMapUtils.getList(mStyleMap, "frames");
-        animFrames = new ArrayList<FacemojiFrame>(frames.size());
+        animFrames = new ArrayList<>(frames.size());
         for (Object f : frames) {
             int w = 0;
             int h = 0;
@@ -108,13 +108,13 @@ public class FacemojiSticker implements ISequenceFramesImageItem {
             int interval = HSMapUtils.getInteger((Map<String, ?>) f, "interval");
             HSLog.d("frame interval is " + interval);
             List<?> layers = HSMapUtils.getList((Map<String, ?>) f, "layers");
-            List<String> layerFileNames = new ArrayList<>(layers.size());
+            List<FacemojiFrame.FacemojiLayer> layerFileNames = new ArrayList<>(layers.size());
             for (Object l : layers) {
                 int type = HSMapUtils.getInteger((Map<String, ?>) l, "type");
                 if (type == 1) {
-                    layerFileNames.add(HSMapUtils.getString((Map<String, ?>) l, "src"));
+                    layerFileNames.add(new FacemojiFrame.FacemojiLayer(type,HSMapUtils.getString((Map<String, ?>) l, "src")));
                 } else {
-                    layerFileNames.add(FacemojiFrame.FACE_PIC);
+                    layerFileNames.add(new FacemojiFrame.FacemojiLayer(type,null));
                     w = HSMapUtils.getInteger((Map<String, ?>) l, "size", "width");
                     h = HSMapUtils.getInteger((Map<String, ?>) l, "size", "height");
                     transX = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "translateX");

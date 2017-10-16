@@ -12,13 +12,13 @@ public class FacemojiFrame implements ISequenceFramesImageItem.IFrame{
     public static final String FACE_PIC = "face_pic";
     private final int interval;
     private final FacePictureParam facePictureParam;// 帧参数
-    private final List<String> layerFileNames; // layer : 帧路径
+    private final List<FacemojiLayer> facemojiLayers; // layer : 帧路径
 
 
-    public FacemojiFrame(int dur, FacePictureParam faceParam, List<String> layers){
+    public FacemojiFrame(int dur, FacePictureParam faceParam, List<FacemojiLayer> facemojiLayers){
         interval = dur;
         facePictureParam = faceParam;
-        layerFileNames = layers;
+        this.facemojiLayers = facemojiLayers;
     }
 
     public int getInterval() {
@@ -29,14 +29,22 @@ public class FacemojiFrame implements ISequenceFramesImageItem.IFrame{
         return facePictureParam;
     }
 
-    public boolean isFaceOnTop(){
-        return !FACE_PIC.equals(layerFileNames.get(0));
+    public List<FacemojiLayer> getLayerList() {
+        return facemojiLayers;
     }
 
-    public List<String> getLayerFileNames() {
-        return layerFileNames;
-    }
+    public static class FacemojiLayer {
+        int type;
+        public String srcName;
+        public boolean isFace(){
+            return type == 0;
+        }
 
+        public FacemojiLayer(int type, String srcName) {
+            this.type = type;
+            this.srcName = srcName;
+        }
+    }
 }
 
 

@@ -30,6 +30,7 @@ import com.ihs.inputmethod.uimodules.constants.Notification;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacePictureParam;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiFrame;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher.FacePalettesView;
 import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
@@ -80,7 +81,8 @@ public class FacemojiManager {
     private static final String[] classicCategoryNames = {
             "person",
             "star",
-            "fruit"
+            "fruit",
+            "dance"
     };
     private static final String[] newCategoryNames = {
             "star",
@@ -409,19 +411,12 @@ public class FacemojiManager {
     }
 
     public static Bitmap getFrame(FacemojiSticker sticker, int frameNumber) {
-        String frameBgFilePath = HSApplication.getContext().getFilesDir().getAbsolutePath() + "/" + MOJIME_DIRECTORY + "/" + sticker.getCategoryName() + "/" + sticker.getName() + "/" + sticker.getName() + "-" + (frameNumber + 1) + ".png";
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        Bitmap originBg = BitmapFactory.decodeFile(frameBgFilePath, options);
-        int bgwidth = originBg.getWidth();
-        int bgheight = originBg.getHeight();
-
-        FacePictureParam param = sticker.getFacemojiFrames().get(frameNumber).getFacePictureParam();
-
         final Bitmap currentFaceBmp = getCurrentFaceBmp();
         if (currentFaceBmp == null) {
-           return null;
+            return null;
         }
+
+        FacePictureParam param = sticker.getFacemojiFrames().get(frameNumber).getFacePictureParam();
 
         Matrix basicMatrix = new Matrix();
         basicMatrix.setValues(new float[]{param.scaleX, param.skewX, param.translateX, param.skewY, param.scaleY, param.translateY, 0, 0, 1});
@@ -431,25 +426,30 @@ public class FacemojiManager {
         faceCanvasMatrix.preConcat(basicMatrix);
         faceCanvasMatrix.preTranslate(-param.width / 2, -param.height / 2);
 
-        Matrix bgMatrix = new Matrix();
-        bgMatrix.postScale((float) sticker.getWidth() / bgwidth, (float) sticker.getHeight() / bgheight);
-
         Bitmap resultBitmap = Bitmap.createBitmap(sticker.getWidth(), sticker.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(resultBitmap);
         Paint paint = new Paint();
         paint.setFilterBitmap(true);
-        if (sticker.getFacemojiFrames().get(frameNumber).isFaceOnTop()) {
-            c.drawBitmap(originBg, bgMatrix, paint);
-            c.setMatrix(faceCanvasMatrix);
-            c.drawBitmap(currentFaceBmp, null, new Rect(0, 0, param.width, param.height), paint);
-            c.setMatrix(new Matrix());
-        } else {
-            c.setMatrix(faceCanvasMatrix);
-            c.drawBitmap(currentFaceBmp, null, new Rect(0, 0, param.width, param.height), paint);
-            c.setMatrix(new Matrix());
-            c.drawBitmap(originBg, bgMatrix, paint);
+        paint.setAntiAlias(true);
+
+        for (FacemojiFrame.FacemojiLayer layer : sticker.getFacemojiFrames().get(frameNumber).getLayerList()){
+            if (layer.isFace()){
+                c.setMatrix(faceCanvasMatrix);
+                c.drawBitmap(currentFaceBmp, null, new Rect(0, 0, param.width, param.height), paint);
+            }else {
+                c.setMatrix(new Matrix());
+                String frameBgFilePath = HSApplication.getContext().getFilesDir().getAbsolutePath() + "/" + MOJIME_DIRECTORY + "/" + sticker.getCategoryName() + "/" + sticker.getName() + "/" + layer.srcName;
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap originBg = BitmapFactory.decodeFile(frameBgFilePath, options);
+                int bgwidth = originBg.getWidth();
+                int bgheight = originBg.getHeight();
+                Matrix bgMatrix = new Matrix();
+                bgMatrix.postScale((float) sticker.getWidth() / bgwidth, (float) sticker.getHeight() / bgheight);
+                c.drawBitmap(originBg, bgMatrix, paint);
+                originBg.recycle();
+            }
         }
-        originBg.recycle();
         return resultBitmap;
     }
 
