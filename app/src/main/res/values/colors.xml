@@ -120,6 +120,7 @@
     <color name="main_activity_bg">#eef0f7</color>
     <color name="privacy_stress_text">#53c0fe</color>
     <color name="custom_rate_alert_button_bg">#d53bf1</color>
+    <color name="custom_share_alert_button_bg">#4589f3</color>
 
     <!-- Wallpaper -->
     <color name="wallpaper_activities_control_highlight">#dadada</color>

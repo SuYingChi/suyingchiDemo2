@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/apk_update_alert_bg">
+
+    <ImageView
+        android:id="@+id/iv_top_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/ic_keyboard_custom_theme_share_alert" />
+
+    <TextView
+        android:id="@+id/tv_share_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_top_image"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="18.3dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:lineSpacingExtra="4.7sp"
+        android:text="@string/custom_share_alert_message"
+        android:textColor="#343434"
+        android:textSize="15.3sp" />
+
+    <Button
+        android:id="@+id/btn_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_share_message"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="23.3dp"
+        android:drawableLeft="@drawable/ic_instagram"
+        android:drawableStart="@drawable/ic_instagram"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="@string/custom_share_alert_button_text"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/iv_close_image"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/btn_close" />
+</RelativeLayout>

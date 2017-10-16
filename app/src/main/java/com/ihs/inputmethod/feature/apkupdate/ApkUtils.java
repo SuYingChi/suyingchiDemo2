@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.feature.apkupdate;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.utils.CommonUtils;
@@ -39,6 +41,7 @@ public class ApkUtils {
     private static final String PREF_KEY_UPDATE_APK_VERSION_CODE = "update_apk_version_code";
     private static final String PREF_KEY_UPDATE_ALERT_LAST_SHOWN_TIME = "update_alert_last_shown_time";
     private static final String PREF_KEY_RATE_BUTTON_CLICKED = "perf_rate_button_clicked";
+    private static final String PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM = "perf_shared_keyboard_on_instagram";
     private static final long UPDATE_ALERT_SHOW_INTERVAL_IN_MILLIS = 24 * 60 * 60 * 1000;
     private static final String PREF_APKUTILS_FILE_NAME = "pref_file_apkutils";
 
@@ -255,6 +258,114 @@ public class ApkUtils {
 
     public static boolean isRateButtonClicked() {
         return HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).getBoolean(PREF_KEY_RATE_BUTTON_CLICKED, false);
+    }
+
+    public static boolean isSharedKeyboardOnInstagramBefore() {
+        return HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).getBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, false);
+    }
+
+    public static boolean isInstagramInstalled() {
+        return isInstalled("com.instagram.android");
+    }
+
+    public static boolean isInstalled(String packageName) {
+        try {
+            PackageInfo packageInfo = HSApplication.getContext().getPackageManager().getPackageInfo(packageName.trim(),
+                    PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+            if (packageInfo != null) {
+                // 说明某个应用使用了该包名
+                return true;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+    private static String getShareFileDir() {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            return Environment.getExternalStorageDirectory() + File.separator + HSApplication.getContext().getPackageName() + File.separator + "shareApp";
+        }
+        Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sd_card_unavailable_tip), Toast.LENGTH_SHORT).show();
+        return null;
+    }
+
+    private static String getInstagramShareFile() {
+        String shareFileDirPath = getShareFileDir();
+        if (shareFileDirPath == null) {
+            return null;
+        }
+        File file = new File(shareFileDirPath, "share_keyboard_to_instagram.jpg");
+        if (!file.exists() || file.length() == 0) {
+            file.getParentFile().mkdirs();
+            HSFileUtils.copyFile(HSApplication.getContext().getResources().openRawResource(R.raw.share_keyboard_to_instagram), file);
+        }
+        return file.getAbsolutePath();
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static void shareKeyboardToInstagram(Activity activity) {
+        Intent intent = HSApplication.getContext().getPackageManager().getLaunchIntentForPackage("com.instagram.android");
+        if (intent != null) {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.setPackage("com.instagram.android");
+            // Create the URI from the media
+            String mediaPath = getInstagramShareFile();
+            if (mediaPath == null) {
+                return;
+            }
+            File media = new File(mediaPath);
+            Uri uri = Uri.fromFile(media);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/*");
+            activity.startActivity(shareIntent);
+            HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).putBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, true);
+        }
+    }
+
+    @SuppressLint("InflateParams")
+    public static void showCustomShareAlert(Activity activity, final View.OnClickListener shareButtonClickListener) {
+        String preferredLanguageString = Locale.getDefault().getLanguage();
+        HSLog.d("showCustomShareAlert preferredLanguageString: " + preferredLanguageString);
+
+        LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.apk_custom_share_alert, null);
+        final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
+        TextView message = (TextView) view.findViewById(R.id.tv_share_message);
+        message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_message), "Application", "Update", "ShareAlert", "Message", preferredLanguageString));
+        Button positiveBtn = (Button) view.findViewById(R.id.btn_share);
+        positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
+                HSApplication.getContext().getResources().getColor(R.color.custom_share_alert_button_bg),
+                HSApplication.getContext().getResources().getColor(R.color.guide_bg_disable_color),
+                HSApplication.getContext().getResources().getDimension(R.dimen.apk_update_alert_button_radius)));
+        positiveBtn.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_button_text), "Application", "Update", "ShareAlert", "ButtonText", preferredLanguageString));
+        positiveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!CommonUtils.isNetworkAvailable(-1)) {
+                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                HSAnalytics.logEvent("customizeTheme_shareToUnlock_clicked");
+                if (shareButtonClickListener != null) {
+                    shareButtonClickListener.onClick(v);
+                }
+                shareKeyboardToInstagram(activity);
+                alertDialog.dismiss();
+            }
+        });
+        ImageView closeIcon = (ImageView) view.findViewById(R.id.iv_close_image);
+        closeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+        HSAnalytics.logEvent("customizeTheme_shareToUnlock_show");
     }
 
     @SuppressLint("InflateParams")
