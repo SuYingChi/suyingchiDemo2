@@ -96,7 +96,9 @@ public class StickerDataManager {
                 Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
                 currentNewStickerSet.addAll(newGroupNameList);
                 saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
-                HSInputMethodService.getInstance().setShowNewMask(true);
+                saveShowNewMask(true);
+            } else if (!shouldShowNewMask()) { //如果新Sticker的为空而且从未点击过plusButton
+                saveShowNewMask(false);
             }
 
             isReady = true;
@@ -139,6 +141,15 @@ public class StickerDataManager {
         return PreferenceManager.getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_NEW_STICKER_SET, new HashSet());
     }
 
+    public void saveShowNewMask(boolean show) {
+        HSPreferenceHelper.getDefault().putBoolean("show_new_mask", show);
+        HSInputMethodService.setShowNewMask(false);
+    }
+
+    public boolean shouldShowNewMask() {
+        return HSPreferenceHelper.getDefault().getBoolean("show_new_mask", true);
+    }
+
     public void removeNewTipOfStickerGroup(StickerModel stickerModel) {
         String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
         Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
@@ -147,8 +158,9 @@ public class StickerDataManager {
             saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
         }
 
+
         if (currentNewStickerSet.isEmpty()) {
-            HSInputMethodService.getInstance().setShowNewMask(false);
+            HSInputMethodService.setShowNewMask(false);
         }
     }
 

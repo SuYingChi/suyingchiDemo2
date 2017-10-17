@@ -119,7 +119,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
                     plusButton.hideNewTip();
 //                    StickerUtils.saveFirstKeyboardAppearAndNotClickState(false);
 //                    StickerDataManager.getInstance().saveShowNewTipState(false);
-                    HSInputMethodService.getInstance().setShowNewMask(false);
+//                    HSInputMethodService.getInstance().setShowNewMask(false);
+                    StickerDataManager.getInstance().saveShowNewMask(false);
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
