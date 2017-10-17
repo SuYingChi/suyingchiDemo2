@@ -139,7 +139,6 @@
                     android:id="@+id/camera_switcher"
                     style="@style/CaptureImageViewStyle"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:onClick="useBeauty"
                     android:src="@drawable/ic_switch_camera" />
             </LinearLayout>
         </LinearLayout>

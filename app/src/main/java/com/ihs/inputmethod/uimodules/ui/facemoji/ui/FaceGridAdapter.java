@@ -35,6 +35,7 @@ public class FaceGridAdapter extends BaseAdapter {
     private boolean editMode;
     private List<FaceItem> faceTobeDeleted;
     private Activity faceListActivity;
+    private OnSelectedFaceChangedListener onSelectedFaceChangedListener;
 
     public FaceGridAdapter(int stickerDimension, Activity activity) {
         this.mData = FacemojiManager.getFaceList();
@@ -42,6 +43,10 @@ public class FaceGridAdapter extends BaseAdapter {
         this.stickerDimension = stickerDimension;
         this.mInflater = LayoutInflater.from(HSApplication.getContext());
         this.faceListActivity = activity;
+    }
+
+    public void setOnSelectedFaceChangedListener(OnSelectedFaceChangedListener onSelectedFaceChangedListener) {
+        this.onSelectedFaceChangedListener = onSelectedFaceChangedListener;
     }
 
     @Override
@@ -133,6 +138,9 @@ public class FaceGridAdapter extends BaseAdapter {
                         } else {
                             faceTobeDeleted.add(face);
                             face.setIsSelected(true);
+                        }
+                        if (onSelectedFaceChangedListener != null){
+                            onSelectedFaceChangedListener.onSelectedFaceChange(faceTobeDeleted.size());
                         }
                     } else {
                         if (face.getUri().equals(FacemojiManager.getCurrentFacePicUri())) {
@@ -231,4 +239,7 @@ public class FaceGridAdapter extends BaseAdapter {
     }
 
 
+    public interface OnSelectedFaceChangedListener{
+        void onSelectedFaceChange(int selectedCount);
+    }
 }

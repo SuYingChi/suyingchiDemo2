@@ -1,26 +1,27 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji.ui;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 
 
-public class FaceListActivity extends HSAppCompatActivity implements View.OnClickListener {
+public class FaceListActivity extends HSAppCompatActivity implements View.OnClickListener, FaceGridAdapter.OnSelectedFaceChangedListener {
     private int screenHeight;
     private GridView faceGrid;
     private static final int PAGER_TOP_PADDING_PX = 10;
@@ -31,7 +32,7 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
     private int faceItemDimension;
     private FaceGridAdapter adapter;
     private TextView editBtn;
-    private TextView deleteBtn;
+    private ImageView deleteBtn;
 
 
     @Override
@@ -51,6 +52,7 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
         faceGrid = (GridView) findViewById(R.id.face_grid);
         setGridViewLayoutProperties();
         adapter = new FaceGridAdapter(faceItemDimension, this);
+        adapter.setOnSelectedFaceChangedListener(this);
         faceGrid.setAdapter(adapter);
 
         editBtn = (TextView) findViewById(R.id.facelist_edit_btn);
@@ -61,19 +63,14 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
         editButtonHolder.setLayoutParams(editHolderPara);
         editButtonHolder.setOnClickListener(this);
 
-        deleteBtn = (TextView) findViewById(R.id.face_delete_btn);
-        StateListDrawable deletedBackground = new StateListDrawable();
-        deletedBackground.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(getResources().getColor(R.color.facemoji_face_pressed_color)));
-        deletedBackground.addState(new int[]{}, new ColorDrawable(getResources().getColor(R.color.facemoji_face_deleted_bg)));
-        deleteBtn.setBackgroundDrawable(deletedBackground);
-        deleteBtn.setClickable(true);
+        deleteBtn = (ImageView) findViewById(R.id.delete_face);
         deleteBtn.setOnClickListener(this);
         LinearLayout.LayoutParams deleteBtn_param = (LinearLayout.LayoutParams) deleteBtn.getLayoutParams();
         deleteBtn_param.height = getNavigateBarHeight();
 
         Intent intent = getIntent();
-        if (intent.getBooleanExtra("toggleEditMode", false)) {
-            toggleEditMode();
+        if (intent.getBooleanExtra("switchEditMode", false)) {
+            switchEditMode();
         }
     }
 
@@ -88,32 +85,41 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
         faceItemDimension = (int) ((float) (gridHeight - PAGER_BOTTOM_PADDING_PX - PAGER_TOP_PADDING_PX - GRID_VERTICAL_GAP_PX * (GRID_ROW_NUMBER - 1)) / GRID_ROW_NUMBER);
     }
 
-    private void toggleEditMode() {
+    private void switchEditMode() {
 
         adapter.setEditMode(!adapter.isInEditMode());
         if (adapter.isInEditMode()) {
+            deleteBtn.setVisibility(View.VISIBLE);
+            editBtn.setVisibility(View.GONE);
             adapter.resetAllItems();
-            editBtn.setText("Cancel");
             if (adapter.getCount() <= 1) {
-                deleteBtn.setTextColor(getResources().getColor(R.color.facemoji_delete_btn_text_disabled));
                 deleteBtn.setClickable(false);
             } else {
-                deleteBtn.setTextColor(Color.RED);
                 deleteBtn.setClickable(true);
             }
             deleteBtn.setVisibility(View.VISIBLE);
+            VectorDrawableCompat closeDrawable = VectorCompat.createVectorDrawable(this, R.drawable.ic_close_black_24dp);
+            DrawableCompat.setTint(closeDrawable,getResources().getColor(R.color.white));
+            getSupportActionBar().setHomeAsUpIndicator(closeDrawable);
+            showEditStatusTitle(0);
         } else {
-            editBtn.setText("Edit");
             deleteBtn.setVisibility(View.GONE);
+            editBtn.setVisibility(View.VISIBLE);
+            getSupportActionBar().setHomeAsUpIndicator(null);
+            getSupportActionBar().setTitle(getResources().getString(R.string.switch_facemoji_toolbar_title));
         }
         adapter.notifyDataSetChanged();
 
     }
 
+    private void showEditStatusTitle(int selectedCount){
+        getSupportActionBar().setTitle(getResources().getString(R.string.switch_facemoji_selected_status_title,selectedCount));
+    }
+
     private void deleteSelectedFace() {
         adapter.deleteSelectedFace();
-        toggleEditMode();
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACE_CHANGED);
+        switchEditMode();
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACE_DELETED);
     }
 
     @Override
@@ -121,7 +127,11 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                finish();
+                if (adapter.isInEditMode()) {
+                    switchEditMode();
+                }else {
+                    finish();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -131,9 +141,14 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.facelist_edit_btn_holder) {
-            toggleEditMode();
-        } else if (id == R.id.face_delete_btn) {
+            switchEditMode();
+        } else if (id == R.id.delete_face) {
             deleteSelectedFace();
         }
+    }
+
+    @Override
+    public void onSelectedFaceChange(int selectedCount) {
+        showEditStatusTitle(selectedCount);
     }
 }

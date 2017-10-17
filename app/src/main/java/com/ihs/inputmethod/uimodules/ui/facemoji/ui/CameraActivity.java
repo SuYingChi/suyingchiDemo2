@@ -65,6 +65,7 @@ import pl.droidsonroids.gif.GifImageView;
 public class CameraActivity extends HSAppCompatActivity {
     public static final String FACEMOJI_SAVED = "FACEMOJI_SAVED";
     public static final String FACE_CHANGED = "FACE_CHANGED";
+    public static final String FACE_DELETED = "FACE_DELETED";
     private static final int SAMPLE_SIZE = 8;
     private boolean useBeautyNow = true;
     private Bitmap srcBitmap;

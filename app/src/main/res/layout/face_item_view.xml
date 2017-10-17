@@ -17,8 +17,6 @@
         android:id="@+id/face_item_picker_icon"
         android:layout_width="@dimen/facemoji_face_list_picker_size"
         android:layout_height="@dimen/facemoji_face_list_picker_size"
-        android:layout_marginRight="@dimen/facemoji_face_list_picker_margin"
-        android:layout_marginBottom="@dimen/facemoji_face_list_picker_margin"
-        android:layout_gravity="bottom|right"/>
+        android:layout_gravity="right"/>
 
 </FrameLayout>

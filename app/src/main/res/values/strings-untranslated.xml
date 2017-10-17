@@ -21,11 +21,15 @@
     <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
 
     <string name="camera_activity_title">Take a Selfie</string>
-    <string name="my_facemoji_toolbar_title">MY FACEMOJI</string>
-    <string name="switch_facemoji_toolbar_title">Switch Face</string>
-
     <string name="facemoji_in_progress">FaceMoji in progress...</string>
+
+    <string name="my_facemoji_toolbar_title">MY FACEMOJI</string>
     <string name="my_facemoji_send_facemoji_tip">Alerady ROFL? Go send them on Emoji keyboard!</string>
+
+    <string name="switch_facemoji_toolbar_title">Switch Face</string>
+    <string name="switch_facemoji_selected_status_title">%d Selected</string>
+    <string name="label_manage">MANAGE</string>
+
     <string name="sticker_title_create_my_facemojis">Create My Facemojis</string>
     <string name="sticker_title_my_facemojis">My Facemojis</string>
     <string name="sticker_title_funny_stickers">Funny Stickers</string>
