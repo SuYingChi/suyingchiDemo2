@@ -30,6 +30,7 @@ public class StickerDataManager {
     public static final String STICKER_GROUP_ORIGINAL = "sticker_group_original_position";
     public static final String PREFERENCE_KEY_NEW_STICKER_SET = "sp_key_new_sticker_set";
     private static final String PREFERENCE_STICKER_IS_FIRST_LOAD = "sp_sticker_is_first_load";
+    private static final String SHOW_NEW_MASK = "show_new_mask";
     private static StickerDataManager instance;
     private List<StickerGroup> stickerGroups;
     private List<StickerGroup> stickerGroupsInKeyboard;
@@ -124,7 +125,7 @@ public class StickerDataManager {
         List<StickerGroup> stickerGroups = new ArrayList<>();
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickersGifs", "Sticker", "StickerGroupList");
         for (Map<String, Object> map : stickerConfigList) {
-            Boolean showInKeyboard = (Boolean) map.get("KeyboardStickerGroupList");
+            Boolean showInKeyboard = (Boolean) map.get("showInKeyboard");
             String stickerGroupName = (String) map.get("name");
             String stickerGroupDownloadDisplayName = (String) map.get("showName");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
@@ -158,12 +159,12 @@ public class StickerDataManager {
     }
 
     public void saveShowNewMask(boolean show) {
-        HSPreferenceHelper.getDefault().putBoolean("show_new_mask", show);
+        HSPreferenceHelper.getDefault().putBoolean(SHOW_NEW_MASK, show);
         HSInputMethodService.setShowNewMask(false);
     }
 
     public boolean shouldShowNewMask() {
-        return HSPreferenceHelper.getDefault().getBoolean("show_new_mask", true);
+        return HSPreferenceHelper.getDefault().getBoolean(SHOW_NEW_MASK, true);
     }
 
     public void removeNewTipOfStickerGroup(StickerModel stickerModel) {
