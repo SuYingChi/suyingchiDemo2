@@ -49,7 +49,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
     private StickerPanelManager stickerPanelManager;
 
     private PlusButton plusButton;
-    private String currentTab;
+    private String downloadStickerName;
 
     private ViewPager stickerPanelViewPager;
     private StickerViewPagerAdapter stickerViewPagerAdapter;
@@ -58,7 +58,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         if (StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION.equals(s)) {
             StickerGroup stickerGroup = (StickerGroup) hsBundle.getObject(StickerDataManager.STICKER_GROUP_ORIGINAL);
             if (stickerGroup != null) {
-                currentTab = stickerGroup.getStickerGroupName();
+                downloadStickerName = stickerGroup.getStickerGroupName();
             }
         }
         HSLog.d("sticker regainDataAndNotifyDataSetChange...");
@@ -154,7 +154,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             @Override
             public void onPageSelected(int position) {
                 if (position != 0) { // 下载页之间的滑动
-                    stickerTabRecyclerView.getLayoutManager().scrollToPosition(position + 1);
+                    stickerTabRecyclerView.getLayoutManager().scrollToPosition(position + 2);
                     final String stickerGroupName = stickerPanelManager.getNeedDownloadStickerGroupInKeyboardList().get(position - 1).getStickerGroupName();
                     stickerTabAdapter.setTabSelected(stickerGroupName);
                 } else { //从下载页面滑到首页，先滑动到下载好的最后一项
@@ -239,7 +239,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
     void onDataLoaded() {
         stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());
-        stickerTabAdapter.setCurrentTab(TextUtils.isEmpty(currentTab) ? stickerPanelManager.getDefaultTab() : currentTab, stickerPanelManager.getDefaultTab());
+        String tabToSelect = TextUtils.isEmpty(downloadStickerName) ? stickerPanelManager.getCurrentTabName() : downloadStickerName;
+        stickerTabAdapter.setCurrentTab(tabToSelect, stickerPanelManager.getCurrentTabName());
     }
 
     public void saveRecent() {
@@ -268,7 +269,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             if (!tab.equals(stickerPanelManager.getCurrentTabName())) {
                 stickerPanelManager.setCurrentTabName(tab);
                 stickerTabAdapter.setTabSelected(tab);
-//                stickerTabRecyclerView.scrollToPosition(stickerTabAdapter.getTabIndex(tab));
+                stickerTabRecyclerView.scrollToPosition(stickerTabAdapter.getTabIndex(tab));
                 if (stickerPanelManager.isRecentTab(tab)) { // 滑到recent
                     stickerPanelManager.flushPendingRecentSticker();
                     stickerMainRecyclerViewAdapter.setData(stickerPanelManager.getStickerPanelItemList());
