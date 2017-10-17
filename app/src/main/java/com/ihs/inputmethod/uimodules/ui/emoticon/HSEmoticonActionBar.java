@@ -117,7 +117,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             btn.setOnClickListener(this);
 
             if (TextUtils.equals(panelName, "sticker") &&
-                    HSInputMethodService.getInstance().isShowNewMask()) {
+                    HSInputMethodService.isShowNewMask()) {
                 View newTipView = new View(getContext());
                 GradientDrawable redPointDrawable = new GradientDrawable();
                 redPointDrawable.setColor(Color.RED);

@@ -2,7 +2,9 @@ package com.ihs.inputmethod.uimodules.stickerplus;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -43,7 +45,9 @@ public class PlusButton extends FrameLayout {
 
         AppCompatImageView plusImage = new AppCompatImageView(getContext());
         plusImage.setLayoutParams(lp);
-        plusImage.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.common_tab_plus));
+        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.common_tab_plus);
+        plusImage.setImageDrawable(drawable);
+        plusImage.setAlpha(0.8f);
         addView(plusImage);
 
         if (StickerDataManager.getInstance().shouldShowNewMask()) {

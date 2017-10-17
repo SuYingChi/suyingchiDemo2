@@ -160,7 +160,7 @@ public class StickerDataManager {
 
     public void saveShowNewMask(boolean show) {
         HSPreferenceHelper.getDefault().putBoolean(SHOW_NEW_MASK, show);
-        HSInputMethodService.setShowNewMask(false);
+        HSInputMethodService.setShowNewMask(show);
     }
 
     public boolean shouldShowNewMask() {
