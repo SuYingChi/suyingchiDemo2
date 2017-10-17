@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +52,7 @@ public class StickerHomeFragment extends Fragment {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
             if (CameraActivity.FACEMOJI_SAVED.equals(s) || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
-                    || (CameraActivity.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) //face被删除光了，才重新加载页面数据
-                    ){
+                    || (CameraActivity.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */ ){
                 loadDatas();
             }
         }
@@ -74,7 +74,7 @@ public class StickerHomeFragment extends Fragment {
         stickerCardAdapter = new HomeStickerAdapter(new CommonStickerAdapter.OnStickerItemClickListener() {
             @Override
             public void onFacemojiClick(FacemojiSticker facemojiSticker) {
-
+                goMyFacemojiActivity(facemojiSticker.getCategoryName());
             }
 
             @Override
@@ -138,7 +138,7 @@ public class StickerHomeFragment extends Fragment {
             stickerHomeModel.titleClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), MyFacemojiActivity.class));
+                    goMyFacemojiActivity(null);
                 }
             };
             stickerModelList.add(stickerHomeModel);
@@ -187,6 +187,14 @@ public class StickerHomeFragment extends Fragment {
 
         stickerCardAdapter.setItems(stickerModelList);
         stickerCardAdapter.notifyDataSetChanged();
+    }
+
+    private void goMyFacemojiActivity(String categoryName){
+        Intent intent = new Intent(getActivity(), MyFacemojiActivity.class);
+        if(!TextUtils.isEmpty(categoryName)){
+            intent.putExtra(MyFacemojiActivity.INIT_SHOW_TAB_CATEGORY,categoryName);
+        }
+        startActivity(intent);
     }
 
     @Override

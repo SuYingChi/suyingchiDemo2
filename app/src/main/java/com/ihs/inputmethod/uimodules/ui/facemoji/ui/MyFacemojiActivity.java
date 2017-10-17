@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -44,7 +45,7 @@ import java.util.Date;
 
 
 public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener, View.OnClickListener {
-
+    public final static String INIT_SHOW_TAB_CATEGORY = "initShowTabCategory";
     private TabHost mTabHost;
     private ViewPager mImagePager;
     private FacemojiPalettesAdapter mFacemojiPalettesAdapter;
@@ -139,7 +140,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         mImagePager.setOffscreenPageLimit(0);
         mImagePager.setPersistentDrawingCache(ViewGroup.PERSISTENT_NO_CACHE);
 
-        setCurrentCategoryId(FacemojiManager.getInstance().getCurrentCategoryId());
+        showInitTabByCategoryName();
 
         LinearLayout.LayoutParams tab_host_param = (LinearLayout.LayoutParams) mTabHost.getLayoutParams();
         tab_host_param.height = getTabBarHeight();
@@ -180,6 +181,20 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
                 return;
             }
         }
+    }
+
+    private void showInitTabByCategoryName() {
+        String initTabCategory = getIntent().getStringExtra(INIT_SHOW_TAB_CATEGORY);
+        int initPosition = 0;
+        if (!TextUtils.isEmpty(initTabCategory)){
+            for (int i = 0 ; i < FacemojiManager.getInstance().getClassicCategories().size(); i++){
+                if (initTabCategory.equals(FacemojiManager.getInstance().getClassicCategories().get(i).getName())){
+                    initPosition = i;
+                    break;
+                }
+            }
+        }
+        setCurrentCategoryId(initPosition);
     }
 
     @Override
