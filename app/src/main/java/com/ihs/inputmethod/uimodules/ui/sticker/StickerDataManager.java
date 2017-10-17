@@ -10,6 +10,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerModel;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class StickerDataManager {
     public static final String STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION = "sticker_data_change_finish";
     public static final String STICKER_GROUP_ORIGINAL = "sticker_group_original_position";
     public static final String PREFERENCE_KEY_NEW_STICKER_SET = "sp_key_new_sticker_set";
-    private static final String PREFERENCE_SHOW_NEW_TIP_STATE = "sp_show_new_tip_state";
     private static final String PREFERENCE_STICKER_IS_FIRST_LOAD = "sp_sticker_is_first_load";
     private static StickerDataManager instance;
     private List<StickerGroup> stickerGroups;
@@ -108,7 +108,9 @@ public class StickerDataManager {
                 Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
                 currentNewStickerSet.addAll(newGroupNameList);
                 saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
-                saveShowNewTipState(true);
+                saveShowNewMask(true);
+            } else if (!shouldShowNewMask()) { //如果新Sticker的为空而且从未点击过plusButton
+                saveShowNewMask(false);
             }
 
             isReady = true;
@@ -155,6 +157,15 @@ public class StickerDataManager {
         return PreferenceManager.getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_NEW_STICKER_SET, new HashSet());
     }
 
+    public void saveShowNewMask(boolean show) {
+        HSPreferenceHelper.getDefault().putBoolean("show_new_mask", show);
+        HSInputMethodService.setShowNewMask(false);
+    }
+
+    public boolean shouldShowNewMask() {
+        return HSPreferenceHelper.getDefault().getBoolean("show_new_mask", true);
+    }
+
     public void removeNewTipOfStickerGroup(StickerModel stickerModel) {
         String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
         Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
@@ -163,8 +174,9 @@ public class StickerDataManager {
             saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
         }
 
+
         if (currentNewStickerSet.isEmpty()) {
-            saveShowNewTipState(false);
+            saveShowNewMask(false);
         }
     }
 
@@ -178,15 +190,6 @@ public class StickerDataManager {
         return getCurrentNewStickerSet(HSApplication.getContext()).contains(stickerGroup.getStickerGroupName());
 
     }
-
-    public void saveShowNewTipState(boolean flag) {
-        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putBoolean(PREFERENCE_SHOW_NEW_TIP_STATE, flag).commit();
-    }
-
-    public boolean isShowNewTipState() {
-        return PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean(PREFERENCE_SHOW_NEW_TIP_STATE, false);
-    }
-
 
     boolean isStickersReady() {
         return isReady;
