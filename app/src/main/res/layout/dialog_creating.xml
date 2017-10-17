@@ -12,27 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
-    <FrameLayout
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/creating_view"
-        android:layout_centerHorizontal="true">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/facemoji_creating" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_horizontal"
-            android:text="@string/facemoji_in_progress"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-    </FrameLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/facemoji_in_progress"
+        android:background="@drawable/facemoji_processing_bg"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
 
 </RelativeLayout>
