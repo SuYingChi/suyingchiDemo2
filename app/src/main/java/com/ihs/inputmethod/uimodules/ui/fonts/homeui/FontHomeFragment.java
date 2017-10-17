@@ -1,9 +1,9 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.homeui;
 
+import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,7 +20,6 @@ import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.utils.DownloadUtils;
-import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,13 +124,10 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         final FontModel fontModel = fontModelList.get(position);
         final String fontName = fontModel.getFontName();
         DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
-                null, new AdLoadingView.OnAdBufferingListener() {
-                    @Override
-                    public void onDismiss(boolean success) {
-                        if (success) {
-                            HSFontDownloadManager.getInstance().updateFontModel(fontModel);
-                            HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
-                        }
+                null, success -> {
+                    if (success) {
+                        HSFontDownloadManager.getInstance().updateFontModel(fontModel);
+                        HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
                     }
                 });
     }

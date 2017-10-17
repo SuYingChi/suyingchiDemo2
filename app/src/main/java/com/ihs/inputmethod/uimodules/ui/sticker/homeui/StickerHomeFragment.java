@@ -69,7 +69,7 @@ public class StickerHomeFragment extends Fragment {
         stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
             @Override
             public void onCardViewClick(StickerModel stickerModel, Drawable drawable) {
-                HSAnalytics.logEvent(stickerModel.getStickerGroup().getStickerGroupName(), "sticker_download_clicked");
+                HSAnalytics.logEvent("sticker_download_clicked", "StickerGroupName", stickerModel.getStickerGroup().getStickerGroupName());
                 onDownloadButtonClick(stickerModel, drawable);
             }
 
