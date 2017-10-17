@@ -10,7 +10,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerMyCardAda
 public class MyStickerAdapter extends CommonStickerAdapter {
 
     public MyStickerAdapter() {
-        super(null);
+        super();
         delegatesManager.addDelegate(new StickerMyCardAdapterDelegate());
     }
 }

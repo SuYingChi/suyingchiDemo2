@@ -72,9 +72,9 @@
 
         <TextView
             android:id="@+id/send_facemoji_tip"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:padding="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/my_facemoji_send_facemoji_tip"

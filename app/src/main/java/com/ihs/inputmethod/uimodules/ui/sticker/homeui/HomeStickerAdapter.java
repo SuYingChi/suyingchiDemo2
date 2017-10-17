@@ -15,12 +15,12 @@ import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerTitleAdap
 public class HomeStickerAdapter extends CommonStickerAdapter {
 
     public HomeStickerAdapter(OnStickerItemClickListener onStickerItemClickListener) {
-        super(onStickerItemClickListener);
+        super();
         delegatesManager.addDelegate(new StickerTitleAdapterDelegate())
                 .addDelegate(new StickerBigCreateFacemojiAdapterDelegate())
                 .addDelegate(new StickerSamllCreateFacemojiAdapterDelegate())
-                .addDelegate(new StickerFacemojiAdapterDelegate())
+                .addDelegate(new StickerFacemojiAdapterDelegate(onStickerItemClickListener))
                 .addDelegate(new StickerMoreComingAdapterDelegate())
-                .addDelegate(new StickerHomeCardAdapterDelegate(this));
+                .addDelegate(new StickerHomeCardAdapterDelegate(onStickerItemClickListener));
     }
 }

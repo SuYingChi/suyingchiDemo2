@@ -1,12 +1,11 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegatesManager;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerHomeCardAdapterDelegate;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 
 import java.util.List;
@@ -16,22 +15,17 @@ import java.util.List;
  * Created by guonan.lv on 17/8/10.
  */
 
-public class CommonStickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-
+public class CommonStickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public interface OnStickerItemClickListener {
-        void onCardClick(StickerHomeModel stickerHomeModel);
-
-        void onDownloadClick(StickerHomeModel stickerHomeModel);
-
+        void onFacemojiClick(FacemojiSticker facemojiSticker);
+        void onCardClick(StickerHomeModel stickerHomeModel, Drawable drawable);
+        void onDownloadClick(StickerHomeModel stickerHomeModel, Drawable drawable);
     }
 
-
-    private OnStickerItemClickListener StickerItemClickListener;
     protected AdapterDelegatesManager<List<StickerHomeModel>> delegatesManager;
     private List<StickerHomeModel> items;
 
-    public CommonStickerAdapter(OnStickerItemClickListener StickerItemClickListener) {
-        this.StickerItemClickListener = StickerItemClickListener;
+    public CommonStickerAdapter() {
         delegatesManager = new AdapterDelegatesManager<>();
     }
 
@@ -87,22 +81,4 @@ public class CommonStickerAdapter extends RecyclerView.Adapter<RecyclerView.View
     public int getSpanSize(int position) {
         return delegatesManager.getSpanSize(items, position);
     }
-
-    @Override
-    public void onClick(final View v) {
-        final StickerHomeModel model = (StickerHomeModel) v.getTag();
-        final int key = (int) v.getTag(R.id.theme_card_view_tag_key_action);
-
-        switch (key) {
-            case StickerHomeCardAdapterDelegate.TAG_CARD:
-                StickerItemClickListener.onCardClick(model);
-                break;
-            case StickerHomeCardAdapterDelegate.TAG_DOWNLOAD:
-                StickerItemClickListener.onDownloadClick(model);
-                break;
-            default:
-                break;
-        }
-    }
-
 }

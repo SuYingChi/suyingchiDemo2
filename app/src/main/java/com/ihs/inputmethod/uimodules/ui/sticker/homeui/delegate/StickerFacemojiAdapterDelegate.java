@@ -11,11 +11,18 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiAnimationView;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiView;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.CommonStickerAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 
 import java.util.List;
 
 public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<StickerHomeModel>> {
+    private CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener;
+
+    public StickerFacemojiAdapterDelegate(CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener) {
+        this.onStickerItemClickListener = onStickerItemClickListener;
+    }
 
     @Override
     protected boolean isForViewType(@NonNull List<StickerHomeModel> items, int position) {
@@ -33,7 +40,16 @@ public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<Sticker
     @Override
     protected void onBindViewHolder(@NonNull List<StickerHomeModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
         StickerFacemojiViewHolder h = (StickerFacemojiViewHolder) holder;
-        h.facemojiAnimationView.setSticker(items.get(position).facemojiSticker);
+        FacemojiSticker facemojiSticker = items.get(position).facemojiSticker;
+        h.facemojiAnimationView.setSticker(facemojiSticker);
+        h.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onStickerItemClickListener != null){
+                    onStickerItemClickListener.onFacemojiClick(facemojiSticker);
+                }
+            }
+        });
     }
 
     @Override

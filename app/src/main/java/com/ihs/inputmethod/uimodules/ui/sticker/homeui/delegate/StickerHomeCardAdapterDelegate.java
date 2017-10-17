@@ -15,6 +15,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.CommonStickerAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,14 +32,14 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
     public final static int TAG_DOWNLOAD = 1;
     public final static int TAG_CARD = 2;
 
-    private View.OnClickListener cardViewOnClickListener;
+    private CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener;
     private int imageWidth;
     private int imageHeight;
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
 
-    public StickerHomeCardAdapterDelegate(View.OnClickListener cardViewOnClickListener) {
-        this.cardViewOnClickListener = cardViewOnClickListener;
+    public StickerHomeCardAdapterDelegate(CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener) {
+        this.onStickerItemClickListener = onStickerItemClickListener;
         Resources resources = HSApplication.getContext().getResources();
         imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
         imageHeight = (int) (imageWidth / 1.6f);
@@ -75,11 +76,25 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
         stickerCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
         stickerCardViewHolder.moreMenuImage.setTag(stickerModel);
         stickerCardViewHolder.moreMenuImage.setTag(R.id.theme_card_view_tag_key_action, TAG_DOWNLOAD);
-        stickerCardViewHolder.moreMenuImage.setOnClickListener(cardViewOnClickListener);
+        stickerCardViewHolder.moreMenuImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onStickerItemClickListener != null){
+                    onStickerItemClickListener.onDownloadClick(stickerModel,stickerCardViewHolder.stickerRealImage.getDrawable());
+                }
+            }
+        });
 
         stickerCardViewHolder.stickerRealImage.setTag(stickerModel);
         stickerCardViewHolder.stickerRealImage.setTag(R.id.theme_card_view_tag_key_action, TAG_CARD);
-        stickerCardViewHolder.stickerRealImage.setOnClickListener(cardViewOnClickListener);
+        stickerCardViewHolder.stickerRealImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onStickerItemClickListener != null){
+                    onStickerItemClickListener.onCardClick(stickerModel,stickerCardViewHolder.stickerRealImage.getDrawable());
+                }
+            }
+        });
 
         /**
          * 判断是否有当前sticker group 是否是new

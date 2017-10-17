@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,6 +19,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.ihs.inputmethod.uimodules.ui.facemoji.ui.MyFacemojiActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -71,13 +73,18 @@ public class StickerHomeFragment extends Fragment {
     private void initView() {
         stickerCardAdapter = new HomeStickerAdapter(new CommonStickerAdapter.OnStickerItemClickListener() {
             @Override
-            public void onCardClick(StickerHomeModel stickerHomeModel) {
-                HSAnalytics.logEvent(stickerHomeModel.stickerGroup.getStickerGroupName(), "sticker_download_clicked");
-                onDownloadClick(stickerHomeModel);
+            public void onFacemojiClick(FacemojiSticker facemojiSticker) {
+
             }
 
             @Override
-            public void onDownloadClick(final StickerHomeModel stickerHomeModel) {
+            public void onCardClick(StickerHomeModel stickerHomeModel, Drawable drawable) {
+                HSAnalytics.logEvent(stickerHomeModel.stickerGroup.getStickerGroupName(), "sticker_download_clicked");
+                onDownloadClick(stickerHomeModel, drawable);
+            }
+
+            @Override
+            public void onDownloadClick(final StickerHomeModel stickerHomeModel, Drawable drawable) {
                 final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
                 final String stickerGroupName =stickerGroup.getStickerGroupName();
                 final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
@@ -142,12 +149,12 @@ public class StickerHomeFragment extends Fragment {
 
             stickerHomeModel = new StickerHomeModel();
             stickerHomeModel.isFacemoji = true;
-            stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,0).get(0);
+            stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,1).get(0);
             stickerModelList.add(stickerHomeModel);
             if (FacemojiManager.getFaceList().size() >= 2){
                 stickerHomeModel = new StickerHomeModel();
                 stickerHomeModel.isFacemoji = true;
-                stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,1).get(0);
+                stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,2).get(0);
                 stickerModelList.add(stickerHomeModel);
             }
         }else {
