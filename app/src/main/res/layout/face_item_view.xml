@@ -7,16 +7,26 @@
     android:gravity="center">
 
     <ImageView
+        android:id="@+id/face_item_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:id="@+id/face_item_img"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:scaleType="fitXY" />
 
     <ImageView
         android:id="@+id/face_item_picker_icon"
         android:layout_width="@dimen/facemoji_face_list_picker_size"
         android:layout_height="@dimen/facemoji_face_list_picker_size"
-        android:layout_gravity="right"/>
+        android:layout_gravity="right" />
+
+    <ImageView
+        android:id="@+id/face_now_used"
+        android:visibility="gone"
+        android:layout_width="@dimen/facemoji_face_list_picker_size"
+        android:layout_height="@dimen/facemoji_face_list_picker_size"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="@dimen/facemoji_face_list_picker_margin"
+        android:layout_marginRight="@dimen/facemoji_face_list_picker_margin"
+        android:src="@drawable/facemoji_now_used" />
 
 </FrameLayout>

@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.facemoji.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +78,7 @@ public class FaceGridAdapter extends BaseAdapter {
         if (convertView != null) {
             HSLog.d("use old convertview");
             holder = (StickerViewHolder) convertView.getTag();
-            loadFaceImg(holder.faceImg, face);
+            loadFaceImg(holder.faceImg, face,holder.nowUsed);
             refreshPickerView(holder.picker, face);
             setItemClickListener(face, convertView, holder.picker);
             return convertView;
@@ -90,14 +89,16 @@ public class FaceGridAdapter extends BaseAdapter {
         containerLayout.setLayoutParams(new GridView.LayoutParams(stickerDimension, stickerDimension));
         final ImageView face_img = (ImageView) containerLayout.findViewById(R.id.face_item_img);
         final ImageView picker = (ImageView) containerLayout.findViewById(R.id.face_item_picker_icon);
+        final ImageView faceNowUsed = (ImageView) containerLayout.findViewById(R.id.face_now_used);
         refreshPickerView(picker, face);
         setItemClickListener(face, convertView, picker);
         holder = new StickerViewHolder();
         holder.faceImg = face_img;
+        holder.nowUsed = faceNowUsed;
         holder.faceImg.setTag(face);
         holder.picker = picker;
         convertView.setTag(holder);
-        loadFaceImg(face_img, face);
+        loadFaceImg(face_img, face,holder.nowUsed);
         return convertView;
     }
 
@@ -177,6 +178,7 @@ public class FaceGridAdapter extends BaseAdapter {
     class StickerViewHolder {
         public ImageView faceImg;
         public ImageView picker;
+        public ImageView nowUsed;
     }
 
     private void refreshPickerView(View picker, FaceItem face) {
@@ -201,7 +203,7 @@ public class FaceGridAdapter extends BaseAdapter {
         faceView.setImageDrawable(null);
     }
 
-    private void loadFaceImg(ImageView faceView, FaceItem face) {
+    private void loadFaceImg(ImageView faceView, FaceItem face, ImageView nowUsed) {
 
         if (face.isAddButton()) {
             initAddFaceBtn(faceView);
@@ -213,15 +215,13 @@ public class FaceGridAdapter extends BaseAdapter {
         param.width = param.height;
         faceView.setLayoutParams(param);
 
-        int color = Color.WHITE;
-        if (face.getUri().equals(FacemojiManager.getCurrentFacePicUri())) {
-            color = 0x1cde97;
-        }
+        nowUsed.setVisibility((!isInEditMode()&&(face.getUri()!=null)&&face.getUri().equals(FacemojiManager.getCurrentFacePicUri()))?View.VISIBLE:View.GONE);
+
 
         // face bitmap
         Bitmap bitmap = ImageLoader.getInstance().loadImageSync(
                 face.getUri().toString(),
-                new DisplayImageOptions.Builder().imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true).postProcessor(new BitmapAddBorderProcessor(color)).build()
+                new DisplayImageOptions.Builder().imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true).build()
                 );
 
         if (!isInEditMode()) {
