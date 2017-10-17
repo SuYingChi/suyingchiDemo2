@@ -246,4 +246,17 @@ Bevat gesponsorde inhoud.</string>
         <string name="custom_rate_alert_message" tools:ignore="Typos">Wil je dit item GRATIS ontgrendelen? Beoordeel ons gewoon met 5 sterren!</string>
         <string name="custom_rate_alert_button_text">Beoordeel met 5 sterren om te ontgrendelen</string>
         <string name="custom_rate_alert_toast_text">Controleer je Google Play</string>
+        <string name="keyboard_settings">Toetsenbordinstellingen</string>
+        <string name="general">ALGEMEEN</string>
+
+        <!-- home bottom tab-->
+        <string name="call_flash">Oproepflitser</string>
+
+        <!-- wallpaper preview -->
+        <string name="key_theme_set_btn">TOETSTHEMA INSTELLEN</string>
+        <string name="wallpaper_apply_fail">Toepassen is mislukt</string>
+        <string name="home_screen">Beginscherm</string>
+        <string name="locker_screen">Vergrendelscherm</string>
+        <string name="home_and_locker_screen">Begin- en vergrendelschermen</string>
+        <string name="key_theme_loading_progress_dialog_text">Toetsthema wordt geladen...</string>
 </resources>

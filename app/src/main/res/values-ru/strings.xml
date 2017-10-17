@@ -248,4 +248,17 @@
         <string name="custom_rate_alert_message" tools:ignore="Typos">Хотите разблокировать это БЕСПЛАТНО? Поставьте нам 5 звезд!</string>
         <string name="custom_rate_alert_button_text">Поставить 5 звезд и разблокировать</string>
         <string name="custom_rate_alert_toast_text">Проверьте Google Play</string>
+        <string name="keyboard_settings">Настройки клавиатуры</string>
+        <string name="general">ОБЩИЕ</string>
+
+        <!-- home bottom tab-->
+        <string name="call_flash">Мигание при звонке</string>
+
+        <!-- wallpaper preview -->
+        <string name="key_theme_set_btn">УСТАНОВИТЬ ТЕМУ КЛАВИАТУРЫ</string>
+        <string name="wallpaper_apply_fail">Не удалось применить</string>
+        <string name="home_screen">Главный экран</string>
+        <string name="locker_screen">Экран блокировки</string>
+        <string name="home_and_locker_screen">Главный экран и экран блокировки</string>
+        <string name="key_theme_loading_progress_dialog_text">Загрузка темы клавиш...</string>
 </resources>

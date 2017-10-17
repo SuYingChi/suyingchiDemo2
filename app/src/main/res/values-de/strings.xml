@@ -248,4 +248,17 @@ Enthält Werbung.</string>
         <string name="custom_rate_alert_message" tools:ignore="Typos">Diese Funktion KOSTENLOS freischalten? Geben Sie uns einfach 5 Sterne!</string>
         <string name="custom_rate_alert_button_text">Mit 5 Sternen freischalten</string>
         <string name="custom_rate_alert_toast_text">Bitte Ihr Google Play überprüfen</string>
+        <string name="keyboard_settings">Tastatureinstellungen</string>
+        <string name="general">ALLGEMEIN</string>
+
+        <!-- home bottom tab-->
+        <string name="call_flash">Anruf-Flash</string>
+
+        <!-- wallpaper preview -->
+        <string name="key_theme_set_btn">TASTENDESIGN FESTLEGEN</string>
+        <string name="wallpaper_apply_fail">Startbildschirm</string>
+        <string name="home_screen">Konfiguration fehlgeschlagen</string>
+        <string name="locker_screen">Sperrbildschirm</string>
+        <string name="home_and_locker_screen">Start- und Sperrbildschirme</string>
+    <string name="key_theme_loading_progress_dialog_text">Tastendesign lädt...</string>
 </resources>

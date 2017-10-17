@@ -247,4 +247,17 @@ Include contenuti sponsorizzati.</string>
         <string name="custom_rate_alert_message" tools:ignore="Typos">Vuoi sbloccare questo elemento GRATIS! Valuta l\'app con 5 stelle!</string>
         <string name="custom_rate_alert_button_text">Assegna 5 stelle per sbloccare</string>
         <string name="custom_rate_alert_toast_text">Vai su Google Play</string>
+        <string name="keyboard_settings">Impostazioni tastiera</string>
+        <string name="general">GENERALE</string>
+
+        <!-- home bottom tab-->
+        <string name="call_flash">Chiamata flash</string>
+
+        <!-- wallpaper preview -->
+        <string name="key_theme_set_btn">IMPOSTA TEMA PRINCIPALE</string>
+        <string name="wallpaper_apply_fail">Non applicato</string>
+        <string name="home_screen">Schermata iniziale</string>
+        <string name="locker_screen">Schermata di blocco</string>
+        <string name="home_and_locker_screen">Schermata iniziale e di blocco</string>
+        <string name="key_theme_loading_progress_dialog_text">Caricamento del tema principale...</string>
 </resources>

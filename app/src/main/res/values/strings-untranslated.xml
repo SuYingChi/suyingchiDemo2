@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- store home -->
-
-    <string name="keyboard_settings">Keyboard Settings</string>
-    <string name="general">GENERAL</string>
-
-    <!-- home bottom tab-->
-    <string name="call_flash">Call Flash</string>
-
-    <!-- wallpaper preview -->
-    <string name="key_theme_set_btn">SET KEY THEME</string>
-    <string name="wallpaper_apply_fail">Applied Failed</string>
-    <string name="home_screen">Home screen</string>
-    <string name="locker_screen">Lock screen</string>
-    <string name="home_and_locker_screen">Home and lock screens</string>
-    <string name="key_theme_loading_progress_dialog_text">Loading Key Theme...</string>
-
     <!-- In Call Theme -->
     <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
 

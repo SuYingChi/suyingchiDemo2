@@ -248,4 +248,17 @@ Incluye contenido patrocinado.</string>
         <string name="custom_rate_alert_message" tools:ignore="Typos">¿Quieres desbloquear este objeto gratis? ¡Valóranos con 5 estrellas!</string>
         <string name="custom_rate_alert_button_text">Valóranos con 5 estrellas para desbloquear</string>
         <string name="custom_rate_alert_toast_text">Comprueba tu Google Play</string>
+        <string name="keyboard_settings">Parpadeo de llamada</string>
+        <string name="general">GENERAL</string>
+
+        <!-- home bottom tab-->
+        <string name="call_flash">Ajustes del teclado</string>
+
+        <!-- wallpaper preview -->
+        <string name="key_theme_set_btn">ESTABLECER TEMA DE TECLA</string>
+        <string name="wallpaper_apply_fail">Pantalla de inicio</string>
+        <string name="home_screen">Error al solicitar</string>
+        <string name="locker_screen">Pantalla de bloqueo</string>
+        <string name="home_and_locker_screen">Pantallas de inicio y bloqueo</string>
+        <string name="key_theme_loading_progress_dialog_text">Cargando tema de tecla...</string>
 </resources>

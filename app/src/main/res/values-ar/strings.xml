@@ -248,4 +248,17 @@
         <string name="custom_rate_alert_message" tools:ignore="Typos">هل ترغب في فتح هذا العنصر مجاناً؟ ما عليك سوى تقييمنا بـ 5 نجوم!</string>
         <string name="custom_rate_alert_button_text">قيّم بـ 5 نجوم لفتحه</string>
         <string name="custom_rate_alert_toast_text">يرجى تفقد Google Play</string>
+        <string name="keyboard_settings">إعدادات لوحة المفاتيح</string>
+        <string name="general">عام</string>
+
+        <!-- home bottom tab-->
+        <string name="call_flash">توهج أثناء الاتصال</string>
+
+        <!-- wallpaper preview -->
+        <string name="key_theme_set_btn">تعيين تصميم المفاتيح</string>
+        <string name="wallpaper_apply_fail">فشل التطبيق</string>
+        <string name="home_screen">الشاشة الرئيسية</string>
+        <string name="locker_screen">شاشة القفل</string>
+        <string name="home_and_locker_screen">الشاشة الرئيسية وشاشة القفل</string>
+        <string name="key_theme_loading_progress_dialog_text">جارٍ تحميل تصميم المفاتيح...</string>
 </resources>
