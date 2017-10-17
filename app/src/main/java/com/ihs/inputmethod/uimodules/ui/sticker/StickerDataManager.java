@@ -160,7 +160,7 @@ public class StickerDataManager {
 
 
         if (currentNewStickerSet.isEmpty()) {
-            HSInputMethodService.setShowNewMask(false);
+            saveShowNewMask(false);
         }
     }
 
