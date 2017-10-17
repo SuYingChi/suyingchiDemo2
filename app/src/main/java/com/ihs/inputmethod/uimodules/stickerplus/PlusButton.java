@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -46,6 +48,9 @@ public class PlusButton extends FrameLayout {
         AppCompatImageView plusImage = new AppCompatImageView(getContext());
         plusImage.setLayoutParams(lp);
         Drawable drawable = ContextCompat.getDrawable(context, R.drawable.common_tab_plus);
+        if (!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
+            DrawableCompat.setTint(drawable, Color.parseColor("#37474f"));
+        }
         plusImage.setImageDrawable(drawable);
         plusImage.setAlpha(0.8f);
         addView(plusImage);

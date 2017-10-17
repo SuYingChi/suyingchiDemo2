@@ -41,7 +41,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
     public final static String NOTIFICATION_THEME_HOME_DESTROY = "ThemeHomeFragment.destroy";
     public final static String NOTIFICATION_THEME_HOME_STOP = "ThemeHomeFragment.stop";
 
-    private static final int KEYBOARD_ACTIVIATION_FROM_CARD = 1;
+    private static final int KEYBOARD_ACTIVATION_FROM_CARD = 1;
 
     private RecyclerView recyclerView;
     private ThemeHomeAdapter adapter;
@@ -285,14 +285,14 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
     @Override
     public void onKeyboardActivationStart() {
         Intent intent = new Intent(getActivity(), KeyboardActivationGuideActivity.class);
-        startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_CARD);
+        startActivityForResult(intent, KEYBOARD_ACTIVATION_FROM_CARD);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == KEYBOARD_ACTIVIATION_FROM_CARD) {
+        if (requestCode == KEYBOARD_ACTIVATION_FROM_CARD) {
             adapter.finishKeyboardActivation(resultCode == Activity.RESULT_OK);
         }
     }
