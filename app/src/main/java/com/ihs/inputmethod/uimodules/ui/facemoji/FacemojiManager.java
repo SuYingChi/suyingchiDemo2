@@ -25,6 +25,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Notification;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
@@ -57,27 +58,10 @@ import java.util.zip.ZipFile;
 
 public class FacemojiManager {
 
-    public enum FacemojiType{
-        CLASSIC,NEW
-    }
-
     private static final String FACE_PICTURE_URI = "face_picture_uri";
     private static final String UPLOAD_FILE_PATH = "upload_file_path";
     private static final String MOJIME_DIRECTORY = "Mojime";
     private static final String PREF_CATEGORY_LAST_PAGE_ID = "sticker_category_last_page_id ";
-    private static int currentPageSize = FacemojiPalettesParam.SIZE;
-
-    private static FacemojiManager instance;
-    private static Uri currentFacePicUri;
-    private static String currentUploadFile;
-    private List<FacemojiCategory> newCategories = new ArrayList<>();
-    private List<FacemojiCategory> classicCategories = new ArrayList<>();
-    private static Bitmap originFace;
-    private int currentClassicCategoryId = 0;
-    private static int mCurrentClassicCategoryPageId = 0;
-    private static boolean mFaceSwitcherShowing;
-    private static FacePalettesView mFacePalettesView;
-    private static List<FaceItem> faces = new ArrayList<>();
     private static final String[] classicCategoryNames = {
             "star",
             "dance",
@@ -87,13 +71,22 @@ public class FacemojiManager {
     private static final String[] newCategoryNames = {
             "star",
             "fruit"};
-
+    private static int currentPageSize = FacemojiPalettesParam.SIZE;
+    private static FacemojiManager instance;
+    private static Uri currentFacePicUri;
+    private static String currentUploadFile;
+    private static Bitmap originFace;
+    private static int mCurrentClassicCategoryPageId = 0;
+    private static boolean mFaceSwitcherShowing;
+    private static FacePalettesView mFacePalettesView;
+    private static List<FaceItem> faces = new ArrayList<>();
     // Take photo but not saved
     private static Uri mTempFacePicUri;
     private static boolean mUsingTempFace;
     private static Bitmap mTempFaceBmp;
-
-
+    private List<FacemojiCategory> newCategories = new ArrayList<>();
+    private List<FacemojiCategory> classicCategories = new ArrayList<>();
+    private int currentClassicCategoryId = 0;
     private FacemojiManager() {
 
     }
@@ -113,32 +106,12 @@ public class FacemojiManager {
         setTempFacePicUri(null);
     }
 
-    public void init() {
-        copyAssetStickersToStorage();
-        loadStickerList();
-        getDefaultFacePicUri();
-        loadFaceList();
-        initFaceSwitchView();
-        loadLastUploadPreviewPic();
-    }
-
-    private void copyAssetStickersToStorage() {
-        Set<String> allCategoryNames = new HashSet();
-        for(String category : classicCategoryNames){
-            allCategoryNames.add(category);
-        }
-
-        for(String category : newCategoryNames){
-            allCategoryNames.add(category);
-        }
-
-        for(String category :allCategoryNames){
-            copyAssetFileToStorage(category);
-        }
-    }
-
     public static boolean isUsingTempFace() {
         return mUsingTempFace;
+    }
+
+    public static void setUsingTempFace(final boolean usingTempFace) {
+        mUsingTempFace = usingTempFace;
     }
 
     private static void loadLastUploadPreviewPic() {
@@ -152,54 +125,6 @@ public class FacemojiManager {
                 HSLog.d("face pic does not exist");
             }
         }
-    }
-
-    public int getCurrentCategoryId() {
-        return currentClassicCategoryId;
-    }
-
-    public void setCurrentCategoryId(int currentId) {
-        currentClassicCategoryId = currentId;
-    }
-
-    public List<FacemojiCategory> getCategories(FacemojiType facemojiType){
-        switch (facemojiType){
-            case NEW:
-                return newCategories;
-            default:
-                return classicCategories;
-        }
-    }
-
-    public List<FacemojiCategory> getClassicCategories() {
-        return classicCategories;
-    }
-
-    public static void setCurrentFacePicUri(Uri uri) {
-        currentFacePicUri = uri;
-        SharedPreferences sharedPreferences = HSApplication.getContext().getSharedPreferences(FACE_PICTURE_URI, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (null == uri) {
-            editor.remove(FACE_PICTURE_URI);
-            editor.commit();
-            originFace = null;
-            return;
-        } else {
-            editor.putString(FACE_PICTURE_URI, currentFacePicUri.toString());
-            editor.commit();
-
-            try {
-                if (originFace != null) {
-                    originFace.recycle();
-                }
-
-                originFace = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), currentFacePicUri);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACE_CHANGED);
-        hideFaceSwitchView();
     }
 
     public static void setTempFacePicUri(Uri uri) {
@@ -229,12 +154,35 @@ public class FacemojiManager {
         }
     }
 
-    public static void setUsingTempFace(final boolean usingTempFace) {
-        mUsingTempFace = usingTempFace;
-    }
-
     public static Uri getCurrentFacePicUri() {
         return FacemojiManager.currentFacePicUri;
+    }
+
+    public static void setCurrentFacePicUri(Uri uri) {
+        currentFacePicUri = uri;
+        SharedPreferences sharedPreferences = HSApplication.getContext().getSharedPreferences(FACE_PICTURE_URI, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (null == uri) {
+            editor.remove(FACE_PICTURE_URI);
+            editor.commit();
+            originFace = null;
+            return;
+        } else {
+            editor.putString(FACE_PICTURE_URI, currentFacePicUri.toString());
+            editor.commit();
+
+            try {
+                if (originFace != null) {
+                    originFace.recycle();
+                }
+
+                originFace = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), currentFacePicUri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACE_CHANGED);
+        hideFaceSwitchView();
     }
 
     public static Uri getDefaultFacePicUri() {
@@ -301,42 +249,6 @@ public class FacemojiManager {
         editor.commit();
         HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.LOCAL_UPLOAD_DATA_CHANGE);
     }
-
-    private boolean copyAssetFileToStorage(String fileName) {
-        String filePath = HSApplication.getContext().getFilesDir().getAbsolutePath();
-        AssetManager assetMgr = HSApplication.getContext().getAssets();
-        String path = filePath + "/" + MOJIME_DIRECTORY;
-        String categoryDirectory = path + "/" + fileName;
-        File mojimeFile = new File(categoryDirectory);
-        if (mojimeFile.exists()) {
-            return false;
-        }
-        mojimeFile.mkdirs();
-        AssetManager am = assetMgr;
-        try {
-            InputStream isd = am.open(fileName + ".zip");
-            OutputStream os = new FileOutputStream(path + "/" + fileName + "/" + fileName + ".zip");
-            byte[] b = new byte[1024];
-            int length;
-            while ((length = isd.read(b)) > 0) {
-                os.write(b, 0, length);
-            }
-            isd.close();
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String zipPath = path + "/" + fileName + "/" + fileName + ".zip";
-        File mojimeZipFile = new File(zipPath);
-        if (mojimeZipFile.exists()) {
-            unzip(zipPath, fileName);
-        }
-        mojimeZipFile.delete();
-        HSLog.d("mojime files succesfully decompressed to file directory " + path + "/" + fileName);
-        return true;
-    }
-
 
     private static void unzip(String zipFileName, String fileName) {
         try {
@@ -461,6 +373,201 @@ public class FacemojiManager {
         return bitmap;
     }
 
+    public static int getCategoryPosition(String name) {
+        for (int i = 0; i < classicCategoryNames.length; i++) {
+            if (name.equals(classicCategoryNames[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static List<FaceItem> getFaceList() {
+        return faces;
+    }
+
+    public static List<FaceItem> getFaceByPagePosition(int position) {
+        List<FaceItem> result = new ArrayList<>();
+        List<FaceItem> faces = getFaceList();
+        for (int i = position * 8; i < Math.min((position + 1) * 8, faces.size()); i++) {
+            result.add(faces.get(i));
+        }
+        return result;
+    }
+
+    public static void deleteFace(FaceItem faceItem) {
+
+        File fdelete = new File(faceItem.getUri().getPath());
+        if (fdelete.exists()) {
+            if (fdelete.delete()) {
+                Log.e("-->", "file Deleted :" + fdelete);
+            } else {
+                Log.e("-->", "file not Deleted :" + fdelete);
+            }
+        }
+    }
+
+    public static int getCurrentPageSize() {
+        return currentPageSize;
+    }
+
+    public static int getCurrentCategoryPageId() {
+        return mCurrentClassicCategoryPageId;
+    }
+
+    public static void setCurrentCategoryPageId(final int id) {
+        mCurrentClassicCategoryPageId = id;
+    }
+
+    public static void showFaceSwitchView() {
+        HSLog.d("show face switch view");
+
+        if (mFaceSwitcherShowing) {
+            return;
+        }
+
+        mFacePalettesView.prepare();
+
+        final FrameLayout inputArea = HSInputMethod.getInputArea();
+
+        final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.BOTTOM;
+
+        inputArea.addView(mFacePalettesView, params);
+
+        mFaceSwitcherShowing = true;
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.SHOW_FACE_LIST);
+    }
+
+    public static void initFaceSwitchView() {
+
+        if (mFacePalettesView != null) {
+            mFacePalettesView.destroy();
+        }
+
+        mFacePalettesView = (FacePalettesView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.face_switcher_layout, null);
+        mFacePalettesView.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
+        final View closeButton = mFacePalettesView.findViewById(R.id.face_switch_close_btn);
+        mFaceSwitcherShowing = false;
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideFaceSwitchView();
+            }
+        });
+
+        final View editButton = mFacePalettesView.findViewById(R.id.face_switch_edit_btn);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HSApplication.getContext(), FaceListActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("toggleEditMode", true);
+                HSApplication.getContext().startActivity(i);
+            }
+        });
+    }
+
+    public static boolean hasTempFace() {
+        return mTempFacePicUri != null;
+    }
+
+    public static void hideFaceSwitchView() {
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.HIDE_FACE_LIST);
+
+        if (mFaceSwitcherShowing) {
+            final FrameLayout inputArea = HSInputMethod.getInputArea();
+            inputArea.removeView(mFacePalettesView);
+            mFaceSwitcherShowing = false;
+        }
+    }
+
+    public static int getFacePageCount() {
+        return (int) Math.ceil(1.0 * getFaceList().size() / 8);
+    }
+
+    public void init() {
+        copyAssetStickersToStorage();
+        loadStickerList();
+        getDefaultFacePicUri();
+        loadFaceList();
+        initFaceSwitchView();
+        loadLastUploadPreviewPic();
+    }
+
+    private void copyAssetStickersToStorage() {
+        Set<String> allCategoryNames = new HashSet();
+        for(String category : classicCategoryNames){
+            allCategoryNames.add(category);
+        }
+
+        for(String category : newCategoryNames){
+            allCategoryNames.add(category);
+        }
+
+        for(String category :allCategoryNames){
+            copyAssetFileToStorage(category);
+        }
+    }
+
+    public int getCurrentCategoryId() {
+        return currentClassicCategoryId;
+    }
+
+    public void setCurrentCategoryId(int currentId) {
+        currentClassicCategoryId = currentId;
+    }
+
+    public List<FacemojiCategory> getCategories(FacemojiType facemojiType){
+        switch (facemojiType){
+            case NEW:
+                return newCategories;
+            default:
+                return classicCategories;
+        }
+    }
+
+    public List<FacemojiCategory> getClassicCategories() {
+        return classicCategories;
+    }
+
+    private boolean copyAssetFileToStorage(String fileName) {
+        String filePath = HSApplication.getContext().getFilesDir().getAbsolutePath();
+        AssetManager assetMgr = HSApplication.getContext().getAssets();
+        String path = filePath + "/" + MOJIME_DIRECTORY;
+        String categoryDirectory = path + "/" + fileName;
+        File mojimeFile = new File(categoryDirectory);
+        if (mojimeFile.exists()) {
+            return false;
+        }
+        mojimeFile.mkdirs();
+        AssetManager am = assetMgr;
+        try {
+            InputStream isd = am.open(fileName + ".zip");
+            OutputStream os = new FileOutputStream(path + "/" + fileName + "/" + fileName + ".zip");
+            byte[] b = new byte[1024];
+            int length;
+            while ((length = isd.read(b)) > 0) {
+                os.write(b, 0, length);
+            }
+            isd.close();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String zipPath = path + "/" + fileName + "/" + fileName + ".zip";
+        File mojimeZipFile = new File(zipPath);
+        if (mojimeZipFile.exists()) {
+            unzip(zipPath, fileName);
+        }
+        mojimeZipFile.delete();
+        HSLog.d("mojime files succesfully decompressed to file directory " + path + "/" + fileName);
+        return true;
+    }
 
     private void loadStickerList() {
         classicCategories.clear();
@@ -478,20 +585,9 @@ public class FacemojiManager {
         return getCategories(facemojiType).get(postion).getStickerList();
     }
 
-
-    public static int getCategoryPosition(String name) {
-        for (int i = 0; i < classicCategoryNames.length; i++) {
-            if (name.equals(classicCategoryNames[i])) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public String getCategoryName(FacemojiType facemojiType,int id) {
         return getCategories(facemojiType).get(id).getName();
     }
-
 
     public void loadFaceList(){
 
@@ -527,44 +623,6 @@ public class FacemojiManager {
             }
         }
     }
-
-
-    public static List<FaceItem> getFaceList() {
-        return faces;
-    }
-
-    public static List<FaceItem> getFaceByPagePosition(int position) {
-        List<FaceItem> result = new ArrayList<>();
-        List<FaceItem> faces = getFaceList();
-        for (int i = position * 8; i < Math.min((position + 1) * 8, faces.size()); i++) {
-            result.add(faces.get(i));
-        }
-        return result;
-    }
-
-    public static void deleteFace(FaceItem faceItem) {
-
-        File fdelete = new File(faceItem.getUri().getPath());
-        if (fdelete.exists()) {
-            if (fdelete.delete()) {
-                Log.e("-->", "file Deleted :" + fdelete);
-            } else {
-                Log.e("-->", "file not Deleted :" + fdelete);
-            }
-        }
-    }
-
-    static class FacemojiPalettesParam {
-        static final int SIZE = 6;
-        static final int COL = 3;
-        static final int ROW = 2;
-        static final int ROW_LANDSCAPE = 1;
-    }
-
-    public static int getCurrentPageSize() {
-        return currentPageSize;
-    }
-
 
     public List<FacemojiSticker> getDataFromPagePosition(FacemojiType facemojiType,int position) {
         Pair<Integer, Integer> pair = getCategoryIdAndPageIdFromPagePosition(facemojiType,position);
@@ -608,14 +666,6 @@ public class FacemojiManager {
         return 0;
     }
 
-    public static void setCurrentCategoryPageId(final int id) {
-        mCurrentClassicCategoryPageId = id;
-    }
-
-    public static int getCurrentCategoryPageId() {
-        return mCurrentClassicCategoryPageId;
-    }
-
     public int getPageIdFromCategoryId(FacemojiType facemojiType,final int categoryId) {
         String key = PREF_CATEGORY_LAST_PAGE_ID + categoryId;
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
@@ -640,81 +690,15 @@ public class FacemojiManager {
         return sum;
     }
 
-    public static void showFaceSwitchView() {
-        HSLog.d("show face switch view");
-
-        if (mFaceSwitcherShowing) {
-            return;
-        }
-
-        mFacePalettesView.prepare();
-
-        final FrameLayout inputArea = HSInputMethod.getInputArea();
-
-        final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.BOTTOM;
-
-        inputArea.addView(mFacePalettesView, params);
-
-        mFaceSwitcherShowing = true;
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.SHOW_FACE_LIST);
+    public enum FacemojiType{
+        CLASSIC,NEW
     }
 
-    public static void initFaceSwitchView() {
-
-        if (mFacePalettesView != null) {
-            mFacePalettesView.destroy();
-        }
-
-        mFacePalettesView = (FacePalettesView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.face_switcher_layout, null);
-        mFacePalettesView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                return; // set dummy listener here to filter any touch event located on the view
-            }
-        });
-        mFacePalettesView.setHapticFeedbackEnabled(false);
-        mFacePalettesView.setSoundEffectsEnabled(false);
-        final View closeButton = mFacePalettesView.findViewById(R.id.face_switch_close_btn);
-        mFaceSwitcherShowing = false;
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideFaceSwitchView();
-            }
-        });
-
-        final View editButton = mFacePalettesView.findViewById(R.id.face_switch_edit_btn);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(HSApplication.getContext(), FaceListActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("toggleEditMode", true);
-                HSApplication.getContext().startActivity(i);
-            }
-        });
-    }
-
-    public static boolean hasTempFace() {
-        return mTempFacePicUri != null;
-    }
-
-    public static void hideFaceSwitchView() {
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.HIDE_FACE_LIST);
-
-        if (mFaceSwitcherShowing) {
-            final FrameLayout inputArea = HSInputMethod.getInputArea();
-            inputArea.removeView(mFacePalettesView);
-            mFaceSwitcherShowing = false;
-        }
-    }
-
-    public static int getFacePageCount() {
-        return (int) Math.ceil(1.0 * getFaceList().size() / 8);
+    static class FacemojiPalettesParam {
+        static final int SIZE = 6;
+        static final int COL = 3;
+        static final int ROW = 2;
+        static final int ROW_LANDSCAPE = 1;
     }
 
 }

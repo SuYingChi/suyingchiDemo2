@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher.FacePalettesView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/face_palettes_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:hapticFeedbackEnabled="false"
     android:orientation="vertical"
-    android:background="@color/gif_panel_background"
-    android:id="@+id/face_palettes_view"
-    android:hapticFeedbackEnabled="false">
+    android:soundEffectsEnabled="false">
 
 
     <RelativeLayout
@@ -17,55 +18,55 @@
             android:id="@+id/face_switch_close_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:gravity="center">
         <ImageView
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/close_btn_small"
+            android:layout_gravity="center"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="13dp"
-            android:layout_gravity="center"
+            android:scaleType="centerInside"
+            android:src="@drawable/close_btn_small"
             />
         </LinearLayout>
 
         <TextView
             android:id="@+id/face_switch_title"
-            android:singleLine="true"
-            android:text="Switch Face"
-            android:textSize="14sp"
-            android:textColor="#ffffffff"
-            android:fontFamily="sans-serif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="visible"
-            android:gravity="center"/>
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Switch Face"
+            android:textColor="#ffffffff"
+            android:textSize="14sp"
+            android:visibility="visible"/>
 
         <TextView
             android:id="@+id/face_switch_edit_btn"
-            android:singleLine="true"
-            android:text="Edit"
-            android:textSize="14sp"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/white_text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="13dp"
-            android:layout_alignParentRight="true"
             android:layout_alignBaseline="@id/face_switch_title"
-            android:visibility="visible"
-            android:gravity="center_vertical|right" />
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="13dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical|right"
+            android:singleLine="true"
+            android:text="Edit"
+            android:textColor="@color/white_text_color"
+            android:textSize="14sp"
+            android:visibility="visible" />
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/face_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="@null" />
 
     <com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher.FacePageIndicatorView
         android:id="@+id/face_switch_page_id_view"
