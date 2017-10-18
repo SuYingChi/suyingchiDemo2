@@ -79,10 +79,10 @@ public class FacemojiManager {
     private static FacePalettesView mFacePalettesView;
     private static List<FaceItem> faces = new ArrayList<>();
     private static final String[] classicCategoryNames = {
-            "person",
             "star",
-            "fruit",
-            "dance"
+            "dance",
+            "person",
+            "fruit"
     };
     private static final String[] newCategoryNames = {
             "star",

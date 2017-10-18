@@ -67,9 +67,11 @@ public class CameraActivity extends HSAppCompatActivity {
     public static final String FACE_CHANGED = "FACE_CHANGED";
     public static final String FACE_DELETED = "FACE_DELETED";
     private static final int SAMPLE_SIZE = 8;
-    private boolean useBeautyNow = true;
     private Bitmap srcBitmap;
     private Bitmap beautyBitmap;
+    private boolean useBeautyNow = true;
+
+    private View cameraLayout;
 
     private INotificationObserver mImeActionObserver = new INotificationObserver() {
         @Override
@@ -187,7 +189,7 @@ public class CameraActivity extends HSAppCompatActivity {
             super.onPreExecute();
 
             showProcessingDialog();
-            findViewById(R.id.camera_click_button).setClickable(true);
+            cameraLayout.setClickable(true);
 
         }
 
@@ -393,13 +395,13 @@ public class CameraActivity extends HSAppCompatActivity {
 
         int captureBtnHeight = (int) (0.65f * (screenHeight - statusBarHeight - faceTitlePara.height - lp.height - scrollViewPara.height - textPara.height));
 
-        View camera = findViewById(R.id.camera_click_button);
-        LinearLayout.LayoutParams cameraPara = (LinearLayout.LayoutParams) camera.getLayoutParams();
+        cameraLayout = findViewById(R.id.camera_click_button);
+        LinearLayout.LayoutParams cameraPara = (LinearLayout.LayoutParams) cameraLayout.getLayoutParams();
         cameraPara.height = captureBtnHeight;
         cameraPara.width = captureBtnHeight;
-        camera.setBackgroundDrawable(com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getCompatCircleRippleDrawable(getResources().getColor(R.color.colorPrimary), 0));
-        camera.setLayoutParams(cameraPara);
-        camera.setClickable(true);
+        cameraLayout.setBackgroundDrawable(com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getCompatCircleRippleDrawable(getResources().getColor(R.color.colorPrimary), 0));
+        cameraLayout.setLayoutParams(cameraPara);
+        cameraLayout.setClickable(true);
 
         ImageView gallery2 = (ImageView) findViewById(R.id.gallery2);
         LinearLayout.LayoutParams galleryPara2 = (LinearLayout.LayoutParams) gallery2.getLayoutParams();
@@ -456,7 +458,7 @@ public class CameraActivity extends HSAppCompatActivity {
             View synthesis = findViewById(R.id.synthesis_picture);
             synthesis.setVisibility(View.INVISIBLE);
         }
-        findViewById(R.id.camera_click_button).setClickable(true);
+        cameraLayout.setClickable(true);
         closeProcessingDialog();
     }
 
@@ -468,8 +470,12 @@ public class CameraActivity extends HSAppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        releaseCamera();
-        super.onBackPressed();
+        if (isSynthesisingImage){
+            backToCaptureStatus();
+        }else {
+            releaseCamera();
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -478,7 +484,7 @@ public class CameraActivity extends HSAppCompatActivity {
             case KeyEvent.KEYCODE_CAMERA: // 按下拍照按钮
                 if (camera != null && event.getRepeatCount() == 0) {
                     takePicture(null);
-                    findViewById(R.id.camera_click_button).setClickable(false);
+                    cameraLayout.setClickable(false);
                 }
         }
         return super.onKeyDown(keyCode, event);
@@ -847,7 +853,7 @@ public class CameraActivity extends HSAppCompatActivity {
         try {
             if (camera != null) {
                 camera.takePicture(null, null, new MyPictureCallback());
-                findViewById(R.id.camera_click_button).setClickable(false);
+                cameraLayout.setClickable(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -869,6 +875,8 @@ public class CameraActivity extends HSAppCompatActivity {
     }
 
     private void synthesisingPhoto(Bitmap bitmap) {
+        isSynthesisingImage = true;
+
         ImageView beautyBtn = (ImageView) findViewById(R.id.beauty_button);
         Drawable beautyDrawable = getResources().getDrawable(R.drawable.ic_beauty);
         DrawableCompat.setTintList(beautyDrawable, new ColorStateList(
@@ -895,14 +903,27 @@ public class CameraActivity extends HSAppCompatActivity {
 
         photoView.setImageMatrix(new Matrix());
         photoView.setImageBitmap(useBeautyNow?beautyBitmap:srcBitmap);
-        photoView.setVisibility(View.VISIBLE);
+
+        updateUIIfStatusChange();
+    }
+
+    private void updateUIIfStatusChange() {
+        cameraLayout.setClickable(!isSynthesisingImage);
+
+        photoView.setVisibility(isSynthesisingImage?View.VISIBLE:View.GONE);
 
         View synthesis = findViewById(R.id.synthesis_picture);
-        synthesis.setVisibility(View.VISIBLE);
+        synthesis.setVisibility(isSynthesisingImage?View.VISIBLE:View.GONE);
+
         View switcherHolder = findViewById(R.id.switcher_holder);
-        switcherHolder.setVisibility(View.INVISIBLE);
-        surfaceView.setVisibility(View.INVISIBLE);
-        isSynthesisingImage = true;
+        switcherHolder.setVisibility(isSynthesisingImage?View.INVISIBLE:View.VISIBLE);
+
+        surfaceView.setVisibility(isSynthesisingImage?View.INVISIBLE:View.VISIBLE);
+    }
+
+    private void backToCaptureStatus(){
+        isSynthesisingImage = false;
+        updateUIIfStatusChange();
     }
 
     Handler handler = new Handler() {

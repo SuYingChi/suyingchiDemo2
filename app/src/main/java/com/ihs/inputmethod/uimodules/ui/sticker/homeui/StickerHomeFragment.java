@@ -149,12 +149,12 @@ public class StickerHomeFragment extends Fragment {
 
             stickerHomeModel = new StickerHomeModel();
             stickerHomeModel.isFacemoji = true;
-            stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,1).get(0);
+            stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,0).get(0);
             stickerModelList.add(stickerHomeModel);
             if (FacemojiManager.getFaceList().size() >= 2){
                 stickerHomeModel = new StickerHomeModel();
                 stickerHomeModel.isFacemoji = true;
-                stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,2).get(0);
+                stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(FacemojiManager.FacemojiType.CLASSIC,1).get(0);
                 stickerModelList.add(stickerHomeModel);
             }
         }else {
