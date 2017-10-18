@@ -42,7 +42,7 @@ public class KeyboardGooglePlayAdManager implements KCNativeAdView.OnAdLoadedLis
     private void initAndShowDialog() {
         adGooglePlayDialog = new AdGooglePlayDialog(HSApplication.getContext(), nativeAdView);
         adGooglePlayDialog.show();
-        HSPreferenceHelper.getDefault().putLong(PREF_AD_SHOW_TIME, System.currentTimeMillis());
+        //HSPreferenceHelper.getDefault().putLong(PREF_AD_SHOW_TIME, System.currentTimeMillis());
     }
 
     private boolean isShowedFixedTimeBefore() { // 是否在一定时间之前展示过广告
@@ -59,8 +59,7 @@ public class KeyboardGooglePlayAdManager implements KCNativeAdView.OnAdLoadedLis
 
     public boolean loadAndShowAdIfConditionSatisfied() {
         if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayNative")
-                && HSConfig.optBoolean(false, "Application", "NativeAds", "GooglePlayNativeAd", "ShowAd")
-                && !isShowedFixedTimeBefore()) {
+                && HSConfig.optBoolean(false, "Application", "NativeAds", "GooglePlayNativeAd", "ShowAd")) {
             initNativeAdView();
             return true;
         } else {
