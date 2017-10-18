@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -115,7 +116,14 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
         convertView = mInflater.inflate(R.layout.facemoji_view, null);
         final View containerLayout = convertView.findViewById(R.id.facemoji_cell_layout);
-        containerLayout.setLayoutParams(new GridView.LayoutParams(stickerDimension, stickerDimension));
+
+        Resources resources = convertView.getResources();
+        int width = (int) ((resources.getDisplayMetrics().widthPixels - resources.getDimension(R.dimen.facemoji_grid_item_horizontal_space) - resources.getDimension(R.dimen.facemoji_grid_left_margin) * 2) / 2);
+        int height = (int) ((float) sticker.getHeight() / sticker.getWidth() * width);
+
+        GridView.LayoutParams layoutParams = new GridView.LayoutParams(width, height);
+        containerLayout.setLayoutParams(layoutParams);
+
         final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
         facemojiView.setSticker(sticker);
         facemojiView.setTag(sticker);
@@ -149,10 +157,10 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             share(sticker, ShareChannel.MESSENGER);
         } else if (id == R.id.whatsapp_share_icon_btn) {
             share(sticker, ShareChannel.WHATSAPP);
-        } else if (id ==  R.id.twitter_share_icon_btn) {
+        } else if (id == R.id.twitter_share_icon_btn) {
             share(sticker, ShareChannel.TWITTER);
         } else {
-                showShareAlert(sticker);
+            showShareAlert(sticker);
         }
     }
 

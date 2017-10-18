@@ -70,9 +70,6 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         }
         mActivePageViews.remove(position);
         final GridViewWithHeaderAndFooter stickerPageGridView = new GridViewWithHeaderAndFooter(HSApplication.getContext());
-        stickerPageGridView.setGravity(Gravity.CENTER);
-
-        stickerPageGridView.setVerticalScrollBarEnabled(false);
         setGridViewLayoutProperties(stickerPageGridView);
         FacemojiGridAdapter adapter = new FacemojiGridAdapter(FacemojiManager.getInstance().getStickerList(facemojiType,position), stickerDimension);
         stickerPageGridView.setAdapter(adapter);
@@ -83,10 +80,12 @@ class FacemojiPalettesAdapter extends PagerAdapter {
 
     private void setGridViewLayoutProperties(GridViewWithHeaderAndFooter stickerPageGridView) {
         int gap = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.facemoji_myfacemoji_grid_gap);
+        stickerPageGridView.setGravity(Gravity.CENTER);
         stickerPageGridView.setNumColumns(GRID_COLUMN_NUMBER);
-        stickerPageGridView.setPadding(gap, PAGER_TOP_PADDING_PX, gap, PAGER_BOTTOM_PADDING_PX);
-        stickerPageGridView.setVerticalSpacing(gap);
-        stickerPageGridView.setHorizontalSpacing(gap);
+        stickerPageGridView.setVerticalSpacing(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.facemoji_grid_item_vertical_space));
+        stickerPageGridView.setHorizontalSpacing(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.facemoji_grid_item_horizontal_space));
+        stickerPageGridView.setVerticalScrollBarEnabled(false);
+
         stickerDimension = (int) ((float) (pagerHeight - gap * (GRID_ROW_NUMBER - 1)) / GRID_ROW_NUMBER);
         int topPadding = (pagerHeight - stickerDimension*GRID_ROW_NUMBER- gap * (GRID_ROW_NUMBER - 1))/2-5;
         ViewGroup.LayoutParams param = new ViewGroup.LayoutParams(topPadding,topPadding);

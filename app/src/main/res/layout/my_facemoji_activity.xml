@@ -78,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/my_facemoji_send_facemoji_tip"
+            android:gravity="center_horizontal"
             android:drawableLeft="@drawable/ic_tick"
             android:textColor="@color/white"
             android:drawablePadding="8dp"
@@ -87,6 +88,8 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/facemoji_pager"
             android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/facemoji_grid_left_margin"
+            android:layout_marginRight="@dimen/facemoji_grid_left_margin"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1" />
