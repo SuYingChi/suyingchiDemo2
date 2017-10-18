@@ -538,6 +538,8 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fallingstars.jpg</string>
 							<key>name</key>
 							<string>Falling Stars</string>
+							<key>shareToUnlock</key>
+							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
@@ -4505,24 +4507,32 @@
 							<string>BigFace01</string>
 							<key>showName</key>
 							<string>Animated Smiley</string>
+							<key>showInKeyboard</key>
+							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>LoveGif02</string>
 							<key>showName</key>
 							<string>Animated Lover</string>
+							<key>showInKeyboard</key>
+							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>AngryFace</string>
 							<key>showName</key>
 							<string>Angry Face</string>
+							<key>showInKeyboard</key>
+							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>FunnyEmoji</string>
 							<key>showName</key>
 							<string>Funny Emoji</string>
+							<key>showInKeyboard</key>
+							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
