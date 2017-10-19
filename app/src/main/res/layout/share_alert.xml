@@ -1,106 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/facemoji_share_alert_bg">
+    android:background="@drawable/white_round_rectangle_bg"
+    android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Share"
-            android:textSize="20sp"
-            android:id="@+id/share_alert_title"
-            android:textColor="#000000"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"/>
 
     <LinearLayout
         android:id="@+id/back_button_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:clickable="true"
         android:gravity="center">
         <ImageView
-            android:layout_width="12dp"
+            android:layout_width="15dp"
             android:id="@+id/share_alert_close_btn"
-            android:layout_height="12dp"
-            android:layout_margin="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/close_btn"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:id="@+id/share_alert_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/back_button_holder"
+        android:fontFamily="sans-serif-medium"
+        android:text="Share"
+        android:textColor="#000000"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_below="@id/share_alert_title"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
         <com.ihs.inputmethod.uimodules.ui.facemoji.ui.FacemojiAnimationView
-            android:layout_marginTop="10dp"
+            android:id="@+id/share_sticker_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/share_sticker_preview"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
+
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            >
+            android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
+
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/share_icon_message"
                     android:id="@+id/message_share_icon_btn"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/share_icon_facebook"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/share_icon_message" />
+
+                <ImageView
                     android:id="@+id/facebook_share_icon_btn"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/share_icon_whatsapp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/share_icon_facebook" />
+
+                <ImageView
                     android:id="@+id/whatsapp_share_icon_btn"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/share_icon_messenger"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/share_icon_whatsapp" />
+
+                <ImageView
                     android:id="@+id/messenger_share_icon_btn"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/share_icon_twitter"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/share_icon_messenger" />
+
+                <ImageView
                     android:id="@+id/twitter_share_icon_btn"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/share_icon_email"
-                    android:id="@+id/email_share_icon_btn"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/share_icon_twitter" />
+
+                <ImageView
+                    android:id="@+id/email_share_icon_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/share_icon_email" />
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -112,6 +121,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

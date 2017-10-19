@@ -63,9 +63,6 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         int id = v.getId();
         if  (id == R.id.face_menu_icon) {
                 startFaceListActivity();
-        } else if (id == R.id.back_button_holder) {
-                onBackPressed();
-        } else if (id == R.id.triangle_button) {
         } else if (id ==  R.id.face_save_btn_holder) {
             onClickSaveButton();
         }

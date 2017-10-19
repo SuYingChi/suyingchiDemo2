@@ -21,7 +21,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <LinearLayout
                 android:id="@+id/face_save_btn_holder"
@@ -72,26 +72,25 @@
 
         <TextView
             android:id="@+id/send_facemoji_tip"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:padding="5dp"
-            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_facemoji_send_facemoji_tip"
-            android:gravity="center_horizontal"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
             android:drawableLeft="@drawable/ic_tick"
-            android:textColor="@color/white"
             android:drawablePadding="8dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/my_facemoji_send_facemoji_tip"
+            android:textColor="@color/white" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/facemoji_pager"
             android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/facemoji_grid_left_margin"
-            android:layout_marginRight="@dimen/facemoji_grid_left_margin"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/facemoji_grid_left_margin"
+            android:layout_marginRight="@dimen/facemoji_grid_left_margin"
             android:layout_weight="1" />
 
 

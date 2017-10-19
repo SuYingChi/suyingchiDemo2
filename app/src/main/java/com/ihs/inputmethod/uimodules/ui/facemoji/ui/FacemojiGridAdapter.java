@@ -77,7 +77,6 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         this.mData = dataList;
         this.stickerDimension = stickerDimension;
         this.mInflater = LayoutInflater.from(HSApplication.getContext());
-        initShareAlert();
     }
 
     @Override
@@ -179,9 +178,12 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
 
     private void showShareAlert(FacemojiSticker sticker) {
         if (dialog == null) {
-            return;
+            initShareAlert();
+        }else {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
         }
-        dialog.dismiss();
         stickerPlayer.setSticker(sticker);
         messageIcon.setTag(sticker);
         emailIcon.setTag(sticker);
