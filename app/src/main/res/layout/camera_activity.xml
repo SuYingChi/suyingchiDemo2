@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
@@ -111,7 +112,8 @@
                     android:layout_gravity="center_vertical"
                     android:background="?selectableItemBackgroundBorderless"
                     android:onClick="showGallery"
-                    android:src="@drawable/ic_gallery" />
+                    android:tint="@color/standard_gray"
+                    app:srcCompat="@drawable/ic_gallery_black_24dp" />
             </LinearLayout>
 
             <FrameLayout
@@ -124,7 +126,8 @@
                 <ImageView
                     style="@style/CaptureImageViewStyle"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_camera" />
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_camera_black_24dp" />
 
             </FrameLayout>
 
@@ -139,7 +142,8 @@
                     android:id="@+id/camera_switcher"
                     style="@style/CaptureImageViewStyle"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_switch_camera" />
+                    app:srcCompat="@drawable/ic_switch_camera_black_24dp"
+                    android:tint="@color/standard_gray"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -159,16 +163,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:visibility="invisible">
-
-                <ImageView
-                    android:id="@+id/gallery2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/show_picture"
-                    android:onClick="showGallery" />
-            </LinearLayout>
+                android:visibility="invisible"/>
 
             <LinearLayout
                 android:id="@+id/confirm_make_face"
@@ -181,7 +176,8 @@
                 <ImageView
                     style="@style/CaptureImageViewStyle"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_tick" />
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_tick_black_24dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -194,8 +190,7 @@
                     android:id="@+id/beauty_button"
                     style="@style/CaptureImageViewStyle"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:onClick="useBeauty"
-                    android:src="@drawable/ic_beauty" />
+                    android:onClick="useBeauty" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

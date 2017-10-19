@@ -20,7 +20,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_create_facemoji" />
+            android:tint="@color/white"
+            app:srcCompat="@drawable/ic_facemoji_create_black_24dp" />
 
         <TextView
             android:layout_width="wrap_content"

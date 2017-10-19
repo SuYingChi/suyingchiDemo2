@@ -12,7 +12,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -43,6 +43,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -391,12 +392,6 @@ public class CameraActivity extends HSAppCompatActivity {
         cameraLayout.setBackgroundDrawable(com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getCompatCircleRippleDrawable(getResources().getColor(R.color.colorPrimary), 0));
         cameraLayout.setLayoutParams(cameraPara);
         cameraLayout.setClickable(true);
-
-        ImageView gallery2 = (ImageView) findViewById(R.id.gallery2);
-        LinearLayout.LayoutParams galleryPara2 = (LinearLayout.LayoutParams) gallery2.getLayoutParams();
-        galleryPara2.height = (int) (0.25f * (screenHeight - statusBarHeight - faceTitlePara.height - lp.height - scrollViewPara.height - textPara.height));
-        galleryPara2.width = galleryPara2.height * gallery2.getBackground().getIntrinsicWidth() / gallery2.getBackground().getIntrinsicHeight();
-        gallery2.setLayoutParams(galleryPara2);
 
         confirmMakeFaceBtn = findViewById(R.id.confirm_make_face);
         LinearLayout.LayoutParams choosePicPram = (LinearLayout.LayoutParams) confirmMakeFaceBtn.getLayoutParams();
@@ -875,7 +870,7 @@ public class CameraActivity extends HSAppCompatActivity {
         isSynthesisingImage = true;
 
         ImageView beautyBtn = (ImageView) findViewById(R.id.beauty_button);
-        Drawable beautyDrawable = getResources().getDrawable(R.drawable.ic_beauty);
+        VectorDrawableCompat beautyDrawable = VectorCompat.createVectorDrawable(HSApplication.getContext(), R.drawable.ic_beauty_black_24dp);
         DrawableCompat.setTintList(beautyDrawable, new ColorStateList(
                 new int[][]
                         {
@@ -885,7 +880,7 @@ public class CameraActivity extends HSAppCompatActivity {
                 new int[]
                         {
                                 getResources().getColor(R.color.colorPrimary),
-                                Color.GRAY,
+                                getResources().getColor(R.color.standard_gray)
                         }
         ));
         beautyBtn.setImageDrawable(beautyDrawable);
