@@ -16,9 +16,10 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSMapUtils;
-import com.ihs.inputmethod.uimodules.mediacontroller.Constants;
 import com.ihs.inputmethod.api.utils.HSPictureUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.mediacontroller.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -237,6 +238,16 @@ public class ShareUtils {
         String mimeType = getMimeType(filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length()));
 
         if(mimeType == null || "".equals(mimeType)){
+            return;
+        }
+
+        if (shareChannel == ShareChannel.MORE){
+            Intent shareIntent = new Intent();
+            shareIntent.setAction("android.intent.action.SEND");
+            shareIntent.putExtra("android.intent.extra.STREAM", shareFileUri);
+            shareIntent.setType("image/*");
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            HSApplication.getContext().startActivity(Intent.createChooser(shareIntent, HSApplication.getContext().getResources().getText(R.string.label_share)));
             return;
         }
 

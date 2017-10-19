@@ -40,7 +40,7 @@
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:singleLine="true"
-            android:text="Switch Face"
+            android:text="@string/switch_facemoji_toolbar_title"
             android:textColor="#ffffffff"
             android:textSize="14sp"
             android:visibility="visible"/>
@@ -55,7 +55,7 @@
             android:fontFamily="sans-serif"
             android:gravity="center_vertical|right"
             android:singleLine="true"
-            android:text="Edit"
+            android:text="@string/label_manage"
             android:textColor="@color/white_text_color"
             android:textSize="14sp"
             android:visibility="visible" />

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/white_round_rectangle_bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="15dp">
 
 
     <LinearLayout
@@ -11,19 +12,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
         android:clickable="true"
         android:gravity="center">
+
         <ImageView
-            android:layout_width="15dp"
             android:id="@+id/share_alert_close_btn"
+            android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/close_btn"/>
+            android:src="@drawable/close_btn" />
     </LinearLayout>
 
     <TextView
-        android:layout_marginLeft="15dp"
         android:id="@+id/share_alert_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +34,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/share_alert_title"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
@@ -47,72 +46,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp" />
 
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp">
-
-                <ImageView
-                    android:id="@+id/message_share_icon_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/share_icon_message" />
-
-                <ImageView
-                    android:id="@+id/facebook_share_icon_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/share_icon_facebook" />
-
-                <ImageView
-                    android:id="@+id/whatsapp_share_icon_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/share_icon_whatsapp" />
-
-                <ImageView
-                    android:id="@+id/messenger_share_icon_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/share_icon_messenger" />
-
-                <ImageView
-                    android:id="@+id/twitter_share_icon_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/share_icon_twitter" />
-
-                <ImageView
-                    android:id="@+id/email_share_icon_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/share_icon_email" />
-            </LinearLayout>
-        </HorizontalScrollView>
-
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:id="@+id/share_apps_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

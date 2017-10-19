@@ -8,11 +8,11 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.Telephony;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +24,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
@@ -50,12 +50,6 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     private Dialog dialog;
     private int stickerDimension;
     private FacemojiAnimationView stickerPlayer;
-    private ImageView messageIcon;
-    private ImageView emailIcon;
-    private ImageView messengerIcon;
-    private ImageView twitterIcon;
-    private ImageView facebookIcon;
-    private ImageView whatsappIcon;
 
     private ProgressBar mProgressBar;
     private ProgressListener mShareProgressListener = new ProgressListener() {
@@ -144,23 +138,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
 
         final FacemojiSticker sticker = (FacemojiSticker) arg0.getTag();
-
-        int id = arg0.getId();
-        if (id == R.id.message_share_icon_btn) {
-            share(sticker, ShareChannel.MESSAGE);
-        } else if (id == R.id.facebook_share_icon_btn) {
-            share(sticker, ShareChannel.FACEBOOK);
-        } else if (id == R.id.email_share_icon_btn) {
-            share(sticker, ShareChannel.EMAIL);
-        } else if (id == R.id.messenger_share_icon_btn) {
-            share(sticker, ShareChannel.MESSENGER);
-        } else if (id == R.id.whatsapp_share_icon_btn) {
-            share(sticker, ShareChannel.WHATSAPP);
-        } else if (id == R.id.twitter_share_icon_btn) {
-            share(sticker, ShareChannel.TWITTER);
-        } else {
-            showShareAlert(sticker);
-        }
+        showShareAlert(sticker);
     }
 
     private void share(final FacemojiSticker sticker, ShareChannel channel) {
@@ -178,99 +156,41 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
 
     private void showShareAlert(FacemojiSticker sticker) {
         if (dialog == null) {
-            initShareAlert();
+            initShareAlert(sticker);
         }else {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
         }
         stickerPlayer.setSticker(sticker);
-        messageIcon.setTag(sticker);
-        emailIcon.setTag(sticker);
-        messengerIcon.setTag(sticker);
-        twitterIcon.setTag(sticker);
-        facebookIcon.setTag(sticker);
-        whatsappIcon.setTag(sticker);
         mProgressBar.setVisibility(View.GONE);
         dialog.setCancelable(true);
         dialog.show();
     }
 
-    private void initShareAlert() {
+    private void initShareAlert(FacemojiSticker sticker) {
         dialog = new Dialog(HSApplication.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.share_alert);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        WindowManager.LayoutParams param = new WindowManager.LayoutParams();
-        param.copyFrom(dialog.getWindow().getAttributes());
         WindowManager wm = (WindowManager) HSApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        param.width = (int) (size.x * 0.80);
-        param.height = (int) (size.y * 0.57);
-        dialog.getWindow().setAttributes(param);
-
 
         stickerPlayer = (FacemojiAnimationView) dialog.findViewById(R.id.share_sticker_preview);
         LinearLayout.LayoutParams playerParam = (LinearLayout.LayoutParams) stickerPlayer.getLayoutParams();
-        playerParam.height = (int) (param.height * 0.5);
-        playerParam.width = playerParam.height;
+        playerParam.height = (int) (size.y * 0.57 * 0.5);
+        playerParam.width = (int) (playerParam.height * (float)sticker.getWidth() / sticker.getHeight());
         stickerPlayer.setLayoutParams(playerParam);
         stickerPlayer.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        messageIcon = (ImageView) dialog.findViewById(R.id.message_share_icon_btn);
-        messageIcon.setImageDrawable(HSDrawableUtils.getDimmedDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.share_icon_message)));
-        if (!HSInstallationUtils.isAppInstalled(ShareChannel.MESSAGE.getPackageName()) && !(getMmsPackages().length > 0)) {
-            messageIcon.setVisibility(View.GONE);
-        } else {
-            messageIcon.setOnClickListener(this);
-        }
+        RecyclerView shareRecyclerView = (RecyclerView) dialog.findViewById(R.id.share_apps_recycler_view);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(HSApplication.getContext(), 4);
+        shareRecyclerView.setLayoutManager(gridLayoutManager);
 
-
-        emailIcon = (ImageView) dialog.findViewById(R.id.email_share_icon_btn);
-        emailIcon.setImageDrawable(HSDrawableUtils.getDimmedDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.share_icon_email)));
-
-        if (!HSInstallationUtils.isAppInstalled(ShareChannel.EMAIL.getPackageName()) && !(getEmailPackages().length > 0)) {
-            emailIcon.setVisibility(View.GONE);
-        } else {
-            emailIcon.setOnClickListener(this);
-        }
-
-        messengerIcon = (ImageView) dialog.findViewById(R.id.messenger_share_icon_btn);
-        messengerIcon.setImageDrawable(HSDrawableUtils.getDimmedDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.share_icon_messenger)));
-
-        if (!HSInstallationUtils.isAppInstalled(ShareChannel.MESSENGER.getPackageName())) {
-            messengerIcon.setVisibility(View.GONE);
-        } else {
-            messengerIcon.setOnClickListener(this);
-        }
-
-        twitterIcon = (ImageView) dialog.findViewById(R.id.twitter_share_icon_btn);
-        twitterIcon.setImageDrawable(HSDrawableUtils.getDimmedDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.share_icon_twitter)));
-        if (!HSInstallationUtils.isAppInstalled(ShareChannel.TWITTER.getPackageName())) {
-            twitterIcon.setVisibility(View.GONE);
-        } else {
-            twitterIcon.setOnClickListener(this);
-        }
-
-        facebookIcon = (ImageView) dialog.findViewById(R.id.facebook_share_icon_btn);
-        facebookIcon.setImageDrawable(HSDrawableUtils.getDimmedDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.share_icon_facebook)));
-        if (!HSInstallationUtils.isAppInstalled(ShareChannel.FACEBOOK.getPackageName())) {
-            facebookIcon.setVisibility(View.GONE);
-        } else {
-            facebookIcon.setOnClickListener(this);
-        }
-
-        whatsappIcon = (ImageView) dialog.findViewById(R.id.whatsapp_share_icon_btn);
-        whatsappIcon.setImageDrawable(HSDrawableUtils.getDimmedDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.share_icon_whatsapp)));
-
-        if (!HSInstallationUtils.isAppInstalled(ShareChannel.WHATSAPP.getPackageName())) {
-            whatsappIcon.setVisibility(View.GONE);
-        } else {
-            whatsappIcon.setOnClickListener(this);
-        }
+        ShareAdapter shareAdapter = new ShareAdapter(sticker,getSharedAppsList());
+        shareRecyclerView.setAdapter(shareAdapter);
 
         LinearLayout closeBtn = (LinearLayout) dialog.findViewById(R.id.back_button_holder);
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -283,6 +203,80 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         mProgressBar = (ProgressBar) dialog.findViewById(R.id.progressBar);
 
         dialog.setCancelable(true);
+    }
+
+    private List<ShareChannel> getSharedAppsList(){
+        List<ShareChannel> shareChannelList = new ArrayList<>();
+
+        if (HSInstallationUtils.isAppInstalled(ShareChannel.MESSAGE.getPackageName()) || (getMmsPackages().length > 0)) {
+            shareChannelList.add(ShareChannel.MESSAGE);
+        }
+
+        if (HSInstallationUtils.isAppInstalled(ShareChannel.EMAIL.getPackageName()) || (getEmailPackages().length > 0)) {
+            shareChannelList.add(ShareChannel.EMAIL);
+        }
+
+        if (HSInstallationUtils.isAppInstalled(ShareChannel.MESSENGER.getPackageName())) {
+            shareChannelList.add(ShareChannel.MESSENGER);
+        }
+
+        if (HSInstallationUtils.isAppInstalled(ShareChannel.TWITTER.getPackageName())) {
+            shareChannelList.add(ShareChannel.TWITTER);
+        }
+
+        if (HSInstallationUtils.isAppInstalled(ShareChannel.FACEBOOK.getPackageName())) {
+            shareChannelList.add(ShareChannel.FACEBOOK);
+        }
+
+        if (HSInstallationUtils.isAppInstalled(ShareChannel.WHATSAPP.getPackageName())) {
+            shareChannelList.add(ShareChannel.WHATSAPP);
+        }
+
+        shareChannelList.add(ShareChannel.MORE);
+        return shareChannelList;
+    }
+
+
+    private class ShareAdapter extends RecyclerView.Adapter<ShareAdapter.ShareViewHolder>{
+        FacemojiSticker sticker;
+        List<ShareChannel> sharedAppsList;
+        public ShareAdapter(FacemojiSticker sticker, List<ShareChannel> sharedAppsList) {
+            this.sticker = sticker;
+            this.sharedAppsList = sharedAppsList;
+        }
+
+        @Override
+        public ShareAdapter.ShareViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ShareViewHolder(View.inflate(parent.getContext(),R.layout.facemoji_share_app_item,null));
+        }
+
+        @Override
+        public void onBindViewHolder(ShareAdapter.ShareViewHolder holder, int position) {
+            ShareChannel shareChannel = sharedAppsList.get(position);
+            holder.shareAppIcon.setImageResource(shareChannel.getIconId());
+            holder.shareAppName.setText(shareChannel.getAppName());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    share(sticker, shareChannel);
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return sharedAppsList.size();
+        }
+
+        public  class ShareViewHolder extends RecyclerView.ViewHolder{
+            ImageView shareAppIcon;
+            TextView shareAppName;
+            public ShareViewHolder(View itemView) {
+                super(itemView);
+                shareAppIcon = (ImageView) itemView.findViewById(R.id.share_app_icon);
+                shareAppName = (TextView) itemView.findViewById(R.id.share_app_name);
+            }
+        }
     }
 
     public void finish() {

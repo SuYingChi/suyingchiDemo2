@@ -122,8 +122,8 @@
                 android:onClick="takePicture">
 
                 <ImageView
-                    android:layout_gravity="center"
                     style="@style/CaptureImageViewStyle"
+                    android:layout_gravity="center"
                     android:src="@drawable/ic_camera" />
 
             </FrameLayout>
@@ -170,14 +170,19 @@
                     android:onClick="showGallery" />
             </LinearLayout>
 
-            <ImageView
+            <LinearLayout
                 android:id="@+id/confirm_make_face"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:onClick="synthesisImage"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_tick" />
+                android:gravity="center"
+                android:onClick="synthesisImage">
+
+                <ImageView
+                    style="@style/CaptureImageViewStyle"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_tick" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"

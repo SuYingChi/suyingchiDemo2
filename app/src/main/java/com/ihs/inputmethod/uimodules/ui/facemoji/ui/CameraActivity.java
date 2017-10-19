@@ -297,7 +297,7 @@ public class CameraActivity extends HSAppCompatActivity {
     private Dialog mCreatingDialog;
     private GifImageView mCreatingView;
     private boolean isSynthesisingImage;
-    private ImageView confirmMakeFaceBtn;
+    private View confirmMakeFaceBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -322,17 +322,6 @@ public class CameraActivity extends HSAppCompatActivity {
 
         photoView = (ImageView) findViewById(R.id.photo_view);
         photoView.setVisibility(View.INVISIBLE);
-
-        confirmMakeFaceBtn = (ImageView) findViewById(R.id.confirm_make_face);
-        confirmMakeFaceBtn.setOnClickListener(new View.OnClickListener() {
-                                                       @Override
-                                                       public void onClick(View v) {
-                                                           showProcessingDialog();
-                                                           handler.sendEmptyMessageDelayed(1, 1000);
-                                                       }
-                                                   }
-        );
-
 
         //relayout
         View faceTitleBar = findViewById(R.id.face_title_bar);
@@ -409,12 +398,20 @@ public class CameraActivity extends HSAppCompatActivity {
         galleryPara2.width = galleryPara2.height * gallery2.getBackground().getIntrinsicWidth() / gallery2.getBackground().getIntrinsicHeight();
         gallery2.setLayoutParams(galleryPara2);
 
-        View choosePic = findViewById(R.id.confirm_make_face);
-        LinearLayout.LayoutParams choosePicPram = (LinearLayout.LayoutParams) choosePic.getLayoutParams();
+        confirmMakeFaceBtn = findViewById(R.id.confirm_make_face);
+        LinearLayout.LayoutParams choosePicPram = (LinearLayout.LayoutParams) confirmMakeFaceBtn.getLayoutParams();
         choosePicPram.height = captureBtnHeight;
         choosePicPram.width = captureBtnHeight;
-        choosePic.setLayoutParams(choosePicPram);
-        choosePic.setBackgroundDrawable(com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getCompatCircleRippleDrawable(getResources().getColor(R.color.colorPrimary), 0));
+        confirmMakeFaceBtn.setLayoutParams(choosePicPram);
+        confirmMakeFaceBtn.setBackgroundDrawable(com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getCompatCircleRippleDrawable(getResources().getColor(R.color.colorPrimary), 0));
+        confirmMakeFaceBtn.setOnClickListener(new View.OnClickListener() {
+                                                  @Override
+                                                  public void onClick(View v) {
+                                                      showProcessingDialog();
+                                                      handler.sendEmptyMessageDelayed(1, 1000);
+                                                  }
+                                              }
+        );
 
         initFaceListView();
 
