@@ -40,13 +40,14 @@
 
     <ImageView
         android:id="@+id/iv_close_image"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:padding="6dp"
         android:src="@drawable/btn_close" />
 </android.support.percent.PercentRelativeLayout>
