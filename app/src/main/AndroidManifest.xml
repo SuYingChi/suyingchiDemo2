@@ -3,9 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ihs.inputmethod.uimodules">
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
     <uses-sdk tools:overrideLibrary="com.facebook,com.facebook.shimmer,android.support.customtabs,com.facebook.ads,com.google.android.gms,com.mopub.mobileads.banner,com.mopub.mobileads.base,com.mopub.mobileads.native_static" />
 
-    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
 
     <!-- permission add same with kika.2017.4.26 liuyu -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -47,9 +56,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".ui.customize.CustomizeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop" />
+        <activity
+            android:name=".ui.customize.CustomizeActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.customize.WallpaperPreviewActivity"
@@ -79,8 +89,9 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <activity android:name=".ui.customize.InCallThemePreviewActivity"
-            android:theme="@style/CPSettingsActivityTheme"/>
+        <activity
+            android:name=".ui.customize.InCallThemePreviewActivity"
+            android:theme="@style/CPSettingsActivityTheme" />
 
 
         <!-- 给applovin配置sdk key，注意，master keyboard需要另外的key -->
@@ -100,8 +111,7 @@
         <service
             android:name=".ui.customize.service.CustomizeService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"></service>
 
         <service
             android:name="com.ihs.devicemonitor.accessibility.HSAccessibilityService"
