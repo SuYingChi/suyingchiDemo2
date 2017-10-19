@@ -460,6 +460,7 @@ public class FacemojiManager {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSInputMethod.hideWindow();
                 Intent i = new Intent(HSApplication.getContext(), FaceListActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
