@@ -89,6 +89,12 @@ public class CustomUIRateAlertUtils {
         }
     }
 
+    private static void onDismissClick(DialogInterface dialog) {
+        if (actionListenerList != null && !actionListenerList.isEmpty()) {
+            actionListenerList.get(1).onClick(dialog, 1);
+        }
+    }
+
     private static void showRateAlert(Activity activity,String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {
         updateRateAlertInfo(s1, s2, list1, list2);
 
@@ -127,12 +133,30 @@ public class CustomUIRateAlertUtils {
                 break;
             case RATE_ALERT_TYPE_ONE:
                 dialog = new CustomUIRateOneAlert(activity);
+                dialog.setDismissListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onDismissClick(dialog);
+                    }
+                });
                 break;
             case RATE_ALERT_TYPE_TWO:
                 dialog = new CustomUIRateTwoAlert(activity);
+                dialog.setDismissListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onDismissClick(dialog);
+                    }
+                });
                 break;
             case RATE_ALERT_TYPE_THREE:
                 dialog = new CustomUIRateThreeAlert(activity);
+                dialog.setDismissListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onDismissClick(dialog);
+                    }
+                });
                 break;
             default:
                 dialog = new CustomUIRateAlert(activity);
