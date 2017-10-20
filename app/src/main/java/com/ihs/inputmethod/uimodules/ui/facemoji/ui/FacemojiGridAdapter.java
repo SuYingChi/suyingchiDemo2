@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.Telephony;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,7 +29,6 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
@@ -50,6 +50,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     private Dialog dialog;
     private int stickerDimension;
     private FacemojiAnimationView stickerPlayer;
+    private ShareAdapter shareAdapter;
 
     private ProgressBar mProgressBar;
     private ProgressListener mShareProgressListener = new ProgressListener() {
@@ -156,40 +157,46 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
 
     private void showShareAlert(FacemojiSticker sticker) {
         if (dialog == null) {
-            initShareAlert(sticker);
-        }else {
+            initShareAlert();
+        } else {
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
         }
         stickerPlayer.setSticker(sticker);
+        shareAdapter.setSticker(sticker);
         mProgressBar.setVisibility(View.GONE);
         dialog.setCancelable(true);
         dialog.show();
     }
 
-    private void initShareAlert(FacemojiSticker sticker) {
+    private void initShareAlert() {
         dialog = new Dialog(HSApplication.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.share_alert);
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        WindowManager.LayoutParams param = new WindowManager.LayoutParams();
+        param.copyFrom(dialog.getWindow().getAttributes());
         WindowManager wm = (WindowManager) HSApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
 
+        param.width = (int) (size.x * 0.85);
+        dialog.getWindow().setAttributes(param);
+
         stickerPlayer = (FacemojiAnimationView) dialog.findViewById(R.id.share_sticker_preview);
         LinearLayout.LayoutParams playerParam = (LinearLayout.LayoutParams) stickerPlayer.getLayoutParams();
         playerParam.height = (int) (size.y * 0.57 * 0.5);
-        playerParam.width = (int) (playerParam.height * (float)sticker.getWidth() / sticker.getHeight());
         stickerPlayer.setLayoutParams(playerParam);
-        stickerPlayer.setScaleType(ImageView.ScaleType.FIT_XY);
+        stickerPlayer.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         RecyclerView shareRecyclerView = (RecyclerView) dialog.findViewById(R.id.share_apps_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HSApplication.getContext(), 4);
+        shareRecyclerView.addItemDecoration(new SpacesItemDecoration(HSApplication.getContext().getResources().getDimension(R.dimen.facemoji_share_alert_share_app_recycler_horizontal_space), HSApplication.getContext().getResources().getDimension(R.dimen.facemoji_share_alert_share_app_recycler_vertical_space)));
         shareRecyclerView.setLayoutManager(gridLayoutManager);
 
-        ShareAdapter shareAdapter = new ShareAdapter(sticker,getSharedAppsList());
+        shareAdapter = new ShareAdapter(getSharedAppsList());
         shareRecyclerView.setAdapter(shareAdapter);
 
         LinearLayout closeBtn = (LinearLayout) dialog.findViewById(R.id.back_button_holder);
@@ -205,7 +212,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         dialog.setCancelable(true);
     }
 
-    private List<ShareChannel> getSharedAppsList(){
+    private List<ShareChannel> getSharedAppsList() {
         List<ShareChannel> shareChannelList = new ArrayList<>();
 
         if (HSInstallationUtils.isAppInstalled(ShareChannel.MESSAGE.getPackageName()) || (getMmsPackages().length > 0)) {
@@ -236,18 +243,51 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         return shareChannelList;
     }
 
+    private class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private float verticalSpace;
+        private float horizontalSpace;
 
-    private class ShareAdapter extends RecyclerView.Adapter<ShareAdapter.ShareViewHolder>{
-        FacemojiSticker sticker;
-        List<ShareChannel> sharedAppsList;
-        public ShareAdapter(FacemojiSticker sticker, List<ShareChannel> sharedAppsList) {
-            this.sticker = sticker;
-            this.sharedAppsList = sharedAppsList;
+        public SpacesItemDecoration(float verticalSpace, float horizontalSpace) {
+            this.verticalSpace = verticalSpace;
+            this.horizontalSpace = horizontalSpace;
         }
 
         @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+
+            int position = parent.getChildLayoutPosition(view);
+
+            int left = (position == 0 ? 0 : (int) (horizontalSpace / 2));
+            int right = ((position == parent.getChildCount() - 1) ? 0 : (int) (horizontalSpace / 2));
+            int top = (int) (verticalSpace / 2);
+            int bottom = top;
+
+            outRect.left = left;
+            outRect.right = right;
+            outRect.top = top;
+            outRect.bottom = bottom;
+        }
+    }
+
+
+    private class ShareAdapter extends RecyclerView.Adapter<ShareAdapter.ShareViewHolder> {
+        FacemojiSticker sticker;
+        List<ShareChannel> sharedAppsList;
+
+        public ShareAdapter(List<ShareChannel> sharedAppsList) {
+            this.sharedAppsList = sharedAppsList;
+        }
+
+
+        public void setSticker(FacemojiSticker sticker) {
+            this.sticker = sticker;
+        }
+
+
+        @Override
         public ShareAdapter.ShareViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ShareViewHolder(View.inflate(parent.getContext(),R.layout.facemoji_share_app_item,null));
+            return new ShareViewHolder(View.inflate(parent.getContext(), R.layout.facemoji_share_app_item, null));
         }
 
         @Override
@@ -268,9 +308,10 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             return sharedAppsList.size();
         }
 
-        public  class ShareViewHolder extends RecyclerView.ViewHolder{
+        public class ShareViewHolder extends RecyclerView.ViewHolder {
             ImageView shareAppIcon;
             TextView shareAppName;
+
             public ShareViewHolder(View itemView) {
                 super(itemView);
                 shareAppIcon = (ImageView) itemView.findViewById(R.id.share_app_icon);
@@ -291,7 +332,6 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
      * @return
      */
     private String[] getMmsPackages() {
-        HSLog.d("AAAAA getMmsPackages");
         List<String> packages = new ArrayList<>();
         PackageManager packageManager = HSApplication.getContext().getPackageManager();
 
@@ -309,7 +349,6 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
                 continue;
             }
             if (!packages.contains(activityInfo.packageName)) {
-                HSLog.d("AAAAA available mms packageName :" + activityInfo.packageName);
                 packages.add(activityInfo.packageName);
             }
         }
@@ -324,7 +363,6 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
      * @return
      */
     private String[] getEmailPackages() {
-        HSLog.d("AAAAA getEmailPackages");
         List<String> packages = new ArrayList<>();
 
         Uri uri = Uri.parse("mailto:" + "test@qq.com");
@@ -335,7 +373,6 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         for (ResolveInfo resolveInfo : resolveInfos) {
             final ActivityInfo activityInfo = resolveInfo.activityInfo;
             if (!packages.contains(activityInfo.packageName)) {
-                HSLog.d("AAAAA available email packageName :" + activityInfo.packageName);
                 packages.add(activityInfo.packageName);
             }
         }

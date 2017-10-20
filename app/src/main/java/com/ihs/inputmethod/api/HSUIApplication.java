@@ -47,7 +47,9 @@ import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
@@ -219,6 +221,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         });
         HSKeyboardThemeManager.init();
         StickerDataManager.getInstance();
+        MediaController.setHandler(UIController.getInstance().getUIHandler());
         ThemeDirManager.moveCustomAssetsToFileIfNecessary();
 
         CustomUIRateAlertUtils.initialize();

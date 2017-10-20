@@ -7,7 +7,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
-import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.panelcontainer.BasePanel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -41,7 +40,6 @@ public class HSFacemojiPanel extends BasePanel{
                 return HSFileUtils.getFileName(FacemojiManager.getCurrentFacePicUri());
             }
         });
-        MediaController.setHandler(UIController.getInstance().getUIHandler());
 
         panelView.onPanelShow();
     }

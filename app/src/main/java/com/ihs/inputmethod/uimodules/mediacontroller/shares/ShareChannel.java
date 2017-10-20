@@ -14,7 +14,7 @@ public enum ShareChannel {
     MESSENGER("Messenger", "com.facebook.orca",R.drawable.share_icon_messenger),
     WHATSAPP("Whatsapp", "com.whatsapp",R.drawable.share_icon_whatsapp),
     TWITTER("Twitter", "com.twitter.android",R.drawable.share_icon_twitter),
-    MORE("More", "",R.drawable.share_icon_facebook),
+    MORE("More", "",R.mipmap.ic_launcher),
     CURRENT("", "current",0);
 
     private String appName;

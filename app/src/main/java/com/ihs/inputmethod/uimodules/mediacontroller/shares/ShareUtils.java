@@ -67,11 +67,7 @@ public class ShareUtils {
         if (shareMode != null) {
             return shareMode;
         }
-        // default supported apps
-        if (isSupportedPackageName(packageName)) {
-            return new Pair(HSPictureUtils.IMAGE_SHARE_MODE_INTENT, IMAGE_SHARE_FORMAT_GIF);
-        }
-        return new Pair(HSPictureUtils.IMAGE_SHARE_MODE_LINK, IMAGE_SHARE_FORMAT_LINK);
+        return new Pair(HSPictureUtils.IMAGE_SHARE_MODE_INTENT, IMAGE_SHARE_FORMAT_GIF);
     }
 
     /**

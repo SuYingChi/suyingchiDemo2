@@ -888,7 +888,7 @@ public class CameraActivity extends HSAppCompatActivity {
 
         GPUImage gpuImage = new GPUImage(CameraActivity.this);
         MagicBeautyFilter magicBeautyFilter = new MagicBeautyFilter(CameraActivity.this);
-        magicBeautyFilter.setBeautyLevel(3);
+        magicBeautyFilter.setBeautyLevel(4);
         gpuImage.setFilter(magicBeautyFilter);
         srcBitmap = bitmap;
         beautyBitmap = gpuImage.getBitmapWithFilterApplied(srcBitmap);
