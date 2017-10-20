@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,7 +28,10 @@ public class StickerSamllCreateFacemojiAdapterDelegate extends AdapterDelegate<L
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
         RecyclerView.ViewHolder viewHolder = new RecyclerView.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_small_create_facemoji, parent, false)) {
         };
-        viewHolder.itemView.getLayoutParams().height = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels / 3;
+        Resources res = HSApplication.getContext().getResources();
+        ViewGroup.LayoutParams layoutParams = viewHolder.itemView.getLayoutParams();
+        int width = (int) ((res.getDisplayMetrics().widthPixels - res.getDimension(R.dimen.theme_card_recycler_view_padding_left) - res.getDimension(R.dimen.theme_card_recycler_view_padding_right) ) / 3 - res.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
+        layoutParams.height = layoutParams.width = width;
         return viewHolder;
     }
 

@@ -104,8 +104,10 @@ public class StickerHomeFragment extends Fragment {
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
                                     int position = stickerModelList.indexOf(stickerHomeModel);
-                                    stickerModelList.remove(position);
-                                    stickerCardAdapter.notifyItemRemoved(position);
+                                    if (position > 0 && position < stickerModelList.size()) {
+                                        stickerModelList.remove(position);
+                                        stickerCardAdapter.notifyItemRemoved(position);
+                                    }
                                 }
                             }
 
