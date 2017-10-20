@@ -20,7 +20,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
@@ -69,18 +68,14 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 
         themeCardViewHolder.themeRealImage.setImageDrawable(null);
 
-
-
         final HSKeyboardTheme keyboardTheme = items.get(position).keyboardTheme;
         holder.itemView.setTag(keyboardTheme.mThemeName);
         themeCardViewHolder.themeDelete.setVisibility(View.GONE);
         // show animated mark and new mark judgement
         boolean isShowAnimatedMark;
-        if (keyboardTheme.getThemeData() == null || keyboardTheme.getThemeData().get("showAnimatedMark") == null) {
-            isShowAnimatedMark = false;
-        } else {
-            isShowAnimatedMark = (boolean) keyboardTheme.getThemeData().get("showAnimatedMark");
-        }
+        isShowAnimatedMark = !(keyboardTheme.getThemeData() == null || keyboardTheme.getThemeData().get("showAnimatedMark") == null)
+                && (boolean) keyboardTheme.getThemeData().get("showAnimatedMark");
+
         if (isShowAnimatedMark) {
             themeCardViewHolder.themeAnimatedImage.setVisibility(View.VISIBLE);
             themeCardViewHolder.themeNewImage.setVisibility(View.GONE);

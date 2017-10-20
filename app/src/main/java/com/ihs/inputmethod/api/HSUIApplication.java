@@ -92,9 +92,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(intent.getAction())) {
-                Intent configChangedIntent = new Intent(HSNotificationConstant.HS_CONFIG_CHANGED);
-                configChangedIntent.setPackage(HSApplication.getContext().getPackageName());
-                HSUIApplication.this.sendBroadcast(configChangedIntent, HSNotificationConstant.getSecurityPermission(HSApplication.getContext()));
                 recordInstallType();
             }
         }
