@@ -136,6 +136,9 @@
     <dimen name="facemoji_grid_item_vertical_space">4dp</dimen>
     <dimen name="facemoji_grid_left_margin">4dp</dimen>
 
+    <dimen name="facemoji_keyboard_grid_horizontal_space">2dp</dimen>
+    <dimen name="facemoji_keyboard_grid_vertical_space">4dp</dimen>
+
     <dimen name="common_card_view_max_elevation">2dp</dimen>
     <dimen name="custom_theme_background_item_corners_radius">3dp</dimen>
     <dimen name="custom_theme_item_margin">4dp</dimen>
