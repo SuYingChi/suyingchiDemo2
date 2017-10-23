@@ -239,7 +239,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
             if (!item.hasLocalContent()
                     && ((HSConfigUtils.toBoolean(item.getConfigData().get("rateToUnlock"), false)
-                    && !ApkUtils.isRateButtonClicked())
+                    && ApkUtils.shouldShowRateAlert())
                     || (HSConfigUtils.toBoolean(item.getConfigData().get("shareToUnlock"), false)
                     && ApkUtils.isInstagramInstalled() && !ApkUtils.isSharedKeyboardOnInstagramBefore()))) {
                 holder.mGiftIconImageView.setVisibility(View.VISIBLE);

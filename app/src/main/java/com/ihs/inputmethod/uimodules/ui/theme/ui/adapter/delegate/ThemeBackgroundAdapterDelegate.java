@@ -292,7 +292,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundNewMark.setVisibility(GONE);
                             if (!customThemeItemBase.hasLocalContent()
                                     && ((HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
-                                    && !ApkUtils.isRateButtonClicked())
+                                    && ApkUtils.shouldShowRateAlert())
                                     || (HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled() && !ApkUtils.isSharedKeyboardOnInstagramBefore()))) {
                                 holder.backgroundGiftIcon.setVisibility(View.VISIBLE);

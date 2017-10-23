@@ -261,6 +261,10 @@ public class ApkUtils {
         return HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).getBoolean(PREF_KEY_RATE_BUTTON_CLICKED, false);
     }
 
+    public static boolean shouldShowRateAlert() {
+        return !(KCFeatureRestrictionConfig.isFeatureRestricted("RateToUnlock") || isRateButtonClicked());
+    }
+
     public static boolean isSharedKeyboardOnInstagramBefore() {
         return HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).getBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, false);
     }
@@ -371,7 +375,7 @@ public class ApkUtils {
 
     @SuppressLint("InflateParams")
     public static boolean showCustomRateAlert(final View.OnClickListener rateButtonClickListener) {
-        if (KCFeatureRestrictionConfig.isFeatureRestricted("RateToUnlock") || isRateButtonClicked()) {
+        if (!shouldShowRateAlert()) {
             return false;
         }
         String preferredLanguageString = Locale.getDefault().getLanguage();
