@@ -149,14 +149,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                         closeFullScreenAd.show();
                     }
                 }
-                HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "keyboard", null, null, null);
             } else {
-                if (isInRightAppForBackAd()) {
-                    HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "normal", null, null, null);
-                } else {
-                    HSAnalytics.logGoogleAnalyticsEvent("app", "Trigger", "Spring_Trigger", "restricted", null, null, null);
-                }
-
                 boolean adShown = showBackAdIfNeeded();
                 if (adShown) {
                     lastBackAdShownTime = System.currentTimeMillis();
