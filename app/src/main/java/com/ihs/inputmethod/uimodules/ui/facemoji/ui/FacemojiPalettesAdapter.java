@@ -70,6 +70,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         }
         mActivePageViews.remove(position);
         final GridViewWithHeaderAndFooter stickerPageGridView = new GridViewWithHeaderAndFooter(HSApplication.getContext());
+        stickerPageGridView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setGridViewLayoutProperties(stickerPageGridView);
         FacemojiGridAdapter adapter = new FacemojiGridAdapter(FacemojiManager.getInstance().getStickerList(facemojiType,position), stickerDimension);
         stickerPageGridView.setAdapter(adapter);

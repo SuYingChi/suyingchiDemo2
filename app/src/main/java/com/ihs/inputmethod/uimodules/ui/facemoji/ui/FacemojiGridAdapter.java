@@ -108,15 +108,22 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             }
             return convertView;
         }
+
         convertView = mInflater.inflate(R.layout.facemoji_view, null);
         final View containerLayout = convertView.findViewById(R.id.facemoji_cell_layout);
 
-        Resources resources = convertView.getResources();
-        int width = (int) ((resources.getDisplayMetrics().widthPixels - resources.getDimension(R.dimen.facemoji_grid_item_horizontal_space) - resources.getDimension(R.dimen.facemoji_grid_left_margin) * 2) / 2);
-        int height = (int) ((float) sticker.getHeight() / sticker.getWidth() * width);
+        if (sticker.getWidth() == sticker.getHeight()) { //方形的sticker，则尺寸用原来的
+            int height = (int) (parent.getMeasuredHeight() / 3.2f); //设置3.2，保证如果超过3行，则可以看到下面部分内容
+            int width = height;
+            containerLayout.setLayoutParams(new GridView.LayoutParams(width, height));
+        } else {
+            Resources resources = convertView.getResources();
+            int width = (int) ((resources.getDisplayMetrics().widthPixels - resources.getDimension(R.dimen.facemoji_grid_item_horizontal_space) - resources.getDimension(R.dimen.facemoji_grid_left_margin) * 2) / 2);
+            int height = (int) ((float) sticker.getHeight() / sticker.getWidth() * width);
 
-        GridView.LayoutParams layoutParams = new GridView.LayoutParams(width, height);
-        containerLayout.setLayoutParams(layoutParams);
+            GridView.LayoutParams layoutParams = new GridView.LayoutParams(width, height);
+            containerLayout.setLayoutParams(layoutParams);
+        }
 
         final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
         facemojiView.setSticker(sticker);
