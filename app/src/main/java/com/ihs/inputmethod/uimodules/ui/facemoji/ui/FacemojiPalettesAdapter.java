@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji.ui;
 
+import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.util.SparseArray;
@@ -22,15 +23,16 @@ class FacemojiPalettesAdapter extends PagerAdapter {
 
     private FacemojiManager.FacemojiType facemojiType = FacemojiManager.FacemojiType.CLASSIC;
 
+    private Activity activity;
 
     private SparseArray<GridView> mActivePageViews = new SparseArray<>();
-    private int stickerDimension;
     private int pagerHeight;
 
     private int mActivePosition = 0;
     private MyFacemojiActivity.PagerCallback callback;
 
-    public FacemojiPalettesAdapter(int pagerHeight, MyFacemojiActivity.PagerCallback callback) {
+    public FacemojiPalettesAdapter(Activity activity, int pagerHeight, MyFacemojiActivity.PagerCallback callback) {
+        this.activity = activity;
         this.callback = callback;
         this.pagerHeight = pagerHeight;
     }
@@ -72,7 +74,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         final GridViewWithHeaderAndFooter stickerPageGridView = new GridViewWithHeaderAndFooter(HSApplication.getContext());
         stickerPageGridView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setGridViewLayoutProperties(stickerPageGridView);
-        FacemojiGridAdapter adapter = new FacemojiGridAdapter(FacemojiManager.getInstance().getStickerList(facemojiType,position), stickerDimension);
+        FacemojiGridAdapter adapter = new FacemojiGridAdapter(activity,FacemojiManager.getInstance().getStickerList(facemojiType,position));
         stickerPageGridView.setAdapter(adapter);
         container.addView(stickerPageGridView);
         mActivePageViews.put(position, stickerPageGridView);
@@ -87,9 +89,9 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         stickerPageGridView.setHorizontalSpacing(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.facemoji_grid_item_horizontal_space));
         stickerPageGridView.setVerticalScrollBarEnabled(false);
 
-        stickerDimension = (int) ((float) (pagerHeight - gap * (GRID_ROW_NUMBER - 1)) / GRID_ROW_NUMBER);
-        int topPadding = (pagerHeight - stickerDimension*GRID_ROW_NUMBER- gap * (GRID_ROW_NUMBER - 1))/2-5;
-        ViewGroup.LayoutParams param = new ViewGroup.LayoutParams(topPadding,topPadding);
+        int dimension = (int) ((float) (pagerHeight - gap * (GRID_ROW_NUMBER - 1)) / GRID_ROW_NUMBER);
+        int topPadding = (pagerHeight - dimension * GRID_ROW_NUMBER - gap * (GRID_ROW_NUMBER - 1)) / 2 - 5;
+        ViewGroup.LayoutParams param = new ViewGroup.LayoutParams(topPadding, topPadding);
         View headerView = new View(HSApplication.getContext());
         headerView.setLayoutParams(param);
 

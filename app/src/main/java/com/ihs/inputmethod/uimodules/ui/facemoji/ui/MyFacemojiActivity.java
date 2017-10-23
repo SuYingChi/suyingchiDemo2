@@ -117,7 +117,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         TabWidget tabWidget = mTabHost.getTabWidget();
         tabWidget.setStripEnabled(false);
         mImagePager = (ViewPager) findViewById(R.id.facemoji_pager);
-        mFacemojiPalettesAdapter = new FacemojiPalettesAdapter(getGridViewHeight(), new PagerCallback() {
+        mFacemojiPalettesAdapter = new FacemojiPalettesAdapter(this,getGridViewHeight(), new PagerCallback() {
             @Override
             public int getCurrentPagerPosition() {
                 return mCurrentPagerPosition;

@@ -135,6 +135,7 @@
     <dimen name="facemoji_grid_item_horizontal_space">4dp</dimen>
     <dimen name="facemoji_grid_item_vertical_space">4dp</dimen>
     <dimen name="facemoji_grid_left_margin">4dp</dimen>
+    <dimen name="facemoji_indicator_height">11dp</dimen>
 
     <dimen name="facemoji_keyboard_grid_horizontal_space">8dp</dimen>
     <dimen name="facemoji_keyboard_grid_vertical_space">8dp</dimen>

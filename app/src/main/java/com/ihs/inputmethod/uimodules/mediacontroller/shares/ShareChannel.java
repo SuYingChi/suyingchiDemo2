@@ -15,7 +15,7 @@ public enum ShareChannel {
     WHATSAPP("Whatsapp", "com.whatsapp",R.drawable.share_icon_whatsapp),
     TWITTER("Twitter", "com.twitter.android",R.drawable.share_icon_twitter),
     INSTAGRAM("Instagram", "com.instagram.android",R.drawable.share_icon_instagram),
-    MORE("More", "",R.mipmap.ic_launcher),
+    MORE("More", "",R.drawable.ic_facemoji_share_app_more),
     CURRENT("", "current",0);
 
     private String appName;

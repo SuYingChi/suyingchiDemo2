@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji.ui;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +35,6 @@ import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareChannel;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
-import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 
 import java.util.ArrayList;
@@ -44,11 +44,10 @@ import java.util.List;
  * Created by dsapphire on 15/11/27.
  */
 public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickListener {
-
+    private Activity activity;
     private List<FacemojiSticker> mData;
     private LayoutInflater mInflater;
     private Dialog dialog;
-    private int stickerDimension;
     private FacemojiAnimationView stickerPlayer;
     private ShareAdapter shareAdapter;
 
@@ -68,9 +67,9 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
     };
 
-    public FacemojiGridAdapter(List<FacemojiSticker> dataList, int stickerDimension) {
+    public FacemojiGridAdapter(Activity activity, List<FacemojiSticker> dataList) {
+        this.activity = activity;
         this.mData = dataList;
-        this.stickerDimension = stickerDimension;
         this.mInflater = LayoutInflater.from(HSApplication.getContext());
     }
 
@@ -141,10 +140,6 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             return;
         }
 
-        if (FacemojiManager.isUsingTempFace()) {
-            return;
-        }
-
         final FacemojiSticker sticker = (FacemojiSticker) arg0.getTag();
         showShareAlert(sticker);
     }
@@ -178,10 +173,9 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     }
 
     private void initShareAlert() {
-        dialog = new Dialog(HSApplication.getContext());
+        dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.share_alert);
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         WindowManager.LayoutParams param = new WindowManager.LayoutParams();
         param.copyFrom(dialog.getWindow().getAttributes());
         WindowManager wm = (WindowManager) HSApplication.getContext().getSystemService(Context.WINDOW_SERVICE);

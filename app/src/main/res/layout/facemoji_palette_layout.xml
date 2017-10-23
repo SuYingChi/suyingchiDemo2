@@ -100,7 +100,7 @@
     <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiIndicatorView
         android:id="@+id/page_indicator"
         android:layout_width="match_parent"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
-        android:layout_height="5dp"/>
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:layout_height="@dimen/facemoji_indicator_height"/>
 </LinearLayout>

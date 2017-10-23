@@ -41,7 +41,7 @@ class FacemojiLayoutParams {
 
 
 
-		mEmojiPagerHeight = defaultKeyboardHeight;
+		mEmojiPagerHeight = defaultKeyboardHeight - HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.facemoji_indicator_height);;
 		//
 		mGridViewVerticalSpacing = 30;
 		mGridViewHorizontalSpacing = 30;

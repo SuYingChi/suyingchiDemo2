@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.emoticon;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -237,15 +240,39 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     }
 
     private ImageView getBtnImage(final String panelName) {
-        final StateListDrawable tabbarBtnDrawable = new StateListDrawable();
-        final Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_unselected");
-        final Drawable pressedDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_selected");
+        Drawable tabbarBtnDrawable;
+        if (PANEL_FACEEMOJI.equals(panelName)){
+            int resId = HSApplication.getContext().getResources().getIdentifier("ic_facemoji_panel_tab", "drawable", HSApplication.getContext().getPackageName());
+            Drawable drawable = VectorDrawableCompat.create(HSApplication.getContext().getResources(),resId,null);
+            DrawableCompat.setTintList(drawable, new ColorStateList(
+                    new int[][]
+                            {
+                                    new int[]{android.R.attr.state_focused},
+                                    new int[]{android.R.attr.state_pressed},
+                                    new int[]{android.R.attr.state_selected},
+                                    new int[]{}
+                            },
+                    new int[]
+                            {
+                                    Color.WHITE,
+                                    Color.WHITE,
+                                    Color.WHITE,
+                                    0x88ffffff,
+                            }
+            ));
+            tabbarBtnDrawable = drawable;
+        }else {
+            final StateListDrawable stateListDrawable = new StateListDrawable();
+            final Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_unselected");
+            final Drawable pressedDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_selected");
 
 
-        tabbarBtnDrawable.addState(new int[]{android.R.attr.state_focused}, pressedDrawable);
-        tabbarBtnDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedDrawable);
-        tabbarBtnDrawable.addState(new int[]{android.R.attr.state_selected}, pressedDrawable);
-        tabbarBtnDrawable.addState(new int[]{}, drawable);
+            stateListDrawable.addState(new int[]{android.R.attr.state_focused}, pressedDrawable);
+            stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedDrawable);
+            stateListDrawable.addState(new int[]{android.R.attr.state_selected}, pressedDrawable);
+            stateListDrawable.addState(new int[]{}, drawable);
+            tabbarBtnDrawable = stateListDrawable;
+        }
 
         ImageView tabbarBtn = new ImageView(HSApplication.getContext());
         tabbarBtn.setScaleType(ImageView.ScaleType.CENTER);
