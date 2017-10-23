@@ -8,30 +8,29 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
-        android:paddingTop="@dimen/facemoji_panel_tab_margin_top"
+        android:orientation="horizontal"
         android:paddingBottom="@dimen/facemoji_panel_tab_margin_top"
-        android:orientation="horizontal">
+        android:paddingTop="@dimen/facemoji_panel_tab_margin_top">
 
         <LinearLayout
-            android:layout_alignParentRight="true"
             android:id="@+id/switch_face"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="6dp"
-            android:paddingRight="8dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
+            android:layout_alignParentRight="true"
             android:background="@drawable/facemoji_switch_face_bg"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="2dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="8dp"
+            android:paddingTop="2dp">
 
             <ImageView
                 android:id="@+id/current_face_image"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                />
+                android:scaleType="fitCenter" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -43,8 +42,8 @@
         <TabHost
             android:id="@+id/facemoji_keyboard_category_tabhost"
             android:layout_width="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/switch_face">
 
             <HorizontalScrollView
@@ -79,7 +78,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiViewPager
             android:id="@+id/facemoji_keyboard_pager"
@@ -97,4 +97,10 @@
 
     </FrameLayout>
 
+    <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiIndicatorView
+        android:id="@+id/page_indicator"
+        android:layout_width="match_parent"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_height="5dp"/>
 </LinearLayout>

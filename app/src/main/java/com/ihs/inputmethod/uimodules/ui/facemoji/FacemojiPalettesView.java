@@ -23,6 +23,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
@@ -37,8 +38,9 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     private FacemojiManager.FacemojiType facemojiType = FacemojiManager.FacemojiType.CLASSIC;
     private TabHost mTabHost;
     private FacemojiViewPager mViewPager;
-    private ImageView currentFaceImage;
+    private FacemojiIndicatorView pageIndicatorView;
 
+    private ImageView currentFaceImage;
     private FacemojiLayoutParams mStickerLayoutParams;
     private FacemojiPalettesAdapter mStickerPalettesAdapter;
 
@@ -151,6 +153,8 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             mViewPager.setPersistentDrawingCache(PERSISTENT_NO_CACHE);
             mStickerLayoutParams.setPagerProperties(mViewPager);
 
+            pageIndicatorView = (FacemojiIndicatorView) panelView.findViewById(R.id.page_indicator);
+
             panelView.findViewById(R.id.switch_face).setOnClickListener(this);
 
             // Find share progress view
@@ -238,6 +242,8 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     }
 
     private void setCurrentCategoryId(int categoryId, boolean force) {
+        Pair<Integer, Integer> categoryIdAndPageIdFromPagePosition = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(facemojiType, mViewPager.getCurrentItem());
+        pageIndicatorView.updateIndicator(categoryIdAndPageIdFromPagePosition.second, FacemojiManager.getInstance().getCategoryPageSize(facemojiType, categoryIdAndPageIdFromPagePosition.first));
 
         int oldCategoryId = FacemojiManager.getInstance().getCurrentCategoryId();
         if (oldCategoryId == categoryId && !force) {
@@ -247,12 +253,15 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
         int newTabId = categoryId;
         final int newCategoryPageId = FacemojiManager.getInstance().getPageIdFromCategoryId(facemojiType, categoryId);
-        if (force || FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(facemojiType, mViewPager.getCurrentItem()).first != categoryId) {
+
+
+        if (force || categoryIdAndPageIdFromPagePosition.first != categoryId) {
             mViewPager.setCurrentItem(newCategoryPageId, false /* smoothScroll */);
         }
         if (force || mTabHost.getCurrentTab() != newTabId) {
             mTabHost.setCurrentTab(newTabId);
         }
+
     }
 
     @Override
