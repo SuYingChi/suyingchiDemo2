@@ -500,9 +500,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             }
 
                             if (!baseElement.hasLocalContent()
-                                    && HSConfigUtils.toBoolean(baseElement.getConfigData().get("rateToUnlock"), false)
-                                    && !ApkUtils.isRateButtonClicked()) {
-                                ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                    && HSConfigUtils.toBoolean(baseElement.getConfigData().get("rateToUnlock"), false)) {
+                                if (ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
@@ -520,8 +519,9 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                             }
                                         }, 1000);
                                     }
-                                });
-                                return true;
+                                })) {
+                                    return true;
+                                }
                             }
 
                             if (!baseElement.hasLocalContent()

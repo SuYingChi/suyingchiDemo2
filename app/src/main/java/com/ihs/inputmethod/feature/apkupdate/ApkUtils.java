@@ -32,6 +32,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.io.File;
 import java.util.Locale;
@@ -369,7 +370,10 @@ public class ApkUtils {
     }
 
     @SuppressLint("InflateParams")
-    public static void showCustomRateAlert(final View.OnClickListener rateButtonClickListener) {
+    public static boolean showCustomRateAlert(final View.OnClickListener rateButtonClickListener) {
+        if (KCFeatureRestrictionConfig.isFeatureRestricted("RateToUnlock") || isRateButtonClicked()) {
+            return false;
+        }
         String preferredLanguageString = Locale.getDefault().getLanguage();
         HSLog.d("showCustomRateAlert preferredLanguageString: " + preferredLanguageString);
 
@@ -415,6 +419,7 @@ public class ApkUtils {
         });
         alertDialog.show();
         HSAnalytics.logEvent("customizeTheme_rateToUnlock_show");
+        return true;
     }
 
     @SuppressWarnings({"deprecation"})

@@ -319,9 +319,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             }
 
                             if (!customThemeItemBase.hasLocalContent()
-                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
-                                    && !ApkUtils.isRateButtonClicked()) {
-                                ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)) {
+                                if (ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
@@ -339,8 +338,9 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                                         startCustomThemeActivity(bundle);
                                     }
-                                });
-                                return;
+                                })) {
+                                    return;
+                                }
                             }
 
                             if (!customThemeItemBase.hasLocalContent()
