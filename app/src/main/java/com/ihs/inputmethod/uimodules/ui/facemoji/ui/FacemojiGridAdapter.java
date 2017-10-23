@@ -231,6 +231,10 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             shareChannelList.add(ShareChannel.TWITTER);
         }
 
+        if (HSInstallationUtils.isAppInstalled(ShareChannel.INSTAGRAM.getPackageName())) {
+            shareChannelList.add(ShareChannel.INSTAGRAM);
+        }
+
         if (HSInstallationUtils.isAppInstalled(ShareChannel.FACEBOOK.getPackageName())) {
             shareChannelList.add(ShareChannel.FACEBOOK);
         }

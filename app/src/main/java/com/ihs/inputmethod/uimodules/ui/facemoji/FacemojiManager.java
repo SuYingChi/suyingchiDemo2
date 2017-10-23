@@ -63,14 +63,12 @@ public class FacemojiManager {
     private static final String MOJIME_DIRECTORY = "Mojime";
     private static final String PREF_CATEGORY_LAST_PAGE_ID = "sticker_category_last_page_id ";
     private static final String[] classicCategoryNames = {
-            "star",
             "dance",
+            "star",
             "person",
             "fruit"
     };
-    private static final String[] newCategoryNames = {
-            "star",
-            "fruit"};
+    private static final String[] newCategoryNames = {};
     private static int currentPageSize = FacemojiPalettesParam.SIZE;
     private static FacemojiManager instance;
     private static Uri currentFacePicUri;
