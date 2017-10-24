@@ -9,6 +9,11 @@ libCommons:
       TapjoySDKKey: "xngEmwWtQly0k_AqtdONawECiQlH0ihPQFWD0LYIPuBwFQqH1SU3JkosT66A"
       FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
       GoogleTrackId: "UA-64233211-2"
+  DiverseSession:
+    AppManageDiverseSession: true
+  ImageCache:
+    CacheSize: 0
+
   Market:
     DefaultMarket: "Google"
     Markets:
@@ -24,6 +29,7 @@ libCommons:
     SigKey: "1"
     HashKey: "x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!"
   AppId: "610"
+
 libFramework:
   Push:
     SenderID: "805407701758"

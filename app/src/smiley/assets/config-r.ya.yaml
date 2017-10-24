@@ -12,6 +12,8 @@ libCommons:
       GooglePercentage: 1000
   DiverseSession:
     AppManageDiverseSession: true
+  ImageCache:
+    CacheSize: 0
 
   Market:
     DefaultMarket: "Google"
