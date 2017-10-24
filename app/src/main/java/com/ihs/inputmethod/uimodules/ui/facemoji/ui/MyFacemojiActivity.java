@@ -257,7 +257,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     }
 
     private void addTab(TabHost host, int categoryId) {
-        String tabId = FacemojiManager.getInstance().getCategoryName(FacemojiManager.FacemojiType.CLASSIC,categoryId);
+        String tabId = FacemojiManager.getInstance().getCategoryName(categoryId);
         TabHost.TabSpec tspec = host.newTabSpec(tabId);
         tspec.setContent(R.id.facemoji_dummy);
         View v = LayoutInflater.from(this).inflate(R.layout.facemoji_tab_icon_app, null);

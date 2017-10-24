@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.facemoji;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -95,7 +94,7 @@ public class FacemojiIndicatorView extends FrameLayout {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            paint.setColor(isSelected() ? Color.WHITE : Color.GRAY);
+            paint.setColor(isSelected() ? 0x88c3c3c3 : 0x88888888);
             canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius, paint);
         }
     }

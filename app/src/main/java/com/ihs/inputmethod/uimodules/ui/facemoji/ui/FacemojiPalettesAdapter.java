@@ -21,14 +21,11 @@ class FacemojiPalettesAdapter extends PagerAdapter {
     private static final int GRID_COLUMN_NUMBER = 2;
     private static final int GRID_ROW_NUMBER = 3;
 
-    private FacemojiManager.FacemojiType facemojiType = FacemojiManager.FacemojiType.CLASSIC;
+    private int pagerHeight;
+    private int mActivePosition = 0;
+    private SparseArray<GridView> mActivePageViews = new SparseArray<>();
 
     private Activity activity;
-
-    private SparseArray<GridView> mActivePageViews = new SparseArray<>();
-    private int pagerHeight;
-
-    private int mActivePosition = 0;
     private MyFacemojiActivity.PagerCallback callback;
 
     public FacemojiPalettesAdapter(Activity activity, int pagerHeight, MyFacemojiActivity.PagerCallback callback) {
@@ -37,13 +34,9 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         this.pagerHeight = pagerHeight;
     }
 
-    public void setFacemojiType(FacemojiManager.FacemojiType facemojiType) {
-        this.facemojiType = facemojiType;
-    }
-
     @Override
     public int getCount() {
-        return FacemojiManager.getInstance().getCategories(facemojiType).size();
+        return FacemojiManager.getInstance().getCategories().size();
     }
 
     @Override
@@ -74,7 +67,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         final GridViewWithHeaderAndFooter stickerPageGridView = new GridViewWithHeaderAndFooter(HSApplication.getContext());
         stickerPageGridView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setGridViewLayoutProperties(stickerPageGridView);
-        FacemojiGridAdapter adapter = new FacemojiGridAdapter(activity,FacemojiManager.getInstance().getStickerList(facemojiType,position));
+        FacemojiGridAdapter adapter = new FacemojiGridAdapter(activity,FacemojiManager.getInstance().getStickerList(position));
         stickerPageGridView.setAdapter(adapter);
         container.addView(stickerPageGridView);
         mActivePageViews.put(position, stickerPageGridView);
