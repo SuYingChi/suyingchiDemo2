@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#1b9ce2</color>
-    <color name="colorPrimaryDark">#137db5</color>
-    <color name="colorAccent">#1b9ce2</color>
+    <color name="colorPrimary">#3a90fa</color>
+    <color name="colorPrimaryDark">#3176c5</color>
+    <color name="colorAccent">#3a90fa</color>
     <color name="home_create_keyboard_bg_normal">#f44336</color>
     <color name="home_create_keyboard_bg_pressed">#c3362b</color>
     <color name="home_create_keyboard_bg_pressed_ripple">#c3362b</color>

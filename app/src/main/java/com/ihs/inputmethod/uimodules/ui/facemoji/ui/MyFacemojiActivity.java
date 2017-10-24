@@ -170,13 +170,9 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         mSaveButtonHolder.setLayoutParams(saveHolderPara);
         mSaveButtonHolder.setOnClickListener(this);
 
-        if (FacemojiManager.isUsingTempFace()) {
-            switchToNewState();
-        } else {
-            if (null == FacemojiManager.getDefaultFacePicUri()) {
-                finish();
-                return;
-            }
+        if (!FacemojiManager.isUsingTempFace() && null == FacemojiManager.getDefaultFacePicUri()) {
+            finish();
+            return;
         }
     }
 

@@ -45,10 +45,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".ui.customize.CustomizeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop" />
-
         <activity
             android:name=".ui.customize.WallpaperPreviewActivity"
             android:launchMode="singleTask"
