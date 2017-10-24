@@ -506,6 +506,12 @@
 							<string>$0.99</string>
 						</dict>
 						<dict>
+							<key>name</key>
+							<string>Golden Wishes</string>
+							<key>shareToUnlock</key>
+							<true/>
+						</dict>
+						<dict>
 							<key>iapID</key>
 							<string>com.keyboard.colorkeyboard.pid.background.tier29</string>
 							<key>lockerImgUrl</key>
@@ -538,7 +544,7 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/custom_theme_lockerbg/fallingstars.jpg</string>
 							<key>name</key>
 							<string>Falling Stars</string>
-							<key>shareToUnlock</key>
+							<key>rateToUnlock</key>
 							<true/>
 						</dict>
 						<dict>
@@ -3117,10 +3123,11 @@
 				<key>RateToUnlock</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
+					<integer>0</integer>
 					<key>RegionException</key>
 					<array>
 						<string>CN</string>
+						<string>US</string>
 					</array>
 					<key>TimeZoneException</key>
 					<array/>
