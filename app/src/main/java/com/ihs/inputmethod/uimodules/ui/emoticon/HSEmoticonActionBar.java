@@ -104,14 +104,14 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         containerListener = null;
     }
 
-    public static void saveLastPanelName(String panelName){
+    public static void saveLastPanelName(String panelName) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
         sp.edit().putString("emoticon_last_show_panel_name", panelName).apply();
     }
 
-    public static String getLastPanelName(){
-        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
-        return sp.getString("emoticon_last_show_panel_name",PANEL_EMOJI);
+    public static String getLastPanelName() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
+        return sp.getString("emoticon_last_show_panel_name", PANEL_EMOJI);
     }
 
     @Override
@@ -241,9 +241,14 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
     private ImageView getBtnImage(final String panelName) {
         Drawable tabbarBtnDrawable;
-        if (PANEL_FACEEMOJI.equals(panelName)){
-            int resId = HSApplication.getContext().getResources().getIdentifier("ic_facemoji_panel_tab", "drawable", HSApplication.getContext().getPackageName());
-            Drawable drawable = VectorDrawableCompat.create(HSApplication.getContext().getResources(),resId,null);
+        if (PANEL_FACEEMOJI.equals(panelName)) {
+            Resources resources = HSApplication.getContext().getResources();
+            boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
+            int pressColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_selected_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_selected_color);
+            int normalColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_normal_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_normal_color);
+
+            int resId = resources.getIdentifier("ic_facemoji_panel_tab", "drawable", HSApplication.getContext().getPackageName());
+            Drawable drawable = VectorDrawableCompat.create(resources, resId, null);
             DrawableCompat.setTintList(drawable, new ColorStateList(
                     new int[][]
                             {
@@ -254,14 +259,14 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
                             },
                     new int[]
                             {
-                                    Color.WHITE,
-                                    Color.WHITE,
-                                    Color.WHITE,
-                                    0x88ffffff,
+                                    pressColor,
+                                    pressColor,
+                                    pressColor,
+                                    normalColor,
                             }
             ));
             tabbarBtnDrawable = drawable;
-        }else {
+        } else {
             final StateListDrawable stateListDrawable = new StateListDrawable();
             final Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_unselected");
             final Drawable pressedDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_selected");

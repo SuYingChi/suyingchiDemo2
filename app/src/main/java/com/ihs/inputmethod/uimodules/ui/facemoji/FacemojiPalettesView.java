@@ -18,11 +18,13 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
@@ -116,7 +118,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     public void onPanelShow() {
         if (FacemojiManager.getDefaultFacePicUri() == null) {
             removeAllViews();
-            initDefualtFacemojiPanel();
+            showCreateFacemojiView();
             mStickerPalettesAdapter = null;
             return;
         } else {
@@ -164,29 +166,35 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         }
     }
 
-    private void initDefualtFacemojiPanel() {
+    private void showCreateFacemojiView() {
         Resources res = HSApplication.getContext().getResources();
         int panelWidth = HSResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();
         int panelHeight = HSResourceUtils.getDefaultKeyboardHeight(res)
                 + res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)
                 - res.getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
-        RelativeLayout defaultView = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.facemoji_default_palette, null);
+        RelativeLayout createFacemojiView = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.facemoji_default_palette, null);
         LayoutParams param = new LayoutParams(panelWidth, panelHeight);
-        defaultView.setLayoutParams(param);
-        defaultView.setGravity(Gravity.CENTER);
-        Button facemojiEntrance = (Button) defaultView.findViewById(R.id.facemoji_button_keyboard);
+        createFacemojiView.setLayoutParams(param);
+        createFacemojiView.setGravity(Gravity.CENTER);
+        Button facemojiEntrance = (Button) createFacemojiView.findViewById(R.id.facemoji_button_keyboard);
 
-        ImageView image = (ImageView) defaultView.findViewById(R.id.face_arrow);
+        ImageView image = (ImageView) createFacemojiView.findViewById(R.id.face_arrow);
         RelativeLayout.LayoutParams imageParam = (RelativeLayout.LayoutParams) image.getLayoutParams();
         imageParam.width = (int) (panelWidth * 0.5);
         imageParam.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
         image.setLayoutParams(imageParam);
 
-        LinearLayout rightArea = (LinearLayout) defaultView.findViewById(R.id.right_area_layout);
+        LinearLayout rightArea = (LinearLayout) createFacemojiView.findViewById(R.id.right_area_layout);
         RelativeLayout.LayoutParams rightAreaLayoutParams = (RelativeLayout.LayoutParams) rightArea.getLayoutParams();
         rightAreaLayoutParams.width = (int) (panelWidth * 0.5);
         image.setLayoutParams(imageParam);
+
+        boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
+        int textColor = isCurrentThemeDarkBg ? Color.WHITE : HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_selected_color);
+
+        ((TextView)createFacemojiView.findViewById(R.id.facemoji_title)).setTextColor(textColor);
+        ((TextView)createFacemojiView.findViewById(R.id.facemoji_text)).setTextColor(textColor);
 
         facemojiEntrance.setOnClickListener(new OnClickListener() {
             @Override
@@ -194,7 +202,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
                 onClickFacemojiCreateButton();
             }
         });
-        addView(defaultView);
+        addView(createFacemojiView);
     }
 
     @Override
