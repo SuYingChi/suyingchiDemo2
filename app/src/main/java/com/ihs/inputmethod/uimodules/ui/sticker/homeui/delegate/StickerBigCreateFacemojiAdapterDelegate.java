@@ -32,20 +32,21 @@ public class StickerBigCreateFacemojiAdapterDelegate extends AdapterDelegate<Lis
         StickerBigCreateFacemojiViewHolder stickerBigCreateFacemojiViewHolder = new StickerBigCreateFacemojiViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_big_create_facemoji, parent, false));
 
         int width = parent.getResources().getDisplayMetrics().widthPixels;
+        int halfWidth = width / 2;
         int height = (int) (width / 2 * 0.8);
 
         //整个图片占据空间屏幕宽的一半，让其左右边距是屏幕宽一半的10%，控件大小为屏幕宽的一半的80%
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.faceImage.getLayoutParams();
-        layoutParams.leftMargin = (int) (width * 0.05);
-        layoutParams.rightMargin = (int) (width * 0.05);
-        layoutParams.width = (int) (width * 0.4);
+        layoutParams.leftMargin = (int) (halfWidth * 0.1);
+//        layoutParams.rightMargin = (int) (halfWidth * 0.1);
+        layoutParams.width = (int) (halfWidth * 0.8);
         layoutParams.height = layoutParams.width;
 
         layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.tipText.getLayoutParams();
-        layoutParams.topMargin = (int) (height * 0.2);
+        layoutParams.topMargin = (int) (height * 0.15);
 
         layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.createBtn.getLayoutParams();
-        layoutParams.bottomMargin = (int) (height * 0.2);
+        layoutParams.bottomMargin = (int) (height * 0.15);
 
         stickerBigCreateFacemojiViewHolder.createBtn.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xffffe011,HSApplication.getContext().getResources().getDimension(R.dimen.corner_radius)));
 
