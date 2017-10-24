@@ -6,6 +6,8 @@
     android:gravity="center">
 
     <FrameLayout
+        android:layout_centerHorizontal="true"
+        android:id="@+id/preview_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#10000000">

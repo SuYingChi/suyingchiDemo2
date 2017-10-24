@@ -91,9 +91,6 @@ public class CameraActivity extends HSAppCompatActivity {
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = SAMPLE_SIZE;
-
             Bitmap src = BitmapFactory.decodeByteArray(data, 0, data.length);
             Bitmap des;
             Matrix matrix = new Matrix();
@@ -109,6 +106,7 @@ public class CameraActivity extends HSAppCompatActivity {
                 matrix.reset();
                 matrix.setRotate(getPreviewDegree(), modifiedBitmap.getWidth() / 2, modifiedBitmap.getHeight() / 2);
                 des = Bitmap.createBitmap(modifiedBitmap, 0, 0, modifiedBitmap.getWidth(), modifiedBitmap.getHeight(), matrix, true);
+
                 modifiedBitmap.recycle();
             } else {
                 //back camera  rotate picture
@@ -129,8 +127,8 @@ public class CameraActivity extends HSAppCompatActivity {
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             camera.startPreview();
             final Camera.Parameters parameters = camera.getParameters();
-            final FrameLayout.LayoutParams surfaceViewLayoutParams = (FrameLayout.LayoutParams) surfaceView.getLayoutParams();
-            Camera.Size size = getOptimalCameraSize(parameters.getSupportedPictureSizes(), surfaceViewLayoutParams.width, surfaceViewLayoutParams.height);
+            final ViewGroup.LayoutParams previewContainerLayoutParams =  previewContainer.getLayoutParams();
+            Camera.Size size = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
             parameters.setPictureSize(size.width, size.height);
             camera.setParameters(parameters);
         }
@@ -294,6 +292,7 @@ public class CameraActivity extends HSAppCompatActivity {
     private Camera camera;
     private SurfaceView surfaceView;
     private ImageView photoView;
+    private FrameLayout previewContainer;
     private int currentCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
     private Dialog mCreatingDialog;
     private GifImageView mCreatingView;
@@ -323,6 +322,8 @@ public class CameraActivity extends HSAppCompatActivity {
 
         photoView = (ImageView) findViewById(R.id.photo_view);
         photoView.setVisibility(View.INVISIBLE);
+
+        previewContainer = (FrameLayout) findViewById(R.id.preview_container);
 
         //relayout
         View faceTitleBar = findViewById(R.id.face_title_bar);
@@ -462,9 +463,9 @@ public class CameraActivity extends HSAppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (isSynthesisingImage){
+        if (isSynthesisingImage) {
             backToCaptureStatus();
-        }else {
+        } else {
             releaseCamera();
             super.onBackPressed();
         }
@@ -625,13 +626,14 @@ public class CameraActivity extends HSAppCompatActivity {
 
         camera = Camera.open(cameraId); // 打开摄像头
         final Camera.Parameters parameters = camera.getParameters();
-        final FrameLayout.LayoutParams surfaceViewLayoutParams = (FrameLayout.LayoutParams) surfaceView.getLayoutParams();
+        final ViewGroup.LayoutParams previewContainerLayoutParams = previewContainer.getLayoutParams();
 
-        surfaceViewLayoutParams.width = DisplayUtils.getScreenWidthForContent();
-        surfaceViewLayoutParams.height = parameters.getPreviewSize().width * surfaceViewLayoutParams.width / parameters.getPreviewSize().height;
-        surfaceView.setLayoutParams(surfaceViewLayoutParams);
+        previewContainerLayoutParams.width = DisplayUtils.getScreenWidthForContent();
+        previewContainerLayoutParams.height = parameters.getPreviewSize().width * previewContainerLayoutParams.width / parameters.getPreviewSize().height;
 
-        Camera.Size pictureSize = getOptimalCameraSize(parameters.getSupportedPictureSizes(), surfaceViewLayoutParams.width, surfaceViewLayoutParams.height);
+        previewContainer.setLayoutParams(previewContainerLayoutParams);
+
+        Camera.Size pictureSize = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
         parameters.setPictureSize(pictureSize.width, pictureSize.height);
         camera.setParameters(parameters);
 
@@ -893,8 +895,11 @@ public class CameraActivity extends HSAppCompatActivity {
         srcBitmap = bitmap;
         beautyBitmap = gpuImage.getBitmapWithFilterApplied(srcBitmap);
 
-        photoView.setImageMatrix(new Matrix());
-        photoView.setImageBitmap(useBeautyNow?beautyBitmap:srcBitmap);
+        float scale = (float)previewContainer.getWidth()/ bitmap.getWidth();
+        Matrix matrix = new Matrix();
+        matrix.setScale(scale,scale);
+        photoView.setImageMatrix(matrix);
+        photoView.setImageBitmap(useBeautyNow ? beautyBitmap : srcBitmap);
 
         updateUIIfStatusChange();
     }
@@ -902,18 +907,18 @@ public class CameraActivity extends HSAppCompatActivity {
     private void updateUIIfStatusChange() {
         cameraLayout.setClickable(!isSynthesisingImage);
 
-        photoView.setVisibility(isSynthesisingImage?View.VISIBLE:View.GONE);
+        photoView.setVisibility(isSynthesisingImage ? View.VISIBLE : View.GONE);
 
         View synthesis = findViewById(R.id.synthesis_picture);
-        synthesis.setVisibility(isSynthesisingImage?View.VISIBLE:View.GONE);
+        synthesis.setVisibility(isSynthesisingImage ? View.VISIBLE : View.GONE);
 
         View switcherHolder = findViewById(R.id.switcher_holder);
-        switcherHolder.setVisibility(isSynthesisingImage?View.INVISIBLE:View.VISIBLE);
+        switcherHolder.setVisibility(isSynthesisingImage ? View.INVISIBLE : View.VISIBLE);
 
-        surfaceView.setVisibility(isSynthesisingImage?View.INVISIBLE:View.VISIBLE);
+        surfaceView.setVisibility(isSynthesisingImage ? View.INVISIBLE : View.VISIBLE);
     }
 
-    private void backToCaptureStatus(){
+    private void backToCaptureStatus() {
         isSynthesisingImage = false;
         updateUIIfStatusChange();
     }
@@ -985,6 +990,6 @@ public class CameraActivity extends HSAppCompatActivity {
     public void useBeauty(View v) {
         useBeautyNow = !useBeautyNow;
         v.setSelected(useBeautyNow);
-        photoView.setImageBitmap(useBeautyNow?beautyBitmap:srcBitmap);
+        photoView.setImageBitmap(useBeautyNow ? beautyBitmap : srcBitmap);
     }
 }

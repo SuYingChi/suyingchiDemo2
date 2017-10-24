@@ -33,7 +33,7 @@
     <string name="sticker_title_create_my_facemojis">Create My Facemojis</string>
     <string name="sticker_title_my_facemojis">My Facemojis</string>
     <string name="sticker_title_funny_stickers">Funny Stickers</string>
-    <string name="label_create_funny_facemoji">Make your own emoji \nwith your own face!</string>
+    <string name="label_create_funny_facemoji">Make cool emojis \nwith your own face!</string>
     <string name="label_try_now">TRY NOW</string>
     <string name="label_share">Share</string>
 </resources>
