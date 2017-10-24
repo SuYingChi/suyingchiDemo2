@@ -3,6 +3,6 @@
     <!-- In Call Theme -->
     <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
 
-    <string name="custom_share_alert_message">Share to instagram to unlock FREE item. Get a nice keyboard with RainbowKey.</string>
-    <string name="custom_share_alert_button_text">Unlock Free Item</string>
+    <string name="custom_share_alert_message">Wanna unlock this theme for FREE? Share RainbowKey on Instagram and @rainbowkeyapp to unlock it.</string>
+    <string name="custom_share_alert_button_text">Unlock for Free</string>
 </resources>
