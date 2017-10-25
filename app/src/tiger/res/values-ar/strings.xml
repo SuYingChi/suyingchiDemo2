@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feedback_email">feedback.emoji@hotmail.com</string>
+    <string name="fb_app_id">1474873346171463</string>
+
+    <string name="accessibility_service_description">حوّل مفتاح التبديل الموجود في أعلى اليمين إلى وضعية "مفعّل".  ↗️⊙.⊙↗️
+ستحصل على أفضل تجربة في استخدام لوحة المفاتيح عند السماح بأذونات الوصول!
+ملاحظة: قد تحصل على تذكير من النظام حول السماح ببعض الأذونات، لن يقوم Emoji Keyboard بجمع أي من معلوماتك أبداً.</string>
+
+    <string name="theme_share_text_content">لوحة مفاتيحي المفضلة قمت بإنشائها باستخدام #%1$s 👍 ：https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="theme_share_text_content_for_custom_theme">خصّص لوحة المفاتيح الخاصة بك مع صورك المفضلة! تنزيل #%1$s مجانًا: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="settings_button_tell_a_friend_content">مرحباً، عليك تجربة تطبيق لوحة المفاتيح %1$s. يمكنك ﭠﺧﺼﭕﺹ لوحة مفاتيحك بإضافة صورك الخاصة! واﻟﺧﻁ୨ﻁ والإيموجي رائعة. حمّل #%2$s مجاناً:  https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+</resources>

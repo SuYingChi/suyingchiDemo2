@@ -16,54 +16,54 @@
     <!--whitelist, some resource id you can not proguard, such as getIdentifier-->
     <!--isactive, whether to use whitelist, you can set false to close it simply-->
     <issue id="whitelist" isactive="true">
-        <!--you must write the full package name, such as com.masterkeyboard.emoji.R -->
+        <!--you must write the full package name, such as com.example.app.R -->
         <!--for some reason, we should keep our icon better-->
-        <!--and it support *, ?, such as com.masterkeyboard.emoji.R.drawable.emoji_?-->
+        <!--and it support *, ?, such as com.example.app.R.drawable.emoji_?-->
 
         <!--icon-->
-        <path value="com.masterkeyboard.emoji.R.drawable.ic_*" />
-        <path value="com.masterkeyboard.emoji.R.mipmap.ic_*" />
+        <path value="com.example.app.R.drawable.ic_*" />
+        <path value="com.example.app.R.mipmap.ic_*" />
 
         <!--getidentifier-->
-        <path value="com.masterkeyboard.emoji.R.array.emoji_*" />
-        <path value="com.masterkeyboard.emoji.R.array.text_*" />
-        <path value="com.masterkeyboard.emoji.R.drawable.settings_*" />
-        <path value="com.masterkeyboard.emoji.R.drawable.emoji_*" />
-        <path value="com.masterkeyboard.emoji.R.drawable.theme_*" />
-        <path value="com.masterkeyboard.emoji.R.drawable.menu_function" />
-        <path value="com.masterkeyboard.emoji.R.drawable.menu_back" />
-        <path value="com.masterkeyboard.emoji.R.drawable.menu_setting" />
-        <path value="com.masterkeyboard.emoji.R.drawable.nav_language_icon" />
-        <path value="com.masterkeyboard.emoji.R.drawable.keyboard_font_selected_tick" />
+        <path value="com.example.app.R.array.emoji_*" />
+        <path value="com.example.app.R.array.text_*" />
+        <path value="com.example.app.R.drawable.settings_*" />
+        <path value="com.example.app.R.drawable.emoji_*" />
+        <path value="com.example.app.R.drawable.theme_*" />
+        <path value="com.example.app.R.drawable.menu_function" />
+        <path value="com.example.app.R.drawable.menu_back" />
+        <path value="com.example.app.R.drawable.menu_setting" />
+        <path value="com.example.app.R.drawable.nav_language_icon" />
+        <path value="com.example.app.R.drawable.keyboard_font_selected_tick" />
         <!--getidentifier end-->
 
         <!--libkeyboard-->
         <!--getidentifier-->
-        <path value="com.masterkeyboard.emoji.R.raw.main" />
-        <path value="com.masterkeyboard.emoji.R.raw.main_*" />
-        <path value="com.masterkeyboard.emoji.R.drawable.tabbar_*" />
-        <path value="com.masterkeyboard.emoji.R.drawable.key_emoji_more" />
-        <path value="com.masterkeyboard.emoji.R.style.KeyboardTheme.COMMON" />
-        <path value="com.masterkeyboard.emoji.R.xml.keyboard_layout_set_*" />
-        <path value="com.masterkeyboard.emoji.R.string.label_*" />
-        <path value="com.masterkeyboard.emoji.R.string.subtype_generic_*" />
-        <path value="com.masterkeyboard.emoji.R.string.subtype_no_language_*" />
-        <path value="com.masterkeyboard.emoji.R.string.subtype_*" />
-        <path value="com.masterkeyboard.emoji.R.string.subtype_with_layout_*" />
-        <path value="com.masterkeyboard.emoji.R.anim.key_preview_*" />
+        <path value="com.example.app.R.raw.main" />
+        <path value="com.example.app.R.raw.main_*" />
+        <path value="com.example.app.R.drawable.tabbar_*" />
+        <path value="com.example.app.R.drawable.key_emoji_more" />
+        <path value="com.example.app.R.style.KeyboardTheme.COMMON" />
+        <path value="com.example.app.R.xml.keyboard_layout_set_*" />
+        <path value="com.example.app.R.string.label_*" />
+        <path value="com.example.app.R.string.subtype_generic_*" />
+        <path value="com.example.app.R.string.subtype_no_language_*" />
+        <path value="com.example.app.R.string.subtype_*" />
+        <path value="com.example.app.R.string.subtype_with_layout_*" />
+        <path value="com.example.app.R.anim.key_preview_*" />
         <!--getidentifier end-->
         <!--libkeyboard end-->
 
         <!--libkeyboardutils-->
         <!--getidentifier-->
-        <path value="com.masterkeyboard.emoji.R.id.ad_*" />
+        <path value="com.example.app.R.id.ad_*" />
         <!--getidentifier end-->
         <!--libkeyboardutils end-->
 
         <!--third party-->
-        <path value="com.masterkeyboard.emoji.R.string.com.crashlytics.*" />
-        <path value="com.masterkeyboard.emoji.R.string.com.facebook.*" />
-        <path value="com.masterkeyboard.emoji.R.string.facebook_app_id" />
+        <path value="com.example.app.R.string.com.crashlytics.*" />
+        <path value="com.example.app.R.string.com.facebook.*" />
+        <path value="com.example.app.R.string.facebook_app_id" />
     </issue>
 
     <!--keepmapping, sometimes if we need to support incremental upgrade, we should keep the old mapping-->
@@ -92,20 +92,6 @@
         <path value="res/drawable-xxxhdpi/*.jpg"/>
         <path value="res/drawable-xxxhdpi/*.gif"/>
         <path value="resources.arsc"/>
-    </issue>
-
-    <!--sign, if you want to sign the apk, and if you want to use 7zip, you must fill in the following data-->
-    <!--isactive, whether to use sign, you can set false to close it simply-->
-    <!--if you use -signature to set sign property in cammand line, these setting will be overlayed-->
-    <issue id="sign" isactive="true">
-        <!--the signature file path, in window use \, in linux use /, and the default path is the running location-->
-        <path value="../GlowDesign"/>
-        <!--storepass-->
-        <storepass value="zdhszyzs"/>
-        <!--keypass-->
-        <keypass value="zdhszyzs"/>
-        <!--alias-->
-        <alias value="glowdesign"/>
     </issue>
 
 </resproguard>

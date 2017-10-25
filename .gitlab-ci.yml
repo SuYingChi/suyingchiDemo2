@@ -12,6 +12,7 @@ build_job:
   - ./build_apk_color.sh
   - ./build_apk_master.sh
   - ./build_apk_smiley.sh
+  - ./build_apk_tiger.sh
   artifacts:
     paths:
     - app/build/outputs/apk/*.apk

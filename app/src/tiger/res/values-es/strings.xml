@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feedback_email">feedback.emoji@hotmail.com</string>
+    <string name="fb_app_id">1474873346171463</string>
+
+    <string name="accessibility_service_description">Activa el interruptor de la parte derecha. ↗️⊙.⊙↗️
+¡Con autorización de accesibilidad, disfrutarás de la mejor experiencia en diferentes aplicaciones!
+Nota: Puede que recibas un recordatorio del sistema sobre la autorización; Emoji Keyboard nunca recopilará ninguna información sobre ti.</string>
+
+    <string name="theme_share_text_content">Mi teclado personalizado creado con #%1$s https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="theme_share_text_content_for_custom_theme">Personaliza tu propio teclado con tus fotos favoritas! Descárgate #%1$s gratis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="settings_button_tell_a_friend_content">Tienes que probar el app de teclado %1$s. Puedes personalizar tu teclado con tus propias fotos! Además, las fuentes y  los emojis son geniales. Descárgate #%2$s gratis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+</resources>
