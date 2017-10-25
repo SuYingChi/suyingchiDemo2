@@ -47,19 +47,32 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/send_facemoji_tip"
-            android:layout_gravity="center_horizontal"
+        <LinearLayout
+            android:id="@+id/tip_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:drawableLeft="@drawable/ic_tick"
-            android:drawablePadding="8dp"
-            android:gravity="center_horizontal"
-            android:padding="5dp"
-            android:text="@string/my_facemoji_send_facemoji_tip"
-            android:textColor="@color/white" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_tick" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="8dp"
+                android:gravity="center_horizontal"
+                android:text="@string/my_facemoji_send_facemoji_tip"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/facemoji_pager"

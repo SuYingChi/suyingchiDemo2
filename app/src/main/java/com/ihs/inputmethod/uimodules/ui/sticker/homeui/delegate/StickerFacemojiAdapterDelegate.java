@@ -11,7 +11,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiAnimationView;
-import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiView;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.CommonStickerAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
@@ -59,12 +58,12 @@ public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<Sticker
     @Override
     protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        ((StickerFacemojiViewHolder) holder).facemojiView.startAnimation();
+        ((StickerFacemojiViewHolder) holder).facemojiAnimationView.start();
     }
 
     @Override
     protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
-        ((StickerFacemojiViewHolder) holder).facemojiView.stopAnimation();
+        ((StickerFacemojiViewHolder) holder).facemojiAnimationView.stop();
         super.onViewDetachedFromWindow(holder);
     }
 
@@ -75,12 +74,10 @@ public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<Sticker
 
 
     public final class StickerFacemojiViewHolder extends RecyclerView.ViewHolder {
-        FacemojiView facemojiView;
         FacemojiAnimationView facemojiAnimationView;
 
         public StickerFacemojiViewHolder(View itemView) {
             super(itemView);
-            facemojiView = (FacemojiView) itemView.findViewById(R.id.facemoji_layout);
             facemojiAnimationView = (FacemojiAnimationView) itemView.findViewById(R.id.sticker_player_view);
         }
     }

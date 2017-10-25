@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
-import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
@@ -94,12 +93,12 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             }
         });
 
-        TextView sendFacemojiTipView = (TextView) findViewById(R.id.send_facemoji_tip);
+        LinearLayout sendFacemojiTipView = (LinearLayout) findViewById(R.id.tip_layout);
 
         GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.RECTANGLE);
-        shape.setCornerRadius(getResources().getDimension(R.dimen.corner_radius));
-        shape.setColor(0x77888888);
+        shape.setCornerRadius(DisplayUtils.dip2px(HSApplication.getContext(),7));
+        shape.setColor(0x55888888);
         sendFacemojiTipView.setBackgroundDrawable(shape);
 
         mImagePager.setAdapter(mFacemojiPalettesAdapter);
