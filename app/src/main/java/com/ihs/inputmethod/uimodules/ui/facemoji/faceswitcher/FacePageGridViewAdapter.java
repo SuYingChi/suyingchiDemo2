@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +14,10 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.BitmapAddBorderProcessor;
 import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class FacePageGridViewAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(HSApplication.getContext());
         faceLayoutParams = esLayoutParams;
         adapter = parentAdapter;
-        size =  Math.min(faceLayoutParams.getGridHeight(), faceLayoutParams.getGridWidth());
+        size = Math.min(faceLayoutParams.getGridHeight(), faceLayoutParams.getGridWidth());
     }
 
     @Override
@@ -64,7 +63,7 @@ public class FacePageGridViewAdapter extends BaseAdapter {
         if (convertView != null) {
             holder = (StickerViewHolder) convertView.getTag();
 
-            loadFaceImg(holder.faceImg, face);
+            loadFaceImg(holder.faceImg, holder.faceNowUsed, face);
             setItemClickListener(face, convertView);
             return convertView;
         }
@@ -72,40 +71,42 @@ public class FacePageGridViewAdapter extends BaseAdapter {
         final View containerLayout = convertView.findViewById(R.id.face_item_layout);
         containerLayout.setLayoutParams(new GridView.LayoutParams(size, size));
         final ImageView face_img = (ImageView) containerLayout.findViewById(R.id.face_item_img);
+        final ImageView faceNowUsed = (ImageView) containerLayout.findViewById(R.id.face_now_used);
         setItemClickListener(face, convertView);
 
         holder = new StickerViewHolder();
         holder.faceImg = face_img;
+        holder.faceNowUsed = faceNowUsed;
         holder.faceImg.setTag(face);
         convertView.setTag(holder);
-        loadFaceImg(face_img, face);
+        loadFaceImg(face_img, holder.faceNowUsed, face);
         return convertView;
 
     }
 
     class StickerViewHolder {
         public ImageView faceImg;
+        public ImageView faceNowUsed;
     }
 
 
-    private void loadFaceImg(ImageView faceView, FaceItem face) {
+    private void loadFaceImg(ImageView faceView, ImageView faceNowUsedImg, FaceItem face) {
 
         if (face.isAddButton()) {
             initAddFaceBtn(faceView);
             return;
         }
 
-        FrameLayout.LayoutParams param = (FrameLayout.LayoutParams)faceView.getLayoutParams();
-        param.height = (int)(size*0.8);
+        FrameLayout.LayoutParams param = (FrameLayout.LayoutParams) faceView.getLayoutParams();
+        param.height = (int) (size * 0.8);
         param.width = param.height;
         faceView.setLayoutParams(param);
-        int color = Color.WHITE;
-        if (face.getUri().equals(FacemojiManager.getCurrentFacePicUri())) {
-            color = 0x1cde97;
-        }
 
-        faceView.setImageBitmap(ImageLoader.getInstance().loadImageSync(face.getUri().toString(), new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .postProcessor(new BitmapAddBorderProcessor(color)).build()));
+        faceNowUsedImg.setVisibility((face.getUri() != null && face.getUri().equals(FacemojiManager.getCurrentFacePicUri())) ? View.VISIBLE : View.GONE);
+        faceView.setImageBitmap(ImageLoader.getInstance().loadImageSync(
+                face.getUri().toString(),
+                new DisplayImageOptions.Builder().imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true).build()
+        ));
     }
 
 
@@ -143,7 +144,7 @@ public class FacePageGridViewAdapter extends BaseAdapter {
 
     private void initAddFaceBtn(ImageView faceView) {
 
-        FrameLayout.LayoutParams param = (FrameLayout.LayoutParams)faceView.getLayoutParams();
+        FrameLayout.LayoutParams param = (FrameLayout.LayoutParams) faceView.getLayoutParams();
         param.height = (int) (size * 0.5);
         param.width = param.height;
         faceView.setLayoutParams(param);
@@ -152,8 +153,6 @@ public class FacePageGridViewAdapter extends BaseAdapter {
         faceView.setImageDrawable(null);
 
     }
-
-
 
 
 }

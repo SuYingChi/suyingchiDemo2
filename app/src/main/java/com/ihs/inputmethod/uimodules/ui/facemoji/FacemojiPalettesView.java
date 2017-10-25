@@ -24,6 +24,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -235,7 +236,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     }
 
     private void onClickFacemojiCreateButton() {
-
+        HSInputMethod.hideWindow();
         startCameraActivity();
     }
 
