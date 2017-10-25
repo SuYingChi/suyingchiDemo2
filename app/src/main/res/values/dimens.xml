@@ -229,7 +229,7 @@
 
     <dimen name="online_category_title_view_translationY">-20dp</dimen>
 
-    <dimen name="camera_capture_view_width">58dp</dimen>
+    <dimen name="camera_capture_view_width">48dp</dimen>
     <dimen name="camera_capture_view_padding">5dp</dimen>
 
 </resources>

@@ -247,8 +247,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             int pressColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_selected_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_selected_color);
             int normalColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_normal_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_normal_color);
 
-            int resId = resources.getIdentifier("ic_facemoji_panel_tab", "drawable", HSApplication.getContext().getPackageName());
-            Drawable drawable = VectorDrawableCompat.create(resources, resId, null);
+            Drawable drawable = VectorDrawableCompat.create(resources, R.drawable.ic_facemoji_panel_tab, null);
             DrawableCompat.setTintList(drawable, new ColorStateList(
                     new int[][]
                             {
