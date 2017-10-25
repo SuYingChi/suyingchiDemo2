@@ -74,6 +74,26 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         return stickerPageGridView;
     }
 
+    public void startAnim(int posotion){
+        GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)mActivePageViews.get(posotion);
+        if (gridView!=null){
+            ((FacemojiGridAdapter)gridView.getOriginalAdapter()).startAnim();
+        }
+    }
+
+    public void stopAllAnimations() {
+        for (int i = 0; i < mActivePageViews.size(); ++i) {
+            stopAnim(i);
+        }
+    }
+
+    public void stopAnim(int posotion){
+        GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)mActivePageViews.get(posotion);
+        if (gridView!=null){
+            ((FacemojiGridAdapter)gridView.getOriginalAdapter()).stopAnim();
+        }
+    }
+
     private void setGridViewLayoutProperties(GridViewWithHeaderAndFooter stickerPageGridView) {
         int gap = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.facemoji_myfacemoji_grid_gap);
         stickerPageGridView.setGravity(Gravity.CENTER);
@@ -90,7 +110,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
 
         View footerView = new View(HSApplication.getContext());
         footerView.setLayoutParams(param);
-        stickerPageGridView.addHeaderView(headerView);
+//        stickerPageGridView.addHeaderView(headerView);
         stickerPageGridView.addFooterView(footerView);
     }
 
