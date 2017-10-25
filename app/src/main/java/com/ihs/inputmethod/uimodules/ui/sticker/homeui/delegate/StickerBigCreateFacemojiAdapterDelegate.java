@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -59,6 +60,7 @@ public class StickerBigCreateFacemojiAdapterDelegate extends AdapterDelegate<Lis
         h.createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSAnalytics.logEvent("app_facemoji_creste_clicked_banner");
                 Intent i = new Intent(HSApplication.getContext(), CameraActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 HSApplication.getContext().startActivity(i);

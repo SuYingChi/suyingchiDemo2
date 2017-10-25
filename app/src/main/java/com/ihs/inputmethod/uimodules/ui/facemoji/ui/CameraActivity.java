@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -371,7 +372,7 @@ public class CameraActivity extends HSAppCompatActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
 
-        BitmapFactory.decodeResource(getResources(), R.drawable.facemask1, options);
+        BitmapFactory.decodeResource(getResources(), R.drawable.facemask3, options);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) maskView.getLayoutParams();
         lp.width = DisplayUtils.getScreenWidthForContent();
         lp.height = (int) (lp.width * options.outHeight * (isTablet ? BitmapUtils.TABLET_WIDTH_SCALE_FACTOR : 1) / options.outWidth);
@@ -756,18 +757,23 @@ public class CameraActivity extends HSAppCompatActivity {
         String result;
         switch (index) {
             case 1:
-                result = "normal";
+                result = "male2";
+                break;
             case 2:
                 result = "male1";
+                break;
             case 3:
-                result = "male2";
+                result = "normal";
+                break;
             case 4:
                 result = "female1";
+                break;
             case 5:
                 result = "female2";
+                break;
             default:
                 result = "normal";
-
+                break;
         }
         return result;
     }
@@ -846,6 +852,7 @@ public class CameraActivity extends HSAppCompatActivity {
     }
 
     public void takePicture(View v) {
+        HSAnalytics.logEvent("app_facemoji_camera_button_clicked","hairStyle",getHairStyle());
         try {
             if (camera != null) {
                 camera.takePicture(null, null, new MyPictureCallback());
@@ -986,6 +993,8 @@ public class CameraActivity extends HSAppCompatActivity {
         FacemojiManager.destroyTempFace();
         // Finish Camera activity
         HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACEMOJI_SAVED);
+
+        HSAnalytics.logEvent("app_facemoji_created");
 
         //跳转页面
         Intent i = new Intent(CameraActivity.this, MyFacemojiActivity.class);

@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -38,7 +39,9 @@ import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dsapphire on 15/11/27.
@@ -145,7 +148,10 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     }
 
     private void share(final FacemojiSticker sticker, ShareChannel channel) {
-
+        Map<String,String> params = new HashMap<>();
+        params.put("facemoji",sticker.getCategoryName()+"-"+sticker.getName());
+        params.put("share_app",channel.getAppName());
+        HSAnalytics.logEvent("app_facemoji_shared",params);
         MediaController.getShareManager().shareFacemojiByIntent(
                 sticker,
                 ShareUtils.refreshCurrentShareMode(channel.getPackageName()).second,

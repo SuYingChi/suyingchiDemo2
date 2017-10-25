@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -40,6 +41,7 @@ public class StickerSamllCreateFacemojiAdapterDelegate extends AdapterDelegate<L
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSAnalytics.logEvent("app_facemoji_create_clicked_button");
                 Intent i = new Intent(HSApplication.getContext(), CameraActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 HSApplication.getContext().startActivity(i);

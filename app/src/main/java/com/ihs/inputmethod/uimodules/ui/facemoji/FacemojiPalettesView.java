@@ -20,6 +20,7 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -236,6 +237,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     }
 
     private void onClickFacemojiCreateButton() {
+        HSAnalytics.logEvent("keyboard_facemoji_create_clicked");
         HSInputMethod.hideWindow();
         startCameraActivity();
     }
@@ -249,7 +251,13 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
     private void setCurrentCategoryId(int categoryId, boolean force) {
         Pair<Integer, Integer> categoryIdAndPageIdFromPagePosition = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(mViewPager.getCurrentItem());
-        pageIndicatorView.updateIndicator(categoryIdAndPageIdFromPagePosition.second, FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first));
+        int totalPageOfCurrentCategory = FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first);
+        if (totalPageOfCurrentCategory > 1) {
+            pageIndicatorView.setVisibility(VISIBLE);
+            pageIndicatorView.updateIndicator(categoryIdAndPageIdFromPagePosition.second, FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first));
+        }else {
+            pageIndicatorView.setVisibility(INVISIBLE);
+        }
 
         int oldCategoryId = FacemojiManager.getInstance().getCurrentCategoryId();
         if (oldCategoryId == categoryId && !force) {
@@ -271,9 +279,10 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     }
 
     @Override
-    public void onFacemojiClicked(FacemojiSticker item) {
+    public void onFacemojiClicked(FacemojiSticker sticker) {
+        HSAnalytics.logEvent("app_facemoji_shared",sticker.getCategoryName()+"-"+sticker.getName());
         mStickerPalettesAdapter.pauseAnimation();
-        MediaController.getShareManager().shareFacemojiWithKeyboard(item, mProgressListener);
+        MediaController.getShareManager().shareFacemojiWithKeyboard(sticker, mProgressListener);
     }
 
     public int getCurrentPagerPosition() {
