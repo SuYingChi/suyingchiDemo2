@@ -56,6 +56,8 @@ import com.ihs.inputmethod.uimodules.utils.UriUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage;
@@ -979,12 +981,43 @@ public class CameraActivity extends HSAppCompatActivity {
 
         showProcessingDialog();
 
+        saveFaceToSDCard();
+        // Destroy temp face
+        FacemojiManager.destroyTempFace();
+        // Finish Camera activity
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACEMOJI_SAVED);
+
         //跳转页面
         Intent i = new Intent(CameraActivity.this, MyFacemojiActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         isSynthesisingImage = false;
+    }
+
+
+    private void saveFaceToSDCard() {
+        // Save to sd card
+        String tempFaceFilePath = CameraActivity.getTempFaceFilePath();
+        String faceFilePath = HSPictureManager.getFaceDirectory() + generateFileName();
+        File srcFile = new File(tempFaceFilePath);
+        File dstFile = new File(faceFilePath);
+        HSFileUtils.copyFile(srcFile, dstFile);
+
+        // Reload faces collection
+        FacemojiManager.getInstance().loadFaceList();
+        FacemojiManager.setCurrentFacePicUri(Uri.fromFile(dstFile));
+    }
+
+    /**
+     * 生成时间命名的图片名称
+     *
+     * @return
+     */
+    private String generateFileName() {
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); // 格式化时间
+        return format.format(date) + ".png";
     }
 
     public void useBeauty(View v) {

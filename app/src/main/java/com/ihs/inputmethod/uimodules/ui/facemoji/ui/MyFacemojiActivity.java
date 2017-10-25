@@ -8,12 +8,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,11 +25,7 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
-import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
@@ -39,7 +33,6 @@ import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,37 +46,14 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     private Drawable transparentDrawable;
     private int screenWidth;
     private int screenHeight;
-    private ImageView back_button;
     private ImageView face_icon;
     private ImageView triangle;
-    private View mSaveButtonHolder;
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if  (id == R.id.face_menu_icon) {
-                startFaceListActivity();
-        } else if (id ==  R.id.face_save_btn_holder) {
-            onClickSaveButton();
-        }
-
-    }
-
-    private void onClickSaveButton() {
-        try {
-            // Save face
-            saveFaceToSDCard();
-
-            // Destroy temp face
-            FacemojiManager.destroyTempFace();
-
-            // Finish Camera activity
-            HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACEMOJI_SAVED);
-
-            // Finish self
-            finish();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (id == R.id.face_menu_icon) {
+            startFaceListActivity();
         }
     }
 
@@ -117,7 +87,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         TabWidget tabWidget = mTabHost.getTabWidget();
         tabWidget.setStripEnabled(false);
         mImagePager = (ViewPager) findViewById(R.id.facemoji_pager);
-        mFacemojiPalettesAdapter = new FacemojiPalettesAdapter(this,getGridViewHeight(), new PagerCallback() {
+        mFacemojiPalettesAdapter = new FacemojiPalettesAdapter(this, getGridViewHeight(), new PagerCallback() {
             @Override
             public int getCurrentPagerPosition() {
                 return mCurrentPagerPosition;
@@ -153,7 +123,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         triangle = (ImageView) findViewById(R.id.triangle_button);
         triangle.setOnClickListener(this);
         triangle.setClickable(true);
-        Bitmap bitmap = BitmapFactory.decodeResource(HSApplication.getContext().getResources(),  R.drawable.facemoji_triangle);
+        Bitmap bitmap = BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.facemoji_triangle);
         triangle.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(bitmap));
 
         face_icon.setOnTouchListener(new View.OnTouchListener() {
@@ -164,12 +134,6 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             }
         });
 
-        mSaveButtonHolder = findViewById(R.id.face_save_btn_holder);
-        ViewGroup.LayoutParams saveHolderPara = mSaveButtonHolder.getLayoutParams();
-        saveHolderPara.height = getNavigateBarHeight();
-        mSaveButtonHolder.setLayoutParams(saveHolderPara);
-        mSaveButtonHolder.setOnClickListener(this);
-
         if (!FacemojiManager.isUsingTempFace() && null == FacemojiManager.getDefaultFacePicUri()) {
             finish();
             return;
@@ -179,9 +143,9 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     private void showInitTabByCategoryName() {
         String initTabCategory = getIntent().getStringExtra(INIT_SHOW_TAB_CATEGORY);
         int initPosition = 0;
-        if (!TextUtils.isEmpty(initTabCategory)){
-            for (int i = 0 ; i < FacemojiManager.getInstance().getClassicCategories().size(); i++){
-                if (initTabCategory.equals(FacemojiManager.getInstance().getClassicCategories().get(i).getName())){
+        if (!TextUtils.isEmpty(initTabCategory)) {
+            for (int i = 0; i < FacemojiManager.getInstance().getClassicCategories().size(); i++) {
+                if (initTabCategory.equals(FacemojiManager.getInstance().getClassicCategories().get(i).getName())) {
                     initPosition = i;
                     break;
                 }
@@ -204,21 +168,14 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (FacemojiManager.hasTempFace()) {
-            // Enable using temp face flag
-            FacemojiManager.setUsingTempFace(true);
-            switchToNewState();
-        } else {
-            if (null == FacemojiManager.getDefaultFacePicUri()) {
-                finish();
-                return;
-            }
-
-            Drawable drawable = HSDrawableUtils.getDimmedForegroundDrawable(ImageLoader.getInstance().loadImageSync(FacemojiManager.getDefaultFacePicUri().toString(), new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                    .postProcessor(new BitmapAddBorderProcessor(Color.WHITE)).build()));
-            face_icon.setBackgroundDrawable(drawable);
+        if (null == FacemojiManager.getDefaultFacePicUri()) {
+            finish();
+            return;
         }
+
+        Drawable drawable = HSDrawableUtils.getDimmedForegroundDrawable(ImageLoader.getInstance().loadImageSync(FacemojiManager.getDefaultFacePicUri().toString(), new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                .postProcessor(new BitmapAddBorderProcessor(Color.WHITE)).build()));
+        face_icon.setBackgroundDrawable(drawable);
     }
 
     @Override
@@ -239,17 +196,6 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         if (FacemojiManager.hasTempFace()) {
             FacemojiManager.destroyTempFace();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-//        mFacemojiPalettesAdapter.finish();
-//        mFacemojiPalettesAdapter = null;
-//        mImagePager.removeAllViews();
-//        mImagePager.setAdapter(null);
-//        mImagePager = null;
-//        transparentDrawable = null;
-        super.onBackPressed();
     }
 
     private void addTab(TabHost host, int categoryId) {
@@ -307,19 +253,6 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
     }
 
-
-    private int getActionBarHeight() {
-        TypedValue tv = new TypedValue();
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            return TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-        }
-        return 0;
-    }
-
-    private int getTabbarIconWidth() {
-        return screenWidth - 20 * 2 - 30 * 4;
-    }
-
     private int getGridViewHeight() {
         return (int) (screenHeight * 0.68);
     }
@@ -360,30 +293,5 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     private void startFaceListActivity() {
         Intent i = new Intent(MyFacemojiActivity.this, FaceListActivity.class);
         startActivity(i);
-    }
-
-    private void saveFaceToSDCard() {
-        HSLog.d("");
-
-        // Disable save button to avoid multi-click
-        mSaveButtonHolder.setEnabled(false);
-
-        // Save to sd card
-        String tempFaceFilePath = CameraActivity.getTempFaceFilePath();
-        String faceFilePath = HSPictureManager.getFaceDirectory() + generateFileName();
-        File srcFile = new File(tempFaceFilePath);
-        File dstFile = new File(faceFilePath);
-        HSFileUtils.copyFile(srcFile, dstFile);
-
-        // Reload faces collection
-        FacemojiManager.getInstance().loadFaceList();
-        FacemojiManager.setCurrentFacePicUri(Uri.fromFile(dstFile));
-    }
-
-    private void switchToNewState() {
-        // Switch UI
-        face_icon.setVisibility(View.GONE);
-        triangle.setVisibility(View.GONE);
-        mSaveButtonHolder.setVisibility(View.VISIBLE);
     }
 }
