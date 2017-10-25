@@ -1,13 +1,13 @@
 libCommons:
   RemoteConfig:
-    PlistFile: "Local.ic"
-    PlistUrl: "http://cdn.emoji.mobi/androidemojikeyboard/configs/config-emojikeyboard-2.0.6.ic"
+    PlistFile: "Local.mp"
+    PlistUrl: "http://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/configs/config-smileykeyboard-2.0.0.mp"
   Analytics:
-      FlurryKey: "FC2GWXDVFTZHFK7KX6KV"
-      FacebookID: "1474873346171463"
-      TapjoySDKKey: "xngEmwWtQly0k_AqtdONawECiQlH0ihPQFWD0LYIPuBwFQqH1SU3JkosT66A"
+      FlurryKey: "VFHX539WKM27R8ZZ5398"
+      FacebookID: "725261934240541"
+      TapjoySDKKey: "0vAf42klRSGnoQnFutCZWgECKUjhkbC2ofJglQzbtXRMIpdomrpc7QXJicV3"
       FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
-      GoogleTrackId: "UA-66468004-1"
+      GoogleTrackId: "UA-66468004-2"
       FlurryStoredMaxCount: 1000
       GooglePercentage: 1000
   DiverseSession:
@@ -29,16 +29,16 @@ libCommons:
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
 
   Connection:
-      SigKey: "610_1"
-      HashKey: "f4ilz;_aePCR/qYYl05<Wgu)O[Y{ZQxo"
-  AppId: "610"
+      SigKey: "611_1"
+      HashKey: "PIpRm]zuNpVZ+e~^Ss)(UhtI~Cb49uuA"
+  AppId: "611"
 libFramework:
   Push:
-    SenderID: "805407701758"
+    SenderID: "213210419783"
     SendTokenToServer: yes
   Alerts:
-    LocalFile: "Alerts.ic"
-    RemoteUrl: "http://cdn.emoji.mobi/androidemojikeyboard/alerts/emojikeyboard-2.0.6-alerts.ic"
+    LocalFile: "Alerts.mp"
+    RemoteUrl: "http://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/alerts/smileykeyboard-2.0.0-alerts.mp"
 
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"

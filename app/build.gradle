@@ -96,8 +96,8 @@ android {
         }
 
         tiger {
-            applicationId = "com.mobipioneer.emojikeyboard"
-            versionName "1.0.0"
+            applicationId = "com.tiger.tiger"
+            versionName "2.0.0"
             versionCode 1
             manifestPlaceholders = [APPLY_SCHEME: "tigerKeyboard"]
             signingConfig signingConfigs.tigerReleaseConfig
