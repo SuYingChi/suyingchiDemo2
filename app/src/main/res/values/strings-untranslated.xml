@@ -16,24 +16,24 @@
     <string name="home_and_locker_screen">Home and lock screens</string>
     <string name="key_theme_loading_progress_dialog_text">Loading Key Theme...</string>
 
-    <string name="keyboard_make_facemoji_tip">Tap here to make \n your own Mojis!</string>
+    <string name="keyboard_make_facemoji_tip">DIY your own emojis!</string>
     <!-- In Call Theme -->
     <string name="set_incoming_call_theme">SET INCOMING CALL THEME</string>
 
     <string name="camera_activity_title">Take a Selfie</string>
-    <string name="facemoji_in_progress">FaceMoji in progress...</string>
+    <string name="facemoji_in_progress">Facemoji in progress...</string>
 
-    <string name="my_facemoji_toolbar_title">MY FACEMOJI</string>
-    <string name="my_facemoji_send_facemoji_tip">Already ROFL?Send directly on Emoji Keyboard!</string>
+    <string name="my_facemoji_toolbar_title">MY FACEMOJIS</string>
+    <string name="my_facemoji_send_facemoji_tip">Already ROFL? Send directly on Emoji Keyboard!</string>
 
     <string name="switch_facemoji_toolbar_title">Switch Face</string>
     <string name="switch_facemoji_selected_status_title">%d Selected</string>
-    <string name="label_manage">MANAGE</string>
+    <string name="label_manage">EDIT</string>
 
-    <string name="sticker_title_create_my_facemojis">Create My Facemojis</string>
+    <string name="sticker_title_create_my_facemojis">Create My Facemoji</string>
     <string name="sticker_title_my_facemojis">My Facemojis</string>
     <string name="sticker_title_funny_stickers">Funny Stickers</string>
-    <string name="label_create_funny_facemoji">Make cool emojis \nwith your own face!</string>
+    <string name="label_create_funny_facemoji">Make cool emojis with your own face!</string>
     <string name="label_try_now">TRY NOW</string>
     <string name="label_share">Share</string>
 </resources>
