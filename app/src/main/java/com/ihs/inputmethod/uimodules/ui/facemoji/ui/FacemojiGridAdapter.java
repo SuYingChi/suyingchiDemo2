@@ -108,6 +108,11 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
                 holder.facemojiView.setOnClickListener(this);
                 convertView.setTag(holder);
             }
+            if (playAnim){
+                holder.facemojiView.start();
+            }else {
+                holder.facemojiView.stop();
+            }
             return convertView;
         }
 
@@ -134,7 +139,24 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         holder.facemojiView = facemojiView;
         holder.facemojiView.setOnClickListener(this);
         convertView.setTag(holder);
+
+        if (playAnim){
+            holder.facemojiView.start();
+        }else {
+            holder.facemojiView.stop();
+        }
         return convertView;
+    }
+
+    private boolean playAnim;
+    public void startAnim(){
+        playAnim = true;
+        notifyDataSetChanged();
+    }
+
+    public void stopAnim(){
+        playAnim = false;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -168,10 +190,12 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             initShareAlert();
         } else {
             if (dialog.isShowing()) {
+                stickerPlayer.stop();
                 dialog.dismiss();
             }
         }
         stickerPlayer.setSticker(sticker);
+        stickerPlayer.start();
         shareAdapter.setSticker(sticker);
         mProgressBar.setVisibility(View.GONE);
         dialog.setCancelable(true);

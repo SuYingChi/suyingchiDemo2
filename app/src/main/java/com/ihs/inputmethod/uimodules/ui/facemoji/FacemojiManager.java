@@ -81,14 +81,24 @@ public class FacemojiManager {
     private static Bitmap mTempFaceBmp;
     private List<FacemojiCategory> classicCategories = new ArrayList<>();
     private int currentClassicCategoryId = 0;
-    private FacemojiManager() {
+    private static BitmapFactory.Options newFacemojiOption;
+    private static BitmapFactory.Options oldFacemojiOption;
 
+    private FacemojiManager() {
+        //新的facemoji尺寸是400x300，因此做压缩到200x150，同时图片质量用RGB_565
+        newFacemojiOption = new BitmapFactory.Options();
+        newFacemojiOption.inPreferredConfig = Bitmap.Config.RGB_565;
+        newFacemojiOption.inSampleSize = 2;
+
+        //老的facemoji尺寸是200x200，直接加载
+        oldFacemojiOption = new BitmapFactory.Options();
+        oldFacemojiOption.inPreferredConfig = Bitmap.Config.ARGB_8888;
     }
 
-    public static FacemojiManager getInstance(){
-        if (instance == null){
-            synchronized (FacemojiManager.class){
-                if (instance == null){
+    public static FacemojiManager getInstance() {
+        if (instance == null) {
+            synchronized (FacemojiManager.class) {
+                if (instance == null) {
                     instance = new FacemojiManager();
                 }
             }
@@ -221,17 +231,17 @@ public class FacemojiManager {
 
         Uri uri = getDefaultFacePicUri();
         if (uri == null) {
-            return BitmapFactory.decodeResource(HSApplication.getContext().getResources(),  R.drawable.tabbar_facemoji);
+            return BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.tabbar_facemoji);
         }
 
         return BitmapUtils.corpAndAddBorder(getDefaultFacePicUri(), color, 20);
     }
 
-    public static String getCurrentUploadFile(){
+    public static String getCurrentUploadFile() {
         return currentUploadFile;
     }
 
-    public static void setCurrentUploadFile(String filePath){
+    public static void setCurrentUploadFile(String filePath) {
         currentUploadFile = filePath;
         SharedPreferences sharedPreferences = HSApplication.getContext().getSharedPreferences(UPLOAD_FILE_PATH, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -334,20 +344,23 @@ public class FacemojiManager {
 
         Bitmap resultBitmap = Bitmap.createBitmap(sticker.getWidth(), sticker.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(resultBitmap);
+
         Paint paint = new Paint();
         paint.setFilterBitmap(true);
         paint.setAntiAlias(true);
 
-        for (FacemojiFrame.FacemojiLayer layer : sticker.getFacemojiFrames().get(frameNumber).getLayerList()){
-            if (layer.isFace()){
+        for (FacemojiFrame.FacemojiLayer layer : sticker.getFacemojiFrames().get(frameNumber).getLayerList()) {
+            if (layer.isFace()) {
                 c.setMatrix(faceCanvasMatrix);
                 c.drawBitmap(currentFaceBmp, null, new Rect(0, 0, param.width, param.height), paint);
-            }else {
+            } else {
                 c.setMatrix(new Matrix());
                 String frameBgFilePath = HSApplication.getContext().getFilesDir().getAbsolutePath() + "/" + MOJIME_DIRECTORY + "/" + sticker.getCategoryName() + "/" + sticker.getName() + "/" + layer.srcName;
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                Bitmap originBg = BitmapFactory.decodeFile(frameBgFilePath, options);
+
+                Bitmap originBg = BitmapFactory.decodeFile(frameBgFilePath, getFacemojiStickerOption(sticker));
+                if (originBg == null) {
+                    break;
+                }
                 int bgwidth = originBg.getWidth();
                 int bgheight = originBg.getHeight();
                 Matrix bgMatrix = new Matrix();
@@ -357,6 +370,10 @@ public class FacemojiManager {
             }
         }
         return resultBitmap;
+    }
+
+    private static BitmapFactory.Options getFacemojiStickerOption(FacemojiSticker sticker){
+        return sticker.getWidth() == sticker.getHeight() ? oldFacemojiOption : newFacemojiOption;
     }
 
     public static Bitmap getFrameBitmap(FacemojiSticker sticker, int frameNumber) {
@@ -494,7 +511,7 @@ public class FacemojiManager {
     }
 
     private void copyAssetStickersToStorage() {
-        for(String category : classicCategoryNames){
+        for (String category : classicCategoryNames) {
             copyAssetFileToStorage(category);
         }
     }
@@ -507,7 +524,7 @@ public class FacemojiManager {
         currentClassicCategoryId = currentId;
     }
 
-    public List<FacemojiCategory> getCategories(){
+    public List<FacemojiCategory> getCategories() {
         return classicCategories;
     }
 
@@ -565,7 +582,7 @@ public class FacemojiManager {
         return getCategories().get(id).getName();
     }
 
-    public void loadFaceList(){
+    public void loadFaceList() {
 
         faces.clear();
         faces.add(new FaceItem(null));
@@ -608,7 +625,7 @@ public class FacemojiManager {
         return getCategories().get(pair.first).getStickerList(pair.second);
     }
 
-    public  Pair<Integer, Integer> getCategoryIdAndPageIdFromPagePosition(final int position) {
+    public Pair<Integer, Integer> getCategoryIdAndPageIdFromPagePosition(final int position) {
         int sum = 0;
         for (final FacemojiCategory category : getCategories()) {
             final int temp = sum;
@@ -620,7 +637,7 @@ public class FacemojiManager {
         return null;
     }
 
-    public  int getCategoryIdByName(String name) {
+    public int getCategoryIdByName(String name) {
         for (FacemojiCategory category : getCategories()) {
             if (name.equals(category.getName())) {
                 return category.getCategoryId();
@@ -664,10 +681,6 @@ public class FacemojiManager {
             sum += category.getPageCount();
         }
         return sum;
-    }
-
-    public enum FacemojiType{
-        CLASSIC,NEW
     }
 
     static class FacemojiPalettesParam {

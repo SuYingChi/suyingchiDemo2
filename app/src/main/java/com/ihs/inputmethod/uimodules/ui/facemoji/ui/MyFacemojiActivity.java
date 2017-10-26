@@ -237,7 +237,10 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        if (positionOffset == 0) {
+            mFacemojiPalettesAdapter.stopAllAnimations();
+            mFacemojiPalettesAdapter.startAnim(position);
+        }
     }
 
     @Override

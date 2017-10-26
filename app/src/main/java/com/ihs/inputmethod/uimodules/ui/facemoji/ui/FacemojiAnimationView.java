@@ -16,6 +16,5 @@ public class FacemojiAnimationView extends com.ihs.inputmethod.uimodules.ui.face
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        start();
     }
 }

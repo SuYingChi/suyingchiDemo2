@@ -104,13 +104,13 @@ class FacemojiPalettesAdapter extends PagerAdapter {
 
         int dimension = (int) ((float) (pagerHeight - gap * (GRID_ROW_NUMBER - 1)) / GRID_ROW_NUMBER);
         int topPadding = (pagerHeight - dimension * GRID_ROW_NUMBER - gap * (GRID_ROW_NUMBER - 1)) / 2 - 5;
-        ViewGroup.LayoutParams param = new ViewGroup.LayoutParams(topPadding, topPadding);
+        ViewGroup.LayoutParams param = new ViewGroup.LayoutParams(topPadding, 0);
         View headerView = new View(HSApplication.getContext());
         headerView.setLayoutParams(param);
 
         View footerView = new View(HSApplication.getContext());
         footerView.setLayoutParams(param);
-//        stickerPageGridView.addHeaderView(headerView);
+        stickerPageGridView.addHeaderView(headerView);
         stickerPageGridView.addFooterView(footerView);
     }
 
