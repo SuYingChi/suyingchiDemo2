@@ -72,8 +72,8 @@ public class FacemojiSticker implements ISequenceFramesImageItem {
     }
 
     @Override
-    public Bitmap getFrame(int index) {
-        return FacemojiManager.getFrame(this, index);
+    public Bitmap getFrame(int index,boolean encodeGif) {
+        return FacemojiManager.getFrame(this, index ,encodeGif);
     }
 
     public List<FacemojiFrame> getFacemojiFrames() {

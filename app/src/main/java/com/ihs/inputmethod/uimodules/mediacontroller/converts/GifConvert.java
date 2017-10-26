@@ -1,15 +1,13 @@
 package com.ihs.inputmethod.uimodules.mediacontroller.converts;
 
+import android.graphics.Bitmap;
+
 import com.ihs.inputmethod.uimodules.mediacontroller.Constants;
 import com.ihs.inputmethod.uimodules.mediacontroller.ISequenceFramesImageItem;
-import com.ihs.inputmethod.uimodules.utils.gif.GifEncoder;
-import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.waynejo.androidndkgif.GifEncoder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Created by ihandysoft on 16/6/1.
@@ -29,33 +27,20 @@ public class GifConvert extends BaseConvert {
             return mFile;
         }
 
-        //创建文件
-        File mFile = HSFileUtils.createNewFile(fileName);
-
-        // 2、写入帧图片
-        OutputStream os = null;
-        GifEncoder gifEncoder = null;
+        GifEncoder gifEncoder = new GifEncoder();
+        int count = sequnceFramesImage.getFrames().size();
+        Bitmap frameBitmap = sequnceFramesImage.getFrame(0,true);
         try {
-            os = new FileOutputStream(mFile);
-            gifEncoder = new GifEncoder();
-            gifEncoder.start(os);
-            gifEncoder.setRepeat(0);//无限重复
-            int count = sequnceFramesImage.getFrames().size();
-            for(int i = 0; i < count; i++){
-                gifEncoder.addFrame(getFrame(i));
-                gifEncoder.setDelay(getFrameInternal(i));//设置延时
+            gifEncoder.init(frameBitmap.getWidth(), frameBitmap.getHeight(), fileName, GifEncoder.EncodingType.ENCODING_TYPE_SIMPLE_FAST);
+            gifEncoder.encodeFrame(frameBitmap, getFrameInternal(0));
+            for(int i = 1; i < count; i++){
+                gifEncoder.encodeFrame(getFrame(i), getFrameInternal(i));
             }
-            gifEncoder.finish();
+            gifEncoder.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }  finally {
-            if(os != null)
-                try {
-                    os.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
         }
+
         return mFile;
     }
 }

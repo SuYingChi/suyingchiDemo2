@@ -1,7 +1,8 @@
 package com.ihs.inputmethod.uimodules.mediacontroller;
 
-import java.util.List;
 import android.graphics.Bitmap;
+
+import java.util.List;
 
 
 /**
@@ -15,5 +16,5 @@ public interface ISequenceFramesImageItem extends  IImageItem{
     }
 
     List<? extends IFrame> getFrames();
-    Bitmap getFrame(int index);
+    Bitmap getFrame(int index,boolean encodeGif);
 }

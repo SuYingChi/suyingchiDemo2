@@ -7,7 +7,6 @@ import android.os.Message;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -62,19 +61,6 @@ public class FacemojiAnimationView extends AppCompatImageView {
         mExecutor = FacemojiRenderingExecutor.getInstance();
     }
 
-    private Bitmap getNextBitmap() {
-        if (mIndex == sticker.getFrames().size() - 1) {
-            mIndex = 0;
-        } else {
-            mIndex++;
-        }
-        long startTime = System.currentTimeMillis();
-        Bitmap bitmap = FacemojiManager.getFrame(sticker, mIndex);
-        long endTime = System.currentTimeMillis();
-        lastFramePrepareTime = endTime - startTime;
-        return bitmap;
-    }
-
     /**
      * Starts the animation
      */
@@ -100,7 +86,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
                 }
 
                 long startTime = System.currentTimeMillis();
-                buffer = FacemojiManager.getFrame(sticker, mIndex);
+                buffer = FacemojiManager.getFrame(sticker, mIndex,false);
                 mHandler.sendEmptyMessage(INVALIDATE_ANIM);
                 long endTime = System.currentTimeMillis();
                 lastFramePrepareTime = endTime - startTime;
@@ -124,7 +110,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
             return;
         }
 
-        setImageBitmap(FacemojiManager.getFrame(sticker, 0));
+        setImageBitmap(FacemojiManager.getFrame(sticker, 0,false));
     }
 
     /**

@@ -81,18 +81,18 @@ public class FacemojiManager {
     private static Bitmap mTempFaceBmp;
     private List<FacemojiCategory> classicCategories = new ArrayList<>();
     private int currentClassicCategoryId = 0;
-    private static BitmapFactory.Options newFacemojiOption;
-    private static BitmapFactory.Options oldFacemojiOption;
+    private static BitmapFactory.Options lowQualityOption;
+    private static BitmapFactory.Options highQualityOption;
 
     private FacemojiManager() {
         //新的facemoji尺寸是400x300，因此做压缩到200x150，同时图片质量用RGB_565
-        newFacemojiOption = new BitmapFactory.Options();
-        newFacemojiOption.inPreferredConfig = Bitmap.Config.RGB_565;
-        newFacemojiOption.inSampleSize = 2;
+        lowQualityOption = new BitmapFactory.Options();
+        lowQualityOption.inPreferredConfig = Bitmap.Config.RGB_565;
+        lowQualityOption.inSampleSize = 2;
 
         //老的facemoji尺寸是200x200，直接加载
-        oldFacemojiOption = new BitmapFactory.Options();
-        oldFacemojiOption.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        highQualityOption = new BitmapFactory.Options();
+        highQualityOption.inPreferredConfig = Bitmap.Config.ARGB_8888;
     }
 
     public static FacemojiManager getInstance() {
@@ -326,7 +326,7 @@ public class FacemojiManager {
         }
     }
 
-    public static Bitmap getFrame(FacemojiSticker sticker, int frameNumber) {
+    public static Bitmap getFrame(FacemojiSticker sticker, int frameNumber,boolean gifEncode) {
         final Bitmap currentFaceBmp = getCurrentFaceBmp();
         if (currentFaceBmp == null) {
             return null;
@@ -357,7 +357,7 @@ public class FacemojiManager {
                 c.setMatrix(new Matrix());
                 String frameBgFilePath = HSApplication.getContext().getFilesDir().getAbsolutePath() + "/" + MOJIME_DIRECTORY + "/" + sticker.getCategoryName() + "/" + sticker.getName() + "/" + layer.srcName;
 
-                Bitmap originBg = BitmapFactory.decodeFile(frameBgFilePath, getFacemojiStickerOption(sticker));
+                Bitmap originBg = BitmapFactory.decodeFile(frameBgFilePath, getFacemojiStickerOption(sticker,gifEncode));
                 if (originBg == null) {
                     break;
                 }
@@ -372,8 +372,11 @@ public class FacemojiManager {
         return resultBitmap;
     }
 
-    private static BitmapFactory.Options getFacemojiStickerOption(FacemojiSticker sticker){
-        return sticker.getWidth() == sticker.getHeight() ? oldFacemojiOption : newFacemojiOption;
+    private static BitmapFactory.Options getFacemojiStickerOption(FacemojiSticker sticker, boolean gifEncode){
+        if (gifEncode) {
+            return highQualityOption;
+        }
+        return sticker.getWidth() == sticker.getHeight() ? highQualityOption : lowQualityOption;
     }
 
     public static Bitmap getFrameBitmap(FacemojiSticker sticker, int frameNumber) {
