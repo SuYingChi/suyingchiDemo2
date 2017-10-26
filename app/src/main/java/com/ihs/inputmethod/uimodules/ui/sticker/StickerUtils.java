@@ -21,13 +21,13 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -141,96 +141,68 @@ public class StickerUtils {
     }
 
     public static boolean isEditTextSupportSticker(String packageName) {
-        if (!DirectoryUtils.isSDCardEnabled()) {
-            return false;
-        }
+        return DirectoryUtils.isSDCardEnabled() && StickerPrefsUtil.getInstance().isAppSupportSticker(packageName);
 
-        Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);
-        return (boolean) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_SEND_DIRECTLY)
-                || (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE) == MediaShareUtils.IMAGE_SHARE_MODE_INTENT
-                || (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE) == MediaShareUtils.IMAGE_SHARE_MODE_EXPORT;
     }
 
-    public static void share(final Sticker sticker, final String packageName) {
-        if (!DirectoryUtils.isSDCardEnabled()) {
+    public static void sendToPackage(final Sticker sticker, final String packageName) {
+        if (!DirectoryUtils.isSDCardEnabled() || !StickerPrefsUtil.getInstance().isAppSupportSticker(packageName)) {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
-            //HSInputMethod.inputText(sticker.getStickerRemoteUri());
             return;
         }
         StickerPrefsUtil.getInstance().recordStickerSelect(sticker.getStickerName());
 
         final String targetExternalFilePath = DirectoryUtils.getImageExportFolder() + "/" + sticker.getStickerName() + sticker.getStickerFileSuffix();
+        addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
+        File externalImageFile = new File(targetExternalFilePath);
+        if (!externalImageFile.exists()) {
+            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_send_failed), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
         final String mimeType = "image/*";
-
-        final Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);
-        final boolean canSendDirectly = (Boolean) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_SEND_DIRECTLY);
-
-        // 可以直接发送到对话列表中
-        if (canSendDirectly) {
-            String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
-            boolean pngSupported = false;
-            boolean gifSupported = false;
-            for (String mime_Type : mimeTypes) {
-                if (ClipDescription.compareMimeTypes(mime_Type, "image/png")) {
-                    pngSupported = true;
-                }
-                if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
-                    gifSupported = true;
-                }
+        boolean pngSupported = false;
+        boolean gifSupported = false;
+        for (String mime_Type : mimeTypes) {
+            if (ClipDescription.compareMimeTypes(mime_Type, "image/png")) {
+                pngSupported = true;
             }
-            if (pngSupported || gifSupported) {
-                addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
-                File externalImageFile = new File(targetExternalFilePath);
-                if (!externalImageFile.exists()) {
-                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_send_failed), Toast.LENGTH_SHORT).show();
+            if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
+                gifSupported = true;
+            }
+        }
+        addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
+        if (pngSupported || gifSupported) {
+
+            Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
+            if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX) && gifSupported) {
+                if (commitStickerImage(uri, "", "image/gif")) {
                     return;
                 }
-
-                Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
-                if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX) && gifSupported) {
-                    commitStickerImage(uri, "", "image/gif");
+            } else if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_PNG_SUFFIX) && pngSupported) {
+                if (commitStickerImage(uri, "", "image/png")) {
                     return;
-                } else if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_PNG_SUFFIX) && pngSupported) {
-                    commitStickerImage(uri, "", "image/png");
+                }
+            } else if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_PNG_SUFFIX) && gifSupported) {
+                // 如果图片是 PNG，而应用只支持 GIF，则发送时声称是 GIF，目前是可以发出去的；以后也许需要改成需要转成真实的 GIF 格式后再发送
+                if (commitStickerImage(uri, "", "image/gif")) {
                     return;
-                } else if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_PNG_SUFFIX) && gifSupported) {
-                    // 如果图片是 PNG，而应用只支持 GIF，则发送时声称是 GIF，目前是可以发出去的；以后也许需要改成需要转成真实的 GIF 格式后再发送
-                    commitStickerImage(uri, "", "image/gif");
-                    return;
-                } else {
-                    // 如果找不到把图片直接发出去的格式支持，则走原来的逻辑
                 }
             }
         }
 
-        final int mode = (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE);
-        switch (mode) {
-            // image
-            case MediaShareUtils.IMAGE_SHARE_MODE_INTENT:
-                addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
-                try {
-                    MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetExternalFilePath)), mimeType, packageName);
-                } catch (Exception e) {
-                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
-                    //HSInputMethod.inputText(sticker.getStickerRemoteUri());
-                }
-                break;
-            // save to gallery
-            case ShareUtils.IMAGE_SHARE_MODE_EXPORT:
-                copyStickerFileToSDCard(sticker, targetExternalFilePath);
-                MediaShareUtils.shareImageByExport(targetExternalFilePath);
-                break;
-            case MediaShareUtils.IMAGE_SHARE_MODE_LINK:
-                Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
-                //HSInputMethod.inputText(sticker.getStickerRemoteUri());
-                break;
-            default:
-                Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
-                //HSInputMethod.inputText(sticker.getStickerRemoteUri());
+        try {
+            MediaShareUtils.shareImageByIntent(Uri.fromFile(externalImageFile), mimeType, packageName);
+        } catch (Exception e) {
+            HSAnalytics.logEvent("Sticker_toast_send_failed", "packageName", packageName);
+            StickerPrefsUtil.getInstance().recordUnsupportApp(packageName);
+            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
+//            HSInputMethod.inputText(sticker.getStickerRemoteUri());
         }
     }
 
-    private static void commitStickerImage(Uri contentUri, String imageDescription, String fileType) {
+    private static boolean commitStickerImage(Uri contentUri, String imageDescription, String fileType) {
         InputContentInfoCompat inputContentInfo = new InputContentInfoCompat(contentUri,
                 new ClipDescription(imageDescription, new String[]{fileType}), null);
         InputConnection inputConnection = HSInputMethodService.getInstance().getCurrentInputConnection();
@@ -239,7 +211,7 @@ public class StickerUtils {
         if (android.os.Build.VERSION.SDK_INT >= 25) {
             flags |= InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
         }
-        InputConnectionCompat.commitContent(inputConnection, editorInfo, inputContentInfo, flags, null);
+        return InputConnectionCompat.commitContent(inputConnection, editorInfo, inputContentInfo, flags, null);
     }
 
     private static Uri getImageContentUri(Context context, File imageFile) {
