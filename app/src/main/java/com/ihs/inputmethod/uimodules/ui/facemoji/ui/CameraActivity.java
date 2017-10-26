@@ -353,13 +353,6 @@ public class CameraActivity extends HSAppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pre = getIntent();
-                if (pre.getBooleanExtra("FaceGridAdapter", false)) {
-                    Intent i = new Intent(CameraActivity.this, FaceListActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                }
-
                 // Release camera and finish
                 onBackPressed();
             }

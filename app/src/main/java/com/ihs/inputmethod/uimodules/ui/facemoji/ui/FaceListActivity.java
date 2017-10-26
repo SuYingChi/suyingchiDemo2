@@ -22,6 +22,7 @@ import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 
 
 public class FaceListActivity extends HSAppCompatActivity implements View.OnClickListener, FaceGridAdapter.OnSelectedFaceChangedListener {
+    public final static String TOGGLE_MANAGE_FACE_MODE = "toggleManageFaceMode";
     private int screenHeight;
     private GridView faceGrid;
     private static final int PAGER_TOP_PADDING_PX = 10;
@@ -69,7 +70,7 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
         deleteBtn_param.height = getNavigateBarHeight();
 
         Intent intent = getIntent();
-        if (intent.getBooleanExtra("switchEditMode", false)) {
+        if (intent.getBooleanExtra(TOGGLE_MANAGE_FACE_MODE, false)) {
             switchEditMode();
         }
     }

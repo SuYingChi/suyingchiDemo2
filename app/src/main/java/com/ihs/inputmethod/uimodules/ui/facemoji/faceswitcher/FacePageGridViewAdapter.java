@@ -124,8 +124,8 @@ public class FacePageGridViewAdapter extends BaseAdapter {
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("FaceGridAdapter", true);
                     HSApplication.getContext().startActivity(i);
+                    FacemojiManager.hideFaceSwitchView();
                 }
             });
         } else {

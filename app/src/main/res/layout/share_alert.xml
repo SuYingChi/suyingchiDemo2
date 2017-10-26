@@ -4,10 +4,13 @@
     android:layout_height="wrap_content"
     android:background="@drawable/white_round_rectangle_bg"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp">
 
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/back_button_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,12 +20,14 @@
 
         <ImageView
             android:id="@+id/share_alert_close_btn"
+            android:layout_margin="10dp"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/close_btn" />
+            android:src="@drawable/ic_facemoji_share_close" />
     </LinearLayout>
 
     <TextView
+        android:layout_marginTop="20dp"
         android:id="@+id/share_alert_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

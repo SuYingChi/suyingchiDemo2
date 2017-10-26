@@ -280,7 +280,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
     @Override
     public void onFacemojiClicked(FacemojiSticker sticker) {
-        HSAnalytics.logEvent("app_facemoji_shared",sticker.getCategoryName()+"-"+sticker.getName());
+        HSAnalytics.logEvent("keyboard_facemoji_sent","categoryAndName",sticker.getCategoryName()+"-"+sticker.getName());
         mStickerPalettesAdapter.pauseAnimation();
         MediaController.getShareManager().shareFacemojiWithKeyboard(sticker, mProgressListener);
     }

@@ -477,8 +477,10 @@ public class FacemojiManager {
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("toggleEditMode", true);
+                i.putExtra(FaceListActivity.TOGGLE_MANAGE_FACE_MODE, true);
                 HSApplication.getContext().startActivity(i);
+
+                hideFaceSwitchView();
             }
         });
     }
