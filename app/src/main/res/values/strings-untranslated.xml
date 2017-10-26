@@ -24,7 +24,7 @@
     <string name="facemoji_in_progress">FaceMoji in progress...</string>
 
     <string name="my_facemoji_toolbar_title">MY FACEMOJI</string>
-    <string name="my_facemoji_send_facemoji_tip">Alerady ROFL? Go send them on Emoji keyboard!</string>
+    <string name="my_facemoji_send_facemoji_tip">Already ROFL?Send directly on Emoji Keyboard!</string>
 
     <string name="switch_facemoji_toolbar_title">Switch Face</string>
     <string name="switch_facemoji_selected_status_title">%d Selected</string>
