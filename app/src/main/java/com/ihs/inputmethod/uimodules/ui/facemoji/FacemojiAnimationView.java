@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -16,9 +17,9 @@ import java.util.concurrent.TimeUnit;
  * Created by xu.zhang on 3/28/16.
  */
 public class FacemojiAnimationView extends AppCompatImageView {
+    private ScheduledFuture<?> schedule;
 
     private int mIndex;
-    private boolean mShouldRun;
     private boolean mIsRunning;
     private Bitmap buffer;
 
@@ -55,7 +56,6 @@ public class FacemojiAnimationView extends AppCompatImageView {
     public FacemojiAnimationView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mIndex = 0;
-        mShouldRun = false;
         mIsRunning = false;
 
         mExecutor = FacemojiRenderingExecutor.getInstance();
@@ -68,31 +68,29 @@ public class FacemojiAnimationView extends AppCompatImageView {
         if (sticker == null) {
             return;
         }
-        if (mIsRunning){
+        if (mIsRunning) {
             return;
         }
 
-        mShouldRun = true;
         mIsRunning = true;
 
-        mExecutor.schedule( new Thread() {
+        mExecutor.schedule(new Thread() {
             @Override
             public void run() {
 
-                if (!mShouldRun) {
-                    mIsRunning = false;
+                if (!mIsRunning) {
                     mExecutor.remove(this);
                     return;
                 }
 
                 long startTime = System.currentTimeMillis();
-                buffer = FacemojiManager.getFrame(sticker, mIndex,false);
+                buffer = FacemojiManager.getFrame(sticker, mIndex, false);
                 mHandler.sendEmptyMessage(INVALIDATE_ANIM);
                 long endTime = System.currentTimeMillis();
                 lastFramePrepareTime = endTime - startTime;
 
                 mExecutor.remove(this);
-                mExecutor.schedule(this, Math.max(sticker.getFrames().get(mIndex).getInterval() - lastFramePrepareTime , 0), TimeUnit.MILLISECONDS);
+                schedule = mExecutor.schedule(this, Math.max(sticker.getFrames().get(mIndex).getInterval() - lastFramePrepareTime, 0), TimeUnit.MILLISECONDS);
 
                 if (mIndex == sticker.getFrames().size() - 1) {
                     mIndex = 0;
@@ -100,7 +98,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
                     mIndex++;
                 }
             }
-        }, Math.max(sticker.getFrames().get(mIndex).getInterval() - lastFramePrepareTime , 0), TimeUnit.MILLISECONDS);
+        }, Math.max(sticker.getFrames().get(mIndex).getInterval() - lastFramePrepareTime, 0), TimeUnit.MILLISECONDS);
     }
 
     final ScheduledThreadPoolExecutor mExecutor;
@@ -110,20 +108,22 @@ public class FacemojiAnimationView extends AppCompatImageView {
             return;
         }
 
-        setImageBitmap(FacemojiManager.getFrame(sticker, 0,false));
+        setImageBitmap(FacemojiManager.getFrame(sticker, 0, false));
     }
 
     /**
      * Stops the animation
      */
     public synchronized void stop() {
-        mShouldRun = false;
         mIsRunning = false;
+        if (schedule != null) {
+            schedule.cancel(true);
+        }
         mHandler.removeCallbacksAndMessages(null);
     }
 
     public boolean isRuning() {
-        return mShouldRun;
+        return mIsRunning;
     }
 
     @Override

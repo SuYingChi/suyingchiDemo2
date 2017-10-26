@@ -149,14 +149,19 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     }
 
     private boolean playAnim;
-    public void startAnim(){
-        playAnim = true;
-        notifyDataSetChanged();
+
+    public void startAnim() {
+        if (!playAnim){
+            playAnim = true;
+            notifyDataSetChanged();
+        }
     }
 
     public void stopAnim(){
-        playAnim = false;
-        notifyDataSetChanged();
+        if (playAnim) {
+            playAnim = false;
+            notifyDataSetChanged();
+        }
     }
 
     @Override

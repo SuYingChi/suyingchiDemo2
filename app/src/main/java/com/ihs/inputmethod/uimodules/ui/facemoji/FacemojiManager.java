@@ -176,10 +176,6 @@ public class FacemojiManager {
             editor.commit();
 
             try {
-                if (originFace != null) {
-                    originFace.recycle();
-                }
-
                 originFace = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), currentFacePicUri);
             } catch (Exception e) {
                 e.printStackTrace();
