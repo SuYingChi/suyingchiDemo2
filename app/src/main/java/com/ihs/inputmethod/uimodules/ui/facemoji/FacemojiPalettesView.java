@@ -217,7 +217,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
     @Override
     public void onPageSelected(int position) {
-        final Pair<Integer, Integer> newPos = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(position);
+        final Pair<Integer, Integer> newPos = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(position,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);
         setCurrentCategoryId(newPos.first /* categoryId */, false /* force */);
         FacemojiManager.setCurrentCategoryPageId(newPos.second /* categoryPageId */);
     }
@@ -250,11 +250,11 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     }
 
     private void setCurrentCategoryId(int categoryId, boolean force) {
-        Pair<Integer, Integer> categoryIdAndPageIdFromPagePosition = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(mViewPager.getCurrentItem());
-        int totalPageOfCurrentCategory = FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first);
+        Pair<Integer, Integer> categoryIdAndPageIdFromPagePosition = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(mViewPager.getCurrentItem(),FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);
+        int totalPageOfCurrentCategory = FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);
         if (totalPageOfCurrentCategory > 1) {
             pageIndicatorView.setVisibility(VISIBLE);
-            pageIndicatorView.updateIndicator(categoryIdAndPageIdFromPagePosition.second, FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first));
+            pageIndicatorView.updateIndicator(categoryIdAndPageIdFromPagePosition.second, FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation));
         }else {
             pageIndicatorView.setVisibility(INVISIBLE);
         }
@@ -266,7 +266,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         FacemojiManager.getInstance().setCurrentCategoryId(categoryId);
 
         int newTabId = categoryId;
-        final int newCategoryPageId = FacemojiManager.getInstance().getPageIdFromCategoryId(categoryId);
+        final int newCategoryPageId = FacemojiManager.getInstance().getPageIdFromCategoryId(categoryId,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);
 
 
         if (force || categoryIdAndPageIdFromPagePosition.first != categoryId) {

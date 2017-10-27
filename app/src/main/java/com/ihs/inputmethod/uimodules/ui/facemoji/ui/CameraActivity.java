@@ -897,7 +897,7 @@ public class CameraActivity extends HSAppCompatActivity {
         srcBitmap = bitmap;
         beautyBitmap = gpuImage.getBitmapWithFilterApplied(srcBitmap);
 
-        float scale = (float)previewContainer.getWidth()/ bitmap.getWidth();
+        float scale = (float)DisplayUtils.getScreenWidthForContent()/ bitmap.getWidth();
         Matrix matrix = new Matrix();
         matrix.setScale(scale,scale);
         photoView.setImageMatrix(matrix);

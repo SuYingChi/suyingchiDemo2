@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
@@ -30,7 +31,7 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
 
     @Override
     public int getCount() {
-        return FacemojiManager.getInstance().getTotalPageCount();
+        return FacemojiManager.getInstance().getTotalPageCount(FacemojiManager.ShowLocation.Keyboard,mFacemojiPalettesView.getResources().getConfiguration().orientation);
     }
 
     @Override
@@ -61,14 +62,14 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
         final LayoutInflater inflater = LayoutInflater.from(container.getContext());
         final FacemojiPageGridView gifPageGridView = (FacemojiPageGridView) inflater.inflate(R.layout.facemoji_page_view, container, false);
 
-        List<FacemojiSticker> data = FacemojiManager.getInstance().getDataFromPagePosition(position);
+        List<FacemojiSticker> data = FacemojiManager.getInstance().getDataFromPagePosition(position, FacemojiManager.ShowLocation.Keyboard,container.getResources().getConfiguration().orientation);
 
         int height;
         int width;
-        if (data.get(0).getWidth() == data.get(0).getHeight()){
+        if (data.get(0).getWidth() == data.get(0).getHeight()) {
             mImageLayoutParams.setPageGridViewProperties(gifPageGridView);
-            height = width = Math.min(mImageLayoutParams.getViewWidth(),mImageLayoutParams.getViewHeight());
-        }else {
+            height = width = Math.min(mImageLayoutParams.getViewWidth(), mImageLayoutParams.getViewHeight());
+        } else {
             Resources resources = HSApplication.getContext().getResources();
             int verticalSpacing = resources.getDimensionPixelSize(R.dimen.facemoji_keyboard_grid_vertical_space);
             int horizontalSpacing = resources.getDimensionPixelSize(R.dimen.facemoji_keyboard_grid_horizontal_space);
@@ -77,8 +78,13 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
             gifPageGridView.setHorizontalSpacing(horizontalSpacing);
             gifPageGridView.setNumColumns(columns);
 
-            height = (container.getMeasuredHeight() - verticalSpacing) / 2;
-            width = (container.getMeasuredWidth() - horizontalSpacing * (columns - 1)) / columns;
+            if (container.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                width = (container.getMeasuredWidth() - horizontalSpacing * (columns - 1)) / columns;
+                height = container.getMeasuredHeight();
+            } else {
+                height = (container.getMeasuredHeight() - verticalSpacing) / 2;
+                width = (container.getMeasuredWidth() - horizontalSpacing * (columns - 1)) / columns;
+            }
         }
 
         FacemojiPageGridAdapter adapter = new FacemojiPageGridAdapter(

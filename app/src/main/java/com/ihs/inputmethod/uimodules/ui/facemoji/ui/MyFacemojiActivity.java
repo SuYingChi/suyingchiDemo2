@@ -167,6 +167,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     @Override
     protected void onResume() {
         super.onResume();
+        mFacemojiPalettesAdapter.startAnim(mCurrentPagerPosition);
         if (null == FacemojiManager.getDefaultFacePicUri()) {
             finish();
             return;

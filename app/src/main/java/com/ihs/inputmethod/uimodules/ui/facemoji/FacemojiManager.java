@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -55,6 +56,9 @@ import java.util.zip.ZipFile;
 
 
 public class FacemojiManager {
+    public enum ShowLocation {
+        Keyboard,App
+    }
 
     private static final String FACE_PICTURE_URI = "face_picture_uri";
     private static final String UPLOAD_FILE_PATH = "upload_file_path";
@@ -199,12 +203,7 @@ public class FacemojiManager {
                 try {
                     FacemojiManager.currentFacePicUri = Uri.parse(uri);
 
-                    if (originFace != null) {
-                        originFace.recycle();
-                    }
-
                     originFace = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), currentFacePicUri);
-
                     return FacemojiManager.currentFacePicUri;
                 } catch (Exception e) {
                     HSLog.d("face pic does not exist");
@@ -417,7 +416,10 @@ public class FacemojiManager {
         }
     }
 
-    public static int getCurrentPageSize() {
+    public static int getCurrentPageSize(ShowLocation showLocation, int orientation, FacemojiSticker facemojiSticker) {
+        if (showLocation == FacemojiManager.ShowLocation.Keyboard && orientation == Configuration.ORIENTATION_LANDSCAPE && facemojiSticker.getWidth() != facemojiSticker.getHeight()) {
+            return 3;
+        }
         return currentPageSize;
     }
 
@@ -618,19 +620,19 @@ public class FacemojiManager {
         }
     }
 
-    public List<FacemojiSticker> getDataFromPagePosition(int position) {
-        Pair<Integer, Integer> pair = getCategoryIdAndPageIdFromPagePosition(position);
+    public List<FacemojiSticker> getDataFromPagePosition(int position,ShowLocation showLocation, int orientation) {
+        Pair<Integer, Integer> pair = getCategoryIdAndPageIdFromPagePosition(position,showLocation,orientation);
         if (pair == null) {
             return new ArrayList<>();
         }
-        return getCategories().get(pair.first).getStickerList(pair.second);
+        return getCategories().get(pair.first).getStickerList(pair.second,showLocation,orientation);
     }
 
-    public Pair<Integer, Integer> getCategoryIdAndPageIdFromPagePosition(final int position) {
+    public Pair<Integer, Integer> getCategoryIdAndPageIdFromPagePosition(final int position,ShowLocation showLocation, int orientation) {
         int sum = 0;
         for (final FacemojiCategory category : getCategories()) {
             final int temp = sum;
-            sum += category.getPageCount();
+            sum += category.getPageCount(showLocation, orientation);
             if (sum > position) {
                 return new Pair<>(category.getCategoryId(), position - temp);
             }
@@ -647,20 +649,16 @@ public class FacemojiManager {
         return -1;
     }
 
-    public int getCurrentCategoryPageSize() {
-        return getCategoryPageSize(currentClassicCategoryId);
-    }
-
-    public int getCategoryPageSize(final int categoryId) {
+    public int getCategoryPageSize(final int categoryId,ShowLocation showLocation, int orientation) {
         for (final FacemojiCategory category : getCategories()) {
             if (category.getCategoryId() == categoryId) {
-                return category.getPageCount();
+                return category.getPageCount(showLocation, orientation);
             }
         }
         return 0;
     }
 
-    public int getPageIdFromCategoryId(final int categoryId) {
+    public int getPageIdFromCategoryId(final int categoryId,ShowLocation showLocation, int orientation) {
         String key = PREF_CATEGORY_LAST_PAGE_ID + categoryId;
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
         final int lastSavedCategoryPageId = mPrefs.getInt(key, 0);
@@ -671,15 +669,15 @@ public class FacemojiManager {
             if (category.getCategoryId() == categoryId) {
                 return sum + lastSavedCategoryPageId;
             }
-            sum += category.getPageCount();
+            sum += category.getPageCount(showLocation, orientation);
         }
         return 0;
     }
 
-    public int getTotalPageCount() {
+    public int getTotalPageCount(ShowLocation showLocation, int orientation) {
         int sum = 0;
         for (FacemojiCategory category : getCategories()) {
-            sum += category.getPageCount();
+            sum += category.getPageCount(showLocation,orientation);
         }
         return sum;
     }

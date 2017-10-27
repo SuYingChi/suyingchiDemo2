@@ -218,18 +218,14 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         Point size = new Point();
         display.getSize(size);
 
-        param.width = (int) (size.x * 0.85);
+        param.width = (int) (size.x * 0.95);
         dialog.getWindow().setAttributes(param);
 
         stickerPlayer = (FacemojiAnimationView) dialog.findViewById(R.id.share_sticker_preview);
-        LinearLayout.LayoutParams playerParam = (LinearLayout.LayoutParams) stickerPlayer.getLayoutParams();
-        playerParam.height = (int) (size.y * 0.57 * 0.5);
-        stickerPlayer.setLayoutParams(playerParam);
-        stickerPlayer.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         RecyclerView shareRecyclerView = (RecyclerView) dialog.findViewById(R.id.share_apps_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HSApplication.getContext(), 4);
-        shareRecyclerView.addItemDecoration(new SpacesItemDecoration(HSApplication.getContext().getResources().getDimension(R.dimen.facemoji_share_alert_share_app_recycler_horizontal_space), HSApplication.getContext().getResources().getDimension(R.dimen.facemoji_share_alert_share_app_recycler_vertical_space)));
+        shareRecyclerView.addItemDecoration(new SpacesItemDecoration(HSApplication.getContext().getResources().getDimension(R.dimen.facemoji_share_alert_share_app_recycler_vertical_space), HSApplication.getContext().getResources().getDimension(R.dimen.facemoji_share_alert_share_app_recycler_horizontal_space)));
         shareRecyclerView.setLayoutManager(gridLayoutManager);
 
         shareAdapter = new ShareAdapter(getSharedAppsList());
