@@ -1,0 +1,45 @@
+libCommons:
+  RemoteConfig:
+    UpdateInterval: 10
+    PlistFile: "Local.ic"
+    PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-emojikeyboard-2.0.6.ic"
+  Analytics:
+      FlurryKey: "FC2GWXDVFTZHFK7KX6KV"
+      FacebookID: "1474873346171463"
+      TapjoySDKKey: "xngEmwWtQly0k_AqtdONawECiQlH0ihPQFWD0LYIPuBwFQqH1SU3JkosT66A"
+      FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
+      GoogleTrackId: "UA-64233211-2"
+  DiverseSession:
+    AppManageDiverseSession: true
+  ImageCache:
+    CacheSize: 0
+
+  Market:
+    DefaultMarket: "Google"
+    Markets:
+      Google:
+        AppPackage: "com.android.vending"
+        AppUrl: "market://details?id="
+        WebUrl: "https://play.google.com/store/apps/details?id="
+      Amazon:
+        AppPackage: "com.amazon.venezia"
+        AppUrl: "amzn://apps/android?p="
+        WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
+  Connection:
+    SigKey: "1"
+    HashKey: "x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!"
+  AppId: "610"
+
+libFramework:
+  Push:
+    SenderID: "805407701758"
+    SendTokenToServer: yes
+  Alerts:
+    LocalFile: "Alerts.ic"
+    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/emojikeyboard-2.0.6-alerts.ic"
+      
+libKeyboard:
+  DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
+
+Application:
+  WallpaperAPIURL: "https://dev-service.appcloudbox.net/wallpapers/"
