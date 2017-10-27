@@ -61,7 +61,7 @@
 
 
     <!--&lt;!&ndash; required by device permanent &ndash;&gt;-->
-    <string name="sync_account_type">com.smartkeyboard.emoji.sync</string>
+    <string name="sync_account_type">com.mobipioneer.emojikeyboard.sync</string>
     <string name="accessibility_service_description">"Turn 'ON' the switch on the top right. ↗️⊙.⊙↗️
 With accessibility authorization, you'll get the best typing experience on different apps!
 
