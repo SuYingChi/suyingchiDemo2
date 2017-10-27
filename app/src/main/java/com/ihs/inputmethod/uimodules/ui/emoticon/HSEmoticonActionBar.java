@@ -230,7 +230,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         final ImageView deleteKey = new ImageView(getContext());
         deleteKey.setScaleType(ImageView.ScaleType.CENTER);
         deleteKey.setTag(Constants.CODE_DELETE);
-        deleteKey.setImageDrawable(deleteKeyDrawable);
+        deleteKey.setImageDrawable(getTabDrawable(R.drawable.ic_delete_panel_tab));
         deleteKey.setOnTouchListener(new DeleteKeyOnTouchListener(getContext()));
         // 56dp fixed
         final LayoutParams params = new LayoutParams(HSDisplayUtils.dip2px(56), height);
@@ -240,44 +240,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     }
 
     private ImageView getBtnImage(final String panelName) {
-        Drawable tabbarBtnDrawable;
-        if (PANEL_FACEEMOJI.equals(panelName)) {
-            Resources resources = HSApplication.getContext().getResources();
-            boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
-            int pressColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_selected_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_selected_color);
-            int normalColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_normal_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_normal_color);
-
-            Drawable drawable = VectorDrawableCompat.create(resources, R.drawable.ic_facemoji_panel_tab, null);
-            DrawableCompat.setTintList(drawable, new ColorStateList(
-                    new int[][]
-                            {
-                                    new int[]{android.R.attr.state_focused},
-                                    new int[]{android.R.attr.state_pressed},
-                                    new int[]{android.R.attr.state_selected},
-                                    new int[]{}
-                            },
-                    new int[]
-                            {
-                                    pressColor,
-                                    pressColor,
-                                    pressColor,
-                                    normalColor,
-                            }
-            ));
-            tabbarBtnDrawable = drawable;
-        } else {
-            final StateListDrawable stateListDrawable = new StateListDrawable();
-            final Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_unselected");
-            final Drawable pressedDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_selected");
-
-
-            stateListDrawable.addState(new int[]{android.R.attr.state_focused}, pressedDrawable);
-            stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedDrawable);
-            stateListDrawable.addState(new int[]{android.R.attr.state_selected}, pressedDrawable);
-            stateListDrawable.addState(new int[]{}, drawable);
-            tabbarBtnDrawable = stateListDrawable;
-        }
-
+        Drawable tabbarBtnDrawable = getTabDrawable(HSApplication.getContext().getResources().getIdentifier("ic_" + panelName + "_panel_tab", "drawable", HSApplication.getContext().getPackageName()));
         ImageView tabbarBtn = new ImageView(HSApplication.getContext());
         tabbarBtn.setScaleType(ImageView.ScaleType.CENTER);
         tabbarBtn.setImageDrawable(tabbarBtnDrawable);
@@ -285,6 +248,33 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         tabbarBtn.setBackgroundDrawable(getBackgroundDrawable());
         tabbarBtn.setSoundEffectsEnabled(false);
         return tabbarBtn;
+    }
+
+    @NonNull
+    private Drawable getTabDrawable(int resId) {
+        Resources resources = HSApplication.getContext().getResources();
+        boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
+        int pressColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_selected_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_selected_color);
+        int normalColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_normal_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_normal_color);
+
+        Drawable tabbarBtnDrawable = VectorDrawableCompat.create(resources,resId, null);
+        DrawableCompat.setTintList(tabbarBtnDrawable, new ColorStateList(
+                new int[][]
+                        {
+                                new int[]{android.R.attr.state_focused},
+                                new int[]{android.R.attr.state_pressed},
+                                new int[]{android.R.attr.state_selected},
+                                new int[]{}
+                        },
+                new int[]
+                        {
+                                pressColor,
+                                pressColor,
+                                pressColor,
+                                normalColor,
+                        }
+        ));
+        return tabbarBtnDrawable;
     }
 
     @NonNull
@@ -319,12 +309,14 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         if (tag != null && tag instanceof String) {
             Class panel = panels.get(tag);
             if (containerListener != null && panel != null) {
-                saveLastPanelName(tag.toString());
+                //去掉记忆功能
+//                saveLastPanelName(tag.toString());
                 containerListener.showPanel(panel);
                 HSAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
             }
         } else {
             if (v.getId() == alphabet_left.getId() && keyboardActionListener != null) {
+                saveLastPanelName(PANEL_EMOJI);
                 keyboardActionListener.showPanel(KeyboardPanel.class);
                 keyboardActionListener.setBarVisibility(VISIBLE);
                 keyboardActionListener = null;
