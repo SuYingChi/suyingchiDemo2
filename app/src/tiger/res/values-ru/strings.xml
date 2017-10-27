@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="feedback_email">feedback.emoji@hotmail.com</string>
-    <string name="fb_app_id">1474873346171463</string>
+    <string name="feedback_email">feedback.mobipioneer@hotmail.com</string>
+    <string name="fb_app_id">725261934240541</string>
 
     <string name="accessibility_service_description">Переведите переключатель в верхней правом углу в положение «ON». ↗️⊙.⊙↗️
 Предоставив права доступа, вы сможете вводить текст с максимальным удобством в любом приложении!
 Примечание: вы можете получать системные уведомления об авторизации, RainbowKey НЕ БУДЕТ собирать КАКИЕ-ЛИБО сведения о вас.</string>
 
-    <string name="theme_share_text_content">Моя личная клавиатура, созданная в #%1$s https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
-    <string name="theme_share_text_content_for_custom_theme">Настройте собственную клавиатуру с любимыми картинками!✌️😍👍 Загрузите #%1$s бесплатно: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
-    <string name="settings_button_tell_a_friend_content">Hey, Du hast dir die App %1$s angesehen. Du kannst deine Tastatur mit deinen eigenen Bildern ausstatten! Und die Schriftarten und Fonts sind der Wahnsinn! Downloade #%2$s gratis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="theme_share_text_content">Моя личная клавиатура, созданная в #%1$s https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
+    <string name="theme_share_text_content_for_custom_theme">Настройте собственную клавиатуру с любимыми картинками!✌️😍👍 Загрузите #%1$s бесплатно: https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
+    <string name="settings_button_tell_a_friend_content">Hey, Du hast dir die App %1$s angesehen. Du kannst deine Tastatur mit deinen eigenen Bildern ausstatten! Und die Schriftarten und Fonts sind der Wahnsinn! Downloade #%2$s gratis: https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
 </resources>
