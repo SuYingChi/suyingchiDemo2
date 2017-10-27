@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.feature.common.ConcurrentUtils;
@@ -74,7 +75,12 @@ public class StickerDownloadManager {
             HSZipUtils.unzip(new File(stickerGroupZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
             DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_STICKER_NAME_JOIN, stickerGroup.getStickerGroupName());
             StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
-            StickerSuggestionManager.updateConfig();
+            HSThreadUtils.execute(new Runnable() {
+                @Override
+                public void run() {
+                    StickerSuggestionManager.updateConfig();
+                }
+            });
         } catch (ZipException e) {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.unzip_sticker_group_failed), Toast.LENGTH_SHORT).show();
             HSLog.e(e.getMessage());
