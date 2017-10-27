@@ -4502,6 +4502,8 @@
 			</dict>
 			<key>Server</key>
 			<dict>
+				<key>StickerSuggestionBaseURL</key>
+				<string>https://emojidevelop.s3.amazonaws.com/apps_android/sticker_suggestion</string>
 				<key>EmojiSuggestionBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/emoji_suggestion</string>
 				<key>FontDownloadBaseURL</key>

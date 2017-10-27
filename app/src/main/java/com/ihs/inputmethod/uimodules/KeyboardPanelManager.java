@@ -28,7 +28,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.adpanel.KeyboardPanelAdManager;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -454,6 +453,13 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 recyclerView.setLayoutManager(linearLayoutManager);
                 stickerSuggestionAdapter = new StickerSuggestionAdapter(stickerList);
                 recyclerView.setAdapter(stickerSuggestionAdapter);
+                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                        HSFloatWindowManager.getInstance().refreshStickerWindowTimer();
+                    }
+                });
             } else {
                 RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.rv_sticker);
                 stickerSuggestionAdapter = (StickerSuggestionAdapter) recyclerView.getAdapter();

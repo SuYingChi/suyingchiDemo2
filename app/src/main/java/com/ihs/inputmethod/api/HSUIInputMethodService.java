@@ -411,9 +411,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
-        if (!restarting) {
-            isAppSupportSticker = StickerUtils.isEditTextSupportSticker(currentAppPackageName);
-        }
+        isAppSupportSticker = true;
+//        if (!restarting) {
+//            isAppSupportSticker = StickerUtils.isEditTextSupportSticker(currentAppPackageName);
+//        }
     }
 
     @Override
@@ -485,6 +486,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     protected void showStickerSuggestionByName(String stickerTag, ArrayList<String> stickerNameByString) {
         List<Sticker> stickerList = new ArrayList<>();
+        if (!TextUtils.isEmpty(stickerTag) && Character.isLetter(stickerTag.codePointAt(stickerTag.length() - 1))) {
+            if (stickerNameByString == null || stickerNameByString.size() <= 0) {
+                HSFloatWindowManager.getInstance().removeFloatingWindow();
+            }
+        }
+
         if (stickerNameByString != null && stickerNameByString.size() > 0) {
             for (String stickerName : stickerNameByString) {
                 if (StickerDataManager.getInstance().isStickerGroupDownloaded(StickerUtils.getGroupNameByStickerName(stickerName))) {
@@ -496,8 +503,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
             getKeyboardPanelMananger().showSuggestedStickers(stickerTag, StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
             HSAnalytics.logEvent("keyboard_sticker_prediction_show", "sticker tag", stickerTag);
-        } else {
-            HSFloatWindowManager.getInstance().removeFloatingWindow();
         }
     }
 }

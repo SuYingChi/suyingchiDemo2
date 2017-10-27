@@ -166,4 +166,7 @@ public class HSFloatWindowManager {
         }
     }
 
+    public void refreshStickerWindowTimer() {
+        handler.sendEmptyMessageDelayed(MSG_REMOVE_STICKER_VIEW, 5000);
+    }
 }
