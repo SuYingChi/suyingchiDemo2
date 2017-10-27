@@ -32,7 +32,7 @@ public class HSFloatWindowManager {
             switch (msg.what) {
                 case MSG_REMOVE_STICKER_VIEW:
                     if (!handler.hasMessages(MSG_REMOVE_STICKER_VIEW)) {
-//                        removeFloatingWindow();
+                        removeFloatingWindow();
                     }
                     break;
             }

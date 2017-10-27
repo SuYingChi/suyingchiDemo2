@@ -9,6 +9,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
+import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.feature.common.ConcurrentUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
@@ -58,8 +59,8 @@ public class StickerDownloadManager {
         String stickerDownloadNames = HSPreferenceHelper.getDefault().getString(DOWNLOADED_STICKER_NAME_JOIN, "");
         try {
             JSONArray jsonArray = new JSONArray(stickerDownloadNames);
-            for (int i = jsonArray.length()-1; i >= 0; i--) {
-                stickerNames.add((String)jsonArray.get(i));
+            for (int i = jsonArray.length() - 1; i >= 0; i--) {
+                stickerNames.add((String) jsonArray.get(i));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -73,6 +74,7 @@ public class StickerDownloadManager {
             HSZipUtils.unzip(new File(stickerGroupZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
             DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_STICKER_NAME_JOIN, stickerGroup.getStickerGroupName());
             StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
+            StickerSuggestionManager.updateConfig();
         } catch (ZipException e) {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.unzip_sticker_group_failed), Toast.LENGTH_SHORT).show();
             HSLog.e(e.getMessage());
@@ -81,15 +83,15 @@ public class StickerDownloadManager {
     }
 
     /**
-     *
      * Try to copy a asset sticker file to sd card.
+     *
      * @param sticker
      * @param v
      * @param callback
      */
-    public  void tryLoadAssetSticker(Sticker sticker, View v,LoadingAssetStickerCallback callback) {
-        AssetStickerProcessTask task = new AssetStickerProcessTask(sticker,v,callback);
-        ConcurrentUtils.postOnThreadPoolExecutor (task);
+    public void tryLoadAssetSticker(Sticker sticker, View v, LoadingAssetStickerCallback callback) {
+        AssetStickerProcessTask task = new AssetStickerProcessTask(sticker, v, callback);
+        ConcurrentUtils.postOnThreadPoolExecutor(task);
     }
 
     /**
@@ -97,15 +99,15 @@ public class StickerDownloadManager {
      */
     private static class AssetStickerProcessTask implements Runnable {
         SoftReference<View> view;
-        public Sticker sticker ;
+        public Sticker sticker;
         LoadingAssetStickerCallback callback;
         public File resultFile;
 
-        public AssetStickerProcessTask(Sticker sticker,View v,LoadingAssetStickerCallback callback) {
+        public AssetStickerProcessTask(Sticker sticker, View v, LoadingAssetStickerCallback callback) {
             this.sticker = sticker;
             this.view = new SoftReference<View>(v);
             this.resultFile = new File(StickerUtils.getStickerLocalPath(this.sticker));
-            this.callback =  callback;
+            this.callback = callback;
         }
 
         @Override
@@ -114,24 +116,24 @@ public class StickerDownloadManager {
                 UIController.getInstance().getUIHandler().post(new Runnable() {
                     @Override
                     public void run() {
-                         callback.processFailed(sticker,new Exception("Null sticker"));
+                        callback.processFailed(sticker, new Exception("Null sticker"));
                     }
                 });
-                return  ;
+                return;
             }
             if (this.resultFile.exists()) {
                 UIController.getInstance().getUIHandler().post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.processSucceeded(sticker, resultFile, view.get() );
+                        callback.processSucceeded(sticker, resultFile, view.get());
                     }
                 });
-                return   ;
+                return;
             }
 
             String stickerFileName = sticker.getStickerName() + sticker.getStickerFileSuffix();
             String stickerAssetFolderPath = StickerUtils.getStickerAssetFolderPath(sticker);
-            AssetManager assetManager = HSApplication.getContext(). getAssets();
+            AssetManager assetManager = HSApplication.getContext().getAssets();
             String[] files = null;
             try {
                 files = assetManager.list(stickerAssetFolderPath);
@@ -163,7 +165,7 @@ public class StickerDownloadManager {
                         UIController.getInstance().getUIHandler().post(new Runnable() {
                             @Override
                             public void run() {
-                                callback.processSucceeded(sticker, resultFile,view.get() );
+                                callback.processSucceeded(sticker, resultFile, view.get());
                             }
                         });
 
@@ -172,7 +174,7 @@ public class StickerDownloadManager {
                         UIController.getInstance().getUIHandler().post(new Runnable() {
                             @Override
                             public void run() {
-                                callback.processFailed(sticker,e);
+                                callback.processFailed(sticker, e);
                             }
                         });
                     } finally {
@@ -194,12 +196,12 @@ public class StickerDownloadManager {
 
                     break;
                 }
-            }else {
+            } else {
 
                 UIController.getInstance().getUIHandler().post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.processFailed(sticker,new Exception("can't find the asset sticker file"));
+                        callback.processFailed(sticker, new Exception("can't find the asset sticker file"));
                     }
                 });
             }
@@ -208,15 +210,16 @@ public class StickerDownloadManager {
         private void copyFile(InputStream in, OutputStream out) throws IOException {
             byte[] buffer = new byte[1024];
             int read;
-            while((read = in.read(buffer)) != -1){
+            while ((read = in.read(buffer)) != -1) {
                 out.write(buffer, 0, read);
             }
         }
 
     }
 
-    public interface LoadingAssetStickerCallback{
-        void processSucceeded(Sticker sticker,File file, View view);
+    public interface LoadingAssetStickerCallback {
+        void processSucceeded(Sticker sticker, File file, View view);
+
         void processFailed(Sticker sticker, Exception e);
     }
 
