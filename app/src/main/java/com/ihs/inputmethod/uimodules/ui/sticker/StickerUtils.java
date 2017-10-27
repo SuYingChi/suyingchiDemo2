@@ -290,10 +290,7 @@ public class StickerUtils {
         Bitmap stickerShareBitmap = Bitmap.createScaledBitmap(stickerShareBitmapTemp, (int) (width * STICKER_ZOOM_RATIO), (int) (height * STICKER_ZOOM_RATIO), true);
         Canvas canvas = new Canvas(backgroundBitmap);
 
-        String color = getBackgroundColor(packageName);
-        if (!color.equals(ERROR_COLOR)) {
-            canvas.drawColor(Color.parseColor(color)); // 为背景着色
-        }
+        canvas.drawColor(Color.parseColor(getBackgroundColor(packageName))); // 为背景着色
 
         Paint p = new Paint();
         p.setAntiAlias(true);
@@ -342,7 +339,7 @@ public class StickerUtils {
                     return color;
                 }
             }
-            return ERROR_COLOR;
+            return "#FFFFFF";
         }
     }
 
