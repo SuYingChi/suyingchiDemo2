@@ -2,7 +2,7 @@ libCommons:
   RemoteConfig:
     UpdateInterval: 10
     PlistFile: "Local.mp"
-    PlistUrl: "http://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/configs/config-smileykeyboard-2.0.0.mp"
+    PlistUrl: "xxxhttp://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/configs/config-smileykeyboard-2.0.0.mp"
   Analytics:
       FlurryKey: "VFHX539WKM27R8ZZ5398"
       FacebookID: "725261934240541"
