@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.utils.ImageLoaderURIUtils;
 import com.kc.commons.configfile.KCList;
 import com.kc.commons.configfile.KCMap;
@@ -79,7 +80,7 @@ public class StickerGroup {
                     stickerImageFilePath = new StringBuilder(ASSETS_STICKER_FILE_NAME)
                             .append("/").append(stickerGroupName).append("/").append(imageName);
                     stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.Assets);
-                    filePath = "file:///android_asset/"+ stickerImageFilePath;
+                    filePath = "file:///android_asset/" + stickerImageFilePath;
                 } else if (isStickerGroupDownloaded()) {
                     stickerImageFilePath = new StringBuilder(getStickerFolderPath(stickerGroupName))
                             .append("/").append(imageName);
@@ -128,7 +129,7 @@ public class StickerGroup {
             open.close();
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            HSLog.e("FileNotFoundException: " + stickerGroupName + STICKER_CONFIG_FILE_SUFFIX);
         }
         return false;
     }

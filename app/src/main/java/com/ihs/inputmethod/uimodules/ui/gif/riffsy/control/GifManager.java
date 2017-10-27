@@ -17,7 +17,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.DaoHelper;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.download.GifDownloadTask;
@@ -26,7 +25,6 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
 
 import java.io.File;
-import java.util.Map;
 
 public final class GifManager {
 
@@ -56,9 +54,6 @@ public final class GifManager {
     }
 
 
-
-
-
     synchronized public void sendRequest(final BaseRequest request) {
         if (request != null) {
             RequestHandler.handleRequest(request);
@@ -73,63 +68,33 @@ public final class GifManager {
 
         File gifFile = DirectoryUtils.getDownloadGifUri(gif.id);
 
-        final Map<String, Object> shareModeMap = MediaShareUtils.getShareModeMap(packageName);
-        final boolean canSendDirectly = (Boolean) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_SEND_DIRECTLY);
-
         // 可以直接发送到对话列表中
-        if (canSendDirectly) {
-            String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
-            boolean gifSupported = false;
-            for (String mime_Type : mimeTypes) {
-                if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
-                    gifSupported = true;
-                }
-            }
-            if (gifSupported) {
-                Uri imageUri = getGifContentUri(HSApplication.getContext(), gifFile);
-                if (!gifFile.exists() || imageUri == null) {
-                    HSLog.e("send GIF directly failed.");
-                } else {
-                    commitGifImage(imageUri, "");
-                    return;
-                }
+        String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
+        boolean gifSupported = false;
+        for (String mime_Type : mimeTypes) {
+            if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
+                gifSupported = true;
             }
         }
-
-        final int mode = (int) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_MODE);
-        final String format = (String) shareModeMap.get(MediaShareUtils.IMAGE_SHARE_MODE_MAP_KEY_FORMAT);
-        final String mimeType;
-
-        if (format.equals(MediaShareUtils.IMAGE_SHARE_FORMAT_MP4)) {
-            if (gif.getMp4Url() != null) {
-                shareMp4(gif, callback);
+        if (gifSupported) {
+            Uri imageUri = getGifContentUri(HSApplication.getContext(), gifFile);
+            if (!gifFile.exists() || imageUri == null) {
+                HSLog.e("send GIF directly failed.");
+            } else {
+                commitGifImage(imageUri, "");
                 return;
             }
         }
 
+        final String mimeType;
+
         mimeType = "image/*";
         final String targetFilePath = DirectoryUtils.getImageExportFolder() + "/" + gif.getId() + ".gif";
-
-        switch (mode) {
-            // image
-            case MediaShareUtils.IMAGE_SHARE_MODE_INTENT:
-                HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
-                try {
-                    MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetFilePath)), mimeType, packageName);
-                } catch (Exception e) {
-                    HSInputMethod.inputText(gif.getUrl());
-                }
-                break;
-            // save to gallery
-            case ShareUtils.IMAGE_SHARE_MODE_EXPORT:
-                HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
-                MediaShareUtils.shareImageByExport(targetFilePath);
-                break;
-            case MediaShareUtils.IMAGE_SHARE_MODE_LINK:
-                HSInputMethod.inputText(gif.getUrl());
-                break;
-            default:
-                HSInputMethod.inputText(gif.getUrl());
+        HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
+        try {
+            MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetFilePath)), mimeType, packageName);
+        } catch (Exception e) {
+            HSInputMethod.inputText(gif.getUrl());
         }
     }
 

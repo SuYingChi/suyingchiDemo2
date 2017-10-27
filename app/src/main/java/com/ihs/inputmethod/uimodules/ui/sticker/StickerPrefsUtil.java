@@ -4,6 +4,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSPreferenceHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class StickerPrefsUtil {
     private static final String STICKER_PREFS_FILE = "sticker_prefs_file";
     private static final String STICKER_RECENTLY_USED = "sticker_recent";
+    private static final String STICKER_UNSUPPORT_APP = "sticker_unsupport_app";
     private static HSPreferenceHelper hsPreferenceHelper;
     private static StickerPrefsUtil instance;
 
@@ -36,6 +38,21 @@ public class StickerPrefsUtil {
         String str = stickerName + ";";
         stickerRecentlyUsed = stickerRecentlyUsed.replace(str, "");
         hsPreferenceHelper.putString(STICKER_RECENTLY_USED, str + stickerRecentlyUsed);
+    }
+
+    public void recordUnsupportApp(String packageName) {
+        String string = hsPreferenceHelper.getString(STICKER_UNSUPPORT_APP, "");
+        List<String> strings = Arrays.asList(string.split(";"));
+        if (!strings.contains(packageName)) {
+            string = string + packageName + ";";
+        }
+        hsPreferenceHelper.putString(STICKER_UNSUPPORT_APP, string);
+    }
+
+    public boolean isAppSupportSticker(String packageName) {
+        String string = hsPreferenceHelper.getString(STICKER_UNSUPPORT_APP, "");
+        List<String> strings = Arrays.asList(string.split(";"));
+        return !strings.contains(packageName);
     }
 
     public String getStickerUsedTimes() {
