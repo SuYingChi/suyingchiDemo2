@@ -70,6 +70,10 @@ public class CameraActivity extends HSAppCompatActivity {
     public static final String FACEMOJI_SAVED = "FACEMOJI_SAVED";
     public static final String FACE_CHANGED = "FACE_CHANGED";
     public static final String FACE_DELETED = "FACE_DELETED";
+
+    private int previewWidth;
+    private int previewHeight;
+
     private static final int SAMPLE_SIZE = 8;
     private Bitmap srcBitmap;
     private Bitmap beautyBitmap;
@@ -624,10 +628,9 @@ public class CameraActivity extends HSAppCompatActivity {
         final Camera.Parameters parameters = camera.getParameters();
         final ViewGroup.LayoutParams previewContainerLayoutParams = previewContainer.getLayoutParams();
 
-        previewContainerLayoutParams.width = DisplayUtils.getScreenWidthForContent();
-        previewContainerLayoutParams.height = parameters.getPreviewSize().width * previewContainerLayoutParams.width / parameters.getPreviewSize().height;
-
-        previewContainer.setLayoutParams(previewContainerLayoutParams);
+        setPreviewContainerLayoutParam(previewContainerLayoutParams,parameters);
+        previewWidth = previewContainerLayoutParams.width;
+        previewHeight = previewContainerLayoutParams.height;
 
         Camera.Size pictureSize = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
         parameters.setPictureSize(pictureSize.width, pictureSize.height);
@@ -641,6 +644,40 @@ public class CameraActivity extends HSAppCompatActivity {
 
         camera.setDisplayOrientation(getPreviewDegree());
         camera.startPreview(); // 开始预览
+    }
+
+    private void setPreviewContainerLayoutParam(ViewGroup.LayoutParams previewContainerLayoutParams, Camera.Parameters parameters) {
+        int screenWidth = DisplayUtils.getScreenWidthForContent();
+        int screenHeight = DisplayUtils.getScreenHeightForContent();
+
+        int previewWidth = parameters.getPreviewSize().height;
+        int previewHeight = parameters.getPreviewSize().width;
+
+        int viewHeight;
+        int viewWidth;
+
+        if ((float)previewWidth / previewHeight > (float) screenWidth  / screenHeight){
+            viewWidth = screenWidth;
+            viewHeight = (int) ((float)viewWidth * previewHeight / previewWidth);
+
+            if (viewHeight > screenHeight){
+                viewHeight = screenHeight;
+                viewWidth = (int) ((float)viewHeight * previewWidth / previewHeight);
+            }
+
+        }else {
+            viewHeight = previewHeight;
+            viewWidth = (int) ((float)viewHeight * previewWidth / previewHeight);
+
+            if (viewWidth > screenWidth){
+                viewWidth = screenWidth;
+                viewHeight = (int) ((float)viewWidth * previewHeight / previewWidth);
+            }
+        }
+
+
+        previewContainerLayoutParams.width = viewWidth;
+        previewContainerLayoutParams.height = viewHeight;
     }
 
     private void releaseCamera() {
@@ -705,25 +742,6 @@ public class CameraActivity extends HSAppCompatActivity {
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-    }
-
-    /**
-     * 将拍下来的照片存放在SD卡中
-     *
-     * @param face
-     */
-    private static void saveToSDCard(Bitmap face, File pngFile) {
-
-        FileOutputStream outputStream = null; // 文件输出流
-        try {
-            outputStream = new FileOutputStream(pngFile);
-            face.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            outputStream.close(); // 关闭输出流
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        FacemojiManager.getInstance().loadFaceList();
-        FacemojiManager.setCurrentFacePicUri(Uri.fromFile(pngFile));
     }
 
     /**
@@ -897,7 +915,7 @@ public class CameraActivity extends HSAppCompatActivity {
         srcBitmap = bitmap;
         beautyBitmap = gpuImage.getBitmapWithFilterApplied(srcBitmap);
 
-        float scale = (float)DisplayUtils.getScreenWidthForContent()/ bitmap.getWidth();
+        float scale = (float)previewWidth/ bitmap.getWidth();
         Matrix matrix = new Matrix();
         matrix.setScale(scale,scale);
         photoView.setImageMatrix(matrix);
