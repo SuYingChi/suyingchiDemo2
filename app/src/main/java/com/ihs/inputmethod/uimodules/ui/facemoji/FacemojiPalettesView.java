@@ -302,4 +302,10 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     public void onDestory() {
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
     }
+
+    public void stopAllAnim() {
+        if (mStickerPalettesAdapter != null) {
+            mStickerPalettesAdapter.stopAllAnimations();
+        }
+    }
 }

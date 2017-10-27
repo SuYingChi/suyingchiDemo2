@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 
 /**
@@ -46,15 +45,12 @@ public class AnimationLayout extends RelativeLayout {
     public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                HSLog.d("AAAAA ACTION_DOWN");
                 handleDown();
                 break;
             case MotionEvent.ACTION_UP:
-                HSLog.d("AAAAA ACTION_UP");
                 handleUp();
                 break;
             case MotionEvent.ACTION_CANCEL:
-                HSLog.d("AAAAA ACTION_CANCEL");
                 handleCancel();
                 break;
             default:
@@ -68,18 +64,14 @@ public class AnimationLayout extends RelativeLayout {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 // child not receive click event,so arrival here
-                HSLog.d("AAAAA ACTION_DOWN");
                 // if we do case the event,wo should recover the state before press
                 if(!super.onTouchEvent(event)){
-                    HSLog.d("AAAAA AnimationLayout ACTION_DOWN return false");
                     handleRecover();
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                HSLog.d("AAAAA ACTION_UP");
                 break;
             case MotionEvent.ACTION_CANCEL:
-                HSLog.d("AAAAA  onTouchEvent ACTION_CANCEL");
                 handleCancel();
                 break;
             default:
@@ -122,8 +114,6 @@ public class AnimationLayout extends RelativeLayout {
     }
 
     private void startScaleAnimation(float scaleX,float scaleY){
-//        setScaleX(scaleX);
-//        setScaleY(scaleY);
         clearAnimation();
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(ObjectAnimator.ofFloat(this, "scaleX", getScaleX(), scaleX), ObjectAnimator.ofFloat(this, "scaleY", getScaleY(), scaleY));

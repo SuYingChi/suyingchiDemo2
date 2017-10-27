@@ -167,7 +167,9 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     @Override
     protected void onResume() {
         super.onResume();
-        mFacemojiPalettesAdapter.startAnim(mCurrentPagerPosition);
+        if (mFacemojiPalettesAdapter != null) {
+            mFacemojiPalettesAdapter.startAnim(mCurrentPagerPosition);
+        }
         if (null == FacemojiManager.getDefaultFacePicUri()) {
             finish();
             return;
@@ -183,6 +185,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         // NOT use temp face if we quit
         FacemojiManager.setUsingTempFace(false);
         if (mFacemojiPalettesAdapter != null) {
+            mFacemojiPalettesAdapter.stopAllAnimations();
             mFacemojiPalettesAdapter.finish();
         }
         super.onStop();

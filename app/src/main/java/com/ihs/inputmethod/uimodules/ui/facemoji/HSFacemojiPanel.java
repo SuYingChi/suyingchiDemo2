@@ -3,6 +3,10 @@ package com.ihs.inputmethod.uimodules.ui.facemoji;
 import android.view.View;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -17,6 +21,14 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class HSFacemojiPanel extends BasePanel{
     private FacemojiPalettesView panelView;
+    private INotificationObserver notificationObserver = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (HSInputMethod.HS_NOTIFICATION_HIDE_WINDOW.equals(s)){
+                panelView.stopAllAnim();
+            }
+        }
+    };
 
     @Override
     protected View onCreatePanelView() {
@@ -41,12 +53,21 @@ public class HSFacemojiPanel extends BasePanel{
             }
         });
 
+        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_HIDE_WINDOW,notificationObserver);
+
         panelView.onPanelShow();
+    }
+
+    @Override
+    protected boolean onHidePanelView(int appearMode) {
+        panelView.stopAllAnim();
+        return super.onHidePanelView(appearMode);
     }
 
     @Override
     protected void onDestroy() {
         panelView.onDestory();
+        HSGlobalNotificationCenter.removeObserver(notificationObserver);
         super.onDestroy();
     }
 }

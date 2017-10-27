@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 
 import java.util.concurrent.ScheduledFuture;
@@ -64,16 +65,19 @@ public class FacemojiAnimationView extends AppCompatImageView {
     /**
      * Starts the animation
      */
-    public synchronized void start() {
+    public void start() {
         if (sticker == null) {
             return;
         }
-        if (mIsRunning) {
-            return;
+
+        synchronized (this) {
+            if (mIsRunning) {
+                return;
+            }
+            mIsRunning = true;
         }
 
-        mIsRunning = true;
-
+        HSLog.d("cjx",sticker.getName()+" start");
         mExecutor.schedule(new Thread() {
             @Override
             public void run() {
@@ -88,6 +92,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
                 mHandler.sendEmptyMessage(INVALIDATE_ANIM);
                 long endTime = System.currentTimeMillis();
                 lastFramePrepareTime = endTime - startTime;
+                HSLog.v("cjx", sticker.getName() + " getFrame cost time :" + lastFramePrepareTime + " and interval:" + sticker.getFrames().get(mIndex).getInterval());
 
                 mExecutor.remove(this);
                 schedule = mExecutor.schedule(this, Math.max(sticker.getFrames().get(mIndex).getInterval() - lastFramePrepareTime, 0), TimeUnit.MILLISECONDS);
@@ -114,8 +119,14 @@ public class FacemojiAnimationView extends AppCompatImageView {
     /**
      * Stops the animation
      */
-    public synchronized void stop() {
-        mIsRunning = false;
+    public void stop() {
+        synchronized (this) {
+            if (!mIsRunning) {
+                return;
+            }
+            mIsRunning = false;
+        }
+        HSLog.d("cjx",sticker.getName()+" stop");
         if (schedule != null) {
             schedule.cancel(true);
         }
