@@ -4421,76 +4421,54 @@
 					<dict>
 						<key>PackageName</key>
 						<string>com.google.android.apps.messaging</string>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
 						<string>gif</string>
 					</dict>
 					<dict>
 						<key>PackageName</key>
 						<string>com.tencent.mm</string>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
-						<string>mp4</string>
+						<string>gif</string>
 					</dict>
 					<dict>
 						<key>PackageName</key>
 						<string>kik.android</string>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
-						<string>mp4</string>
+						<string>gif</string>
 					</dict>
 					<dict>
 						<key>PackageName</key>
 						<string>com.whatsapp</string>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
 						<string>gif</string>
 					</dict>
 					<dict>
 						<key>PackageName</key>
 						<string>com.facebook.orca</string>
-						<key>SendDirectly</key>
-						<true/>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
 						<string>gif</string>
 					</dict>
 					<dict>
 						<key>PackageName</key>
 						<string>com.google.android.talk</string>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
 						<string>gif</string>
 					</dict>
 					<dict>
 						<key>PackageName</key>
 						<string>com.facebook.katana</string>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
-						<string>mp4</string>
+						<string>gif</string>
 					</dict>
 					<dict>
 						<key>PackageName</key>
 						<string>com.twitter.android</string>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
-						<string>mp4</string>
+						<string>gif</string>
 					</dict>
 					<dict>
 						<key>PackageName</key>
 						<string>com.snapchat.android</string>
-						<key>SendDirectly</key>
-						<true/>
-						<key>SendMode</key>
-						<integer>1</integer>
 						<key>SourceFormat</key>
 						<string>gif</string>
 					</dict>
@@ -4513,7 +4491,7 @@
 						</dict>
 						<dict>
 							<key>backgroundColor</key>
-							<string>#e1ffc7</string>
+							<string>#ffffff</string>
 							<key>packageName</key>
 							<string>com.whatsapp</string>
 						</dict>
