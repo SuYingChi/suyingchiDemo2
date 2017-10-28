@@ -437,14 +437,17 @@ public class MainActivity extends HSDeepLinkActivity {
                 }
             }
         }
-        if (getIntent().getBooleanExtra("isInStepOne", false)) {
-            isInStepOne = true;
+        try {
+            if (getIntent().getBooleanExtra("isInStepOne", false)) {
+                isInStepOne = true;
+            }
+        } catch (Exception e) {
+            return;
         }
 
+
         if (getIntent().getBooleanExtra("skip", false) && !isInStepOne && !HSInputMethodListManager.isMyInputMethodEnabled()) {
-
             clickStepOne = true;
-
         }
     }
 
