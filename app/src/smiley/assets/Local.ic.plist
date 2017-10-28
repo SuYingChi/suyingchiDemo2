@@ -3045,6 +3045,16 @@
 						</dict>
 						<dict>
 							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
+							<key>showName</key>
+							<string>System White</string>
+							<key>themeDesc</key>
+							<string>No color will ever be brighter than white.</string>
+							<key>zipName</key>
+							<string>White</string>
+						</dict>
+						<dict>
+							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Classic.jpg</string>
 							<key>showName</key>
 							<string>Classic</string>
@@ -3082,16 +3092,6 @@
 							<string>Addicted to black.</string>
 							<key>zipName</key>
 							<string>Dark</string>
-						</dict>
-						<dict>
-							<key>largePreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
-							<key>showName</key>
-							<string>System White</string>
-							<key>themeDesc</key>
-							<string>No color will ever be brighter than white.</string>
-							<key>zipName</key>
-							<string>White</string>
 						</dict>
 					</array>
 				</dict>
