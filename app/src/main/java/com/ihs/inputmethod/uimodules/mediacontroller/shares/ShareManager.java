@@ -53,11 +53,12 @@ public class ShareManager {
         }
     }
 
-    public void shareFacemojiByIntent(ISequenceFramesImageItem sfImage, String format, ShareChannel shareChannel){
-        new IntentShare(sfImage, format, shareChannel).shareFacemoji(null);
-    }
     public void shareFacemojiByIntent(ISequenceFramesImageItem sfImage, String format, ShareChannel shareChannel, ProgressListener progressListener){
         new IntentShare(sfImage, format, shareChannel).shareFacemoji(progressListener);
+    }
+
+    public void shareFacemojiFromKeyboard(ISequenceFramesImageItem sfImage, String format, ShareChannel shareChannel, ProgressListener progressListener){
+        new IntentShare(sfImage, format, true ,shareChannel).shareFacemoji(progressListener);
     }
 
     public void shareFacemojiByExport(ISequenceFramesImageItem sfImage, String format){

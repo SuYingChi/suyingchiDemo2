@@ -242,8 +242,9 @@ public class ShareUtils {
             shareIntent.setAction("android.intent.action.SEND");
             shareIntent.putExtra("android.intent.extra.STREAM", shareFileUri);
             shareIntent.setType("image/*");
-            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            HSApplication.getContext().startActivity(Intent.createChooser(shareIntent, HSApplication.getContext().getResources().getText(R.string.label_share)));
+            Intent chooser = Intent.createChooser(shareIntent, HSApplication.getContext().getResources().getText(R.string.label_share));
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            HSApplication.getContext().startActivity(chooser);
             return;
         }
 

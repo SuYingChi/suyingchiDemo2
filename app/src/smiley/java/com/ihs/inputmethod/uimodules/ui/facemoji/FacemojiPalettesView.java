@@ -29,9 +29,11 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.mediacontroller.Constants;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.converts.SyncWorkHandler;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
+import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareChannel;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.ihs.inputmethod.uimodules.widget.KeyboardProgressView;
@@ -287,7 +289,9 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     public void onFacemojiClicked(FacemojiSticker sticker) {
         HSAnalytics.logEvent("keyboard_facemoji_sent","categoryAndName",sticker.getCategoryName()+"-"+sticker.getName());
         mStickerPalettesAdapter.pauseAnimation();
-        MediaController.getShareManager().shareFacemojiWithKeyboard(sticker, mProgressListener);
+        MediaController.getShareManager().shareFacemojiFromKeyboard(sticker, Constants.MEDIA_FORMAT_GIF,
+                ShareChannel.CURRENT,
+                mProgressListener);
     }
 
     public int getCurrentPagerPosition() {

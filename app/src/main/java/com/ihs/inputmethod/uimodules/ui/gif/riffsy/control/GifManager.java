@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v13.view.inputmethod.EditorInfoCompat;
 import android.support.v13.view.inputmethod.InputConnectionCompat;
 import android.support.v13.view.inputmethod.InputContentInfoCompat;
+import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
@@ -60,14 +61,7 @@ public final class GifManager {
         }
     }
 
-    public void share(final GifItem gif, final String packageName, final GifDownloadTask.Callback callback) {
-        if (!DirectoryUtils.isSDCardEnabled()) {
-            HSInputMethod.inputText(gif.getUrl());
-            return;
-        }
-
-        File gifFile = DirectoryUtils.getDownloadGifUri(gif.id);
-
+    public void share(File gifFile,String gifName,final String packageName,String url,final GifDownloadTask.Callback callback){
         // 可以直接发送到对话列表中
         String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
         boolean gifSupported = false;
@@ -89,13 +83,25 @@ public final class GifManager {
         final String mimeType;
 
         mimeType = "image/*";
-        final String targetFilePath = DirectoryUtils.getImageExportFolder() + "/" + gif.getId() + ".gif";
+        final String targetFilePath = DirectoryUtils.getImageExportFolder() + "/" + gifName + ".gif";
         HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
         try {
             MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetFilePath)), mimeType, packageName);
         } catch (Exception e) {
-            HSInputMethod.inputText(gif.getUrl());
+            if (!TextUtils.isEmpty(url)) {
+                HSInputMethod.inputText(url);
+            }
         }
+    }
+
+    public void share(final GifItem gif, final String packageName, final GifDownloadTask.Callback callback) {
+        if (!DirectoryUtils.isSDCardEnabled()) {
+            HSInputMethod.inputText(gif.getUrl());
+            return;
+        }
+
+        File gifFile = DirectoryUtils.getDownloadGifUri(gif.id);
+        share(gifFile,gif.id,packageName,gif.getUrl(),callback);
     }
 
     private void shareMp4(final GifItem gif, GifDownloadTask.Callback callback) {

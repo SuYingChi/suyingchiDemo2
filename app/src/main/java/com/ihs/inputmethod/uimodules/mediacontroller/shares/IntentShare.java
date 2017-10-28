@@ -9,6 +9,7 @@ import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.converts.SyncWorkHandler;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
 
 import java.io.File;
 
@@ -20,11 +21,16 @@ public class IntentShare extends FacemojiShare {
     private ISequenceFramesImageItem sequenceFramesImage;
     private ShareChannel shareChannel;
     private Uri shareFileUri;
+    private boolean fromKeyboard;
 
     public IntentShare(ISequenceFramesImageItem sfImage, String format, final ShareChannel channel) {
+        this(sfImage,format,false,channel);
+    }
+    public IntentShare(ISequenceFramesImageItem sfImage, String format,boolean fromKeyboard, final ShareChannel channel) {
         super(format);
         this.sequenceFramesImage = sfImage;
         this.shareChannel = channel;
+        this.fromKeyboard = fromKeyboard;
     }
 
     public void shareFacemoji(final ProgressListener progressListener) {
@@ -41,12 +47,17 @@ public class IntentShare extends FacemojiShare {
         String faceName = HSFileUtils.getFileName(FacemojiManager.getCurrentFacePicUri());
         if (faceName == null) return;
         // check the format file
-        File[] tempFiles = HSFileUtils.listFile(shareDir, sequenceFramesImage.getCategoryName() + "_" + sequenceFramesImage.getName() + "_" + faceName, format);
+        String facemojiName = sequenceFramesImage.getCategoryName() + "_" + sequenceFramesImage.getName() + "_" + faceName;
+        File[] tempFiles = HSFileUtils.listFile(shareDir, facemojiName, format);
         // the format file has created
         if (tempFiles != null && tempFiles.length > 0 && !SyncWorkHandler.getInstance().isRunning()) {
             // do share
             this.shareFileUri = Uri.fromFile(new File(tempFiles[0].getAbsolutePath()));
-            ShareUtils.shareMedia(shareChannel, shareFileUri);
+            if (fromKeyboard){
+                GifManager.getInstance().share(new File(tempFiles[0].getAbsolutePath()),facemojiName,shareChannel.getPackageName(),null,null);
+            }else {
+                ShareUtils.shareMedia(shareChannel, shareFileUri);
+            }
             return;
         }
         // Show progress
@@ -66,8 +77,13 @@ public class IntentShare extends FacemojiShare {
                             progressListener.stopProgress();
                         }
                         // do share
-                        IntentShare.this.shareFileUri = Uri.fromFile(new File(filePath));
-                        ShareUtils.shareMedia(shareChannel, shareFileUri);
+                        File file = new File(filePath);
+                        IntentShare.this.shareFileUri = Uri.fromFile(file);
+                        if (fromKeyboard){
+                            GifManager.getInstance().share(file,facemojiName,shareChannel.getPackageName(),null,null);
+                        }else {
+                            ShareUtils.shareMedia(shareChannel, shareFileUri);
+                        }
                     }
                 });
             }
