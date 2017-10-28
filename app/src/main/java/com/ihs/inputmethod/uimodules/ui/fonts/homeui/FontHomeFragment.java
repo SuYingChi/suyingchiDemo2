@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.crashlytics.android.Crashlytics;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -46,6 +47,10 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                 if (hsSpecialCharacter != null) {
                     FontModel fontModel = new FontModel(hsSpecialCharacter);
                     int position = fontModelList.indexOf(fontModel);
+                    if (position < 0) {
+                        Crashlytics.log("font model index = -1, font model: " + fontModel);
+                        return;
+                    }
                     fontModelList.remove(position);
                     fontCardAdapter.notifyItemRemoved(position);
                     fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
