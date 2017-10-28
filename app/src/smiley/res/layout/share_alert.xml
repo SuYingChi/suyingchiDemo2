@@ -43,7 +43,7 @@
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
-        <com.ihs.inputmethod.uimodules.ui.facemoji.ui.FacemojiAnimationView
+        <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiAnimationView
             android:id="@+id/share_sticker_preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

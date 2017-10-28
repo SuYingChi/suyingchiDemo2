@@ -24,8 +24,6 @@ public class Notification {
 
     // Facemoji
     public static final String FACE_CHANGED                 = "FACE_CHANGED";
-    public static final String SHOW_FACE_LIST               = "SHOW_FACE_LIST";
-    public static final String HIDE_FACE_LIST               = "HIDE_FACE_LIST";
     public static final String FACEMOJI_SAVED               = "FACEMOJI_SAVED";
 
 

@@ -12,11 +12,12 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 
-public final class FacePalettesView extends LinearLayout implements ViewPager.OnPageChangeListener, FacePageGridView.OnFaceClickListener {
+public final class FacePalettesView extends LinearLayout implements ViewPager.OnPageChangeListener, FacePageGridView.OnFaceClickListener, FacePageGridViewAdapter.OnFaceSwitchListener {
 
     private ViewPager mViewPager;
     private FaceLayoutParams mFaceLayoutParams;
     private FacePageIndicatorView mFacePageIndicatorView;
+    private FacePageGridViewAdapter.OnFaceSwitchListener onFaceSwitchListener;
 
     public FacePalettesView(Context context) {
         super(context);
@@ -26,10 +27,9 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
         super(context, attrs);
     }
 
-    public void destroy() {
-
+    public void setOnFaceSwitchListener(FacePageGridViewAdapter.OnFaceSwitchListener onFaceSwitchListener) {
+        this.onFaceSwitchListener = onFaceSwitchListener;
     }
-
 
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
@@ -50,7 +50,7 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
         // view pager
         mViewPager = (ViewPager) findViewById(R.id.face_viewpager);
         mFaceLayoutParams = new FaceLayoutParams(HSApplication.getContext().getResources());
-        mViewPager.setAdapter(new FacePalettesViewAdapter(mFaceLayoutParams));
+        mViewPager.setAdapter(new FacePalettesViewAdapter(mFaceLayoutParams,this));//设置监听为this，因为外部传入该类的onFaceSwitchListener时机比该方法慢
         mViewPager.addOnPageChangeListener(this);
         mViewPager.setPersistentDrawingCache(PERSISTENT_NO_CACHE);
         mFaceLayoutParams.setPagerProperties(mViewPager);
@@ -81,5 +81,12 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
     public void prepare() {
         mViewPager.getAdapter().notifyDataSetChanged();
         mViewPager.setCurrentItem(0);
+    }
+
+    @Override
+    public void onFaceSwitch() {
+        if (onFaceSwitchListener != null){
+            onFaceSwitchListener.onFaceSwitch();
+        }
     }
 }

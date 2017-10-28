@@ -33,10 +33,10 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.framework.Constants;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
-import com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanel;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
@@ -117,20 +117,42 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        final String[] panelNames = {
-                PANEL_EMOJI,
-                PANEL_STICKER,
-                PANEL_FACEEMOJI,
-                PANEL_GIF,
-                PANEL_TEXT
-        };
-        final Class[] panelClassNames = {
-                HSEmojiPanel.class,
-                StickerPanel.class,
-                HSFacemojiPanel.class,
-                GifPanel.class,
-                HSTextPanel.class
-        };
+        String[] panelNames = new String[0];
+        Class[] panelClassNames = new Class[0];
+        if (BuildConfig.OPEN_FACEMOJI) {
+            try {
+                panelClassNames = new Class[]{
+                        HSEmojiPanel.class,
+                        StickerPanel.class,
+                        Class.forName("com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel"),
+                        GifPanel.class,
+                        HSTextPanel.class
+                };
+                panelNames = new String[]{
+                        PANEL_EMOJI,
+                        PANEL_STICKER,
+                        PANEL_FACEEMOJI,
+                        PANEL_GIF,
+                        PANEL_TEXT
+                };
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                throw new RuntimeException("com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel not find!");
+            }
+        } else {
+            panelClassNames = new Class[]{
+                    HSEmojiPanel.class,
+                    StickerPanel.class,
+                    GifPanel.class,
+                    HSTextPanel.class
+            };
+            panelNames = new String[]{
+                    PANEL_EMOJI,
+                    PANEL_STICKER,
+                    PANEL_GIF,
+                    PANEL_TEXT
+            };
+        }
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
         for (int i = 0; i < panelNames.length; i++) {
             final String panelName = panelNames[i];
@@ -316,7 +338,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             }
         } else {
             if (v.getId() == alphabet_left.getId() && keyboardActionListener != null) {
-                saveLastPanelName(PANEL_EMOJI);
                 keyboardActionListener.showPanel(KeyboardPanel.class);
                 keyboardActionListener.setBarVisibility(VISIBLE);
                 keyboardActionListener = null;

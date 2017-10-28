@@ -137,14 +137,16 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         emptyViewLayoutParams.weight = 1;
         functionLayout.addView(emptyView,emptyViewLayoutParams);
 
-        //FaceMojiView
-        facemojiView = new GifImageView(getContext());
-        facemojiView.setImageURI(Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.keyboard_facemoji));
-        facemojiView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        facemojiView.setId(R.id.func_facemoji_button);
-        facemojiView.setOnClickListener(this);
-        facemojiView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
-        functionLayout.addView(facemojiView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
+        if (BuildConfig.OPEN_FACEMOJI) {
+            //FaceMojiView
+            facemojiView = new GifImageView(getContext());
+            facemojiView.setImageURI(Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.keyboard_facemoji));
+            facemojiView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            facemojiView.setId(R.id.func_facemoji_button);
+            facemojiView.setOnClickListener(this);
+            facemojiView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+            functionLayout.addView(facemojiView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
+        }
     }
 
 

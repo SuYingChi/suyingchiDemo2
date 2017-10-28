@@ -11,6 +11,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
+import com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher.HSSwitchFacePanel;
 import com.ihs.panelcontainer.BasePanel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -20,7 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  */
 
 public class HSFacemojiPanel extends BasePanel{
-    private FacemojiPalettesView panelView;
+    private com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiPalettesView panelView;
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
@@ -33,7 +34,14 @@ public class HSFacemojiPanel extends BasePanel{
     @Override
     protected View onCreatePanelView() {
         if (panelView == null) {
-            panelView = (FacemojiPalettesView) View.inflate(HSApplication.getContext(), R.layout.panel_facemoji, null);
+            panelView = (com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiPalettesView) View.inflate(HSApplication.getContext(), R.layout.panel_facemoji, null);
+            panelView.setOnItemClickListener(new FacemojiPalettesView.OnItemClickListener() {
+                @Override
+                public void onSwitchFaceClick() {
+                    getPanelActionListener().showChildPanel(HSSwitchFacePanel.class,null);
+                    getPanelActionListener().getBarView().setVisibility(View.GONE);
+                }
+            });
             panelView.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
             init();
         }
@@ -49,13 +57,19 @@ public class HSFacemojiPanel extends BasePanel{
         MediaController.setFaceNameProvider(new MediaController.FaceNameProvider() {
             @Override
             public String faceName() {
-                return HSFileUtils.getFileName(FacemojiManager.getCurrentFacePicUri());
+                return HSFileUtils.getFileName(com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager.getCurrentFacePicUri());
             }
         });
 
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_HIDE_WINDOW,notificationObserver);
 
         panelView.onPanelShow();
+    }
+
+    @Override
+    protected boolean onShowPanelView(int appearMode) {
+        panelView.restartAnim();
+        return super.onShowPanelView(appearMode);
     }
 
     @Override

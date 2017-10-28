@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 
@@ -120,7 +121,7 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
     private void deleteSelectedFace() {
         adapter.deleteSelectedFace();
         switchEditMode();
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACE_DELETED);
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(FacemojiManager.FACE_DELETED);
     }
 
     @Override

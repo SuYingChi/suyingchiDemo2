@@ -18,11 +18,10 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.MyFacemojiActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -51,8 +50,8 @@ public class StickerHomeFragment extends Fragment {
     private INotificationObserver observer = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (CameraActivity.FACEMOJI_SAVED.equals(s) || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
-                    || (CameraActivity.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */ ){
+            if (FacemojiManager.FACEMOJI_SAVED.equals(s) || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
+                    || (FacemojiManager.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */ ){
                 loadDatas();
             }
         }
@@ -71,9 +70,9 @@ public class StickerHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sticker, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         initView();
-        HSGlobalNotificationCenter.addObserver(CameraActivity.FACEMOJI_SAVED, observer);
+        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_SAVED, observer);
         HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
-        HSGlobalNotificationCenter.addObserver(CameraActivity.FACE_DELETED, observer);
+        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACE_DELETED, observer);
         return view;
     }
 
@@ -137,43 +136,46 @@ public class StickerHomeFragment extends Fragment {
 
     private void loadDatas() {
         stickerModelList.clear();
+        StickerHomeModel stickerHomeModel;
 
-        StickerHomeModel stickerHomeModel = new StickerHomeModel();
-        stickerHomeModel.isTitle = true;
-        if (FacemojiManager.getDefaultFacePicUri() != null){
-            stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_my_facemojis);
-            stickerHomeModel.rightButton = HSApplication.getContext().getResources().getString(R.string.theme_store_more);
-            stickerHomeModel.titleClickable = true;
-            stickerHomeModel.titleClickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goMyFacemojiActivity(null);
-                }
-            };
-            stickerModelList.add(stickerHomeModel);
-
+        if (BuildConfig.OPEN_FACEMOJI) {
             stickerHomeModel = new StickerHomeModel();
-            stickerHomeModel.isSmallCreateFacemoji = true;
-            stickerModelList.add(stickerHomeModel);
+            stickerHomeModel.isTitle = true;
+            if (FacemojiManager.getDefaultFacePicUri() != null) {
+                stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_my_facemojis);
+                stickerHomeModel.rightButton = HSApplication.getContext().getResources().getString(R.string.theme_store_more);
+                stickerHomeModel.titleClickable = true;
+                stickerHomeModel.titleClickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goMyFacemojiActivity(null);
+                    }
+                };
+                stickerModelList.add(stickerHomeModel);
 
-            stickerHomeModel = new StickerHomeModel();
-            stickerHomeModel.isFacemoji = true;
-            stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(0).get(0);
-            stickerModelList.add(stickerHomeModel);
-            if (FacemojiManager.getFaceList().size() >= 2){
+                stickerHomeModel = new StickerHomeModel();
+                stickerHomeModel.isSmallCreateFacemoji = true;
+                stickerModelList.add(stickerHomeModel);
+
                 stickerHomeModel = new StickerHomeModel();
                 stickerHomeModel.isFacemoji = true;
-                stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(1).get(0);
+                stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(0).get(0);
+                stickerModelList.add(stickerHomeModel);
+                if (FacemojiManager.getFaceList().size() >= 2) {
+                    stickerHomeModel = new StickerHomeModel();
+                    stickerHomeModel.isFacemoji = true;
+                    stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(1).get(0);
+                    stickerModelList.add(stickerHomeModel);
+                }
+            } else {
+                stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_create_my_facemojis);
+                stickerHomeModel.titleClickable = false;
+                stickerModelList.add(stickerHomeModel);
+
+                stickerHomeModel = new StickerHomeModel();
+                stickerHomeModel.isBigCreateFacemoji = true;
                 stickerModelList.add(stickerHomeModel);
             }
-        }else {
-            stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_create_my_facemojis);
-            stickerHomeModel.titleClickable = false;
-            stickerModelList.add(stickerHomeModel);
-
-            stickerHomeModel = new StickerHomeModel();
-            stickerHomeModel.isBigCreateFacemoji = true;
-            stickerModelList.add(stickerHomeModel);
         }
 
         stickerHomeModel = new StickerHomeModel();
@@ -199,11 +201,16 @@ public class StickerHomeFragment extends Fragment {
     }
 
     private void goMyFacemojiActivity(String categoryName){
-        Intent intent = new Intent(getActivity(), MyFacemojiActivity.class);
-        if(!TextUtils.isEmpty(categoryName)){
-            intent.putExtra(MyFacemojiActivity.INIT_SHOW_TAB_CATEGORY,categoryName);
+        try {
+            Intent intent = new Intent(getActivity(), Class.forName("com.ihs.inputmethod.uimodules.ui.facemoji.ui.MyFacemojiActivity"));
+            if(!TextUtils.isEmpty(categoryName)){
+                intent.putExtra(FacemojiManager.INIT_SHOW_TAB_CATEGORY,categoryName);
+            }
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("com.ihs.inputmethod.uimodules.ui.facemoji.ui.MyFacemojiActivity not find");
         }
-        startActivity(intent);
     }
 
     @Override

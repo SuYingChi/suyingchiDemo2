@@ -29,13 +29,15 @@ public class FacePageGridViewAdapter extends BaseAdapter {
     private List<FaceItem> mData;
     private LayoutInflater mInflater;
     private FacePalettesViewAdapter adapter;
+    private OnFaceSwitchListener onFaceSwitchListener;
     private int size;
 
     public FacePageGridViewAdapter(final FacePalettesViewAdapter parentAdapter, final List<FaceItem> data,
-                                   final FaceLayoutParams esLayoutParams) {
+                                   final FaceLayoutParams esLayoutParams,OnFaceSwitchListener onFaceSwitchListener) {
         mData = data;
         mInflater = LayoutInflater.from(HSApplication.getContext());
         faceLayoutParams = esLayoutParams;
+        this.onFaceSwitchListener = onFaceSwitchListener;
         adapter = parentAdapter;
         size = Math.min(faceLayoutParams.getGridHeight(), faceLayoutParams.getGridWidth());
     }
@@ -125,7 +127,6 @@ public class FacePageGridViewAdapter extends BaseAdapter {
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     HSApplication.getContext().startActivity(i);
-                    FacemojiManager.hideFaceSwitchView();
                 }
             });
         } else {
@@ -139,6 +140,10 @@ public class FacePageGridViewAdapter extends BaseAdapter {
                     FacemojiManager.setCurrentFacePicUri(face.getUri());
                     adapter.onFaceSelected();
                     notifyDataSetChanged();
+
+                    if (onFaceSwitchListener != null){
+                        onFaceSwitchListener.onFaceSwitch();
+                    }
                 }
             });
         }
@@ -157,5 +162,7 @@ public class FacePageGridViewAdapter extends BaseAdapter {
 
     }
 
-
+    public interface OnFaceSwitchListener {
+        void onFaceSwitch();
+    }
 }

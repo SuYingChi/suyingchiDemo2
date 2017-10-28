@@ -11,6 +11,7 @@ import android.widget.GridView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiAnimationView;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 
 class FacemojiPalettesAdapter extends PagerAdapter {

@@ -45,6 +45,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     private ImageView currentFaceImage;
     private FacemojiLayoutParams mStickerLayoutParams;
     private FacemojiPalettesAdapter mStickerPalettesAdapter;
+    private OnItemClickListener onItemClickListener;
 
     private int mCurrentPagerPosition = 0;
 
@@ -72,13 +73,17 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         Resources res = context.getResources();
         mStickerLayoutParams = new FacemojiLayoutParams(res);
 
-        HSGlobalNotificationCenter.addObserver(CameraActivity.FACE_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACE_CHANGED, notificationObserver);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (CameraActivity.FACE_CHANGED.equals(s)) {
+            if (FacemojiManager.FACE_CHANGED.equals(s)) {
                 if (currentFaceImage != null) {
                     currentFaceImage.setImageURI(FacemojiManager.getCurrentFacePicUri());
                 }
@@ -293,7 +298,9 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.switch_face:
-                FacemojiManager.showFaceSwitchView();
+                if (onItemClickListener != null){
+                    onItemClickListener.onSwitchFaceClick();
+                }
                 break;
 
         }
@@ -303,9 +310,19 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
     }
 
+    public void restartAnim(){
+        if (mStickerPalettesAdapter != null) {
+            mStickerPalettesAdapter.startAnimation(mCurrentPagerPosition);
+        }
+    }
+
     public void stopAllAnim() {
         if (mStickerPalettesAdapter != null) {
             mStickerPalettesAdapter.stopAllAnimations();
         }
+    }
+
+    public interface OnItemClickListener{
+        void onSwitchFaceClick();
     }
 }

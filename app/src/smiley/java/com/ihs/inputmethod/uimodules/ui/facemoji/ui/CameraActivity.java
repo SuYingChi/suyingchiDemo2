@@ -67,10 +67,6 @@ import pl.droidsonroids.gif.GifImageView;
 
 
 public class CameraActivity extends HSAppCompatActivity {
-    public static final String FACEMOJI_SAVED = "FACEMOJI_SAVED";
-    public static final String FACE_CHANGED = "FACE_CHANGED";
-    public static final String FACE_DELETED = "FACE_DELETED";
-
     private int previewWidth;
     private int previewHeight;
 
@@ -88,7 +84,7 @@ public class CameraActivity extends HSAppCompatActivity {
                 return;
             }
 
-            if (eventName.equals(FACEMOJI_SAVED)) {
+            if (eventName.equals(FacemojiManager.FACEMOJI_SAVED)) {
                 finish();
             }
         }
@@ -318,7 +314,7 @@ public class CameraActivity extends HSAppCompatActivity {
         initView();
 
 
-        HSGlobalNotificationCenter.addObserver(FACEMOJI_SAVED, mImeActionObserver);
+        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_SAVED, mImeActionObserver);
     }
 
     private void initView() {
@@ -1003,7 +999,7 @@ public class CameraActivity extends HSAppCompatActivity {
         // Destroy temp face
         FacemojiManager.destroyTempFace();
         // Finish Camera activity
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACEMOJI_SAVED);
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(FacemojiManager.FACEMOJI_SAVED);
 
         HSAnalytics.logEvent("app_facemoji_created");
 

@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
@@ -16,28 +15,17 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.constants.Notification;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacePictureParam;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiFrame;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
-import com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher.FacePalettesView;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.FaceListActivity;
-import com.ihs.inputmethod.uimodules.utils.BitmapUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -56,6 +44,11 @@ import java.util.zip.ZipFile;
 
 
 public class FacemojiManager {
+    public static final String FACEMOJI_SAVED = "FACEMOJI_SAVED";
+    public static final String FACE_CHANGED = "FACE_CHANGED";
+    public static final String FACE_DELETED = "FACE_DELETED";
+    public final static String INIT_SHOW_TAB_CATEGORY = "initShowTabCategory";
+
     public enum ShowLocation {
         Keyboard,App
     }
@@ -76,8 +69,6 @@ public class FacemojiManager {
     private static String currentUploadFile;
     private static Bitmap originFace;
     private static int mCurrentClassicCategoryPageId = 0;
-    private static boolean mFaceSwitcherShowing;
-    private static FacePalettesView mFacePalettesView;
     private static List<FaceItem> faces = new ArrayList<>();
     // Take photo but not saved
     private static Uri mTempFacePicUri;
@@ -185,8 +176,7 @@ public class FacemojiManager {
                 e.printStackTrace();
             }
         }
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(CameraActivity.FACE_CHANGED);
-        hideFaceSwitchView();
+        HSGlobalNotificationCenter.sendNotificationOnMainThread(FacemojiManager.FACE_CHANGED);
     }
 
     public static Uri getDefaultFacePicUri() {
@@ -220,16 +210,6 @@ public class FacemojiManager {
         }
 
         return null;
-    }
-
-    public static Bitmap getCurrentFaceIcon(int color) {
-
-        Uri uri = getDefaultFacePicUri();
-        if (uri == null) {
-            return BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.tabbar_facemoji);
-        }
-
-        return BitmapUtils.corpAndAddBorder(getDefaultFacePicUri(), color, 20);
     }
 
     public static String getCurrentUploadFile() {
@@ -431,73 +411,9 @@ public class FacemojiManager {
         mCurrentClassicCategoryPageId = id;
     }
 
-    public static void showFaceSwitchView() {
-        HSLog.d("show face switch view");
-
-        if (mFaceSwitcherShowing) {
-            return;
-        }
-
-        mFacePalettesView.prepare();
-
-        final FrameLayout inputArea = HSInputMethod.getInputArea();
-
-        final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.BOTTOM;
-
-        inputArea.addView(mFacePalettesView, params);
-
-        mFaceSwitcherShowing = true;
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.SHOW_FACE_LIST);
-    }
-
-    public static void initFaceSwitchView() {
-
-        if (mFacePalettesView != null) {
-            mFacePalettesView.destroy();
-        }
-
-        mFacePalettesView = (FacePalettesView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.face_switcher_layout, null);
-        mFacePalettesView.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
-        final View closeButton = mFacePalettesView.findViewById(R.id.face_switch_close_btn);
-        mFaceSwitcherShowing = false;
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideFaceSwitchView();
-            }
-        });
-
-        final View editButton = mFacePalettesView.findViewById(R.id.face_switch_edit_btn);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HSInputMethod.hideWindow();
-                Intent i = new Intent(HSApplication.getContext(), FaceListActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra(FaceListActivity.TOGGLE_MANAGE_FACE_MODE, true);
-                HSApplication.getContext().startActivity(i);
-
-                hideFaceSwitchView();
-            }
-        });
-    }
 
     public static boolean hasTempFace() {
         return mTempFacePicUri != null;
-    }
-
-    public static void hideFaceSwitchView() {
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.HIDE_FACE_LIST);
-
-        if (mFaceSwitcherShowing) {
-            final FrameLayout inputArea = HSInputMethod.getInputArea();
-            inputArea.removeView(mFacePalettesView);
-            mFaceSwitcherShowing = false;
-        }
     }
 
     public static int getFacePageCount() {
@@ -509,7 +425,6 @@ public class FacemojiManager {
         loadStickerList();
         getDefaultFacePicUri();
         loadFaceList();
-        initFaceSwitchView();
         loadLastUploadPreviewPic();
     }
 

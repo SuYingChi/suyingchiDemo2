@@ -14,10 +14,12 @@ class FacePalettesViewAdapter extends PagerAdapter {
 
 	private FaceLayoutParams mFaceLayoutParams;
 	private SparseArray<GridView> mActivePageViews = new SparseArray<>();
+	private FacePageGridViewAdapter.OnFaceSwitchListener onFaceSwitchListener;
 	private int currentPosition;
 
-	public FacePalettesViewAdapter(FaceLayoutParams faceLayoutParams) {
+	public FacePalettesViewAdapter(FaceLayoutParams faceLayoutParams,FacePageGridViewAdapter.OnFaceSwitchListener onFaceSwitchListener) {
 		mFaceLayoutParams = faceLayoutParams;
+		this.onFaceSwitchListener = onFaceSwitchListener;
 	}
 
 	@Override
@@ -51,7 +53,7 @@ class FacePalettesViewAdapter extends PagerAdapter {
 		pageGridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
 		mFaceLayoutParams.setPageGridViewProperties(pageGridView);
 
-		final FacePageGridViewAdapter adapter = new FacePageGridViewAdapter(this, FacemojiManager.getFaceByPagePosition(position), mFaceLayoutParams);
+		final FacePageGridViewAdapter adapter = new FacePageGridViewAdapter(this, FacemojiManager.getFaceByPagePosition(position), mFaceLayoutParams,onFaceSwitchListener);
 
 		pageGridView.setAdapter(adapter);
 

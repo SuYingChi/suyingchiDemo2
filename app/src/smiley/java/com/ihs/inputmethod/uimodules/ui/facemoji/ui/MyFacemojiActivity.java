@@ -37,7 +37,7 @@ import java.util.Date;
 
 
 public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener, View.OnClickListener {
-    public final static String INIT_SHOW_TAB_CATEGORY = "initShowTabCategory";
+
     private TabHost mTabHost;
     private ViewPager mImagePager;
     private FacemojiPalettesAdapter mFacemojiPalettesAdapter;
@@ -140,7 +140,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     }
 
     private void showInitTabByCategoryName() {
-        String initTabCategory = getIntent().getStringExtra(INIT_SHOW_TAB_CATEGORY);
+        String initTabCategory = getIntent().getStringExtra(FacemojiManager.INIT_SHOW_TAB_CATEGORY);
         int initPosition = 0;
         if (!TextUtils.isEmpty(initTabCategory)) {
             for (int i = 0; i < FacemojiManager.getInstance().getClassicCategories().size(); i++) {
