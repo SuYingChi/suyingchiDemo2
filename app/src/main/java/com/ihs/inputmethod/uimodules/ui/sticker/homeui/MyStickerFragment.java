@@ -1,9 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
-import android.graphics.drawable.Drawable;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,6 +15,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ import java.util.List;
 
 public class MyStickerFragment extends Fragment {
     private RecyclerView recyclerView;
-    private StickerCardAdapter stickerCardAdapter;
-    private List<StickerModel> stickerModelList = new ArrayList<>();
+    private CommonStickerAdapter stickerCardAdapter;
+    private List<StickerHomeModel> stickerModelList = new ArrayList<>();
     public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker_my);
 
     @Nullable
@@ -42,17 +42,8 @@ public class MyStickerFragment extends Fragment {
     private void initView() {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         loadStickerModel();
-        stickerCardAdapter = new StickerCardAdapter(stickerModelList, new StickerCardAdapter.OnStickerCardClickListener() {
-            @Override
-            public void onCardViewClick(StickerModel stickerModel, Drawable drawable) {
-
-            }
-
-            @Override
-            public void onDownloadButtonClick(StickerModel stickerModel, Drawable drawable) {
-
-            }
-        });
+        stickerCardAdapter = new MyStickerAdapter();
+        stickerCardAdapter.setItems(stickerModelList);
         recyclerView.setAdapter(stickerCardAdapter);
         recyclerView.setLayoutManager(layoutManager);
     }
@@ -68,9 +59,10 @@ public class MyStickerFragment extends Fragment {
             if(!TextUtils.isEmpty(downloadStickerName)) {
                 for(StickerGroup stickerGroup : stickerGroupList){
                     if (downloadStickerName.equals(stickerGroup.getStickerGroupName())){
-                        StickerModel stickerModel = new StickerModel(stickerGroup);
-                        stickerModel.setIsDownloaded(true);
-                        stickerModelList.add(stickerModel);
+                        StickerHomeModel stickerHomeModel = new StickerHomeModel();
+                        stickerHomeModel.stickerGroup = stickerGroup;
+                        stickerHomeModel.isDownloaded = true;
+                        stickerModelList.add(stickerHomeModel);
                         break;
                     }
                 }

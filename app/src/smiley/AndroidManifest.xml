@@ -114,6 +114,35 @@
             android:taskAffinity=""
             android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
+        <!-- FaceMoji -->
+        <activity
+            android:name="com.ihs.inputmethod.uimodules.ui.facemoji.ui.MyFacemojiActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBarFullScreen"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.ihs.inputmethod.uimodules.ui.facemoji.ui.FaceListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
         <!--
          Optionally, register AnalyticsReceiver and AnalyticsService to support background
          dispatching on non-Google Play devices
@@ -239,6 +268,7 @@
             android:name="com.smartkeyboard.emoji.SplashActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

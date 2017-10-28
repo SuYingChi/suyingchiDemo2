@@ -55,7 +55,7 @@ public abstract class BaseConvert {
      */
     protected Bitmap getFrame(int index){
 
-        Bitmap temp = sequnceFramesImage.getFrame(index);
+        Bitmap temp = sequnceFramesImage.getFrame(index,true);
         if(temp != null){
             return setBackgroudColor(temp, Color.WHITE);
         }

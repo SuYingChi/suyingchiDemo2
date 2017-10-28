@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/config_suggestions_strip_height"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/facemoji_panel_tab_margin_top"
+        android:paddingTop="@dimen/facemoji_panel_tab_margin_top">
+
+        <LinearLayout
+            android:id="@+id/switch_face"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/facemoji_switch_face_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="2dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="8dp"
+            android:paddingTop="2dp">
+
+            <ImageView
+                android:id="@+id/current_face_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_arrow_toward_bottom" />
+
+        </LinearLayout>
+
+        <TabHost
+            android:id="@+id/facemoji_keyboard_category_tabhost"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/switch_face">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none">
+                <!-- add scroll -->
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="14dp" />
+            </HorizontalScrollView>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="0dp"
+                android:layout_height="0dp">
+
+                <View
+                    android:id="@+id/facemoji_keyboard_dummy"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </TabHost>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiViewPager
+            android:id="@+id/facemoji_keyboard_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.ihs.inputmethod.uimodules.widget.KeyboardProgressView
+            android:id="@+id/share_progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/keyboard_progress_view_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiIndicatorView
+        android:id="@+id/page_indicator"
+        android:layout_width="match_parent"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:layout_height="@dimen/facemoji_indicator_height"/>
+</LinearLayout>

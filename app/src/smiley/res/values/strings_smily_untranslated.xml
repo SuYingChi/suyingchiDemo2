@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_facemoji_send_facemoji_tip">Already ROFL? Send directly on Emoji Keyboard!</string>
+    <string name="camera_activity_title">Take a Selfie</string>
+    <string name="facemoji_in_progress">Facemoji in progress...</string>
+
+    <string name="my_facemoji_toolbar_title">MY FACEMOJIS</string>
+
+    <string name="switch_facemoji_toolbar_title">Switch Face</string>
+    <string name="switch_facemoji_selected_status_title">%d Selected</string>
+    <string name="label_manage">EDIT</string>
+
+</resources>

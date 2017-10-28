@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="0dip"
+    android:layout_weight="1"
+    android:gravity="center">
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/facemoji_tab_host_icon_app"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"
+        android:hapticFeedbackEnabled="false"
+        android:soundEffectsEnabled="false"
+        android:layout_gravity="center"/>
+</LinearLayout>

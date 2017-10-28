@@ -94,6 +94,17 @@
     <dimen name="facemoji_face_list_left_margin">13dp</dimen>
     <dimen name="facemoji_face_list_bottom_margin">10dp</dimen>
     <dimen name="facemoji_face_list_scroll_view_height">58dp</dimen>
+    <dimen name="facemoji_panel_tab_margin_top">3dp</dimen>
+    <dimen name="facemoji_grid_item_horizontal_space">4dp</dimen>
+    <dimen name="facemoji_grid_item_vertical_space">4dp</dimen>
+    <dimen name="facemoji_grid_left_margin">4dp</dimen>
+    <dimen name="facemoji_indicator_height">11dp</dimen>
+
+    <dimen name="facemoji_keyboard_grid_horizontal_space">3dp</dimen>
+    <dimen name="facemoji_keyboard_grid_vertical_space">3dp</dimen>
+
+    <dimen name="facemoji_share_alert_share_app_recycler_horizontal_space">12dp</dimen>
+    <dimen name="facemoji_share_alert_share_app_recycler_vertical_space">16dp</dimen>
 
     <dimen name="common_card_view_max_elevation">2dp</dimen>
     <dimen name="custom_theme_background_item_corners_radius">3dp</dimen>
@@ -180,5 +191,8 @@
     <dimen name="overview_panel_total_height">253dp</dimen>
 
     <dimen name="online_category_title_view_translationY">-20dp</dimen>
+
+    <dimen name="camera_capture_view_width">48dp</dimen>
+    <dimen name="camera_capture_view_padding">5dp</dimen>
 
 </resources>

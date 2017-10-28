@@ -57,11 +57,6 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".ui.customize.CustomizeActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
             android:name=".ui.customize.WallpaperPreviewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -136,7 +131,7 @@
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
+            android:theme="@style/AppTheme.NoActionBarFullScreen"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="${applicationId}.keyboard.main" />

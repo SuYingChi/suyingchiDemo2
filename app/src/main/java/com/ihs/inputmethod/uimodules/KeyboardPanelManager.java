@@ -36,6 +36,7 @@ import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.framework.KeyboardSwitcher;
 import com.ihs.inputmethod.uimodules.settings.HSNewSettingsPanel;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
+import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonActionBar;
 import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
 import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerSuggestionAdapter;
@@ -91,6 +92,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             } else if (HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD.equals(s)) {
                 showKeyboardWithMenu();
                 functionBar.showNewMarkIfNeed();
+                functionBar.showMakeFacemojiTipIfNeed(keyboardPanelSwitchContainer);
             }
         }
     };
@@ -238,6 +240,13 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             HSApplication.getContext().startActivity(intent);
             HSAnalytics.logEvent("keyboard_cloth_button_click");
         }
+
+        if (view.getId() == R.id.func_facemoji_button){
+            HSEmoticonActionBar.saveLastPanelName(HSEmoticonActionBar.PANEL_FACEEMOJI);
+            keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
+            keyboardPanelSwitchContainer.setBarVisibility(GONE);
+            functionBar.dismissMakeFacemojiTip();
+        }
     }
 
     public void showKeyboardWithMenu() {
@@ -250,8 +259,10 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     public void showEmojiPanel() {
+        HSEmoticonActionBar.saveLastPanelName(HSEmoticonActionBar.PANEL_EMOJI);
         keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
+        functionBar.dismissMakeFacemojiTip();
     }
 
     public void beforeStartInputView() {

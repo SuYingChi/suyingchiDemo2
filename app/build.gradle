@@ -9,7 +9,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -76,6 +76,7 @@ android {
             versionCode 6
             versionName "1.1.2"
             manifestPlaceholders = [APPLY_SCHEME: "lockerKeyboard"]
+            buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             signingConfig signingConfigs.masterReleaseConfig
         }
 
@@ -84,6 +85,7 @@ android {
             versionCode 19
             versionName "2.0.6"
             manifestPlaceholders = [APPLY_SCHEME: "smileyKeyboard"]
+            buildConfigField "boolean", "ENABLE_FACEMOJI", "true"
             signingConfig signingConfigs.smileyReleaseConfig
         }
 
@@ -92,6 +94,7 @@ android {
             versionName "2.4.1"
             versionCode 56
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
+            buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             signingConfig signingConfigs.colorReleaseConfig
         }
 
@@ -100,6 +103,7 @@ android {
             versionName "2.0.0"
             versionCode 1
             manifestPlaceholders = [APPLY_SCHEME: "tigerKeyboard"]
+            buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             signingConfig signingConfigs.tigerReleaseConfig
         }
 
@@ -128,6 +132,7 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
     maven { url "http://dl.appnext.com/" }
     maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist" }
+    maven { url "http://dl.bintray.com/waynejo/maven" }
     flatDir {
         dirs 'libs', 'libs/bin_chargingscreen_android'
     }
@@ -191,6 +196,7 @@ dependencies {
 
     compile "com.ihandy.iap:iap.gm:4.0.+"
 
+    smileyCompile project(':gpuimage')
     //ihs related
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
@@ -228,6 +234,7 @@ dependencies {
     compile (name: 'ihs/libCallAssistant/libcallassistant', ext: 'aar')
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile('com.waynejo:androidndkgif:0.3.3')
     //----
 
     //keep alive

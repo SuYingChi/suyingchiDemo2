@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/facemoji_default_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/right_area_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/facemoji_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="13dp"
+            android:fontFamily="bold"
+            android:gravity="left|center_vertical"
+            android:text="Facemoji"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/facemoji_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="left|bottom"
+            android:text="@string/label_create_funny_facemoji"
+            android:textColor="#7fffffff"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/facemoji_button_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/facemoji_create_btn"
+            android:fontFamily="bold"
+            android:text="@string/label_try_now"
+            android:textAllCaps="false"
+            android:textColor="@color/key_text_color_white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/face_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/right_area_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@id/right_area_layout"
+        android:scaleType="fitCenter"
+        android:src="@drawable/create_facemoji_large" />
+
+</RelativeLayout>

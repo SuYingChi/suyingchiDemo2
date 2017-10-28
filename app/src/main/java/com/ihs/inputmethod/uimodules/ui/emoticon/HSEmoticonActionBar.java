@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.emoticon;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +11,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -30,6 +33,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.framework.Constants;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
@@ -49,6 +53,12 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
  */
 
 public final class HSEmoticonActionBar extends LinearLayout implements View.OnClickListener {
+
+    public final static String PANEL_EMOJI = "emoji";
+    public final static String PANEL_STICKER = "sticker";
+    public final static String PANEL_FACEEMOJI = "facemoji";
+    public final static String PANEL_GIF = "gif";
+    public final static String PANEL_TEXT = "text";
 
     private BasePanel.OnPanelActionListener containerListener;
     private BasePanel.OnPanelActionListener keyboardActionListener;
@@ -84,21 +94,55 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         containerListener = null;
     }
 
+    public static void saveLastPanelName(String panelName) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
+        sp.edit().putString("emoticon_last_show_panel_name", panelName).apply();
+    }
+
+    public static String getLastPanelName() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
+        return sp.getString("emoticon_last_show_panel_name", PANEL_EMOJI);
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        final String[] panelNames = {
-                "emoji",
-                "sticker",
-                "gif",
-                "text"
-        };
-        final Class[] panelClassNames = {
-                HSEmojiPanel.class,
-                StickerPanel.class,
-                GifPanel.class,
-                HSTextPanel.class
-        };
+        String[] panelNames = new String[0];
+        Class[] panelClassNames = new Class[0];
+        if (BuildConfig.ENABLE_FACEMOJI) {
+            try {
+                panelClassNames = new Class[]{
+                        HSEmojiPanel.class,
+                        StickerPanel.class,
+                        Class.forName("com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel"),
+                        GifPanel.class,
+                        HSTextPanel.class
+                };
+                panelNames = new String[]{
+                        PANEL_EMOJI,
+                        PANEL_STICKER,
+                        PANEL_FACEEMOJI,
+                        PANEL_GIF,
+                        PANEL_TEXT
+                };
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                throw new RuntimeException("com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel not find!");
+            }
+        } else {
+            panelClassNames = new Class[]{
+                    HSEmojiPanel.class,
+                    StickerPanel.class,
+                    GifPanel.class,
+                    HSTextPanel.class
+            };
+            panelNames = new String[]{
+                    PANEL_EMOJI,
+                    PANEL_STICKER,
+                    PANEL_GIF,
+                    PANEL_TEXT
+            };
+        }
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
         final int actionBarAmount = panelNames.length;
         for (int i = 0; i < panelNames.length; i++) {
@@ -160,7 +204,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         final ImageView deleteKey = new ImageView(getContext());
         deleteKey.setScaleType(ImageView.ScaleType.CENTER);
         deleteKey.setTag(Constants.CODE_DELETE);
-        deleteKey.setImageDrawable(deleteKeyDrawable);
+        deleteKey.setImageDrawable(getTabDrawable(R.drawable.ic_delete_panel_tab));
         deleteKey.setOnTouchListener(new DeleteKeyOnTouchListener(getContext()));
         // 56dp fixed
         final LayoutParams params = new LayoutParams(HSDisplayUtils.dip2px(56), height);
@@ -170,16 +214,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     }
 
     private ImageView getBtnImage(final String panelName) {
-        final StateListDrawable tabbarBtnDrawable = new StateListDrawable();
-        final Drawable drawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_unselected");
-        final Drawable pressedDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("ic_compound_panel_" + panelName + "_button_selected");
-
-
-        tabbarBtnDrawable.addState(new int[]{android.R.attr.state_focused}, pressedDrawable);
-        tabbarBtnDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedDrawable);
-        tabbarBtnDrawable.addState(new int[]{android.R.attr.state_selected}, pressedDrawable);
-        tabbarBtnDrawable.addState(new int[]{}, drawable);
-
+        Drawable tabbarBtnDrawable = getTabDrawable(HSApplication.getContext().getResources().getIdentifier("ic_" + panelName + "_panel_tab", "drawable", HSApplication.getContext().getPackageName()));
         ImageView tabbarBtn = new ImageView(HSApplication.getContext());
         tabbarBtn.setScaleType(ImageView.ScaleType.CENTER);
         tabbarBtn.setImageDrawable(tabbarBtnDrawable);
@@ -187,6 +222,33 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         tabbarBtn.setBackgroundDrawable(getBackgroundDrawable());
         tabbarBtn.setSoundEffectsEnabled(false);
         return tabbarBtn;
+    }
+
+    @NonNull
+    private Drawable getTabDrawable(int resId) {
+        Resources resources = HSApplication.getContext().getResources();
+        boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
+        int pressColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_selected_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_selected_color);
+        int normalColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_normal_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_normal_color);
+
+        Drawable tabbarBtnDrawable = VectorDrawableCompat.create(resources,resId, null);
+        DrawableCompat.setTintList(tabbarBtnDrawable, new ColorStateList(
+                new int[][]
+                        {
+                                new int[]{android.R.attr.state_focused},
+                                new int[]{android.R.attr.state_pressed},
+                                new int[]{android.R.attr.state_selected},
+                                new int[]{}
+                        },
+                new int[]
+                        {
+                                pressColor,
+                                pressColor,
+                                pressColor,
+                                normalColor,
+                        }
+        ));
+        return tabbarBtnDrawable;
     }
 
     @NonNull
@@ -221,8 +283,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         if (tag != null && tag instanceof String) {
             Class panel = panels.get(tag);
             if (containerListener != null && panel != null) {
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-                sp.edit().putString("emoticon_last_show_panel_name", tag.toString()).apply();
                 containerListener.showPanel(panel);
                 HSAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
             }

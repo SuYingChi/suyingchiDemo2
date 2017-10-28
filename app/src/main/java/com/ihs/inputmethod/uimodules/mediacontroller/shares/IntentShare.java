@@ -3,11 +3,12 @@ package com.ihs.inputmethod.uimodules.mediacontroller.shares;
 import android.net.Uri;
 
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.mediacontroller.ISequenceFramesImageItem;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.converts.SyncWorkHandler;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
-import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 
 import java.io.File;
 
@@ -20,12 +21,6 @@ public class IntentShare extends FacemojiShare {
     private ShareChannel shareChannel;
     private Uri shareFileUri;
 
-    public IntentShare(Uri uri, String format, ShareChannel channel){
-        super(format);
-        this.shareFileUri = uri;
-        this.shareChannel = channel;
-    }
-
     public IntentShare(ISequenceFramesImageItem sfImage, String format, final ShareChannel channel) {
         super(format);
         this.sequenceFramesImage = sfImage;
@@ -34,8 +29,6 @@ public class IntentShare extends FacemojiShare {
 
     public void shareFacemoji(final ProgressListener progressListener) {
 
-        HSLog.d("shareFacemojiByIntent " + sequenceFramesImage.getCategoryName() + "-" + sequenceFramesImage.getName() + " via " + shareChannel.getPackageName());
-
         // share cache dir
         String shareDir = null;
         try {
@@ -43,8 +36,9 @@ public class IntentShare extends FacemojiShare {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         // check current face picture
-        String faceName = MediaController.getFaceNameProvider().faceName();
+        String faceName = HSFileUtils.getFileName(FacemojiManager.getCurrentFacePicUri());
         if (faceName == null) return;
         // check the format file
         File[] tempFiles = HSFileUtils.listFile(shareDir, sequenceFramesImage.getCategoryName() + "_" + sequenceFramesImage.getName() + "_" + faceName, format);
@@ -90,36 +84,5 @@ public class IntentShare extends FacemojiShare {
             }
         });
     }
-
-    /**
-     * 分享
-     */
-//    public void shareMedia() {
-//        // 可选的支持的应用包名，如果默认的包名对应的应用不能打开，则尝试可选的包名对应的应用打开
-//        String[] optionPackageName = MediaShareUtils.getAvailablePackages(shareChannel);
-//        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//        shareIntent.setPackage(shareChannel.getPackageName());
-//        shareIntent.putExtra(Intent.EXTRA_STREAM, shareFileUri);
-//        try {
-//            shareIntent.setType(getMimeType());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//        if(MediaShareUtils.isIntentAvailable(shareIntent)) {
-//            HSApplication.getContext().startActivity(shareIntent);
-//            return;
-//        }else if(optionPackageName!=null && optionPackageName.length >0){
-//            for(String pkg : optionPackageName){
-//                shareIntent.setPackage(pkg);
-//                if(MediaShareUtils.isIntentAvailable(shareIntent)) {
-//                    HSApplication.getContext().startActivity(shareIntent);
-//                    return;
-//                }
-//            }
-//        }
-//        Toast.makeText(HSApplication.getContext(), "sorry,can not find appropriate share tools", Toast.LENGTH_SHORT).show();
-//    }
-
 
 }

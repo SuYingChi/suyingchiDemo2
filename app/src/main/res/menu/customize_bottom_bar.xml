@@ -5,22 +5,22 @@
 
         <item
             android:id="@+id/customize_bottom_bar_keyboard"
-            android:icon="@drawable/customize_keyboard"
+            android:icon="@drawable/ic_tab_keyboard_black_24dp"
             android:title="@string/customize_keyboard_title" />
 
         <item
             android:id="@+id/customize_bottom_bar_wallpapers"
-            android:icon="@drawable/customize_wallpaper"
+            android:icon="@drawable/ic_tab_wallpaper_black_24dp"
             android:title="@string/customize_wallpapers_title" />
 
         <item
             android:id="@+id/customize_bottom_bar_call"
-            android:icon="@drawable/customize_call"
+            android:icon="@drawable/ic_tab_call_black_24dp"
             android:title="@string/call_flash" />
 
         <item
             android:id="@+id/customize_bottom_bar_setting"
-            android:icon="@drawable/customize_settings"
+            android:icon="@drawable/ic_tab_setting_black_24dp"
             android:title="@string/settings" />
 
     </group>

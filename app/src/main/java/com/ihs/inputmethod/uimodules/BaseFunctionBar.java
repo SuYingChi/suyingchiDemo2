@@ -5,15 +5,22 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -25,8 +32,13 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
+import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
+
+import pl.droidsonroids.gif.GifImageView;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -36,6 +48,21 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     private SettingsButton settingsButton;
     private OnFunctionBarItemClickListener onFunctionBarClickListener;
     private BaseFunction baseFunction;
+    private GifImageView facemojiView;
+    private View makeFacemojiTip;
+
+    private final static int MSG_DISMISS_MAKE_FACEMOJI_TIP = 1;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case MSG_DISMISS_MAKE_FACEMOJI_TIP:
+                    dismissMakeFacemojiTip();
+                    break;
+            }
+        }
+    };
 
     public BaseFunctionBar(Context context) {
         this(context, null);
@@ -86,6 +113,23 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         this.setBackgroundDrawable(getTransparentRippleBackground());
 
         functionLayout.addView(clothView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        //站位View
+        View emptyView = new View(HSApplication.getContext());
+        LayoutParams emptyViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,0);
+        emptyViewLayoutParams.weight = 1;
+        functionLayout.addView(emptyView,emptyViewLayoutParams);
+
+        if (BuildConfig.ENABLE_FACEMOJI) {
+            //FaceMojiView
+            facemojiView = new GifImageView(getContext());
+            facemojiView.setImageURI(Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.keyboard_facemoji));
+            facemojiView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            facemojiView.setId(R.id.func_facemoji_button);
+            facemojiView.setOnClickListener(this);
+            facemojiView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
+            functionLayout.addView(facemojiView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
+        }
     }
 
 
@@ -163,6 +207,52 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
     public void hideNewMark() {
         baseFunction.hideNewTip();
+    }
+
+    public void showMakeFacemojiTipIfNeed(final KeyboardPanelSwitchContainer keyboardPanelSwitchContainer) {
+        if (shouldShowMakeFacmojiTip()) {
+            getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (facemojiView.getWidth() > 0 && facemojiView.getHeight() > 0){
+                        getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                        makeFacemojiTip = LayoutInflater.from(getContext()).inflate(R.layout.layout_make_facemoji_tip, BaseFunctionBar.this, false);
+                        makeFacemojiTip.measure(0, 0);
+                        int[] location = new int[2];
+                        facemojiView.getLocationInWindow(location);
+
+                        View triangleView = makeFacemojiTip.findViewById(R.id.triangle_view);
+                        LinearLayout.LayoutParams layoutParams = (LayoutParams) triangleView.getLayoutParams();
+                        layoutParams.rightMargin = keyboardPanelSwitchContainer.getWidth() - (location[0] + facemojiView.getWidth() / 2) - triangleView.getMeasuredWidth() / 2;
+
+                        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        lp.setMargins(0, location[1] - makeFacemojiTip.getMeasuredHeight(), 0, 0);
+                        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+
+                        keyboardPanelSwitchContainer.addView(makeFacemojiTip, lp);
+
+                        handler.removeMessages(MSG_DISMISS_MAKE_FACEMOJI_TIP);
+                        handler.sendEmptyMessageDelayed(MSG_DISMISS_MAKE_FACEMOJI_TIP, 5000);
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean shouldShowMakeFacmojiTip(){
+        if (BuildConfig.ENABLE_FACEMOJI && FacemojiManager.getDefaultFacePicUri() == null && (System.currentTimeMillis() - PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getLong("lastShowMakeFacemojiTipTime",0) > 24*60*60*1000)){
+            PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putLong("lastShowMakeFacemojiTipTime",System.currentTimeMillis()).apply();
+            return true;
+        }
+        return false;
+    }
+
+    public void dismissMakeFacemojiTip() {
+        if (makeFacemojiTip != null && makeFacemojiTip.getParent()!=null){
+            ((ViewGroup)makeFacemojiTip.getParent()).removeView(makeFacemojiTip);
+            makeFacemojiTip = null;
+        }
     }
 
     public interface OnFunctionBarItemClickListener {

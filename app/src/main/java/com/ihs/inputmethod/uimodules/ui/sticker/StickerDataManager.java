@@ -167,14 +167,13 @@ public class StickerDataManager {
         return HSPreferenceHelper.getDefault().getBoolean(SHOW_NEW_MASK, true);
     }
 
-    public void removeNewTipOfStickerGroup(StickerModel stickerModel) {
-        String stickerGroupName = stickerModel.getStickerGroup().getStickerGroupName();
+    public void removeNewTipOfStickerGroup(StickerGroup stickerGroup) {
+        String stickerGroupName = stickerGroup.getStickerGroupName();
         Set<String> currentNewStickerSet = getCurrentNewStickerSet(HSApplication.getContext());
         if (currentNewStickerSet.contains(stickerGroupName)) {
             currentNewStickerSet.remove(stickerGroupName);
             saveCurrentNewStickerSet(HSApplication.getContext(), currentNewStickerSet);
         }
-
 
         if (currentNewStickerSet.isEmpty()) {
             saveShowNewMask(false);

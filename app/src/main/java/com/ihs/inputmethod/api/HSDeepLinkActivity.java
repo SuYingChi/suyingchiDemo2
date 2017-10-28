@@ -7,10 +7,10 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 
-public class HSDeepLinkActivity extends HSActivity {
+public class HSDeepLinkActivity extends HSAppCompatActivity {
 
 	private GoogleApiClient mClient;
 	private Uri mUrl;

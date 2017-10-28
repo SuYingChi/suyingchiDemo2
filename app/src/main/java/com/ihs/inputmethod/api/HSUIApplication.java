@@ -40,11 +40,16 @@ import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
+import com.ihs.inputmethod.api.managers.HSDirectoryManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
@@ -203,8 +208,17 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
+        //init facemoji
+        HSDirectoryManager.getInstance().init(HSApplication.getContext());
+        HSThreadUtils.execute(new Runnable() {
+            @Override
+            public void run() {
+                FacemojiManager.getInstance().init();
+            }
+        });
         HSKeyboardThemeManager.init();
         StickerDataManager.getInstance();
+        MediaController.setHandler(UIController.getInstance().getUIHandler());
         ThemeDirManager.moveCustomAssetsToFileIfNecessary();
 
         CustomUIRateAlertUtils.initialize();

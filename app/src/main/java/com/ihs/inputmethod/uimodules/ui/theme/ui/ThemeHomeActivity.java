@@ -16,8 +16,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.provider.Browser;
 import android.provider.Settings;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -30,7 +28,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -341,7 +338,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
         }
         mBottomBar.setSelectedItemId(ITEMS_FLURRY_NAME_MAP.keyAt(currentTabIndex));
-        setIconDrawable(mBottomBar.getMenu().getItem(currentTabIndex));
         mContent.setWithChildTabSelected(currentTabIndex,innerTabIndex);
     }
 
@@ -398,35 +394,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
     }
 
-    private void resetBottomMenu() {
-        Menu menu = mBottomBar.getMenu();
-        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_wallpapers, R.drawable.customize_wallpaper);
-        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_keyboard, R.drawable.customize_keyboard);
-        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_call, R.drawable.customize_call);
-        setMenuItemIconDrawable(menu, R.id.customize_bottom_bar_setting, R.drawable.customize_settings);
-    }
-
-    private void setIconDrawable(final MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.customize_bottom_bar_wallpapers:
-                HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "wallpaper");
-                item.setIcon(R.drawable.customize_wallpaper_h);
-                break;
-            case R.id.customize_bottom_bar_keyboard:
-                HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "keyboard");
-                item.setIcon(R.drawable.customize_keyboard_h);
-                break;
-            case R.id.customize_bottom_bar_call:
-                HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "callflash");
-                item.setIcon(R.drawable.customize_call_h);
-                break;
-            case R.id.customize_bottom_bar_setting:
-                HSAnalytics.logEvent("app_tab_bottom_clicked", "tabName", "settings");
-                item.setIcon(R.drawable.customize_settings_h);
-                break;
-        }
-    }
-
     @Override
     public boolean onNavigationItemSelected(final MenuItem item) {
         // Handle navigation view item clicks here.
@@ -438,17 +405,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
         mContent.setChildSelected(currentTabIndex);
         // reset icon to origins
-        resetBottomMenu();
-
-        setIconDrawable(item);
         return true;
-    }
-
-    private void setMenuItemIconDrawable(Menu menu, @IdRes int itemId, @DrawableRes int drawableId) {
-        MenuItem item = menu.findItem(itemId);
-        if (item != null) {
-            item.setIcon(drawableId);
-        }
     }
 
     private void showTrialKeyboardDialog() {
