@@ -19,6 +19,7 @@ import java.util.List;
 
 public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<StickerHomeModel>> {
     private CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener;
+    private boolean playAnim = false;
 
     public StickerFacemojiAdapterDelegate(CommonStickerAdapter.OnStickerItemClickListener onStickerItemClickListener) {
         this.onStickerItemClickListener = onStickerItemClickListener;
@@ -53,18 +54,11 @@ public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<Sticker
                 }
             }
         });
-    }
-
-    @Override
-    protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
-        super.onViewAttachedToWindow(holder);
-        ((StickerFacemojiViewHolder) holder).facemojiAnimationView.start();
-    }
-
-    @Override
-    protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
-        ((StickerFacemojiViewHolder) holder).facemojiAnimationView.stop();
-        super.onViewDetachedFromWindow(holder);
+        if (playAnim){
+            h.facemojiAnimationView.start();
+        }else {
+            h.facemojiAnimationView.stop();
+        }
     }
 
     @Override
@@ -74,11 +68,15 @@ public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<Sticker
 
 
     public final class StickerFacemojiViewHolder extends RecyclerView.ViewHolder {
-        FacemojiAnimationView facemojiAnimationView;
+        public FacemojiAnimationView facemojiAnimationView;
 
         public StickerFacemojiViewHolder(View itemView) {
             super(itemView);
             facemojiAnimationView = (FacemojiAnimationView) itemView.findViewById(R.id.sticker_player_view);
         }
+    }
+
+    public void setPlayAnim(boolean playAnim){
+        this.playAnim = playAnim;
     }
 }

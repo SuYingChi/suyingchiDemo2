@@ -13,14 +13,22 @@ import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerTitleAdap
  */
 
 public class HomeStickerAdapter extends CommonStickerAdapter {
+    private StickerFacemojiAdapterDelegate stickerFacemojiAdapterDelegate;
 
     public HomeStickerAdapter(OnStickerItemClickListener onStickerItemClickListener) {
         super();
+        stickerFacemojiAdapterDelegate = new StickerFacemojiAdapterDelegate(onStickerItemClickListener);
         delegatesManager.addDelegate(new StickerTitleAdapterDelegate())
                 .addDelegate(new StickerBigCreateFacemojiAdapterDelegate())
                 .addDelegate(new StickerSamllCreateFacemojiAdapterDelegate())
-                .addDelegate(new StickerFacemojiAdapterDelegate(onStickerItemClickListener))
+                .addDelegate(stickerFacemojiAdapterDelegate)
                 .addDelegate(new StickerMoreComingAdapterDelegate())
                 .addDelegate(new StickerHomeCardAdapterDelegate(onStickerItemClickListener));
+    }
+
+    public void setPlayStickerFacemoij(boolean playAnim){
+        if (stickerFacemojiAdapterDelegate != null){
+            stickerFacemojiAdapterDelegate.setPlayAnim(playAnim);
+        }
     }
 }

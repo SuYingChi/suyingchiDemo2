@@ -26,6 +26,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
+import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerFacemojiAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
@@ -42,6 +43,8 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
  */
 
 public class StickerHomeFragment extends Fragment {
+    private boolean isVisibleToUser;
+    private boolean isResume;
 
     private RecyclerView recyclerView;
     private HomeStickerAdapter stickerCardAdapter;
@@ -215,7 +218,57 @@ public class StickerHomeFragment extends Fragment {
 
     @Override
     public void onResume() {
+        isResume = true;
+        startFacemojiAnim();
         super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        isResume = false;
+        stopFacemojiAnim();
+        super.onStop();
+    }
+
+    private void startFacemojiAnim(){
+        if (BuildConfig.OPEN_FACEMOJI) {
+            if (isVisibleToUser && isResume) {
+                stickerCardAdapter.setPlayStickerFacemoij(true);
+                for (int i = 0; i < stickerModelList.size(); i++) {
+                    if (stickerModelList.get(i).isFacemoji){
+                        RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+                        if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder){
+                            ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder)viewHolder).facemojiAnimationView.start();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void stopFacemojiAnim() {
+        if (BuildConfig.OPEN_FACEMOJI) {
+            stickerCardAdapter.setPlayStickerFacemoij(false);
+            for (int i = 0; i < stickerModelList.size(); i++) {
+                if (stickerModelList.get(i).isFacemoji){
+                    RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+                    if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder){
+                        ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder)viewHolder).facemojiAnimationView.stop();
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        if (isVisibleToUser){
+            startFacemojiAnim();
+        }else {
+            stopFacemojiAnim();
+        }
     }
 
     @Override
