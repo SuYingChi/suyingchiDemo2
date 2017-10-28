@@ -233,12 +233,14 @@ public class StickerHomeFragment extends Fragment {
     private void startFacemojiAnim(){
         if (BuildConfig.ENABLE_FACEMOJI) {
             if (isVisibleToUser && isResume) {
-                stickerCardAdapter.setPlayStickerFacemoij(true);
-                for (int i = 0; i < stickerModelList.size(); i++) {
-                    if (stickerModelList.get(i).isFacemoji){
-                        RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
-                        if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder){
-                            ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder)viewHolder).facemojiAnimationView.start();
+                if (stickerCardAdapter != null) {
+                    stickerCardAdapter.setPlayStickerFacemoij(true);
+                    for (int i = 0; i < stickerModelList.size(); i++) {
+                        if (stickerModelList.get(i).isFacemoji) {
+                            RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+                            if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) {
+                                ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) viewHolder).facemojiAnimationView.start();
+                            }
                         }
                     }
                 }
@@ -248,12 +250,14 @@ public class StickerHomeFragment extends Fragment {
 
     private void stopFacemojiAnim() {
         if (BuildConfig.ENABLE_FACEMOJI) {
-            stickerCardAdapter.setPlayStickerFacemoij(false);
-            for (int i = 0; i < stickerModelList.size(); i++) {
-                if (stickerModelList.get(i).isFacemoji){
-                    RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
-                    if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder){
-                        ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder)viewHolder).facemojiAnimationView.stop();
+            if (stickerCardAdapter != null) {
+                stickerCardAdapter.setPlayStickerFacemoij(false);
+                for (int i = 0; i < stickerModelList.size(); i++) {
+                    if (stickerModelList.get(i).isFacemoji) {
+                        RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+                        if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) {
+                            ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) viewHolder).facemojiAnimationView.stop();
+                        }
                     }
                 }
             }
