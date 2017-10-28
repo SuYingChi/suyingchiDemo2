@@ -453,8 +453,13 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
             } else {
                 preferenceCategoryMore.addPreference(updatePreference);
             }
+            if (getResources().getBoolean(R.bool.hideRemoveAds)) {
+                preferenceCategoryMore.removePreference(findPreference("removeAd"));
+            } else{
+                findPreference("removeAd").setOnPreferenceClickListener(this);
+            }
+
             findPreference("keyboard_settings").setOnPreferenceClickListener(this);
-            findPreference("removeAd").setOnPreferenceClickListener(this);
             findPreference("privacy_policy").setOnPreferenceClickListener(this);
             updatePreference.setOnPreferenceClickListener(this);
 
