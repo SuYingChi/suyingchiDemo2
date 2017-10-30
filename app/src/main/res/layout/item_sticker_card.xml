@@ -29,10 +29,10 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/sticker_image_real_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerCrop"
                     android:visibility="visible"
                     app:riv_corner_radius_top_left="@dimen/common_round_corner"
                     app:riv_corner_radius_top_right="@dimen/common_round_corner" />
