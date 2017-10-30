@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="feedback_email">feedback.emoji@hotmail.com</string>
-    <string name="fb_app_id">1474873346171463</string>
+    <string name="feedback_email">feedback.mobipioneer@hotmail.com</string>
+    <string name="fb_app_id">725261934240541</string>
 
     <string name="app_name">Emoji Keyboard</string>
     <string name="action_settings">Settings</string>
