@@ -7,7 +7,6 @@ import android.os.Message;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 
 import java.util.concurrent.ScheduledFuture;
@@ -77,7 +76,10 @@ public class FacemojiAnimationView extends AppCompatImageView {
             mIsRunning = true;
         }
 
-        HSLog.d("cjx",sticker.getName()+" start");
+        if (mIndex >= sticker.getFrames().size()) {
+            mIndex = 0;
+        }
+
         mExecutor.schedule(new Thread() {
             @Override
             public void run() {
@@ -92,7 +94,6 @@ public class FacemojiAnimationView extends AppCompatImageView {
                 mHandler.sendEmptyMessage(INVALIDATE_ANIM);
                 long endTime = System.currentTimeMillis();
                 lastFramePrepareTime = endTime - startTime;
-                HSLog.v("cjx", sticker.getName() + " getFrame cost time :" + lastFramePrepareTime + " and interval:" + sticker.getFrames().get(mIndex).getInterval());
 
                 mExecutor.remove(this);
                 schedule = mExecutor.schedule(this, Math.max(sticker.getFrames().get(mIndex).getInterval() - lastFramePrepareTime, 0), TimeUnit.MILLISECONDS);
@@ -126,7 +127,6 @@ public class FacemojiAnimationView extends AppCompatImageView {
             }
             mIsRunning = false;
         }
-        HSLog.d("cjx",sticker.getName()+" stop");
         if (schedule != null) {
             schedule.cancel(true);
         }

@@ -233,29 +233,27 @@ public class StickerHomeFragment extends Fragment {
     private void startFacemojiAnim(){
         if (BuildConfig.ENABLE_FACEMOJI) {
             if (isVisibleToUser && isResume) {
-                if (stickerCardAdapter != null) {
-                    stickerCardAdapter.setPlayStickerFacemoij(true);
-                    for (int i = 0; i < stickerModelList.size(); i++) {
-                        if (stickerModelList.get(i).isFacemoji) {
-                            RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
-                            if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) {
-                                ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) viewHolder).facemojiAnimationView.start();
-                            }
-                        }
-                    }
-                }
+                setAnimStatus(true);
             }
         }
     }
 
     private void stopFacemojiAnim() {
         if (BuildConfig.ENABLE_FACEMOJI) {
-            if (stickerCardAdapter != null) {
-                stickerCardAdapter.setPlayStickerFacemoij(false);
-                for (int i = 0; i < stickerModelList.size(); i++) {
-                    if (stickerModelList.get(i).isFacemoji) {
-                        RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
-                        if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) {
+            setAnimStatus(false);
+        }
+    }
+
+    private void setAnimStatus(boolean start) {
+        if (recyclerView != null && recyclerView.getChildCount() > 0 && stickerCardAdapter != null) {
+            stickerCardAdapter.setPlayStickerFacemoij(start);
+            for (int i = 0; i < stickerModelList.size(); i++) {
+                if (stickerModelList.get(i).isFacemoji) {
+                    RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+                    if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) {
+                        if (start){
+                            ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) viewHolder).facemojiAnimationView.start();
+                        }else {
                             ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) viewHolder).facemojiAnimationView.stop();
                         }
                     }
