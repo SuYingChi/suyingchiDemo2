@@ -198,7 +198,7 @@ dependencies {
     compile "com.ihandy.iap:iap.gm:4.0.+"
 
     smileyCompile project(':gpuimage')
-    smileyCompile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+
     //ihs related
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
@@ -208,11 +208,12 @@ dependencies {
     compile "com.facebook.shimmer:shimmer:0.1.0@aar"
 
     //3rd party
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     compile 'org.jcodec:jcodec-android:0.1.9'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.afollestad.material-dialogs:core:0.9.0.1'
+    compile('com.waynejo:androidndkgif:0.3.3')
     compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
@@ -235,7 +236,6 @@ dependencies {
     //callassistant
     compile (name: 'ihs/libCallAssistant/libcallassistant', ext: 'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile('com.waynejo:androidndkgif:0.3.3')
     //----
 
     //keep alive
