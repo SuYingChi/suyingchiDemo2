@@ -221,7 +221,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         HSAnalytics.logEvent("sticker_input_tab", "stickerGroupName", sticker.getStickerGroupName());
         stickerPanelManager.pendingRecentSticker(sticker);
         String currentPackageName = HSInputMethod.getCurrentHostAppPackageName();
-        StickerUtils.sendToPackage(sticker, currentPackageName);
+        StickerUtils.sendStickerToPackage(sticker, currentPackageName);
     }
 
     public void showPanelView() {

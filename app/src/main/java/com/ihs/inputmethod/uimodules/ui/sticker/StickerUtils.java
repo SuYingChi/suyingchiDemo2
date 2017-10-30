@@ -1,10 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
-import android.content.ClipDescription;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.res.AssetManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,20 +8,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v13.view.inputmethod.EditorInfoCompat;
-import android.support.v13.view.inputmethod.InputConnectionCompat;
-import android.support.v13.view.inputmethod.InputContentInfoCompat;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
@@ -145,7 +132,7 @@ public class StickerUtils {
 
     }
 
-    public static void sendToPackage(final Sticker sticker, final String packageName) {
+    public static void sendStickerToPackage(final Sticker sticker, final String packageName) {
         if (!DirectoryUtils.isSDCardEnabled() || !StickerPrefsUtil.getInstance().isAppSupportSticker(packageName)) {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
             return;
@@ -159,82 +146,9 @@ public class StickerUtils {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_send_failed), Toast.LENGTH_SHORT).show();
             return;
         }
-
-        String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
-        final String mimeType = "image/*";
-        boolean pngSupported = false;
-        boolean gifSupported = false;
-        for (String mime_Type : mimeTypes) {
-            if (ClipDescription.compareMimeTypes(mime_Type, "image/png")) {
-                pngSupported = true;
-            }
-            if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
-                gifSupported = true;
-            }
-        }
         addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
-        if (pngSupported || gifSupported) {
 
-            Uri uri = getImageContentUri(HSApplication.getContext(), externalImageFile);
-            if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_GIF_SUFFIX) && gifSupported) {
-                if (commitStickerImage(uri, "", "image/gif")) {
-                    return;
-                }
-            } else if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_PNG_SUFFIX) && pngSupported) {
-                if (commitStickerImage(uri, "", "image/png")) {
-                    return;
-                }
-            } else if (sticker.getStickerFileSuffix().equals(Sticker.STICKER_IMAGE_PNG_SUFFIX) && gifSupported) {
-                // 如果图片是 PNG，而应用只支持 GIF，则发送时声称是 GIF，目前是可以发出去的；以后也许需要改成需要转成真实的 GIF 格式后再发送
-                if (commitStickerImage(uri, "", "image/gif")) {
-                    return;
-                }
-            }
-        }
-
-        try {
-            MediaShareUtils.shareImageByIntent(Uri.fromFile(externalImageFile), mimeType, packageName);
-        } catch (Exception e) {
-            HSAnalytics.logEvent("Sticker_toast_send_failed", "packageName", packageName);
-            StickerPrefsUtil.getInstance().recordUnsupportApp(packageName);
-            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
-//            HSInputMethod.inputText(sticker.getStickerRemoteUri());
-        }
-    }
-
-    private static boolean commitStickerImage(Uri contentUri, String imageDescription, String fileType) {
-        InputContentInfoCompat inputContentInfo = new InputContentInfoCompat(contentUri,
-                new ClipDescription(imageDescription, new String[]{fileType}), null);
-        InputConnection inputConnection = HSInputMethodService.getInstance().getCurrentInputConnection();
-        EditorInfo editorInfo = HSInputMethodService.getInstance().getCurrentInputEditorInfo();
-        int flags = 0;
-        if (android.os.Build.VERSION.SDK_INT >= 25) {
-            flags |= InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
-        }
-        return InputConnectionCompat.commitContent(inputConnection, editorInfo, inputContentInfo, flags, null);
-    }
-
-    private static Uri getImageContentUri(Context context, File imageFile) {
-        String filePath = imageFile.getAbsolutePath();
-        Cursor cursor = context.getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[]{MediaStore.Images.Media._ID},
-                MediaStore.Images.Media.DATA + "=? ",
-                new String[]{filePath}, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-            cursor.close();
-            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id);
-        } else {
-            if (imageFile.exists()) {
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.DATA, filePath);
-                return context.getContentResolver().insert(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            } else {
-                return null;
-            }
-        }
+        MediaShareUtils.share(sticker.getStickerFileSuffix(), packageName, externalImageFile, "");
     }
 
     private static void copyStickerFileToSDCard(Sticker sticker, String destinationPath) {

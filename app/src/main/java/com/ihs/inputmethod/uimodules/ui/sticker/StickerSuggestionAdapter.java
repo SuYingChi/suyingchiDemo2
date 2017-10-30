@@ -47,7 +47,7 @@ public class StickerSuggestionAdapter extends RecyclerView.Adapter<StickerSugges
             @Override
             public void onClick(View v) {
                 HSFloatWindowManager.getInstance().removeFloatingWindow();
-                StickerUtils.sendToPackage(sticker, HSUIInputMethodService.getInstance().getCurrentInputEditorInfo().packageName);
+                StickerUtils.sendStickerToPackage(sticker, HSUIInputMethodService.getInstance().getCurrentInputEditorInfo().packageName);
                 if (!TextUtils.isEmpty(stickerTag)) {
                     HSAnalytics.logEvent("keyboard_sticker_prediction_sent", "sticker tag", stickerTag, "sticker group", sticker.getStickerGroupName());
                 }

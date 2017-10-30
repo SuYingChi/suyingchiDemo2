@@ -6,18 +6,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v13.view.inputmethod.EditorInfoCompat;
 import android.support.v13.view.inputmethod.InputConnectionCompat;
 import android.support.v13.view.inputmethod.InputContentInfoCompat;
-import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
-import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
-import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.DaoHelper;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.download.GifDownloadTask;
@@ -61,47 +56,13 @@ public final class GifManager {
         }
     }
 
-    public void share(File gifFile,String gifName,final String packageName,String url,final GifDownloadTask.Callback callback){
-        // 可以直接发送到对话列表中
-        String[] mimeTypes = EditorInfoCompat.getContentMimeTypes(HSInputMethodService.getInstance().getCurrentInputEditorInfo());
-        boolean gifSupported = false;
-        for (String mime_Type : mimeTypes) {
-            if (ClipDescription.compareMimeTypes(mime_Type, "image/gif")) {
-                gifSupported = true;
-            }
-        }
-        if (gifSupported) {
-            Uri imageUri = getGifContentUri(HSApplication.getContext(), gifFile);
-            if (!gifFile.exists() || imageUri == null) {
-                HSLog.e("send GIF directly failed.");
-            } else {
-                commitGifImage(imageUri, "");
-                return;
-            }
-        }
-
-        final String mimeType;
-
-        mimeType = "image/*";
-        final String targetFilePath = DirectoryUtils.getImageExportFolder() + "/" + gifName + ".gif";
-        HSFileUtils.copyFile(gifFile.getAbsolutePath(), targetFilePath);
-        try {
-            MediaShareUtils.shareImageByIntent(Uri.fromFile(new File(targetFilePath)), mimeType, packageName);
-        } catch (Exception e) {
-            if (!TextUtils.isEmpty(url)) {
-                HSInputMethod.inputText(url);
-            }
-        }
-    }
-
     public void share(final GifItem gif, final String packageName, final GifDownloadTask.Callback callback) {
         if (!DirectoryUtils.isSDCardEnabled()) {
             HSInputMethod.inputText(gif.getUrl());
             return;
         }
 
-        File gifFile = DirectoryUtils.getDownloadGifUri(gif.id);
-        share(gifFile,gif.id,packageName,gif.getUrl(),callback);
+        MediaShareUtils.share(".gif", packageName, DirectoryUtils.getDownloadGifUri(gif.id), gif.getUrl());
     }
 
     private void shareMp4(final GifItem gif, GifDownloadTask.Callback callback) {
