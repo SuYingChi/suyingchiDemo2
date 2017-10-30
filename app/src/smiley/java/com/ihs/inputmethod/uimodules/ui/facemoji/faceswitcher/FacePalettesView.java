@@ -2,11 +2,18 @@ package com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.common.VectorCompat;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
@@ -47,6 +54,12 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+        boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
+        int elementColor = Color.WHITE;
+        if (!isCurrentThemeDarkBg){
+            elementColor = HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_selected_color);
+        }
+
         // view pager
         mViewPager = (ViewPager) findViewById(R.id.face_viewpager);
         mFaceLayoutParams = new FaceLayoutParams(HSApplication.getContext().getResources());
@@ -58,6 +71,17 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
         // page id view
         mFacePageIndicatorView = (FacePageIndicatorView) findViewById(R.id.face_switch_page_id_view);
         mFacePageIndicatorView.setColors(0xff1ea0cd, 0x00000000);
+
+        TextView title = (TextView) findViewById(R.id.face_switch_title);
+        title.setTextColor(elementColor);
+
+        TextView manageText = (TextView) findViewById(R.id.face_switch_edit_btn);
+        manageText.setTextColor(elementColor);
+
+        ImageView backImage = (ImageView) findViewById(R.id.face_switch_back_btn);
+        VectorDrawableCompat closeDrawable = VectorCompat.createVectorDrawable(HSApplication.getContext(),R.drawable.ic_close_black_24dp);
+        DrawableCompat.setTint(closeDrawable,elementColor);
+        backImage.setImageDrawable(closeDrawable);
     }
 
     @Override

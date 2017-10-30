@@ -58,33 +58,33 @@ public class FacemojiManager {
     private static final String UPLOAD_FILE_PATH = "upload_file_path";
     private static final String MOJIME_DIRECTORY = "Mojime";
     private static final String PREF_CATEGORY_LAST_PAGE_ID = "sticker_category_last_page_id ";
-    private static final String[] classicCategoryNames;
+    private static final String[] categoryNames;
     private static int currentPageSize = FacemojiPalettesParam.SIZE;
     private static FacemojiManager instance;
     private static Uri currentFacePicUri;
     private static String currentUploadFile;
     private static Bitmap originFace;
-    private static int mCurrentClassicCategoryPageId = 0;
+    private static int mCurrentCategoryPageId = 0;
     private static List<FaceItem> faces = new ArrayList<>();
     // Take photo but not saved
     private static Uri mTempFacePicUri;
     private static boolean mUsingTempFace;
     private static Bitmap mTempFaceBmp;
     private List<FacemojiCategory> classicCategories = new ArrayList<>();
-    private int currentClassicCategoryId = 0;
+    private int currentCategoryId = 0;
     private static BitmapFactory.Options lowQualityOption;
     private static BitmapFactory.Options highQualityOption;
 
     static {
         if (BuildConfig.ENABLE_FACEMOJI){
-            classicCategoryNames = new String[]{
+            categoryNames = new String[]{
                     "dance",
                     "star",
                     "person",
                     "fruit"
             };
         }else {
-            classicCategoryNames = new String[]{};
+            categoryNames = new String[]{};
         }
     }
 
@@ -372,8 +372,8 @@ public class FacemojiManager {
     }
 
     public static int getCategoryPosition(String name) {
-        for (int i = 0; i < classicCategoryNames.length; i++) {
-            if (name.equals(classicCategoryNames[i])) {
+        for (int i = 0; i < categoryNames.length; i++) {
+            if (name.equals(categoryNames[i])) {
                 return i;
             }
         }
@@ -413,11 +413,11 @@ public class FacemojiManager {
     }
 
     public static int getCurrentCategoryPageId() {
-        return mCurrentClassicCategoryPageId;
+        return mCurrentCategoryPageId;
     }
 
     public static void setCurrentCategoryPageId(final int id) {
-        mCurrentClassicCategoryPageId = id;
+        mCurrentCategoryPageId = id;
     }
 
 
@@ -438,17 +438,17 @@ public class FacemojiManager {
     }
 
     private void copyAssetStickersToStorage() {
-        for (String category : classicCategoryNames) {
+        for (String category : categoryNames) {
             copyAssetFileToStorage(category);
         }
     }
 
     public int getCurrentCategoryId() {
-        return currentClassicCategoryId;
+        return currentCategoryId;
     }
 
     public void setCurrentCategoryId(int currentId) {
-        currentClassicCategoryId = currentId;
+        currentCategoryId = currentId;
     }
 
     public List<FacemojiCategory> getCategories() {
@@ -496,8 +496,8 @@ public class FacemojiManager {
 
     private void loadStickerList() {
         classicCategories.clear();
-        for (int i = 0; i < classicCategoryNames.length; i++) {
-            classicCategories.add(i, new FacemojiCategory(classicCategoryNames[i], i));
+        for (int i = 0; i < categoryNames.length; i++) {
+            classicCategories.add(i, new FacemojiCategory(categoryNames[i], i));
         }
     }
 

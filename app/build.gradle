@@ -9,7 +9,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 22
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -82,6 +82,7 @@ android {
 
         smiley {
             applicationId = "com.smartkeyboard.emoji"
+            minSdkVersion 15
             versionCode 19
             versionName "2.0.6"
             manifestPlaceholders = [APPLY_SCHEME: "smileyKeyboard"]
@@ -197,6 +198,7 @@ dependencies {
     compile "com.ihandy.iap:iap.gm:4.0.+"
 
     smileyCompile project(':gpuimage')
+    smileyCompile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     //ihs related
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
@@ -232,7 +234,6 @@ dependencies {
 
     //callassistant
     compile (name: 'ihs/libCallAssistant/libcallassistant', ext: 'aar')
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile('com.waynejo:androidndkgif:0.3.3')
     //----

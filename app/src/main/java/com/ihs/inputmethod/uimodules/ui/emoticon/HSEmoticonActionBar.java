@@ -65,6 +65,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     private TextView alphabet_left;
     private Map<Class, View> btnMap = new HashMap<>();
     private Map<String, Class> panels = new HashMap<>();
+    boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
         @Override
@@ -86,6 +87,8 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
 
     public HSEmoticonActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
     }
 
@@ -227,7 +230,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     @NonNull
     private Drawable getTabDrawable(int resId) {
         Resources resources = HSApplication.getContext().getResources();
-        boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
         int pressColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_selected_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_selected_color);
         int normalColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_normal_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_normal_color);
 

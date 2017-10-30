@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher.FacePalettesView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ihs.inputmethod.uimodules.ui.facemoji.faceswitcher.FacePalettesView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/face_palettes_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,23 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
         android:hapticFeedbackEnabled="false">
-        <LinearLayout
-            android:id="@+id/face_switch_close_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+
+
+        <ImageView
+            android:id="@+id/face_switch_back_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:gravity="center">
-        <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_gravity="center"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="13dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/close_btn_small"
-            />
-        </LinearLayout>
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/face_switch_title"
@@ -43,7 +38,7 @@
             android:text="@string/switch_facemoji_toolbar_title"
             android:textColor="#ffffffff"
             android:textSize="14sp"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/face_switch_edit_btn"

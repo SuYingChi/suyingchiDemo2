@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Pair;
@@ -50,6 +52,9 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
     private OnItemClickListener onItemClickListener;
 
     private int mCurrentPagerPosition = 0;
+    private int mCurrentCategoryId = 0;
+
+    boolean isCurrentThemeDarkBg;
 
     // Share progress
     private KeyboardProgressView mShareProgressView;
@@ -74,6 +79,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         super(context, attrs, defStyle);
         Resources res = context.getResources();
         mStickerLayoutParams = new FacemojiLayoutParams(res);
+        isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
 
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACE_CHANGED, notificationObserver);
     }
@@ -107,7 +113,15 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         iconView.setPadding(10, 10, 10, 10);
         iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         iconView.setImageDrawable(FacemojiManager.getInstance().getCategories().get(categoryId).getCategoryIcon());
-        iconView.setBackgroundResource(R.drawable.facemoji_tab_bg);
+
+        StateListDrawable stateListDrawable = new StateListDrawable();
+        GradientDrawable shapeDrawable = new GradientDrawable();
+        shapeDrawable.setShape(GradientDrawable.OVAL);
+        shapeDrawable.setColor(isCurrentThemeDarkBg ? Color.parseColor("#aaf5f4f4"):Color.parseColor("#aac3c3c3"));
+        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, shapeDrawable);
+        stateListDrawable.addState(new int[]{}, new ColorDrawable(Color.TRANSPARENT));
+        iconView.setBackgroundDrawable(stateListDrawable);
+
         tspec.setIndicator(iconView);
         host.addTab(tspec);
     }
@@ -171,7 +185,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
             addView(panelView);
 
-            setCurrentCategoryId(FacemojiManager.getInstance().getCurrentCategoryId(), true /* force */);
+            setCurrentCategoryId(mCurrentCategoryId, true /* force */);
         }
     }
 
@@ -266,11 +280,11 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             pageIndicatorView.setVisibility(INVISIBLE);
         }
 
-        int oldCategoryId = FacemojiManager.getInstance().getCurrentCategoryId();
-        if (oldCategoryId == categoryId && !force) {
+        if (mCurrentCategoryId == categoryId && !force) {
             return;
         }
-        FacemojiManager.getInstance().setCurrentCategoryId(categoryId);
+
+        mCurrentCategoryId = categoryId;
 
         int newTabId = categoryId;
         final int newCategoryPageId = FacemojiManager.getInstance().getPageIdFromCategoryId(categoryId,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);

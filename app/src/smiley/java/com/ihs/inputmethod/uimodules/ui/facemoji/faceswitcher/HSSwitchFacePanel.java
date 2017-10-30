@@ -40,7 +40,7 @@ public class HSSwitchFacePanel extends BasePanel{
     }
 
     private void init() {
-        final View closeButton = panelView.findViewById(R.id.face_switch_close_btn);
+        final View closeButton = panelView.findViewById(R.id.face_switch_back_btn);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
