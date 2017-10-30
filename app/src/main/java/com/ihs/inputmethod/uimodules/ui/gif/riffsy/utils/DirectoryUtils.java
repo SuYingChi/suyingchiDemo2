@@ -25,7 +25,7 @@ public final class DirectoryUtils {
     }
 
     public static File getMp4CacheDir() {
-        final File mp4Dir=new File(getAvailableCacheDir(),MP4_CACHE_DIR);
+        final File mp4Dir = new File(getAvailableCacheDir(), MP4_CACHE_DIR);
         if (!mp4Dir.exists()) {
             mp4Dir.mkdirs();
         }
@@ -33,7 +33,7 @@ public final class DirectoryUtils {
     }
 
     private static File getCacheDirectory(final String dirName) {
-        File dir=new File(getAvailableCacheDir(),dirName);
+        File dir = new File(getAvailableCacheDir(), dirName);
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -51,19 +51,19 @@ public final class DirectoryUtils {
 
     public static File getDownloadGifUri(final String fileName) {
         final File folderPath = getGifDownloadFolder();
-        return new File(folderPath,fileName);
+        return new File(folderPath, fileName + ".gif");
     }
 
-    private static File getAvailableCacheDir(){
+    private static File getAvailableCacheDir() {
         File dir;
-        if(!HSPermissionsUtil.checkAllPermissionsGranted(HSApplication.getContext(),
+        if (!HSPermissionsUtil.checkAllPermissionsGranted(HSApplication.getContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE)){
-            dir=new File(HSApplication.getContext().getFilesDir(),CACHE_DIR);
-        }else  if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            dir=new File(Environment.getExternalStorageDirectory(),CACHE_DIR);
-        }else{
-            dir=new File(HSApplication.getContext().getFilesDir(),CACHE_DIR);
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            dir = new File(HSApplication.getContext().getFilesDir(), CACHE_DIR);
+        } else if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            dir = new File(Environment.getExternalStorageDirectory(), CACHE_DIR);
+        } else {
+            dir = new File(HSApplication.getContext().getFilesDir(), CACHE_DIR);
         }
         if (!dir.exists()) {
             dir.mkdirs();
@@ -71,9 +71,9 @@ public final class DirectoryUtils {
         return dir;
     }
 
-    public static boolean isSDCardEnabled(){
+    public static boolean isSDCardEnabled() {
         return HSPermissionsUtil.checkAllPermissionsGranted(HSApplication.getContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE)&&Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+                Manifest.permission.READ_EXTERNAL_STORAGE) && Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 }

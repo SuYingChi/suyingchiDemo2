@@ -11,6 +11,8 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 
 import java.io.File;
 
+import static com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils.getDownloadGifUri;
+
 public final class DownloadManager {
 
 	private static DownloadManager instance;
@@ -69,7 +71,7 @@ public final class DownloadManager {
 	}
 
 	public DownloadTask loadImageTask(final String fileName, final String url, final View view, final GifDownloadTask.Callback callback){
-		final File downloadedFile =new File(getGifDownloadFolder(), fileName);
+		final File downloadedFile = getDownloadGifUri(fileName);
 		GifDownloadTask task = new GifDownloadTask(url, downloadedFile, view, callback);
 		if (downloadedFile.exists() && !threadManager.isTaskAdded(downloadedFile.getAbsolutePath())) {
 			task.setDone(true);

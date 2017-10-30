@@ -55,7 +55,6 @@ public final class GifManager {
             RequestHandler.handleRequest(request);
         }
     }
-
     public void share(final GifItem gif, final String packageName, final GifDownloadTask.Callback callback) {
         if (!DirectoryUtils.isSDCardEnabled()) {
             HSInputMethod.inputText(gif.getUrl());
