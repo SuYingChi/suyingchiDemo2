@@ -4487,6 +4487,10 @@
 			</dict>
 			<key>StickersGifs</key>
 			<dict>
+				<key>SendUrlApp</key>
+				<array>
+					<string>com.instagram.android</string>
+				</array>
 				<key>GifConfig</key>
 				<dict>
 					<key>UpdateIntervalInHour</key>

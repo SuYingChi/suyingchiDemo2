@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.uimodules.R;
@@ -24,6 +25,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPrefsUtil;
 
 import java.io.File;
+import java.util.List;
 
 public final class MediaShareUtils {
 
@@ -72,6 +74,16 @@ public final class MediaShareUtils {
                     return;
                 }
             }
+        }
+
+        List<String> sendLinkAppList = (List<String>) HSConfig.getList("Application", "StickersGifs", "SendUrlApp");
+        if (sendLinkAppList.contains(packageName)) {
+            if(!TextUtils.isEmpty(remoteUrl)){
+                HSInputMethod.inputText(remoteUrl);
+            }else{
+                Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
+            }
+            return;
         }
 
         try {

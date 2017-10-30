@@ -2,7 +2,7 @@ libCommons:
   RemoteConfig:
     UpdateInterval: 10
     PlistFile: "Local.ic"
-    PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-emojikeyboard-2.0.6.ic"
+    PlistUrl: "1https://emojidevelop.s3.amazonaws.com/apps_android/config/config-emojikeyboard-2.0.6.ic"
   Analytics:
       FlurryKey: "FC2GWXDVFTZHFK7KX6KV"
       FacebookID: "1474873346171463"
