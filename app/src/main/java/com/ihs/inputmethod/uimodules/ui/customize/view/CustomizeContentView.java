@@ -117,7 +117,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
                 fragmentTransaction.add(R.id.content_layout, currentFragment, tag);
             }
             hideOtherFragment(position, fragmentTransaction, fragmentManager);
-            fragmentTransaction.show(currentFragment).commit();
+            fragmentTransaction.show(currentFragment).commitAllowingStateLoss();
         }
 
         private void setupWithTabSelected(int position, int tabPosition) {
