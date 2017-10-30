@@ -27,6 +27,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
@@ -62,6 +63,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         @Override
         public void startProgress() {
             mShareProgressView.start();
+            mStickerPalettesAdapter.pauseAnimation();
         }
 
         @Override
@@ -301,8 +303,8 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
     @Override
     public void onFacemojiClicked(FacemojiSticker sticker) {
+        HSLog.d("cjx","onFacemojiClicked");
         HSAnalytics.logEvent("keyboard_facemoji_sent","categoryAndName",sticker.getCategoryName()+"-"+sticker.getName());
-        mStickerPalettesAdapter.pauseAnimation();
         MediaController.getShareManager().shareFacemojiFromKeyboard(sticker, Constants.MEDIA_FORMAT_GIF,
                 ShareChannel.CURRENT,
                 mProgressListener);

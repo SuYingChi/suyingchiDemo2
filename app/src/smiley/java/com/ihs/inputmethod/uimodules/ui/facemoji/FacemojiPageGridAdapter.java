@@ -16,8 +16,7 @@ import java.util.List;
 /**
  * Created by dsapphire on 15/11/27.
  */
-public class FacemojiPageGridAdapter extends BaseAdapter implements FacemojiView.OnFacemojiEventListener,
-        Recoverable {
+public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable {
 
     private FacemojiPageGridView.OnFacemojiClickListener mListener;
     private List<FacemojiSticker> mData;
@@ -62,10 +61,9 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements FacemojiView
         FacemojiSticker sticker = (FacemojiSticker) getItem(position);
         if (convertView != null) {
             holder = (StickerViewHolder) convertView.getTag();
-            if (!sticker.equals(holder.facemojiView.getSticker())) {
-                holder.facemojiView.setSticker(sticker);
-                holder.facemojiView.setTag(sticker);
-                ((FacemojiView) convertView).setOnFacemojiEventListener(this);
+            if (!sticker.equals(holder.facemojiAnimationView.getSticker())) {
+                holder.facemojiAnimationView.setSticker(sticker);
+                holder.facemojiAnimationView.setTag(sticker);
                 convertView.setTag(holder);
             }
             return convertView;
@@ -73,34 +71,33 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements FacemojiView
         convertView = mInflater.inflate(R.layout.facemoji_custom_view, null);
         final View containerLayout = convertView.findViewById(R.id.facemoji_layout);
         containerLayout.setLayoutParams(new GridView.LayoutParams(stickerWidth, stickerHeight));
-        final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
-        facemojiView.setSticker(sticker);
-        facemojiView.setTag(sticker);
-        ((FacemojiView) convertView).setOnFacemojiEventListener(this);
+        final FacemojiAnimationView facemojiAnimationView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
+        final FacemojiView facemojiView = (FacemojiView) containerLayout.findViewById(R.id.facemoji_layout);
+        facemojiAnimationView.setSticker(sticker);
+        facemojiAnimationView.setTag(sticker);
         holder = new StickerViewHolder();
+        holder.facemojiAnimationView = facemojiAnimationView;
         holder.facemojiView = facemojiView;
+        holder.facemojiView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null){
+                    mListener.onFacemojiClicked(sticker);
+                }
+            }
+        });
         convertView.setTag(holder);
 
         return convertView;
-    }
-
-    @Override
-    public void onPressFacemoji() {
-    }
-
-    @Override
-    public void onReleaseFacemoji(final FacemojiSticker facemojiSticker) {
-        if (facemojiSticker != null) {
-            mListener.onFacemojiClicked(facemojiSticker);
-        }
     }
 
     public void setData(List<FacemojiSticker> data) {
         mData = data;
     }
 
-    class StickerViewHolder {
-        public FacemojiAnimationView facemojiView;
+    public static class StickerViewHolder {
+        FacemojiView facemojiView;
+        FacemojiAnimationView facemojiAnimationView;
     }
 
     @Override
