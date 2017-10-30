@@ -1,4 +1,4 @@
-package com.mobipioneer.emojikeyboard;
+package com.mobipioneer.emojikeyboard.app;
 
 import com.ihs.inputmethod.api.HSUIApplication;
 
