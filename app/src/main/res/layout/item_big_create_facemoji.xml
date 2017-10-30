@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/face_arrow"
             android:layout_toRightOf="@id/face_arrow"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="3dp"
             android:text="@string/label_create_funny_facemoji"
             android:textColor="@color/white"
             android:textSize="18sp"
