@@ -7,7 +7,7 @@ libCommons:
       FacebookID: "725261934240541"
       TapjoySDKKey: "0vAf42klRSGnoQnFutCZWgECKUjhkbC2ofJglQzbtXRMIpdomrpc7QXJicV3"
       FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
-      GoogleTrackId: "UA-66468004-2"
+      GoogleTrackId: ""
       FlurryStoredMaxCount: 1000
       GooglePercentage: 1000
   DiverseSession:

@@ -9,7 +9,7 @@ libCommons:
       TapjoyEngagementID: "372155a4-fa46-4f69-a404-36c1128b35a7"
       FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
       FlurryStoredMaxCount: 1000
-      GoogleTrackId: "UA-66468004-6"
+      GoogleTrackId: ""
       GooglePercentage: 1000
   DiverseSession:
     AppManageDiverseSession: true
