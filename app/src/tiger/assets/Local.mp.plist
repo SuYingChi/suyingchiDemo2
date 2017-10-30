@@ -482,6 +482,38 @@
 			<array>
 				<dict>
 					<key>example</key>
+					<string>m̫u̫s̫t̫a̫c̫h̫e̫</string>
+					<key>name</key>
+					<string>mustache</string>
+					<key>sdkVersion</key>
+					<integer>14</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>P̟l̟u̟s̟</string>
+					<key>name</key>
+					<string>Plus</string>
+					<key>sdkVersion</key>
+					<integer>14</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>S̶t̶r̶i̶k̶e̶ o̶u̶t̶</string>
+					<key>name</key>
+					<string>Strike out</string>
+					<key>sdkVersion</key>
+					<integer>21</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>s̸l̸a̸s̸h̸</string>
+					<key>name</key>
+					<string>slash</string>
+					<key>sdkVersion</key>
+					<integer>21</integer>
+				</dict>
+				<dict>
+					<key>example</key>
 					<string>ꋪꀎꈤꍟꌗ</string>
 					<key>name</key>
 					<string>RUNES</string>
@@ -683,6 +715,24 @@
 					<array>
 						<dict>
 							<key>name</key>
+							<string>Halloween</string>
+							<key>showNewMark</key>
+							<true/>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Pumpkin</string>
+							<key>showNewMark</key>
+							<true/>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Grave</string>
+							<key>showNewMark</key>
+							<true/>
+						</dict>
+						<dict>
+							<key>name</key>
 							<string>Green Nebula</string>
 							<key>showNewMark</key>
 							<true/>
@@ -789,7 +839,7 @@
 						</dict>
 						<dict>
 							<key>name</key>
-							<string>background34</string>
+							<string>background13</string>
 						</dict>
 						<dict>
 							<key>lockerImgUrl</key>
@@ -1039,7 +1089,7 @@
 						</dict>
 						<dict>
 							<key>name</key>
-							<string>background13</string>
+							<string>background34</string>
 						</dict>
 						<dict>
 							<key>name</key>
@@ -1103,6 +1153,18 @@
 						<dict>
 							<key>name</key>
 							<string>Diamonds</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Halloween</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Pumpkin</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Grave</string>
 						</dict>
 						<dict>
 							<key>name</key>
@@ -1248,6 +1310,12 @@
 						<dict>
 							<key>name</key>
 							<string>normal1</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>DJ</string>
+							<key>showNewMark</key>
+							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
@@ -1421,6 +1489,10 @@
 						<dict>
 							<key>name</key>
 							<string>normal</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Blackletter</string>
 						</dict>
 						<dict>
 							<key>name</key>
@@ -1737,23 +1809,99 @@
 					<array>
 						<dict>
 							<key>apkUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/FutureTech.apk</string>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Clown Fish.apk</string>
 							<key>bannerImgUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/FutureTech.jpg</string>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Clown Fish.jpg</string>
 							<key>largePreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/FutureTech.jpg</string>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Clown Fish.jpg</string>
 							<key>lockerImgUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/futuretech.jpg</string>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/clownfish.jpg</string>
 							<key>mediumPreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/FutureTech.jpg</string>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Clown Fish.jpg</string>
 							<key>showName</key>
-							<string>Future Tech</string>
+							<string>Clown Fish</string>
 							<key>showNewMark</key>
 							<true/>
 							<key>themePkName</key>
-							<string>com.keyboard.theme.futuretech</string>
+							<string>com.keyboard.theme.clownfish</string>
 							<key>zipName</key>
-							<string>futuretech</string>
+							<string>ClownFish</string>
+						</dict>
+						<dict>
+							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Phoenix.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Phoenix.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Phoenix.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Phoenix.jpg</string>
+							<key>showName</key>
+							<string>Phoenix</string>
+							<key>showNewMark</key>
+							<true/>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.phoenix</string>
+							<key>zipName</key>
+							<string>phoenix</string>
+						</dict>
+						<dict>
+							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/LuxuryBlack.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/LuxuryBlack.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/LuxuryBlack.jpg</string>
+							<key>lockerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/luxuryblack.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/LuxuryBlack.jpg</string>
+							<key>showName</key>
+							<string>Luxury Black</string>
+							<key>showNewMark</key>
+							<true/>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.luxuryblack</string>
+							<key>zipName</key>
+							<string>LuxuryBlack</string>
+						</dict>
+						<dict>
+							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Galaxy.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Galaxy.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Galaxy.jpg</string>
+							<key>lockerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/galaxy.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Galaxy.jpg</string>
+							<key>showName</key>
+							<string>Galaxy</string>
+							<key>themeDesc</key>
+							<string>Don’t limit yourself to the sky, reach for the stars in the endless Galaxy.</string>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.galaxy</string>
+							<key>zipName</key>
+							<string>Galaxy</string>
+						</dict>
+						<dict>
+							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/RoseGold.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/RoseGold.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/RoseGold.jpg</string>
+							<key>lockerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/rosegold.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/RoseGold.jpg</string>
+							<key>showName</key>
+							<string>Rose Gold</string>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.rosegold</string>
+							<key>zipName</key>
+							<string>RoseGold</string>
 						</dict>
 						<dict>
 							<key>apkUrl</key>
@@ -1774,6 +1922,24 @@
 							<string>com.keyboard.theme.keyboardforos11</string>
 							<key>zipName</key>
 							<string>KeyboardforOs11</string>
+						</dict>
+						<dict>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Pop.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Pop.jpg</string>
+							<key>lockerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/pop.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Pop.jpg</string>
+							<key>showName</key>
+							<string>Pop Art</string>
+							<key>themeDesc</key>
+							<string>Art is everywhere.</string>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.pop</string>
+							<key>zipName</key>
+							<string>Pop</string>
 						</dict>
 						<dict>
 							<key>apkUrl</key>
@@ -1903,6 +2069,26 @@
 						</dict>
 						<dict>
 							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/FutureTech.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/FutureTech.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/FutureTech.jpg</string>
+							<key>lockerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/futuretech.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/FutureTech.jpg</string>
+							<key>showName</key>
+							<string>Future Tech</string>
+							<key>showNewMark</key>
+							<true/>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.futuretech</string>
+							<key>zipName</key>
+							<string>futuretech</string>
+						</dict>
+						<dict>
+							<key>apkUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/BlackGold.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/BlackGold.jpg</string>
@@ -1923,44 +2109,6 @@
 						</dict>
 						<dict>
 							<key>apkUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Galaxy.apk</string>
-							<key>bannerImgUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Galaxy.jpg</string>
-							<key>largePreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Galaxy.jpg</string>
-							<key>lockerImgUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/galaxy.jpg</string>
-							<key>mediumPreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Galaxy.jpg</string>
-							<key>showName</key>
-							<string>Galaxy</string>
-							<key>themeDesc</key>
-							<string>Don’t limit yourself to the sky, reach for the stars in the endless Galaxy.</string>
-							<key>themePkName</key>
-							<string>com.keyboard.theme.galaxy</string>
-							<key>zipName</key>
-							<string>Galaxy</string>
-						</dict>
-						<dict>
-							<key>bannerImgUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Pop.jpg</string>
-							<key>largePreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Pop.jpg</string>
-							<key>lockerImgUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/pop.jpg</string>
-							<key>mediumPreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Pop.jpg</string>
-							<key>showName</key>
-							<string>Pop Art</string>
-							<key>themeDesc</key>
-							<string>Art is everywhere.</string>
-							<key>themePkName</key>
-							<string>com.keyboard.theme.pop</string>
-							<key>zipName</key>
-							<string>Pop</string>
-						</dict>
-						<dict>
-							<key>apkUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Spinner.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Spinner.jpg</string>
@@ -1976,24 +2124,6 @@
 							<string>com.keyboard.theme.spinner</string>
 							<key>zipName</key>
 							<string>Spinner</string>
-						</dict>
-						<dict>
-							<key>apkUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/RoseGold.apk</string>
-							<key>bannerImgUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/RoseGold.jpg</string>
-							<key>largePreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/RoseGold.jpg</string>
-							<key>lockerImgUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/rosegold.jpg</string>
-							<key>mediumPreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/RoseGold.jpg</string>
-							<key>showName</key>
-							<string>Rose Gold</string>
-							<key>themePkName</key>
-							<string>com.keyboard.theme.rosegold</string>
-							<key>zipName</key>
-							<string>RoseGold</string>
 						</dict>
 						<dict>
 							<key>apkUrl</key>
@@ -4507,6 +4637,60 @@
 					</array>
 					<key>StickerGroupList</key>
 					<array>
+						<dict>
+							<key>name</key>
+							<string>AdorableFace</string>
+							<key>showName</key>
+							<string>Adorable Face</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>LoveBear</string>
+							<key>showName</key>
+							<string>Love</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>HappyBirthday</string>
+							<key>showName</key>
+							<string>Happy Birthday</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>ShibaInu</string>
+							<key>showName</key>
+							<string>Shiba Inu</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>HappyCat</string>
+							<key>showName</key>
+							<string>Happy Cat</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>LoveGif</string>
+							<key>showName</key>
+							<string>Animated Love</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>CuteHalloween</string>
+							<key>showName</key>
+							<string>Cute Halloween</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Halloween</string>
+							<key>showName</key>
+							<string>Halloween</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Festival</string>
+							<key>showName</key>
+							<string>Animated Festival</string>
+						</dict>
 						<dict>
 							<key>name</key>
 							<string>BigFace01</string>
