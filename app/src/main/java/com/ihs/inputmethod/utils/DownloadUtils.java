@@ -110,13 +110,7 @@ public class DownloadUtils {
                         onAdBufferingListener.onDismiss(downloadSuccess);
                     }
                 }, 2000, false);
-//        if (showInDialog) {
         adLoadingView.showInDialog();
-//        } else {
-//            HSInputMethod.getInputArea().addView(adLoadingView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-//            HSInputMethodService.getInstance().setVisibleTopY(DisplayUtils.getScreenHeightPixels() - adLoadingView.getRootViewHeight() >> 1);
-//        }
-
 
         initConnection(resources, adLoadingView, connection);
         adLoadingView.setTag(connection);

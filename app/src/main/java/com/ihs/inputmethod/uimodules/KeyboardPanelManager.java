@@ -157,6 +157,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY, notificationObserver);
 
+
         return keyboardPanelSwitchContainer;
     }
 
@@ -200,6 +201,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             functionBar.onDestroy();
             functionBar = null;
         }
+
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
     }
@@ -386,6 +388,51 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     private void logGoogleAdEvent(String action) {
         HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map) null, (Map) null);
+    }
+
+    public void showSearchAdBar() {
+        if (keyboardPanelSwitchContainer == null) {
+            return;
+        }
+
+        if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
+                || !HSConfig.optBoolean(true, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowAd")
+                || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")) {
+            return;
+        }
+
+        gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
+        gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        gpAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
+        int padding = DisplayUtils.dip2px(8);
+        gpAdRecyclerView.setPadding(padding, 0, padding, 0);
+        gpAdAdapter = new CustomBarGPAdAdapter();
+        gpAdRecyclerView.setAdapter(gpAdAdapter);
+        GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
+        gpAdRecyclerView.setLayoutManager(layoutManager);
+        gpAdRecyclerView.setHasFixedSize(true);
+
+        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
+            @Override
+            public void onHide() {
+                if (acbNativeAdLoader != null) {
+                    acbNativeAdLoader.cancel();
+                    acbNativeAdLoader = null;
+                }
+                if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+                    keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+                }
+                HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
+            }
+        });
+        customizeBarLayout.setContent(gpAdRecyclerView);
+        reloadGpAd();
+        if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
+            if (keyboardPanelSwitchContainer != null) {
+                keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+                keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
+            }
+        }
     }
 
 

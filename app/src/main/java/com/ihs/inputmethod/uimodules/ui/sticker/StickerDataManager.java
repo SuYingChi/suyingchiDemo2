@@ -89,7 +89,6 @@ public class StickerDataManager {
                 }
             }
 
-
             // 如果是第一次加载，则将StickerGroups中前两个位置置为new
             if (isFirstLoad() && stickerGroups.size() > 1) {
                 Set<String> firstNewStickerSet = new HashSet<>();

@@ -18,9 +18,11 @@ import android.view.inputmethod.InputConnection;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.adpanel.KeyboardGooglePlayAdManager;
@@ -30,6 +32,7 @@ import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
+import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
@@ -39,14 +42,21 @@ import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPrefsUtil;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
+import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarGPAdAdapter;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by xu.zhang on 11/3/15.
@@ -57,6 +67,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     private static final String GOOGLE_SEARCH_BAR_PACKAGE_NAME = "com.google.android.googlequicksearchbox";
     private static final String HS_SHOW_KEYBOARD_WINDOW = "hs.inputmethod.framework.api.SHOW_INPUTMETHOD";
     public static final String HS_NOTIFICATION_START_INPUT_INSIDE_CUSTOM_SEARCH_EDIT_TEXT = "CustomSearchEditText";
+
+    private static final String KEYWORD_REQUEST_URL = "http://52.205.105.87/adcaffe/ad/keywords/get";
+    private static final String ASSETS_KEYWORD_FILE_PATH = "Keyword";
+    private static final String KEYWORD_FINAL_FILE_NAME = "keyword.txt";
+    private static final String KEYWORD_TEMP_FILE_NAME = "keyword.temp";
+    private List<String> keywordList = new ArrayList<>();
 
     private InputConnection insideConnection = null;
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -86,6 +102,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     private KeyboardFullScreenAd openFullScreenAd;
     private KeyboardFullScreenAd closeFullScreenAd;
     private KeyboardGooglePlayAdManager keyboardGooglePlayAdManager;
+    private String currentWord = "";
     private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
@@ -241,6 +258,57 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         }
     }
 
+    private void requestKeywordList() {
+        if ((System.currentTimeMillis() - HSPreferenceHelper.getDefault().getLong(CustomBarGPAdAdapter.SEARCH_AD_UPDATE_TIME, 0)
+                < TimeUnit.MINUTES.toMillis(HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin")) &&
+                (HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin") > 0))) {
+            return;
+        }
+        File tempFile = HSFileUtils.createNewFile(getKeywordFilePathBase() + KEYWORD_TEMP_FILE_NAME);
+        File destFile = new File(getKeywordFilePathBase() + KEYWORD_FINAL_FILE_NAME);
+        HSHttpConnection connection = new HSHttpConnection(KEYWORD_REQUEST_URL);
+        connection.setDownloadFile(tempFile);
+        connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
+            @Override
+            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                if (destFile.exists()) {
+                    destFile.delete();
+                }
+                if (tempFile.renameTo(destFile)) {
+                    List<String> tempKeywordList = new ArrayList<>();
+                    try {
+                        InputStreamReader read = new InputStreamReader(
+                                new FileInputStream(destFile), "UTF-8");// 考虑到编码格式
+                        BufferedReader bufferedReader = new BufferedReader(read);
+                        String lineTxt;
+
+                        while ((lineTxt = bufferedReader.readLine()) != null)
+                        {
+                            tempKeywordList.add(lineTxt);
+                        }
+                        keywordList.clear();
+                        keywordList.addAll(tempKeywordList);
+                        bufferedReader.close();
+                        read.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+                tempFile.delete();
+            }
+        });
+        connection.startAsync();
+
+    }
+
+    private String getKeywordFilePathBase() {
+        return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_KEYWORD_FILE_PATH + "/";
+    }
+
     @Override
     public View onCreateInputView() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardStartTime("CreateAndStartInputView");
@@ -391,6 +459,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                 && !currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 进入Google Play
             keyboardGooglePlayAdManager.loadAndShowAdIfConditionSatisfied();
             getKeyboardPanelMananger().showGoogleAdBar();
+            requestKeywordList();
         } else if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
                 && !editorInfo.packageName.equals(this.getPackageName())
                 && !editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 离开Google Play
@@ -442,6 +511,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME) || TextUtils.equals(currentAppPackageName, GOOGLE_SEARCH_BAR_PACKAGE_NAME);
     }
 
+    private boolean shouldShowSearchAD() {
+        return HSConfig.getList("Application", "SearchAd", "PackageNameList").contains(currentAppPackageName);
+    }
+
     private static Runnable clearImageLoaderCacheRunnable = new Runnable() {
         @Override
         public void run() {
@@ -482,6 +555,21 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             HSLog.i("Failed to log key enter in google play.");
         }
 
+        //TODO request correct keyword list
+        if (codePoint > 0) {
+            if (codePoint == ' ') {
+                currentWord = "";
+            } else {
+                currentWord += (char) codePoint;
+                if (keywordList != null) {
+                    if (keywordList.contains(currentWord)) {
+
+                    }
+                }
+
+            }
+
+        }
         super.onCodeInput(codePoint, x, y, isKeyRepeat);
     }
 
