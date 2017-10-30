@@ -209,6 +209,18 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         baseFunction.hideNewTip();
     }
 
+    public void showFacemojiGifView(){
+        if (facemojiView != null){
+            facemojiView.setVisibility(VISIBLE);
+        }
+    }
+
+    public void hideFacemojiGifView(){
+        if (facemojiView != null){
+            facemojiView.setVisibility(GONE);
+        }
+    }
+
     public void showMakeFacemojiTipIfNeed(final KeyboardPanelSwitchContainer keyboardPanelSwitchContainer) {
         if (shouldShowMakeFacmojiTip()) {
             getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

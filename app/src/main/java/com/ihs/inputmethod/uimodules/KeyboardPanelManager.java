@@ -205,23 +205,25 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (view.getId() == R.id.func_setting_button) {
             SettingsButton settingsButton = functionBar.getSettingsButton();
             int settingButtonType = settingsButton.getButtonType();
-
             switch (settingButtonType) {
                 case SettingsButton.SettingButtonType.MENU:
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
+                    functionBar.hideFacemojiGifView();
                     HSAnalytics.logEvent("keyboard_function_button_click");
                     break;
 
                 case SettingsButton.SettingButtonType.SETTING:
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.backToParentPanel(false);
+                    functionBar.showFacemojiGifView();
                     break;
 
                 case SettingsButton.SettingButtonType.BACK:
                     keyboardPanelSwitchContainer.backToParentPanel(false);
                     if (keyboardPanelSwitchContainer.getCurrentPanel() == keyboardPanelSwitchContainer.getKeyboardPanel()) {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
+                        functionBar.showFacemojiGifView();
                     } else {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.SETTING);
                     }
