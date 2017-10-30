@@ -73,7 +73,7 @@
     <!-- New permission add at 2017/4/13 end-->
 
     <application
-        android:name="com.mobipioneer.emojikeyboard.InputMethodApplication"
+        android:name="com.mobipioneer.emojikeyboard.app.InputMethodApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_keyboard"
         android:label="@string/english_ime_name"
@@ -284,7 +284,7 @@
 
         <!--end of devicemonitor libs-->
         <service
-            android:name="com.mobipioneer.emojikeyboard.InputMethodService"
+            android:name="com.mobipioneer.emojikeyboard.app.MyInputMethodService"
             android:label="@string/english_service_label"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
