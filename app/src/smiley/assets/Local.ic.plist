@@ -1539,6 +1539,26 @@
 					<array>
 						<dict>
 							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Clown Fish.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Clown Fish.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Clown Fish.jpg</string>
+							<key>lockerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/clownfish.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Clown Fish.jpg</string>
+							<key>showName</key>
+							<string>Clown Fish</string>
+							<key>showNewMark</key>
+							<true/>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.clownfish</string>
+							<key>zipName</key>
+							<string>ClownFish</string>
+						</dict>
+						<dict>
+							<key>apkUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Phoenix.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Phoenix.jpg</string>
@@ -4689,7 +4709,7 @@
 			<key>Update</key>
 			<dict>
 				<key>LatestVersionCode</key>
-				<integer>19</integer>
+				<integer>20</integer>
 			</dict>
 			<key>Wallpapers</key>
 			<array>
