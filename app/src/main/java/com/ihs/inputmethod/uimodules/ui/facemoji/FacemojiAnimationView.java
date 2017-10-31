@@ -20,7 +20,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
     private ScheduledFuture<?> schedule;
 
     private int mIndex;
-    private boolean mIsRunning;
+    private volatile boolean mIsRunning;
     private Bitmap buffer;
 
     private final static int INVALIDATE_ANIM = 1;
@@ -66,6 +66,10 @@ public class FacemojiAnimationView extends AppCompatImageView {
      */
     public void start() {
         if (sticker == null) {
+            return;
+        }
+
+        if (mIsRunning) {
             return;
         }
 
@@ -121,6 +125,10 @@ public class FacemojiAnimationView extends AppCompatImageView {
      * Stops the animation
      */
     public void stop() {
+        if (!mIsRunning) {
+            return;
+        }
+
         synchronized (this) {
             if (!mIsRunning) {
                 return;
