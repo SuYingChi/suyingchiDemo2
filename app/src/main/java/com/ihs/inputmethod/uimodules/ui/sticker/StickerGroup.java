@@ -26,6 +26,7 @@ public class StickerGroup {
 
     private final String stickerGroupName;
     private boolean showInKeyboard = false;
+    private boolean showAnimatedMark = false;
     private String downloadDisplayName;
     private String stickerGroupPreviewImageUri;
     private String stickerGroupDownloadPreviewImageUri;
@@ -190,6 +191,14 @@ public class StickerGroup {
 
     public void setShowInKeyboard(boolean showInKeyboard) {
         this.showInKeyboard = showInKeyboard;
+    }
+
+    public void setShowAnimatedMark(boolean showAnimatedMark) {
+        this.showAnimatedMark = showAnimatedMark;
+    }
+
+    public boolean shouldShowAnimatedMark() {
+        return showAnimatedMark;
     }
 
     public boolean isShowInKeyboard() {

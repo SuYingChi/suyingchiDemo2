@@ -102,7 +102,6 @@ public class StickerHomeFragment extends Fragment {
                 StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
                 stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
 
-
                 DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                         stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                         new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {

@@ -71,6 +71,8 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
             ImageSize imageSize = new ImageSize(imageWidth, imageHeight);
             ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(stickerCardViewHolder.stickerRealImage), options, imageSize, null, null);
+        } else {
+            stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
         }
         stickerCardViewHolder.downloadBtn.setVisibility(View.VISIBLE);
         stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.ic_download_icon);
@@ -96,16 +98,23 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
             }
         });
 
-        /**
-         * 判断是否有当前sticker group 是否是new
-         */
-        if (isNewStickerGroup(stickerGroup)) {
-            stickerCardViewHolder.stickerNewImage.setVisibility(View.VISIBLE);
-            Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
-            stickerCardViewHolder.stickerNewImage.setImageURI(uri);
-        } else {
+        if (stickerGroup.shouldShowAnimatedMark()) {
+            stickerCardViewHolder.stickerAnimatedView.setVisibility(View.VISIBLE);
             stickerCardViewHolder.stickerNewImage.setVisibility(View.GONE);
+        } else {
+            stickerCardViewHolder.stickerAnimatedView.setVisibility(View.GONE);
+            /**
+             * 判断是否有当前sticker group 是否是new
+             */
+            if (isNewStickerGroup(stickerGroup)) {
+                stickerCardViewHolder.stickerNewImage.setVisibility(View.VISIBLE);
+                Uri uri = Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.app_theme_new_gif);
+                stickerCardViewHolder.stickerNewImage.setImageURI(uri);
+            } else {
+                stickerCardViewHolder.stickerNewImage.setVisibility(View.GONE);
+            }
         }
+
     }
 
     private boolean isNewStickerGroup(StickerGroup stickerGroup) {
@@ -118,6 +127,7 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
 
         TextView stickerGroupName;
         GifImageView stickerNewImage;
+        ImageView stickerAnimatedView;
         ImageView stickerRealImage;
 
 
@@ -128,8 +138,8 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
             stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
             stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
             stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
+            stickerAnimatedView = (ImageView) itemView.findViewById(R.id.sticker_animated_view);
             downloadBtn = (ImageView) itemView.findViewById(R.id.download_icon);
-
         }
     }
 }

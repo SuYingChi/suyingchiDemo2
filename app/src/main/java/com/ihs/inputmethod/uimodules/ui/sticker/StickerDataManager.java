@@ -11,7 +11,6 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.StickerModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -125,6 +124,7 @@ public class StickerDataManager {
         List<StickerGroup> stickerGroups = new ArrayList<>();
         List<Map<String, Object>> stickerConfigList = (List<Map<String, Object>>) HSConfig.getList("Application", "StickersGifs", "Sticker", "StickerGroupList");
         for (Map<String, Object> map : stickerConfigList) {
+            Boolean showAnimatedMark = (Boolean) map.get("showAnimatedMark");
             Boolean showInKeyboard = (Boolean) map.get("showInKeyboard");
             String stickerGroupName = (String) map.get("name");
             String stickerGroupDownloadDisplayName = (String) map.get("showName");
@@ -132,6 +132,9 @@ public class StickerDataManager {
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
             if (showInKeyboard != null) {
                 stickerGroup.setShowInKeyboard(showInKeyboard);
+            }
+            if (showAnimatedMark != null) {
+                stickerGroup.setShowAnimatedMark(showAnimatedMark);
             }
             stickerGroups.add(stickerGroup);
         }
