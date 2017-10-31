@@ -111,6 +111,11 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerTabRecyclerView.setAdapter(stickerTabAdapter);
 
             plusButton = (PlusButton) findViewById(R.id.plus_container);
+            if (StickerDataManager.getInstance().shouldShowNewMask()) {
+                plusButton.showNewTip();
+            } else {
+                plusButton.hideNewTip();
+            }
             plusButton.setOnClickListener(v -> {
                 final Bundle bundle = new Bundle();
                 bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_MAIN_PAGE_TAB, ThemeHomeActivity.TAB_INDEX_KEYBOARD);

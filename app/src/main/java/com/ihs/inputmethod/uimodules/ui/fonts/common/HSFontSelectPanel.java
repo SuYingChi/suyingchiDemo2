@@ -1,6 +1,9 @@
 package com.ihs.inputmethod.uimodules.ui.fonts.common;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +12,15 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
+import com.ihs.inputmethod.uimodules.stickerplus.PlusButton;
+import com.ihs.inputmethod.uimodules.ui.customize.fragment.KeyboardFragment;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 
@@ -29,6 +36,9 @@ public class HSFontSelectPanel extends BasePanel {
 
     private HSFontSelectViewAdapter mAdapter;
 
+    private BaseFunctionBar functionBar;
+
+
     private INotificationObserver loadDataObserver = new INotificationObserver() {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
@@ -43,7 +53,7 @@ public class HSFontSelectPanel extends BasePanel {
     @Override
     public View onCreatePanelView() {
         //set functionBar setting button type
-        BaseFunctionBar functionBar = (BaseFunctionBar) panelActionListener.getBarView();
+        functionBar = (BaseFunctionBar) panelActionListener.getBarView();
         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.BACK);
 
         Context mThemeContext = new ContextThemeWrapper(mContext, HSKeyboardThemeManager.getCurrentTheme().mStyleId);
@@ -61,7 +71,7 @@ public class HSFontSelectPanel extends BasePanel {
 
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         HSGlobalNotificationCenter.removeObserver(loadDataObserver);
     }
@@ -69,7 +79,32 @@ public class HSFontSelectPanel extends BasePanel {
 
     @Override
     protected boolean onHidePanelView(int appearMode) {
+        functionBar.getPLusButton().setVisibility(View.GONE);
         HSGlobalNotificationCenter.removeObserver(loadDataObserver);
         return super.onHidePanelView(appearMode);
+    }
+
+    @Override
+    protected boolean onShowPanelView(int appearMode) {
+        functionBar.getPLusButton().setVisibility(View.VISIBLE);
+        functionBar.getPLusButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Bundle bundle = new Bundle();
+                bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_MAIN_PAGE_TAB, ThemeHomeActivity.TAB_INDEX_KEYBOARD);
+                bundle.putInt(ThemeHomeActivity.BUNDLE_KEY_HOME_INNER_PAGE_TAB, KeyboardFragment.TAB_FONT);
+                HSInputMethod.hideWindow();
+                ((PlusButton) v).hideNewTip();
+
+                new Handler().postDelayed(() -> {
+                    final Intent intent = new Intent();
+                    intent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
+                    intent.putExtras(bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    HSApplication.getContext().startActivity(intent);
+                }, 200);
+            }
+        });
+        return super.onShowPanelView(appearMode);
     }
 }

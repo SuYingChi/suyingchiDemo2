@@ -16,7 +16,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
@@ -54,12 +53,6 @@ public class PlusButton extends FrameLayout {
         plusImage.setImageDrawable(drawable);
         plusImage.setAlpha(0.8f);
         addView(plusImage);
-
-        if (StickerDataManager.getInstance().shouldShowNewMask()) {
-            showNewTip();
-        } else {
-            hideNewTip();
-        }
     }
 
 
