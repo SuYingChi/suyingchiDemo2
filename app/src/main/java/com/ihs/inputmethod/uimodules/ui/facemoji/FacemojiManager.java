@@ -143,7 +143,6 @@ public class FacemojiManager {
 
         // Recycle face bmp first
         if (mTempFaceBmp != null) {
-            mTempFaceBmp.recycle();
             mTempFaceBmp = null;
         }
 
@@ -311,7 +310,7 @@ public class FacemojiManager {
     }
 
     public static Bitmap getFrame(FacemojiSticker sticker, int frameNumber,boolean gifEncode) {
-        final Bitmap currentFaceBmp = getCurrentFaceBmp();
+        Bitmap currentFaceBmp = getCurrentFaceBmp();
         if (currentFaceBmp == null) {
             return null;
         }
@@ -335,8 +334,25 @@ public class FacemojiManager {
 
         for (FacemojiFrame.FacemojiLayer layer : sticker.getFacemojiFrames().get(frameNumber).getLayerList()) {
             if (layer.isFace()) {
-                c.setMatrix(faceCanvasMatrix);
-                c.drawBitmap(currentFaceBmp, null, new Rect(0, 0, param.width, param.height), paint);
+                //重新获取头像，而不是用currentFaceBmp，因为88号手机直接用currentFaceBmp可能绘制不到canvas中
+                if (mUsingTempFace) {
+                    try {
+                        currentFaceBmp = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), mTempFacePicUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        currentFaceBmp = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), currentFacePicUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (currentFaceBmp != null){
+                    c.setMatrix(faceCanvasMatrix);
+                    c.drawBitmap(currentFaceBmp, null, new Rect(0, 0, param.width, param.height), null);
+                }
             } else {
                 c.setMatrix(new Matrix());
                 String frameBgFilePath = HSApplication.getContext().getFilesDir().getAbsolutePath() + "/" + MOJIME_DIRECTORY + "/" + sticker.getCategoryName() + "/" + sticker.getName() + "/" + layer.srcName;
