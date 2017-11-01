@@ -256,7 +256,7 @@
     <string name="apk_update_alert_message">Mevcut sürümünüz çok düşük, kullanmak için lütfen en son sürüme güncelleyin.</string>
     <string name="custom_rate_alert_message" tools:ignore="Typos">Bu öğenin kilidini ÜCRETSİZ olarak açmak ister misin? Sadece bize 5 yıldız ver!</string>
     <string name="custom_rate_alert_button_text">Kilidi Açmak için 5 Yıldız Ver</string>
-    <string name="custom_rate_alert_toast_text">Lütfen Google Play'i kontrol et</string>
+    <string name="custom_rate_alert_toast_text">Lütfen Google Play\'i kontrol et</string>
     <string name="keyboard_settings">Klavye Ayarları</string>
     <string name="general">GENEL</string>
 

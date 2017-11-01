@@ -261,11 +261,11 @@ Bevat gesponsorde inhoud.</string>
         <string name="key_theme_loading_progress_dialog_text">Toetsthema wordt geladen...</string>
     <!-- Facemoji -->
     <string name="label_try_now">PROBEER HET NU</string>
-    <string name="label_create_funny_facemoji">Maak coole emoji's met je eigen gezicht!</string>
+    <string name="label_create_funny_facemoji">Maak coole emoji\'s met je eigen gezicht!</string>
 
-    <string name="keyboard_make_facemoji_tip">Maak je eigen emoji's!</string>
+    <string name="keyboard_make_facemoji_tip">Maak je eigen emoji\'s!</string>
     <string name="sticker_title_create_my_facemojis">Mijn facemoji maken</string>
-    <string name="sticker_title_my_facemojis">Mijn Facemoji's</string>
+    <string name="sticker_title_my_facemojis">Mijn Facemoji\'s</string>
     <string name="sticker_title_funny_stickers">Grappige stickers</string>
     <string name="label_share">Delen</string>
 </resources>
