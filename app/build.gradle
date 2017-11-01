@@ -222,6 +222,7 @@ dependencies {
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
     compile(name: 'libcharging', ext: 'aar')
+    compile(name: 'ihs/libAdCaffe/libAdCaffe', ext: 'aar')
     compile(name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
     //facebook
     compile "com.facebook.shimmer:shimmer:0.1.0@aar"

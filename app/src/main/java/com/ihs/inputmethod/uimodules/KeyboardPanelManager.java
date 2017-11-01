@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.acb.adcaffe.nativead.AdCaffeNativeAd;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -390,7 +391,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map) null, (Map) null);
     }
 
-    public void showSearchAdBar() {
+    public void showSearchAdBar(List<AdCaffeNativeAd> nativeAds) {
         if (keyboardPanelSwitchContainer == null) {
             return;
         }
@@ -412,18 +413,15 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         gpAdRecyclerView.setLayoutManager(layoutManager);
         gpAdRecyclerView.setHasFixedSize(true);
 
-        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
-            @Override
-            public void onHide() {
-                if (acbNativeAdLoader != null) {
-                    acbNativeAdLoader.cancel();
-                    acbNativeAdLoader = null;
-                }
-                if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
-                    keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
-                }
-                HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
+        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), () -> {
+            if (acbNativeAdLoader != null) {
+                acbNativeAdLoader.cancel();
+                acbNativeAdLoader = null;
             }
+            if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+                keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+            }
+            HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
         });
         customizeBarLayout.setContent(gpAdRecyclerView);
         reloadGpAd();

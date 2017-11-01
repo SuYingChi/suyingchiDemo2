@@ -331,11 +331,6 @@
 					<integer>30</integer>
 				</dict>
 			</dict>
-			<key>CurrentTheme</key>
-			<dict>
-				<key>LaunchDelayTime</key>
-				<integer>3000</integer>
-			</dict>
 			<key>ChargeLocker</key>
 			<dict>
 				<key>Alert</key>
@@ -361,6 +356,257 @@
 				<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
 				<key>state</key>
 				<integer>1</integer>
+			</dict>
+			<key>CurrentTheme</key>
+			<dict>
+				<key>LaunchDelayTime</key>
+				<integer>3000</integer>
+			</dict>
+			<key>FeaturePrompt</key>
+			<dict>
+				<key>ChargerLockerAlert</key>
+				<dict>
+					<key>MaxShowCount</key>
+					<integer>3</integer>
+					<key>SessionInterval</key>
+					<integer>3</integer>
+				</dict>
+				<key>ThemeCard</key>
+				<dict>
+					<key>MaxShowCount</key>
+					<integer>2</integer>
+					<key>SessionInterval</key>
+					<integer>2</integer>
+				</dict>
+			</dict>
+			<key>FeatureRestriction</key>
+			<dict>
+				<key>AdBackButton</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdGooglePlayIcon</key>
+				<dict>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdGooglePlayNative</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>24</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdKeyboardClose</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>3</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdKeyboardOpen</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>3</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>BoostNotification</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>KeyboardBannerAd</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>RateToUnlock</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array>
+						<string>CN</string>
+						<string>US</string>
+					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+			</dict>
+			<key>FeaturesGuide</key>
+			<dict>
+				<key>ScreenFlashGuide</key>
+				<dict>
+					<key>GuideAlertOpenSettings</key>
+					<false/>
+					<key>GuideAlertShow</key>
+					<false/>
+					<key>GuideAlertShowInterval</key>
+					<integer>0</integer>
+					<key>GuideAlertShowTime</key>
+					<integer>0</integer>
+					<key>OutsideAppGuide</key>
+					<dict>
+						<key>GuideScreenFlash</key>
+						<true/>
+						<key>Interval</key>
+						<integer>6</integer>
+						<key>ShowTime</key>
+						<integer>3</integer>
+					</dict>
+				</dict>
+				<key>ShowBladeFlash</key>
+				<true/>
+			</dict>
+			<key>FontList</key>
+			<array>
+				<dict>
+					<key>example</key>
+					<string>ꋪꀎꈤꍟꌗ</string>
+					<key>name</key>
+					<string>RUNES</string>
+					<key>sdkVersion</key>
+					<integer>23</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>ᑕᑌᖇᐯEᗪ</string>
+					<key>name</key>
+					<string>CURVED</string>
+					<key>sdkVersion</key>
+					<integer>23</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>¢υяνу</string>
+					<key>name</key>
+					<string>curvy</string>
+					<key>sdkVersion</key>
+					<integer>19</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>S̤̮m̤̮i̤̮l̤̮e̤̮y̤̮</string>
+					<key>name</key>
+					<string>Smiley</string>
+					<key>sdkVersion</key>
+					<integer>23</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>d̰̃õ̰ṵ̃b̰̃l̰̃ḛ̃ t̰̃ḭ̃l̰̃d̰̃ḛ̃</string>
+					<key>name</key>
+					<string>double tilde</string>
+					<key>sdkVersion</key>
+					<integer>19</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>A͙s͙t͙e͙r͙i͙k͙s͙</string>
+					<key>name</key>
+					<string>Asteriks</string>
+					<key>sdkVersion</key>
+					<integer>21</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>Bིྀoིྀwིྀ Tིྀiིྀeིྀsིྀ</string>
+					<key>name</key>
+					<string>Bow Ties</string>
+					<key>sdkVersion</key>
+					<integer>23</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>B̥ͦu̥ͦb̥ͦb̥ͦl̥ͦe̥ͦs̥ͦ</string>
+					<key>name</key>
+					<string>Bubbles</string>
+					<key>sdkVersion</key>
+					<integer>21</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>B͛Z͛Z͛T͛!</string>
+					<key>name</key>
+					<string>BZZT!</string>
+					<key>sdkVersion</key>
+					<integer>21</integer>
+				</dict>
+				<dict>
+					<key>example</key>
+					<string>s̾m̾o̾k̾i̾n̾g̾</string>
+					<key>name</key>
+					<string>smoking</string>
+					<key>sdkVersion</key>
+					<integer>21</integer>
+				</dict>
+			</array>
+			<key>InterstitialAds</key>
+			<dict>
+				<key>BackButton</key>
+				<dict>
+					<key>MaxCountPerDay</key>
+					<integer>4</integer>
+					<key>MinIntervalByHour</key>
+					<integer>1</integer>
+					<key>PackageNameExclude</key>
+					<array>
+						<string>android</string>
+						<string>facebook</string>
+						<string>com.whatsapp</string>
+					</array>
+					<key>Show</key>
+					<false/>
+				</dict>
+				<key>KeyboardAds</key>
+				<dict>
+					<key>KeyboardClose</key>
+					<dict>
+						<key>SessionIndexOfDay</key>
+						<array/>
+						<key>Show</key>
+						<false/>
+					</dict>
+					<key>KeyboardOpen</key>
+					<dict>
+						<key>SessionIndexOfDay</key>
+						<array/>
+						<key>Show</key>
+						<false/>
+					</dict>
+				</dict>
 			</dict>
 			<key>KeyboardTheme</key>
 			<dict>
@@ -3030,613 +3276,6 @@
 					</array>
 				</dict>
 			</dict>
-			<key>FeaturePrompt</key>
-			<dict>
-				<key>ChargerLockerAlert</key>
-				<dict>
-					<key>MaxShowCount</key>
-					<integer>3</integer>
-					<key>SessionInterval</key>
-					<integer>3</integer>
-				</dict>
-				<key>ThemeCard</key>
-				<dict>
-					<key>MaxShowCount</key>
-					<integer>2</integer>
-					<key>SessionInterval</key>
-					<integer>2</integer>
-				</dict>
-			</dict>
-			<key>FeatureRestriction</key>
-			<dict>
-				<key>AdBackButton</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdGooglePlayIcon</key>
-				<dict>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdGooglePlayNative</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>24</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdKeyboardClose</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>3</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdKeyboardOpen</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>3</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>BoostNotification</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>KeyboardBannerAd</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>RateToUnlock</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>0</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-						<string>US</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-			</dict>
-			<key>FeaturesGuide</key>
-			<dict>
-				<key>ScreenFlashGuide</key>
-				<dict>
-					<key>GuideAlertOpenSettings</key>
-					<false/>
-					<key>GuideAlertShow</key>
-					<false/>
-					<key>GuideAlertShowInterval</key>
-					<integer>0</integer>
-					<key>GuideAlertShowTime</key>
-					<integer>0</integer>
-					<key>OutsideAppGuide</key>
-					<dict>
-						<key>GuideScreenFlash</key>
-						<true/>
-						<key>Interval</key>
-						<integer>6</integer>
-						<key>ShowTime</key>
-						<integer>3</integer>
-					</dict>
-				</dict>
-				<key>ShowBladeFlash</key>
-				<true/>
-			</dict>
-			<key>ScreenFlash</key>
-			<dict>
-				<key>CallAssistant</key>
-				<dict>
-					<key>AutoRefresh</key>
-					<dict>
-						<key>enable</key>
-						<false/>
-						<key>interval</key>
-						<integer>10</integer>
-					</dict>
-					<key>OpenWhenScreenFlashTurnOn</key>
-					<true/>
-					<key>ShowAds</key>
-					<true/>
-					<key>ShowWhenIncomingCall</key>
-					<true/>
-					<key>ShowWhenIncomingFailedCall</key>
-					<true/>
-					<key>ShowWhenOutgoingCall</key>
-					<true/>
-				</dict>
-				<key>DefaultSwitch</key>
-				<false/>
-				<key>DefaultTheme</key>
-				<string>1</string>
-				<key>Enable</key>
-				<true/>
-				<key>Themes</key>
-				<array>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Parrot.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>6</integer>
-						<key>IdName</key>
-						<string>Parrot</string>
-						<key>Name</key>
-						<string>Parrot</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Parrot.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Dog.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>7</integer>
-						<key>IdName</key>
-						<string>Dog</string>
-						<key>Name</key>
-						<string>Dog</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Dog.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Lightning.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>IconAccept</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Lightning_yes.png</string>
-						<key>IconReject</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Lightning_no.png</string>
-						<key>Id</key>
-						<integer>8</integer>
-						<key>IdName</key>
-						<string>Lightning</string>
-						<key>Name</key>
-						<string>Lightning</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Lightning.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Sun.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>11</integer>
-						<key>IdName</key>
-						<string>Sun</string>
-						<key>Name</key>
-						<string>Sun</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Sun.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Stars.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>9</integer>
-						<key>IdName</key>
-						<string>Stars</string>
-						<key>Name</key>
-						<string>Stars</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Stars.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Vitas.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>10</integer>
-						<key>IdName</key>
-						<string>Vitas</string>
-						<key>Name</key>
-						<string>Vitas</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Vitas.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/DJ.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>12</integer>
-						<key>IdName</key>
-						<string>DJ</string>
-						<key>Name</key>
-						<string>DJ</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/DJ.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Tech.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>13</integer>
-						<key>IdName</key>
-						<string>Tech</string>
-						<key>Name</key>
-						<string>Tech</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Tech.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rhyme.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>14</integer>
-						<key>IdName</key>
-						<string>Rhyme</string>
-						<key>Name</key>
-						<string>Rhyme</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rhyme.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Neon.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>15</integer>
-						<key>IdName</key>
-						<string>Neon</string>
-						<key>Name</key>
-						<string>Neon</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Neon.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/LightningFire.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>16</integer>
-						<key>IdName</key>
-						<string>LightningFire</string>
-						<key>Name</key>
-						<string>LightningFire</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/LightningFire.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Chicken.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>17</integer>
-						<key>IdName</key>
-						<string>Chicken</string>
-						<key>Name</key>
-						<string>Chicken</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Chicken.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rotate.gif</string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>Id</key>
-						<integer>18</integer>
-						<key>IdName</key>
-						<string>Rotate</string>
-						<key>Name</key>
-						<string>Rotate</string>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rotate.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-					<dict>
-						<key>Description</key>
-						<string></string>
-						<key>Gif</key>
-						<string></string>
-						<key>Hot</key>
-						<false/>
-						<key>Icon</key>
-						<string></string>
-						<key>IconAccept</key>
-						<string>http://cdn.appcloudbox.net/sunspotmix/thumbnail/defaultbutton/acb_phone_call_answer.png</string>
-						<key>IconReject</key>
-						<string>http://cdn.appcloudbox.net/sunspotmix/thumbnail/defaultbutton/acb_phone_call_refuse.png</string>
-						<key>Id</key>
-						<integer>1</integer>
-						<key>IdName</key>
-						<string>Moving</string>
-						<key>Name</key>
-						<dict>
-							<key>Default</key>
-							<string>Moving</string>
-							<key>ar</key>
-							<string>متحركة</string>
-							<key>de</key>
-							<string>Bewegung</string>
-							<key>es</key>
-							<string>Movimiento</string>
-							<key>fr</key>
-							<string>Mobile</string>
-							<key>hi</key>
-							<string>मूविंग</string>
-							<key>in</key>
-							<string>Bergerak</string>
-							<key>it</key>
-							<string>Movimento</string>
-							<key>jp</key>
-							<string>ムーブメント</string>
-							<key>ko</key>
-							<string>이동</string>
-							<key>nl</key>
-							<string>Bewegend</string>
-							<key>pt</key>
-							<string>Em movimento</string>
-							<key>ru</key>
-							<string>Скольжение</string>
-							<key>th</key>
-							<string>เคลื่อนไหว</string>
-							<key>tr</key>
-							<string>Hareketli</string>
-							<key>vn</key>
-							<string>Chuyển Động</string>
-							<key>zh-CN</key>
-							<string>走马灯</string>
-							<key>zh-HK</key>
-							<string>走馬燈</string>
-							<key>zh-SG</key>
-							<string>走马灯</string>
-							<key>zh-TW</key>
-							<string>走馬燈</string>
-						</dict>
-						<key>PreviewImage</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Default.jpg</string>
-						<key>ResType</key>
-						<string>url</string>
-					</dict>
-				</array>
-			</dict>
-			<key>FontList</key>
-			<array>
-				<dict>
-					<key>example</key>
-					<string>ꋪꀎꈤꍟꌗ</string>
-					<key>name</key>
-					<string>RUNES</string>
-					<key>sdkVersion</key>
-					<integer>23</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>ᑕᑌᖇᐯEᗪ</string>
-					<key>name</key>
-					<string>CURVED</string>
-					<key>sdkVersion</key>
-					<integer>23</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>¢υяνу</string>
-					<key>name</key>
-					<string>curvy</string>
-					<key>sdkVersion</key>
-					<integer>19</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>S̤̮m̤̮i̤̮l̤̮e̤̮y̤̮</string>
-					<key>name</key>
-					<string>Smiley</string>
-					<key>sdkVersion</key>
-					<integer>23</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>d̰̃õ̰ṵ̃b̰̃l̰̃ḛ̃ t̰̃ḭ̃l̰̃d̰̃ḛ̃</string>
-					<key>name</key>
-					<string>double tilde</string>
-					<key>sdkVersion</key>
-					<integer>19</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>A͙s͙t͙e͙r͙i͙k͙s͙</string>
-					<key>name</key>
-					<string>Asteriks</string>
-					<key>sdkVersion</key>
-					<integer>21</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>Bིྀoིྀwིྀ Tིྀiིྀeིྀsིྀ</string>
-					<key>name</key>
-					<string>Bow Ties</string>
-					<key>sdkVersion</key>
-					<integer>23</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>B̥ͦu̥ͦb̥ͦb̥ͦl̥ͦe̥ͦs̥ͦ</string>
-					<key>name</key>
-					<string>Bubbles</string>
-					<key>sdkVersion</key>
-					<integer>21</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>B͛Z͛Z͛T͛!</string>
-					<key>name</key>
-					<string>BZZT!</string>
-					<key>sdkVersion</key>
-					<integer>21</integer>
-				</dict>
-				<dict>
-					<key>example</key>
-					<string>s̾m̾o̾k̾i̾n̾g̾</string>
-					<key>name</key>
-					<string>smoking</string>
-					<key>sdkVersion</key>
-					<integer>21</integer>
-				</dict>
-			</array>
-			<key>InterstitialAds</key>
-			<dict>
-				<key>BackButton</key>
-				<dict>
-					<key>MaxCountPerDay</key>
-					<integer>4</integer>
-					<key>MinIntervalByHour</key>
-					<integer>1</integer>
-					<key>PackageNameExclude</key>
-					<array>
-						<string>android</string>
-						<string>facebook</string>
-						<string>com.whatsapp</string>
-					</array>
-					<key>Show</key>
-					<false/>
-				</dict>
-				<key>KeyboardAds</key>
-				<dict>
-					<key>KeyboardClose</key>
-					<dict>
-						<key>SessionIndexOfDay</key>
-						<array/>
-						<key>Show</key>
-						<false/>
-					</dict>
-					<key>KeyboardOpen</key>
-					<dict>
-						<key>SessionIndexOfDay</key>
-						<array/>
-						<key>Show</key>
-						<false/>
-					</dict>
-				</dict>
-			</dict>
 			<key>LocalNotifications</key>
 			<dict>
 				<key>Content</key>
@@ -4122,10 +3761,6 @@
 			</dict>
 			<key>Locker</key>
 			<dict>
-				<key>UseNewLockScreen</key>
-				<false/>
-				<key>LockerAutoRefreshAdsEnable</key>
-				<false/>
 				<key>Ads</key>
 				<dict>
 					<key>MinCountToShowAds</key>
@@ -4166,6 +3801,10 @@
 				<integer>1</integer>
 				<key>HoursFromFirstUse</key>
 				<integer>0</integer>
+				<key>LockerAutoRefreshAdsEnable</key>
+				<false/>
+				<key>UseNewLockScreen</key>
+				<false/>
 				<key>Wallpapers</key>
 				<array>
 					<dict>
@@ -4312,6 +3951,21 @@
 			</dict>
 			<key>NativeAds</key>
 			<dict>
+				<key>GooglePlayNativeAd</key>
+				<dict>
+					<key>ShowAd</key>
+					<false/>
+				</dict>
+				<key>KeyboardBannerAd</key>
+				<dict>
+					<key>SessionIndexOfDay</key>
+					<array>
+						<integer>10</integer>
+						<integer>20</integer>
+					</array>
+					<key>Show</key>
+					<true/>
+				</dict>
 				<key>KeyboardToolBar</key>
 				<dict>
 					<key>GooglePlay</key>
@@ -4332,21 +3986,6 @@
 						<key>ShowCameraAd</key>
 						<true/>
 					</dict>
-				</dict>
-				<key>GooglePlayNativeAd</key>
-				<dict>
-					<key>ShowAd</key>
-					<false/>
-				</dict>
-				<key>KeyboardBannerAd</key>
-				<dict>
-					<key>SessionIndexOfDay</key>
-					<array>
-						<integer>10</integer>
-						<integer>20</integer>
-					</array>
-					<key>Show</key>
-					<true/>
 				</dict>
 				<key>NativeAdPosition</key>
 				<dict>
@@ -4402,10 +4041,397 @@
 				<key>price</key>
 				<string>$2.99</string>
 			</dict>
+			<key>ScreenFlash</key>
+			<dict>
+				<key>CallAssistant</key>
+				<dict>
+					<key>AutoRefresh</key>
+					<dict>
+						<key>enable</key>
+						<false/>
+						<key>interval</key>
+						<integer>10</integer>
+					</dict>
+					<key>OpenWhenScreenFlashTurnOn</key>
+					<true/>
+					<key>ShowAds</key>
+					<true/>
+					<key>ShowWhenIncomingCall</key>
+					<true/>
+					<key>ShowWhenIncomingFailedCall</key>
+					<true/>
+					<key>ShowWhenOutgoingCall</key>
+					<true/>
+				</dict>
+				<key>DefaultSwitch</key>
+				<false/>
+				<key>DefaultTheme</key>
+				<string>1</string>
+				<key>Enable</key>
+				<true/>
+				<key>Themes</key>
+				<array>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Parrot.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>6</integer>
+						<key>IdName</key>
+						<string>Parrot</string>
+						<key>Name</key>
+						<string>Parrot</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Parrot.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Dog.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>7</integer>
+						<key>IdName</key>
+						<string>Dog</string>
+						<key>Name</key>
+						<string>Dog</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Dog.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Lightning.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>IconAccept</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Lightning_yes.png</string>
+						<key>IconReject</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Lightning_no.png</string>
+						<key>Id</key>
+						<integer>8</integer>
+						<key>IdName</key>
+						<string>Lightning</string>
+						<key>Name</key>
+						<string>Lightning</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Lightning.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Sun.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>11</integer>
+						<key>IdName</key>
+						<string>Sun</string>
+						<key>Name</key>
+						<string>Sun</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Sun.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Stars.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>9</integer>
+						<key>IdName</key>
+						<string>Stars</string>
+						<key>Name</key>
+						<string>Stars</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Stars.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Vitas.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>10</integer>
+						<key>IdName</key>
+						<string>Vitas</string>
+						<key>Name</key>
+						<string>Vitas</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Vitas.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/DJ.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>12</integer>
+						<key>IdName</key>
+						<string>DJ</string>
+						<key>Name</key>
+						<string>DJ</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/DJ.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Tech.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>13</integer>
+						<key>IdName</key>
+						<string>Tech</string>
+						<key>Name</key>
+						<string>Tech</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Tech.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rhyme.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>14</integer>
+						<key>IdName</key>
+						<string>Rhyme</string>
+						<key>Name</key>
+						<string>Rhyme</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rhyme.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Neon.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>15</integer>
+						<key>IdName</key>
+						<string>Neon</string>
+						<key>Name</key>
+						<string>Neon</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Neon.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/LightningFire.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>16</integer>
+						<key>IdName</key>
+						<string>LightningFire</string>
+						<key>Name</key>
+						<string>LightningFire</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/LightningFire.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Chicken.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>17</integer>
+						<key>IdName</key>
+						<string>Chicken</string>
+						<key>Name</key>
+						<string>Chicken</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Chicken.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rotate.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>18</integer>
+						<key>IdName</key>
+						<string>Rotate</string>
+						<key>Name</key>
+						<string>Rotate</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Rotate.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string></string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>IconAccept</key>
+						<string>http://cdn.appcloudbox.net/sunspotmix/thumbnail/defaultbutton/acb_phone_call_answer.png</string>
+						<key>IconReject</key>
+						<string>http://cdn.appcloudbox.net/sunspotmix/thumbnail/defaultbutton/acb_phone_call_refuse.png</string>
+						<key>Id</key>
+						<integer>1</integer>
+						<key>IdName</key>
+						<string>Moving</string>
+						<key>Name</key>
+						<dict>
+							<key>Default</key>
+							<string>Moving</string>
+							<key>ar</key>
+							<string>متحركة</string>
+							<key>de</key>
+							<string>Bewegung</string>
+							<key>es</key>
+							<string>Movimiento</string>
+							<key>fr</key>
+							<string>Mobile</string>
+							<key>hi</key>
+							<string>मूविंग</string>
+							<key>in</key>
+							<string>Bergerak</string>
+							<key>it</key>
+							<string>Movimento</string>
+							<key>jp</key>
+							<string>ムーブメント</string>
+							<key>ko</key>
+							<string>이동</string>
+							<key>nl</key>
+							<string>Bewegend</string>
+							<key>pt</key>
+							<string>Em movimento</string>
+							<key>ru</key>
+							<string>Скольжение</string>
+							<key>th</key>
+							<string>เคลื่อนไหว</string>
+							<key>tr</key>
+							<string>Hareketli</string>
+							<key>vn</key>
+							<string>Chuyển Động</string>
+							<key>zh-CN</key>
+							<string>走马灯</string>
+							<key>zh-HK</key>
+							<string>走馬燈</string>
+							<key>zh-SG</key>
+							<string>走马灯</string>
+							<key>zh-TW</key>
+							<string>走馬燈</string>
+						</dict>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/Default.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
+				</array>
+			</dict>
+			<key>SearchAd</key>
+			<dict>
+				<key>PackageNameList</key>
+				<array>
+					<string>com.android.vending</string>
+					<string>com.andriod.browser</string>
+					<string>com.android.chrome/org.mozilla.firefox</string>
+				</array>
+				<key>updateTimeInMin</key>
+				<integer>15</integer>
+			</dict>
 			<key>SearchEngine</key>
 			<dict>
 				<key>url</key>
 				<string>http://www.searchmobileonline.com/?pubid=201720503&amp;q=</string>
+			</dict>
+			<key>Server</key>
+			<dict>
+				<key>EmojiSuggestionBaseURL</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/emoji_suggestion</string>
+				<key>FontDownloadBaseURL</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/fonts/</string>
+				<key>IncomingCallThemeURL</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/</string>
+				<key>LanguageBaseURL</key>
+				<string>http://cdn.api-alliance.com/keyboardarts/adaptxt/3.1.1</string>
+				<key>RemoteContentDownloadURL</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
+				<key>StickerDownloadBaseURL</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers/</string>
 			</dict>
 			<key>StickersGifs</key>
 			<dict>
@@ -4501,34 +4527,34 @@
 						<dict>
 							<key>name</key>
 							<string>BigFace01</string>
-							<key>showName</key>
-							<string>Animated Smiley</string>
 							<key>showInKeyboard</key>
 							<true/>
+							<key>showName</key>
+							<string>Animated Smiley</string>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>LoveGif02</string>
-							<key>showName</key>
-							<string>Animated Lover</string>
 							<key>showInKeyboard</key>
 							<true/>
+							<key>showName</key>
+							<string>Animated Lover</string>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>AngryFace</string>
-							<key>showName</key>
-							<string>Angry Face</string>
 							<key>showInKeyboard</key>
 							<true/>
+							<key>showName</key>
+							<string>Angry Face</string>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>FunnyEmoji</string>
-							<key>showName</key>
-							<string>Funny Emoji</string>
 							<key>showInKeyboard</key>
 							<true/>
+							<key>showName</key>
+							<string>Funny Emoji</string>
 						</dict>
 						<dict>
 							<key>name</key>
@@ -4592,21 +4618,6 @@
 						</dict>
 					</array>
 				</dict>
-			</dict>
-			<key>Server</key>
-			<dict>
-				<key>EmojiSuggestionBaseURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/emoji_suggestion</string>
-				<key>FontDownloadBaseURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/fonts/</string>
-				<key>IncomingCallThemeURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/</string>
-				<key>LanguageBaseURL</key>
-				<string>http://cdn.api-alliance.com/keyboardarts/adaptxt/3.1.1</string>
-				<key>RemoteContentDownloadURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
-				<key>StickerDownloadBaseURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers/</string>
 			</dict>
 			<key>UninstallFeedback</key>
 			<dict>
@@ -5416,7 +5427,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>20.3</real>
+								<real>20.300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -5454,7 +5465,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>20.7</real>
+								<real>20.699999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6995,7 +7006,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>22.3</real>
+								<real>22.300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7033,7 +7044,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>22.7</real>
+								<real>22.699999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11178,7 +11189,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>14.7</real>
+								<real>14.699999999999999</real>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11216,7 +11227,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>14.3</real>
+								<real>14.300000000000001</real>
 							</dict>
 						</dict>
 						<key>ids</key>

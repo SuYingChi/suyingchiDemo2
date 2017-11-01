@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import com.acb.adcaffe.nativead.AdCaffeNativeAd;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -34,6 +35,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
+import com.ihs.inputmethod.feature.common.AdCaffeHelper;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -61,7 +63,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by xu.zhang on 11/3/15.
  */
-public abstract class HSUIInputMethodService extends HSInputMethodService {
+public abstract class HSUIInputMethodService extends HSInputMethodService implements AdCaffeHelper.OnNativeAdLoadListener {
     public static final String ACTION_CLOSE_SYSTEM_DIALOGS = "android.intent.action.CLOSE_SYSTEM_DIALOGS";
     private static final String GOOGLE_PLAY_PACKAGE_NAME = "com.android.vending";
     private static final String GOOGLE_SEARCH_BAR_PACKAGE_NAME = "com.google.android.googlequicksearchbox";
@@ -103,6 +105,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     private KeyboardFullScreenAd closeFullScreenAd;
     private KeyboardGooglePlayAdManager keyboardGooglePlayAdManager;
     private String currentWord = "";
+    private AdCaffeHelper adCaffeHelper;
     private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
@@ -132,6 +135,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(this.receiver, intentFilter);
+        readKeywordListFromFile(HSFileUtils.createNewFile(getKeywordFilePathBase() + KEYWORD_FINAL_FILE_NAME));
 
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_START_INPUT_INSIDE, keyboardNotificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FINISH_INPUT_INSIDE, keyboardNotificationObserver);
@@ -141,6 +145,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
         closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Close");
         keyboardGooglePlayAdManager = new KeyboardGooglePlayAdManager(HSApplication.getContext().getString(R.string.ad_placement_google_play_dialog_ad));
+        adCaffeHelper = new AdCaffeHelper(this, "placementId", this);
     }
 
     private long lastBackAdShownTime = 0L;
@@ -259,13 +264,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     }
 
     private void requestKeywordList() {
-        if ((System.currentTimeMillis() - HSPreferenceHelper.getDefault().getLong(CustomBarGPAdAdapter.SEARCH_AD_UPDATE_TIME, 0)
-                < TimeUnit.MINUTES.toMillis(HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin")) &&
-                (HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin") > 0))) {
+        if (System.currentTimeMillis() - HSPreferenceHelper.getDefault().getLong(CustomBarGPAdAdapter.SEARCH_AD_UPDATE_TIME, 0)
+                < TimeUnit.MINUTES.toMillis(HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin"))) {
             return;
         }
         File tempFile = HSFileUtils.createNewFile(getKeywordFilePathBase() + KEYWORD_TEMP_FILE_NAME);
-        File destFile = new File(getKeywordFilePathBase() + KEYWORD_FINAL_FILE_NAME);
+        File destFile = HSFileUtils.createNewFile(getKeywordFilePathBase() + KEYWORD_FINAL_FILE_NAME);
         HSHttpConnection connection = new HSHttpConnection(KEYWORD_REQUEST_URL);
         connection.setDownloadFile(tempFile);
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
@@ -275,24 +279,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
                     destFile.delete();
                 }
                 if (tempFile.renameTo(destFile)) {
-                    List<String> tempKeywordList = new ArrayList<>();
-                    try {
-                        InputStreamReader read = new InputStreamReader(
-                                new FileInputStream(destFile), "UTF-8");// 考虑到编码格式
-                        BufferedReader bufferedReader = new BufferedReader(read);
-                        String lineTxt;
-
-                        while ((lineTxt = bufferedReader.readLine()) != null)
-                        {
-                            tempKeywordList.add(lineTxt);
-                        }
-                        keywordList.clear();
-                        keywordList.addAll(tempKeywordList);
-                        bufferedReader.close();
-                        read.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                   readKeywordListFromFile(destFile);
                 }
             }
 
@@ -302,7 +289,28 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
         });
         connection.startAsync();
+    }
 
+    private void readKeywordListFromFile(File file) {
+        List<String> tempKeywordList = new ArrayList<>();
+        try {
+            InputStreamReader read = new InputStreamReader(
+                    new FileInputStream(file), "UTF-8");// 考虑到编码格式
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineTxt;
+
+            while ((lineTxt = bufferedReader.readLine()) != null)
+            {
+                tempKeywordList.add(lineTxt);
+            }
+            keywordList.clear();
+            keywordList.addAll(tempKeywordList);
+            bufferedReader.close();
+            read.close();
+            HSPreferenceHelper.getDefault().putLong(CustomBarGPAdAdapter.SEARCH_AD_UPDATE_TIME, System.currentTimeMillis());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getKeywordFilePathBase() {
@@ -515,6 +523,17 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         return HSConfig.getList("Application", "SearchAd", "PackageNameList").contains(currentAppPackageName);
     }
 
+    private String[] splitIntoWords(String sentence) {
+        String[] words = sentence.split("\\s+");
+        for (int i = 0; i < words.length; i++) {
+            // You may want to check for a non-word character before blindly
+            // performing a replacement
+            // It may also be necessary to adjust the character class
+            words[i] = words[i].replaceAll("[^\\w]", "");
+        }
+        return words;
+    }
+
     private static Runnable clearImageLoaderCacheRunnable = new Runnable() {
         @Override
         public void run() {
@@ -555,22 +574,24 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             HSLog.i("Failed to log key enter in google play.");
         }
 
-        //TODO request correct keyword list
+
+        super.onCodeInput(codePoint, x, y, isKeyRepeat);
+
+        List<String> inputWord = new ArrayList<>();
         if (codePoint > 0) {
             if (codePoint == ' ') {
+                inputWord.add(currentWord);
                 currentWord = "";
             } else {
                 currentWord += (char) codePoint;
                 if (keywordList != null) {
                     if (keywordList.contains(currentWord)) {
-
+                        String[] words = splitIntoWords(getInputLogic().mConnection.getAllText().toString());
+                        adCaffeHelper.loadAdWithKeywords(words);
                     }
                 }
-
             }
-
         }
-        super.onCodeInput(codePoint, x, y, isKeyRepeat);
     }
 
     @Override
@@ -594,5 +615,18 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             getKeyboardPanelMananger().showSuggestedStickers(stickerTag, StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
             HSAnalytics.logEvent("keyboard_sticker_prediction_show", "sticker tag", stickerTag);
         }
+    }
+
+    @Override
+    public void onNativeAdLoadFail(HSError hsError) {
+        HSLog.e("lv_eee", hsError.getMessage() + " " + hsError.getCode());
+    }
+
+    @Override
+    public void onNativeAdLoadSuccess(List<AdCaffeNativeAd> nativeAds, boolean hasMore, int nextOffset) {
+        if (!shouldShowSearchAD()) {
+            return;
+        }
+        getKeyboardPanelMananger().showSearchAdBar(nativeAds);
     }
 }
