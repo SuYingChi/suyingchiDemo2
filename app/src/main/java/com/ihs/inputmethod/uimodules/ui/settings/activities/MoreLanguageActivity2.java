@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodSubtype;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.language.HSImeSubtypeListItem;

@@ -27,7 +27,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

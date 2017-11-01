@@ -43,7 +43,7 @@ import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background.BackgroundFragment;

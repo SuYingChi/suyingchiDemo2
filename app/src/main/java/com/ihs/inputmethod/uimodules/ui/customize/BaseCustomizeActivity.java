@@ -11,17 +11,17 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.service.CustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceHolder;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
 
 /**
  * Created by guonan.lv on 17/9/1.
  */
 
-public class BaseCustomizeActivity extends HSAppCompatActivity implements ServiceConnection, ServiceHolder{
+public class BaseCustomizeActivity extends HSAppCompatActivity implements ServiceConnection, ServiceHolder {
     protected ICustomizeService mService;
     protected boolean mHasPendingTheme = false;
     private boolean mIsDestroying;

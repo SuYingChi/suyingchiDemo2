@@ -20,7 +20,7 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.MyFontFragment;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.MyStickerFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
@@ -145,8 +145,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
     @Override
     protected void onStop() {
         super.onStop();
-        System.gc();
-        if (homeKeyTracker.isHomeKeyPressed() && trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
+        if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
             trialKeyboardDialog.dismiss();
         }
     }

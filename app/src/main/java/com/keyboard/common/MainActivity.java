@@ -47,6 +47,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.inner.HomeKeyTracker;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;

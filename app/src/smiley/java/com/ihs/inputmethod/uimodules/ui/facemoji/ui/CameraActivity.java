@@ -49,7 +49,7 @@ import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.utils.BitmapUtils;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.ihs.inputmethod.uimodules.utils.UriUtils;

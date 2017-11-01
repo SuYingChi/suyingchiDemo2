@@ -37,7 +37,7 @@ import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.HSAppCompatActivity;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
@@ -262,7 +262,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     @Override
     protected void onStop() {
         super.onStop();
-        if (homeKeyTracker.isHomeKeyPressed() && trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
+        if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
             trialKeyboardDialog.dismiss();
         }
     }

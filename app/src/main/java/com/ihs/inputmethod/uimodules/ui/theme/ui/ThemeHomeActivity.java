@@ -35,12 +35,12 @@ import android.widget.Toast;
 
 import com.acb.call.CPSettings;
 import com.acb.call.HomeKeyWatcher;
-import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
+import com.ihs.app.framework.inner.HomeKeyTracker;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -73,6 +73,8 @@ import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
+
+import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -229,6 +231,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         mWallpaperTabIndex = bundle.getInt("wallpaperIndex");
     }
 
+    private HomeKeyTracker homeKeyTracker = new HomeKeyTracker(HSApplication.getContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -386,10 +389,20 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        homeKeyTracker.startTracker();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        System.gc();
-        if (homeKeyTracker.isHomeKeyPressed() && trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
+        if(homeKeyTracker.isHomeKeyPressed()){
+            HSAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
+        }
+        homeKeyTracker.stopTracker();
+
+        if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
             trialKeyboardDialog.dismiss();
         }
     }
