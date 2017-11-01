@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
+        <net.appcloudbox.ads.base.ContainerView.AcbNativeAdPrimaryView
             android:id="@+id/ad_cover_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             app:rcl_corner_radius="2dp">
 
-            <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+            <net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView
                 android:id="@+id/ad_icon"
                 android:layout_width="65dp"
                 android:layout_height="65dp"

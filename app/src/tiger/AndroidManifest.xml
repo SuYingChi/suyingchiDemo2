@@ -209,32 +209,6 @@
             </intent-filter>
         </receiver>
 
-        <provider
-            android:name="com.ihs.commons.config.RemoteConfigProvider"
-            android:authorities="${applicationId}.framework_remoteconfig"
-            android:enabled="true"
-            android:exported="false" />
-        <receiver
-            android:name="com.ihs.commons.config.RemoteConfigReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="hs.diverse.session.SESSION_START" />
-            </intent-filter>
-        </receiver>
-
-        <provider
-            android:name="com.ihs.app.analytics.AnalyticsProvider"
-            android:authorities="${applicationId}.framework_analytics"
-            android:enabled="true"
-            android:exported="false" />
-
-        <provider
-            android:name="com.ihs.commons.preference.PreferenceProvider"
-            android:authorities="${applicationId}.framework_preference"
-            android:enabled="true"
-            android:exported="false" />
-
         <activity
             android:name="com.keyboard.common.SplashActivity"
             android:launchMode="singleTask"

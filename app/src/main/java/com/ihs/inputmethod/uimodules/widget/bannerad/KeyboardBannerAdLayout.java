@@ -13,13 +13,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.adadapter.ContainerView.AcbNativeAdContainerView;
-import com.acb.adadapter.ContainerView.AcbNativeAdIconView;
-import com.acb.nativeads.AcbNativeAdLoader;
-import com.ihs.commons.utils.HSError;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView;
+import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.common.utils.AcbError;
 
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class KeyboardBannerAdLayout extends FrameLayout {
             }
 
             @Override
-            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
 
             }
         });

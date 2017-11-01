@@ -179,7 +179,7 @@
             android:noHistory="true"
             android:taskAffinity=".acb_interstitial_quiet" />
         <activity
-            android:name="com.acb.adadapter.ApplovinInterstitialAdapter.AcbAppLovinInterstitialActivity"
+            android:name="net.appcloudbox.ads.base.ApplovinInterstitialAdapter.AcbAppLovinInterstitialActivity"
             android:noHistory="true"
             android:taskAffinity=".acb_interstitial_quiet" />
 

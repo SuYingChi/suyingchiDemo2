@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
 
-    <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+    <net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView
         android:id="@+id/ad_icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

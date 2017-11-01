@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.acb.adadapter.ContainerView.AcbNativeAdPrimaryView
+        <net.appcloudbox.ads.base.ContainerView.AcbNativeAdPrimaryView
             android:id="@+id/theme_banner"
             android:layout_width="match_parent"
             android:layout_height="180dp" />
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
-        <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+        <net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView
             android:id="@+id/theme_icon"
             android:layout_width="38dp"
             android:layout_height="38dp"

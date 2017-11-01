@@ -149,31 +149,36 @@ final LIB_DEVICE_VERSION = '.gm:4.2.+'
 
 dependencies {
     // App Framework
-    compile "com.ihandy.appframework:libAppframework.gm:4.3.8.gm"
+    compile "com.ihandy.appframework:libAppframework.gm:4.5.0.gm"
+    //Ads
+    compile 'net.appcloudbox.ads:libAcbAds.gm:1.0.0.gm'
 
-    // Ads
-    compile "com.ihandy.nativeads:libNativeAds.gm:4.5.0.gm"
-    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.5.1.gm"
-    compile 'com.ihandy.expressads:libExpressAds.gm:4.5.0.gm'
-
-    // Native Ad Adapters
-    compile 'com.ihandy.3rdadadapter:libAdAvocarrotNativeAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdFBNativeAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdYeahmobiNativeAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdMopubNativeAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdmobNativeAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdxNativeAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdFlurryNativeAdapter.gm:4.1.0.gm'
+//
+//    // Ads
+//    compile "com.ihandy.nativeads:libNativeAds.gm:4.5.0.gm"
+//    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.5.1.gm"
+//    compile 'com.ihandy.expressads:libExpressAds.gm:4.5.0.gm'
+//
+//    // Native Ad Adapters
+    compile 'net.appcloudbox.adadapter:libAdAvocarrotNativeAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdYeahmobiNativeAdapter.beta:5.1.0.beta02'
+    compile 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.gm:5.1.0.gm'
+//    compile 'net.appcloudbox.adadapter:libAdBaiduNativeAdapter.gm:5.0.0.gm'
 
     // Interstitial Ad Adapters
-    compile 'com.ihandy.3rdadadapter:libAdAdmobInterstitialAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdxInterstitialAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdFBInterstitialAdapter.gm:4.5.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdxInterstitialAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdFBInterstitialAdapter.gm:5.0.0.gm'
 
     // Express Ad Adapters
-    compile 'com.ihandy.3rdadadapter:libAdMopubBannerAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdxBannerAdapter.gm:4.5.0.gm'
-    compile 'com.ihandy.3rdadadapter:libAdAdmobBannerAdapter.gm:4.5.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdMopubBannerAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdxBannerAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdmobBannerAdapter.gm:5.0.0.gm'
+//    compile 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
 
     // Google Play Services
     compile "com.google.android.gms:play-services-ads:11.0.4"

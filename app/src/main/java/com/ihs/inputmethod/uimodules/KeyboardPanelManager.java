@@ -14,9 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.acb.adadapter.AcbAd;
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.nativeads.AcbNativeAdLoader;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
@@ -25,7 +22,6 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
@@ -53,6 +49,11 @@ import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.keyboard.core.session.KCKeyboardSession;
+
+import net.appcloudbox.ads.base.AcbAd;
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.common.utils.AcbError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -363,7 +364,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             }
 
             @Override
-            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, HSError hsError) {
+            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
                 if (HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowCameraAd")) {
                     cameraAdInfoList = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "CameraAd");
 

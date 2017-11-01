@@ -10,9 +10,9 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.acb.call.customize.AcbCallManager;
-import com.acb.expressads.AcbExpressAdManager;
-import com.acb.interstitialads.AcbInterstitialAdManager;
-import com.acb.nativeads.AcbNativeAdManager;
+import net.appcloudbox.ads.expressads.AcbExpressAdManager;
+import net.appcloudbox.ads.interstitialads.AcbInterstitialAdManager;
+import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.alerts.HSAlertMgr;

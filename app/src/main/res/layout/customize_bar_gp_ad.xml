@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/setting_panel_item_margin_top">
 
-        <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+        <net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView
             android:id="@+id/ad_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"

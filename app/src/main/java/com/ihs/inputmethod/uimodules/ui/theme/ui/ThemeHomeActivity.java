@@ -35,7 +35,7 @@ import android.widget.Toast;
 
 import com.acb.call.CPSettings;
 import com.acb.call.HomeKeyWatcher;
-import com.acb.interstitialads.AcbInterstitialAdLoader;
+import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;

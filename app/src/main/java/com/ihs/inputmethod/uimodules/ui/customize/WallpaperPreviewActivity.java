@@ -26,8 +26,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.acb.adadapter.AcbNativeAd;
-import com.acb.nativeads.AcbNativeAdLoader;
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
 import com.artw.lockscreen.LockerSettings;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;

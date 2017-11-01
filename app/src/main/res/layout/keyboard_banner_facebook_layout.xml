@@ -21,7 +21,7 @@
         android:layout_centerVertical="true"
         android:paddingBottom="4dp">
 
-        <com.acb.adadapter.ContainerView.AcbNativeAdIconView
+        <net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView
             android:id="@+id/ad_icon"
             android:layout_width="45dp"
             android:layout_height="45dp"

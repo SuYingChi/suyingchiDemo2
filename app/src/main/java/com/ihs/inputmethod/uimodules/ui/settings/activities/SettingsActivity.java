@@ -44,7 +44,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.acb.call.CPSettings;
-import com.acb.nativeads.AcbNativeAdManager;
+import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
