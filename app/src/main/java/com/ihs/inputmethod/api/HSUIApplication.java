@@ -10,9 +10,6 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.acb.call.customize.AcbCallManager;
-import net.appcloudbox.ads.expressads.AcbExpressAdManager;
-import net.appcloudbox.ads.interstitialads.AcbInterstitialAdManager;
-import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.alerts.HSAlertMgr;
@@ -65,6 +62,10 @@ import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
+
+import net.appcloudbox.ads.expressads.AcbExpressAdManager;
+import net.appcloudbox.ads.interstitialads.AcbInterstitialAdManager;
+import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -167,6 +168,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onMainProcessApplicationCreate() {
+        Fabric.with(this, new Crashlytics());
 
         HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
             @Override
@@ -223,7 +225,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         CustomUIRateAlertUtils.initialize();
 
-        Fabric.with(this, new Crashlytics());
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
