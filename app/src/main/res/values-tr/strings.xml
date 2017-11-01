@@ -1,3 +1,282 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <!--base-->
+    <string name="settings">Ayarlar</string>
+    <string name="enabled">Etkinleştirildi</string>
+    <string name="disabled">Devreden çıkarıldı</string>
+    <string name="language">Dil</string>
+    <string name="languages">Dil</string>
+    <string name="next">Sonraki</string>
+    <string name="back">Geri</string>
+    <string name="cancel">İptal et</string>
+    <string name="delete">Sil</string>
+    <string name="save">Kaydet</string>
+    <string name="saving">Kaydediliyor...</string>
+    <string name="allow">İzin Ver</string>
+    <string name="done">Tamam</string>
+    <string name="got_it">ANLADIM</string>
+    <string name="filter">Kırp</string>
+    <string name="use">Kullan</string>
+    <string name="customize_keyboard_title">Klavye</string>
+    <string name="customize_wallpapers_title">Duvar kağıdı</string>
+    <string name="may_contains_ads">Reklam İçerebilir</string>
+    <string name="online_wallpaper_set_btn">DUVAR KAĞIDINI BELİRLE</string>
+    <string name="online_wallpaper_loading">HD Duvar Kağıdı yükleniyor, lütfen bekleyin.</string>
+
+    <string name="unknown">Bilinmeyen</string>
+
+    <string name="alert_find_keyboard_and_switch_on">%1$s uygulamasını aç</string>
+
+    <!--main-->
+    <string name="alert_attention_messenger">%1$s klavyesi kullanıcıların gizliliğini ciddiyetle dikkate alır. ASLA parola veya kredi kartı numarası gibi herhangi bir veriyi toplamayız. </string>
+    <string name="toast_enable_keyboard">%1$s Etkinleştir</string>
+    <string name="toast_select_keyboard">%1$s seç</string>
+    <string name="keyboard_guide_privacy_policy">Yükleyerek %1$s ve %2$s kabul etmiş olursunuz</string>
+    <string name="text_terms_of_service">Hizmet Koşulları</string>
+    <string name="text_privacy_policy">Gizlilik Politikası</string>
+
+    <!--dialog-->
+    <string name="dialog_title_select_keyboard_apply_rain"> %1$s etkinleştir</string>
+    <string name="dialog_msg_select_keyboard_apply_rain">Bu temayı kullanmak için %1$s klavyesini etkinleştirmeniz gerekir.</string>
+    <string name="dialog_confirm_select_keyboard_apply_rain">ETKİNLEŞTİR</string>
+
+    <string name="dialog_title_enable_keyboard_home_rain"> %1$s etkinleştir</string>
+    <string name="dialog_msg_enable_keyboard_home_rain">%1$s, kişiselleştirilmiş klavye temaları ve şirin emojiler sunar.</string>
+
+    <!--language-->
+    <string name="add">EKLE</string>
+    <string name="key_layout_dialog_title">26 Tuş Düzeni</string>
+    <string name="current_languages">Kullanılan Diller</string>
+    <string name="available_languages">Kullanılabilen Diller</string>
+    <string name="switch_language_tip">Dilleri klavyeden değiştirmek için ara çubuğu basılı tutun.</string>
+
+    <!--lib-->
+    <string name="choose_language">Dil seç</string>
+    <string name="more_language">Dil Ekle</string>
+
+    <!--settings-->
+    <string name="language_dict">Dil</string>
+
+    <string name="setting_preference_title">Tercihler</string>
+    <string name="setting_auto_correction">Otomatik Düzeltme</string>
+    <string name="setting_auto_capitalization">Otomatik Büyük Harfe Çevirme</string>
+    <string name="setting_word_prediction">Tahmin</string>
+    <string name="setting_emoji_prediction">Emoji Tahmini</string>
+    <string name="setting_swipe_input">Kaydır</string>
+    <string name="setting_double_space_period">\".\" Kısayol</string>
+    <string name="setting_double_space_period_summary">Ara çubuğuna çift dokunmak boşluğun ardından nokta koyar.</string>
+    <string name="setting_sound_on_keypress">Tuşa basınca ses çıkar</string>
+    <string name="setting_vibrate_on_keypress">Tuşa basınca titreş</string>
+
+    <!-- settings more page -->
+    <string name="boost_noti_setting_desc">Telefonunuzun hızını ve performansını artırmak için boş alan açın ve RAM\'i temizleyin. Sponsorlu içerik içerir.</string>
+    <string name="boost_noti_setting_title">Telefon Hızlandırma</string>
+    <string name="setting_call_assistant_title">Aramalar için Ekran Flaşı</string>
+    <string name="enable_locker_detail">Kilit ekranına gözde temaları gösterme. Sponsorlu içerik içerir.</string>
+    <string name="screen_locker_enable_alert_toast">Ekran Kilidi Etkinleştirildi</string>
+
+    <!--new settings panel-->
+    <string name="setting_item_themes">Temalar</string>
+    <string name="setting_item_my_theme">Tema Oluştur</string>
+    <string name="setting_item_fonts">Yazı tipleri</string>
+
+    <string name="setting_item_sounds">Sesler</string>
+    <string name="setting_item_swipe">Kaydır</string>
+    <string name="setting_item_add_languages">Dil Ekle</string>
+    <string name="setting_item_more_settings">Daha Fazla Ayar</string>
+
+    <!--settings panel-->
+    <string name="settings_button_tell_a_friend">Arkadaşına bahset</string>
+    <string name="settings_button_tell_a_friend_tip">Mesajlarını hemen paylaş</string>
+
+
+    <!-- gif panel -->
+    <string name="result_no">GIF veya çıkartma bulunamadı.</string>
+    <string name="result_no_recent">Son Arama Yok.</string>
+    <string name="result_no_suggestion">Önerilen GIF veya çıkartma yok.</string>
+    <string name="result_no_favorites">Gözde Yok.</string>
+    <string name="result_no_data_on_fail">Lütfen ağı kontrol edin ve tekrar deneyin.</string>
+    <string name="result_no_data_on_complete">GIF veya çıkartma bulunamadı.</string>
+
+    <!--gif strip-->
+    <string name="emoji_search_title">Aramak için emoji seç</string>
+    <string name="emoji_search_hint">Metin veya emoji ile GIF ara </string>
+
+    <!--theme panel-->
+    <string name="customized_themes">Kişiselleştirilmiş Klavye</string>
+    <string name="default_themes">%1$s Temaları</string>
+    <string name="custom_theme_create">Oluştur</string>
+    <string name="theme_more">Daha Fazla</string>
+
+    <!--theme home-->
+    <string name="theme_store_background_title">Kendi Temamı Oluştur</string>
+    <string name="theme_store_more">DAHA FAZLA</string>
+    <string name="my_theme_customized_theme_title">Kişiselleştirilmiş Klavye</string>
+    <string name="my_theme_downloaded_theme_title">İndirildi</string>
+    <string name="theme_detail_recommend_title">Beğenebilirsin</string>
+    <string name="theme_card_custom_theme_default_name">Temam</string>
+    <string name="theme_detail_custom_theme_title_name">Kişiselleştirilmiş Klavye</string>
+    <string name="theme_trial_keyboard_edit_text_hint">Buraya yazmayı deneyin;</string>
+
+    <string name="dialog_app_usage_tips">Farklı uygulamalarda daha iyi bir yazı yazma deneyimi için kullanım erişimi olan uygulamaları açmanızı tavsiye ederiz.</string>
+    <string name="dialog_app_usage_title">Kullanım Erişimi olan Uygulamalara İzin Ver</string>
+
+    <!--theme home nav-->
+    <string name="theme_nav_my_themes">Temalarım</string>
+    <string name="theme_nav_languages">Dil</string>
+    <string name="theme_nav_settings">Ayarlar</string>
+    <string name="theme_nav_update">Güncelle</string>
+    <string name="theme_nav_no_ads">Reklamları Kaldır</string>
+
+    <!--theme card-->
+    <string name="theme_card_menu_download">İndir</string>
+    <string name="theme_card_menu_downloading">İndiriliyor</string>
+    <string name="theme_card_downloading_tip">İndiriliyor...</string>
+    <string name="theme_card_menu_share">Paylaş</string>
+    <string name="theme_card_set_locker_bg">Kilit Ekranı Olarak Ayarla</string>
+    <string name="theme_card_menu_apply">Uygula</string>
+    <string name="theme_card_menu_applied">Uygulandı</string>
+    <string name="theme_card_menu_delete">Sil</string>
+
+    <!--custom theme-->
+    <string name="custom_theme_background">Arka plan</string>
+    <string name="custom_theme_font">Yazı Tipi</string>
+    <string name="custom_theme_sound">Tıklama Sesi</string>
+    <string name="custom_theme_effect">Dokunma Efekti</string>
+
+    <string name="custom_theme_backgrounds">arka planlar</string>
+    <string name="custom_theme_fonts">yazı tipleri</string>
+    <string name="custom_theme_sounds">tıklama sesleri</string>
+    <string name="custom_theme_effects">dokunma efektleri</string>
+
+    <string name="custom_theme_title">Klavye Oluştur</string>
+    <string name="custom_theme_title_background">Arka Plan Seç</string>
+    <string name="custom_theme_title_button_shape">Düğme Şeklini Seç</string>
+    <string name="custom_theme_title_button_style">Düğme Stilini Seç</string>
+    <string name="custom_theme_title_font">Yazı Tipini Seç</string>
+    <string name="custom_theme_title_font_color">Yazı Rengini Seç</string>
+    <string name="custom_theme_title_sound">Tıklama Sesini Seç</string>
+    <string name="custom_theme_title_effect">Dokunma Efektini Seç</string>
+    <string name="custom_theme_sound_tip">Tıklama sesi efektini kullanmak için lütfen sessiz modu kapatın veya ayarlar bölümünden tuşa basıldığında Sesi etkinleştirin.</string>
+
+    <!--IAP Tip Info -->
+    <string name="current_theme_price" formatted="true">%1$s için kilidi aç</string>
+    <string name="purchase_success">Satın alma işlemi başarıyla gerçekleştirildi.</string>
+    <string name="purchase_error">HATA:</string>
+    <string name="purchase_error_message">Alışverişiniz artık mevcut değil. Daha sonra tekrar deneyin.</string>
+    <string name="purchase_error_bill">FATURALANDIRMA KULLANILAMIYOR</string>
+    <string name="purchase_error_item">ÖĞE KULLANILAMIYOR</string>
+    <string name="purchase_error_item_owned">ÖĞENİN ZATEN SAHİBİ VAR</string>
+    <string name="purchase_google_play_unavailable">Google Play cihazınızda mevcut değil.</string>
+    <string name="purchase_unavailable">Satın alma kullanılamıyor.</string>
+
+    <!-- Theme new tip -->
+    <string name="new_background_tip">Yeni arka plan</string>
+    <string name="new_font_tip">Yeni yazı tipi</string>
+    <string name="new_tap_effect_tip">Yeni dokunma efekti</string>
+    <string name="new_click_sound_tip">Yeni tıklama sesi</string>
+    <string name="new_theme_tip">Yeni temalar mevcut</string>
+
+    <!--apk update-->
+    <string name="apk_update_to_date_tip">Güncelsiniz</string>
+    <string name="apk_update_alert_title">Son Sürümü İndir</string>
+    <string name="apk_update_alert_negative_btn">DAHA SONRA</string>
+    <string name="apk_update_alert_positive_btn">GÜNCELLE</string>
+    <string name="apk_update_downloading">Güncelleme indiriliyor</string>
+    <string name="apk_update_downloading_notification_title">İndiriliyor</string>
+
+
+    <string name="sd_card_unavailable_tip">SD kartı kullanılamıyor!</string>
+
+    <string name="theme_create_custom_theme_failed">Tema oluşturulamadı, lütfen cihazınızda yeterli disk alanı olduğundan emin olun ve tekrar deneyin.</string>
+
+    <string name="home_create_keyboard">Kendi Temamı Oluştur</string>
+
+    <string name="charging_alert_title">Akıllı Şarj</string>
+    <string name="charging_alert_message">Aşırı şarjı etkin bir şekilde engellemek için Akıllı Şarjı etkinleştirin. Sponsorlu içerik içerir.</string>
+
+    <string name="enable_charging_detail">Pili optimize etmek için akıllı şarjı etkinleştirin. Sponsorlu içerik içerir.</string>
+
+    <!--Accessibility-->
+    <string name="tv_enable_keyboard_tip">%1$s etkinleştir, DAHA FAZLA temanın keyfini sürün!</string>
+    <string name="accessibility_service_label">%1$s</string>
+    <string name="tv_set_up_manually">ELLE AYAR</string>
+    <string name="tv_1_tap_to_set_up_keyboard">%1$s Etkinleştir</string>
+    <string name="alter_enable_access_title">%1$s Etkinleştir</string>
+    <string name="alter_enable_access_content">Klavyeyi ayarlamak için lütfen %1$s uygulamasını bulun ve etkinleştirin.</string>
+    <string name="alter_enable_access_confirm">ANLADIM</string>
+    <string name="alert_enable_access_warn_content">Erişebilirlik izni olmadan da %1$s uygulamasını elle etkinleştirebilirsin.</string>
+    <string name="alert_enable_access_warn_confirm">ELLE AYAR</string>
+    <string name="alert_enable_access_warn_title">Klavyeyi Elle Etkinleştir</string>
+    <string name="access_set_up_success">Başarıyla ayarlandı!</string>
+    <string name="access_set_up_failed">Ayarlanamadı</string>
+    <string name="dialog_access_setup_manual">ELLE AYAR</string>
+    <string name="retry">TEKRAR DENE</string>
+    <string name="dialog_set_up_manual_message">Lütfen tekrar deneyin ve klavyeyi elle ayarlayın.</string>
+    <!--Accessibility end-->
+
+    <!--guide-->
+    <string name="guide_open_camera">Kamerayı hızla açmak için kaydır</string>
+    <string name="guide_open_control_centre">Kontrol Merkezini açmak için kaydır</string>
+
+    <!-- sticker download documents-->
+    <string name="sticker_download_button">İNDİR</string>
+    <string name="sticker_downloading_label">İndiriliyor</string>
+    <string name="sticker_downloading_successful">İndirme Başarılı</string>
+    <string name="sticker_downloading_guide">Hemen ücretsiz indirin!</string>
+    <string name="sticker_share_toast">Uygulama çıkartmaları desteklemiyor.</string>
+    <string name="sticker_send_failed">Çıkartma gönderilemedi, lütfen tekrar deneyin.</string>
+    <string name="unzip_sticker_group_failed">Çıkartma sıkıştırması açılamadı, lütfen tekrar indirin!</string>
+    <string name="foreground_download_failed">İndirme başarısız</string>
+
+    <string name="interstitial_ad_title_after_save_theme">Başarıyla kaydedildi</string>
+    <string name="interstitial_ad_subtitle_after_save_theme">--------------- Beğenebilirsin ---------------</string>
+
+    <string name="interstitial_ad_title_after_try_keyboard">Başarıyla uygulandı</string>
+    <string name="interstitial_ad_subtitle_after_try_keyboard">--------------- Beğenebilirsin ---------------</string>
+
+    <string name="interstitial_ad_subtitle_home_gift_button">--------------- Beğenebilirsin ---------------</string>
+    <string name="store_nav_download">İndirilenler</string>
+    <string name="tab_theme_my">TEMAM</string>
+    <string name="tab_sticker">ÇIKARTMA</string>
+    <string name="tab_sticker_my">ÇIKARTMALARIM</string>
+    <string name="tab_font_my">YAZI TİPİM</string>
+    <string name="item_sticker_more_coming">Yakında daha fazla çıkarma gelecek</string>
+    <string name="item_font_more_coming">Yakında daha fazla yazı tipi gelecek</string>
+
+    <string name="locker_alert_title">Ekran Kilidi</string>
+    <string name="locker_alert_message">Gözde temalarınızı kilit ekranına ekleyin. Sponsorlu içerik içerebilir.</string>
+
+    <string name="call_assistant_alert_title">Çağrılar için Hareketli Temalar</string>
+    <string name="call_assistant_alert_message">Gelen arama ekranına hareketli temalar ekleyin. Sponsorlu içerik içerebilir.</string>
+
+    <string name="multi_function_alert_title">Göz Alıcı Temalar</string>
+    <string name="multi_function_alert_message">Kilit ekranına ve gelen arama ekranına göz alıcı temalar ekleyin. Sponsorlu içerik içerebilir.</string>
+
+    <string name="apk_update_alert_message">Mevcut sürümünüz çok düşük, kullanmak için lütfen en son sürüme güncelleyin.</string>
+    <string name="custom_rate_alert_message" tools:ignore="Typos">Bu öğenin kilidini ÜCRETSİZ olarak açmak ister misin? Sadece bize 5 yıldız ver!</string>
+    <string name="custom_rate_alert_button_text">Kilidi Açmak için 5 Yıldız Ver</string>
+    <string name="custom_rate_alert_toast_text">Lütfen Google Play'i kontrol et</string>
+    <string name="keyboard_settings">Klavye Ayarları</string>
+    <string name="general">GENEL</string>
+
+    <!-- home bottom tab-->
+    <string name="call_flash">Arama Flaşı</string>
+
+    <!-- wallpaper preview -->
+    <string name="key_theme_set_btn">TUŞ TEMASI BELİRLE</string>
+    <string name="wallpaper_apply_fail">Uygulama Başarısız</string>
+    <string name="home_screen">Ana Ekran</string>
+    <string name="locker_screen">Kilit ekranı</string>
+    <string name="home_and_locker_screen">Ana ve kilit ekranı</string>
+    <string name="key_theme_loading_progress_dialog_text">Tuş Teması Yükleniyor...</string>
+    <!-- Facemoji -->
+    <string name="label_try_now">HEMEN DENE</string>
+    <string name="label_create_funny_facemoji">Kendi yüzünle havalı emojiler yap!</string>
+
+    <string name="keyboard_make_facemoji_tip">Kendi emojilerini yap!</string>
+    <string name="sticker_title_create_my_facemojis">Facemojimi Oluştur</string>
+    <string name="sticker_title_my_facemojis">Facemojilerim</string>
+    <string name="sticker_title_funny_stickers">Komik Çıkartmalar</string>
+    <string name="label_share">Paylaş</string>
 </resources>

@@ -273,4 +273,14 @@
     <string name="locker_screen">Lock screen</string>
     <string name="home_and_locker_screen">Home and lock screens</string>
     <string name="key_theme_loading_progress_dialog_text">Loading Key Theme...</string>
+
+    <!-- Facemoji -->
+    <string name="label_try_now">TRY NOW</string>
+    <string name="label_share">Share</string>
+    <string name="label_create_funny_facemoji">Make cool emojis with your own face!</string>
+
+    <string name="keyboard_make_facemoji_tip">DIY your own emojis!</string>
+    <string name="sticker_title_create_my_facemojis">Create My Facemoji</string>
+    <string name="sticker_title_my_facemojis">My Facemojis</string>
+    <string name="sticker_title_funny_stickers">Funny Stickers</string>
 </resources>

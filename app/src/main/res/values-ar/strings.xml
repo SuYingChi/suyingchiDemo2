@@ -261,4 +261,14 @@
         <string name="locker_screen">شاشة القفل</string>
         <string name="home_and_locker_screen">الشاشة الرئيسية وشاشة القفل</string>
         <string name="key_theme_loading_progress_dialog_text">جارٍ تحميل تصميم المفاتيح...</string>
+
+    <!-- Facemoji -->
+    <string name="label_try_now">جربه الآن</string>
+    <string name="label_create_funny_facemoji">شكّل إيموجي رائعة من بوجهك!</string>
+
+    <string name="keyboard_make_facemoji_tip">إيموجي من صنع يديك!</string>
+    <string name="sticker_title_create_my_facemojis">إنشاء Facemoji الخاصة بي</string>
+    <string name="sticker_title_my_facemojis">Facemoji الخاصة بي</string>
+    <string name="sticker_title_funny_stickers">ملصقات مضحكة</string>
+    <string name="label_share">مشاركة</string>
 </resources>

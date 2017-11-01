@@ -249,4 +249,13 @@ Contém conteúdos patrocinados.</string>
         <string name="custom_rate_alert_message" tools:ignore="Typos">Deseja desbloquear este item GRÁTIS? Avalie-nos com 5 estrelas!</string>
         <string name="custom_rate_alert_button_text">Avalie com 5 estrelas para desbloquear</string>
         <string name="custom_rate_alert_toast_text">Veja seu Google Play</string>
+    <!-- Facemoji -->
+    <string name="label_try_now">EXPERIMENTE AGORA</string>
+    <string name="label_create_funny_facemoji">Faça emojis bacanas com seu próprio rosto!</string>
+
+    <string name="keyboard_make_facemoji_tip">Faça seus próprios emojis!</string>
+    <string name="sticker_title_create_my_facemojis">Criar meu Facemoji</string>
+    <string name="sticker_title_my_facemojis">Meus Facemojis</string>
+    <string name="sticker_title_funny_stickers">Stickers engraçados</string>
+    <string name="label_share">Compartilhar</string>
 </resources>

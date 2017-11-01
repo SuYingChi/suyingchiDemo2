@@ -260,4 +260,13 @@
         <string name="locker_screen">Écran de verrouillage</string>
         <string name="home_and_locker_screen">Écrans d\'accueil et de verrouillage</string>
         <string name="key_theme_loading_progress_dialog_text">Chargement du thème clé...</string>
+    <!-- Facemoji -->
+    <string name="label_try_now">ESSAYEZ MAINTENANT</string>
+    <string name="label_create_funny_facemoji">Créez de super émojis avec votre propre visage !</string>
+
+    <string name="keyboard_make_facemoji_tip">Créez vos propres emojis !</string>
+    <string name="sticker_title_create_my_facemojis">Créer mon Facemoji</string>
+    <string name="sticker_title_my_facemojis">Mes Facemojis</string>
+    <string name="sticker_title_funny_stickers">Autocollants rigolos</string>
+    <string name="label_share">Partager</string>
 </resources>

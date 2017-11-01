@@ -261,4 +261,13 @@ Incluye contenido patrocinado.</string>
         <string name="locker_screen">Pantalla de bloqueo</string>
         <string name="home_and_locker_screen">Pantallas de inicio y bloqueo</string>
         <string name="key_theme_loading_progress_dialog_text">Cargando tema de tecla...</string>
+    <!-- Facemoji -->
+    <string name="label_try_now">PROBAR AHORA</string>
+    <string name="label_create_funny_facemoji">¡Crea divertidos emojis con tu propia cara!</string>
+
+    <string name="keyboard_make_facemoji_tip">¡Crea tus propios emojis!</string>
+    <string name="sticker_title_create_my_facemojis">Crear Mi Facemoji</string>
+    <string name="sticker_title_my_facemojis">Mis Facemojis</string>
+    <string name="sticker_title_funny_stickers">Divertidas pegatinas</string>
+    <string name="label_share">Compartir</string>
 </resources>

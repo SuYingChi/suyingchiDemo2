@@ -261,4 +261,14 @@ Enthält Werbung.</string>
         <string name="locker_screen">Sperrbildschirm</string>
         <string name="home_and_locker_screen">Start- und Sperrbildschirme</string>
     <string name="key_theme_loading_progress_dialog_text">Tastendesign lädt...</string>
+    <!-- Facemoji -->
+    <string name="label_try_now">JETZT TESTEN</string>
+    <string name="label_create_funny_facemoji">Kreiere coole Emojis mit deinem eigenen Gesicht!</string>
+
+    <string name="keyboard_make_facemoji_tip">Kreiere deine eigenen Emojis!</string>
+    <string name="sticker_title_create_my_facemojis">Mein Facemoji erstellen</string>
+    <string name="sticker_title_my_facemojis">Meine Facemojis</string>
+    <string name="sticker_title_funny_stickers">Lustige Sticker</string>
+    <string name="label_share">Teilen</string>
+
 </resources>
