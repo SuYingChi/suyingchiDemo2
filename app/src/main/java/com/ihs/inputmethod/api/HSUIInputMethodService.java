@@ -420,10 +420,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     @Override
     public void onKeyboardWindowShow() {
         super.onKeyboardWindowShow();
-        if (shouldShowGoogleAD()) {
-            getKeyboardPanelMananger().showGoogleAdBar();
-        } else if (!TextUtils.equals(currentAppPackageName, HSApplication.getContext().getPackageName())) {
-            getKeyboardPanelMananger().showBannerAdBar();
+
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            if (shouldShowGoogleAD()) {
+                getKeyboardPanelMananger().showGoogleAdBar();
+            } else if (!TextUtils.equals(currentAppPackageName, HSApplication.getContext().getPackageName())) {
+                getKeyboardPanelMananger().showBannerAdBar();
+            }
         }
 
         // Stop clearing image loader cache
