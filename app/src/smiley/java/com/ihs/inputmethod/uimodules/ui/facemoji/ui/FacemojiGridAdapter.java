@@ -11,8 +11,10 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.Telephony;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -49,7 +51,7 @@ import java.util.Map;
  */
 public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickListener {
     private Activity activity;
-    private List<FacemojiSticker> mData;
+    private List<FacemojiSticker> facemojiStickerList;
     private LayoutInflater mInflater;
     private Dialog dialog;
     private FacemojiAnimationView stickerPlayer;
@@ -71,23 +73,27 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
     };
 
-    public FacemojiGridAdapter(Activity activity, List<FacemojiSticker> dataList) {
+    public FacemojiGridAdapter(Activity activity, List<FacemojiSticker> facemojiStickerList) {
         this.activity = activity;
-        this.mData = dataList;
+        this.facemojiStickerList = facemojiStickerList;
         this.mInflater = LayoutInflater.from(HSApplication.getContext());
+    }
+
+    public void setFacemojiStickerList(List<FacemojiSticker> facemojiStickerList) {
+        this.facemojiStickerList = facemojiStickerList;
     }
 
     @Override
     public int getCount() {
-        if (mData == null) return 0;
-        return mData.size();
+        if (facemojiStickerList == null) return 0;
+        return facemojiStickerList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        if (mData != null) {
-            if (mData.size() > position)
-                return mData.get(position);
+        if (facemojiStickerList != null) {
+            if (facemojiStickerList.size() > position)
+                return facemojiStickerList.get(position);
         }
         return null;
     }
@@ -109,42 +115,46 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
                 holder.facemojiView.setOnClickListener(this);
                 convertView.setTag(holder);
             }
-            if (playAnim){
-                holder.facemojiView.start();
-            }else {
-                holder.facemojiView.stop();
-            }
-            return convertView;
-        }
-
-        convertView = mInflater.inflate(R.layout.facemoji_view, null);
-        final View containerLayout = convertView.findViewById(R.id.facemoji_cell_layout);
-
-        if (sticker.getWidth() == sticker.getHeight()) { //方形的sticker，则尺寸用原来的
-            int height = (int) (parent.getMeasuredHeight() / 3.2f); //设置3.2，保证如果超过3行，则可以看到下面部分内容
-            int width = height;
-            containerLayout.setLayoutParams(new GridView.LayoutParams(width, height));
-        } else {
-            Resources resources = convertView.getResources();
-            int width = (int) ((resources.getDisplayMetrics().widthPixels - resources.getDimension(R.dimen.facemoji_grid_item_horizontal_space) - resources.getDimension(R.dimen.facemoji_grid_left_margin) * 2) / 2);
-            int height = (int) ((float) sticker.getHeight() / sticker.getWidth() * width);
-
-            GridView.LayoutParams layoutParams = new GridView.LayoutParams(width, height);
-            containerLayout.setLayoutParams(layoutParams);
-        }
-
-        final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
-        facemojiView.setSticker(sticker);
-        facemojiView.setTag(sticker);
-        holder = new StickerViewHolder();
-        holder.facemojiView = facemojiView;
-        holder.facemojiView.setOnClickListener(this);
-        convertView.setTag(holder);
-
-        if (playAnim){
-            holder.facemojiView.start();
         }else {
-            holder.facemojiView.stop();
+            convertView = mInflater.inflate(R.layout.facemoji_view, null);
+            final AnimationLayout containerLayout = (AnimationLayout) convertView.findViewById(R.id.facemoji_cell_layout);
+
+            if (sticker.getWidth() == sticker.getHeight()) { //方形的sticker，则尺寸用原来的
+                int height = (int) (parent.getMeasuredHeight() / 3.2f); //设置3.2，保证如果超过3行，则可以看到下面部分内容
+                int width = height;
+                containerLayout.setLayoutParams(new GridView.LayoutParams(width, height));
+            } else {
+                Resources resources = convertView.getResources();
+                int width = (int) ((resources.getDisplayMetrics().widthPixels - resources.getDimension(R.dimen.facemoji_grid_item_horizontal_space) - resources.getDimension(R.dimen.facemoji_grid_left_margin) * 2) / 2);
+                int height = (int) ((float) sticker.getHeight() / sticker.getWidth() * width);
+
+                GridView.LayoutParams layoutParams = new GridView.LayoutParams(width, height);
+                containerLayout.setLayoutParams(layoutParams);
+            }
+
+            final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
+            facemojiView.setSticker(sticker);
+            facemojiView.setTag(sticker);
+            holder = new StickerViewHolder();
+            holder.facemojiView = facemojiView;
+            holder.facemojiContainer = containerLayout;
+            holder.facemojiView.setOnClickListener(this);
+            convertView.setTag(holder);
+        }
+
+        if (sticker.getName() == null){
+            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
+            DrawableCompat.setTint(drawable,HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color));
+            holder.facemojiView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            int placeHolderWidth = (int) (HSApplication.getContext().getResources().getDisplayMetrics().density * 60);
+            int paddingLeft = (holder.facemojiContainer.getLayoutParams().width - placeHolderWidth ) / 2;
+            int paddingTop = (holder.facemojiContainer.getLayoutParams().height - placeHolderWidth ) / 2;
+            holder.facemojiView.setPadding(paddingLeft,paddingTop,paddingLeft,paddingTop);
+            holder.facemojiView.setImageDrawable(drawable);
+        }else {
+            holder.facemojiView.setPadding(0,0,0,0);
+            holder.facemojiView.setScaleType(ImageView.ScaleType.FIT_XY);
+            holder.facemojiView.start();
         }
         return convertView;
     }
@@ -188,6 +198,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     }
 
     class StickerViewHolder {
+        public AnimationLayout facemojiContainer;
         public FacemojiAnimationView facemojiView;
     }
 
@@ -335,6 +346,9 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (sticker.getName() == null){
+                        return;
+                    }
                     share(sticker, shareChannel);
                 }
             });

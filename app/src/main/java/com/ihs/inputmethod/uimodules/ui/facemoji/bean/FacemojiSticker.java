@@ -17,8 +17,8 @@ import java.util.Map;
  * Created by xu.zhang on 2/27/16.
  */
 public class FacemojiSticker implements ISequenceFramesImageItem {
-    private final String categoryName;//sticker的category
-    private final String name;//sticker的名字
+    private String categoryName;//sticker的category
+    private String name;//sticker的名字
     private int version;
     private int width;
     private int height;
@@ -84,6 +84,12 @@ public class FacemojiSticker implements ISequenceFramesImageItem {
         this.categoryName = categoryName;
         this.name = name;
         parseMojimeSticker();
+    }
+
+    public FacemojiSticker(String categoryName, int width,int height){
+        this.categoryName = categoryName;
+        this.width = width;
+        this.height = height;
     }
 
     private void parseMojimeSticker() {

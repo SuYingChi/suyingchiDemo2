@@ -10,6 +10,5 @@
     <com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiAnimationView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
         android:id="@+id/sticker_player_view"/>
 </com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiView>

@@ -16,12 +16,15 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 
+import com.artw.lockscreen.common.NetworkChangeReceiver;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
-import com.ihs.inputmethod.uimodules.BuildConfig;
-import com.ihs.inputmethod.uimodules.constants.Notification;
+import com.ihs.inputmethod.api.utils.HSNetworkConnectionUtils;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacePictureParam;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
@@ -40,11 +43,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 
 public class FacemojiManager {
+    public final static String FACEMOJI_CATEGORY_DOWNLOADED = "FACEMOJI_CATEGORY_DOWNLOADED";
+    public final static String FACEMOJI_CATEGORY_BUNDLE_KEY = "facemojiCategory";
+
     public static final String FACEMOJI_SAVED = "FACEMOJI_SAVED";
     public static final String FACE_CHANGED = "FACE_CHANGED";
     public static final String FACE_DELETED = "FACE_DELETED";
@@ -55,14 +62,11 @@ public class FacemojiManager {
     }
 
     private static final String FACE_PICTURE_URI = "face_picture_uri";
-    private static final String UPLOAD_FILE_PATH = "upload_file_path";
     private static final String MOJIME_DIRECTORY = "Mojime";
     private static final String PREF_CATEGORY_LAST_PAGE_ID = "sticker_category_last_page_id ";
-    private static final String[] categoryNames;
     private static int currentPageSize = FacemojiPalettesParam.SIZE;
     private static FacemojiManager instance;
     private static Uri currentFacePicUri;
-    private static String currentUploadFile;
     private static Bitmap originFace;
     private static int mCurrentCategoryPageId = 0;
     private static List<FaceItem> faces = new ArrayList<>();
@@ -70,33 +74,55 @@ public class FacemojiManager {
     private static Uri mTempFacePicUri;
     private static boolean mUsingTempFace;
     private static Bitmap mTempFaceBmp;
-    private List<FacemojiCategory> classicCategories = new ArrayList<>();
+    private final static String[] buildInFacemojiCategories = new String[]{"star","person"};
+    private List<FacemojiCategory> facemojiCategories = new ArrayList<>();
+    private List<FacemojiCategory> facemojiBuildInCategories = new ArrayList<>();
     private int currentCategoryId = 0;
     private static BitmapFactory.Options lowQualityOption;
     private static BitmapFactory.Options highQualityOption;
 
-    static {
-        if (BuildConfig.ENABLE_FACEMOJI){
-            categoryNames = new String[]{
-                    "dance",
-                    "star",
-                    "person",
-                    "fruit"
-            };
-        }else {
-            categoryNames = new String[]{};
+    private FacemojiManager() {
+
+    }
+
+    private void loadFacemojiCategoryFromConfig() {
+        facemojiCategories.clear();
+        facemojiBuildInCategories.clear();
+        FacemojiCategory facemojiCategory;
+        List<Map<String,Object>> facemojiList = (List<Map<String, Object>>) HSConfig.getList("Application", "Facemoji");
+        for (int i = 0 ; i < facemojiList.size() ; i++) {
+            Map<String, Object> map = facemojiList.get(i);
+            boolean isBuildIn = false;
+            for(String name:buildInFacemojiCategories){
+                if (name.equals(map.get("name"))){
+                    isBuildIn = true;
+                    break;
+                }
+            }
+            facemojiCategory = new FacemojiCategory((String) map.get("name"), i, (int) map.get("width"), (Integer) map.get("height"),isBuildIn);
+            if (isBuildIn){
+                facemojiBuildInCategories.add(facemojiCategory);
+            }
+            facemojiCategories.add(facemojiCategory);
         }
     }
 
-    private FacemojiManager() {
-        //新的facemoji尺寸是400x300，因此做压缩到200x150，同时图片质量用RGB_565
-        lowQualityOption = new BitmapFactory.Options();
-        lowQualityOption.inPreferredConfig = Bitmap.Config.RGB_565;
-        lowQualityOption.inSampleSize = 2;
+    private INotificationObserver notificationObserver =  new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (HSConfig.HS_NOTIFICATION_CONFIG_CHANGED.equals(s)) {
+                onConfigChange();
+            }else if (NetworkChangeReceiver.NOTIFICATION_CONNECTIVITY_CHANGED.equals(s)){
+                if (HSNetworkConnectionUtils.isNetworkConnected()){
+                    loadFacemojiCategoryFromConfig();
+                }
+            }
+        }
+    };
 
-        //老的facemoji尺寸是200x200，直接加载
-        highQualityOption = new BitmapFactory.Options();
-        highQualityOption.inPreferredConfig = Bitmap.Config.ARGB_8888;
+    private void onConfigChange() {
+        loadFacemojiCategoryFromConfig();
+        FacemojiDownloadManager.getInstance().onConfigChange();
     }
 
     public static FacemojiManager getInstance() {
@@ -110,6 +136,23 @@ public class FacemojiManager {
         return instance;
     }
 
+    public void setDownloadedFacemojiCategoryUnzipSuccess(FacemojiCategory facemojiCategory) {
+        HSLog.d("cjx","setDownloadedFacemojiCategoryUnzipSuccess + category name:"+facemojiCategory.getName());
+        List<FacemojiCategory> categories = FacemojiManager.getInstance().getCategories();
+        for (int i = 0 ; i < categories.size() ; i++ ){
+            FacemojiCategory category = categories.get(i);
+            HSLog.d("cjx","match  + category name:"+category.getName());
+            if (category.getName().equals(facemojiCategory.getName())){
+                HSLog.d("cjx","find match  + category name:"+category.getName());
+                category.unzipSuccess();
+                HSBundle bundle = new HSBundle();
+                bundle.putObject(FACEMOJI_CATEGORY_BUNDLE_KEY, facemojiCategory);
+                HSGlobalNotificationCenter.sendNotification(FACEMOJI_CATEGORY_DOWNLOADED, bundle);
+                break;
+            }
+        }
+    }
+
     public static void destroyTempFace() {
         setTempFacePicUri(null);
     }
@@ -120,19 +163,6 @@ public class FacemojiManager {
 
     public static void setUsingTempFace(final boolean usingTempFace) {
         mUsingTempFace = usingTempFace;
-    }
-
-    private static void loadLastUploadPreviewPic() {
-        SharedPreferences sharedPreferences = HSApplication.getContext().getSharedPreferences(UPLOAD_FILE_PATH, Context.MODE_PRIVATE);
-        String fileName = sharedPreferences.getString(UPLOAD_FILE_PATH, "");
-        File file = new File(fileName);
-        if (file.exists()) {
-            try {
-                FacemojiManager.currentUploadFile = fileName;
-            } catch (Exception e) {
-                HSLog.d("face pic does not exist");
-            }
-        }
     }
 
     public static void setTempFacePicUri(Uri uri) {
@@ -220,26 +250,8 @@ public class FacemojiManager {
         return null;
     }
 
-    public static String getCurrentUploadFile() {
-        return currentUploadFile;
-    }
-
-    public static void setCurrentUploadFile(String filePath) {
-        currentUploadFile = filePath;
-        SharedPreferences sharedPreferences = HSApplication.getContext().getSharedPreferences(UPLOAD_FILE_PATH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (null == currentUploadFile) {
-            editor.remove(UPLOAD_FILE_PATH);
-        } else {
-            editor.putString(UPLOAD_FILE_PATH, currentUploadFile);
-        }
-        editor.commit();
-        HSGlobalNotificationCenter.sendNotificationOnMainThread(Notification.LOCAL_UPLOAD_DATA_CHANGE);
-    }
-
-    private static void unzip(String zipFileName, String fileName) {
+    public static boolean unzipFacemojiCategory(File file) {
         try {
-            File file = new File(zipFileName);
             ZipFile zipFile = new ZipFile(file);
 
             File zipDir = new File(file.getParentFile(), "");
@@ -257,8 +269,10 @@ public class FacemojiManager {
                     entryDestination.mkdirs();
                 }
             }
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
     }
@@ -379,17 +393,9 @@ public class FacemojiManager {
         return sticker.getWidth() == sticker.getHeight() ? highQualityOption : lowQualityOption;
     }
 
-    public static Bitmap getFrameBitmap(FacemojiSticker sticker, int frameNumber) {
-        String frameBgFilePath = HSApplication.getContext().getFilesDir().getAbsolutePath() + "/" + MOJIME_DIRECTORY + "/" + sticker.getCategoryName() + "/" + sticker.getName() + "/" + sticker.getName() + "-" + (frameNumber + 1) + ".png";
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        Bitmap bitmap = BitmapFactory.decodeFile(frameBgFilePath, options);
-        return bitmap;
-    }
-
-    public static int getCategoryPosition(String name) {
-        for (int i = 0; i < categoryNames.length; i++) {
-            if (name.equals(categoryNames[i])) {
+    public int getCategoryPosition(String name) {
+        for (int i = 0; i < facemojiCategories.size(); i++) {
+            if (name.equals(facemojiCategories.get(i).getName())) {
                 return i;
             }
         }
@@ -446,15 +452,26 @@ public class FacemojiManager {
     }
 
     public void init() {
-        copyAssetStickersToStorage();
-        loadStickerList();
+        //新的facemoji尺寸是400x300，因此做压缩到200x150，同时图片质量用RGB_565
+        lowQualityOption = new BitmapFactory.Options();
+        lowQualityOption.inPreferredConfig = Bitmap.Config.RGB_565;
+        lowQualityOption.inSampleSize = 2;
+
+        //老的facemoji尺寸是200x200，直接加载
+        highQualityOption = new BitmapFactory.Options();
+        highQualityOption.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+        loadFacemojiCategoryFromConfig();
+        copyBuildInAssetStickersToStorage();
         getDefaultFacePicUri();
         loadFaceList();
-        loadLastUploadPreviewPic();
+        FacemojiDownloadManager.getInstance();
+        HSGlobalNotificationCenter.addObserver(HSConfig.HS_NOTIFICATION_CONFIG_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(NetworkChangeReceiver.NOTIFICATION_CONNECTIVITY_CHANGED, notificationObserver);
     }
 
-    private void copyAssetStickersToStorage() {
-        for (String category : categoryNames) {
+    private void copyBuildInAssetStickersToStorage() {
+        for (FacemojiCategory category : facemojiBuildInCategories) {
             copyAssetFileToStorage(category);
         }
     }
@@ -468,27 +485,39 @@ public class FacemojiManager {
     }
 
     public List<FacemojiCategory> getCategories() {
-        return classicCategories;
+        return facemojiCategories;
     }
 
-    public List<FacemojiCategory> getClassicCategories() {
-        return classicCategories;
+    public List<FacemojiCategory> getFacemojiCategories() {
+        return facemojiCategories;
     }
 
-    private boolean copyAssetFileToStorage(String fileName) {
-        String filePath = HSApplication.getContext().getFilesDir().getAbsolutePath();
+    public static File getFacemojiZipFile(FacemojiCategory facemojiCategory){
+        File file = new File(getFacemojiLocalDirPath() + "/" + facemojiCategory.getName() + "/" + facemojiCategory.getName() + ".zip");
+        File parentFile = file.getParentFile();
+        if (!parentFile.exists()){
+            parentFile.mkdirs();
+        }
+        return file;
+    }
+
+    public static String getFacemojiLocalDirPath(){
+        return HSApplication.getContext().getFilesDir().getAbsolutePath() +  "/" + MOJIME_DIRECTORY;
+    }
+
+    private boolean copyAssetFileToStorage(FacemojiCategory facemojiCategory) {
         AssetManager assetMgr = HSApplication.getContext().getAssets();
-        String path = filePath + "/" + MOJIME_DIRECTORY;
-        String categoryDirectory = path + "/" + fileName;
+        String categoryDirectory = getFacemojiLocalDirPath() + "/" + facemojiCategory.getName();
         File mojimeFile = new File(categoryDirectory);
         if (mojimeFile.exists()) {
             return false;
         }
         mojimeFile.mkdirs();
         AssetManager am = assetMgr;
+        File mojimeZipFile = getFacemojiZipFile(facemojiCategory);
         try {
-            InputStream isd = am.open(fileName + ".zip");
-            OutputStream os = new FileOutputStream(path + "/" + fileName + "/" + fileName + ".zip");
+            InputStream isd = am.open(facemojiCategory.getName() + ".zip");
+            OutputStream os = new FileOutputStream(mojimeZipFile);
             byte[] b = new byte[1024];
             int length;
             while ((length = isd.read(b)) > 0) {
@@ -500,21 +529,13 @@ public class FacemojiManager {
             e.printStackTrace();
         }
 
-        String zipPath = path + "/" + fileName + "/" + fileName + ".zip";
-        File mojimeZipFile = new File(zipPath);
         if (mojimeZipFile.exists()) {
-            unzip(zipPath, fileName);
+            if (unzipFacemojiCategory(mojimeZipFile)){
+                facemojiCategory.unzipSuccess();
+            }
         }
         mojimeZipFile.delete();
-        HSLog.d("mojime files succesfully decompressed to file directory " + path + "/" + fileName);
         return true;
-    }
-
-    private void loadStickerList() {
-        classicCategories.clear();
-        for (int i = 0; i < categoryNames.length; i++) {
-            classicCategories.add(i, new FacemojiCategory(categoryNames[i], i));
-        }
     }
 
     public List<FacemojiSticker> getStickerList(int postion) {
@@ -621,6 +642,7 @@ public class FacemojiManager {
         }
         return sum;
     }
+
 
     static class FacemojiPalettesParam {
         static final int SIZE = 6;

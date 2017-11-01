@@ -22,12 +22,12 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
@@ -37,9 +37,12 @@ import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.converts.SyncWorkHandler;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareChannel;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.ihs.inputmethod.uimodules.widget.KeyboardProgressView;
+
+import java.util.List;
 
 public class FacemojiPalettesView extends LinearLayout implements OnTabChangeListener, ViewPager.OnPageChangeListener,
         FacemojiPageGridView.OnFacemojiClickListener, View.OnClickListener {
@@ -84,6 +87,7 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
 
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACE_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_CATEGORY_DOWNLOADED, notificationObserver);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -96,6 +100,20 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             if (FacemojiManager.FACE_CHANGED.equals(s)) {
                 if (currentFaceImage != null) {
                     currentFaceImage.setImageURI(FacemojiManager.getCurrentFacePicUri());
+                }
+            }else if (FacemojiManager.FACEMOJI_CATEGORY_DOWNLOADED.equals(s)){
+                if (hsBundle != null){
+                    FacemojiCategory facemojiCategory = (FacemojiCategory) hsBundle.getObject(FacemojiManager.FACEMOJI_CATEGORY_BUNDLE_KEY);
+                    List<FacemojiCategory> categories = FacemojiManager.getInstance().getCategories();
+                    for (int i = 0 ; i < categories.size() ; i++ ){
+                        FacemojiCategory category = categories.get(i);
+                        if (category.getName().equals(facemojiCategory.getName())){
+                            mStickerPalettesAdapter.notifyDownloaded(i);
+                            mStickerPalettesAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+
                 }
             }
         }
@@ -114,7 +132,12 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         iconView.setLayoutParams(iconParam);
         iconView.setPadding(10, 10, 10, 10);
         iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        iconView.setImageDrawable(FacemojiManager.getInstance().getCategories().get(categoryId).getCategoryIcon());
+        FacemojiCategory facemojiCategory = FacemojiManager.getInstance().getFacemojiCategories().get(categoryId);
+        if (facemojiCategory.isBuildIn() || facemojiCategory.isDownloadedSuccess()){
+            iconView.setImageDrawable(facemojiCategory.getCategoryIcon());
+        }else {
+            Glide.with(HSApplication.getContext()).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).into(iconView);
+        }
 
         StateListDrawable stateListDrawable = new StateListDrawable();
         GradientDrawable shapeDrawable = new GradientDrawable();
@@ -303,7 +326,9 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
 
     @Override
     public void onFacemojiClicked(FacemojiSticker sticker) {
-        HSLog.d("cjx","onFacemojiClicked");
+        if (sticker.getName() == null){
+            return;
+        }
         HSAnalytics.logEvent("keyboard_facemoji_sent","categoryAndName",sticker.getCategoryName()+"-"+sticker.getName());
         MediaController.getShareManager().shareFacemojiFromKeyboard(sticker, Constants.MEDIA_FORMAT_GIF,
                 ShareChannel.CURRENT,

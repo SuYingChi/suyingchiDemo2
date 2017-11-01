@@ -65,7 +65,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
      * Starts the animation
      */
     public void start() {
-        if (sticker == null) {
+        if (sticker == null || sticker.getName() == null) {
             return;
         }
 
@@ -114,7 +114,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
     final ScheduledThreadPoolExecutor mExecutor;
 
     private void show() {
-        if (sticker == null) {
+        if (sticker == null || sticker.getName() == null) {
             return;
         }
 

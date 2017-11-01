@@ -61,6 +61,9 @@ class FacemojiPalettesAdapter extends PagerAdapter {
     public Object instantiateItem(final ViewGroup container, final int position) {
         GridView view = mActivePageViews.get(position);
         if (view != null) {
+            if (view.getParent() != null){
+                ((ViewGroup)view.getParent()).removeView(view);
+            }
             container.addView(view);
             return view;
         }
@@ -68,15 +71,26 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         final GridViewWithHeaderAndFooter stickerPageGridView = new GridViewWithHeaderAndFooter(HSApplication.getContext());
         stickerPageGridView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setGridViewLayoutProperties(stickerPageGridView);
-        FacemojiGridAdapter adapter = new FacemojiGridAdapter(activity,FacemojiManager.getInstance().getStickerList(position));
+        FacemojiGridAdapter adapter = new FacemojiGridAdapter(activity,FacemojiManager.getInstance().getCategories().get(position).getStickerList());
         stickerPageGridView.setAdapter(adapter);
         container.addView(stickerPageGridView);
         mActivePageViews.put(position, stickerPageGridView);
         return stickerPageGridView;
     }
 
-    public void startAnim(int posotion){
-        GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)mActivePageViews.get(posotion);
+    public void notifyDownloaded(int position) {
+        GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)mActivePageViews.get(position);
+        if (gridView != null) {
+            FacemojiGridAdapter adapter = (FacemojiGridAdapter) gridView.getOriginalAdapter();
+            if (adapter != null){
+                adapter.setFacemojiStickerList(FacemojiManager.getInstance().getCategories().get(position).getStickerList());
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    public void startAnim(int position){
+        GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)mActivePageViews.get(position);
         if (gridView != null) {
             for (int i = 0; i < gridView.getChildCount(); ++i) {
                 View view = gridView.getChildAt(i);

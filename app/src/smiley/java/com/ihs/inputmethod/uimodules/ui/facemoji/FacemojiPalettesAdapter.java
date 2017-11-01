@@ -19,6 +19,7 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
     private static String TAG = "FacemojiPalettesAdapter";
     private SparseArray<FacemojiPageGridView> mActivePageViews = new SparseArray<>();
     private FacemojiLayoutParams mImageLayoutParams;
+    private int orientation;
 
     private int mActivePosition = 0;
     private FacemojiPalettesView mFacemojiPalettesView;
@@ -27,6 +28,7 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
                                    FacemojiLayoutParams imageLayoutParams) {
         mFacemojiPalettesView = facemojiPalettesView;
         mImageLayoutParams = imageLayoutParams;
+        orientation = facemojiPalettesView.getResources().getConfiguration().orientation;
     }
 
     @Override
@@ -62,7 +64,7 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
         final LayoutInflater inflater = LayoutInflater.from(container.getContext());
         final FacemojiPageGridView gifPageGridView = (FacemojiPageGridView) inflater.inflate(R.layout.facemoji_page_view, container, false);
 
-        List<FacemojiSticker> data = FacemojiManager.getInstance().getDataFromPagePosition(position, FacemojiManager.ShowLocation.Keyboard,container.getResources().getConfiguration().orientation);
+        List<FacemojiSticker> data = FacemojiManager.getInstance().getDataFromPagePosition(position, FacemojiManager.ShowLocation.Keyboard,orientation);
 
         int height;
         int width;
@@ -173,6 +175,17 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
         for (int i = 0; i < facemojiPageGridView.getChildCount(); ++i) {
             FacemojiView facemojiView = (FacemojiView) facemojiPageGridView.getChildAt(i);
             facemojiView.stopAnimation();
+        }
+    }
+
+    public void notifyDownloaded(int position) {
+        FacemojiPageGridView gridView = mActivePageViews.get(position);
+        if (gridView != null) {
+            FacemojiPageGridAdapter adapter = (FacemojiPageGridAdapter) gridView.getOriginalAdapter();
+            if (adapter != null){
+                adapter.setData(FacemojiManager.getInstance().getDataFromPagePosition(position, FacemojiManager.ShowLocation.Keyboard,orientation));
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 

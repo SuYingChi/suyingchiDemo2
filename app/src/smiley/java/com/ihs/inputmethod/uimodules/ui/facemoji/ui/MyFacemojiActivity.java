@@ -23,17 +23,24 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 
+import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
-import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener, View.OnClickListener {
@@ -47,6 +54,25 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     private int screenHeight;
     private ImageView face_icon;
     private ImageView triangle;
+
+    private INotificationObserver notificationObserver = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (FacemojiManager.FACEMOJI_CATEGORY_DOWNLOADED.equals(s)){
+                if (hsBundle != null){
+                    FacemojiCategory facemojiCategory = (FacemojiCategory) hsBundle.getObject(FacemojiManager.FACEMOJI_CATEGORY_BUNDLE_KEY);
+                    List<FacemojiCategory> categories = FacemojiManager.getInstance().getCategories();
+                    for (int i = 0 ; i < categories.size() ; i++ ){
+                        FacemojiCategory category = categories.get(i);
+                        if (category.getName().equals(facemojiCategory.getName())){
+                            mFacemojiPalettesAdapter.notifyDownloaded(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {
@@ -79,7 +105,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         mTabHost = (TabHost) findViewById(R.id.facemoji_category_tabhost);
         mTabHost.setup();
-        for (int i = 0; i < FacemojiManager.getInstance().getClassicCategories().size(); i++) {
+        for (int i = 0; i < FacemojiManager.getInstance().getFacemojiCategories().size(); i++) {
             addTab(mTabHost, i);
         }
         mTabHost.setOnTabChangedListener(this);
@@ -137,14 +163,16 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             finish();
             return;
         }
+
+        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_CATEGORY_DOWNLOADED,notificationObserver);
     }
 
     private void showInitTabByCategoryName() {
         String initTabCategory = getIntent().getStringExtra(FacemojiManager.INIT_SHOW_TAB_CATEGORY);
         int initPosition = 0;
         if (!TextUtils.isEmpty(initTabCategory)) {
-            for (int i = 0; i < FacemojiManager.getInstance().getClassicCategories().size(); i++) {
-                if (initTabCategory.equals(FacemojiManager.getInstance().getClassicCategories().get(i).getName())) {
+            for (int i = 0; i < FacemojiManager.getInstance().getFacemojiCategories().size(); i++) {
+                if (initTabCategory.equals(FacemojiManager.getInstance().getFacemojiCategories().get(i).getName())) {
                     initPosition = i;
                     break;
                 }
@@ -193,6 +221,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
     @Override
     protected void onDestroy() {
+        HSGlobalNotificationCenter.removeObserver(notificationObserver);
         super.onDestroy();
 
         // Destroy temp face
@@ -214,7 +243,12 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         int margin = (int) getResources().getDimension(R.dimen.facemoji_category_bar_icon_margin);
         iconParam.setMargins(0, margin, 0, margin);
         iconView.setLayoutParams(iconParam);
-        iconView.setImageDrawable(FacemojiManager.getInstance().getClassicCategories().get(categoryId).getCategoryIcon());
+        FacemojiCategory facemojiCategory = FacemojiManager.getInstance().getFacemojiCategories().get(categoryId);
+        if (facemojiCategory.isBuildIn() || facemojiCategory.isDownloadedSuccess()){
+            iconView.setImageDrawable(facemojiCategory.getCategoryIcon());
+        }else {
+            Glide.with(HSApplication.getContext()).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).into(iconView);
+        }
         iconView.setBackgroundDrawable(getTabbarCategoryIconBackground());
         tspec.setIndicator(v);
         host.addTab(tspec);
@@ -235,7 +269,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
     @Override
     public void onTabChanged(String tabId) {
-        int categoryId = FacemojiManager.getCategoryPosition(tabId);
+        int categoryId = FacemojiManager.getInstance().getCategoryPosition(tabId);
         setCurrentCategoryId(categoryId);
     }
 
