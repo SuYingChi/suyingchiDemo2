@@ -24,6 +24,7 @@ build_job:
   only:
     - develop
     - master
+    - tiger_fix_crash
   tags:
   - camera
 
