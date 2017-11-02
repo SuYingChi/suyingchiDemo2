@@ -425,23 +425,27 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
             @Override
             public void onDownloadSucceeded(File file) {
-                if (holder.downloadingProgressListener != null) {
-                    holder.downloadingProgressListener.onDownloadSucceeded();
-                } else {
-                    onItemDownloadSucceeded(holder, item);
-                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (holder.downloadingProgressListener != null) {
+                            holder.downloadingProgressListener.onDownloadSucceeded();
+                        } else {
+                            onItemDownloadSucceeded(holder, item);
+                        }
+                    }
+                });
             }
 
             @Override
             public void onDownloadFailed(File file) {
-                if (holder.downloadingProgressListener != null) {
-                    holder.downloadingProgressListener.onDownloadFailed();
-                }
-
-                resetToLastItem();
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        if (holder.downloadingProgressListener != null) {
+                            holder.downloadingProgressListener.onDownloadFailed();
+                        }
+                        resetToLastItem();
                         holder.setIsRecyclable(true);
                     }
                 });
