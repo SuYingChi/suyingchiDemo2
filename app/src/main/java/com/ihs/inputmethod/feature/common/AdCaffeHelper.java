@@ -14,7 +14,6 @@ import com.ihs.commons.connection.HSServerAPIConnection;
 import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.libcommon.utils.HSAdUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,10 +33,7 @@ public class AdCaffeHelper {
 
     private Context context;
     private HSServerAPIConnection connection;
-
-    public void setOnNativeAdLoadListener(OnNativeAdLoadListener onNativeAdLoadListener) {
-        this.onNativeAdLoadListener = onNativeAdLoadListener;
-    }
+    private static final String SERVER_URL_AD_CAFFE = "http://52.205.105.87/adcaffe/ad/get";
 
     private OnNativeAdLoadListener onNativeAdLoadListener;
 
@@ -57,30 +53,34 @@ public class AdCaffeHelper {
     public AdCaffeHelper(Context context, String placementId, OnNativeAdLoadListener onNativeAdLoadListener) {
         this.context = context;
 
-        this.placementId = placementId;
-        this.packageName = UserDataUtils.getPackageName(context);
-        HSAdUtils.getAdID(new HSAdUtils.GetAdIdListener() {
-            @Override
-            public void onGetAdIdSuccess(String s) {
-                adId = s;
-            }
+        this.placementId = "999999_24581";
+        this.packageName = "com.psafe.msuite";
+//        HSAdUtils.getAdID(new HSAdUtils.GetAdIdListener() {
+//            @Override
+//            public void onGetAdIdSuccess(String s) {
+//                adId = s;
+//            }
+//
+//            @Override
+//            public void onGetAdIdFailed() {
+//
+//            }
+//        });
 
-            @Override
-            public void onGetAdIdFailed() {
-
-            }
-        });
+        adId = "92ee900f-610b-442d-9178-7dc94619f009";
         platform = "android";
         deviceType = getDeviceType(context);
-        osVersion = UserDataUtils.getOsVersion();
-        networkType = getNetworkType(context);
-        country = UserDataUtils.getCountry();
-        vendor = "ironsource";
+        osVersion = "10";
+        networkType = "wifi";
+        country = "hk";
+        vendor = "appnext";
         this.onNativeAdLoadListener = onNativeAdLoadListener;
     }
 
     public void loadAdWithKeywords(String[] keywords) {
-        updateKeywords(keywords);
+        String[] words = new String[1];
+        words[0] = "saga";
+        updateKeywords(words);
         startConnection();
     }
 
@@ -102,12 +102,23 @@ public class AdCaffeHelper {
         if (offset != -1) {
             fillJson(jsonObject, "offset", offset);
         }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put("tools");
+        jsonArray.put("games");
+        try {
+            jsonObject.put("category", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         fillJson(jsonObject, "os_version", osVersion);
         fillJson(jsonObject, "network", networkType);
         fillJsonArray(jsonObject, "keyword", keywords);
 
-        this.connection = new ServerAPIConnection("/ad/get", HttpRequest.Method.GET, jsonObject);
+        connection = new HSServerAPIConnection(SERVER_URL_AD_CAFFE, HttpRequest.Method.GET, jsonObject);
+        connection.setSigKey("x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!", "1");
+        connection.setEncryptKey("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", "1");
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {

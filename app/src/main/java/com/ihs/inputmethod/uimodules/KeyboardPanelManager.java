@@ -41,6 +41,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.widget.bannerad.KeyboardBannerAdLayout;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarGPAdAdapter;
+import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarSearchAdAdapter;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
@@ -78,6 +79,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private HSMediaView hsBackgroundVideoView;
     private List<AcbNativeAd> gpNativeAdList = new ArrayList<>();
     private CustomBarGPAdAdapter gpAdAdapter;
+    private List<AdCaffeNativeAd> searchAdNativeAdList = new ArrayList<>();
+    private CustomBarSearchAdAdapter searchAdAdapter;
+    private RecyclerView searchAdRecyclerView;
     private AcbNativeAdLoader acbNativeAdLoader;
     private RecyclerView gpAdRecyclerView;
     private List<Integer> bannerAdSessionList;
@@ -396,35 +400,31 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             return;
         }
 
-        if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
-                || !HSConfig.optBoolean(true, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowAd")
-                || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")) {
+        if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
         }
 
-        gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
-        gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-        gpAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
+        if (searchAdAdapter == null) {
+            searchAdAdapter = new CustomBarSearchAdAdapter();
+        }
+        searchAdAdapter.setAdList(nativeAds);
+
+        searchAdRecyclerView = new RecyclerView(HSApplication.getContext());
+        searchAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        searchAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
         int padding = DisplayUtils.dip2px(8);
-        gpAdRecyclerView.setPadding(padding, 0, padding, 0);
-        gpAdAdapter = new CustomBarGPAdAdapter();
-        gpAdRecyclerView.setAdapter(gpAdAdapter);
+        searchAdRecyclerView.setPadding(padding, 0, padding, 0);
+        searchAdRecyclerView.setAdapter(searchAdAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
-        gpAdRecyclerView.setLayoutManager(layoutManager);
-        gpAdRecyclerView.setHasFixedSize(true);
+        searchAdRecyclerView.setLayoutManager(layoutManager);
+        searchAdRecyclerView.setHasFixedSize(true);
 
         CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), () -> {
-            if (acbNativeAdLoader != null) {
-                acbNativeAdLoader.cancel();
-                acbNativeAdLoader = null;
-            }
             if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
                 keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
             }
-            HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
         });
-        customizeBarLayout.setContent(gpAdRecyclerView);
-        reloadGpAd();
+        customizeBarLayout.setContent(searchAdRecyclerView);
         if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
             if (keyboardPanelSwitchContainer != null) {
                 keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
@@ -456,18 +456,15 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         gpAdRecyclerView.setLayoutManager(layoutManager);
         gpAdRecyclerView.setHasFixedSize(true);
 
-        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), new CustomizeBarLayout.OnCustomizeBarListener() {
-            @Override
-            public void onHide() {
-                if (acbNativeAdLoader != null) {
-                    acbNativeAdLoader.cancel();
-                    acbNativeAdLoader = null;
-                }
-                if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
-                    keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
-                }
-                HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
+        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), () -> {
+            if (acbNativeAdLoader != null) {
+                acbNativeAdLoader.cancel();
+                acbNativeAdLoader = null;
             }
+            if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+                keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+            }
+            HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
         });
         customizeBarLayout.setContent(gpAdRecyclerView);
         reloadGpAd();

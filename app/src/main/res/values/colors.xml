@@ -104,6 +104,7 @@
 
     <color name="turn_sound_tip_bg">#E33c3c46</color>
 
+    <color name="search_ad_placeholder_color">#e0e4ed</color>
     <color name="ad_button_blue_pressed">#3000e0</color>
     <color name="ad_button_green_state">#00c753</color>
     <color name="ad_button_green_state_pressed">#00a947</color>

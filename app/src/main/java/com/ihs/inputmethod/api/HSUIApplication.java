@@ -155,6 +155,9 @@ public class HSUIApplication extends HSInputMethodApplication {
     protected void onMainProcessApplicationCreate() {
         Fabric.with(this, new Crashlytics());
 
+//        HSAdCaffeReportManager.getInstance().start();
+//        HSAdCaffeReportManager.getInstance().enableReportInstalledPackages();
+
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(HSApplication.getContext()).memoryCacheSize(memoryCacheSize).build();

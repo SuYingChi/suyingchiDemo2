@@ -36,7 +36,6 @@ import java.util.Map;
 
 public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
 
-    public static final String SEARCH_AD_UPDATE_TIME = "search_ad_update_time";
 
     private Context context = HSApplication.getContext();
     private List<AcbNativeAd> adList = new ArrayList<>();
@@ -79,8 +78,7 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
         } else if (viewType == TYPE_CAM) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             View itemView = layoutInflater.inflate(R.layout.customize_bar_gp_cam, parent, false);
-            RecyclerView.ViewHolder camViewHolder = new CamViewHolder(itemView);
-            return camViewHolder;
+            return new CamViewHolder(itemView);
         } else {
             return null;
         }
