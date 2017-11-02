@@ -149,7 +149,7 @@ final LIB_DEVICE_VERSION = '.gm:4.2.+'
 
 dependencies {
     // App Framework
-    compile "com.ihandy.appframework:libAppframework.gm:4.5.0.gm"
+    compile "com.ihandy.appframework:libAppframework.gm:4.4.0.gm"
     //Ads
     compile 'net.appcloudbox.ads:libAcbAds.gm:1.1.1.gm'
 
