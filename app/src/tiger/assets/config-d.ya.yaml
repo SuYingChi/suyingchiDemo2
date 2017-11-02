@@ -5,7 +5,7 @@ libCommons:
     PlistUrl: "xxxhttp://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/configs/config-smileykeyboard-2.0.0.mp"
   Analytics:
       FlurryKey: "VFHX539WKM27R8ZZ5398"
-      FacebookID: "725261934240541"
+      FacebookID: "2017803811838675"
       TapjoySDKKey: "0vAf42klRSGnoQnFutCZWgECKUjhkbC2ofJglQzbtXRMIpdomrpc7QXJicV3"
       FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
       GoogleTrackId: "UA-66468004-2"
