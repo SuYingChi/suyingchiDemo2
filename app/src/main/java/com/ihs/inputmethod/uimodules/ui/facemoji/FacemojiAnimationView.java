@@ -84,7 +84,14 @@ public class FacemojiAnimationView extends AppCompatImageView {
             mIndex = 0;
         }
 
-        mExecutor.schedule(new Thread() {
+        //先显示一帧
+        long startTime = System.currentTimeMillis();
+        setImageBitmap(FacemojiManager.getFrame(sticker, mIndex, false));
+        mHandler.sendEmptyMessage(INVALIDATE_ANIM);
+        long endTime = System.currentTimeMillis();
+        lastFramePrepareTime = endTime - startTime;
+
+        schedule = mExecutor.schedule(new Thread() {
             @Override
             public void run() {
 
@@ -135,8 +142,9 @@ public class FacemojiAnimationView extends AppCompatImageView {
             }
             mIsRunning = false;
         }
+
         if (schedule != null) {
-            schedule.cancel(true);
+            schedule.cancel(false);
         }
         mHandler.removeCallbacksAndMessages(null);
     }

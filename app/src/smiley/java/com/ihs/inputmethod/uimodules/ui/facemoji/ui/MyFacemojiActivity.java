@@ -65,7 +65,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
                     for (int i = 0 ; i < categories.size() ; i++ ){
                         FacemojiCategory category = categories.get(i);
                         if (category.getName().equals(facemojiCategory.getName())){
-                            mFacemojiPalettesAdapter.notifyDownloaded(i);
+                            mFacemojiPalettesAdapter.notifyDownloaded(i,mCurrentPagerPosition);
                             break;
                         }
                     }

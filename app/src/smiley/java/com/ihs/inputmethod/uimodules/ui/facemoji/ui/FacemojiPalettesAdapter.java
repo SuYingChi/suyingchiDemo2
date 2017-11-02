@@ -78,13 +78,16 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         return stickerPageGridView;
     }
 
-    public void notifyDownloaded(int position) {
+    public void notifyDownloaded(int position, int currentPagerPosition) {
         GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)mActivePageViews.get(position);
         if (gridView != null) {
             FacemojiGridAdapter adapter = (FacemojiGridAdapter) gridView.getOriginalAdapter();
             if (adapter != null){
                 adapter.setFacemojiStickerList(FacemojiManager.getInstance().getCategories().get(position).getStickerList());
-                adapter.notifyDataSetChanged();
+                if (position == currentPagerPosition) {
+                    adapter.startAnim();
+                    adapter.notifyDataSetChanged();
+                }
             }
         }
     }
@@ -92,6 +95,10 @@ class FacemojiPalettesAdapter extends PagerAdapter {
     public void startAnim(int position){
         GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter)mActivePageViews.get(position);
         if (gridView != null) {
+            FacemojiGridAdapter adapter = (FacemojiGridAdapter) gridView.getOriginalAdapter();
+            if (adapter != null){
+                adapter.startAnim();
+            }
             for (int i = 0; i < gridView.getChildCount(); ++i) {
                 View view = gridView.getChildAt(i);
                 if (view instanceof AnimationLayout) {
@@ -110,6 +117,10 @@ class FacemojiPalettesAdapter extends PagerAdapter {
     public void stopAnim(int posotion){
         GridViewWithHeaderAndFooter gridView = (GridViewWithHeaderAndFooter) mActivePageViews.get(posotion);
         if (gridView != null) {
+            FacemojiGridAdapter adapter = (FacemojiGridAdapter) gridView.getOriginalAdapter();
+            if (adapter != null){
+                adapter.stopAnim();
+            }
             for (int i = 0; i < gridView.getChildCount(); ++i) {
                 View view =  gridView.getChildAt(i);
                 if (view instanceof AnimationLayout){

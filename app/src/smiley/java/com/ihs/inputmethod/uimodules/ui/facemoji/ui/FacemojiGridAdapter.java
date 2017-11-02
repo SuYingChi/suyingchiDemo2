@@ -152,9 +152,13 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             holder.facemojiView.setPadding(paddingLeft,paddingTop,paddingLeft,paddingTop);
             holder.facemojiView.setImageDrawable(drawable);
         }else {
-            holder.facemojiView.setPadding(0,0,0,0);
-            holder.facemojiView.setScaleType(ImageView.ScaleType.FIT_XY);
-            holder.facemojiView.start();
+            if (playAnim){
+                holder.facemojiView.start();
+                holder.facemojiView.setPadding(0,0,0,0);
+                holder.facemojiView.setScaleType(ImageView.ScaleType.FIT_XY);
+            }else {
+                holder.facemojiView.stop();
+            }
         }
         return convertView;
     }
@@ -164,14 +168,12 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     public void startAnim() {
         if (!playAnim){
             playAnim = true;
-            notifyDataSetChanged();
         }
     }
 
     public void stopAnim(){
         if (playAnim) {
             playAnim = false;
-            notifyDataSetChanged();
         }
     }
 
@@ -182,7 +184,9 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
 
         final FacemojiSticker sticker = (FacemojiSticker) arg0.getTag();
-        showShareAlert(sticker);
+        if (sticker.getName() != null) {
+            showShareAlert(sticker);
+        }
     }
 
     private void share(final FacemojiSticker sticker, ShareChannel channel) {
