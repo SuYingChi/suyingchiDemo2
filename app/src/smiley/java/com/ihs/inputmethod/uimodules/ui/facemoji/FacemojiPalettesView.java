@@ -3,10 +3,14 @@ package com.ihs.inputmethod.uimodules.ui.facemoji;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Pair;
@@ -23,6 +27,12 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -131,12 +141,28 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
         iconParam.setMargins(10, 5, 10, 5);
         iconView.setLayoutParams(iconParam);
         iconView.setPadding(10, 10, 10, 10);
-        iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         FacemojiCategory facemojiCategory = FacemojiManager.getInstance().getFacemojiCategories().get(categoryId);
         if (facemojiCategory.isBuildIn() || facemojiCategory.isDownloadedSuccess()){
+            iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             iconView.setImageDrawable(facemojiCategory.getCategoryIcon());
         }else {
-            Glide.with(HSApplication.getContext()).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).into(iconView);
+            iconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_panel_tab);
+            int tintColor = isCurrentThemeDarkBg ? Color.WHITE : HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color);
+            DrawableCompat.setTint(drawable,tintColor);
+            RequestOptions requestOptions = new RequestOptions().placeholder(drawable).diskCacheStrategy(DiskCacheStrategy.DATA);
+            Glide.with(this).asBitmap().apply(requestOptions).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).listener(new RequestListener<Bitmap>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                    iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    return false;
+                }
+            }).into(iconView);
         }
 
         StateListDrawable stateListDrawable = new StateListDrawable();

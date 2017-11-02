@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -24,6 +26,12 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -105,6 +113,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         mTabHost = (TabHost) findViewById(R.id.facemoji_category_tabhost);
         mTabHost.setup();
+
         for (int i = 0; i < FacemojiManager.getInstance().getFacemojiCategories().size(); i++) {
             addTab(mTabHost, i);
         }
@@ -247,7 +256,22 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         if (facemojiCategory.isBuildIn() || facemojiCategory.isDownloadedSuccess()){
             iconView.setImageDrawable(facemojiCategory.getCategoryIcon());
         }else {
-            Glide.with(HSApplication.getContext()).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).into(iconView);
+            iconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_panel_tab);
+            DrawableCompat.setTint(drawable,HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color));
+            RequestOptions requestOptions = new RequestOptions().placeholder(drawable).diskCacheStrategy(DiskCacheStrategy.DATA);
+            Glide.with(this).asBitmap().apply(requestOptions).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).listener(new RequestListener<Bitmap>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                    iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    return false;
+                }
+            }).into(iconView);
         }
         iconView.setBackgroundDrawable(getTabbarCategoryIconBackground());
         tspec.setIndicator(v);
