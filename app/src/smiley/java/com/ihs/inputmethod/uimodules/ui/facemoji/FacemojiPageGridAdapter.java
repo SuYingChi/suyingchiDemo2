@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.facemoji;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
@@ -96,8 +98,12 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
 
         if (sticker.getName() == null){
             holder.facemojiAnimationView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-
-            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
+            Drawable drawable;
+            if (Build.VERSION.SDK_INT < 21){
+                drawable = VectorCompat.createVectorDrawable(HSApplication.getContext(),R.drawable.ic_sticker_panel_tab);
+            }else {
+                drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
+            }
             if (!isCurrentThemeDarkBg) {
                 DrawableCompat.setTint(drawable,HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color));
             }

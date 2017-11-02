@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
@@ -38,6 +39,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
@@ -147,7 +149,13 @@ public class FacemojiPalettesView extends LinearLayout implements OnTabChangeLis
             iconView.setImageDrawable(facemojiCategory.getCategoryIcon());
         }else {
             iconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_panel_tab);
+            Drawable drawable;
+            if (Build.VERSION.SDK_INT < 21){
+                drawable = VectorCompat.createVectorDrawable(HSApplication.getContext(),R.drawable.ic_sticker_panel_tab);
+            }else {
+                drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
+            }
+
             int tintColor = isCurrentThemeDarkBg ? Color.WHITE : HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color);
             DrawableCompat.setTint(drawable,tintColor);
             RequestOptions requestOptions = new RequestOptions().placeholder(drawable).diskCacheStrategy(DiskCacheStrategy.DATA);

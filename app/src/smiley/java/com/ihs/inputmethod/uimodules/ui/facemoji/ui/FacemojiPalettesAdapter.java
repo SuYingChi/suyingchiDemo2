@@ -83,11 +83,11 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         if (gridView != null) {
             FacemojiGridAdapter adapter = (FacemojiGridAdapter) gridView.getOriginalAdapter();
             if (adapter != null){
-                adapter.setFacemojiStickerList(FacemojiManager.getInstance().getCategories().get(position).getStickerList());
                 if (position == currentPagerPosition) {
                     adapter.setAllowPlayAnim(true);
-                    adapter.notifyDataSetChanged();
                 }
+                adapter.setFacemojiStickerList(FacemojiManager.getInstance().getCategories().get(position).getStickerList());
+                adapter.notifyDataSetChanged();
             }
         }
     }

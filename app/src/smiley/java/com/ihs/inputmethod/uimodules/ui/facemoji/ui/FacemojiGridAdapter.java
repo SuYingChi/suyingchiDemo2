@@ -13,6 +13,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Telephony;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -33,6 +34,7 @@ import android.widget.TextView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
+import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
@@ -145,7 +147,12 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
 
         if (sticker.getName() == null){
-            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
+            Drawable drawable;
+            if (Build.VERSION.SDK_INT < 21){
+                drawable = VectorCompat.createVectorDrawable(HSApplication.getContext(),R.drawable.ic_sticker_panel_tab);
+            }else {
+                drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
+            }
             DrawableCompat.setTint(drawable,HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color));
             int placeHolderWidth = (int) (HSApplication.getContext().getResources().getDisplayMetrics().density * 60);
             int paddingLeft = (holder.facemojiContainer.getLayoutParams().width - placeHolderWidth ) / 2;
@@ -167,8 +174,8 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     private boolean allowPlayAnim;
 
     public void setAllowPlayAnim(boolean allowPlayAnim) {
-        if (!this.allowPlayAnim){
-            this.allowPlayAnim = true;
+        if (this.allowPlayAnim != allowPlayAnim){
+            this.allowPlayAnim = allowPlayAnim;
         }
     }
 
