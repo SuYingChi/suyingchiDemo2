@@ -30,6 +30,7 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacePictureParam;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiFrame;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
+import com.ihs.inputmethod.utils.HSConfigUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -159,7 +160,7 @@ public class FacemojiManager {
             Map<String, Object> map = facemojiList.get(i);
             String stickerCategoryName = (String) map.get("name");
             boolean isBuildIn = buildInFacemojiCategories.contains(stickerCategoryName);
-            facemojiCategory = new FacemojiCategory(stickerCategoryName, i, (int) map.get("width"), (Integer) map.get("height"),isBuildIn);
+            facemojiCategory = new FacemojiCategory(stickerCategoryName, i, HSConfigUtils.toInt(map.get("width"),0), HSConfigUtils.toInt(map.get("height"),0),isBuildIn);
             facemojiCategories.add(facemojiCategory);
 
             if (isBuildIn){

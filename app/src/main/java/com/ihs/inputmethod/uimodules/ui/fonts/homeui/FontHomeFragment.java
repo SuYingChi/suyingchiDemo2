@@ -21,6 +21,7 @@ import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.utils.DownloadUtils;
+import com.ihs.inputmethod.utils.HSConfigUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +104,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
             Object SDKVersion = map.get("sdkVersion");
             int minSDKVersion = 0;
             if (SDKVersion != null) {
-                minSDKVersion = (int) SDKVersion;
+                minSDKVersion = HSConfigUtils.toInt(SDKVersion,0);
             }
             HSSpecialCharacter hsSpecialCharacter = new HSSpecialCharacter();
             hsSpecialCharacter.name = fontName;

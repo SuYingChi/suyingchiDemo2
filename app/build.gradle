@@ -149,16 +149,10 @@ final LIB_DEVICE_VERSION = '.gm:4.2.+'
 
 dependencies {
     // App Framework
-    compile "com.ihandy.appframework:libAppframework.gm:4.4.0.gm"
+    compile "com.ihandy.appframework:libAppframework.gm:4.5.0.gm"
     //Ads
     compile 'net.appcloudbox.ads:libAcbAds.gm:1.1.1.gm'
 
-//
-//    // Ads
-//    compile "com.ihandy.nativeads:libNativeAds.gm:4.5.0.gm"
-//    compile "com.ihandy.interstitialads:InterstitialAds.gm:4.5.1.gm"
-//    compile 'com.ihandy.expressads:libExpressAds.gm:4.5.0.gm'
-//
 //    // Native Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdAvocarrotNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'
@@ -166,7 +160,7 @@ dependencies {
     compile 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.gm:5.1.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.beta:5.1.1.beta01'
     compile 'net.appcloudbox.adadapter:libAdBaiduNativeAdapter.gm:5.0.0.gm'
 
     // Interstitial Ad Adapters
