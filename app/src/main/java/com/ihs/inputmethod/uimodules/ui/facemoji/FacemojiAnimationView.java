@@ -84,13 +84,6 @@ public class FacemojiAnimationView extends AppCompatImageView {
             mIndex = 0;
         }
 
-        //先显示一帧
-        long startTime = System.currentTimeMillis();
-        setImageBitmap(FacemojiManager.getFrame(sticker, mIndex, false));
-        mHandler.sendEmptyMessage(INVALIDATE_ANIM);
-        long endTime = System.currentTimeMillis();
-        lastFramePrepareTime = endTime - startTime;
-
         schedule = mExecutor.schedule(new Thread() {
             @Override
             public void run() {

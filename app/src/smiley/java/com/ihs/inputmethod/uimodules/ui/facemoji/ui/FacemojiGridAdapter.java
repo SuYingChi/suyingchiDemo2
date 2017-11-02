@@ -133,11 +133,13 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             }
 
             final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
+            final ImageView facemojiPlaceholder = (ImageView) containerLayout.findViewById(R.id.facemoji_placeholder);
             facemojiView.setSticker(sticker);
             facemojiView.setTag(sticker);
             holder = new StickerViewHolder();
             holder.facemojiView = facemojiView;
             holder.facemojiContainer = containerLayout;
+            holder.facemojiPlaceholder = facemojiPlaceholder;
             holder.facemojiView.setOnClickListener(this);
             convertView.setTag(holder);
         }
@@ -145,17 +147,16 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         if (sticker.getName() == null){
             Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
             DrawableCompat.setTint(drawable,HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color));
-            holder.facemojiView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             int placeHolderWidth = (int) (HSApplication.getContext().getResources().getDisplayMetrics().density * 60);
             int paddingLeft = (holder.facemojiContainer.getLayoutParams().width - placeHolderWidth ) / 2;
             int paddingTop = (holder.facemojiContainer.getLayoutParams().height - placeHolderWidth ) / 2;
-            holder.facemojiView.setPadding(paddingLeft,paddingTop,paddingLeft,paddingTop);
-            holder.facemojiView.setImageDrawable(drawable);
+            holder.facemojiPlaceholder.setVisibility(View.VISIBLE);
+            holder.facemojiPlaceholder.setPadding(paddingLeft,paddingTop,paddingLeft,paddingTop);
+            holder.facemojiPlaceholder.setImageDrawable(drawable);
         }else {
-            if (playAnim){
+            holder.facemojiPlaceholder.setVisibility(View.GONE);
+            if (allowPlayAnim){
                 holder.facemojiView.start();
-                holder.facemojiView.setPadding(0,0,0,0);
-                holder.facemojiView.setScaleType(ImageView.ScaleType.FIT_XY);
             }else {
                 holder.facemojiView.stop();
             }
@@ -163,17 +164,11 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         return convertView;
     }
 
-    private boolean playAnim;
+    private boolean allowPlayAnim;
 
-    public void startAnim() {
-        if (!playAnim){
-            playAnim = true;
-        }
-    }
-
-    public void stopAnim(){
-        if (playAnim) {
-            playAnim = false;
+    public void setAllowPlayAnim(boolean allowPlayAnim) {
+        if (!this.allowPlayAnim){
+            this.allowPlayAnim = true;
         }
     }
 
@@ -204,6 +199,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     class StickerViewHolder {
         public AnimationLayout facemojiContainer;
         public FacemojiAnimationView facemojiView;
+        public ImageView facemojiPlaceholder;
     }
 
     private void showShareAlert(FacemojiSticker sticker) {

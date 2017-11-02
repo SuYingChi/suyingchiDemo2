@@ -6,7 +6,6 @@ import android.preference.PreferenceManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSMapUtils;
 import com.ihs.inputmethod.api.utils.HSYamlUtils;
-import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 
 import java.util.ArrayList;
@@ -23,10 +22,8 @@ public class FacemojiCategory {
     private int height;
     private boolean isBuildIn;
     private String iconFileName;
-    private List<FacemojiSticker> stickerList;
-
-
     private String name;
+    private List<FacemojiSticker> stickerList = new ArrayList<>();
 
     public FacemojiCategory(String name, int categoryId, int width, int height, boolean isBuildIn) {
         this.name = name;
@@ -34,31 +31,19 @@ public class FacemojiCategory {
         this.width = width;
         this.height = height;
         this.isBuildIn = isBuildIn;
-        stickerList = new ArrayList<>();
-
-        init();
     }
 
-    private void init() {
-        boolean downloadedSuccess = isDownloadedSuccess();
-        if (downloadedSuccess) {
-            parseYaml();
-        }else {
-            // 设置6个空的占位符
-            stickerList.clear();
-            FacemojiSticker facemojiSticker;
-            for (int i = 0 ; i < DEFAULT_SIZE ; i ++){
-                facemojiSticker = new FacemojiSticker(name,width,height);
-                stickerList.add(facemojiSticker);
-            }
-        }
-
-        if (!isBuildIn && !downloadedSuccess) {
-            FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(this);
+    public void setFakeStickerListData(){
+        // 设置6个空的sticker占位
+        stickerList.clear();
+        FacemojiSticker facemojiSticker;
+        for (int i = 0 ; i < DEFAULT_SIZE ; i ++){
+            facemojiSticker = new FacemojiSticker(name,width,height);
+            stickerList.add(facemojiSticker);
         }
     }
 
-    private void parseYaml() {
+    public void parseYaml() {
         String filePath = HSApplication.getContext().getFilesDir().getAbsolutePath();
         String path = filePath + "/Mojime/" + name + "/package.yaml";
         Map<String, Object> mStyleMap = HSYamlUtils.getYamlConfigMap(path, false);

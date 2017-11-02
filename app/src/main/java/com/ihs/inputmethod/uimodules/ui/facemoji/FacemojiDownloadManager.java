@@ -1,5 +1,8 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji;
 
+import android.preference.PreferenceManager;
+
+import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
@@ -40,17 +43,19 @@ public class FacemojiDownloadManager {
         return remoteBasePath + name + "/" + "pack_" + name + ".png";
     }
 
-    public void startDownloadFacemojiResource(FacemojiCategory facemojiCategory) {
+    public void startDownloadFacemojiResource(FacemojiCategory facemojiCategory,IFacemojiCategoryDownloadListener facemojiCategoryDownloadListener) {
         if (!HSNetworkConnectionUtils.isNetworkConnected()) {
             return;
         }
+
         if (downloadedFacemojiCateogryNameList.contains(facemojiCategory.getName())){
             return;
         }
+
         downloadedFacemojiCateogryNameList.add(facemojiCategory.getName());
 
         HSHttpConnection connection = new HSHttpConnection(getRemoteResourcePath(facemojiCategory.getName()));
-        File downloadFile = FacemojiManager.getFacemojiZipFile(facemojiCategory);
+        File downloadFile = FacemojiManager.getFacemojiZipFile(facemojiCategory.getName());
         connection.setDownloadFile(downloadFile);
         connection.setConnectTimeout(1000 * 60);
         connection.setReadTimeout(1000 * 60 * 10);
@@ -60,10 +65,13 @@ public class FacemojiDownloadManager {
                 if (downloadFile.exists() && downloadFile.length() > 0) {
                     boolean unzipResult = FacemojiManager.unzipFacemojiCategory(downloadFile);
                     if (unzipResult) {
-                        FacemojiManager.getInstance().setDownloadedFacemojiCategoryUnzipSuccess(facemojiCategory);
-                        downloadFile.delete();
+                        setFacemojiCategoryDownloadedSuccess(facemojiCategory.getName());
+                        if (facemojiCategoryDownloadListener != null) {
+                            facemojiCategoryDownloadListener.onDownloadSuccess(facemojiCategory);
+                        }
                     }
                 }
+                downloadFile.delete();
                 downloadedFacemojiCateogryNameList.remove(facemojiCategory.getName());
             }
 
@@ -78,5 +86,17 @@ public class FacemojiDownloadManager {
                 connection.startAsync();
             }
         });
+    }
+
+    public void setFacemojiCategoryDownloadedSuccess(String facemojiCategoryName) {
+        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putBoolean("FacemojiCategory_" + facemojiCategoryName + "_DownloadedSuccess", true).apply();
+    }
+
+    public boolean isFacemojiCategoryDownloadedSuccess(String facemojiCategoryName) {
+        return PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean("FacemojiCategory_" + facemojiCategoryName + "_DownloadedSuccess", false);
+    }
+
+    public interface IFacemojiCategoryDownloadListener {
+        void onDownloadSuccess(FacemojiCategory facemojiCategory);
     }
 }

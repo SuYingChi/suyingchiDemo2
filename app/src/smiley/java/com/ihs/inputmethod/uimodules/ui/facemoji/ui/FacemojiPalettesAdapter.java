@@ -85,7 +85,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
             if (adapter != null){
                 adapter.setFacemojiStickerList(FacemojiManager.getInstance().getCategories().get(position).getStickerList());
                 if (position == currentPagerPosition) {
-                    adapter.startAnim();
+                    adapter.setAllowPlayAnim(true);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -97,7 +97,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         if (gridView != null) {
             FacemojiGridAdapter adapter = (FacemojiGridAdapter) gridView.getOriginalAdapter();
             if (adapter != null){
-                adapter.startAnim();
+                adapter.setAllowPlayAnim(true);
             }
             for (int i = 0; i < gridView.getChildCount(); ++i) {
                 View view = gridView.getChildAt(i);
@@ -119,7 +119,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         if (gridView != null) {
             FacemojiGridAdapter adapter = (FacemojiGridAdapter) gridView.getOriginalAdapter();
             if (adapter != null){
-                adapter.stopAnim();
+                adapter.setAllowPlayAnim(false);
             }
             for (int i = 0; i < gridView.getChildCount(); ++i) {
                 View view =  gridView.getChildAt(i);
