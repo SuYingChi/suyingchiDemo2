@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.text.TextUtils;
 
+import com.acb.call.CPSettings;
 import com.acb.call.customize.AcbCallManager;
 import com.artw.lockscreen.ScreenLockerManager;
 import com.crashlytics.android.Crashlytics;
@@ -266,6 +267,11 @@ public class HSUIApplication extends HSInputMethodApplication {
             return !callAssistantHasSwitchedOn;
         });
         AcbCallManager.setAdPlacement(callAdPlacement);
+
+        if (CPSettings.isSMSAssistantModuleEnabled()) {
+            CPSettings.setSMSAssistantModuleEnabled(false);
+        }
+
         StickerSuggestionManager.getInstance();
     }
 

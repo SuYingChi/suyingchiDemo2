@@ -235,6 +235,7 @@ dependencies {
 
     //callassistant
     compile (name: 'ihs/libCallAssistant/libcallassistant', ext: 'aar')
+    compile (name: 'ihs/libCallAssistant/notificationservice', ext: 'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //----
 
