@@ -155,11 +155,11 @@ dependencies {
 //    // Native Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdAvocarrotNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdYeahmobiNativeAdapter.beta:5.1.0.beta02'
+    compile 'net.appcloudbox.adadapter:libAdYeahmobiNativeAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.beta:5.1.1.beta01'
+    compile 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.gm:5.1.1.gm'
     compile 'net.appcloudbox.adadapter:libAdBaiduNativeAdapter.gm:5.0.0.gm'
 
     // Interstitial Ad Adapters

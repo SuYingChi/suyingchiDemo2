@@ -128,12 +128,14 @@ public class CameraActivity extends HSAppCompatActivity {
         // 拍照状态变化时调用该方法
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            camera.startPreview();
-            final Camera.Parameters parameters = camera.getParameters();
-            final ViewGroup.LayoutParams previewContainerLayoutParams =  previewContainer.getLayoutParams();
-            Camera.Size size = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
-            parameters.setPictureSize(size.width, size.height);
-            camera.setParameters(parameters);
+            if (camera != null) {
+                camera.startPreview();
+                final Camera.Parameters parameters = camera.getParameters();
+                final ViewGroup.LayoutParams previewContainerLayoutParams = previewContainer.getLayoutParams();
+                Camera.Size size = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
+                parameters.setPictureSize(size.width, size.height);
+                camera.setParameters(parameters);
+            }
         }
 
         // 开始拍照时调用该方法
