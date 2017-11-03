@@ -8,9 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/config_suggestions_strip_height"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/facemoji_panel_tab_margin_top"
-        android:paddingTop="@dimen/facemoji_panel_tab_margin_top">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/switch_face"
@@ -20,6 +18,8 @@
             android:background="@drawable/facemoji_switch_face_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/facemoji_panel_tab_margin_top"
+            android:layout_marginBottom="@dimen/facemoji_panel_tab_margin_top"
             android:paddingBottom="3dp"
             android:paddingTop="3dp">
 
@@ -40,40 +40,14 @@
 
         </LinearLayout>
 
-        <TabHost
-            android:id="@+id/facemoji_keyboard_category_tabhost"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/facemoji_category_tab_host"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/switch_face">
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:scrollbars="none">
-                <!-- add scroll -->
-                <TabWidget
-                    android:id="@android:id/tabs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:divider="@null"
-                    android:gravity="left|center_vertical"
-                    android:paddingLeft="14dp" />
-            </HorizontalScrollView>
-
-            <FrameLayout
-                android:id="@android:id/tabcontent"
-                android:layout_width="0dp"
-                android:layout_height="0dp">
-
-                <View
-                    android:id="@+id/facemoji_keyboard_dummy"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="gone" />
-            </FrameLayout>
-        </TabHost>
+            android:layout_toLeftOf="@id/switch_face"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp" />
 
     </RelativeLayout>
 

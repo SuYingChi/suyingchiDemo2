@@ -10,7 +10,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -37,7 +36,6 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
@@ -257,9 +255,9 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         if (facemojiCategory.isBuildIn() || facemojiCategory.isDownloadedSuccess()){
             iconView.setImageDrawable(facemojiCategory.getCategoryIcon());
         }else {
-            iconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            Drawable drawable = VectorCompat.createVectorDrawable(HSApplication.getContext(),R.drawable.ic_sticker_panel_tab);
-            DrawableCompat.setTint(drawable,HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color));
+            int padding = (iconParam.height - DisplayUtils.dip2px(this,24)) / 2;
+            iconView.setPadding(padding,padding,padding,padding);
+            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image_grey);
             RequestOptions requestOptions = new RequestOptions().placeholder(drawable).diskCacheStrategy(DiskCacheStrategy.DATA);
             Glide.with(this).asBitmap().apply(requestOptions).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).listener(new RequestListener<Bitmap>() {
                 @Override
@@ -269,7 +267,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
                 @Override
                 public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                    iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    iconView.setPadding(0,0,0,0);
                     return false;
                 }
             }).into(iconView);

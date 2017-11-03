@@ -184,7 +184,7 @@ public abstract class BaseTabViewAdapter extends RecyclerView.Adapter<BaseTabVie
     }
 
     protected class TagViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv_tab_icon;
+        public ImageView iv_tab_icon;
 
         TagViewHolder(View view) {
             super(view);
