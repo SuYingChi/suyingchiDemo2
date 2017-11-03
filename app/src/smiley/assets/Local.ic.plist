@@ -4160,6 +4160,613 @@
 				<key>TermsOfService</key>
 				<string>http://emojilabltd.weebly.com</string>
 			</dict>
+			<key>RateAlert</key>
+			<dict>
+				<key>CurrentType</key>
+				<string>0</string>
+				<key>Type0</key>
+				<dict>
+					<key>Step1</key>
+					<dict>
+						<key>body</key>
+						<dict>
+							<key>en</key>
+							<string>Tap the number of stars you&apos;d give us.</string>
+						</dict>
+						<key>title</key>
+						<dict>
+							<key>en</key>
+							<string>Enjoy Emoji Keyboard?</string>
+						</dict>
+					</dict>
+					<key>Step2</key>
+					<dict>
+						<key>NO</key>
+						<dict>
+							<key>body</key>
+							<dict>
+								<key>en</key>
+								<string>We need your feedback.</string>
+							</dict>
+							<key>button1</key>
+							<dict>
+								<key>en</key>
+								<string>Maybe Later</string>
+							</dict>
+							<key>button2</key>
+							<dict>
+								<key>en</key>
+								<string>Send Email</string>
+							</dict>
+							<key>title</key>
+							<dict>
+								<key>en</key>
+								<string>Thanks!</string>
+							</dict>
+						</dict>
+						<key>YES</key>
+						<dict>
+							<key>body</key>
+							<dict>
+								<key>en</key>
+								<string>Thanks! Please share the love on the Google Play.</string>
+							</dict>
+							<key>button1</key>
+							<dict>
+								<key>en</key>
+								<string>Maybe Later</string>
+							</dict>
+							<key>button2</key>
+							<dict>
+								<key>en</key>
+								<string>Rate Now</string>
+							</dict>
+						</dict>
+					</dict>
+				</dict>
+				<key>Type1</key>
+				<dict>
+					<key>Step1</key>
+					<dict>
+						<key>body</key>
+						<dict>
+							<key>de</key>
+							<string>Gefällt Ihnen Beauty Cam? Bitte teilen Sie uns Ihre Erfahrungen mit. Vielen Dank für Ihr Feedback.</string>
+							<key>en</key>
+							<string>Do you like Beauty Cam? Please let us know about your experience.Thanks for your feedback.</string>
+							<key>es</key>
+							<string>¿Te gusta Beauty Cam? Cuéntanos tu experiencia. Gracias por tus comentarios.</string>
+							<key>fr</key>
+							<string>Vous aimez Beauty Cam ? Parlez-nous de votre expérience. Merci pour vos commentaires.</string>
+							<key>hi</key>
+							<string> क्या आप सुंदर कैम पसंद करते हो? कृपया हमें आपके अनुभव के बारे में बताएं। आपकी प्रतिक्रिया के लिए धन्यवाद।</string>
+							<key>it</key>
+							<string>Ti piace Beauty Cam? Raccontaci la tua esperienza. Grazie per la tua opinione.</string>
+							<key>ja</key>
+							<string>ビューティーカメラはお好きですか？ご経験について教えてください。ご意見ありがとうございます。</string>
+							<key>ko</key>
+							<string>Beauty Cam이 마음에 드시나요? 자신의 경험에 대해 알려주세요. 피드백에 감사드립니다.</string>
+							<key>nl</key>
+							<string>Vind je Beauty Cam leuk? Vertel ons over je ervaring. Alvast bedankt voor je feedback.</string>
+							<key>pt</key>
+							<string>Fale sobre sua experiência. Obrigado pelo seu feedback.</string>
+						</dict>
+						<key>button1</key>
+						<dict>
+							<key>de</key>
+							<string>NEIN</string>
+							<key>en</key>
+							<string>NOPE</string>
+							<key>es</key>
+							<string>NOPE</string>
+							<key>fr</key>
+							<string>NON</string>
+							<key>hi</key>
+							<string>नहीं</string>
+							<key>it</key>
+							<string>NO</string>
+							<key>ja</key>
+							<string>いいえ</string>
+							<key>ko</key>
+							<string>아니</string>
+							<key>nl</key>
+							<string>NEE</string>
+							<key>pt</key>
+							<string>NÃO</string>
+						</dict>
+						<key>button2</key>
+						<dict>
+							<key>en</key>
+							<string>YES</string>
+						</dict>
+						<key>title</key>
+						<dict>
+							<key>de</key>
+							<string>Gefällt Ihnen unsere App?</string>
+							<key>en</key>
+							<string>Do you like our App?</string>
+							<key>es</key>
+							<string>¿Te gusta nuestra aplicación? </string>
+							<key>fr</key>
+							<string>Vous aimez l&apos;application?</string>
+							<key>hi</key>
+							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
+							<key>it</key>
+							<string>Ti piace la nostra app?</string>
+							<key>ja</key>
+							<string>このアプリを気に入りましたか?</string>
+							<key>ko</key>
+							<string>앱이 마음에 드시나요?</string>
+							<key>nl</key>
+							<string>Vind je onze app leuk?</string>
+							<key>pt</key>
+							<string>Gosta da Beauty Cam?</string>
+						</dict>
+					</dict>
+					<key>Step2</key>
+					<dict>
+						<key>NO</key>
+						<dict>
+							<key>body</key>
+							<dict>
+								<key>de</key>
+								<string>Sagen Sie uns, wie wir uns verbessern können?</string>
+								<key>en</key>
+								<string>Can you tell us how we could improve?</string>
+								<key>es</key>
+								<string>Cuéntanos cómo podríamos mejorar?</string>
+								<key>fr</key>
+								<string>Comment pourrions-nous nous améliorer?</string>
+								<key>hi</key>
+								<string>क्या आप बता सकते हैं कि हम कैसे सुधार करें?</string>
+								<key>it</key>
+								<string>Puoi farci sapere come potremmo migliorare?</string>
+								<key>ja</key>
+								<string>私たちがどうしたら改善できるか教えていただけますか？</string>
+								<key>ko</key>
+								<string>앱을 개선할 수 있는 의견을 주시겠습니까?</string>
+								<key>nl</key>
+								<string>Wil je ons vertellen wat we kunnen verbeteren?</string>
+								<key>pt</key>
+								<string>Como podemos melhorar?</string>
+							</dict>
+							<key>button1</key>
+							<dict>
+								<key>de</key>
+								<string>NEIN</string>
+								<key>en</key>
+								<string>NEVER</string>
+								<key>es</key>
+								<string>NUNCA</string>
+								<key>fr</key>
+								<string>JAMAIS</string>
+								<key>hi</key>
+								<string>नहीं</string>
+								<key>it</key>
+								<string>MAI</string>
+								<key>ja</key>
+								<string>しない</string>
+								<key>ko</key>
+								<string>다시 보지 않기</string>
+								<key>nl</key>
+								<string>NOOIT</string>
+								<key>pt</key>
+								<string>NUNCA</string>
+							</dict>
+							<key>button2</key>
+							<dict>
+								<key>de</key>
+								<string>FEEDBACK</string>
+								<key>en</key>
+								<string>FEEDBACK</string>
+								<key>es</key>
+								<string>OPINIONES</string>
+								<key>fr</key>
+								<string>COMMENTAIRE</string>
+								<key>hi</key>
+								<string>प्रतिक्रिया</string>
+								<key>it</key>
+								<string>COMMENTI</string>
+								<key>ja</key>
+								<string>フィードバックする</string>
+								<key>ko</key>
+								<string>피드백 하기</string>
+								<key>nl</key>
+								<string>FEEDBACK</string>
+								<key>pt</key>
+								<string>DAR FEEDBACK</string>
+							</dict>
+							<key>title</key>
+							<dict>
+								<key>de</key>
+								<string>Ihr Feedback ist uns sehr wichtig. Helfen Sie uns BeautyCam noch besser zu machen. Danke~</string>
+								<key>en</key>
+								<string>Your feedback is very important. Help us make BeautyCam the best it can be. Thanks~</string>
+								<key>es</key>
+								<string>Tu opinión es muy importante para nosotros. Ayúdanos a que BeautyCam sea lo mejor posible. ¡Gracias!</string>
+								<key>fr</key>
+								<string>Vos commentaires sont très importants. Aidez-nous à améliorer BeautyCam le plus possible. Merci~</string>
+								<key>hi</key>
+								<string>आपकी प्रतिक्रिया बहुत महत्‍वपूर्ण है। ब्‍यूटीकैम को जितना हो सकता है, बेहतर बनाने में हमारी मदद करें। धन्‍यवाद~</string>
+								<key>it</key>
+								<string>La tua opinione è molto importante. Aiutaci a rendere BeautyCam il meglio possibile. Grazie~</string>
+								<key>ja</key>
+								<string>フィードバックは非常に重要です。BeautyCamを最高のものにするようご協力ください。ありがとう~</string>
+								<key>ko</key>
+								<string>BeautyCam을 최고의 앱으로 만들기 위해 회원님의 피드백은 너무도 중요하답니다. 감사합니다~</string>
+								<key>nl</key>
+								<string>Je feedback is erg belangrijk. Help ons om BeautyCam zo goed mogelijk te maken. Bedankt~</string>
+								<key>pt</key>
+								<string>Seu feedback é muito importante. Ajude-nos a melhorar o app BeautyCam o máximo possível. Obrigado~</string>
+							</dict>
+						</dict>
+						<key>YES</key>
+						<dict>
+							<key>body</key>
+							<dict>
+								<key>de</key>
+								<string>Wir freuen uns das zu hören! Bewerten Sie uns mit 5 Sternen.</string>
+								<key>en</key>
+								<string>Glad to hear that! Rate it 5-Star</string>
+								<key>es</key>
+								<string>¡Nos alegra oírlo! ¡Danos 5 estrellas!</string>
+								<key>fr</key>
+								<string>Nous sommes heureux de l&apos;apprendre ! Donnez-lui 5 étoiles.</string>
+								<key>hi</key>
+								<string>यह जानकर खुशी हुई! इसे 5-स्टार का मूल्यांकन दें हमारे पास</string>
+								<key>it</key>
+								<string>Ci fa piacere saperlo! Valuta l&apos;app con 5 stelle.</string>
+								<key>ja</key>
+								<string>それが聞けて何よりです。5つ星をぜひお願いします！</string>
+								<key>ko</key>
+								<string>그렇게 말씀해주시니 기쁩니다! 별5개를 주신다면 감사하겠습니다.</string>
+								<key>nl</key>
+								<string>Wat leuk om te horen! Beoordeel ons met 5 sterren.</string>
+								<key>pt</key>
+								<string>Ficamos felizes em ouvir isso! Avalie com 5 estrelas.</string>
+							</dict>
+							<key>button1</key>
+							<dict>
+								<key>de</key>
+								<string>NEIN</string>
+								<key>en</key>
+								<string>NEVER</string>
+								<key>es</key>
+								<string>NUNCA</string>
+								<key>fr</key>
+								<string>JAMAIS</string>
+								<key>hi</key>
+								<string>नहीं</string>
+								<key>it</key>
+								<string>MAI</string>
+								<key>ja</key>
+								<string>しない</string>
+								<key>ko</key>
+								<string>다시 보지 않기</string>
+								<key>nl</key>
+								<string>NOOIT</string>
+								<key>pt</key>
+								<string>NUNCA</string>
+							</dict>
+							<key>button2</key>
+							<dict>
+								<key>de</key>
+								<string>5-Sterne</string>
+								<key>en</key>
+								<string>5-Star</string>
+								<key>es</key>
+								<string>5-Estrellas</string>
+								<key>fr</key>
+								<string>5-Etoiles</string>
+								<key>hi</key>
+								<string>5-स्‍टार</string>
+								<key>it</key>
+								<string>5-Stelle</string>
+								<key>ja</key>
+								<string>5星</string>
+								<key>ko</key>
+								<string>별점 5개</string>
+								<key>nl</key>
+								<string>5-Sterren</string>
+								<key>pt</key>
+								<string>5-Estrelas</string>
+							</dict>
+							<key>title</key>
+							<dict>
+								<key>de</key>
+								<string>Wir sind ein kleines Team und arbeiten mit Hochdruck an der Entwicklung von den besten, aber kostenlosen Apps. Ihre 5 Sterne sind für uns mehr wert, als all das Geld der Welt!</string>
+								<key>en</key>
+								<string>We are a small team working extremely hard to give you the best app for free. Your 5-star is better than all the money in the world!</string>
+								<key>es</key>
+								<string>Somos un equipo pequeño y nos esforzamos mucho para ofrecerte la mejor aplicación gratis. ¡Tu valoración de 5 estrellas es mejor que todo el dinero del mundo!</string>
+								<key>fr</key>
+								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l&apos;argent du monde !</string>
+								<key>hi</key>
+								<string>एक छोटी टीम है जो आपको निशुल्क में बेहतर एप्स‍ देने के लिए कड़ी मेहनत करती है। आपका 5-स्टार विश्व की पूरी दौलत से भी अच्छा है!</string>
+								<key>it</key>
+								<string>Il nostro piccolo team lavora duramente per offrirti le migliori app gratuitamente. 5 stelle da parte tua valgono più di tutto il denaro del mondo!</string>
+								<key>ja</key>
+								<string>当社は最高のアプリを無料で提供するために懸命に働く小規模のチームです。あなたの5つ星は、世界中のすべてのお金よりもう</string>
+								<key>ko</key>
+								<string>저희는 최고의 앱을 무료로 공급해 드리기 위해 작은 팀만으로 최선을 다하고 있습니다. 저희에게는 돈보다 사용자 여러분의 별 5개가 더욱 값지답니다!</string>
+								<key>nl</key>
+								<string>We zijn een klein team dat erg hard werkt om jou gratis de beste app te geven. Jouw 5 sterren zijn belangrijker voor </string>
+								<key>pt</key>
+								<string>Somos uma pequena equipe trabalhando muito duro para lhe dar o melhor aplicativo grátis. Suas 5 estrelas são melhores que todo o dinheiro do mundo! </string>
+							</dict>
+						</dict>
+					</dict>
+				</dict>
+				<key>Type2</key>
+				<dict>
+					<key>Step1</key>
+					<dict>
+						<key>body</key>
+						<dict>
+							<key>de</key>
+							<string>Gefällt Ihnen unsere App?</string>
+							<key>en</key>
+							<string>Do you like our App?</string>
+							<key>es</key>
+							<string>¿Te gusta nuestra aplicación?</string>
+							<key>fr</key>
+							<string>Vous aimez l&apos;application ?</string>
+							<key>hi</key>
+							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
+							<key>it</key>
+							<string>Ti piace la nostra app?</string>
+							<key>ja</key>
+							<string>このアプリを気に入りましたか？</string>
+							<key>ko</key>
+							<string>앱이 마음에 드시나요?</string>
+							<key>nl</key>
+							<string>Vind je onze app leuk?</string>
+							<key>pt</key>
+							<string>Gosta da Beauty Cam?</string>
+						</dict>
+						<key>button1</key>
+						<dict>
+							<key>de</key>
+							<string>NEIN</string>
+							<key>en</key>
+							<string>NOPE</string>
+							<key>es</key>
+							<string>NOPE</string>
+							<key>fr</key>
+							<string>NON</string>
+							<key>hi</key>
+							<string>नहीं</string>
+							<key>it</key>
+							<string>NO</string>
+							<key>ja</key>
+							<string>いいえ</string>
+							<key>ko</key>
+							<string>아니</string>
+							<key>nl</key>
+							<string>NEE</string>
+							<key>pt</key>
+							<string>NÃO</string>
+						</dict>
+						<key>button2</key>
+						<dict>
+							<key>en</key>
+							<string>YES</string>
+						</dict>
+					</dict>
+					<key>Step2</key>
+					<dict>
+						<key>NO</key>
+						<dict>
+							<key>body</key>
+							<dict>
+								<key>en</key>
+								<string>Please leave your ideas here and help BeautyCam to be better.Thank you~</string>
+							</dict>
+							<key>button1</key>
+							<dict>
+								<key>de</key>
+								<string>NEIN</string>
+								<key>en</key>
+								<string>NEVER</string>
+								<key>es</key>
+								<string>NUNCA</string>
+								<key>fr</key>
+								<string>JAMAIS</string>
+								<key>hi</key>
+								<string>नहीं</string>
+								<key>it</key>
+								<string>MAI</string>
+								<key>ja</key>
+								<string>しない</string>
+								<key>ko</key>
+								<string>다시 보지 않기</string>
+								<key>nl</key>
+								<string>NOOIT</string>
+								<key>pt</key>
+								<string>NUNCA</string>
+							</dict>
+							<key>button2</key>
+							<dict>
+								<key>de</key>
+								<string>FEEDBACK</string>
+								<key>en</key>
+								<string>FEEDBACK</string>
+								<key>es</key>
+								<string>OPINIONES</string>
+								<key>fr</key>
+								<string>COMMENTAIRE</string>
+								<key>hi</key>
+								<string>प्रतिक्रिया</string>
+								<key>it</key>
+								<string>COMMENTI</string>
+								<key>ja</key>
+								<string>フィードバックする</string>
+								<key>ko</key>
+								<string>피드백 하기</string>
+								<key>nl</key>
+								<string>FEEDBACK</string>
+								<key>pt</key>
+								<string>DAR FEEDBACK</string>
+							</dict>
+						</dict>
+						<key>YES</key>
+						<dict>
+							<key>button1</key>
+							<dict>
+								<key>de</key>
+								<string>NEIN</string>
+								<key>en</key>
+								<string>NEVER</string>
+								<key>es</key>
+								<string>NUNCA</string>
+								<key>fr</key>
+								<string>JAMAIS</string>
+								<key>hi</key>
+								<string>नहीं</string>
+								<key>it</key>
+								<string>MAI</string>
+								<key>ja</key>
+								<string>しない</string>
+								<key>ko</key>
+								<string>다시 보지 않기</string>
+								<key>nl</key>
+								<string>NOOIT</string>
+								<key>pt</key>
+								<string>NUNCA</string>
+							</dict>
+							<key>button2</key>
+							<dict>
+								<key>de</key>
+								<string>5-Sterne</string>
+								<key>en</key>
+								<string>5-Star</string>
+								<key>es</key>
+								<string>5-Estrellas</string>
+								<key>fr</key>
+								<string>5-Etoiles</string>
+								<key>hi</key>
+								<string>5-स्‍टार</string>
+								<key>it</key>
+								<string>5-Stelle</string>
+								<key>ja</key>
+								<string>5星</string>
+								<key>ko</key>
+								<string>별점 5개</string>
+								<key>nl</key>
+								<string>5-Sterren</string>
+								<key>pt</key>
+								<string>5-Estrelas</string>
+							</dict>
+							<key>title</key>
+							<dict>
+								<key>de</key>
+								<string>Wie wäre es dann mit einer Bewertung für die hart arbeitenden Teams?</string>
+								<key>en</key>
+								<string>Then how about a rating for hard-working teams?</string>
+								<key>es</key>
+								<string>¿Qué te parecería valorar el trabajo del equipo?</string>
+								<key>fr</key>
+								<string>Que diriez-vous d&apos;un avis pour des équipes qui travaillent dur ?</string>
+								<key>hi</key>
+								<string>तो कड़ी मेहनत वाली टीमों के लिए एक मूल्यांकन के बारे में क्या?</string>
+								<key>it</key>
+								<string>Allora cosa ne pensi di valutare il nostro duro lavoro?</string>
+								<key>ja</key>
+								<string>それでは、懸命なチームの評価をしていただけますか？</string>
+								<key>ko</key>
+								<string>열심히 일하는 저희 팀을 위해 평가를 해주시겠습니까?</string>
+								<key>nl</key>
+								<string>Wat dacht je dan van een beoordeling voor onze hardwerkende teams?</string>
+								<key>pt</key>
+								<string>Então, o que acha de uma avaliação para as equipes que trabalham duro?</string>
+							</dict>
+						</dict>
+					</dict>
+				</dict>
+				<key>Type3</key>
+				<dict>
+					<key>NO</key>
+					<dict>
+						<key>body</key>
+						<dict>
+							<key>de</key>
+							<string>NEIN</string>
+							<key>en</key>
+							<string>NOPE</string>
+							<key>es</key>
+							<string>NOPE</string>
+							<key>fr</key>
+							<string>NON</string>
+							<key>hi</key>
+							<string>नहीं</string>
+							<key>it</key>
+							<string>NO</string>
+							<key>ja</key>
+							<string>いいえ</string>
+							<key>ko</key>
+							<string>아니</string>
+							<key>nl</key>
+							<string>NEE</string>
+							<key>pt</key>
+							<string>NÃO</string>
+						</dict>
+						<key>title</key>
+						<dict>
+							<key>de</key>
+							<string>Ich habe Feedback</string>
+							<key>en</key>
+							<string>I have some feedback.</string>
+							<key>es</key>
+							<string>Tengo algunos comentarios</string>
+							<key>fr</key>
+							<string>J&apos;ai des commentaires</string>
+							<key>hi</key>
+							<string>मेरे पास कुछ प्रतिक्रिया है</string>
+							<key>it</key>
+							<string>Ho dei suggerimenti</string>
+							<key>ja</key>
+							<string>私は意見があります</string>
+							<key>ko</key>
+							<string>피드백 할 내용이 있습니다</string>
+							<key>nl</key>
+							<string>Ik heb wat feedback</string>
+							<key>pt</key>
+							<string>Tenho um feedback</string>
+						</dict>
+					</dict>
+					<key>YES</key>
+					<dict>
+						<key>body</key>
+						<dict>
+							<key>en</key>
+							<string>YES!</string>
+						</dict>
+						<key>title</key>
+						<dict>
+							<key>de</key>
+							<string>Ich würde sie mit 5 Sternen bewerten</string>
+							<key>en</key>
+							<string>I&apos;d like to give it a 5-star rating.</string>
+							<key>es</key>
+							<string>Me gustaría darle una valoración de 5 estrellas.</string>
+							<key>fr</key>
+							<string>J&apos;aimerais lui donner 5 étoiles.</string>
+							<key>hi</key>
+							<string>मैं इसे 5-स्टार मूल्‍यांकन देना चाहता/चाहती हूं।</string>
+							<key>it</key>
+							<string>Voglio valutare l&apos;app con 5 stelle.</string>
+							<key>ja</key>
+							<string>私は5つ星の評価を与えたいと思います。</string>
+							<key>ko</key>
+							<string>별5개를 주고 싶습니다.</string>
+							<key>nl</key>
+							<string>Ik wil een beoordeling van 5 sterren geven.</string>
+							<key>pt</key>
+							<string>Gostaria de avaliar com 5 estrelas.</string>
+						</dict>
+					</dict>
+				</dict>
+			</dict>
 			<key>RemindChangeKeyboard</key>
 			<dict>
 				<key>Enable</key>
