@@ -9,10 +9,7 @@ build_job:
   - ./gradlew assembleSmileyRelease
   - ./gradlew app:dependencies > app/build/outputs/build-dependencies.txt
   - cd app/ziptool/
-  - ./build_apk_color.sh
-  - ./build_apk_master.sh
   - ./build_apk_smiley.sh
-  - ./build_apk_tiger.sh
   artifacts:
     paths:
     - app/build/outputs/apk/*.apk
