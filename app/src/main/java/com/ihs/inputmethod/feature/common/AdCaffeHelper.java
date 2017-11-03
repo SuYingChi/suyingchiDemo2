@@ -54,7 +54,7 @@ public class AdCaffeHelper {
         this.context = context;
 
         this.placementId = "999999_24581";
-        this.packageName = "com.psafe.msuite";
+        this.packageName = "1241932094";
 //        HSAdUtils.getAdID(new HSAdUtils.GetAdIdListener() {
 //            @Override
 //            public void onGetAdIdSuccess(String s) {
@@ -72,15 +72,16 @@ public class AdCaffeHelper {
         deviceType = getDeviceType(context);
         osVersion = "10";
         networkType = "wifi";
-        country = "hk";
-        vendor = "appnext";
+        country = "us";
+        vendor = "pubnative";
         this.onNativeAdLoadListener = onNativeAdLoadListener;
     }
 
     public void loadAdWithKeywords(String[] keywords) {
-        String[] words = new String[1];
-        words[0] = "saga";
-        updateKeywords(words);
+        updateKeywords(keywords);
+        for (String word : keywords) {
+            HSLog.e("lv_eee", word);
+        }
         startConnection();
     }
 
@@ -99,9 +100,6 @@ public class AdCaffeHelper {
         fillJson(jsonObject, "country", country.toLowerCase());
         fillJson(jsonObject, "vendor", vendor.toLowerCase());
 
-        if (offset != -1) {
-            fillJson(jsonObject, "offset", offset);
-        }
         JSONArray jsonArray = new JSONArray();
         jsonArray.put("tools");
         jsonArray.put("games");
@@ -335,7 +333,7 @@ public class AdCaffeHelper {
         try {
             Constructor constructor = NativeAd.class.getDeclaredConstructor(Context.class);
             constructor.setAccessible(true);
-            return (NativeAd) constructor.newInstance(this);
+            return (NativeAd) constructor.newInstance(context);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
             throw new RuntimeException();

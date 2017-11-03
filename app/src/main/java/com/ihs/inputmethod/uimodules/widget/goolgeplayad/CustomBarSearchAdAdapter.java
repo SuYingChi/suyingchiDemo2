@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
@@ -17,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,14 +86,14 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
     }
 
     class SearchAdViewHolder extends RecyclerView.ViewHolder {
-        ImageView adIcon;
+        RoundedImageView adIcon;
         TextView adTitle;
         TextView adRating;
 
         SearchAdViewHolder(View view) {
             super(view);
 
-            adIcon = (ImageView) view.findViewById(R.id.ad_icon);
+            adIcon = (RoundedImageView) view.findViewById(R.id.ad_icon);
             adTitle = (TextView) view.findViewById(R.id.ad_title);
             adRating = (TextView) view.findViewById(R.id.ad_rating_score);
         }

@@ -400,24 +400,31 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             return;
         }
 
-        if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+        if (keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+            keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(VISIBLE);
+        }
+
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
         }
 
         if (searchAdAdapter == null) {
             searchAdAdapter = new CustomBarSearchAdAdapter();
         }
-        searchAdAdapter.setAdList(nativeAds);
 
-        searchAdRecyclerView = new RecyclerView(HSApplication.getContext());
-        searchAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-        searchAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
-        int padding = DisplayUtils.dip2px(8);
-        searchAdRecyclerView.setPadding(padding, 0, padding, 0);
-        searchAdRecyclerView.setAdapter(searchAdAdapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
-        searchAdRecyclerView.setLayoutManager(layoutManager);
-        searchAdRecyclerView.setHasFixedSize(true);
+        if (searchAdRecyclerView == null) {
+            searchAdRecyclerView = new RecyclerView(HSApplication.getContext());
+            searchAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+            searchAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
+            int padding = DisplayUtils.dip2px(8);
+            searchAdRecyclerView.setPadding(padding, 0, padding, 0);
+            searchAdRecyclerView.setAdapter(searchAdAdapter);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(HSApplication.getContext());
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            searchAdRecyclerView.setLayoutManager(layoutManager);
+            searchAdRecyclerView.setHasFixedSize(true);
+        }
+        searchAdAdapter.setAdList(nativeAds);
 
         CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), () -> {
             if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {

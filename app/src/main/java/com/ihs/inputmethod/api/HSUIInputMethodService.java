@@ -457,6 +457,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     @Override
     public void onStartInput(EditorInfo editorInfo, boolean restarting) {
         super.onStartInput(editorInfo, restarting);
+        currentWord = "";
         if (restarting) {
             getKeyboardPanelMananger().resetKeyboardBarState();
         }
@@ -505,7 +506,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     @Override
     public void onKeyboardWindowHide() {
         if (!shouldShowGoogleAD()) {
-//            getKeyboardPanelMananger().removeCustomizeBar();
+            getKeyboardPanelMananger().removeCustomizeBar();
         }
 
         // Start clearing image loader cache
@@ -524,12 +525,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     }
 
     private String[] splitIntoWords(String sentence) {
-        String[] words = sentence.split("\\s+");
+        String[] words = sentence.trim().split("\\s+");
         for (int i = 0; i < words.length; i++) {
             // You may want to check for a non-word character before blindly
             // performing a replacement
             // It may also be necessary to adjust the character class
             words[i] = words[i].replaceAll("[^\\w]", "");
+            HSLog.e("lv_eee", "split " + words[i] + " " + words[i].length());
         }
         return words;
     }
@@ -578,7 +580,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         super.onCodeInput(codePoint, x, y, isKeyRepeat);
 
         if (codePoint > 0) {
-            if (codePoint == ' ') {
+            if (!Character.isDigit(codePoint) && !Character.isLetter(codePoint)) {
                 currentWord = "";
             } else {
                 currentWord += (char) codePoint;
@@ -622,12 +624,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public void onNativeAdLoadSuccess(List<AdCaffeNativeAd> nativeAds, boolean hasMore, int nextOffset) {
-        for (AdCaffeNativeAd adCaffeNativeAd : nativeAds) {
-            HSLog.e("lv_eee", adCaffeNativeAd.getBody());
+        for (AdCaffeNativeAd ad : nativeAds) {
+            HSLog.e("lv_eee", ad.getTitle() + " " + ad.getBody());
         }
+        getKeyboardPanelMananger().showSearchAdBar(nativeAds);
         if (!shouldShowSearchAD()) {
             return;
         }
-        getKeyboardPanelMananger().showSearchAdBar(nativeAds);
     }
 }

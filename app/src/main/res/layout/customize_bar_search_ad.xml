@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
+    android:layout_width="180dp"
     android:layout_height="60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="6dp"
+    android:layout_marginBottom="11dp"
     android:layout_gravity="center_horizontal"
     android:gravity="center_horizontal"
     android:orientation="horizontal">
@@ -12,13 +13,15 @@
         android:id="@+id/ad_icon_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/setting_panel_item_margin_top">
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp">
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/ad_icon"
-            android:layout_width="53dp"
-            android:layout_height="53dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            app:riv_corner_radius="@dimen/config_key_preview_offset_electric"/>
 
         <ImageView
             android:id="@+id/ad_google_play_icon"
@@ -30,29 +33,28 @@
     </FrameLayout>
 
 
-    <LinearLayout
-        android:layout_width="86dp"
+    <RelativeLayout
+        android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_marginLeft="6dp"
-        android:orientation="vertical"
         android:layout_marginStart="6dp">
 
         <TextView
             android:id="@+id/ad_title"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/setting_panel_item_text_margin_top"
             android:ellipsize="end"
-            android:gravity="center"
+            android:layout_alignParentLeft="true"
             android:maxLines="2"
             android:fontFamily="@string/roboto_medium"
             android:textSize="15sp"
             android:textColor="@android:color/black"
-            />
+            android:layout_alignParentStart="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
             android:layout_height="15dp"
             android:orientation="horizontal">
 
@@ -60,21 +62,22 @@
                 android:id="@+id/ad_rating_score"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:textColor="#999999"
                 android:textSize="12sp"
                 android:fontFamily="ArialMT"/>
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ad_rating_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="3dp"
-                android:layout_marginStart="3dp"
-                android:src="@drawable/ic_ad_label"/>
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/store_star"
+                android:layout_marginStart="3dp" />
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>
