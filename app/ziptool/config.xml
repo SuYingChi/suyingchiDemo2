@@ -26,15 +26,15 @@
 
         <!--facemoji -->
         <path value="com.example.app.R.drawable.face0" />
-        <path value="com.example.app.R.drawable.face0_choosed" />
+        <path value="com.example.app.R.drawable.face0_choosen" />
         <path value="com.example.app.R.drawable.face1" />
-        <path value="com.example.app.R.drawable.face1_choosed" />
+        <path value="com.example.app.R.drawable.face1_choosen" />
         <path value="com.example.app.R.drawable.face2" />
-        <path value="com.example.app.R.drawable.face2_choosed" />
+        <path value="com.example.app.R.drawable.face2_choosen" />
         <path value="com.example.app.R.drawable.face3" />
-        <path value="com.example.app.R.drawable.face3_choosed" />
+        <path value="com.example.app.R.drawable.face3_choosen" />
         <path value="com.example.app.R.drawable.face4" />
-        <path value="com.example.app.R.drawable.face4_choosed" />
+        <path value="com.example.app.R.drawable.face4_choosen" />
         <path value="com.example.app.R.drawable.facemask*" />
 
         <!-- emotion action bar -->
