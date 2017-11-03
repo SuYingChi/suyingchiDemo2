@@ -24,6 +24,18 @@
         <path value="com.example.app.R.drawable.ic_*" />
         <path value="com.example.app.R.mipmap.ic_*" />
 
+        <!--facemoji -->
+        <path value="com.example.app.R.drawable.face0" />
+        <path value="com.example.app.R.drawable.face1" />
+        <path value="com.example.app.R.drawable.face2" />
+        <path value="com.example.app.R.drawable.face3" />
+        <path value="com.example.app.R.drawable.face4" />
+        <path value="com.example.app.R.drawable.face*_choosed.png" />
+        <path value="com.example.app.R.drawable.facemask*" />
+
+        <!-- emotion action bar -->
+        <path value="com.example.app.R.drawable.ic_*_panel_tab.xml" />
+
         <!--getidentifier-->
         <path value="com.example.app.R.array.emoji_*" />
         <path value="com.example.app.R.array.text_*" />
