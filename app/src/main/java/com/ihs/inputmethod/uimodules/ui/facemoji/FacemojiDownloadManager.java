@@ -27,11 +27,11 @@ public class FacemojiDownloadManager {
     }
 
     private FacemojiDownloadManager() {
-        remoteBasePath = HSConfig.optString("", "Application", "DownloadServer", "FacemojiBasePath");
+        remoteBasePath = HSConfig.optString("", "Application", "Server", "FacemojiBasePath");
     }
 
     public void onConfigChange() {
-        remoteBasePath = HSConfig.optString("", "Application", "DownloadServer", "FacemojiBasePath");
+        remoteBasePath = HSConfig.optString("", "Application", "Server", "FacemojiBasePath");
     }
 
 
