@@ -25,6 +25,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.utils.HSNetworkConnectionUtils;
+import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacePictureParam;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
@@ -153,7 +154,7 @@ public class FacemojiManager {
     }
 
     private void loadFacemojiCategoryFromConfig() {
-        facemojiCategories.clear();
+        List<FacemojiCategory> facemojiCategoryList = new ArrayList<>();
         FacemojiCategory facemojiCategory;
         List<Map<String,Object>> facemojiList = (List<Map<String, Object>>) HSConfig.getList("Application", "Facemoji");
         for (int i = 0 ; i < facemojiList.size() ; i++) {
@@ -161,7 +162,7 @@ public class FacemojiManager {
             String stickerCategoryName = (String) map.get("name");
             boolean isBuildIn = buildInFacemojiCategories.contains(stickerCategoryName);
             facemojiCategory = new FacemojiCategory(stickerCategoryName, i, HSConfigUtils.toInt(map.get("width"),0), HSConfigUtils.toInt(map.get("height"),0),isBuildIn);
-            facemojiCategories.add(facemojiCategory);
+            facemojiCategoryList.add(facemojiCategory);
 
             if (isBuildIn){
                 facemojiCategory.parseYaml();
@@ -174,6 +175,7 @@ public class FacemojiManager {
                 }
             }
         }
+        this.facemojiCategories = facemojiCategoryList;
     }
 
     private void copyBuildInAssetStickersToStorage() {
@@ -183,8 +185,13 @@ public class FacemojiManager {
     }
 
     private void onConfigChange() {
-        loadFacemojiCategoryFromConfig();
         FacemojiDownloadManager.getInstance().onConfigChange();
+        HSThreadUtils.execute(new Runnable() {
+            @Override
+            public void run() {
+                loadFacemojiCategoryFromConfig();
+            }
+        });
     }
 
     private void retryDownloadFacemojiCategoryWhenNetworkConnective() {

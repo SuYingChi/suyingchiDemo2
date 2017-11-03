@@ -37,6 +37,7 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
@@ -257,7 +258,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             iconView.setImageDrawable(facemojiCategory.getCategoryIcon());
         }else {
             iconView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_panel_tab);
+            Drawable drawable = VectorCompat.createVectorDrawable(HSApplication.getContext(),R.drawable.ic_sticker_panel_tab);
             DrawableCompat.setTint(drawable,HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_normal_color));
             RequestOptions requestOptions = new RequestOptions().placeholder(drawable).diskCacheStrategy(DiskCacheStrategy.DATA);
             Glide.with(this).asBitmap().apply(requestOptions).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).listener(new RequestListener<Bitmap>() {
