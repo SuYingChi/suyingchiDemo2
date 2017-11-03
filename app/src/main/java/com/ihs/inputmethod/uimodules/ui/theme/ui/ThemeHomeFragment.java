@@ -25,6 +25,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.ThemeHomeAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
+import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -174,7 +175,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
             List<Integer> positions = new ArrayList<>();
             List<Map<String, Object>> themeAdInfos = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "ThemeAd");
             for (Map<String, Object> item : themeAdInfos) {
-                int adPosition = (int) item.get("Position");
+                int adPosition = HSConfigUtils.toInt(item.get("Position"),2);
                 positions.add(adPosition);
             }
             Collections.sort(positions);
@@ -183,9 +184,9 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
                 ThemeHomeModel ad = new ThemeHomeModel();
                 ad.isAd = true;
                 for (Map<String, Object> item : themeAdInfos) {
-                    int adPosition = (int) item.get("Position");
+                    int adPosition = HSConfigUtils.toInt(item.get("Position"),2);
                     if (adPosition == pos) {
-                        ad.span = (int) item.get("Span");
+                        ad.span = HSConfigUtils.toInt(item.get("Position"),2);
                         ad.adPlacement = (String) item.get("NativeAd");
                     }
                 }

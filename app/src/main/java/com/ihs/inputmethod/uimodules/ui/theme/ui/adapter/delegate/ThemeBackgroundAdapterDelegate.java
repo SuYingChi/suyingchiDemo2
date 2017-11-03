@@ -177,7 +177,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 for (Map<String, Object> item : nativeAdInfoList) {
                     NativeAdInfo nativeAdInfo1 = new NativeAdInfo();
                     nativeAdInfo1.nativeAd = (String) item.get("NativeAd");
-                    nativeAdInfo1.position = (int) item.get("Position");
+                    nativeAdInfo1.position = HSConfigUtils.toInt(item.get("Position"),2);
                     nativeAdInfos.add(nativeAdInfo1);
                 }
                 Collections.sort(nativeAdInfos);
