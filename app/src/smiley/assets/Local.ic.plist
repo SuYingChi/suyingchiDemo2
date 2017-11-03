@@ -5784,6 +5784,33 @@
 					</dict>
 					<dict>
 						<key>adType</key>
+						<string>Nexagebanner</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<real>14.5</real>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>cable</string>
+							<string>2c9d2b4f015f5f3a2c4e7237a6ac05ee</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
 						<string>Adxbanner</string>
 						<key>countPerLoad</key>
 						<integer>1</integer>
@@ -6762,6 +6789,33 @@
 						<key>ids</key>
 						<array>
 							<string>10388bdcbb6b41ffa9188163a8f87bf5</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Nexagebanner</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<real>17</real>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>fuse</string>
+							<string>2c9d2b4f015f5f3a2c4e7237a6ac05ee</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
