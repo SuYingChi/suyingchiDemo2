@@ -17,7 +17,7 @@ public class CallAssistantConfigUtils {
         if (CPSettings.isScreenFlashModuleEnabled()) {
             return false;
         }
-        if (CPSettings.isFunctionEnabledBefore()) {
+        if (CPSettings.isScreenFlashEverEnabled()) {
             return false;
         }
         if (limitShowCount) {

@@ -22,13 +22,13 @@ import com.acb.call.constant.CPConst;
 import com.acb.call.customize.AcbCallManager;
 import com.acb.call.receiver.IncomingCallReceiver;
 import com.acb.call.themes.Type;
-import com.acb.call.utils.Utils;
 import com.acb.call.views.InCallActionView;
 import com.acb.call.views.ThemePreviewWindow;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
@@ -71,11 +71,11 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
                 Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT, Gravity.LEFT | Gravity.START);
         boolean showToolBarBack = HSConfig.optBoolean(true, "Application", "LibColorPhone", "ShowToolBarBack");
         if (showToolBarBack) {
-            toolbarTitleParams.setMargins(Utils.pxFromDp(20), 0, 0, 0);
+            toolbarTitleParams.setMargins(DisplayUtils.dip2px(20), 0, 0, 0);
         } else {
-            toolbarTitleParams.leftMargin = Utils.pxFromDp(30);
+            toolbarTitleParams.leftMargin = DisplayUtils.dip2px(30);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                toolbarTitleParams.setMarginStart(Utils.pxFromDp(30));
+                toolbarTitleParams.setMarginStart(DisplayUtils.dip2px(30));
             }
         }
 
