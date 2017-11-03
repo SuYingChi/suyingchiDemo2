@@ -362,11 +362,6 @@
 				<key>LaunchDelayTime</key>
 				<integer>3000</integer>
 			</dict>
-			<key>DownloadServer</key>
-			<dict>
-				<key>FacemojiBasePath</key>
-				<string>https://emojidevelop.s3.amazonaws.com/AndroidResource/download/facemoji/</string>
-			</dict>
 			<key>Facemoji</key>
 			<array>
 				<dict>
@@ -3950,7 +3945,7 @@
 				<key>LockerAutoRefreshAdsEnable</key>
 				<false/>
 				<key>UseNewLockScreen</key>
-				<true/>
+				<false/>
 				<key>Wallpapers</key>
 				<array>
 					<dict>
@@ -4549,6 +4544,8 @@
 			<dict>
 				<key>EmojiSuggestionBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/emoji_suggestion</string>
+				<key>FacemojiBasePath</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/facemoji/</string>
 				<key>FontDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/fonts/</string>
 				<key>IncomingCallThemeURL</key>
@@ -5458,6 +5455,15 @@
 				<integer>3600</integer>
 				<key>frequencyCap</key>
 				<integer>100</integer>
+				<key>frequencyTime</key>
+				<integer>5</integer>
+			</dict>
+			<key>nexagebanner</key>
+			<dict>
+				<key>expireTime</key>
+				<integer>3600</integer>
+				<key>frequencyCap</key>
+				<integer>200</integer>
 				<key>frequencyTime</key>
 				<integer>5</integer>
 			</dict>
@@ -10710,9 +10716,9 @@
 				<key>preload</key>
 				<dict>
 					<key>inventory</key>
-					<integer>0</integer>
+					<integer>1</integer>
 					<key>strategy</key>
-					<string>initiative</string>
+					<string>app</string>
 				</dict>
 				<key>preloadOnlyInWifi</key>
 				<false/>
