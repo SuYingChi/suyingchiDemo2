@@ -79,9 +79,6 @@ public class AdCaffeHelper {
 
     public void loadAdWithKeywords(String[] keywords) {
         updateKeywords(keywords);
-        for (String word : keywords) {
-            HSLog.e("lv_eee", word);
-        }
         startConnection();
     }
 

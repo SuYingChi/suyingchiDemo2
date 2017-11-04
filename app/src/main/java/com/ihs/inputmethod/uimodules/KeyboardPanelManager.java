@@ -395,18 +395,29 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map) null, (Map) null);
     }
 
-    public void showSearchAdBar(List<AdCaffeNativeAd> nativeAds) {
-        if (keyboardPanelSwitchContainer == null) {
-            return;
-        }
-
-        if (keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+    public void showCustomBar() {
+        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
             keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(VISIBLE);
         }
+    }
 
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+    public void hideCustomBar() {
+        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+            keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+        }
+    }
+
+    public void showSearchAdBar(List<AdCaffeNativeAd> nativeAds) {
+        if (keyboardPanelSwitchContainer == null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
         }
+
+        if (nativeAds.isEmpty()) {
+            hideCustomBar();
+            return;
+        }
+
+        showCustomBar();
 
         if (searchAdAdapter == null) {
             searchAdAdapter = new CustomBarSearchAdAdapter();
@@ -426,11 +437,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
         searchAdAdapter.setAdList(nativeAds);
 
-        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), () -> {
-            if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
-                keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
-            }
-        });
+        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), this::hideCustomBar);
         customizeBarLayout.setContent(searchAdRecyclerView);
         if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
             if (keyboardPanelSwitchContainer != null) {

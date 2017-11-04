@@ -1,8 +1,10 @@
 package com.ihs.inputmethod.uimodules.widget.goolgeplayad;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -64,7 +67,7 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
         Glide.with(holder.itemView.getContext()).asBitmap().apply(requestOptions)
                 .load(adCaffeNativeAd.getIconUrl()).transition(withCrossFade(500))
                 .into(holder.adIcon);
-        holder.adIcon.setOnClickListener((v -> adCaffeNativeAd.handleClick()));
+        holder.adIcon.setOnClickListener((v -> directToMarket(adCaffeNativeAd.getPackageName())));
 
         holder.adTitle.setText(adCaffeNativeAd.getTitle());
         holder.adRating.setText(adCaffeNativeAd.getStoreRating());
@@ -96,6 +99,31 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
             adIcon = (RoundedImageView) view.findViewById(R.id.ad_icon);
             adTitle = (TextView) view.findViewById(R.id.ad_title);
             adRating = (TextView) view.findViewById(R.id.ad_rating_score);
+        }
+    }
+
+    /**
+     * 用于跳转到 google play 下载 locker 的界面
+     *
+     * @param lockerPackageName 要跳转的 locker 的包名
+     */
+    public static void directToMarket(String lockerPackageName) {
+        StringBuilder parametersStr = new StringBuilder();
+        parametersStr.append("packageName=" + BuildConfig.APPLICATION_ID);
+        parametersStr.append("&versionName=" + BuildConfig.VERSION_NAME);
+        parametersStr.append("&internal=" + BuildConfig.APPLICATION_ID);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        try {
+            intent.setData(Uri.parse("market://details?id=" + lockerPackageName + "&referrer=" + Uri.encode(parametersStr.toString())));
+            HSApplication.getContext().startActivity(intent);
+
+        } catch (Exception e) {
+            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + lockerPackageName + "&referrer=" + Uri.encode(parametersStr.toString())));
+            HSApplication.getContext().startActivity(intent);
+
         }
     }
 }

@@ -44,6 +44,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPrefsUtil;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
+import com.ihs.inputmethod.utils.TrieHelper;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -106,6 +107,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     private KeyboardGooglePlayAdManager keyboardGooglePlayAdManager;
     private String currentWord = "";
     private AdCaffeHelper adCaffeHelper;
+    private TrieHelper trieHelper;
     private INotificationObserver keyboardNotificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
@@ -305,6 +307,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
             }
             keywordList.clear();
             keywordList.addAll(tempKeywordList);
+            trieHelper = new TrieHelper();
+            for (String keyword : tempKeywordList) {
+                trieHelper.insert(keyword);
+            }
             bufferedReader.close();
             read.close();
         } catch (IOException e) {
@@ -525,13 +531,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     }
 
     private String[] splitIntoWords(String sentence) {
+        sentence = sentence.replaceAll("[^(\\w|\\s)]", ""); //移除emoji以及标点符号
         String[] words = sentence.trim().split("\\s+");
         for (int i = 0; i < words.length; i++) {
             // You may want to check for a non-word character before blindly
             // performing a replacement
             // It may also be necessary to adjust the character class
             words[i] = words[i].replaceAll("[^\\w]", "");
-            HSLog.e("lv_eee", "split " + words[i] + " " + words[i].length());
         }
         return words;
     }
@@ -576,21 +582,25 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
             HSLog.i("Failed to log key enter in google play.");
         }
 
-
         super.onCodeInput(codePoint, x, y, isKeyRepeat);
+        checkKeywordAndLoad(codePoint);
+    }
 
-        if (codePoint > 0) {
-            if (!Character.isDigit(codePoint) && !Character.isLetter(codePoint)) {
-                currentWord = "";
-            } else {
-                currentWord += (char) codePoint;
-                if (keywordList != null) {
-                    if (keywordList.contains(currentWord)) {
-                        String[] words = splitIntoWords(getInputLogic().mConnection.getAllText().toString());
+    private void checkKeywordAndLoad(int codePoint) {
+        if (codePoint == -5 ||
+                (codePoint > 0 && (Character.isLetter(codePoint) || Character.isDigit(codePoint)))) {
+            String[] words = splitIntoWords(getInputLogic().mConnection.getAllText().toString());
+            if (words.length > 0) {
+                currentWord = words[words.length - 1];
+                HSLog.e("lv_eee", currentWord);
+                if (trieHelper != null) {
+                    if (trieHelper.startsWith(currentWord)) {
                         adCaffeHelper.loadAdWithKeywords(words);
+                        return;
                     }
                 }
             }
+            getKeyboardPanelMananger().hideCustomBar();
         }
     }
 
@@ -624,12 +634,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public void onNativeAdLoadSuccess(List<AdCaffeNativeAd> nativeAds, boolean hasMore, int nextOffset) {
-        for (AdCaffeNativeAd ad : nativeAds) {
-            HSLog.e("lv_eee", ad.getTitle() + " " + ad.getBody());
-        }
+        HSLog.e("lv_eee", nativeAds.size() + " ");
         getKeyboardPanelMananger().showSearchAdBar(nativeAds);
-        if (!shouldShowSearchAD()) {
-            return;
-        }
     }
 }
