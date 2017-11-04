@@ -1,0 +1,45 @@
+libCommons:
+  RemoteConfig:
+    UpdateInterval: 10
+    PlistFile: "Local.mp"
+    PlistUrl: "xxxhttp://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/configs/config-smileykeyboard-2.0.0.mp"
+  Analytics:
+      FlurryKey: "VFHX539WKM27R8ZZ5398"
+      FacebookID: "2017803811838675"
+      TapjoySDKKey: "0vAf42klRSGnoQnFutCZWgECKUjhkbC2ofJglQzbtXRMIpdomrpc7QXJicV3"
+      FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
+      GoogleTrackId: "UA-66468004-2"
+  DiverseSession:
+    AppManageDiverseSession: true
+  ImageCache:
+    CacheSize: 0
+
+  Market:
+    DefaultMarket: "Google"
+    Markets:
+      Google:
+        AppPackage: "com.android.vending"
+        AppUrl: "market://details?id="
+        WebUrl: "https://play.google.com/store/apps/details?id="
+      Amazon:
+        AppPackage: "com.amazon.venezia"
+        AppUrl: "amzn://apps/android?p="
+        WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
+  Connection:
+      SigKey: "611_1"
+      HashKey: "zEi$+m=oJi2X<kc]nC0Ry/uEc}1-Koos"
+  AppID: "611"
+
+libFramework:
+  Push:
+    SenderID: "213210419783"
+    SendTokenToServer: yes
+  Alerts:
+    LocalFile: "Alerts.mp"
+    RemoteUrl: "http://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/alerts/smileykeyboard-2.0.0-alerts.mp"
+      
+libKeyboard:
+  DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
+
+Application:
+  WallpaperAPIURL: "https://service.appcloudbox.net/wallpapers/"

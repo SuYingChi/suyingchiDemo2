@@ -39,6 +39,12 @@ android {
             storeFile file('Mobipioneer')
             storePassword "zdhszyzs"
         }
+        grinReleaseConfig {
+            keyAlias "mobipioneer"
+            keyPassword "zdhszyzs"
+            storeFile file('Mobipioneer')
+            storePassword "zdhszyzs"
+        }
     }
     buildTypes {
         //设置Deubug和Release下的编译模式，即proguard文件路径
@@ -107,7 +113,14 @@ android {
             signingConfig signingConfigs.tigerReleaseConfig
         }
 
-
+        flavor {
+            applicationId = "com.grin.grin"
+            versionName "1.0.0"
+            versionCode 1
+            manifestPlaceholders = [APPLY_SCHEME: "grinKeyboard"]
+            buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            signingConfig signingConfigs.grinReleaseConfig
+        }
     }
 
     packagingOptions {
