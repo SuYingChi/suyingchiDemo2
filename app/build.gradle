@@ -40,9 +40,9 @@ android {
             storePassword "zdhszyzs"
         }
         grinReleaseConfig {
-            keyAlias "mobipioneer"
+            keyAlias "keyboardarts"
             keyPassword "zdhszyzs"
-            storeFile file('Mobipioneer')
+            storeFile file('KeyboardArts')
             storePassword "zdhszyzs"
         }
     }
@@ -113,8 +113,8 @@ android {
             signingConfig signingConfigs.tigerReleaseConfig
         }
 
-        flavor {
-            applicationId = "com.grin.grin"
+        grin {
+            applicationId = "com.keyboard.font.theme.emoji"
             versionName "1.0.0"
             versionCode 1
             manifestPlaceholders = [APPLY_SCHEME: "grinKeyboard"]

@@ -26,9 +26,9 @@ libCommons:
         AppUrl: "amzn://apps/android?p="
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
   Connection:
-      SigKey: "611_1"
-      HashKey: "zEi$+m=oJi2X<kc]nC0Ry/uEc}1-Koos"
-  AppID: "611"
+      SigKey: "1"
+      HashKey: "x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!"
+  AppID: "612"
 
 libFramework:
   Push:
@@ -42,4 +42,4 @@ libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
 
 Application:
-  WallpaperAPIURL: "https://service.appcloudbox.net/wallpapers/"
+  WallpaperAPIURL: "https://dev-service.appcloudbox.net/wallpapers/"

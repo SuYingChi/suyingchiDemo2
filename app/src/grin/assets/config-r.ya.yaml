@@ -29,9 +29,9 @@ libCommons:
         WebUrl: "http://www.amazon.com/gp/mas/dl/android?p="
 
   Connection:
-      SigKey: "611_1"
+      SigKey: "612_1"
       HashKey: "zEi$+m=oJi2X<kc]nC0Ry/uEc}1-Koos"
-  AppID: "611"
+  AppID: "612"
 libFramework:
   Push:
     SenderID: "213210419783"
