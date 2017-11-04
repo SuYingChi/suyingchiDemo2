@@ -217,6 +217,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             @Override
             public void run() {
                 FacemojiManager.getInstance().init();
+                ThemeDirManager.moveCustomAssetsToFileIfNecessary();
             }
         });
         HSKeyboardThemeManager.init();
