@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -83,17 +84,16 @@ public class FacemoijTabAdapter extends BaseTabViewAdapter {
     @Override
     public TagViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         TagViewHolder tagViewHolder = super.onCreateViewHolder(parent, viewType);
-        RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) tagViewHolder.itemView.getLayoutParams();
-        lp.width = HSDisplayUtils.dip2px(35);
-        lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(HSDisplayUtils.dip2px(35),HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.config_suggestions_strip_height));
+        tagViewHolder.itemView.setLayoutParams(lp);
 
         tagViewHolder.iv_tab_icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        LinearLayout.LayoutParams imageLayoutParams = (LinearLayout.LayoutParams) tagViewHolder.iv_tab_icon.getLayoutParams();
-        imageLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        imageLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         int topMargin = HSDisplayUtils.dip2px(6);
+        imageLayoutParams.gravity = Gravity.CENTER;
         imageLayoutParams.topMargin = topMargin;
         imageLayoutParams.bottomMargin = topMargin;
+        tagViewHolder.iv_tab_icon.setLayoutParams(imageLayoutParams);
         return tagViewHolder;
     }
 

@@ -414,7 +414,7 @@ public class FacemojiManager {
 
                 if (currentFaceBmp != null){
                     c.setMatrix(faceCanvasMatrix);
-                    c.drawBitmap(currentFaceBmp, null, new Rect(0, 0, param.width, param.height), null);
+                    c.drawBitmap(currentFaceBmp, null, new Rect(0, 0, param.width, param.height), paint);
                 }
             } else {
                 c.setMatrix(new Matrix());
