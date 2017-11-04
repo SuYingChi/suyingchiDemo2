@@ -37,8 +37,8 @@
     <string name="language_activity_name">com.ihs.inputmethod.settings.MoreLanguageActivity2</string>
 
     <!-- theme text override -->
-    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \nhttps://play.google.com/store/apps/details?id=com.mobipioneer.lockerkeyboard</string>
-    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\nhttps://play.google.com/store/apps/details?id=com.mobipioneer.lockerkeyboard</string>
+    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \nhttps://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\nhttps://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
     <string name="share_keyboard_name">Emoji Keyboard</string>
 
     <string name="tip_usage_access">Find %s. Switch it on to enable Apps with usage access.</string>
@@ -64,6 +64,7 @@
 
     <!-- Product Master's config -->
     <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
-    <!-- TODO:分享的内容，需要把网址替换为master的网址 @yanan.jiang -->
-    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app %1$s keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #%2$s For Free:\n http://rainbowkey.com</string>
+    <!-- -->
+    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app %1$s keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #%2$s For Free:\n https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+    <string name="fb_app_id">1651195371844917</string>
 </resources>

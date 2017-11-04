@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
+    <string name="fb_app_id">1651195371844917</string>
+
+    <string name="accessibility_service_description">Schalter oben rechts ‚EINSCHALTEN‘. ↗️⊙.⊙↗️
+Profitieren Sie vom besten Eingabeerlebnis in verschiedenen Apps, wenn die Eingabehilfe aktiviert wurde!
+Hinweis: Sie erhalten ggf. eine Systemmitteilung über die Autorisierung. Emoji Keyboard wird NIEMALS Informationen über Sie erfassen.</string>
+
+    <string name="theme_share_text_content">Meine personalisierte Tastatur, gemacht mit #%1$s  https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+    <string name="theme_share_text_content_for_custom_theme">Passe deine Tastatur mit deinen eigenen Lieblingsbildern an! Downloade #%1$s gratis: https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+    <string name="settings_button_tell_a_friend_content">Hey, Du musst die Tastatur-App %1$s ausprobieren. Du kannst deine Tastatur mit deinen eigenen Bildern ausstatten! Ausserdem sind die Schriftarten und Emojis der Wahnsinn! Lade #%2$s gratis herunter: https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+</resources>

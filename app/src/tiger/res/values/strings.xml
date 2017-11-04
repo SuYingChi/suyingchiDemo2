@@ -66,7 +66,7 @@
 With accessibility authorization, you'll get the best typing experience on different apps!
 
 Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
-    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \n https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
-    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
-    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app %1$s keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #%2$s For Free:\n https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="theme_share_text_content">My personalized keyboard made with #%1$s \n https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
+    <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
+    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app %1$s keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #%2$s For Free:\n https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
 </resources>
