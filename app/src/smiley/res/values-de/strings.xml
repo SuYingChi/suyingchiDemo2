@@ -11,4 +11,13 @@ Hinweis: Sie erhalten ggf. eine Systemmitteilung über die Autorisierung. Emoji 
     <string name="theme_share_text_content">Meine personalisierte Tastatur, gemacht mit #%1$s  https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
     <string name="theme_share_text_content_for_custom_theme">Passe deine Tastatur mit deinen eigenen Lieblingsbildern an! Downloade #%1$s gratis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
     <string name="settings_button_tell_a_friend_content">Hey, Du musst die Tastatur-App %1$s ausprobieren. Du kannst deine Tastatur mit deinen eigenen Bildern ausstatten! Ausserdem sind die Schriftarten und Emojis der Wahnsinn! Lade #%2$s gratis herunter: http://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="my_facemoji_send_facemoji_tip">ROFL? Direkt von Emoji Keyboard senden!</string>
+    <string name="camera_activity_title">Schieße ein Selfie</string>
+    <string name="facemoji_in_progress">Facemoji im Gange…</string>
+
+    <string name="my_facemoji_toolbar_title">MEINE FACEMOJIS</string>
+
+    <string name="switch_facemoji_toolbar_title">Gesicht wechseln</string>
+    <string name="switch_facemoji_selected_status_title">%d Ausgewählt</string>
+    <string name="label_manage">BEARBEITEN</string>
 </resources>

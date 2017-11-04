@@ -5206,6 +5206,12 @@
 					<array>
 						<dict>
 							<key>name</key>
+							<string>LovelyDog</string>
+							<key>showName</key>
+							<string>Lovely Dog</string>
+						</dict>
+						<dict>
+							<key>name</key>
 							<string>AdorableFace</string>
 							<key>showInKeyboard</key>
 							<true/>

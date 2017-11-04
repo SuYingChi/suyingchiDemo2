@@ -8,6 +8,6 @@
 
     <string name="switch_facemoji_toolbar_title">Switch Face</string>
     <string name="switch_facemoji_selected_status_title">%d Selected</string>
-    <string name="label_manage">MANAGE</string>
+    <string name="label_manage">EDIT</string>
 
 </resources>

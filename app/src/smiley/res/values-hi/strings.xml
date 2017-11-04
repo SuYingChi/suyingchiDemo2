@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="my_facemoji_send_facemoji_tip">पहले से ही आरओएफएल? सीधे Emoji Keyboard पर भेजें!</string>
+    <string name="camera_activity_title">एक सेल्‍फी लें</string>
+    <string name="facemoji_in_progress">फेसमोजी प्रगति में है...</string>
+
+    <string name="my_facemoji_toolbar_title">मेरी फेसमोजिज</string>
+
+    <string name="switch_facemoji_toolbar_title">फेस पर जाएं</string>
+    <string name="switch_facemoji_selected_status_title">%d चयनित</string>
+    <string name="label_manage">संपादन</string>
+
+</resources>

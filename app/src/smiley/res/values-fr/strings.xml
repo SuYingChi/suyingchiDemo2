@@ -11,4 +11,13 @@ Remarque : vous recevrez peut-être un rappel système pour l\'autorisation. Em
     <string name="theme_share_text_content">Mon clavier personnalisé créé avec #%1$s https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
     <string name="theme_share_text_content_for_custom_theme">Personaliza tu propio teclado con tus fotos favoritas! Descárgate #%1$s gratis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
     <string name="settings_button_tell_a_friend_content">Salut, vous devriez tester l’application de clavier %1$s. Elle vous permet de personnaliser votre clavier avec vos propres photos ! Quant aux polices et émoticônes, elles sont sublimes ! Téléchargez gratuitement #%2$s : https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="my_facemoji_send_facemoji_tip">Déjà ROFL ? Envoyez directement vers le clavier Emoji !</string>
+    <string name="camera_activity_title">Prendre un selfie</string>
+    <string name="facemoji_in_progress">Facemoji en cours...</string>
+
+    <string name="my_facemoji_toolbar_title">MES FACEMOJIS</string>
+
+    <string name="switch_facemoji_toolbar_title">Changer de visage</string>
+    <string name="switch_facemoji_selected_status_title">%d Sélectionné</string>
+    <string name="label_manage">MODIFIER</string>
 </resources>

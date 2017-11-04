@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="my_facemoji_send_facemoji_tip">Đã ROFL? Gửi trực tiếp trên Emoji Keyboard!</string>
+    <string name="camera_activity_title">Chụp ảnh tự sướng</string>
+    <string name="facemoji_in_progress">Facemoji đang trong tiến trình...</string>
+
+    <string name="my_facemoji_toolbar_title">FACEMOJI CỦA TÔI</string>
+
+    <string name="switch_facemoji_toolbar_title">Đổi Mặt</string>
+    <string name="switch_facemoji_selected_status_title">%d Đã chọn</string>
+    <string name="label_manage">CHỈNH SỬA</string>
+
+</resources>

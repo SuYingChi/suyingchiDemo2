@@ -12,4 +12,14 @@ Obs.: Você pode receber um lembrete do sistema sobre a autorização. Emoji Key
     <string name="theme_share_text_content_for_custom_theme">Personaliza o teu teclado com as tuas fotos favoritas! Descarrega #%1$s grátis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
     <string name="settings_button_tell_a_friend_content">Você precisa experimentar o app %1$s. Você pode personalizar seu teclado com suas próprias fotos! E as ⒻⓄⓃⓉⓈ e os emojis são incríveis.
         Baixe o #%2$s agora grátis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
+    <string name="my_facemoji_send_facemoji_tip">Já está rolando de rir? Envie diretamente pelo Emoji Keyboard!</string>
+    <string name="camera_activity_title">Tire uma selfie</string>
+    <string name="facemoji_in_progress">Facemoji em andamento...</string>
+
+    <string name="my_facemoji_toolbar_title">MEUS FACEMOJIS</string>
+
+    <string name="switch_facemoji_toolbar_title">Mude de rosto</string>
+    <string name="switch_facemoji_selected_status_title">%d Selecionados</string>
+    <string name="label_manage">EDITAR</string>
+
 </resources>

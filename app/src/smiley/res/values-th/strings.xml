@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="my_facemoji_send_facemoji_tip">ROFL ตลกพอไหม? ส่งเข้า Emoji Keyboard โดยตรงเลย!</string>
+    <string name="camera_activity_title">ถ่ายเซลฟี</string>
+    <string name="facemoji_in_progress">กำลังทำ Facemoji...</string>
+
+    <string name="my_facemoji_toolbar_title">Facemoji ของฉัน</string>
+
+    <string name="switch_facemoji_toolbar_title">เปลี่ยนหน้า</string>
+    <string name="switch_facemoji_selected_status_title">%d เลือกแล้ว</string>
+    <string name="label_manage">%d เลือกแล้ว</string>
+
+</resources>
