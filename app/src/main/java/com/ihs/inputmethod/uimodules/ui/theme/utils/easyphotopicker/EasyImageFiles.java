@@ -17,7 +17,7 @@ import java.util.UUID;
 /**
  * Created by Jacek Kwiecień on 14.12.15.
  */
-class EasyImageFiles {
+public class EasyImageFiles {
 
     public static String DEFAULT_FOLDER_NAME = "EasyImage";
     public static String TEMP_FOLDER_NAME = "Temp";

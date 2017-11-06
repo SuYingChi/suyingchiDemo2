@@ -40,6 +40,7 @@ import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -49,7 +50,7 @@ import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
-import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.easyphotopicker.EasyImageFiles;
 import com.ihs.inputmethod.uimodules.utils.BitmapUtils;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.ihs.inputmethod.uimodules.utils.UriUtils;
@@ -505,10 +506,22 @@ public class CameraActivity extends HSAppCompatActivity {
                 Uri uri = data.getData();
                 //根据Uri获取文件路径
                 String filePath = UriUtils.getImageAbsolutePath(this, uri);
+                if (filePath == null){
+                    try {
+                        File file = EasyImageFiles.pickedExistingPicture(HSApplication.getContext(), uri);
+                        if (file != null){
+                            filePath = file.getAbsolutePath();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                //压缩图片到屏幕尺寸
-                Bitmap bitmap = BitmapUtils.compressBitmap(filePath, DisplayUtils.getScreenWidthForContent(), DisplayUtils.getScreenHeightForContent());
-                synthesisingPhoto(bitmap);
+                if (filePath != null) {
+                    //压缩图片到屏幕尺寸
+                    Bitmap bitmap = BitmapUtils.compressBitmap(filePath, DisplayUtils.getScreenWidthForContent(), DisplayUtils.getScreenHeightForContent());
+                    synthesisingPhoto(bitmap);
+                }
                 break;
             default:
                 break;

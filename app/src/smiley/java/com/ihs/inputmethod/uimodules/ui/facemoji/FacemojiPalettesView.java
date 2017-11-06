@@ -107,8 +107,10 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
                     for (int i = 0 ; i < categories.size() ; i++ ){
                         FacemojiCategory category = categories.get(i);
                         if (category.getName().equals(facemojiCategory.getName())){
-                            mStickerPalettesAdapter.notifyDownloaded(i);
-                            mStickerPalettesAdapter.notifyDataSetChanged();
+                            if (mStickerPalettesAdapter != null) {
+                                mStickerPalettesAdapter.notifyDownloaded(i);
+                                mStickerPalettesAdapter.notifyDataSetChanged();
+                            }
                             break;
                         }
                     }
