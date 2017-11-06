@@ -11,6 +11,7 @@ import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.DaoHelper;
@@ -58,6 +59,7 @@ public final class GifManager {
     public void share(final GifItem gif, final String packageName, final GifDownloadTask.Callback callback) {
         if (!DirectoryUtils.isSDCardEnabled()) {
             HSInputMethod.inputText(gif.getUrl());
+            HSAnalytics.logEvent("keyboard_gif_share_mode");
             return;
         }
 
