@@ -511,7 +511,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public void onKeyboardWindowHide() {
-        if (!shouldShowGoogleAD()) {
+        if (!shouldShowSearchAD()) {
             getKeyboardPanelMananger().removeCustomizeBar();
         }
 
@@ -532,6 +532,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     private String[] splitIntoWords(String sentence) {
         sentence = sentence.replaceAll("[^(\\w|\\s)]", ""); //移除emoji以及标点符号
+        HSLog.e("lv_eee", sentence);
         String[] words = sentence.trim().split("\\s+");
         for (int i = 0; i < words.length; i++) {
             // You may want to check for a non-word character before blindly
@@ -635,6 +636,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     @Override
     public void onNativeAdLoadSuccess(List<AdCaffeNativeAd> nativeAds, boolean hasMore, int nextOffset) {
         HSLog.e("lv_eee", nativeAds.size() + " ");
-        getKeyboardPanelMananger().showSearchAdBar(nativeAds);
+        if (shouldShowSearchAD()) {
+            getKeyboardPanelMananger().showSearchAdBar(nativeAds);
+        }
     }
 }

@@ -105,6 +105,8 @@
     <color name="turn_sound_tip_bg">#E33c3c46</color>
 
     <color name="search_ad_placeholder_color">#e0e4ed</color>
+    <color name="search_ad_store_rating_text">#999999</color>
+
     <color name="ad_button_blue_pressed">#3000e0</color>
     <color name="ad_button_green_state">#00c753</color>
     <color name="ad_button_green_state_pressed">#00a947</color>
@@ -123,6 +125,7 @@
     <color name="privacy_stress_text">#53c0fe</color>
     <color name="custom_rate_alert_button_bg">#d53bf1</color>
     <color name="custom_share_alert_button_bg">#4589f3</color>
+
 
     <!-- Wallpaper -->
     <color name="wallpaper_activities_control_highlight">#dadada</color>

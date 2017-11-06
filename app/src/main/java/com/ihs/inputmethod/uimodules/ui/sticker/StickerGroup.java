@@ -121,7 +121,7 @@ public class StickerGroup {
     }
 
     private String getStickerDownloadBaseUrl() {
-        return HSConfig.getString("Application", "Server", "StickerDownloadBaseURL");
+        return HSConfig.getString("Application", "Server", "StickerDownloadBaseURL") + "/";
     }
 
     private boolean isStickerExistInAssets(String stickerGroupName) {

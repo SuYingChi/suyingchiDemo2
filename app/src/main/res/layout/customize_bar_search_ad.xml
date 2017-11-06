@@ -12,9 +12,7 @@
     <FrameLayout
         android:id="@+id/ad_icon_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp">
+        android:layout_height="wrap_content">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/ad_icon"
@@ -22,13 +20,6 @@
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             app:riv_corner_radius="@dimen/config_key_preview_offset_electric"/>
-
-        <ImageView
-            android:id="@+id/ad_google_play_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:src="@drawable/ic_ad_label" />
 
     </FrameLayout>
 
@@ -63,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:textColor="#999999"
+                android:textColor="@color/search_ad_store_rating_text"
                 android:textSize="12sp"
                 android:fontFamily="ArialMT"/>
 

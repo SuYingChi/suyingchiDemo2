@@ -42,7 +42,7 @@ public class Sticker {
 
 
     private String getStickerDownloadBaseUrl() {
-        return HSConfig.getString("Application", "Server", "StickerDownloadBaseURL");
+        return HSConfig.getString("Application", "Server", "StickerDownloadBaseURL") + "/";
     }
 
     public String getStickerUri() {

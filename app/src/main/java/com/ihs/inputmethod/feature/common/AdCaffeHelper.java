@@ -14,6 +14,7 @@ import com.ihs.commons.connection.HSServerAPIConnection;
 import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.libcommon.utils.HSAdUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,26 +55,24 @@ public class AdCaffeHelper {
         this.context = context;
 
         this.placementId = "999999_24581";
-        this.packageName = "1241932094";
-//        HSAdUtils.getAdID(new HSAdUtils.GetAdIdListener() {
-//            @Override
-//            public void onGetAdIdSuccess(String s) {
-//                adId = s;
-//            }
-//
-//            @Override
-//            public void onGetAdIdFailed() {
-//
-//            }
-//        });
+        this.packageName = UserDataUtils.getPackageName(context);
+        HSAdUtils.getAdID(new HSAdUtils.GetAdIdListener() {
+            @Override
+            public void onGetAdIdSuccess(String s) {
+                adId = s;
+            }
 
-        adId = "92ee900f-610b-442d-9178-7dc94619f009";
+            @Override
+            public void onGetAdIdFailed() {
+
+            }
+        });
+
         platform = "android";
         deviceType = getDeviceType(context);
-        osVersion = "10";
-        networkType = "wifi";
-        country = "us";
-        vendor = "pubnative";
+        osVersion = UserDataUtils.getOsVersion();
+        networkType = getNetworkType(context);
+        country = UserDataUtils.getCountry();
         this.onNativeAdLoadListener = onNativeAdLoadListener;
     }
 
@@ -95,7 +94,6 @@ public class AdCaffeHelper {
         fillJson(jsonObject, "platform", platform.toLowerCase());
         fillJson(jsonObject, "device", deviceType.toLowerCase());
         fillJson(jsonObject, "country", country.toLowerCase());
-        fillJson(jsonObject, "vendor", vendor.toLowerCase());
 
         JSONArray jsonArray = new JSONArray();
         jsonArray.put("tools");
@@ -105,7 +103,6 @@ public class AdCaffeHelper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         fillJson(jsonObject, "os_version", osVersion);
         fillJson(jsonObject, "network", networkType);

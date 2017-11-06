@@ -427,7 +427,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             searchAdRecyclerView = new RecyclerView(HSApplication.getContext());
             searchAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
             searchAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
-            int padding = DisplayUtils.dip2px(8);
+            int padding = DisplayUtils.dip2px(5);
             searchAdRecyclerView.setPadding(padding, 0, padding, 0);
             searchAdRecyclerView.setAdapter(searchAdAdapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(HSApplication.getContext());

@@ -84,7 +84,7 @@ public class StickerUtils {
     }
 
     public static String getStickerDownloadBaseUrl() {
-        return HSConfig.getString("Application", "Server", "StickerDownloadBaseURL");
+        return HSConfig.getString("Application", "Server", "StickerDownloadBaseURL") + "/";
     }
 
     private static String getStickerAssetsPath(Sticker sticker) {
