@@ -184,14 +184,17 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
             HSLog.e(TAG, "Invalid dialog");
             return;
         }
+        try {
+            super.show();
+            /**
+             * 设置dialog宽度全屏
+             */
+            android.view.WindowManager.LayoutParams params = getWindow().getAttributes();  //获取对话框当前的参数值、
+            params.width = HSDisplayUtils.getScreenWidthForContent();    //宽度设置全屏宽度
+            getWindow().setAttributes(params);     //设置生效
+        }catch (Exception e){
+        }
 
-        super.show();
 
-        /**
-         * 设置dialog宽度全屏
-         */
-        android.view.WindowManager.LayoutParams params = getWindow().getAttributes();  //获取对话框当前的参数值、
-        params.width = HSDisplayUtils.getScreenWidthForContent();    //宽度设置全屏宽度
-        getWindow().setAttributes(params);     //设置生效
     }
 }
