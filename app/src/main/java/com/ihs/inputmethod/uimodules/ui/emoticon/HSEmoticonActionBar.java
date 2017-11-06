@@ -37,13 +37,16 @@ import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.listeners.DeleteKeyOnTouchListener;
 import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
+import com.ihs.inputmethod.uimodules.ui.emoticon.bean.ActionbarTab;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.GifPanel;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerPanel;
 import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
@@ -110,48 +113,26 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        String[] panelNames = new String[0];
-        Class[] panelClassNames = new Class[0];
+        List<ActionbarTab> actionbarTabs = new ArrayList<>();
+        actionbarTabs.add(new ActionbarTab(PANEL_EMOJI, HSEmojiPanel.class, R.drawable.ic_emoji_panel_tab));
+        actionbarTabs.add(new ActionbarTab(PANEL_STICKER, StickerPanel.class, R.drawable.ic_sticker_panel_tab));
         if (BuildConfig.ENABLE_FACEMOJI) {
             try {
-                panelClassNames = new Class[]{
-                        HSEmojiPanel.class,
-                        StickerPanel.class,
-                        Class.forName("com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel"),
-                        GifPanel.class,
-                        HSTextPanel.class
-                };
-                panelNames = new String[]{
-                        PANEL_EMOJI,
-                        PANEL_STICKER,
-                        PANEL_FACEEMOJI,
-                        PANEL_GIF,
-                        PANEL_TEXT
-                };
+                actionbarTabs.add(new ActionbarTab(PANEL_FACEEMOJI,Class.forName("com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel"), R.drawable.ic_facemoji_panel_tab));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 throw new RuntimeException("com.ihs.inputmethod.uimodules.ui.facemoji.HSFacemojiPanel not find!");
             }
-        } else {
-            panelClassNames = new Class[]{
-                    HSEmojiPanel.class,
-                    StickerPanel.class,
-                    GifPanel.class,
-                    HSTextPanel.class
-            };
-            panelNames = new String[]{
-                    PANEL_EMOJI,
-                    PANEL_STICKER,
-                    PANEL_GIF,
-                    PANEL_TEXT
-            };
         }
+        actionbarTabs.add(new ActionbarTab(PANEL_GIF, GifPanel.class, R.drawable.ic_gif_panel_tab));
+        actionbarTabs.add(new ActionbarTab(PANEL_TEXT, HSTextPanel.class, R.drawable.ic_text_panel_tab));
+
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
-        final int actionBarAmount = panelNames.length;
-        for (int i = 0; i < panelNames.length; i++) {
-            final String panelName = panelNames[i];
-            final Class<?> clazz = panelClassNames[i];
-            final ImageView btn = getBtnImage(panelName);
+        final int actionBarAmount = actionbarTabs.size();
+        for (int i = 0; i < actionBarAmount; i++) {
+            final String panelName = actionbarTabs.get(i).panelName;
+            final Class<?> clazz = actionbarTabs.get(i).panelClass;
+            final ImageView btn = getBtnImage(actionbarTabs.get(i).iconResId);
             final LayoutParams params = new LayoutParams(0, height, 1.0f);
             final int actionBarWidth = (getContext().getResources().getDisplayMetrics().widthPixels - HSDisplayUtils.dip2px(56) * 2) / actionBarAmount;
 
@@ -189,21 +170,12 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         alphabet_left.setOnClickListener(this);
         alphabet_left.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getFuncKeyTextColor());
         alphabet_left.setTextSize(TypedValue.COMPLEX_UNIT_PX, HSKeyboardThemeManager.getCurrentTheme().getFuncKeyLabelSize());
-//        alphabet_left.setTypeface(HSKeyboardThemeManager.getCurrentTheme().getTextTypeface());
         alphabet_left.setText(HSInputMethod.getSwitchToAlphaKeyLabel());
         alphabet_left.setBackgroundDrawable(getBackgroundDrawable());
         initDeleteKey(height);
     }
 
     private void initDeleteKey(final int height) {
-        final StateListDrawable deleteKeyDrawable = new StateListDrawable();
-        Drawable deleteDrawable = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("emoji_delete");
-        Drawable deleteHL = HSKeyboardThemeManager.getCurrentTheme().getStyledDrawableFromResources("emoji_delete_hl");
-        deleteKeyDrawable.addState(new int[]{android.R.attr.state_pressed}, deleteHL);
-        deleteKeyDrawable.addState(new int[]{android.R.attr.state_focused}, deleteHL);
-        deleteKeyDrawable.addState(new int[]{android.R.attr.state_selected}, deleteHL);
-        deleteKeyDrawable.addState(new int[]{}, deleteDrawable);
-
         final ImageView deleteKey = new ImageView(getContext());
         deleteKey.setScaleType(ImageView.ScaleType.CENTER);
         deleteKey.setTag(Constants.CODE_DELETE);
@@ -216,8 +188,8 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
         addView(deleteKey, params);
     }
 
-    private ImageView getBtnImage(final String panelName) {
-        Drawable tabbarBtnDrawable = getTabDrawable(HSApplication.getContext().getResources().getIdentifier("ic_" + panelName + "_panel_tab", "drawable", HSApplication.getContext().getPackageName()));
+    private ImageView getBtnImage(int iconResId) {
+        Drawable tabbarBtnDrawable = getTabDrawable(iconResId);
         ImageView tabbarBtn = new ImageView(HSApplication.getContext());
         tabbarBtn.setScaleType(ImageView.ScaleType.CENTER);
         tabbarBtn.setImageDrawable(tabbarBtnDrawable);
@@ -320,5 +292,6 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
     public void setKeyboardPanelActionListener(BasePanel.OnPanelActionListener panelActionListener) {
         this.keyboardActionListener = panelActionListener;
     }
+
 
 }

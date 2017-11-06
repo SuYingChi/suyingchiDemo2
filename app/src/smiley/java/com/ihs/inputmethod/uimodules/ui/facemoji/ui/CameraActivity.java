@@ -91,6 +91,18 @@ public class CameraActivity extends HSAppCompatActivity {
         }
     };
 
+    private final int[] faceResIdList = new int[]{R.drawable.face0,
+            R.drawable.face1,R.drawable.face2,R.drawable.face3,R.drawable.face4};
+
+    private final int[] faceChoosenResIdList = new int[]{R.drawable.face0_choosen,
+            R.drawable.face1_choosen,R.drawable.face2_choosen,R.drawable.face3_choosen,R.drawable.face4_choosen};
+
+    private final int[] faceMaskResIdList = new int[]{R.drawable.facemask1,
+            R.drawable.facemask2,R.drawable.facemask3,R.drawable.facemask4,R.drawable.facemask5};
+
+    private final int[] faceMaskBlackResIdList = new int[]{R.drawable.facemask1_black,
+            R.drawable.facemask2_black,R.drawable.facemask3_black,R.drawable.facemask4_black,R.drawable.facemask5_black};
+
     private final class MyPictureCallback implements Camera.PictureCallback {
 
         @Override
@@ -545,13 +557,11 @@ public class CameraActivity extends HSAppCompatActivity {
 
                     final LinearLayout faceListView = (LinearLayout) findViewById(R.id.face_list_view);
                     int index = faceListView.indexOfChild(v);
-                    String uri = "drawable/face" + index + "_choosen";
-                    int resourceId = getResources().getIdentifier(uri, null, getPackageName());
-                    v.setBackgroundResource(resourceId);
+                    v.setBackgroundResource(faceChoosenResIdList[index]);
 
                     ImageView maskView = (ImageView) findViewById(R.id.mask_view);
                     RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) maskView.getLayoutParams();
-                    int resId = getResources().getIdentifier("drawable/facemask" + (index + 1), null, getPackageName());
+                    int resId = faceMaskResIdList[index];
                     boolean isTablet = getResources().getBoolean(R.bool.isTablet);
                     if (isTablet) {
                         Bitmap faceMask = BitmapUtils.drawMaskView(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), resId), lp.width, lp.height);
@@ -561,14 +571,14 @@ public class CameraActivity extends HSAppCompatActivity {
                     }
 
 
-                    maskView.setTag("" + (index + 1));
+                    maskView.setTag(index);
 
                     for (int k = 0; k < faceListView.getChildCount(); k++) {
                         if (k == index) {
                             continue;
                         }
 
-                        faceListView.getChildAt(k).setBackgroundResource(getResources().getIdentifier("drawable/face" + k, null, getPackageName()));
+                        faceListView.getChildAt(k).setBackgroundResource(faceResIdList[k]);
                     }
 
                 }
@@ -581,10 +591,7 @@ public class CameraActivity extends HSAppCompatActivity {
             layoutParams.setMargins((int) getResources().getDimension(R.dimen.facemoji_face_list_left_margin), 0,
                     (int) getResources().getDimension(R.dimen.facemoji_face_list_left_margin), (int) getResources().getDimension(R.dimen.facemoji_face_list_bottom_margin));
 
-            String uri = "drawable/face" + i;
-            int resourceId = getResources().getIdentifier(uri, null, getPackageName());
-
-            iv.setBackgroundResource(resourceId);
+            iv.setBackgroundResource(faceResIdList[i]);
             layoutParams.height = (int) (scrollViewPara.height * 0.8);
             layoutParams.width = layoutParams.height * iv.getBackground().getIntrinsicWidth() / iv.getBackground().getIntrinsicHeight();
             iv.setLayoutParams(layoutParams);
@@ -603,7 +610,7 @@ public class CameraActivity extends HSAppCompatActivity {
 
         ImageView maskView = (ImageView) findViewById(R.id.mask_view);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) maskView.getLayoutParams();
-        int resId = getResources().getIdentifier("drawable/facemask" + (target / 2 + 1), null, getPackageName());
+        int resId = faceMaskResIdList[target/2];
         boolean isTablet = getResources().getBoolean(R.bool.isTablet);
         if (isTablet) {
             Bitmap faceMask = BitmapUtils.drawMaskView(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), resId), lp.width, lp.height);
@@ -611,9 +618,9 @@ public class CameraActivity extends HSAppCompatActivity {
         } else {
             maskView.setBackgroundResource(resId);
         }
-        maskView.setTag("" + (target / 2 + 1));
+        maskView.setTag(target / 2);
 
-        faceListView.getChildAt(target / 2).setBackgroundResource(getResources().getIdentifier("drawable/face" + (target / 2) + "_choosen", null, getPackageName()));
+        faceListView.getChildAt(target / 2).setBackgroundResource(faceChoosenResIdList[target / 2]);
     }
 
     private void startCameraAndPreview(final SurfaceHolder holder) {
@@ -997,7 +1004,7 @@ public class CameraActivity extends HSAppCompatActivity {
         activityShot.recycle();
 
         Bitmap mask = BitmapFactory.decodeResource(getResources(),
-                getResources().getIdentifier("drawable/facemask" + maskView.getTag() + "_black", null, getPackageName()));
+                faceMaskBlackResIdList[(int) maskView.getTag()]);
         Matrix matrix = new Matrix();
         matrix.setScale(mask.getWidth() * 1.0f / activityShotRet.getWidth(), mask.getHeight() * 1.0f / activityShotRet.getHeight());
         Bitmap face = Bitmap.createBitmap(activityShotRet, 0, 0, activityShotRet.getWidth(), activityShotRet.getHeight(), matrix, true);
