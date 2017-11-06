@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.facemoji;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -153,25 +152,23 @@ public class FacemojiManager {
         HSGlobalNotificationCenter.addObserver(NetworkChangeReceiver.NOTIFICATION_CONNECTIVITY_CHANGED, notificationObserver);
     }
 
-    private void loadFacemojiCategoryFromConfig() {
+    private synchronized void loadFacemojiCategoryFromConfig() { //可能config change和首次启动时间间隔短，导致同时解压同一个文件会解压不成功
         List<FacemojiCategory> facemojiCategoryList = new ArrayList<>();
         FacemojiCategory facemojiCategory;
         List<Map<String,Object>> facemojiList = (List<Map<String, Object>>) HSConfig.getList("Application", "Facemoji");
         for (int i = 0 ; i < facemojiList.size() ; i++) {
             Map<String, Object> map = facemojiList.get(i);
-            String stickerCategoryName = (String) map.get("name");
-            boolean isBuildIn = buildInFacemojiCategories.contains(stickerCategoryName);
-            facemojiCategory = new FacemojiCategory(stickerCategoryName, i, HSConfigUtils.toInt(map.get("width"),0), HSConfigUtils.toInt(map.get("height"),0),isBuildIn);
+            String facemojiCategoryName = (String) map.get("name");
+            boolean isBuildIn = buildInFacemojiCategories.contains(facemojiCategoryName);
+            facemojiCategory = new FacemojiCategory(facemojiCategoryName, i, HSConfigUtils.toInt(map.get("width"),0), HSConfigUtils.toInt(map.get("height"),0),isBuildIn);
             facemojiCategoryList.add(facemojiCategory);
 
-            if (isBuildIn){
+            if (FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategoryName)){
                 facemojiCategory.parseYaml();
             }else {
-                if (FacemojiDownloadManager.getInstance().isFacemojiCategoryDownloadedSuccess(stickerCategoryName)){
-                    facemojiCategory.parseYaml();
-                }else {
-                    facemojiCategory.setFakeStickerListData();
-                    FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(facemojiCategory,facemojiCategoryDownloadListener);
+                facemojiCategory.setFakeStickerListData();
+                if (!isBuildIn){
+                    FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(facemojiCategory, facemojiCategoryDownloadListener);
                 }
             }
         }
@@ -531,17 +528,18 @@ public class FacemojiManager {
     }
 
     private boolean copyAssetFileToStorage(String facemojiCategoryName) {
-        AssetManager assetMgr = HSApplication.getContext().getAssets();
-        String categoryDirectory = getFacemojiLocalDirPath() + "/" + facemojiCategoryName;
-        File mojimeFile = new File(categoryDirectory);
-        if (mojimeFile.exists()) {
-            return false;
+        if (FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategoryName)) {
+            return true;
         }
-        mojimeFile.mkdirs();
-        AssetManager am = assetMgr;
+
+        String categoryDirectoryPath = getFacemojiLocalDirPath() + "/" + facemojiCategoryName;
+        File mojimeFile = new File(categoryDirectoryPath);
+        if (!mojimeFile.exists()) {
+            mojimeFile.mkdirs();
+        }
         File mojimeZipFile = getFacemojiZipFile(facemojiCategoryName);
         try {
-            InputStream isd = am.open(facemojiCategoryName + ".zip");
+            InputStream isd = HSApplication.getContext().getAssets().open(facemojiCategoryName + ".zip");
             OutputStream os = new FileOutputStream(mojimeZipFile);
             byte[] b = new byte[1024];
             int length;
@@ -552,15 +550,17 @@ public class FacemojiManager {
             os.close();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
         if (mojimeZipFile.exists()) {
-            if (unzipFacemojiCategory(mojimeZipFile)){
+            if (unzipFacemojiCategory(mojimeZipFile)) {
                 FacemojiDownloadManager.getInstance().setFacemojiCategoryDownloadedSuccess(facemojiCategoryName);
+                return true;
             }
         }
         mojimeZipFile.delete();
-        return true;
+        return false;
     }
 
     public List<FacemojiSticker> getStickerList(int postion) {

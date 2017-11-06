@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji.bean;
 
 import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSMapUtils;
@@ -53,19 +52,6 @@ public class FacemojiCategory {
         for (Object stickerName : stickers) {
             stickerList.add(new FacemojiSticker(name, (String) ((Map<String, ?>) stickerName).get("name")));
         }
-    }
-
-    public void unzipSuccess() {
-        saveDownloadedSuccess();
-    }
-
-    private void saveDownloadedSuccess() {
-        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putBoolean("FacemojiCategory_" + name + "_DownloadedSuccess", true).apply();
-        parseYaml();
-    }
-
-    public boolean isDownloadedSuccess() {
-        return PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean("FacemojiCategory_" + name + "_DownloadedSuccess", false);
     }
 
     public List<FacemojiSticker> getStickerList() {

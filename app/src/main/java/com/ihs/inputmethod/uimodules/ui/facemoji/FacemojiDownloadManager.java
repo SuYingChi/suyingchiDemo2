@@ -88,11 +88,11 @@ public class FacemojiDownloadManager {
         });
     }
 
-    public void setFacemojiCategoryDownloadedSuccess(String facemojiCategoryName) {
+    public static void setFacemojiCategoryDownloadedSuccess(String facemojiCategoryName) {
         PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putBoolean("FacemojiCategory_" + facemojiCategoryName + "_DownloadedSuccess", true).apply();
     }
 
-    public boolean isFacemojiCategoryDownloadedSuccess(String facemojiCategoryName) {
+    public static boolean isFacemojiCategoryDownloadedSuccess(String facemojiCategoryName) {
         return PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).getBoolean("FacemojiCategory_" + facemojiCategoryName + "_DownloadedSuccess", false);
     }
 

@@ -213,10 +213,9 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
         Bitmap bitmap = ImageLoader.getInstance().loadImageSync(FacemojiManager.getDefaultFacePicUri().toString(), new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                 .postProcessor(new BitmapAddBorderProcessor(Color.WHITE)).build());
-        if(bitmap !=null){
+        if (bitmap != null) {
             Drawable drawable = HSDrawableUtils.getDimmedForegroundDrawable(bitmap);
             face_icon.setBackgroundDrawable(drawable);
-            bitmap.recycle();
         }
     }
 
@@ -256,25 +255,28 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         iconParam.setMargins(0, margin, 0, margin);
         iconView.setLayoutParams(iconParam);
         FacemojiCategory facemojiCategory = FacemojiManager.getInstance().getFacemojiCategories().get(categoryId);
-        if (facemojiCategory.isBuildIn() || facemojiCategory.isDownloadedSuccess()){
+        if (FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategory.getName())){
             iconView.setImageDrawable(facemojiCategory.getCategoryIcon());
         }else {
             int padding = (iconParam.height - DisplayUtils.dip2px(this,24)) / 2;
             iconView.setPadding(padding,padding,padding,padding);
             Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image_grey);
-            RequestOptions requestOptions = new RequestOptions().placeholder(drawable).diskCacheStrategy(DiskCacheStrategy.DATA);
-            Glide.with(this).asBitmap().apply(requestOptions).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).listener(new RequestListener<Bitmap>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                    return false;
-                }
+            iconView.setImageDrawable(drawable);
+            if (!facemojiCategory.isBuildIn() ){ //可能内置的没有解压成功，则不应该去下载
+                RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA);
+                Glide.with(this).asBitmap().apply(requestOptions).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).listener(new RequestListener<Bitmap>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                    iconView.setPadding(0,0,0,0);
-                    return false;
-                }
-            }).into(iconView);
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                        iconView.setPadding(0, 0, 0, 0);
+                        return false;
+                    }
+                }).into(iconView);
+            }
         }
         iconView.setBackgroundDrawable(getTabbarCategoryIconBackground());
         tspec.setIndicator(v);
