@@ -149,7 +149,11 @@ repositories {
     flatDir {
         dirs 'libs', 'libs/bin_chargingscreen_android'
     }
-
+    configurations.all {
+        resolutionStrategy {
+            force 'net.appcloudbox.common:libAcbCommonUtils.beta:1.1.2.beta04'
+        }
+    }
 }
 
 android.applicationVariants.all { variant ->
@@ -161,9 +165,9 @@ final LIB_DEVICE_VERSION = '.gm:4.2.+'
 
 dependencies {
     // App Framework
-    compile "com.ihandy.appframework:libAppframework.gm:4.5.0.gm"
+    compile "com.ihandy.appframework:libAppframework.beta:4.5.0.beta01"
     //Ads
-    compile 'net.appcloudbox.ads:libAcbAds.gm:1.1.1.gm'
+    compile 'net.appcloudbox.ads:libAcbAds.beta:1.1.1.beta04'
 
 //    // Native Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdAvocarrotNativeAdapter.gm:5.0.0.gm'
