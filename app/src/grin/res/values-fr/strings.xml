@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="feedback_email">feedback.mobipioneer@hotmail.com</string>
-    <string name="fb_app_id">725261934240541</string>
+<string name="feedback_email">private.keyboardarts@gmail.com</string>
+<string name="fb_app_id">2017803811838675</string>
 
     <string name="accessibility_service_description">Activez l\'interrupteur en haut à droite.↗️⊙.⊙↗️
 Avec l\'autorisation d\'accès, vous obtiendrez une meilleure expérience de saisie dans toutes les applications !
 Remarque : vous recevrez peut-être un rappel système pour l\'autorisation. Emoji Keyboard ne collecte JAMAIS vos informations.</string>
 
-    <string name="theme_share_text_content">Mon clavier personnalisé créé avec #%1$s https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
-    <string name="theme_share_text_content_for_custom_theme">Personaliza tu propio teclado con tus fotos favoritas! Descárgate #%1$s gratis: https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
-    <string name="settings_button_tell_a_friend_content">Salut, vous devriez tester l’application de clavier %1$s. Elle vous permet de personnaliser votre clavier avec vos propres photos ! Quant aux polices et émoticônes, elles sont sublimes ! Téléchargez gratuitement #%2$s : https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
+    <string name="theme_share_text_content">Mon clavier personnalisé créé avec #%1$s https://play.google.com/store/apps/details?id=com.keyboard.font.theme.emoji</string>
+    <string name="theme_share_text_content_for_custom_theme">Personaliza tu propio teclado con tus fotos favoritas! Descárgate #%1$s gratis: https://play.google.com/store/apps/details?id=com.keyboard.font.theme.emoji</string>
+    <string name="settings_button_tell_a_friend_content">Salut, vous devriez tester l’application de clavier %1$s. Elle vous permet de personnaliser votre clavier avec vos propres photos ! Quant aux polices et émoticônes, elles sont sublimes ! Téléchargez gratuitement #%2$s : https://play.google.com/store/apps/details?id=com.keyboard.font.theme.emoji</string>
 </resources>

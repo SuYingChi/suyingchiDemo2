@@ -4116,7 +4116,7 @@
 					<array>
 						<dict>
 							<key>NativeAd</key>
-							<string>Smileykey_A(NativeAds)ShortcutAd</string>
+							<string>Grinkey_A(NativeAds)ShortcutAd</string>
 							<key>Position</key>
 							<integer>2</integer>
 						</dict>
@@ -4125,7 +4125,7 @@
 					<array>
 						<dict>
 							<key>NativeAd</key>
-							<string>Smileykey_A(NativeAds)ThemeAd</string>
+							<string>Grinkey_A(NativeAds)ThemeAd</string>
 							<key>Position</key>
 							<integer>2</integer>
 							<key>Span</key>
@@ -4137,9 +4137,9 @@
 			<key>Policy</key>
 			<dict>
 				<key>PrivacyPolicy</key>
-				<string>https://mobipioneerapp.weebly.com</string>
+				<string>https://keyboardarts.weebly.com/</string>
 				<key>TermsOfService</key>
-				<string>https://mobipioneerapp.weebly.com/terms-of-services.html</string>
+				<string>https://keyboardarts.weebly.com/terms-of-services.html</string>
 			</dict>
 			<key>RateAlert</key>
 			<dict>
@@ -5107,7 +5107,7 @@
 					<string>2</string>
 				</dict>
 				<key>RiffsyKey</key>
-				<string>BEOY4UIPQ2L8</string>
+				<string>M65HO76IJSK2</string>
 				<key>SendUrlApp</key>
 				<array>
 					<string>com.instagram.android</string>
@@ -6016,7 +6016,7 @@
 		</dict>
 		<key>expressAds</key>
 		<dict>
-			<key>Smileykey_A(NativeAds)Charging</key>
+			<key>Grinkey_A(NativeAds)Charging</key>
 			<dict>
 				<key>autoRefresh</key>
 				<dict>
@@ -7032,7 +7032,7 @@
 				<key>tempInventoryTime</key>
 				<integer>0</integer>
 			</dict>
-			<key>Smileykey_A(NativeAds)Fuse</key>
+			<key>Grinkey_A(NativeAds)Fuse</key>
 			<dict>
 				<key>autoRefresh</key>
 				<dict>
@@ -8051,7 +8051,7 @@
 		</dict>
 		<key>interstitialAds</key>
 		<dict>
-			<key>Smileykey_A(InterstitialAds)OpenKeyboardFullScreenAd</key>
+			<key>Grinkey_A(InterstitialAds)OpenKeyboardFullScreenAd</key>
 			<dict>
 				<key>deDuplicate</key>
 				<false/>
@@ -8718,7 +8718,7 @@
 					<key>minShowIntervalMinute</key>
 					<integer>120</integer>
 					<key>placementName</key>
-					<string>Smileykey_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
+					<string>Grinkey_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
 					<key>regionException</key>
 					<array>
 						<string>CN</string>
@@ -8732,7 +8732,7 @@
 		</dict>
 		<key>nativeAds</key>
 		<dict>
-			<key>Smileykey_A(NativeAds)ApplyingItem</key>
+			<key>Grinkey_A(NativeAds)ApplyingItem</key>
 			<dict>
 				<key>deDuplicate</key>
 				<true/>
@@ -9339,7 +9339,7 @@
 					</dict>
 				</array>
 			</dict>
-			<key>Smileykey_A(NativeAds)BoostDone</key>
+			<key>Grinkey_A(NativeAds)BoostDone</key>
 			<dict>
 				<key>deDuplicate</key>
 				<true/>
@@ -9985,7 +9985,7 @@
 					</dict>
 				</array>
 			</dict>
-			<key>Smileykey_A(NativeAds)KeyboardBanner</key>
+			<key>Grinkey_A(NativeAds)KeyboardBanner</key>
 			<dict>
 				<key>deDuplicate</key>
 				<false/>
@@ -10592,7 +10592,7 @@
 					</dict>
 				</array>
 			</dict>
-			<key>Smileykey_A(NativeAds)Lumen</key>
+			<key>Grinkey_A(NativeAds)Lumen</key>
 			<dict>
 				<key>deDuplicate</key>
 				<true/>
@@ -11139,7 +11139,7 @@
 					</dict>
 				</array>
 			</dict>
-			<key>Smileykey_A(NativeAds)ThemeTryAd</key>
+			<key>Grinkey_A(NativeAds)ThemeTryAd</key>
 			<dict>
 				<key>deDuplicate</key>
 				<true/>

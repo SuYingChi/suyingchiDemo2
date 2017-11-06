@@ -4121,7 +4121,7 @@
 					<array>
 						<dict>
 							<key>NativeAd</key>
-							<string>Smileykey_A(NativeAds)ShortcutAd</string>
+							<string>Master_A(NativeAds)ShortcutAd</string>
 							<key>Position</key>
 							<integer>2</integer>
 						</dict>
@@ -4130,7 +4130,7 @@
 					<array>
 						<dict>
 							<key>NativeAd</key>
-							<string>Smileykey_A(NativeAds)ThemeAd</string>
+							<string>Master_A(NativeAds)ThemeAd</string>
 							<key>Position</key>
 							<integer>2</integer>
 							<key>Span</key>
@@ -8701,7 +8701,7 @@
 					<key>minShowIntervalMinute</key>
 					<integer>120</integer>
 					<key>placementName</key>
-					<string>Smileykey_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
+					<string>Master_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
 					<key>regionException</key>
 					<array>
 						<string>CN</string>
