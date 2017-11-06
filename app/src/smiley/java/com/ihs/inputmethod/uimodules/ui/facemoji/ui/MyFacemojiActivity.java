@@ -211,9 +211,13 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             return;
         }
 
-        Drawable drawable = HSDrawableUtils.getDimmedForegroundDrawable(ImageLoader.getInstance().loadImageSync(FacemojiManager.getDefaultFacePicUri().toString(), new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .postProcessor(new BitmapAddBorderProcessor(Color.WHITE)).build()));
-        face_icon.setBackgroundDrawable(drawable);
+        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(FacemojiManager.getDefaultFacePicUri().toString(), new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                .postProcessor(new BitmapAddBorderProcessor(Color.WHITE)).build());
+        if(bitmap !=null){
+            Drawable drawable = HSDrawableUtils.getDimmedForegroundDrawable(bitmap);
+            face_icon.setBackgroundDrawable(drawable);
+            bitmap.recycle();
+        }
     }
 
     @Override
