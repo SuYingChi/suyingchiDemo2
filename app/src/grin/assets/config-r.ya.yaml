@@ -32,6 +32,9 @@ libCommons:
       HashKey: "R3bG+XlIKb1DZ$sC`k]<5COn-[A}{$4e"
   AppID: "612"
 libFramework:
+  Push:
+    SenderID: "495163548406"
+    SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.mp"
     RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/grinkeyboard/alerts/grinkeyboard-1.0.0-alerts.mp"
