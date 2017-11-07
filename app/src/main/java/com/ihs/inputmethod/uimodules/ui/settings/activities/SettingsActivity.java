@@ -44,7 +44,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.acb.call.CPSettings;
-import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -64,6 +63,8 @@ import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.keyboard.common.DebugActivity;
+
+import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 
 import java.util.List;
 
@@ -453,7 +454,8 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
             } else {
                 preferenceCategoryMore.addPreference(updatePreference);
             }
-            if (getResources().getBoolean(R.bool.hideRemoveAds)) {
+            if (getResources().getBoolean(R.bool.hideRemoveAds)
+                    || RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 preferenceCategoryMore.removePreference(findPreference("removeAd"));
             } else{
                 findPreference("removeAd").setOnPreferenceClickListener(this);
