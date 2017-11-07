@@ -51,3 +51,6 @@ interstitialAds:
   NativeAdViewType: "effect_1"
 libIAP:
   IAPVerifyUrl: "https://dev-keyboard.appcloudbox.net:7443/keyboard/masterkey/rainbow/dailyrewards"
+
+Application:
+  WallpaperAPIURL: "https://service.appcloudbox.net/wallpapers/"

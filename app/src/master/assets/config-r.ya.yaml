@@ -47,3 +47,6 @@ libNativeAds:
       DeviceId: "EA139D36298CF67CF2CAA699EB07C6B3"
 libIAP:
   IAPVerifyUrl: "https://mpmaster.appcloudbox.net/keyboard/master/receipt/verify"
+
+Application:
+  WallpaperAPIURL: "https://service.appcloudbox.net/wallpapers/"
