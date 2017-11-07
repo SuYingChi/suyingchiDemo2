@@ -240,7 +240,6 @@
 
         <activity
             android:name="com.smartkeyboard.emoji.SplashActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme"
             android:windowSoftInputMode="adjustResize">

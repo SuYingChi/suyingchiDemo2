@@ -211,7 +211,6 @@
 
         <activity
             android:name="com.keyboard.common.SplashActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
