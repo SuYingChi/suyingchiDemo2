@@ -37,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -661,7 +662,12 @@ public class CameraActivity extends HSAppCompatActivity {
         }
 
         camera.setDisplayOrientation(getPreviewDegree());
-        camera.startPreview(); // 开始预览
+        try {
+            camera.startPreview(); // 开始预览
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this,R.string.camera_start_error_tip,Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setPreviewContainerLayoutParam(ViewGroup.LayoutParams previewContainerLayoutParams, Camera.Parameters parameters) {
