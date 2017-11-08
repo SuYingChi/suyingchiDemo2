@@ -616,13 +616,15 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
         @Override
         protected String doInBackground(Bitmap... params) {
+            String themeName = null;
             if (params != null && params.length > 0) {
-                String themeName = KCCustomThemeManager.getInstance().generateCustomTheme(customThemeData);
-                if (themeName != null) {
-                    return themeName;// HSKeyboardThemeManager.saveCustomTheme(params[0], HSKeyboardThemeManager.getCustomThemeData());
+                try {
+                    themeName = KCCustomThemeManager.getInstance().generateCustomTheme(customThemeData);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
-            return null;
+            return themeName;
         }
 
         @Override
