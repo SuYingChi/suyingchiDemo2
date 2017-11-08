@@ -3,9 +3,9 @@
 
     <!-- For keyboard color scheme option dialog. -->
     <string-array name="themes_buildin_names">
-        <item>White</item>
-        <item>Classic</item>
         <item>Dark</item>
+        <item>Classic</item>
+        <item>White</item>
     </string-array>
 
 </resources>

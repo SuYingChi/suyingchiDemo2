@@ -3379,6 +3379,16 @@
 						</dict>
 						<dict>
 							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemBlack.jpg</string>
+							<key>showName</key>
+							<string>System Black</string>
+							<key>themeDesc</key>
+							<string>Addicted to black.</string>
+							<key>zipName</key>
+							<string>Dark</string>
+						</dict>
+						<dict>
+							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Classic.jpg</string>
 							<key>showName</key>
 							<string>Classic</string>
@@ -3406,16 +3416,6 @@
 							<string>com.keyboard.theme.freshair</string>
 							<key>zipName</key>
 							<string>FreshAir</string>
-						</dict>
-						<dict>
-							<key>largePreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemBlack.jpg</string>
-							<key>showName</key>
-							<string>System Black</string>
-							<key>themeDesc</key>
-							<string>Addicted to black.</string>
-							<key>zipName</key>
-							<string>Dark</string>
 						</dict>
 						<dict>
 							<key>largePreviewUrl</key>
