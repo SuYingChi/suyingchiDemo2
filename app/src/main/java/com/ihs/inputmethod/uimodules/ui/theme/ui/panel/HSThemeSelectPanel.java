@@ -17,6 +17,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
+import com.ihs.inputmethod.theme.KeyboardThemeManager;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
@@ -230,6 +231,8 @@ public final class HSThemeSelectPanel extends BasePanel {
 				if (hsKeyboardTheme.isDownloadThemeReady()) {
 					result.add(hsKeyboardTheme);
 				}
+			}else if (KeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(hsKeyboardTheme.mThemeName)){
+				result.add(hsKeyboardTheme);
 			}
 		}
 		return result;

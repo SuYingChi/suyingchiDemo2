@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -27,7 +28,9 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate.BlankViewAdapt
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate.ThemeCardAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeZipDownloadUtils;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.io.File;
@@ -133,11 +136,36 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         switch (key) {
             case ThemeCardAdapterDelegate.TAG_DOWNLOAD:
                 if (keyboardTheme.getThemePkName() != null) {
-                    boolean shouldDownloadThemeAPK = ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
-                    setThemeNotNew(keyboardTheme);
-                    if (shouldDownloadThemeAPK) {
-                        Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.theme_card_downloading_tip), Toast.LENGTH_SHORT).show();
+                    //直接下载主题zip包
+                    boolean downloadThemeZip = HSConfig.optBoolean(false, "Application", "KeyboardTheme", "DownloadThemeZip", "DownloadInApp");
+                    if (downloadThemeZip){
+                        if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)) {
+                            return;
+                        }
+                        String from = "store";
+                        ThemeZipDownloadUtils.startDownloadThemeZip(model.keyboardTheme.mThemeName, from , keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
+                            @Override
+                            public void onDismiss(boolean success) {
+                                if (success){
+                                    ThemeZipDownloadUtils.logDownloadSuccessEvent(keyboardTheme.mThemeName,from);
+                                    if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)){
+                                        HSKeyboardThemeManager.moveNeedDownloadThemeToDownloadedList(keyboardTheme.mThemeName,true);
+                                        if (themeCardItemClickListener != null) {
+                                            themeCardItemClickListener.onKeyboardActivationStart();
+                                        }
+                                        keyboardThemeOnKeyboardActivation = keyboardTheme;
+                                    }
+                                }
+                            }
+                        });
+                        ThemeZipDownloadUtils.logDownloadClickEvent(keyboardTheme.mThemeName,from);
+                    }else {
+                        boolean shouldDownloadThemeAPK = ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
+                        if (shouldDownloadThemeAPK) {
+                            Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.theme_card_downloading_tip), Toast.LENGTH_SHORT).show();
+                        }
                     }
+                    setThemeNotNew(keyboardTheme);
                 }
                 if (themeCardItemClickListener != null) {
                     themeCardItemClickListener.onMenuDownloadClick(keyboardTheme);
@@ -183,8 +211,9 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                 themeCardItemClickListener.onMenuShareClick(keyboardTheme);
                             }
                         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_apply).equals(title)) {
-                            if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName())) {
-                                ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName))));
+                            File file = new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName));
+                            if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName()) && file.exists() && file.length() > 0) {
+                                ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(file));
                             } else {
                                 if (themeCardItemClickListener != null) {
                                     themeCardItemClickListener.onKeyboardActivationStart();

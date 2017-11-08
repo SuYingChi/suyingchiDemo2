@@ -24,7 +24,9 @@ import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.app.utils.HSInstallationUtils;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -37,14 +39,15 @@ import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeZipDownloadUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.keyboard.common.KeyboardActivationGuideActivity;
@@ -212,8 +215,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         rootView = (NestedScrollView) findViewById(R.id.root_view);
         screenshotContainer = findViewById(R.id.keyboard_theme_screenshot_container);
         keyboardThemeScreenShotImageView = (ImageView) findViewById(R.id.keyboard_theme_screenshot);
-//        themeNameText = (TextView) findViewById(R.id.theme_name);
-//        themeDescText = (TextView) findViewById(R.id.theme_desc);
         screenshotLoading = (MdProgressBar) findViewById(R.id.screenshot_loading);
         leftBtn = (TextView) findViewById(R.id.theme_detail_left_btn);
         rightBtn = (TextView) findViewById(R.id.theme_detail_right_btn);
@@ -224,7 +225,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         recommendRecyclerView.setNestedScrollingEnabled(false);
         recommendRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         themeCardAdapter = new CommonThemeCardAdapter(this, this, false);
-//        themeCardAdapter.setThemeCardItemClickListener(this);
         recommendRecyclerView.setAdapter(themeCardAdapter);
 
         addNativeAdView();
@@ -315,7 +315,37 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         if (HSApplication.getContext().getString(R.string.theme_card_menu_download).equalsIgnoreCase(text)) {
             ((TextView) v).setText(R.string.theme_card_menu_downloading);
             v.setEnabled(false);
-            ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
+
+            //直接下载主题zip包
+            boolean downloadThemeZip = HSConfig.optBoolean(false, "Application", "KeyboardTheme", "DownloadThemeZip", "DownloadInApp");
+            if (downloadThemeZip){
+                if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)) {
+                    return;
+                }
+                String from = "detail";
+                ThemeZipDownloadUtils.startDownloadThemeZip(keyboardTheme.mThemeName,keyboardTheme.getSmallPreivewImgUrl(),from, new AdLoadingView.OnAdBufferingListener() {
+                    @Override
+                    public void onDismiss(boolean success) {
+                        if (success){
+                            ThemeZipDownloadUtils.logDownloadSuccessEvent(keyboardTheme.mThemeName,from);
+                            if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)){
+                                HSKeyboardThemeManager.moveNeedDownloadThemeToDownloadedList(keyboardTheme.mThemeName,true);
+                                if (HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
+                                    Intent intent = new Intent(ThemeDetailActivity.this, KeyboardActivationGuideActivity.class);
+                                    startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_APPLY_BUTTON);
+                                } else {
+                                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                                    HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                                }
+                            }
+                        }
+                    }
+                });
+
+                ThemeZipDownloadUtils.logDownloadSuccessEvent(keyboardTheme.mThemeName,from);
+            }else {
+                ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
+            }
             HSAnalytics.logEvent("themedetails_download_clicked", "themeName", themeName);
             if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                 ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(themeName);

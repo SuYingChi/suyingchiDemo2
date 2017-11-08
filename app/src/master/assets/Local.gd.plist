@@ -644,6 +644,11 @@
 						<string>com.keyboard.theme</string>
 					</array>
 				</dict>
+				<key>DownloadThemeZip</key>
+                <dict>
+                    <key>DownloadInApp</key>
+                    <true/>
+                </dict>
 				<key>ThemeContents</key>
 				<dict>
 					<key>BannerList</key>
@@ -5112,6 +5117,8 @@
 				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
 				<key>StickerDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers/</string>
+				<key>ThemeZipDownloadBaseURL</key>
+                <string>http://s3.amazonaws.com/emojidevelop/AndroidResource/download/theme/</string>
 			</dict>
 			<key>StickersGifs</key>
 			<dict>
