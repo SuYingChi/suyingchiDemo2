@@ -38,7 +38,7 @@ public class ThemeZipDownloadUtils {
      * @param from 调用来源，用于统计事件
      * @param onAdBufferingListener
      */
-    public static void startDownloadThemeZip(final String themeName, final String thumbnailUrl, String from, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+    public static void startDownloadThemeZip(String from, final String themeName, final String thumbnailUrl, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
 
         File themeDirectory = new File(KeyboardThemeManager.getThemeDirectoryPath(themeName));
         File downloadFile = new File(themeDirectory, System.currentTimeMillis() + ".zip");

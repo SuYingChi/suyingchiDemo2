@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.artw.lockscreen.LockerEnableDialog;
+import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.commons.config.HSConfig;
@@ -19,6 +21,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -143,7 +146,7 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             return;
                         }
                         String from = "store";
-                        ThemeZipDownloadUtils.startDownloadThemeZip(model.keyboardTheme.mThemeName, from , keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
+                        ThemeZipDownloadUtils.startDownloadThemeZip(from,model.keyboardTheme.mThemeName , keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
                             @Override
                             public void onDismiss(boolean success) {
                                 if (success){
@@ -258,11 +261,22 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
                 HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
                 return;
+            }else {
+                if (LockerSettings.isLockerEnableShowSatisfied()) {
+                    LockerEnableDialog.showLockerEnableDialog(activity,
+                            ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
+                            activity.getString(R.string.locker_enable_title_has_text),
+                            this::showTryKeyboardDialog);
+                } else {
+                    showTryKeyboardDialog();
+                }
             }
-
-            TrialKeyboardDialog trialKeyboardDialog = new TrialKeyboardDialog.Builder(activity).create();
-            trialKeyboardDialog.show(true);
         }
+    }
+
+    private void showTryKeyboardDialog() {
+        TrialKeyboardDialog trialKeyboardDialog = new TrialKeyboardDialog.Builder(activity).create();
+        trialKeyboardDialog.show(true);
     }
 
     private void setThemeNotNew(HSKeyboardTheme keyboardTheme) {

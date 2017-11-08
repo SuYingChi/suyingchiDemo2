@@ -323,13 +323,14 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     return;
                 }
                 String from = "detail";
-                ThemeZipDownloadUtils.startDownloadThemeZip(keyboardTheme.mThemeName,keyboardTheme.getSmallPreivewImgUrl(),from, new AdLoadingView.OnAdBufferingListener() {
+                ThemeZipDownloadUtils.startDownloadThemeZip(from,keyboardTheme.mThemeName,keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
                     @Override
                     public void onDismiss(boolean success) {
                         if (success){
                             ThemeZipDownloadUtils.logDownloadSuccessEvent(keyboardTheme.mThemeName,from);
                             if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)){
                                 HSKeyboardThemeManager.moveNeedDownloadThemeToDownloadedList(keyboardTheme.mThemeName,true);
+                                //直接应用主题
                                 if (HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
                                     Intent intent = new Intent(ThemeDetailActivity.this, KeyboardActivationGuideActivity.class);
                                     startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_APPLY_BUTTON);
@@ -365,9 +366,10 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             });
 
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_apply).equalsIgnoreCase(text)) {
-            if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName())) {
-                ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName))));
-            } else {
+            File file = new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName));
+            if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName()) && file.exists() && file.length() > 0) {
+                ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(file));
+            }else {
                 if (HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
                     Intent intent = new Intent(this, KeyboardActivationGuideActivity.class);
                     startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_APPLY_BUTTON);
