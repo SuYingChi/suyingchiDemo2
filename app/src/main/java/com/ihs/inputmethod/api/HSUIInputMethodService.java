@@ -49,6 +49,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.ihs.inputmethod.framework.Constants.CODE_DELETE;
 
@@ -500,14 +502,11 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME) || TextUtils.equals(currentAppPackageName, GOOGLE_SEARCH_BAR_PACKAGE_NAME);
     }
 
-    private String[] splitIntoWords(String sentence) {
-        sentence = sentence.replaceAll("[^(\\w|\\s)]", ""); //移除emoji以及标点符号
-        String[] words = sentence.trim().split("\\s+");
-        for (int i = 0; i < words.length; i++) {
-            // You may want to check for a non-word character before blindly
-            // performing a replacement
-            // It may also be necessary to adjust the character class
-            words[i] = words[i].replaceAll("[^\\w]", "");
+    private List<String> splitIntoWords(String sentence) {
+        Matcher matcher = Pattern.compile("\\w+").matcher(sentence);
+        List<String> words = new ArrayList<>();
+        while (matcher.find()) {
+            words.add(matcher.group());
         }
         return words;
     }
@@ -562,18 +561,11 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         }
         if (codePoint == CODE_DELETE || //delete key
                 (codePoint > 0 && (Character.isLetter(codePoint) || Character.isDigit(codePoint)))) {
-            String[] words = splitIntoWords(getInputLogic().mConnection.getAllText().toString());
-            if (words.length > 0) {
-                currentWord = words[words.length - 1];
-                HSLog.e("lv_eee", currentWord);
-                if (adCaffeHelper.getTrie() != null) {
-                    if (adCaffeHelper.getTrie().startsWith(currentWord)) {
-                        adCaffeHelper.loadAdWithKeywords(words);
-                        return;
-                    }
+            adCaffeHelper.checkKeywordAndLoad(splitIntoWords(getInputLogic().mConnection.getAllText().toString()), success -> {
+                if (!success) {
+                    getKeyboardPanelMananger().hideCustomBar();
                 }
-            }
-            getKeyboardPanelMananger().hideCustomBar();
+            });
         }
     }
 
@@ -602,7 +594,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public void onNativeAdLoadFail(HSError hsError) {
-        HSLog.e("AdCaff Error", hsError.getMessage() + " " + hsError.getCode());
+        HSLog.e("lv_eee AdCaff Error", hsError.getMessage() + " " + hsError.getCode());
     }
 
     @Override

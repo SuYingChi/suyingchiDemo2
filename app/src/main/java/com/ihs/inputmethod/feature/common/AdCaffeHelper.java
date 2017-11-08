@@ -63,7 +63,7 @@ public class AdCaffeHelper {
     public String networkType;
     public String country;
     public String vendor;
-    public String[] keywords;
+    public List<String> keywords;
     public int offset = -1;
 
     public Trie getTrie() {
@@ -104,12 +104,20 @@ public class AdCaffeHelper {
         if (!shouldShowSearchAdForCurrentApp(packageName)) {
             return;
         }
-        if (System.currentTimeMillis() - HSPreferenceHelper.getDefault().getLong(SEARCH_AD_UPDATE_TIME, 0)
-                < TimeUnit.MINUTES.toMillis(HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin"))) {
-            return;
-        }
+        requestKeywordList();
+    }
+
+    private void requestKeywordList() {
         File tempFile = HSFileUtils.createNewFile(getKeywordFilePathBase() + KEYWORD_TEMP_FILE_NAME + System.currentTimeMillis());
         File destFile = HSFileUtils.createNewFile(getKeywordFilePathBase() + KEYWORD_FINAL_FILE_NAME);
+        if (System.currentTimeMillis() - HSPreferenceHelper.getDefault().getLong(SEARCH_AD_UPDATE_TIME, 0)
+                < TimeUnit.MINUTES.toMillis(HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin"))) {
+            if (trie == null) {
+                new Thread(() -> readKeywordListFromFile(destFile)).start();
+            }
+            return;
+        }
+
         HSHttpConnection connection = new HSHttpConnection(KEYWORD_REQUEST_URL);
         connection.setDownloadFile(tempFile);
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
@@ -162,12 +170,27 @@ public class AdCaffeHelper {
         return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_KEYWORD_FILE_PATH + File.separator;
     }
 
-    public void loadAdWithKeywords(String[] keywords) {
+    public void checkKeywordAndLoad(List<String> words, OnKeywordCheckListener onKeywordCheckListener) {
+        if (words.size() > 0) {
+            String currentWord = words.get(words.size()-1);
+            HSLog.e("lv_eee", currentWord);
+            if (trie != null) {
+                if (trie.startsWith(currentWord)) {
+                    loadAdWithKeywords(words);
+                    onKeywordCheckListener.onCheck(true);
+                    return;
+                }
+            }
+        }
+        onKeywordCheckListener.onCheck(false);
+    }
+
+    private void loadAdWithKeywords(List<String> keywords) {
         updateKeywords(keywords);
         startConnection();
     }
 
-    public void updateKeywords(String[] keywords) {
+    private void updateKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -241,7 +264,7 @@ public class AdCaffeHelper {
         }
     }
 
-    private void fillJsonArray(JSONObject jsonObject, String key, String[] stringList) {
+    private void fillJsonArray(JSONObject jsonObject, String key, List<String> stringList) {
         JSONArray jsonArray = new JSONArray();
         for (String string : stringList) {
             jsonArray.put(string);
@@ -450,7 +473,7 @@ public class AdCaffeHelper {
             coreConnectionConstructor = NativeAdLoadCoreConnection.class.getDeclaredConstructor(
                     Context.class, String.class, int.class);
             coreConnectionConstructor.setAccessible(true);
-            NativeAdLoadCoreConnection coreConnection = null;
+            NativeAdLoadCoreConnection coreConnection;
             coreConnection = coreConnectionConstructor.newInstance(context, "haha", 1);
             Method method = NativeAdLoadCoreConnection.class.getDeclaredMethod(methodName, Context.class);
             method.setAccessible(true);
@@ -492,5 +515,9 @@ public class AdCaffeHelper {
         void onNativeAdLoadFail(HSError hsError);
 
         void onNativeAdLoadSuccess(List<AdCaffeNativeAd> nativeAds, boolean hasMore, int nextOffset);
+    }
+
+    public interface OnKeywordCheckListener {
+        void onCheck(boolean success);
     }
 }
