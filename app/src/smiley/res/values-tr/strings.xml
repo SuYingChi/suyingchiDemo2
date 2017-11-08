@@ -11,7 +11,7 @@
     <string name="switch_facemoji_toolbar_title">Yüzü Değiştir</string>
     <string name="switch_facemoji_selected_status_title">%d Seçildi</string>
     <string name="label_manage">DÜZENLE</string>
-    <string name="accessibility_service_description">Sağ üstteki anahtarı 'AÇIK' konumuna getir. ↗️⊙.⊙↗️
+    <string name="accessibility_service_description">Sağ üstteki anahtarı \'AÇIK\' konumuna getir. ↗️⊙.⊙↗️
         Erişilebilirlik izni ile, farklı uygulamalar üzerinde en iyi yazı yazma deneyimine sahip olursun!
         
         Not: Yetkilendirme ile ilgili bir sistem hatırlatması alabilirsin.  %1$s ASLA HERHANGİ bir bilgini toplamaz.</string>
