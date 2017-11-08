@@ -269,4 +269,9 @@
     <string name="sticker_title_my_facemojis">Mes Facemojis</string>
     <string name="sticker_title_funny_stickers">Autocollants rigolos</string>
     <string name="label_share">Partager</string>
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">DÉFINIR LE THÈME D'APPEL ENTRANT</string>
+    
+    <string name="custom_share_alert_message">Vous souhaitez débloquer ce thème GRATUITEMENT ? Partagez RainbowKey sur Instagram et @rainbowkeyapp pour le débloquer.</string>
+    <string name="custom_share_alert_button_text">Débloquer gratuitement</string>
 </resources>

@@ -270,5 +270,9 @@ Enthält Werbung.</string>
     <string name="sticker_title_my_facemojis">Meine Facemojis</string>
     <string name="sticker_title_funny_stickers">Lustige Sticker</string>
     <string name="label_share">Teilen</string>
-
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">DESIGN FÜR EINGEHENDE ANRUFE FESTLEGEN</string>
+    
+    <string name="custom_share_alert_message">Möchten Sie dieses Design KOSTENLOS freischalten? Dann teilen Sie RainbowKey auf Instagram und @rainbowkeyapp, um es freizuschalten.</string>
+    <string name="custom_share_alert_button_text">Kostenlos freischalten</string>
 </resources>

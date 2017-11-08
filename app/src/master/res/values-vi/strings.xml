@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
+    <string name="fb_app_id">1651195371844917</string>
+
+<string name="accessibility_service_description">Bật công tắc thành 'BẬT' ở góc trên cùng bên phải. ↗️⊙.⊙↗️
+    Với thẩm quyền trợ năng, bạn sẽ có được trải nghiệm đánh máy tốt nhất trên nhiều ứng dụng!
+    
+    Lưu ý: Bạn có thể nhận được một lời nhắc từ hệ thống về việc cấp quyền, %1$s sẽ KHÔNG BAO GIỜ thu thập BẤT KỲ thông tin nào của bạn.</string>
+<string name="theme_share_text_content">Bàn phím cá nhân của tôi được tạo với #%1$s \n https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+<string name="theme_share_text_content_for_custom_theme">Tùy chỉnh bàn phím của riêng bạn với những hình ảnh bạn yêu thích! Tải Xuống #%1$s Miễn Phí:\n https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+<string name="settings_button_tell_a_friend_content">Này, bạn phải dùng thử ứng dụng bàn phím %1$s. Bạn có thể tùy chỉnh bàn phím với những bức ảnh của chính mình! Và các phông chữ và biểu tượng cảm xúc rất tuyệt vời. Tải xuống #%2$s Miễn Phí:\n https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+</resources>

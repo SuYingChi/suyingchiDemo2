@@ -280,5 +280,9 @@
     <string name="sticker_title_my_facemojis">Facemoji của Tôi</string>
     <string name="sticker_title_funny_stickers">Nhãn dán vui nhộn</string>
     <string name="label_share">Chia sẻ</string>
-
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">ĐẶT CHỦ ĐỀ CUỘC GỌI ĐẾN</string>
+    
+    <string name="custom_share_alert_message">Bạn muốn mở khóa chủ đề này MIỄN PHÍ? Hãy chia sẻ RainbowKey trên Instagram và @rainbowkeyapp để mở khóa nó.</string>
+    <string name="custom_share_alert_button_text">Mở khóa Miễn phí</string>
 </resources>

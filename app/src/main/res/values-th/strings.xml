@@ -279,5 +279,9 @@
     <string name="sticker_title_my_facemojis">Facemoji ของฉัน</string>
     <string name="sticker_title_funny_stickers">สติกเกอร์สนุกๆ</string>
     <string name="label_share">แชร์</string>
-
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">กำหนดธีมสายเข้า</string>
+    
+    <string name="custom_share_alert_message">อยากปลดล็อกธีมนี้ฟรีๆ ไหม? แชร์ RainbowKey บน Instagram แล้วพิมพ์ @rainbowkeyapp เพื่อปลดล็อก</string>
+    <string name="custom_share_alert_button_text">ปลดล็อกได้ฟรี</string>
 </resources>

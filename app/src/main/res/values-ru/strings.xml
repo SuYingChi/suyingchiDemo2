@@ -270,4 +270,9 @@
     <string name="sticker_title_my_facemojis">Мои Facemoji</string>
     <string name="sticker_title_funny_stickers">Забавные стикеры</string>
     <string name="label_share">Поделиться</string>
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">УСТАНОВИТЬ ТЕМУ ДЛЯ ВХОДЯЩЕГО ВЫЗОВА</string>
+    
+    <string name="custom_share_alert_message">Хотите разблокировать эту тему БЕСПЛАТНО? Поделитесь RainbowKey в Instagram, указав @rainbowkeyapp.</string>
+    <string name="custom_share_alert_button_text">Разблокировать бесплатно</string>
 </resources>

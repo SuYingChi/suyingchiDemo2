@@ -258,4 +258,9 @@ Contém conteúdos patrocinados.</string>
     <string name="sticker_title_my_facemojis">Meus Facemojis</string>
     <string name="sticker_title_funny_stickers">Stickers engraçados</string>
     <string name="label_share">Compartilhar</string>
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">DEFINIR TEMA DAS CHAMADAS RECEBIDAS</string>
+    
+    <string name="custom_share_alert_message">Deseja desbloquear este tema GRÁTIS? Compartilhe o RainbowKey no Instagram digitando @rainbowkeyapp para desbloqueá-lo.</string>
+    <string name="custom_share_alert_button_text">Desbloqueie Grátis</string>
 </resources>

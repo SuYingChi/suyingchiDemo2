@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
+    <string name="fb_app_id">1651195371844917</string>
+
+<string name="accessibility_service_description">Sağ üstteki anahtarı 'AÇIK' konumuna getir. ↗️⊙.⊙↗️
+    Erişilebilirlik izni ile, farklı uygulamalar üzerinde en iyi yazı yazma deneyimine sahip olursun!
+    
+    Not: Yetkilendirme ile ilgili bir sistem hatırlatması alabilirsin.  %1$s ASLA HERHANGİ bir bilgini toplamaz.</string>
+<string name="theme_share_text_content"># %1$s ile yaptığım kişiselleştirilmiş klavyem \nhttps://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+<string name="theme_share_text_content_for_custom_theme">Klavyeni en sevdiğin fotoğraflarınla özelleştir!\nÜcretsiz #%1$s Adresinden İndir:\nhttps://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+<string name="settings_button_tell_a_friend_content">Hey, %1$s klavye uygulamasını denemelisin. Klavyeni kendi fotoğraflarınla özelleştirebilirsin! Ayrıca yazı tipleri ve emojiler de bir harika.Ücretsiz #%2$s Adresinden İndir:\nhttps://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+</resources>

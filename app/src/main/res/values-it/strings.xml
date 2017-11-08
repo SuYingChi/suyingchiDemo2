@@ -260,4 +260,9 @@ Include contenuti sponsorizzati.</string>
         <string name="locker_screen">Schermata di blocco</string>
         <string name="home_and_locker_screen">Schermata iniziale e di blocco</string>
         <string name="key_theme_loading_progress_dialog_text">Caricamento del tema principale...</string>
+        <!-- In Call Theme -->
+        <string name="set_incoming_call_theme">IMPOSTA IL TEMA PER LE CHIAMATE IN ARRIVO</string>
+        
+        <string name="custom_share_alert_message">Vuoi sbloccare questo tema GRATUITAMENTE? Condividi RainbowKey su Instagram e @rainbowkeyapp per sbloccarlo.</string>
+        <string name="custom_share_alert_button_text">Sblocca gratuitamente</string>
 </resources>

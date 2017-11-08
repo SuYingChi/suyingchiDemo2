@@ -279,5 +279,9 @@
     <string name="sticker_title_my_facemojis">Facemojilerim</string>
     <string name="sticker_title_funny_stickers">Komik Çıkartmalar</string>
     <string name="label_share">Paylaş</string>
-
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">GELEN ARAMA TEMASINI BELİRLE</string>
+    
+    <string name="custom_share_alert_message">Bu temayı ÜCRETSİZ olarak açmak istiyor musun? RainbowKey uygulamasını Instagram'da paylaş, @rainbowkeyapp ile bahset ve kilidini aç.</string>
+    <string name="custom_share_alert_button_text">Ücretsiz Aç</string>
 </resources>

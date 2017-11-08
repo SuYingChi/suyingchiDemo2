@@ -271,4 +271,10 @@
     <string name="sticker_title_my_facemojis">Facemoji الخاصة بي</string>
     <string name="sticker_title_funny_stickers">ملصقات مضحكة</string>
     <string name="label_share">مشاركة</string>
+    
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">تعيين نُسق المكالمات الواردة</string>
+    
+    <string name="custom_share_alert_message">هل تريد فتح هذا النُسق مجانًا؟ شارك RainbowKey على Instagram وrainbowkeyapp لفتحه.</string>
+    <string name="custom_share_alert_button_text">فتح مجانًا</string>
 </resources>

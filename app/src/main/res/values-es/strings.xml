@@ -270,4 +270,9 @@ Incluye contenido patrocinado.</string>
     <string name="sticker_title_my_facemojis">Mis Facemojis</string>
     <string name="sticker_title_funny_stickers">Divertidas pegatinas</string>
     <string name="label_share">Compartir</string>
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">ESTABLECER TEMA DE LLAMADA ENTRANTE</string>
+    
+    <string name="custom_share_alert_message">¿Quieres desbloquear este tema gratis? Comparte %1$s en Instagram y @rainbowkeyapp para desbloquearlo.</string>
+    <string name="custom_share_alert_button_text">Desbloquear gratis</string>
 </resources>

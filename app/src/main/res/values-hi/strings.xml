@@ -279,5 +279,10 @@
     <string name="sticker_title_my_facemojis">मेरी फेसमोजिज</string>
     <string name="sticker_title_funny_stickers">मजेदार स्‍टीकर्स</string>
     <string name="label_share">सांझा करें</string>
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">आने वाली कॉल थीम सेट करें</string>
+    
+    <string name="custom_share_alert_message">मुफ्त में थीम अनलॉक करनी है? इसे अनलॉक करने को इंस्टाग्राम और @rainbowkeyapp पर RainbowKey सांझा करें।</string>
+    <string name="custom_share_alert_button_text">मुफ्त अनलॉक करें</string>
 
 </resources>

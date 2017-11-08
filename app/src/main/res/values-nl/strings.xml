@@ -268,4 +268,9 @@ Bevat gesponsorde inhoud.</string>
     <string name="sticker_title_my_facemojis">Mijn Facemoji\'s</string>
     <string name="sticker_title_funny_stickers">Grappige stickers</string>
     <string name="label_share">Delen</string>
+    <!-- In Call Theme -->
+    <string name="set_incoming_call_theme">THEMA VOOR BINNENKOMENDE OPROEPEN INSTELLEN</string>
+    
+    <string name="custom_share_alert_message">Wil je dit thema GRATIS ontgrendelen? Deel RainbowKey op Instagram met @rainbowkeyapp om te ontgrendelen.</string>
+    <string name="custom_share_alert_button_text">Gratis ontgrendelen</string>
 </resources>
