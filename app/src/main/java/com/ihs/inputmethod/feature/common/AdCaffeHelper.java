@@ -9,22 +9,33 @@ import com.acb.adcaffe.common.UserDataUtils;
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
 import com.acb.adcaffe.nativead.imp.NativeAd;
 import com.acb.adcaffe.nativead.imp.NativeAdLoadCoreConnection;
+import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.connection.HSServerAPIConnection;
 import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.ihs.inputmethod.utils.Trie;
 import com.ihs.libcommon.utils.HSAdUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by guonan.lv on 17/10/31.
@@ -35,6 +46,11 @@ public class AdCaffeHelper {
     private Context context;
     private HSServerAPIConnection connection;
     private static final String SERVER_URL_AD_CAFFE = "http://52.205.105.87/adcaffe/ad/get";
+    private static final String KEYWORD_REQUEST_URL = "http://52.205.105.87/adcaffe/ad/keywords/get";
+    private static final String SEARCH_AD_UPDATE_TIME = "search_ad_update_time";
+    private static final String ASSETS_KEYWORD_FILE_PATH = "Keyword";
+    private static final String KEYWORD_FINAL_FILE_NAME = "keyword.txt";
+    private static final String KEYWORD_TEMP_FILE_NAME = "keywordTemp";
 
     private OnNativeAdLoadListener onNativeAdLoadListener;
 
@@ -50,12 +66,19 @@ public class AdCaffeHelper {
     public String[] keywords;
     public int offset = -1;
 
+    public Trie getTrie() {
+        return trie;
+    }
 
-    public AdCaffeHelper(Context context, String placementId, OnNativeAdLoadListener onNativeAdLoadListener) {
+    private Trie trie;
+
+
+    public AdCaffeHelper(Context context, OnNativeAdLoadListener onNativeAdLoadListener) {
         this.context = context;
 
-        this.placementId = "999999_24581";
-        this.packageName = UserDataUtils.getPackageName(context);
+        placementId = HSConfig.getString("libCommons", "AppID") + "_1000";
+        HSLog.e("lv_eee", "placementId " + placementId);
+        packageName = UserDataUtils.getPackageName(context);
         HSAdUtils.getAdID(new HSAdUtils.GetAdIdListener() {
             @Override
             public void onGetAdIdSuccess(String s) {
@@ -73,7 +96,70 @@ public class AdCaffeHelper {
         osVersion = UserDataUtils.getOsVersion();
         networkType = getNetworkType(context);
         country = UserDataUtils.getCountry();
+        HSLog.e("lv_eee", "country " + country);
         this.onNativeAdLoadListener = onNativeAdLoadListener;
+    }
+
+    public void requestKeywordListIfConditionSatisfied(String packageName) {
+        if (!shouldShowSearchAdForCurrentApp(packageName)) {
+            return;
+        }
+        if (System.currentTimeMillis() - HSPreferenceHelper.getDefault().getLong(SEARCH_AD_UPDATE_TIME, 0)
+                < TimeUnit.MINUTES.toMillis(HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin"))) {
+            return;
+        }
+        File tempFile = HSFileUtils.createNewFile(getKeywordFilePathBase() + KEYWORD_TEMP_FILE_NAME + System.currentTimeMillis());
+        File destFile = HSFileUtils.createNewFile(getKeywordFilePathBase() + KEYWORD_FINAL_FILE_NAME);
+        HSHttpConnection connection = new HSHttpConnection(KEYWORD_REQUEST_URL);
+        connection.setDownloadFile(tempFile);
+        connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
+            @Override
+            public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                readKeywordListFromFile(tempFile);
+                HSPreferenceHelper.getDefault().putLong(SEARCH_AD_UPDATE_TIME, System.currentTimeMillis());
+                if (destFile.exists()) {
+                    destFile.delete();
+                }
+                tempFile.renameTo(destFile);
+                tempFile.delete();
+            }
+
+            @Override
+            public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
+                tempFile.delete();
+            }
+        });
+        connection.startAsync();
+    }
+
+    private void readKeywordListFromFile(File file) {
+        List<String> tempKeywordList = new ArrayList<>();
+        try {
+            InputStreamReader read = new InputStreamReader(
+                    new FileInputStream(file), "UTF-8");// 考虑到编码格式
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineTxt;
+
+            while ((lineTxt = bufferedReader.readLine()) != null) {
+                tempKeywordList.add(lineTxt);
+            }
+            trie = new Trie();
+            for (String keyword : tempKeywordList) {
+                trie.insert(keyword);
+            }
+            bufferedReader.close();
+            read.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean shouldShowSearchAdForCurrentApp(String packageName) {
+        return HSConfig.getList("Application", "SearchAd", "PackageNameList").contains(packageName);
+    }
+
+    private String getKeywordFilePathBase() {
+        return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_KEYWORD_FILE_PATH + File.separator;
     }
 
     public void loadAdWithKeywords(String[] keywords) {
@@ -95,22 +181,11 @@ public class AdCaffeHelper {
         fillJson(jsonObject, "device", deviceType.toLowerCase());
         fillJson(jsonObject, "country", country.toLowerCase());
 
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put("tools");
-        jsonArray.put("games");
-        try {
-            jsonObject.put("category", jsonArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         fillJson(jsonObject, "os_version", osVersion);
         fillJson(jsonObject, "network", networkType);
         fillJsonArray(jsonObject, "keyword", keywords);
 
-        connection = new HSServerAPIConnection(SERVER_URL_AD_CAFFE, HttpRequest.Method.GET, jsonObject);
-        connection.setSigKey("x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!", "1");
-        connection.setEncryptKey("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", "1");
+        connection = new ServerAPIConnection("/ad/get", HttpRequest.Method.GET, jsonObject);
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {

@@ -600,6 +600,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         }
     }
 
+    //TODO Change to static class
     private class GetFilePathTask extends AsyncTask<String, Integer, String> {
 
         @Override

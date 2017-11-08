@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by guonan.lv on 17/11/3.
  */
 
-public class TrieHelper {
+public class Trie {
 
     private class TrieNode {
         Map<Character, TrieNode> children= new HashMap<>();
@@ -24,7 +24,7 @@ public class TrieHelper {
 
     private TrieNode root;
 
-    public TrieHelper() {
+    public Trie() {
         root = new TrieNode(' ');
     }
 
