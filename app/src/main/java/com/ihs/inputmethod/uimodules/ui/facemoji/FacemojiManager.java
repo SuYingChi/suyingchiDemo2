@@ -25,6 +25,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.utils.HSNetworkConnectionUtils;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
+import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacePictureParam;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
@@ -32,8 +33,6 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiFrame;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,11 +41,9 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipException;
 
 
 public class FacemojiManager {
@@ -143,7 +140,7 @@ public class FacemojiManager {
         highQualityOption = new BitmapFactory.Options();
         highQualityOption.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-        copyBuildInAssetStickersToStorage();
+        copyAndUnzipAsssetFacemjiZipFileToLocal();
         loadFacemojiCategoryFromConfig();
         getDefaultFacePicUri();
         loadFaceList();
@@ -175,9 +172,9 @@ public class FacemojiManager {
         this.facemojiCategories = facemojiCategoryList;
     }
 
-    private void copyBuildInAssetStickersToStorage() {
+    private void copyAndUnzipAsssetFacemjiZipFileToLocal() {
         for (String categoryName : buildInFacemojiCategories) {
-            copyAssetFileToStorage(categoryName);
+            copyAndUnzipAsssetFacemjiZipFileToLocal(categoryName);
         }
     }
 
@@ -294,55 +291,6 @@ public class FacemojiManager {
         }
 
         return null;
-    }
-
-    public static boolean unzipFacemojiCategory(File file) {
-        try {
-            ZipFile zipFile = new ZipFile(file);
-
-            File zipDir = new File(file.getParentFile(), "");
-            zipDir.mkdir();
-
-            Enumeration<?> entries = zipFile.entries();
-            while (entries.hasMoreElements()) {
-                ZipEntry entry = (ZipEntry) entries.nextElement();
-                String nme = entry.getName();
-                File entryDestination = new File(zipDir, nme);
-                entryDestination.getParentFile().mkdirs();
-                if (!entry.isDirectory()) {
-                    generateFile(entryDestination, entry, zipFile);
-                } else {
-                    entryDestination.mkdirs();
-                }
-            }
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-    }
-
-    private static void generateFile(File destination, ZipEntry entry, ZipFile owner) {
-        InputStream in = null;
-        OutputStream out = null;
-
-        InputStream rawIn;
-        try {
-            rawIn = owner.getInputStream(entry);
-            in = new BufferedInputStream(rawIn, 1024);
-            FileOutputStream rawOut = new FileOutputStream(destination);
-            out = new BufferedOutputStream(rawOut, 1024);
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private static Bitmap getCurrentFaceBmp() {
@@ -527,16 +475,20 @@ public class FacemojiManager {
         return HSApplication.getContext().getFilesDir().getAbsolutePath() +  "/" + MOJIME_DIRECTORY;
     }
 
-    private boolean copyAssetFileToStorage(String facemojiCategoryName) {
+    public static File getFacemojiCategoryDir(String facemojiCategoryName){
+        File file = new File(getFacemojiLocalDirPath() + "/" + facemojiCategoryName);
+        File parentFile = file.getParentFile();
+        if (!parentFile.exists()){
+            parentFile.mkdirs();
+        }
+        return file;
+    }
+
+    private boolean copyAndUnzipAsssetFacemjiZipFileToLocal(String facemojiCategoryName) {
         if (FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategoryName)) {
             return true;
         }
 
-        String categoryDirectoryPath = getFacemojiLocalDirPath() + "/" + facemojiCategoryName;
-        File mojimeFile = new File(categoryDirectoryPath);
-        if (!mojimeFile.exists()) {
-            mojimeFile.mkdirs();
-        }
         File mojimeZipFile = getFacemojiZipFile(facemojiCategoryName);
         try {
             InputStream isd = HSApplication.getContext().getAssets().open(facemojiCategoryName + ".zip");
@@ -553,13 +505,15 @@ public class FacemojiManager {
             return false;
         }
 
-        if (mojimeZipFile.exists()) {
-            if (unzipFacemojiCategory(mojimeZipFile)) {
-                FacemojiDownloadManager.getInstance().setFacemojiCategoryDownloadedSuccess(facemojiCategoryName);
-                return true;
-            }
+        try {
+            HSZipUtils.unzip(mojimeZipFile,getFacemojiCategoryDir(facemojiCategoryName));
+            FacemojiDownloadManager.getInstance().setFacemojiCategoryDownloadedSuccess(facemojiCategoryName);
+            return true;
+        } catch (ZipException e) {
+            e.printStackTrace();
+        } finally {
+            mojimeZipFile.delete();
         }
-        mojimeZipFile.delete();
         return false;
     }
 

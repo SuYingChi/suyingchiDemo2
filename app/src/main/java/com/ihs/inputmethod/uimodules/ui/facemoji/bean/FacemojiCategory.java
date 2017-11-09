@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSMapUtils;
 import com.ihs.inputmethod.api.utils.HSYamlUtils;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 
 import java.util.ArrayList;
@@ -48,10 +49,17 @@ public class FacemojiCategory {
         Map<String, Object> mStyleMap = HSYamlUtils.getYamlConfigMap(path, false);
         iconFileName = HSMapUtils.getString(mStyleMap, "icon");
         List<?> stickers = HSMapUtils.getList(mStyleMap, "stickers");
-        stickerList.clear();
-        for (Object stickerName : stickers) {
-            stickerList.add(new FacemojiSticker(name, (String) ((Map<String, ?>) stickerName).get("name")));
+
+        if (stickers == null || stickers.size() == 0) {
+            FacemojiDownloadManager.setFacemojiCategoryDownloadedFailed(name);
+            return;
         }
+
+        List<FacemojiSticker> newFacemojiStickerList = new ArrayList<>();
+        for (Object stickerName : stickers) {
+            newFacemojiStickerList.add(new FacemojiSticker(name, (String) ((Map<String, ?>) stickerName).get("name")));
+        }
+        stickerList = newFacemojiStickerList;
     }
 
     public List<FacemojiSticker> getStickerList() {

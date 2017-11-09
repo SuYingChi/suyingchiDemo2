@@ -7,12 +7,14 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
 import com.ihs.inputmethod.api.utils.HSNetworkConnectionUtils;
+import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipException;
 
 public class FacemojiDownloadManager {
     private static class FacemojiDownloadManagerHoler {
@@ -56,19 +58,24 @@ public class FacemojiDownloadManager {
 
         HSHttpConnection connection = new HSHttpConnection(getRemoteResourcePath(facemojiCategory.getName()));
         File downloadFile = FacemojiManager.getFacemojiZipFile(facemojiCategory.getName());
+        if (downloadFile.exists() && downloadFile.length() > 0){
+            downloadFile.delete();
+        }
         connection.setDownloadFile(downloadFile);
         connection.setConnectTimeout(1000 * 60);
         connection.setReadTimeout(1000 * 60 * 10);
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                if (downloadFile.exists() && downloadFile.length() > 0) {
-                    boolean unzipResult = FacemojiManager.unzipFacemojiCategory(downloadFile);
-                    if (unzipResult) {
+                if (hsHttpConnection.isSucceeded() && downloadFile.exists() && downloadFile.length() > 0) {
+                    try {
+                        HSZipUtils.unzip(downloadFile,FacemojiManager.getFacemojiCategoryDir(facemojiCategory.getName()));
                         setFacemojiCategoryDownloadedSuccess(facemojiCategory.getName());
                         if (facemojiCategoryDownloadListener != null) {
                             facemojiCategoryDownloadListener.onDownloadSuccess(facemojiCategory);
                         }
+                    } catch (ZipException e) {
+                        e.printStackTrace();
                     }
                 }
                 downloadFile.delete();
@@ -86,6 +93,14 @@ public class FacemojiDownloadManager {
                 connection.startAsync();
             }
         });
+    }
+
+    /**
+     * 设置下载失败，让其下次再重新下载并解压
+     * @param facemojiCategoryName
+     */
+    public static void setFacemojiCategoryDownloadedFailed(String facemojiCategoryName) {
+        PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext()).edit().putBoolean("FacemojiCategory_" + facemojiCategoryName + "_DownloadedSuccess", false).apply();
     }
 
     public static void setFacemojiCategoryDownloadedSuccess(String facemojiCategoryName) {
