@@ -46,8 +46,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.app.framework.inner.HomeKeyTracker;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -207,6 +207,7 @@ public class MainActivity extends HSDeepLinkActivity {
                                     && isEventRecorded(APP_STEP_ONE_HINT)
                                     && isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
                                 setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
+                                logEventWithSource(Constants.GA_PARAM_ACTION_APP_STEP_TWO_ENABLED);
                             }
                         }
                         MainActivity.this.doStepTwoFinish();
@@ -267,6 +268,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
         if (versionFilterForRecordEvent && !isEventRecorded(INSTRUCTION_SCREEN_VIEWED)) {
             setEventRecorded(INSTRUCTION_SCREEN_VIEWED);
+            logEventWithSource(INSTRUCTION_SCREEN_VIEWED);
         }
 
         WindowManager wm = this.getWindowManager();
@@ -364,6 +366,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 showKeyboardEnableDialog();
                 if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED)) {
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
+                    logEventWithSource(Constants.GA_PARAM_ACTION_APP_STEP_ONE_CLICKED);
                 }
             }
         });
@@ -393,6 +396,7 @@ public class MainActivity extends HSDeepLinkActivity {
                     }
 
                     setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
+                    logEventWithSource(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED);
                 }
             }
         });
@@ -536,6 +540,7 @@ public class MainActivity extends HSDeepLinkActivity {
             public void onClick(View view) {
                 if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
                     setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
+                    logEventWithSource(APP_STEP_ONE_HINT_CLICKED);
                 }
 
                 ImageView imageCodeProject = new ImageView(getApplicationContext());
@@ -561,6 +566,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
+            logEventWithSource(APP_STEP_ONE_HINT);
         }
     }
 
@@ -633,6 +639,7 @@ public class MainActivity extends HSDeepLinkActivity {
                         style = CurrentUIStyle.UISTYLE_STEP_TWO;
                         if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED)) {
                             setEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
+                            logEventWithSource(Constants.GA_PARAM_ACTION_APP_STEP_ONE_ENABLED);
                         }
                     } else {
                         refreshUIState();
@@ -875,5 +882,18 @@ public class MainActivity extends HSDeepLinkActivity {
 
     private boolean shouldShowThemeHome() {
         return HSPreferenceHelper.getDefault().getBoolean(PREF_THEME_HOME_SHOWED, false);
+    }
+
+    private void logEventWithSource(String eventName) {
+        HSAnalytics.logEvent(eventName,"source",getSourceString());
+    }
+
+    private String getSourceString(){
+        switch (currentType) {
+            case TYPE_AUTO:
+                return "auto";
+            default:
+                return "manual";
+        }
     }
 }
