@@ -54,7 +54,7 @@
     <dimen name="config_key_language_on_space_padding_right_electric">6dp</dimen>
     <dimen name="config_key_language_on_space_padding_top_electric">0dp</dimen>
     <dimen name="config_space_key_offesty_pop">2dp</dimen>
-    
+
     <!-- pop up hint -->
     <dimen name="config_key_popup_hint_letter_padding_right_pop">4dp</dimen>
     <dimen name="config_key_popup_hint_letter_padding_top_pop">-3dp</dimen>
@@ -62,22 +62,22 @@
     <dimen name="config_key_popup_hint_letter_padding_top_electric">0dp</dimen>
     <dimen name="config_key_popup_hint_letter_padding_right_grey">3dp</dimen>
     <dimen name="config_key_popup_hint_letter_padding_top_grey">-2dp</dimen>
-    
+
     <dimen name="config_key_hint_letter_padding_right_pop">5dp</dimen>
-    
+
     <!-- font selection panel dimensions -->
     <dimen name="font_item_padding_left">10dp</dimen>
     <dimen name="font_item_padding_top">15dp</dimen>
     <dimen name="font_item_ticker_height">20dp</dimen>
     <dimen name="font_item_ticker_margin_left">5dp</dimen>
     <dimen name="font_item_text_size">18sp</dimen>
-    
+
     <!-- theme selection panel dimensions -->
     <dimen name="theme_item_view_height">110dp</dimen>
     <dimen name="theme_item_imageview_height">90dp</dimen>
     <dimen name="theme_item_imageview_picked_height">99dp</dimen>
-    
-    
+
+
     <!-- gif -->
     <dimen name="config_gif_tag_text_size">10sp</dimen>
     <dimen name="config_gif_tag_padding_horizontal">2dp</dimen>
@@ -85,20 +85,20 @@
     <dimen name="config_gif_emoji_search_page_id_view_height">2dp</dimen>
     <dimen name="control_button_strip_button_margin_left">3.3dp</dimen>
     <dimen name="control_button_strip_margin_left">10dp</dimen>
-    
+
     <dimen name="main_activity_button_height">68dp</dimen>
     <dimen name="main_activity_two_buttons_height">136dp</dimen>
-    
+
     <dimen name="upload_activity_gif_size">160dp</dimen>
     <dimen name="upload_activity_upload_pic_height">120dp</dimen>
     <dimen name="upload_history_upload_pic_horizontal_spacing">3dp</dimen>
     <dimen name="upload_history_upload_pic_vertical_spacing">3dp</dimen>
-    
+
     <dimen name="gif_search_button_margin_left">10dp</dimen>
     <dimen name="gif_search_button_margin_right">5dp</dimen>
     <dimen name="gif_search_button_margin_top">5dp</dimen>
     <dimen name="gif_search_button_margin_bottom">9dp</dimen>
-    
+
     <!-- gif tab button view -->
     <dimen name="gif_tab_button_gif_view_width">49dp</dimen>
     <dimen name="gif_tab_button_gif_view_height">35dp</dimen>
@@ -113,10 +113,10 @@
     <dimen name="gif_primary_tab_button_tag_margin_right">3dp</dimen>
     <dimen name="gif_primary_tab_button_tag_max_width">44dp</dimen>
     <dimen name="gif_primary_tab_button_tag_min_width">15dp</dimen>
-    
+
     <!-- gif search widget -->
     <dimen name="gif_primary_tab_search_widget_bg_stroke_width">1dp</dimen>
-    
+
     <!--facemoji-->
     <dimen name="facemoji_category_bar_height">40dp</dimen>
     <dimen name="facemoji_category_bar_icon_margin">3dp</dimen>

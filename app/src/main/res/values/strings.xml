@@ -216,7 +216,7 @@
 
     <string name="charging_alert_title">Smart Charging</string>
     <string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains sponsored contents.</string>
-  
+
     <string name="enable_charging_detail">Enable smart charging to optimize battery. Contains sponsored contents.</string>
 
     <!--Accessibility-->
@@ -269,12 +269,13 @@ Note: You may receive a system reminder about authorizing, Emoji Keyboard will N
     <string name="guide_open_camera">Slide to open camera quickly</string>
     <string name="guide_open_control_centre">Slide to open Control Centre</string>
 
-	<!-- sticker download documents-->
-	<string name="sticker_download_button">DOWNLOAD</string>
-	<string name="sticker_downloading_label">Downloading</string>
-	<string name="sticker_downloading_successful">Download Successfully</string>
-	<string name="sticker_downloading_guide">Download for free now!</string>
+    <!-- sticker download documents-->
+    <string name="sticker_download_button">DOWNLOAD</string>
+    <string name="sticker_downloading_label">Downloading</string>
+    <string name="sticker_downloading_successful">Download Successfully</string>
+    <string name="sticker_downloading_guide">Download for free now!</string>
     <string name="sticker_share_toast">The app does not support stickers.</string>
-    <string name="boost_noti_setting_desc" >Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
-    <string name="boost_noti_setting_title" >Phone Boost</string>
+    <string name="boost_noti_setting_desc">Free up space and RAM to improve your phone\'s speed and performance. Contains sponsored contents.</string>
+    <string name="boost_noti_setting_title">Phone Boost</string>
+    <string name="title_activity_game">GameActivity</string>
 </resources>

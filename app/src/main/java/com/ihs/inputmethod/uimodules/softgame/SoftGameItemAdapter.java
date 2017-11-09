@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -8,16 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.NativeAdView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,25 +28,23 @@ import java.util.List;
 
 public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    public interface OnSoftGameItemClickListener {
-        public void OnSoftGameItemClick(SoftGameDisplayItem softGameDisplayItem);
-    }
 
     private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
             .showImageOnFail(null)
             .imageScaleType(ImageScaleType.EXACTLY)
             .cacheOnDisk(true).build();
-    private List<SoftGameDisplayItem> softGameDisplayItemList;
-    private OnSoftGameItemClickListener softGameItemClickListener;
+    private List<SoftGameItemBean> softGameDisplayItemList = new ArrayList<>();
     private NativeAdView nativeAdView;
     private static final int TYPE_GAME = 0;
     private static final int TYPE_AD = 1;
 
-    public SoftGameItemAdapter(List<SoftGameDisplayItem> softGameDisplayItemList, OnSoftGameItemClickListener softGameItemClickListener, NativeAdView nativeAdView) {
-        this.softGameDisplayItemList = softGameDisplayItemList;
-        this.softGameItemClickListener = softGameItemClickListener;
+    public SoftGameItemAdapter(NativeAdView nativeAdView) {
         this.nativeAdView = nativeAdView;
+    }
+
+    public SoftGameItemAdapter() {
+
     }
 
     @Override
@@ -66,51 +66,48 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             HSLog.d("current item is Ad.");
         } else {
             final SoftGameItemViewHolder softGameItemViewHolder = (SoftGameItemViewHolder) holder;
-
-            int index = position;
-            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-                index = position - 1;
-            }
-            final SoftGameDisplayItem softGameDisplayItem = softGameDisplayItemList.get(index);
-            ImageLoader.getInstance().displayImage(softGameDisplayItem.getThumbBig(), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
-            softGameItemViewHolder.softGameTitle.setText(softGameDisplayItem.getTitle());
-            softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getType());
+            final SoftGameItemBean softGameDisplayItem = softGameDisplayItemList.get(position);
+            ImageLoader.getInstance().displayImage(softGameDisplayItem.getThumb(), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
+            softGameItemViewHolder.softGameTitle.setText(softGameDisplayItem.getName());
+            softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getDescription());
             softGameItemViewHolder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (softGameItemClickListener != null) {
-                        softGameItemClickListener.OnSoftGameItemClick(softGameDisplayItem);
-                    }
+                        Intent intent = new Intent(HSApplication.getContext(), GameActivity.class);
+                        intent.putExtra("url", softGameDisplayItem.getLink());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        HSApplication.getContext().startActivity(intent);
+                        HSAnalytics.logEvent("game_play_clicked", "game_play_clicked", softGameDisplayItem.getName());
                 }
             });
         }
     }
 
-    public void refreshData(List<SoftGameDisplayItem> softGameDisplayItemList) {
-        this.softGameDisplayItemList = softGameDisplayItemList;
+    public void refreshDataList(List<SoftGameItemBean> softGameItemBeanList) {
+        this.softGameDisplayItemList = softGameItemBeanList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            return softGameDisplayItemList.size() + 1;
-        } else {
+//        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+//            return softGameDisplayItemList.size() + 1;
+//        } else {
             return softGameDisplayItemList.size();
-        }
+//        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            if (position == 0) {
-                return TYPE_AD;
-            } else {
-                return TYPE_GAME;
-            }
-        } else {
+//        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+//            if (position == 0) {
+//                return TYPE_AD;
+//            } else {
+//                return TYPE_GAME;
+//            }
+//        } else {
             return TYPE_GAME;
-        }
+//        }
     }
 
     class SoftGameItemViewHolder extends ViewHolder {
