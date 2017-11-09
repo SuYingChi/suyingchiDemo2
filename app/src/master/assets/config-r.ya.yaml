@@ -29,7 +29,7 @@ libCommons:
   Connection:
     SigKey: "607_1"
     HashKey: "NHC#{e3AnA>?XKSu;W6T7RS:,u<<No#)"
-
+  AppID: "607"
 libFramework:
   Push:
     SenderID: "956858875870ß"

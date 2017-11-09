@@ -27,6 +27,7 @@ libCommons:
   Connection:
     SigKey: "607_1"
     HashKey: "NHC#{e3AnA>?XKSu;W6T7RS:,u<<No#)"
+  AppID: "607"
   IPLocaleManager:
     IPLocaleServerURL: "https://location.appcloudbox.net/prod/country"
     IPLocaleKey: "0}Z|[t=2!,C2BM9>p#Wjot,Ra[)U>*&-"
