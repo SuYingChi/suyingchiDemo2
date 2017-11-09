@@ -323,6 +323,10 @@ public class FacemojiManager {
             return null;
         }
 
+        if (sticker.getFacemojiFrames() == null || sticker.getFacemojiFrames().size() == 0){
+            return null;
+        }
+
         FacePictureParam param = sticker.getFacemojiFrames().get(frameNumber).getFacePictureParam();
 
         Matrix basicMatrix = new Matrix();

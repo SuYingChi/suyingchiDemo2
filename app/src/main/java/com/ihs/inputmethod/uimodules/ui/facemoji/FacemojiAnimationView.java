@@ -69,6 +69,10 @@ public class FacemojiAnimationView extends AppCompatImageView {
             return;
         }
 
+        if (sticker.getFrames() == null || sticker.getFrames().size() == 0){
+            return;
+        }
+
         if (mIsRunning) {
             return;
         }

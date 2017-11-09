@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.facemoji.bean;
 
 import android.graphics.Bitmap;
 
+import com.crashlytics.android.Crashlytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSMapUtils;
@@ -94,6 +95,13 @@ public class FacemojiSticker implements ISequenceFramesImageItem {
 
     private void parseMojimeSticker() {
         Map<String, Object> mStyleMap = HSYamlUtils.getYamlConfigMap(getMojimeConfigFilePath(), false);
+
+        if (mStyleMap == null){
+            Crashlytics.setString("category_name", this.categoryName != null?this.categoryName:"null");
+            Crashlytics.setString("sticker_name", this.name != null?this.name:"null");
+            Crashlytics.logException(new IllegalStateException("exception_parse_facemoji_sticker_failure"));
+            return;
+        }
 
         String stickername = (String) mStyleMap.get("name");
         version = (Integer) mStyleMap.get("version");
