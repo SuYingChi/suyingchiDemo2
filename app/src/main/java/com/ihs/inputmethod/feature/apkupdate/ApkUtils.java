@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,7 +12,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -32,6 +32,8 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
+import com.ihs.keyboardutils.alerts.KCAlert;
+import com.ihs.keyboardutils.utils.AlertShowingUtils;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 
 import java.io.File;
@@ -43,7 +45,8 @@ public class ApkUtils {
     private static final String PREF_KEY_UPDATE_ALERT_LAST_SHOWN_TIME = "update_alert_last_shown_time";
     private static final String PREF_KEY_RATE_BUTTON_CLICKED = "perf_rate_button_clicked";
     private static final String PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM = "perf_shared_keyboard_on_instagram";
-    private static final long UPDATE_ALERT_SHOW_INTERVAL_IN_MILLIS = 24 * 60 * 60 * 1000;
+    private static final long MILLIS_PER_HOUR = 60 * 60 * 1000;
+    private static final int UPDATE_ALERT_SHOW_INTERVAL_IN_MILLIS = 24;
     private static final String PREF_APKUTILS_FILE_NAME = "pref_file_apkutils";
 
     public static void startInstall(Context context, Uri uri) {
@@ -96,26 +99,65 @@ public class ApkUtils {
     }
 
     public static boolean checkAndShowUpdateAlert(final boolean force) {
-        if (shouldUpdate() && isUpdateEnabled()) {
+        if (shouldUpdate() && isUpdateEnabledByConfig()) {
             if (force) {
                 showUpdateAlert();
             } else if (checkTimeout()) {
                 showUpdateAlert();
+            } else {
+                return false;
             }
-
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static void showUpdateAlert() {
+        if (AlertShowingUtils.isShowingAlert()) {
+            return;
         }
 
-        return false;
+        AlertShowingUtils.startShowingAlert();
+
+        try {
+            PackageInfo packageInfo = HSApplication.getContext().getPackageManager().getPackageInfo(HSApplication.getContext().getPackageName(), 0);
+            HSAnalytics.logEvent("update_alert_showed", "versionCode", packageInfo.versionCode + "");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        new KCAlert.Builder(HSApplication.getContext())
+                .setTitle(UpdateConfig.getDefault().getTitle())
+                .setMessage(UpdateConfig.getDefault().getDescription())
+                .setTopImageResource(R.drawable.nav_header_bg)
+                .setImageUri(HSConfig.optString("", "Application", "Update", "NormalAlert", "AlertTopImageUri"))
+                .setCanceledOnTouchOutside(true)
+                .setPositiveButton(HSApplication.getContext().getString(R.string.apk_update_alert_positive_btn), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        HSAnalytics.logEvent("update_alert_update_clicked");
+                        doUpdate();
+                    }
+                }, HSApplication.getContext().getResources().getColor(R.color.home_create_keyboard_bg_normal))
+                .setNegativeButton(HSApplication.getContext().getString(R.string.apk_update_alert_negative_btn), null)
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        AlertShowingUtils.stopShowingAlert();
+                    }
+                })
+                .show();
+        saveUpdateAlertLastShownTime();
     }
 
     private static boolean checkTimeout() {
         final long lastShowTime = getUpdateAlertLastShownTime();
-        if (System.currentTimeMillis() - lastShowTime >= UPDATE_ALERT_SHOW_INTERVAL_IN_MILLIS) {
+        if (System.currentTimeMillis() - lastShowTime >= (HSConfig.optInteger(UPDATE_ALERT_SHOW_INTERVAL_IN_MILLIS, "Application", "Update", "NormalAlert", "ShowAlertInterval") * MILLIS_PER_HOUR)) {
             return true;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -124,14 +166,6 @@ public class ApkUtils {
     public static void doUpdate() {
         if (HSMarketUtils.isMarketInstalled("Google")) {
             HSMarketUtils.browseAPP("Google", HSApplication.getContext().getPackageName());
-        } else {
-            long downloadId;
-
-            if ((downloadId = ApkDownloadManager.getInstance().checkDownload(UpdateConfig.getDefault())) > 0) {
-                HSLog.d("Start to download update apk with downloadId: " + downloadId);
-            } else {
-                HSLog.e("Can't to download update apk with error code: " + downloadId);
-            }
         }
     }
 
@@ -188,17 +222,11 @@ public class ApkUtils {
     }
 
     private static boolean shouldCheckUpdateNow() {
-        return CommonUtils.isNetworkAvailable(-1) // 有网
-                && (HSMarketUtils.isMarketInstalled("Google") //安装了Google Play
-                || !TextUtils.isEmpty(UpdateConfig.getDefault().getDownLoadUrl()));
+        return CommonUtils.isNetworkAvailable(-1) && HSMarketUtils.isMarketInstalled("Google");
     }
 
-    public static boolean isGooglePlayInstalled() {
-        return HSMarketUtils.isMarketInstalled("Google");
-    }
-
-    public static boolean isUpdateEnabled() {
-        return HSApplication.getContext().getResources().getBoolean(R.bool.apk_update_enabled);
+    public static boolean isUpdateEnabledByConfig() {
+        return HSConfig.optBoolean(false, "Application", "Update", "NormalAlert", "ShowAlert");
     }
 
     public static void startUpdate(final Context context) {
@@ -427,9 +455,7 @@ public class ApkUtils {
     }
 
     @SuppressWarnings({"deprecation"})
-    public static void showUpdateAlert() {
-        saveUpdateAlertLastShownTime();
-
+    public static void showCustomUpdateAlert() {
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.apk_update_alert, null, false);
         final AlertDialog dialog = HSAlertDialog.build(R.style.AppCompactTransparentDialogStyle).setView(view).create();

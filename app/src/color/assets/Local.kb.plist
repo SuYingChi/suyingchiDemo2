@@ -4615,8 +4615,39 @@
 			</dict>
 			<key>Update</key>
 			<dict>
+				<key>DownloadUrl</key>
+				<string></string>
+				<key>FeatureClick</key>
+				<dict>
+					<key>Message</key>
+					<dict>
+						<key>en</key>
+						<string>Your current version is too low, please update to lastest version to use it.</string>
+					</dict>
+					<key>Title</key>
+					<dict>
+						<key>en</key>
+						<string>New Version Available</string>
+					</dict>
+				</dict>
 				<key>LatestVersionCode</key>
-				<integer>53</integer>
+				<integer>73</integer>
+				<key>NormalAlert</key>
+				<dict>
+					<key>AlertTopImageUri</key>
+					<string>http://emojidevelop.s3.amazonaws.com/colorcam/download/filternew/black/black-preview.jpg</string>
+					<key>Description</key>
+					<array>
+						<string>We have a new version for you! </string>
+						<string>Update to the latest version to enjoy more features.</string>
+					</array>
+					<key>ShowAlert</key>
+					<true/>
+					<key>ShowAlertInterval</key>
+					<string>12</string>
+					<key>Title</key>
+					<string>New Version Available</string>
+				</dict>
 			</dict>
 			<key>Wallpapers</key>
 			<array>

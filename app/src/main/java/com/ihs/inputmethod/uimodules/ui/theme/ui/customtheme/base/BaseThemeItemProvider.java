@@ -499,7 +499,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.isNewVersionAvailable()) {
                                 holder.mNewMarkImageView.setVisibility(View.GONE);
-                                ApkUtils.showUpdateAlert();
+                                ApkUtils.showCustomUpdateAlert();
                                 return true;
                             }
 

@@ -1,8 +1,9 @@
 package com.ihs.inputmethod.feature.apkupdate;
 
+import android.text.TextUtils;
+
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.inputmethod.api.utils.HSCollectionUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.utils.CommonUtils;
 
@@ -38,7 +39,7 @@ public class UpdateConfig {
         UpdateConfig config = new UpdateConfig();
         config.mDownLoadUrl = HSConfig.optString("", "Update", "DownloadUrl");
         config.mLocalFileName = CommonUtils.getMD5(config.mDownLoadUrl);
-        config.mTitle = HSApplication.getContext().getString(R.string.apk_update_downloading_notification_title);
+        config.mTitle = HSConfig.optString(HSApplication.getContext().getString(R.string.apk_update_alert_title), "Application", "Update", "NormalAlert", "Title");
         config.mUpdateMode = true;
         config.mDescription = getDescriptionConfig();
         return config;
@@ -97,14 +98,17 @@ public class UpdateConfig {
     private static String getDescriptionConfig() {
         String description = "";
 
-        List<String> descriptionList = (List<String>) HSConfig.getList("Update", "Description");
+        @SuppressWarnings("unchecked") List<String> descriptionList = (List<String>) HSConfig.getList("Application", "Update", "NormalAlert", "Description");
 
-        if (!HSCollectionUtils.isEmpty(descriptionList)) {
+        if (descriptionList != null && !descriptionList.isEmpty()) {
             for (int i = 0; i < descriptionList.size(); ++i) {
                 description += descriptionList.get(i) + ((i < (descriptionList.size() - 1)) ? "\n" : "");
             }
         }
 
+        if (TextUtils.isEmpty(description)) {
+            description = HSApplication.getContext().getString(R.string.apk_update_alert_message);
+        }
         return description;
     }
 }

@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
@@ -70,6 +71,7 @@ import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.permission.PermissionFloatWindow;
 import com.ihs.keyboardutils.permission.PermissionTip;
 import com.ihs.keyboardutils.permission.PermissionUtils;
+import com.ihs.keyboardutils.utils.AlertShowingUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
@@ -544,7 +546,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private Random random = new Random();
 
     private void showOpenAlertIfNeeded() {
-        if (!HSPreferenceHelper.getDefault().getBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, false) && ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+        if (!HSPreferenceHelper.getDefault().getBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, false)
+                && ChargingConfigManager.getManager().shouldShowEnableChargingAlert(false)) {
+            if (AlertShowingUtils.isShowingAlert()) {
+                return;
+            }
+            AlertShowingUtils.startShowingAlert();
             CustomDesignAlert multiFunctionDialog = new CustomDesignAlert(HSApplication.getContext());
             multiFunctionDialog.setEnablePrivacy(true, new View.OnClickListener() {
                 @Override
@@ -566,6 +573,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 }
             });
             multiFunctionDialog.show();
+            multiFunctionDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    AlertShowingUtils.stopShowingAlert();
+                }
+            });
             HSAnalytics.logEvent("alert_multi_function_show", "size", "half_screen", "occasion", "open_app");
             HSPreferenceHelper.getDefault().putBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, true);
         } else {
@@ -607,6 +620,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private boolean showChargingDialog() {
         if (ChargingConfigManager.getManager().shouldShowEnableChargingAlert(true)) {
+            if (AlertShowingUtils.isShowingAlert()) {
+                return false;
+            }
+            AlertShowingUtils.startShowingAlert();
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(getString(R.string.charging_alert_title));
             dialog.setMessage(getString(R.string.charging_alert_message));
@@ -620,6 +637,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 }
             });
             dialog.show();
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    AlertShowingUtils.stopShowingAlert();
+                }
+            });
             HSAnalytics.logEvent("alert_charging_show", "size", "half_screen", "occasion", "open_app");
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
             return true;
@@ -630,6 +653,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private boolean showScreenLockerDialog() {
         if (ScreenLockerConfigUtils.shouldShowScreenLockerAlert(true)) {
+            if (AlertShowingUtils.isShowingAlert()) {
+                return false;
+            }
+            AlertShowingUtils.startShowingAlert();
             CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
             lockerDialog.setTitle(getString(R.string.locker_alert_title));
             lockerDialog.setMessage(getString(R.string.locker_alert_message));
@@ -643,6 +670,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 }
             });
             lockerDialog.show();
+            lockerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    AlertShowingUtils.stopShowingAlert();
+                }
+            });
             HSAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");
             ScreenLockerConfigUtils.increaseEnableAlertShowCount();
             return true;
@@ -653,6 +686,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private boolean showCallAssistantDialog() {
         if (CallAssistantConfigUtils.shouldShowCallAssistantAlert(true)) {
+            if (AlertShowingUtils.isShowingAlert()) {
+                return false;
+            }
+            AlertShowingUtils.startShowingAlert();
             CustomDesignAlert callAssistantDialog = new CustomDesignAlert(HSApplication.getContext());
             callAssistantDialog.setTitle(getString(R.string.call_assistant_alert_title));
             callAssistantDialog.setMessage(getString(R.string.call_assistant_alert_message));
@@ -672,6 +709,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 }
             });
             callAssistantDialog.show();
+            callAssistantDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    AlertShowingUtils.stopShowingAlert();
+                }
+            });
             HSAnalytics.logEvent("alert_call_assistant_show", "size", "half_screen", "occasion", "open_app");
             CallAssistantConfigUtils.increaseAlertShowCount();
             return true;

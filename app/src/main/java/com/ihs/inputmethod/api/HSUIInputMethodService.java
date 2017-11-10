@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -310,17 +309,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             getKeyboardPanelMananger().showKeyboardWithMenu();
         }
         Log.e("time log", "time log service onstartInputView finished");
-        // TODO: // How to judge current keyboard id & restart from text?
-        boolean isFromText = editorInfo != null && (editorInfo.inputType & InputType.TYPE_CLASS_TEXT) > 0
-                && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) > 0
-                && (editorInfo.inputType & InputType.TYPE_TEXT_FLAG_CAP_SENTENCES) > 0;
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ApkUtils.checkAndShowUpdateAlert();
-            }
-        }, 1000);
 
         KeyboardAnalyticsReporter.getInstance().onKeyboardSessionStart();
         KeyboardAnalyticsReporter.getInstance().recordKeyboardEndTime();
@@ -429,6 +417,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             }
         }
 
+        handler.removeCallbacks(showUpdateAlertRunnable);
+        handler.postDelayed(showUpdateAlertRunnable, 1000);
+
         // Stop clearing image loader cache
         handler.removeCallbacks(clearImageLoaderCacheRunnable);
     }
@@ -459,6 +450,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    };
+
+    private static Runnable showUpdateAlertRunnable = new Runnable() {
+        @Override
+        public void run() {
+            ApkUtils.checkAndShowUpdateAlert();
         }
     };
 

@@ -449,7 +449,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
         private void setup() {
             preferenceCategoryMore = (PreferenceCategory) findPreference("more");
             updatePreference = findPreference("update");
-            if (!ApkUtils.isUpdateEnabled()) {
+            if (!ApkUtils.isUpdateEnabledByConfig()) {
                 preferenceCategoryMore.removePreference(updatePreference);
             } else {
                 preferenceCategoryMore.addPreference(updatePreference);

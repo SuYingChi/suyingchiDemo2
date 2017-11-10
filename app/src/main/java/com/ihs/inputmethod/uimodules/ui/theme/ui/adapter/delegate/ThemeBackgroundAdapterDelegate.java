@@ -314,7 +314,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.isNewVersionAvailable()) {
                                 holder.backgroundNewMark.setVisibility(GONE);
-                                ApkUtils.showUpdateAlert();
+                                ApkUtils.showCustomUpdateAlert();
                                 return;
                             }
 
