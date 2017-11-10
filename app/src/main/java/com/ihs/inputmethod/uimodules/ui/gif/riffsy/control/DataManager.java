@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.gif.riffsy.control;
 
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -250,6 +251,7 @@ public final class DataManager {
         }
         if (!favorite.contains(item)) {
             favorite.add(0, item);
+            HSAnalytics.logEvent("keyboard_gif_favorite_added");
         }
     }
 

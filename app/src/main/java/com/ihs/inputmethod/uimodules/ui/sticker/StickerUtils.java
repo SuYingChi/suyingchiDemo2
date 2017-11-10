@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.widget.Toast;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -149,6 +150,8 @@ public class StickerUtils {
         addDifferentBackgroundForSticker(sticker, packageName, targetExternalFilePath);
 
         MediaShareUtils.share(sticker.getStickerFileSuffix(), packageName, externalImageFile, "");
+
+        HSAnalytics.logEvent("keyboard_sticker_share_mode");
     }
 
     private static void copyStickerFileToSDCard(Sticker sticker, String destinationPath) {

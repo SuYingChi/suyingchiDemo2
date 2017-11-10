@@ -25,7 +25,6 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.mediacontroller.listeners.DownloadStatusListener;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.DataManager;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifCategory;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
@@ -168,6 +167,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
             public void onClick(View v) {
                 showStripView();
                 mStripView.showStripViewToSearch();
+                HSAnalytics.logEvent("keyboard_gif_search_click");
             }
         });
 
@@ -221,6 +221,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
             e.printStackTrace();
             onFail();
         }
+        HSAnalytics.logEvent("keyboard_gif_tab_switched", mGifCategory.getCurrentLogCategoryId());
     }
 
     private BaseRequest getRequest(String tabId) {
@@ -305,6 +306,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
         if (tag.startsWith("#")) {
             tag = tag.substring(1);
         }
+        HSAnalytics.logEvent("keyboard_gif_tag_clicked", tag);
         mGifCategory.setCurrentExtendedCategoryId(tag);
 
         clear();
