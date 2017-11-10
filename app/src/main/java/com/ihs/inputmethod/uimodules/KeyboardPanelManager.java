@@ -410,7 +410,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public void showSearchAdBar(List<AdCaffeNativeAd> nativeAds) {
+    public void showSearchAdBar(List<AdCaffeNativeAd> nativeAds, String currentAppPackageName) {
         if (keyboardPanelSwitchContainer == null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
         }
@@ -423,6 +423,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         showCustomBar();
         for (AdCaffeNativeAd nativeAd : nativeAds) {
             nativeAd.handleImpression();
+            HSAnalytics.logEvent("searchads_impression", "appName", currentAppPackageName);
         }
 
 
@@ -432,6 +433,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 @Override
                 public void onClick(AdCaffeNativeAd adCaffeNativeAd) {
                     showLoadingAlert();
+                    HSAnalytics.logEvent("searchads_click", "appName", currentAppPackageName);
                 }
 
                 @Override

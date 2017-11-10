@@ -9,6 +9,7 @@ import com.acb.adcaffe.common.UserDataUtils;
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
 import com.acb.adcaffe.nativead.imp.NativeAd;
 import com.acb.adcaffe.nativead.imp.NativeAdLoadCoreConnection;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
@@ -103,6 +104,7 @@ public class AdCaffeHelper {
         if (!shouldShowSearchAdForCurrentApp(packageName)) {
             return;
         }
+        HSAnalytics.logEvent("searchads_search_entry", "appName", packageName);
         requestKeywordList();
     }
 

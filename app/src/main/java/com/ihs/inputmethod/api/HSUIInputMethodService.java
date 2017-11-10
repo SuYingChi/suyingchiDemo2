@@ -562,6 +562,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
             adCaffeHelper.checkKeywordAndLoad(splitIntoWords(getInputLogic().mConnection.getAllText().toString()), success -> {
                 if (!success) {
                     getKeyboardPanelMananger().hideCustomBar();
+                } else {
+                    HSAnalytics.logEvent("searchads_request", "appName", currentAppPackageName);
                 }
             });
         }
@@ -597,7 +599,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public void onNativeAdLoadSuccess(List<AdCaffeNativeAd> nativeAds, boolean hasMore, int nextOffset) {
-        HSLog.e("lv_eee", nativeAds.size() + " ");
-        getKeyboardPanelMananger().showSearchAdBar(nativeAds);
+        if (!nativeAds.isEmpty()) {
+            HSAnalytics.logEvent("searchads_ad_match", "appName", currentAppPackageName);
+        }
+        getKeyboardPanelMananger().showSearchAdBar(nativeAds, currentAppPackageName);
     }
 }
