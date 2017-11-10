@@ -96,7 +96,6 @@ public class AdCaffeHelper {
         osVersion = UserDataUtils.getOsVersion();
         networkType = getNetworkType(context);
         country = UserDataUtils.getCountry();
-        HSLog.e("lv_eee", "country " + country);
         this.onNativeAdLoadListener = onNativeAdLoadListener;
     }
 
@@ -130,11 +129,13 @@ public class AdCaffeHelper {
                 }
                 tempFile.renameTo(destFile);
                 tempFile.delete();
+                HSLog.e("lv_eee", "success");
             }
 
             @Override
             public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
                 tempFile.delete();
+                HSLog.e("lv_eee", "fail");
             }
         });
         connection.startAsync();

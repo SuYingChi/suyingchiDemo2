@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.widget.goolgeplayad;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +31,7 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
 
     private Context context = HSApplication.getContext();
     private List<AdCaffeNativeAd> adList = new ArrayList<>();
+    private AdCaffeOnClickListener adCaffeOnClickListerner;
     private static final int TYPE_AD = 1;
 
     public void addAd(AdCaffeNativeAd ad) {
@@ -50,6 +50,10 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
         notifyDataSetChanged();
     }
 
+    public void setAdCaffeOnClickListener(AdCaffeOnClickListener adCaffeOnClickListerner) {
+        this.adCaffeOnClickListerner = adCaffeOnClickListerner;
+    }
+
     @Override
     public SearchAdViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new SearchAdViewHolder(LayoutInflater.from(context).inflate(R.layout.customize_bar_search_ad, parent, false));
@@ -60,11 +64,28 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
         AdCaffeNativeAd adCaffeNativeAd = adList.get(position);
 
         RequestOptions requestOptions = new RequestOptions().placeholder(new ColorDrawable(ContextCompat.getColor(context, R.color.search_ad_placeholder_color)))
-                .error(new ColorDrawable(Color.RED)).diskCacheStrategy(DiskCacheStrategy.DATA);
+                .error(new ColorDrawable(ContextCompat.getColor(context, R.color.search_ad_placeholder_color))).diskCacheStrategy(DiskCacheStrategy.DATA);
         Glide.with(holder.itemView.getContext()).asBitmap().apply(requestOptions)
                 .load(adCaffeNativeAd.getIconUrl()).transition(withCrossFade(500))
                 .into(holder.adIcon);
-        holder.adIcon.setOnClickListener(v -> adCaffeNativeAd.handleClick());
+        holder.itemView.setOnClickListener(v-> {
+            adCaffeNativeAd.setOnClickListener(new AdCaffeNativeAd.NativeAdOnClickListener() {
+                @Override
+                public void onNativeAdClicked(AdCaffeNativeAd adCaffeNativeAd) {
+                    if (adCaffeOnClickListerner != null) {
+                        adCaffeOnClickListerner.onClick(adCaffeNativeAd);
+                    }
+                }
+
+                @Override
+                public void onNativeAdHandleClickFinished(AdCaffeNativeAd adCaffeNativeAd) {
+                    if (adCaffeOnClickListerner != null) {
+                        adCaffeOnClickListerner.onHandleClickFinish(adCaffeNativeAd);
+                    }
+                }
+            });
+            adCaffeNativeAd.handleClick();
+        });
 
         holder.adTitle.setText(adCaffeNativeAd.getTitle());
         holder.adRating.setText(adCaffeNativeAd.getStoreRating());
@@ -97,5 +118,10 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
             adTitle = (TextView) view.findViewById(R.id.ad_title);
             adRating = (TextView) view.findViewById(R.id.ad_rating_score);
         }
+    }
+
+    public interface AdCaffeOnClickListener {
+        void onClick(AdCaffeNativeAd adCaffeNativeAd);
+        void onHandleClickFinish(AdCaffeNativeAd adCaffeNativeAd);
     }
 }

@@ -2,4 +2,5 @@
 <resources >
     <string name="low_memory_tip">Low memory,please clean your memory!</string>
     <string name="save_theme_failed">Sorry,save theme failed!</string>
+    <string name="loading">Loading…</string>
 </resources>

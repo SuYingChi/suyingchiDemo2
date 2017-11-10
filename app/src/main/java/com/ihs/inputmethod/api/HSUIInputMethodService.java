@@ -487,9 +487,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public void onKeyboardWindowHide() {
-        if (!adCaffeHelper.shouldShowSearchAdForCurrentApp(currentAppPackageName)) {
-            getKeyboardPanelMananger().removeCustomizeBar();
-        }
+        getKeyboardPanelMananger().removeCustomizeBar();
 
         // Start clearing image loader cache
         handler.postDelayed(clearImageLoaderCacheRunnable, HSApplication.isDebugging ? 5 * 1000 : 5 * 60 * 1000);

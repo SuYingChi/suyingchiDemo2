@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,11 +46,13 @@ import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarSearchAdAdapte
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
+import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
+import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.core.session.KCKeyboardSession;
 
 import net.appcloudbox.ads.base.AcbAd;
@@ -76,10 +79,10 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     private KeyboardPanelSwitchContainer keyboardPanelSwitchContainer;
     private BaseFunctionBar functionBar;
+    private AlertDialog loadingDialog;
     private HSMediaView hsBackgroundVideoView;
     private List<AcbNativeAd> gpNativeAdList = new ArrayList<>();
     private CustomBarGPAdAdapter gpAdAdapter;
-    private List<AdCaffeNativeAd> searchAdNativeAdList = new ArrayList<>();
     private CustomBarSearchAdAdapter searchAdAdapter;
     private RecyclerView searchAdRecyclerView;
     private AcbNativeAdLoader acbNativeAdLoader;
@@ -418,9 +421,24 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         showCustomBar();
+        for (AdCaffeNativeAd nativeAd : nativeAds) {
+            nativeAd.handleImpression();
+        }
+
 
         if (searchAdAdapter == null) {
             searchAdAdapter = new CustomBarSearchAdAdapter();
+            searchAdAdapter.setAdCaffeOnClickListener(new CustomBarSearchAdAdapter.AdCaffeOnClickListener() {
+                @Override
+                public void onClick(AdCaffeNativeAd adCaffeNativeAd) {
+                    showLoadingAlert();
+                }
+
+                @Override
+                public void onHandleClickFinish(AdCaffeNativeAd adCaffeNativeAd) {
+                    hideLoadingAlert();
+                }
+            });
         }
 
         if (searchAdRecyclerView == null) {
@@ -447,6 +465,20 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
+    private void hideLoadingAlert() {
+        KCCommonUtils.dismissDialog(loadingDialog);
+    }
+
+    private void showLoadingAlert() {
+        if (loadingDialog == null) {
+            loadingDialog = HSAlertDialog.build(HSApplication.getContext(), 0).
+                    setView(R.layout.layout_dialog_loading).
+                    setCancelable(true).create();
+        }
+        if (!loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
+    }
 
     public void showGoogleAdBar() {
         if (keyboardPanelSwitchContainer == null) {
