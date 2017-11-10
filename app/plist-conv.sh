@@ -4,7 +4,7 @@ chmod +x ./yacoder
 for file in `find ./build/intermediates/assets -type f -name "*.??.plist"`
 do
     echo $file
-    ./pacoder -e $file ${file%.*}
+    ./jacoder -e $file ${file%.*}
     rm $file
 done
 

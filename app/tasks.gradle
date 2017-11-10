@@ -8,8 +8,8 @@ android {
         Task mergeAssets = tasks.findByName("merge${taskMiddleName}Assets")
         Task encodePlistArchives = tasks.create(name: "encode${taskMiddleName}PlistArchives",
                 type: Exec,
-                group: 'RainbowKey',
-                description: 'Perform plist -> pa conversion before merge{Variant}Assets tasks.') {
+                group: 'Keyboard Team',
+                description: 'Perform plist -> ja conversion before merge{Variant}Assets tasks.') {
             commandLine './plist-conv.sh'
         }
         mergeAssets.finalizedBy encodePlistArchives
