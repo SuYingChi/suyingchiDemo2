@@ -2,6 +2,7 @@ package com.ihs.inputmethod.api;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 
 
 public class HSFloatWindowManager {
@@ -102,4 +104,36 @@ public class HSFloatWindowManager {
     }
 
 
+    public void showNewGameTipWindow(View tipView, int x, int y) {
+        if (windowAdded) {
+            return;
+        }
+        Resources resources = HSApplication.getContext().getResources();
+        final WindowManager windowManager = getWindowManager();
+        LayoutParams layoutParams = new LayoutParams();
+//        layoutParams.x = x;
+//        layoutParams.y = HSResourceUtils.getDefaultKeyboardHeight(resources) - resources.getDimensionPixelOffset(R.dimen.config_suggestions_strip_height);
+        if (isCanDrawOverlays()) {
+            layoutParams.type = LayoutParams.TYPE_SYSTEM_ERROR;
+        } else {
+            layoutParams.type = LayoutParams.TYPE_TOAST;
+        }
+        layoutParams.width = DisplayUtils.dip2px(239);
+        layoutParams.height = DisplayUtils.dip2px(112);
+        layoutParams.format = PixelFormat.RGBA_8888;
+        layoutParams.flags |= LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+        layoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        try {
+            windowManager.addView(tipView, layoutParams);
+            windowAdded = true;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+//                    HSFloatWindowManager.getInstance().removeAccessibilityCover();
+                }
+            }, 5000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

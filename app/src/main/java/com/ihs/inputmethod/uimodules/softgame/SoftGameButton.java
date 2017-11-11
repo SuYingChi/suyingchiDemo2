@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.AttrRes;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,7 +25,7 @@ import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.feature.common.VectorCompat;
-import com.ihs.inputmethod.api.HSUIInputMethodService;
+import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -127,7 +127,7 @@ public class SoftGameButton extends FrameLayout {
         showNewMark();
     }
 
-    private void showNewGameTip(SoftGameItemBean softGameItemBean) {
+    private void showNewGameTip(final SoftGameItemBean softGameItemBean) {
         if (softGameItemBean == null) {
             return;
         }
@@ -155,13 +155,16 @@ public class SoftGameButton extends FrameLayout {
         newGameTip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(HSApplication.getContext(), GameActivity.class);
+                intent.putExtra("url", softGameItemBean.getLink());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                HSApplication.getContext().startActivity(intent);
+                HSAnalytics.logEvent("game_play_clicked", "game_play_clicked", softGameItemBean.getName());
             }
         });
 
         try {
-            PopupWindow popupWindow = new PopupWindow(newGameTip);
-            popupWindow.showAtLocation(HSUIInputMethodService.getKeyboardPanelMananger().getKeyboardPanelSwitchContainer(),ALIGN_PARENT_RIGHT,-100,-100);
+            HSFloatWindowManager.getInstance().showNewGameTipWindow(newGameTip,0,location[1] - DisplayUtils.dip2px(112));
         } catch (Exception e) {
             e.printStackTrace();
         }
