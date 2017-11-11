@@ -84,6 +84,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             } else if (HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD.equals(s)) {
                 showKeyboardWithMenu();
                 functionBar.showNewMarkIfNeed();
+                functionBar.checkNewGame();
             }
         }
     };

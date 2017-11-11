@@ -49,6 +49,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     private RelativeLayout clothButtonVG;
     private boolean isAdAnimating = false;
     private ImageView imageView;
+    private SoftGameButton softGameButton;
 
 
     public BaseFunctionBar(Context context) {
@@ -76,7 +77,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     }
 
 
-     // TODO: 17/4/7 需求要求隐藏web搜索，但是没有去掉。如果不再用，需要完整去除。
+    // TODO: 17/4/7 需求要求隐藏web搜索，但是没有去掉。如果不再用，需要完整去除。
 //    private BaseFunction webSeachView;
     private BaseFunction clothView;
 
@@ -110,13 +111,16 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         functionLayout.addView(imageView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
 
         RelativeLayout rightLayout = new RelativeLayout(getContext());
-        SoftGameButton softGameButton = new SoftGameButton(getContext());
+        softGameButton = new SoftGameButton(getContext());
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         rightLayout.addView(softGameButton, layoutParams);
         functionLayout.addView(rightLayout, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
+    public void checkNewGame() {
+        softGameButton.checkNewGame();
+    }
 
     public void setOnFunctionBarClickListener(OnFunctionBarItemClickListener onFunctionBarClickListener) {
         this.onFunctionBarClickListener = onFunctionBarClickListener;
