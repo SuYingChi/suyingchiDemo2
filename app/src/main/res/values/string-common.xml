@@ -12,7 +12,7 @@
 	<string name="font_fontFamily_medium">sans-serif</string>
 
 	<!-- Config for difference activity name -->
-	<string name="setting_activity_name">com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity2</string>
+	<string name="setting_activity_name">com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity</string>
 	<string name="language_activity_name">com.ihs.inputmethod.uimodules.ui.settings.activities.MoreLanguageActivity2</string>
 
 	<!--built in theme-->

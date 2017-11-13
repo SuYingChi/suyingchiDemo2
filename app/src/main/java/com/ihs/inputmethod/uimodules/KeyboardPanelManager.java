@@ -94,6 +94,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 showKeyboardWithMenu();
                 functionBar.showNewMarkIfNeed();
                 functionBar.showMakeFacemojiTipIfNeed(keyboardPanelSwitchContainer);
+            }else if(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY.equals(s)){
                 functionBar.checkNewGame();
             }
         }
@@ -154,6 +155,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY, notificationObserver);
 
         return keyboardPanelSwitchContainer;
     }
