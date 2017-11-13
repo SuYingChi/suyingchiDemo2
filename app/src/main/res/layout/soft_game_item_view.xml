@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp">
+
+    <com.ihs.feature.common.RoundCornerImageView
+        android:id="@+id/soft_game_thumbnail"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/soft_game_icon_place_holder"
+        app:round_left_bottom_corner_radius="6dp"
+        app:round_left_top_corner_radius="6dp"
+        app:round_right_bottom_corner_radius="6dp"
+        app:round_right_top_corner_radius="6dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/soft_game_play_button"
+        android:layout_toRightOf="@+id/soft_game_thumbnail"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/soft_game_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:text="Soft Game Title"
+            android:textColor="#212121"
+            android:textSize="17.3sp" />
+
+        <TextView
+            android:id="@+id/soft_game_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="1"
+            android:text="Soft Game Type"
+            android:textColor="#757575"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/soft_game_play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/sticker_download_button_bg_selector"
+        android:paddingBottom="6dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="6dp"
+        android:text="Play"
+        android:textColor="@android:color/white"
+        android:textSize="14.7sp" />
+</RelativeLayout>

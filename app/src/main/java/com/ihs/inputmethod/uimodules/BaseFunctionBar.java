@@ -33,6 +33,7 @@ import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.softgame.SoftGameButton;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectViewAdapter;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.ClothButton;
@@ -52,6 +53,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     private View makeFacemojiTip;
 
     private final static int MSG_DISMISS_MAKE_FACEMOJI_TIP = 1;
+    private SoftGameButton softGameButton;
 
     private Handler handler = new Handler(){
         @Override
@@ -89,7 +91,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     }
 
 
-     // TODO: 17/4/7 需求要求隐藏web搜索，但是没有去掉。如果不再用，需要完整去除。
+    // TODO: 17/4/7 需求要求隐藏web搜索，但是没有去掉。如果不再用，需要完整去除。
 //    private BaseFunction webSeachView;
     private BaseFunction clothView;
 
@@ -130,8 +132,18 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
             facemojiView.setBackgroundDrawable(RippleDrawableUtils.getTransparentRippleBackground());
             functionLayout.addView(facemojiView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
         }
+
+        RelativeLayout rightLayout = new RelativeLayout(getContext());
+        softGameButton = new SoftGameButton(getContext());
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        rightLayout.addView(softGameButton, layoutParams);
+        functionLayout.addView(rightLayout, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
+    public void checkNewGame() {
+        softGameButton.checkNewGame();
+    }
 
     public void setOnFunctionBarClickListener(OnFunctionBarItemClickListener onFunctionBarClickListener) {
         this.onFunctionBarClickListener = onFunctionBarClickListener;

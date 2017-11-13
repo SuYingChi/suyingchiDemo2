@@ -2,6 +2,7 @@ package com.ihs.inputmethod.api;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.api.utils.HSResourceUtils;
 
 
 public class HSFloatWindowManager {
@@ -38,6 +40,8 @@ public class HSFloatWindowManager {
             }
         }
     };
+
+    private View GameTipView;
 
     public synchronized static HSFloatWindowManager getInstance() {
         if (null == instance) {
@@ -153,6 +157,47 @@ public class HSFloatWindowManager {
         }
     }
 
+
+    public void showNewGameTipWindow(View tipView, int x, int y) {
+        if (windowAdded) {
+            return;
+        }
+        Resources resources = HSApplication.getContext().getResources();
+        final WindowManager windowManager = getWindowManager();
+        LayoutParams layoutParams = new LayoutParams();
+//        layoutParams.x = x;
+        layoutParams.y = DisplayUtils.getScreenHeightPixels() - HSResourceUtils.getDefaultKeyboardHeight(resources) - HSResourceUtils.getDefaultSuggestionStripHeight(resources) - DisplayUtils.dip2px(102);
+
+
+        if (isCanDrawOverlays()) {
+            layoutParams.type = LayoutParams.TYPE_SYSTEM_ERROR;
+        } else {
+            layoutParams.type = LayoutParams.TYPE_TOAST;
+        }
+
+
+        layoutParams.width = DisplayUtils.dip2px(239);
+        layoutParams.height = DisplayUtils.dip2px(112);
+        layoutParams.format = PixelFormat.RGBA_8888;
+        layoutParams.flags |= LayoutParams.FLAG_NOT_FOCUSABLE | LayoutParams.FLAG_NOT_TOUCH_MODAL |
+                LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+        layoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        layoutParams.gravity = Gravity.TOP | Gravity.END;
+        this.GameTipView = tipView;
+        try {
+            windowManager.addView(tipView, layoutParams);
+            windowAdded = true;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    HSFloatWindowManager.getInstance().removeGameTipView();
+                }
+            }, 5000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void removeFloatingWindow() {
         if (floatWindow == null || !windowAdded) {
             return;
@@ -168,5 +213,18 @@ public class HSFloatWindowManager {
 
     public void refreshStickerWindowTimer() {
         handler.sendEmptyMessageDelayed(MSG_REMOVE_STICKER_VIEW, 5000);
+    }
+
+    public void removeGameTipView() {
+        final WindowManager windowManager = getWindowManager();
+        if (GameTipView != null) {
+            try {
+                windowManager.removeViewImmediate(GameTipView);
+                GameTipView = null;
+                windowAdded = false;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

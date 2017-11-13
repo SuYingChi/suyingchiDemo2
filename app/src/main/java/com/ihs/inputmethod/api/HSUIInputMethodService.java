@@ -103,7 +103,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
     };
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    private static KeyboardPanelManager getKeyboardPanelMananger() {
+    public static KeyboardPanelManager getKeyboardPanelMananger() {
         return (KeyboardPanelManager) keyboardPanelSwitcher;
     }
 
@@ -435,6 +435,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
         handler.postDelayed(clearImageLoaderCacheRunnable, HSApplication.isDebugging ? 5 * 1000 : 5 * 60 * 1000);
         HSFloatWindowManager.getInstance().removeFloatingWindow();
         isAppSupportSticker = false;
+        HSFloatWindowManager.getInstance().removeGameTipView();
     }
 
     private boolean shouldShowGoogleAD() {

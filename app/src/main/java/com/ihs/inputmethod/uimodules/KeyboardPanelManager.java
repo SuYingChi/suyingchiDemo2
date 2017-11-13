@@ -94,6 +94,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 showKeyboardWithMenu();
                 functionBar.showNewMarkIfNeed();
                 functionBar.showMakeFacemojiTipIfNeed(keyboardPanelSwitchContainer);
+                functionBar.checkNewGame();
             }
         }
     };
@@ -485,5 +486,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         } else {
             HSFloatWindowManager.getInstance().removeFloatingWindow();
         }
+    }
+    public KeyboardPanelSwitchContainer getKeyboardPanelSwitchContainer() {
+        return keyboardPanelSwitchContainer;
     }
 }

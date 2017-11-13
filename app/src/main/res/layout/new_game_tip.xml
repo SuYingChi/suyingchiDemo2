@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="239dp"
+    android:layout_height="112dp"
+    android:background="@drawable/new_game_tip_background">
+
+    <TextView
+        android:id="@+id/new_game_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/new_game_title_bg"
+        android:fontFamily="sans-serif"
+        android:foregroundGravity="center"
+        android:maxLines="1"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Time Killer Games"
+        android:textColor="@color/key_text_color_white"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/new_game_title_tv"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:padding="3dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/new_game_exit_icon" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="19dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical">
+
+        <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+            android:id="@+id/new_game_icon"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/new_game_tip_icon" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="19dp"
+            android:layout_toRightOf="@+id/new_game_icon"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/new_game_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="2"
+                android:text="Stack Tower - embed codes"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/new_game_play_button"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/new_game_play_button_bg_selector"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:text="PLAY"
+                android:textColor="@android:color/white"
+                android:textSize="15.7sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
