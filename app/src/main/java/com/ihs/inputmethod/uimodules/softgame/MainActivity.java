@@ -49,7 +49,7 @@ public class MainActivity extends HSFragmentActivity implements ViewPager.OnPage
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
-
+        private String[] mTitles = new String[]{"HOT", "NEW"};
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -69,6 +69,11 @@ public class MainActivity extends HSFragmentActivity implements ViewPager.OnPage
         @Override
         public int getCount() {
             return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
         }
     }
 }

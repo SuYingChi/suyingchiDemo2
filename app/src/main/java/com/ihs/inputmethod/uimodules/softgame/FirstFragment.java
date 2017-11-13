@@ -68,6 +68,7 @@ public class FirstFragment extends Fragment {
         hsHttpConnection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
+                progressBar.setVisibility(View.GONE);
                 JSONObject bodyJSON = hsHttpConnection.getBodyJSON();
                 try {
                     List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray(JSON_GAMES));
@@ -81,7 +82,6 @@ public class FirstFragment extends Fragment {
                         softGameItemArrayList.add(bean);
                     }
                     softGameItemAdapter.refreshDataList(softGameItemArrayList);
-                    progressBar.setVisibility(View.GONE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

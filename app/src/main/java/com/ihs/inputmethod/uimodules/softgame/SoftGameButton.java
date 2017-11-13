@@ -148,7 +148,7 @@ public class SoftGameButton extends FrameLayout {
         newGameTip.findViewById(R.id.iv_close).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                HSUIInputMethodService.getKeyboardPanelMananger().getKeyboardPanelSwitchContainer().removeView(newGameTip);
+                HSFloatWindowManager.getInstance().removeGameTipView();
             }
         });
 

@@ -394,10 +394,10 @@ public abstract class HSUIInputMethodService extends HSInputMethodService {
 
     @Override
     public void onKeyboardWindowHide() {
+        HSFloatWindowManager.getInstance().removeGameTipView();
         if(!inPlayStore()){
             getKeyboardPanelMananger().removeCustomizeBar();
         }
-
     }
 
     private boolean inPlayStore() {
