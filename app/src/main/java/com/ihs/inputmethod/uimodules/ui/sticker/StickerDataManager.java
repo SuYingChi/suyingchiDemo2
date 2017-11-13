@@ -92,7 +92,6 @@ public class StickerDataManager {
                 }
             }
 
-            HSLog.e("eee", "" + stickerGroupsInKeyboard.size());
 
             // 如果是第一次加载，则将StickerGroups中前两个位置置为new
             if (isFirstLoad() && stickerGroups.size() > 1) {
