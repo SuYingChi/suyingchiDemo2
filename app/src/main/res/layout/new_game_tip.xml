@@ -23,12 +23,13 @@
 
     <ImageView
         android:id="@+id/iv_close"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignBottom="@+id/new_game_title_tv"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
+        android:padding="3dp"
+        android:layout_marginRight="10dp"
         android:src="@drawable/new_game_exit_icon" />
 
     <RelativeLayout

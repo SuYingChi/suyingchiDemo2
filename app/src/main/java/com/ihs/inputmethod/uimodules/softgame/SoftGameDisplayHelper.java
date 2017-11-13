@@ -18,14 +18,14 @@ public class SoftGameDisplayHelper {
     public static void DisplaySoftGames(Activity activity, String placement) {
         Intent intent;
         if (null == activity) {
-            intent = new Intent(HSApplication.getContext(), MainActivity.class);
+            intent = new Intent(HSApplication.getContext(), SoftGameDisplayActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.putExtra(SoftGameDisplayActivity.SOFT_GAME_PLACEMENT_MESSAGE, placement);
+            intent.putExtra(SoftGameDisplayActivity.SOFT_GAME_PLACEMENT_MESSAGE, placement);
             HSApplication.getContext().startActivity(intent);
         } else {
-            intent = new Intent(activity, MainActivity.class);
+            intent = new Intent(activity, SoftGameDisplayActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//            intent.putExtra(SoftGameDisplayActivity.SOFT_GAME_PLACEMENT_MESSAGE, placement);
+            intent.putExtra(SoftGameDisplayActivity.SOFT_GAME_PLACEMENT_MESSAGE, placement);
             activity.startActivity(intent);
         }
     }

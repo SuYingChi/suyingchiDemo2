@@ -165,7 +165,7 @@ public class KeyboardActivationActivity extends HSActivity {
 //                if (actIntent == null) {
 //                    actIntent = new Intent();
 //                }
-//                actIntent.setClass(HSApplication.getContext(), MainActivity.class);
+//                actIntent.setClass(HSApplication.getContext(), SoftGameDisplayActivity.class);
 //                startActivity(actIntent);
 //            }
 //        });

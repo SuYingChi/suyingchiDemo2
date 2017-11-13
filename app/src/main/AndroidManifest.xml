@@ -145,16 +145,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".softgame.SoftGameDisplayActivity"
-            android:screenOrientation="portrait"
-            android:taskAffinity=".keyboard.softgame"></activity>
-        <activity
             android:launchMode="singleTask"
             android:name=".softgame.GameActivity"
             android:label="@string/title_activity_game"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <activity android:name=".softgame.MainActivity"
+        <activity android:name=".softgame.SoftGameDisplayActivity"
             android:theme="@style/Theme.Design.Light"
             />
     </application>

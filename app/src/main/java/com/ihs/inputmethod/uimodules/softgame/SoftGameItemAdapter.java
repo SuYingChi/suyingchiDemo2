@@ -43,6 +43,7 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<SoftGameItemBean> softGameDisplayItemList = new ArrayList<>();
     private static final int TYPE_GAME = 0;
     private static final int TYPE_AD = 1;
+    private NativeAdView nativeAdView;
 
     public SoftGameItemAdapter(String placementName) {
         this.placementName = placementName;
@@ -58,7 +59,7 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
             loadingView.setLayoutParams(loadingLP);
             loadingView.setGravity(Gravity.CENTER);
-            NativeAdView nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
+            nativeAdView = new NativeAdView(HSApplication.getContext(), view, loadingView);
             nativeAdView.configParams(new NativeAdParams(placementName, width, 1.9f));
             viewHolder = new ViewHolder(nativeAdView) {
             };
@@ -89,6 +90,15 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
                     HSAnalytics.logEvent("game_play_clicked", "game_play_clicked", softGameDisplayItem.getName());
                 }
             });
+        }
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        if (nativeAdView != null) {
+            nativeAdView.release();
+            nativeAdView = null;
         }
     }
 

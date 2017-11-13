@@ -539,7 +539,7 @@ public class MainActivity extends HSDeepLinkActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edit_text_test.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
-        HSLog.d("jx,MainActivity onstop hide input");
+        HSLog.d("jx,SoftGameDisplayActivity onstop hide input");
         HSInputMethod.hideWindow();
     }
 
@@ -928,7 +928,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                MainActivity.this.doHideAnimation();
+//                SoftGameDisplayActivity.this.doHideAnimation();
                 startThemeHomeActivity();
             }
         });

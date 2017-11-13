@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.widget.RelativeLayout.ALIGN_PARENT_RIGHT;
-import static com.ihs.inputmethod.uimodules.softgame.FirstFragment.JSON_GAMES;
+import static com.ihs.inputmethod.uimodules.softgame.SoftGameItemFragment.JSON_GAMES;
 
 /**
  * Created by liuzhongtao on 17/7/18.

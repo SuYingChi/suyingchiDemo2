@@ -23,9 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import softgames.de.softgamesapilib.SoftgamesSearchConfig;
-
-public class FirstFragment extends Fragment {
+public class SoftGameItemFragment extends Fragment {
 
     public static final int SOFT_GAME_LOAD_COUNT = 50;
     public static final String JSON_GAMES = "games";
@@ -54,11 +52,6 @@ public class FirstFragment extends Fragment {
         softGameItemAdapter = new SoftGameItemAdapter(placementName);
         recyclerView.setAdapter(softGameItemAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-
-        final SoftgamesSearchConfig sgConfig = new SoftgamesSearchConfig(SoftGameManager.getPartnerId());
-        sgConfig.setSortByPopularity(true);
-        sgConfig.setLimit(SOFT_GAME_LOAD_COUNT);
-
 
         HSHttpConnection hsHttpConnection = new HSHttpConnection(url.toString());
         hsHttpConnection.startAsync();
@@ -93,9 +86,9 @@ public class FirstFragment extends Fragment {
         return v;
     }
 
-    public static FirstFragment newInstance(String text, String placementName) {
+    public static SoftGameItemFragment newInstance(String text, String placementName) {
 
-        FirstFragment f = new FirstFragment();
+        SoftGameItemFragment f = new SoftGameItemFragment();
         Bundle b = new Bundle();
         b.putString("url", text);
         b.putString("placementName", placementName);

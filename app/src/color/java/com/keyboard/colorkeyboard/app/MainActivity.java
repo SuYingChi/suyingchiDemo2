@@ -284,7 +284,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 m.showInputMethodPicker();
                 Toast toast = Toast.makeText(MainActivity.this, R.string.toast_select_keyboard, Toast.LENGTH_LONG);
                 toast.show();
-                //                MainActivity.this.doSetpTwoFinishAnimation();
+                //                SoftGameDisplayActivity.this.doSetpTwoFinishAnimation();
 
 
                 if (versionFilterForRecordEvent && !isEventRecorded(Constants.GA_PARAM_ACTION_APP_STEP_TWO_CLICKED)) {
@@ -313,11 +313,11 @@ public class MainActivity extends HSDeepLinkActivity {
         bt_design_theme.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(MainActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(MainActivity.this,CustomThemeActivity.class));
+//                Toast.makeText(SoftGameDisplayActivity.this,"go to custom theme",Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(SoftGameDisplayActivity.this,CustomThemeActivity.class));
 
 
-//                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiableFromActivity(MainActivity.this,null);
+//                IAPManager.getManager().startCustomThemeActivityIfSlotAvaiableFromActivity(SoftGameDisplayActivity.this,null);
 
                 HSGoogleAnalyticsUtils.getInstance().logAppEvent("app_customize_entry_clicked");
             }
@@ -668,7 +668,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 bt_step_one.setVisibility(View.GONE);
                 bt_step_two.setVisibility(View.GONE);
                 MainActivity.this.doAppearAnimation();
-                // MainActivity.this.doScaleAnimation();
+                // SoftGameDisplayActivity.this.doScaleAnimation();
             }
         });
         alphaAnimation.setDuration(500);
@@ -855,7 +855,7 @@ public class MainActivity extends HSDeepLinkActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                MainActivity.this.doHideAnimation();
+//                SoftGameDisplayActivity.this.doHideAnimation();
                 startThemeHomeActivity();
             }
         });
