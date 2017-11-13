@@ -139,7 +139,7 @@ public class ApkUtils {
                         HSAnalytics.logEvent("update_alert_update_clicked");
                         doUpdate();
                     }
-                }, HSApplication.getContext().getResources().getColor(R.color.home_create_keyboard_bg_normal))
+                }, HSApplication.getContext().getResources().getColor(R.color.colorPrimaryDark))
                 .setNegativeButton(HSApplication.getContext().getString(R.string.apk_update_alert_negative_btn), null)
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
