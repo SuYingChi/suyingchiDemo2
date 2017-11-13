@@ -37,6 +37,7 @@ import java.util.Map;
 
 import static android.widget.RelativeLayout.ALIGN_PARENT_RIGHT;
 import static com.ihs.inputmethod.uimodules.softgame.SoftGameItemFragment.JSON_GAMES;
+import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
 /**
  * Created by liuzhongtao on 17/7/18.
@@ -67,6 +68,8 @@ public class SoftGameButton extends FrameLayout {
     }
 
     private void initView() {
+        this.setBackgroundDrawable(getTransparentRippleBackground());
+
         buttonIcon = new ImageView(getContext());
         int padding = HSDisplayUtils.dip2px(6);
         buttonIcon.setPadding(padding, padding, padding, padding);
@@ -163,14 +166,7 @@ public class SoftGameButton extends FrameLayout {
             }
         });
 
-        try {
-            HSFloatWindowManager.getInstance().showNewGameTipWindow(newGameTip,0,location[1] - DisplayUtils.dip2px(112));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-//        HSUIInputMethodService.getKeyboardPanelMananger().getKeyboardPanelSwitchContainer().addView(newGameTip, lp);
+        HSFloatWindowManager.getInstance().showNewGameTipWindow(newGameTip, 0, location[1] - DisplayUtils.dip2px(112));
     }
 
     public void showNewMark() {
@@ -185,7 +181,7 @@ public class SoftGameButton extends FrameLayout {
             int height = HSDisplayUtils.dip2px(7);
             LayoutParams layoutParams = new LayoutParams(width, height);
             layoutParams.rightMargin = HSDisplayUtils.dip2px(4);
-            layoutParams.topMargin = HSDisplayUtils.dip2px(4);
+            layoutParams.topMargin = HSDisplayUtils.dip2px(8);
             layoutParams.gravity = Gravity.TOP | Gravity.END;
             newTipDotView.setLayoutParams(layoutParams);
             addView(newTipDotView);

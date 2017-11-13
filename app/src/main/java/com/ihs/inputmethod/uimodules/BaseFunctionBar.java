@@ -133,12 +133,8 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
             functionLayout.addView(facemojiView, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
         }
 
-        RelativeLayout rightLayout = new RelativeLayout(getContext());
         softGameButton = new SoftGameButton(getContext());
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        rightLayout.addView(softGameButton, layoutParams);
-        functionLayout.addView(rightLayout, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        functionLayout.addView(softGameButton, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
     public void checkNewGame() {
