@@ -14,27 +14,36 @@ public class MainActivity extends HSFragmentActivity implements ViewPager.OnPage
     public static final String TOP_50_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50&sort=top_games";
     public static final String TOP_NEW_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50";
     private ViewPager mViewPager;
-    private TabLayout mTabLayout;
+    public static final String SOFT_GAME_PLACEMENT_MESSAGE = "soft_game_placement_msg";
+    private String placementName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soft_game_display);
 
-        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        placementName = getIntent().getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
+
+
+        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabs);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(this);
 
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
     }
 
 
+
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
+
 
     @Override
     public void onPageSelected(int position) {
@@ -50,6 +59,7 @@ public class MainActivity extends HSFragmentActivity implements ViewPager.OnPage
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         private String[] mTitles = new String[]{"HOT", "NEW"};
+
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -58,11 +68,11 @@ public class MainActivity extends HSFragmentActivity implements ViewPager.OnPage
         public Fragment getItem(int pos) {
             switch (pos) {
                 case 0:
-                    return FirstFragment.newInstance(TOP_50_GAME);
+                    return FirstFragment.newInstance(TOP_50_GAME, placementName);
                 case 1:
-                    return FirstFragment.newInstance(TOP_NEW_GAME);
+                    return FirstFragment.newInstance(TOP_NEW_GAME, placementName);
                 default:
-                    return FirstFragment.newInstance(TOP_50_GAME);
+                    return FirstFragment.newInstance(TOP_50_GAME, placementName);
             }
         }
 

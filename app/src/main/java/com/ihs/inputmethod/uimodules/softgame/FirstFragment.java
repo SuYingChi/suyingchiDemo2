@@ -16,7 +16,6 @@ import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 import org.json.JSONObject;
 
@@ -42,7 +41,8 @@ public class FirstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Object url = getArguments().get("url");
-        if(url == null){
+        String placementName = getArguments().getString("placementName");
+        if (url == null) {
             return null;
         }
 
@@ -51,10 +51,7 @@ public class FirstFragment extends Fragment {
         progressBar = (ProgressBar) v.findViewById(R.id.soft_game_progress_bar);
         recyclerView = (RecyclerView) v.findViewById(R.id.soft_game_main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.VERTICAL, false));
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-//            initNativeAdView();
-        }
-        softGameItemAdapter = new SoftGameItemAdapter();
+        softGameItemAdapter = new SoftGameItemAdapter(placementName);
         recyclerView.setAdapter(softGameItemAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
@@ -96,12 +93,12 @@ public class FirstFragment extends Fragment {
         return v;
     }
 
-    public static FirstFragment newInstance(String text) {
+    public static FirstFragment newInstance(String text, String placementName) {
 
         FirstFragment f = new FirstFragment();
         Bundle b = new Bundle();
         b.putString("url", text);
-
+        b.putString("placementName", placementName);
         f.setArguments(b);
 
         return f;
