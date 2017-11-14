@@ -88,17 +88,6 @@
             android:name=".ui.customize.InCallThemePreviewActivity"
             android:theme="@style/CPSettingsActivityTheme" />
 
-        <!-- 防止全屏和程序外广告声明冲突 -->
-        <activity
-            android:name="com.acb.interstitialads.NativeInterstitial.AcbNativeInterstitalQuietActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_screen_value"
-            tools:replace="android:taskAffinity" />
-        <activity
-            android:name="com.acb.adadapter.QuietInterstial.BackgroundActivity"
-            android:noHistory="true"
-            android:taskAffinity=".acb_screen_value"
-            tools:replace="android:taskAffinity" />
 
         <!-- 给applovin配置sdk key，注意，master keyboard需要另外的key -->
         <meta-data
@@ -140,7 +129,6 @@
             android:name="com.keyboard.common.MainActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarFullScreen"
             android:windowSoftInputMode="adjustResize">
