@@ -213,21 +213,24 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 case SettingsButton.SettingButtonType.MENU:
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
-                    functionBar.hideFacemojiGifView();
+                    functionBar.hideMenuButton(functionBar.getFacemojiView());
+                    functionBar.hideMenuButton(functionBar.getSoftGameButton());
                     HSAnalytics.logEvent("keyboard_function_button_click");
                     break;
 
                 case SettingsButton.SettingButtonType.SETTING:
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.backToParentPanel(false);
-                    functionBar.showFacemojiGifView();
+                    functionBar.showMenuButton(functionBar.getFacemojiView());
+                    functionBar.showMenuButton(functionBar.getSoftGameButton());
                     break;
 
                 case SettingsButton.SettingButtonType.BACK:
                     keyboardPanelSwitchContainer.backToParentPanel(false);
                     if (keyboardPanelSwitchContainer.getCurrentPanel() == keyboardPanelSwitchContainer.getKeyboardPanel()) {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
-                        functionBar.showFacemojiGifView();
+                        functionBar.showMenuButton(functionBar.getFacemojiView());
+                        functionBar.showMenuButton(functionBar.getSoftGameButton());
                     } else {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.SETTING);
                     }

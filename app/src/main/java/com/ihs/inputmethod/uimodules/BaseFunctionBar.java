@@ -143,6 +143,14 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         plusButton.setVisibility(GONE);
     }
 
+    public SoftGameButton getSoftGameButton() {
+        return softGameButton;
+    }
+
+    public GifImageView getFacemojiView() {
+        return facemojiView;
+    }
+
     public void checkNewGame() {
         softGameButton.checkNewGame();
     }
@@ -223,15 +231,15 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         baseFunction.hideNewTip();
     }
 
-    public void showFacemojiGifView() {
-        if (facemojiView != null) {
-            facemojiView.setVisibility(VISIBLE);
+    public void showMenuButton(View view) {
+        if (view != null) {
+            view.setVisibility(VISIBLE);
         }
     }
 
-    public void hideFacemojiGifView() {
-        if (facemojiView != null) {
-            facemojiView.setVisibility(GONE);
+    public void hideMenuButton(View view) {
+        if (view != null) {
+            view.setVisibility(GONE);
         }
     }
 

@@ -89,6 +89,16 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             ImageLoader.getInstance().displayImage(softGameDisplayItem.getThumb(), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);
             softGameItemViewHolder.softGameTitle.setText(softGameDisplayItem.getName());
             softGameItemViewHolder.softGameType.setText(softGameDisplayItem.getDescription());
+            softGameItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HSApplication.getContext(), GameActivity.class);
+                    intent.putExtra("url", softGameDisplayItem.getLink());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    HSApplication.getContext().startActivity(intent);
+                    HSAnalytics.logEvent("game_play_clicked", "game_play_clicked", softGameDisplayItem.getName());
+                }
+            });
             softGameItemViewHolder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
