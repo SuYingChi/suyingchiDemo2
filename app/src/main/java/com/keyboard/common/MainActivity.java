@@ -291,6 +291,28 @@ public class MainActivity extends HSDeepLinkActivity {
                 return true;
             }
         });
+        launchImageView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!isLaunchAnimationPlayed) {
+                    Log.w("cjx","start play anim");
+                    isLaunchAnimationPlayed = true;
+                    launchImageView.setVisibility(GONE);
+                    launchVideoView.setVisibility(View.VISIBLE);
+                    launchVideoView.start();
+                    if (!shouldShowThemeHome()) {
+                        HSFloatWindowManager.getInstance().initAccessibilityCover();
+                        if (!isSettingButtonAnimationPlayed) {
+                            if (!hasPlayed) {
+                                progressLayout.setVisibility(View.VISIBLE);
+                                progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                            }
+                            HSLog.w("show setting button in abnormal way");
+                        }
+                    }
+                }
+            }
+        });
         launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -604,29 +626,6 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onResume() {
         super.onResume();
         HSLog.d("MainActivity onResume.");
-
-        if (!isLaunchAnimationPlayed) {
-            isLaunchAnimationPlayed = true;
-            launchImageView.setVisibility(GONE);
-            launchVideoView.setVisibility(View.VISIBLE);
-            launchVideoView.start();
-            HSFloatWindowManager.getInstance().initAccessibilityCover();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!isSettingButtonAnimationPlayed) {
-                        if (!hasPlayed) {
-                            progressLayout.setVisibility(View.VISIBLE);
-                            progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
-                        }
-                        HSLog.w("show setting button in abnormal way");
-                    }
-                }
-            }, 6000);
-        } else {
-            launchImageView.setVisibility(View.VISIBLE);
-            launchVideoView.setVisibility(GONE);
-        }
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                 getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,

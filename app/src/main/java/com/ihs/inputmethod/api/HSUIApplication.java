@@ -151,41 +151,10 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     protected void onRemoteProcessApplicationCreate(String processSuffix) {
-        HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
-            @Override
-            public Notification getForegroundNotification() {
-                return null;
-            }
-
-            @Override
-            public int getNotificationID() {
-                return 0;
-            }
-
-            @Override
-            public void onServiceCreate() {
-            }
-        });
     }
 
     protected void onMainProcessApplicationCreate() {
         Fabric.with(this, new Crashlytics());
-
-        HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
-            @Override
-            public Notification getForegroundNotification() {
-                return null;
-            }
-
-            @Override
-            public int getNotificationID() {
-                return 0;
-            }
-
-            @Override
-            public void onServiceCreate() {
-            }
-        });
 
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
@@ -218,6 +187,12 @@ public class HSUIApplication extends HSInputMethodApplication {
             public void run() {
                 FacemojiManager.getInstance().init();
                 ThemeDirManager.moveCustomAssetsToFileIfNecessary();
+                AcbInterstitialAdManager.getInstance().init(HSUIApplication.this);
+                AcbNativeAdManager.sharedInstance().init(HSUIApplication.this);
+                AcbExpressAdManager.getInstance().init(HSUIApplication.this);
+                setChargingFunctionStatus();
+                registerNotificationEvent();
+                ScreenLockerManager.init();
             }
         });
         HSKeyboardThemeManager.init();
@@ -232,20 +207,13 @@ public class HSUIApplication extends HSInputMethodApplication {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
         }
 
-        AcbInterstitialAdManager.getInstance().init(this);
-        AcbNativeAdManager.sharedInstance().init(this);
-        AcbExpressAdManager.getInstance().init(this);
 
         HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
-
-        setChargingFunctionStatus();
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         HSInputMethodService.initResourcesBeforeOnCreate();
 
-        registerNotificationEvent();
 
-        ScreenLockerManager.init();
         FloatWindowCompat.initLockScreen(this);
         initIAP();
 
@@ -274,6 +242,28 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
 
         StickerSuggestionManager.getInstance();
+
+        UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //init KeepAlive
+                HSPermanentUtils.startKeepAlive(true, true, null, new PermanentService.PermanentServiceListener() {
+                    @Override
+                    public Notification getForegroundNotification() {
+                        return null;
+                    }
+
+                    @Override
+                    public int getNotificationID() {
+                        return 0;
+                    }
+
+                    @Override
+                    public void onServiceCreate() {
+                    }
+                });
+            }
+        },30000);
     }
 
     private void activeAdPlacements() {

@@ -67,3 +67,4 @@ xcuserdata
 # Other files
 .gradle/
 /captures/
+gpuimage/.externalNativeBuild/
