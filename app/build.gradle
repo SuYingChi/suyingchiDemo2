@@ -224,6 +224,8 @@ dependencies {
     compile(name: 'libcharging', ext: 'aar')
     compile(name: 'ihs/libAdCaffe/libAdCaffe', ext: 'aar')
     compile(name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
+    compile(name: 'ihs/libAdCaffe/libAdCaffeCommon', ext: 'jar')
+    compile(name: 'ihs/libAdCaffe/libAdCaffeNativeAd', ext: 'jar')
     //facebook
     compile "com.facebook.shimmer:shimmer:0.1.0@aar"
 
