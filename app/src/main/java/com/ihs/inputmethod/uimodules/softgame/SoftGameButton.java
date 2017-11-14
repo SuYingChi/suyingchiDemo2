@@ -162,11 +162,11 @@ public class SoftGameButton extends FrameLayout {
                 intent.putExtra("url", softGameItemBean.getLink());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 HSApplication.getContext().startActivity(intent);
-                HSAnalytics.logEvent("game_play_clicked", "game_play_clicked", softGameItemBean.getName());
+                HSAnalytics.logEvent("keyboard_game_bubble_clicked");
             }
         });
 
-        HSFloatWindowManager.getInstance().showNewGameTipWindow(newGameTip, 0, location[1] - DisplayUtils.dip2px(112));
+        HSFloatWindowManager.getInstance().showNewGameTipWindow(newGameTip);
     }
 
     public void showNewMark() {

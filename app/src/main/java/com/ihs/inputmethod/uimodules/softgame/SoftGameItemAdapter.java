@@ -77,6 +77,13 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
         if (itemViewType == TYPE_AD) {
             HSLog.d("current item is Ad.");
         } else {
+            if (softGameDisplayItemList == null || softGameDisplayItemList.isEmpty()) {
+                return;
+            }
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                position--;
+            }
+
             final SoftGameItemViewHolder softGameItemViewHolder = (SoftGameItemViewHolder) holder;
             final SoftGameItemBean softGameDisplayItem = softGameDisplayItemList.get(position);
             ImageLoader.getInstance().displayImage(softGameDisplayItem.getThumb(), new ImageViewAware(softGameItemViewHolder.softGameThumbnail), displayImageOptions);

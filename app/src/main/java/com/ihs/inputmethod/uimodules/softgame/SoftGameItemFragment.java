@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.connection.HSHttpConnection;
@@ -32,7 +31,6 @@ public class SoftGameItemFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private SoftGameItemAdapter softGameItemAdapter;
-    private ProgressBar progressBar;
 
     private Handler handler = new Handler();
 
@@ -46,7 +44,6 @@ public class SoftGameItemFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.frag_game_hot, container, false);
 
-        progressBar = (ProgressBar) v.findViewById(R.id.soft_game_progress_bar);
         recyclerView = (RecyclerView) v.findViewById(R.id.soft_game_main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.VERTICAL, false));
         softGameItemAdapter = new SoftGameItemAdapter(placementName);
@@ -58,7 +55,6 @@ public class SoftGameItemFragment extends Fragment {
         hsHttpConnection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                progressBar.setVisibility(View.GONE);
                 JSONObject bodyJSON = hsHttpConnection.getBodyJSON();
                 try {
                     List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray(JSON_GAMES));

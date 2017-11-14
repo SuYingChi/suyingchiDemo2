@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
@@ -158,15 +159,14 @@ public class HSFloatWindowManager {
     }
 
 
-    public void showNewGameTipWindow(View tipView, int x, int y) {
+    public void showNewGameTipWindow(View tipView) {
         if (windowAdded) {
             return;
         }
         Resources resources = HSApplication.getContext().getResources();
         final WindowManager windowManager = getWindowManager();
         LayoutParams layoutParams = new LayoutParams();
-//        layoutParams.x = x;
-        layoutParams.y = DisplayUtils.getScreenHeightPixels() - HSResourceUtils.getDefaultKeyboardHeight(resources) - HSResourceUtils.getDefaultSuggestionStripHeight(resources) - DisplayUtils.dip2px(102);
+        layoutParams.y = DisplayUtils.getScreenHeightPixels() - HSResourceUtils.getDefaultKeyboardHeight(resources) - HSResourceUtils.getDefaultSuggestionStripHeight(resources) - DisplayUtils.dip2px(105);
 
 
         if (isCanDrawOverlays()) {
@@ -192,7 +192,8 @@ public class HSFloatWindowManager {
                 public void run() {
                     HSFloatWindowManager.getInstance().removeGameTipView();
                 }
-            }, 5000);
+            }, 6000);
+            HSAnalytics.logEvent("keyboard_game_bubble_show");
         } catch (Exception e) {
             e.printStackTrace();
         }
