@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,8 +19,10 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
+import com.ihs.inputmethod.uimodules.R;
+
+import java.lang.reflect.InvocationTargetException;
 
 
 public class HSFloatWindowManager {
@@ -166,7 +170,8 @@ public class HSFloatWindowManager {
         Resources resources = HSApplication.getContext().getResources();
         final WindowManager windowManager = getWindowManager();
         LayoutParams layoutParams = new LayoutParams();
-        layoutParams.y = DisplayUtils.getScreenHeightPixels() - HSResourceUtils.getDefaultKeyboardHeight(resources) - HSResourceUtils.getDefaultSuggestionStripHeight(resources) - DisplayUtils.dip2px(105);
+        layoutParams.y = DisplayUtils.getScreenHeightPixels() - HSResourceUtils.getDefaultKeyboardHeight(resources) - HSResourceUtils.getDefaultSuggestionStripHeight(resources) - DisplayUtils.dip2px(102)
+        - getNavigationBarSize(HSApplication.getContext()).y;
 
 
         if (isCanDrawOverlays()) {
@@ -174,7 +179,6 @@ public class HSFloatWindowManager {
         } else {
             layoutParams.type = LayoutParams.TYPE_TOAST;
         }
-
 
         layoutParams.width = DisplayUtils.dip2px(239);
         layoutParams.height = DisplayUtils.dip2px(112);
@@ -227,5 +231,49 @@ public class HSFloatWindowManager {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    public static Point getNavigationBarSize(Context context) {
+        Point appUsableSize = getAppUsableScreenSize(context);
+        Point realScreenSize = getRealScreenSize(context);
+
+        // navigation bar on the right
+        if (appUsableSize.x < realScreenSize.x) {
+            return new Point(realScreenSize.x - appUsableSize.x, appUsableSize.y);
+        }
+
+        // navigation bar at the bottom
+        if (appUsableSize.y < realScreenSize.y) {
+            return new Point(appUsableSize.x, realScreenSize.y - appUsableSize.y);
+        }
+
+        // navigation bar is not present
+        return new Point();
+    }
+
+    public static Point getAppUsableScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size;
+    }
+
+    public static Point getRealScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+
+        if (Build.VERSION.SDK_INT >= 17) {
+            display.getRealSize(size);
+        } else if (Build.VERSION.SDK_INT >= 14) {
+            try {
+                size.x = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
+                size.y = (Integer) Display.class.getMethod("getRawHeight").invoke(display);
+            } catch (IllegalAccessException e) {} catch (InvocationTargetException e) {} catch (NoSuchMethodException e) {}
+        }
+
+        return size;
     }
 }
