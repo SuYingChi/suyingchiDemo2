@@ -63,6 +63,10 @@
     @com.facebook.common.internal.DoNotStrip *;
 }
 
+-keepclasseswithmembernames class com.acb.adcaffe.nativead.imp.** {
+    *;
+}
+
 # Keep native methods
 -keepclassmembers class * {
     native <methods>;

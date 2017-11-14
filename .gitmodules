@@ -13,3 +13,6 @@
 [submodule "libs/libKeyboardCommons"]
 	path = libs/libKeyboardCommons
 	url = http://git.ihandysoft.com/bingroup/Bin_KeyboardCommons_Android.git
+[submodule "libs/ihs/libAdCaffe"]
+	path = libs/ihs/libAdCaffe
+	url = http://git.ihandysoft.com/bingroup/bin_adcaffe_android.git

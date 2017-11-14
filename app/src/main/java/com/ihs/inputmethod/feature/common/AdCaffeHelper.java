@@ -211,7 +211,14 @@ public class AdCaffeHelper {
         fillJson(jsonObject, "network", networkType);
         fillJsonArray(jsonObject, "keyword", keywords);
 
-        connection = new ServerAPIConnection("/ad/get", HttpRequest.Method.GET, jsonObject);
+        if (HSLog.isDebugging()) {
+            connection = new HSServerAPIConnection(SERVER_URL_AD_CAFFE, HttpRequest.Method.GET, jsonObject);
+            connection.setSigKey("x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!", "1");
+            connection.setEncryptKey("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", "1");
+        } else {
+            connection = new ServerAPIConnection("/ad/get", HttpRequest.Method.GET, jsonObject);
+        }
+
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
