@@ -16,6 +16,7 @@ build_job:
   artifacts:
     paths:
     - app/build/outputs/apk/*.apk
+    - app/build/outputs/apk/*/*/*.apk
     - app/build/outputs/mapping/*/*/mapping.txt
     - app/build/outputs/apk/*/*-release_signed_7zip_aligned.apk
     - app/build/outputs/apk/*/resource_mapping_app-*-release.txt
