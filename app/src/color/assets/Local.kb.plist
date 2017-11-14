@@ -4406,9 +4406,11 @@
 			<dict>
 				<key>PackageNameList</key>
 				<array>
+					<string>com.google.android.googlequicksearchbox</string>
 					<string>com.android.vending</string>
 					<string>com.andriod.browser</string>
-					<string>com.android.chrome/org.mozilla.firefox</string>
+					<string>com.android.chrome</string>
+					<string>org.mozilla.firefox</string>
 				</array>
 				<key>updateTimeInMin</key>
 				<integer>15</integer>
@@ -9739,6 +9741,14 @@
 					<key>showProbability</key>
 					<integer>0</integer>
 				</dict>
+			</dict>
+		</dict>
+		<key>libAdCaffe</key>
+		<dict>
+			<key>NativeAd</key>
+			<dict>
+				<key>ResolveClickUrl</key>
+				<true/>
 			</dict>
 		</dict>
 		<key>nativeAds</key>
