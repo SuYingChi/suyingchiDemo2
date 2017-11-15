@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -15,6 +14,7 @@ import android.widget.FrameLayout;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
@@ -24,6 +24,7 @@ import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTranspa
  */
 
 public class PlusButton extends FrameLayout {
+    private static final String IMG_MENU_PLUS = "menu_plus.png";
     private View newTipView;
     private final static int FUNCTION_VIEW_REAL_WIDTH = 18;
 
@@ -46,14 +47,17 @@ public class PlusButton extends FrameLayout {
 
         AppCompatImageView plusImage = new AppCompatImageView(getContext());
         plusImage.setLayoutParams(lp);
-        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.common_tab_plus);
-        if (!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
-            DrawableCompat.setTint(drawable, Color.parseColor("#37474f"));
+        Drawable drawable = HSKeyboardThemeManager.getThemeSettingMenuDrawable(IMG_MENU_PLUS, null);
+        if (drawable == null) {
+            drawable = ContextCompat.getDrawable(context, R.drawable.common_tab_plus);
+            drawable = BaseFunctionBar.getFuncButtonDrawable(drawable);
         }
+
         plusImage.setImageDrawable(drawable);
         plusImage.setAlpha(0.8f);
         addView(plusImage);
     }
+
 
 
     public void showNewTip() {
