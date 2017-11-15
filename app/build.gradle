@@ -171,29 +171,29 @@ dependencies {
     compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdYeahmobiNativeAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.1.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.gm:5.1.1.gm'
     compile 'net.appcloudbox.adadapter:libAdBaiduNativeAdapter.gm:5.0.0.gm'
 
     // Interstitial Ad Adapters
-    compile 'net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdxInterstitialAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter.gm:5.1.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdxInterstitialAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdFBInterstitialAdapter.gm:5.0.0.gm'
 
     // Express Ad Adapters
-    compile 'net.appcloudbox.adadapter:libAdMopubBannerAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdxBannerAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdmobBannerAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdMopubBannerAdapter.gm:5.0.1.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdxBannerAdapter.gm:5.1.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdAdmobBannerAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
 
     // Google Play Services
-    compile "com.google.android.gms:play-services-ads:11.0.4"
-    compile "com.google.android.gms:play-services-basement:11.0.4"
-    compile "com.google.android.gms:play-services-location:11.0.4"
-    compile "com.google.android.gms:play-services-analytics:11.0.4"
-    compile "com.google.android.gms:play-services-gcm:11.0.4"
-    compile "com.google.firebase:firebase-appindexing:11.0.4"
+    compile "com.google.android.gms:play-services-ads:11.6.0"
+    compile "com.google.android.gms:play-services-basement:11.6.0"
+    compile "com.google.android.gms:play-services-location:11.6.0"
+    compile "com.google.android.gms:play-services-analytics:11.6.0"
+    compile "com.google.android.gms:play-services-gcm:11.6.0"
+    compile "com.google.firebase:firebase-appindexing:11.4.2"
 
     // Android Support
     compile "com.android.support:recyclerview-v7:26.1.0"
@@ -248,8 +248,8 @@ dependencies {
     compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
 
     //callassistant
-    compile (name: 'ihs/libCallAssistant/libcallassistant', ext: 'aar')
-    compile (name: 'ihs/libCallAssistant/notificationservice', ext: 'aar')
+    compile (name: 'ihs/libCallAssistant/libColorPhone', ext: 'aar')
+    compile (name: 'ihs/libCallAssistant/libNotificationService', ext: 'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //----
 
