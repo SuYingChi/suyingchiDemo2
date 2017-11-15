@@ -45,3 +45,21 @@ libKeyboard:
 
 Application:
   WallpaperAPIURL: "https://service.appcloudbox.net/wallpapers/"
+
+adAdapter:
+  admobNative:
+    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
+  admobBanner:
+    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
+  admobInterstitial:
+    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
+  adxNative:
+    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
+  adxBanner:
+    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
+  adxInterstitial:
+    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
+  openxBanner:
+    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
+  ironsourceInterstitial:
+    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
