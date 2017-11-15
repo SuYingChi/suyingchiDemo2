@@ -161,8 +161,11 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
 
         face_icon.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                int[] state = face_icon.getBackground().getState();
-                triangle.getBackground().setState(state);
+                Drawable background = face_icon.getBackground();
+                if (background != null) {
+                    int[] state = background.getState();
+                    triangle.getBackground().setState(state);
+                }
                 return false;
             }
         });
