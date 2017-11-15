@@ -82,6 +82,7 @@ android {
             versionName "1.2.0"
             manifestPlaceholders = [APPLY_SCHEME: "lockerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             signingConfig signingConfigs.masterReleaseConfig
         }
 
@@ -92,6 +93,7 @@ android {
             versionName "2.1.0"
             manifestPlaceholders = [APPLY_SCHEME: "smileyKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "true"
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             signingConfig signingConfigs.smileyReleaseConfig
         }
 
@@ -101,6 +103,7 @@ android {
             versionCode 56
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true" //MainActivity开启时显示video，只有color特殊
             signingConfig signingConfigs.colorReleaseConfig
         }
 
@@ -110,6 +113,7 @@ android {
             versionCode 11
             manifestPlaceholders = [APPLY_SCHEME: "tigerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             signingConfig signingConfigs.tigerReleaseConfig
         }
 
@@ -119,6 +123,7 @@ android {
             versionCode 1
             manifestPlaceholders = [APPLY_SCHEME: "grinKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             signingConfig signingConfigs.grinReleaseConfig
         }
     }

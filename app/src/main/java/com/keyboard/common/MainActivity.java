@@ -62,6 +62,7 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.CustomProgressDrawable;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
@@ -278,58 +279,88 @@ public class MainActivity extends HSDeepLinkActivity {
         int screenWidth = size.x;
         final int screenHeight = size.y;
 
-        launchImageView = (ImageView) findViewById(R.id.launch_image_view);
-        launchVideoView = (VideoView) findViewById(R.id.launch_mp4_view);
-        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
-        launchVideoView.setVideoURI(uri);
-        launchVideoView.setZOrderOnTop(true);
-        launchVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                HSLog.e("MainActivity mp4 play error: what = " + what + " extra = " + extra);
-                startThemeHomeActivity();
-                return true;
-            }
-        });
-        launchImageView.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!isLaunchAnimationPlayed) {
-                    Log.w("cjx","start play anim");
-                    isLaunchAnimationPlayed = true;
-                    launchImageView.setVisibility(GONE);
-                    launchVideoView.setVisibility(View.VISIBLE);
-                    launchVideoView.start();
-                    if (!shouldShowThemeHome()) {
+
+
+        if (!BuildConfig.MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START) {
+            ImageView logoImage = findViewById(R.id.logo_image_view);
+            logoImage.setVisibility(View.VISIBLE);
+            logoImage.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
                         HSFloatWindowManager.getInstance().initAccessibilityCover();
-                        if (!isSettingButtonAnimationPlayed) {
-                            if (!hasPlayed) {
-                                progressLayout.setVisibility(View.VISIBLE);
-                                progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                        progressLayout.setVisibility(View.VISIBLE);
+                        progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                    }
+                    if (isSettingButtonAnimationPlayed) {
+                        HSLog.w("setting button already showed.");
+                        return;
+                    }
+                    if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
+                        startThemeHomeActivity();
+                    }
+
+                }
+            }, 1000);
+
+        }else {
+            launchImageView = findViewById(R.id.launch_image_view);
+            launchVideoView = findViewById(R.id.launch_mp4_view);
+            Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
+            launchVideoView.setVideoURI(uri);
+            launchVideoView.setZOrderOnTop(true);
+            launchVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    HSLog.e("MainActivity mp4 play error: what = " + what + " extra = " + extra);
+                    startThemeHomeActivity();
+                    return true;
+                }
+            });
+
+            launchImageView.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (!isLaunchAnimationPlayed) {
+                        Log.w("cjx","start play anim");
+                        isLaunchAnimationPlayed = true;
+                        launchImageView.setVisibility(GONE);
+                        launchVideoView.setVisibility(View.VISIBLE);
+                        launchVideoView.start();
+                        if (!shouldShowThemeHome()) {
+                            HSFloatWindowManager.getInstance().initAccessibilityCover();
+                            if (!isSettingButtonAnimationPlayed) {
+                                if (!hasPlayed) {
+                                    progressLayout.setVisibility(View.VISIBLE);
+                                    progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                                }
+                                HSLog.w("show setting button in abnormal way");
                             }
-                            HSLog.w("show setting button in abnormal way");
                         }
                     }
                 }
-            }
-        });
-        launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
-                    progressLayout.setVisibility(View.VISIBLE);
-                    progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
-                    hasPlayed = true;
+            });
+
+            launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+                        progressLayout.setVisibility(View.VISIBLE);
+                        progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                        hasPlayed = true;
+                    }
+                    if (isSettingButtonAnimationPlayed) {
+                        HSLog.w("setting button already showed.");
+                        return;
+                    }
+                    if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
+                        startThemeHomeActivity();
+                    }
                 }
-                if (isSettingButtonAnimationPlayed) {
-                    HSLog.w("setting button already showed.");
-                    return;
-                }
-                if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
-                    startThemeHomeActivity();
-                }
-            }
-        });
+            });
+
+        }
 
         protocolText = (TextView) findViewById(R.id.privacy_policy_text);
         String serviceKeyText = getString(R.string.text_terms_of_service);
@@ -696,9 +727,11 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onStop() {
         super.onStop();
         HSLog.d("MainActivity onStop.");
-        launchVideoView.stopPlayback();
-        launchImageView.setVisibility(View.VISIBLE);
-        launchVideoView.setVisibility(GONE);
+        if (BuildConfig.MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START) {
+            launchVideoView.stopPlayback();
+            launchImageView.setVisibility(View.VISIBLE);
+            launchVideoView.setVisibility(GONE);
+        }
     }
 
     @Override
