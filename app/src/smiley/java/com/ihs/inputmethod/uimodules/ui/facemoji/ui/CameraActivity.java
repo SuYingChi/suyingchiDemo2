@@ -533,7 +533,9 @@ public class CameraActivity extends HSAppCompatActivity {
                 if (filePath != null) {
                     //压缩图片到屏幕尺寸
                     Bitmap bitmap = BitmapUtils.compressBitmap(filePath, DisplayUtils.getScreenWidthForContent(), DisplayUtils.getScreenHeightForContent());
-                    synthesisingPhoto(bitmap);
+                    if (bitmap != null) {
+                        synthesisingPhoto(bitmap);
+                    }
                 }
                 break;
             default:

@@ -51,6 +51,10 @@ public class BitmapUtils {
         options.inJustDecodeBounds = false;
         Bitmap source = BitmapFactory.decodeFile(filePath, options);
 
+        if (source == null) {
+            return null;
+        }
+
         ExifInterface exifInterface = null;
         try {
             exifInterface = new ExifInterface(filePath);
