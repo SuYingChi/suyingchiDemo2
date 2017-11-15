@@ -4,6 +4,14 @@
 <dict>
 	<key>Data</key>
 	<dict>
+		<key>libCommons</key>
+		<dict>
+			<key>RemoteConfig</key>
+			<dict>
+				<key>UpdateInterval</key>
+				<integer>43200</integer>
+			</dict>
+		</dict>
 		<key>Application</key>
 		<dict>
 			<key>AccessUsageAlert</key>
@@ -628,6 +636,489 @@
 					</dict>
 				</dict>
 			</dict>
+			<key>LocalNotifications</key>
+			<dict>
+				<key>Content</key>
+				<array>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/galaxy.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.galaxy</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Locker</string>
+						<key>Message</key>
+						<array>
+							<string>Displaying your favourite themes on lock screen.</string>
+						</array>
+						<key>Repeat</key>
+						<true/>
+						<key>Title</key>
+						<string>Enable Screen Locker</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/spinner.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.spinner</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/royalbattle.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.royalbattle</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/goldsilver.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.goldsilver</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Charging</string>
+						<key>Message</key>
+						<array>
+							<string>Enable smart charging to prevent overcharging efficiently.</string>
+						</array>
+						<key>Repeat</key>
+						<true/>
+						<key>Title</key>
+						<string>Enable Smart Charging</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/futuregalaxy.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.futuregalaxy</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>CustomizedTheme</string>
+						<key>Message</key>
+						<array>
+							<string>Nice photo! Would you like to set it as background? </string>
+						</array>
+						<key>Name</key>
+						<string>name1</string>
+						<key>Repeat</key>
+						<true/>
+						<key>Title</key>
+						<string>Got new pictures?</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>CustomizedTheme</string>
+						<key>Message</key>
+						<array>
+							<string>Wanna have a new look? 😎✨ Come and create new keyboard &gt;&gt;</string>
+						</array>
+						<key>Name</key>
+						<string>name2</string>
+						<key>Repeat</key>
+						<true/>
+						<key>Title</key>
+						<string>Dress your keyboard!</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/blackgold.png</string>
+						<key>Message</key>
+						<array>
+							<string>Decorate your keyboard with exclusive theme!</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.blackgold</string>
+						<key>Title</key>
+						<string>New theme Black Gold available!</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/panda.png</string>
+						<key>Message</key>
+						<array>
+							<string>Guess you like Panda？Come and design your keyboard!</string>
+							<string>Decorate your keyboard with exclusive Panda!</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.panda</string>
+						<key>Title</key>
+						<string>New theme Panda available!</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/poolparty.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.poolparty</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/kitty.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.kitty</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/rosegold.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.rosegold</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/jelly.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.jelly</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pop.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.pop</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/firedemon.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.firedemon</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/glory.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.glory</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/californiasummer.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.californiasummer</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/goldbars.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.goldbars</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/gold.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.gold</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/irontech.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.irontech</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pinklace.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.pinklace</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/forthehorde.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.forthehorde</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/demon.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.demon</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/bluejeans.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.bluejeans</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/soccerfan.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.soccerfan</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/blackdiamond.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.blackdiamond</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/kawaii.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.kawaii</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/deathstar.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.deathstar</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/dragon.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.dragon</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/fairyforest.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.fairyforest</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/graffiti.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.graffiti</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+					<dict>
+						<key>ActionType</key>
+						<string>Theme</string>
+						<key>IconUrl</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/handwriting.png</string>
+						<key>Message</key>
+						<array>
+							<string>Enjoy new theme picked just for you.</string>
+						</array>
+						<key>Name</key>
+						<string>com.keyboard.theme.handwriting</string>
+						<key>Title</key>
+						<string>New Theme Discovery</string>
+					</dict>
+				</array>
+				<key>LocalNotificationsPushTime</key>
+				<array>
+					<integer>12</integer>
+				</array>
+			</dict>
 			<key>KeyboardTheme</key>
 			<dict>
 				<key>DownloadTheme</key>
@@ -638,6 +1129,11 @@
 					<array>
 						<string>com.keyboard.theme</string>
 					</array>
+				</dict>
+				<key>DownloadThemeZip</key>
+				<dict>
+					<key>DownloadInApp</key>
+					<true/>
 				</dict>
 				<key>ThemeContents</key>
 				<dict>
@@ -1321,6 +1817,10 @@
 						</dict>
 						<dict>
 							<key>name</key>
+							<string>Camera Shot</string>
+						</dict>
+						<dict>
+							<key>name</key>
 							<string>DJ</string>
 							<key>showNewMark</key>
 							<true/>
@@ -1815,6 +2315,24 @@
 					</array>
 					<key>offical_themes</key>
 					<array>
+						<dict>
+							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/GalaxyDream.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/GalaxyDream.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/GalaxyDream.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/GalaxyDream.jpg</string>
+							<key>showName</key>
+							<string>Galaxy Dream</string>
+							<key>showNewMark</key>
+							<true/>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.galaxydream</string>
+							<key>zipName</key>
+							<string>galaxydream</string>
+						</dict>
 						<dict>
 							<key>apkUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Clown Fish.apk</string>
@@ -3347,6 +3865,16 @@
 						</dict>
 						<dict>
 							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemBlack.jpg</string>
+							<key>showName</key>
+							<string>System Black</string>
+							<key>themeDesc</key>
+							<string>Addicted to black.</string>
+							<key>zipName</key>
+							<string>Dark</string>
+						</dict>
+						<dict>
+							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Classic.jpg</string>
 							<key>showName</key>
 							<string>Classic</string>
@@ -3377,16 +3905,6 @@
 						</dict>
 						<dict>
 							<key>largePreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemBlack.jpg</string>
-							<key>showName</key>
-							<string>System Black</string>
-							<key>themeDesc</key>
-							<string>Addicted to black.</string>
-							<key>zipName</key>
-							<string>Dark</string>
-						</dict>
-						<dict>
-							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
 							<key>showName</key>
 							<string>System White</string>
@@ -3397,489 +3915,6 @@
 						</dict>
 					</array>
 				</dict>
-			</dict>
-			<key>LocalNotifications</key>
-			<dict>
-				<key>Content</key>
-				<array>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/galaxy.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.galaxy</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Locker</string>
-						<key>Message</key>
-						<array>
-							<string>Displaying your favourite themes on lock screen.</string>
-						</array>
-						<key>Repeat</key>
-						<true/>
-						<key>Title</key>
-						<string>Enable Screen Locker</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/spinner.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.spinner</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/royalbattle.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.royalbattle</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/goldsilver.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.goldsilver</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Charging</string>
-						<key>Message</key>
-						<array>
-							<string>Enable smart charging to prevent overcharging efficiently.</string>
-						</array>
-						<key>Repeat</key>
-						<true/>
-						<key>Title</key>
-						<string>Enable Smart Charging</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/futuregalaxy.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.futuregalaxy</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>CustomizedTheme</string>
-						<key>Message</key>
-						<array>
-							<string>Nice photo! Would you like to set it as background? </string>
-						</array>
-						<key>Name</key>
-						<string>name1</string>
-						<key>Repeat</key>
-						<true/>
-						<key>Title</key>
-						<string>Got new pictures?</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>CustomizedTheme</string>
-						<key>Message</key>
-						<array>
-							<string>Wanna have a new look? 😎✨ Come and create new keyboard &gt;&gt;</string>
-						</array>
-						<key>Name</key>
-						<string>name2</string>
-						<key>Repeat</key>
-						<true/>
-						<key>Title</key>
-						<string>Dress your keyboard!</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/blackgold.png</string>
-						<key>Message</key>
-						<array>
-							<string>Decorate your keyboard with exclusive theme!</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.blackgold</string>
-						<key>Title</key>
-						<string>New theme Black Gold available!</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/panda.png</string>
-						<key>Message</key>
-						<array>
-							<string>Guess you like Panda？Come and design your keyboard!</string>
-							<string>Decorate your keyboard with exclusive Panda!</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.panda</string>
-						<key>Title</key>
-						<string>New theme Panda available!</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/poolparty.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.poolparty</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/kitty.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.kitty</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/rosegold.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.rosegold</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/jelly.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.jelly</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pop.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.pop</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/firedemon.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.firedemon</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/glory.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.glory</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/californiasummer.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.californiasummer</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/goldbars.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.goldbars</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/gold.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.gold</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/irontech.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.irontech</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pinklace.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.pinklace</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/forthehorde.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.forthehorde</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/demon.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.demon</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/bluejeans.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.bluejeans</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/soccerfan.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.soccerfan</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/blackdiamond.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.blackdiamond</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/kawaii.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.kawaii</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/deathstar.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.deathstar</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/dragon.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.dragon</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/fairyforest.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.fairyforest</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/graffiti.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.graffiti</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-					<dict>
-						<key>ActionType</key>
-						<string>Theme</string>
-						<key>IconUrl</key>
-						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/handwriting.png</string>
-						<key>Message</key>
-						<array>
-							<string>Enjoy new theme picked just for you.</string>
-						</array>
-						<key>Name</key>
-						<string>com.keyboard.theme.handwriting</string>
-						<key>Title</key>
-						<string>New Theme Discovery</string>
-					</dict>
-				</array>
-				<key>LocalNotificationsPushTime</key>
-				<array>
-					<integer>12</integer>
-				</array>
 			</dict>
 			<key>Locker</key>
 			<dict>
@@ -5139,6 +5174,22 @@
 					<array>
 						<dict>
 							<key>name</key>
+							<string>3DEmoji</string>
+							<key>showName</key>
+							<string>3D Emoji</string>
+							<key>showInKeyboard</key>
+							<true/>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>LovelyDog</string>
+							<key>showName</key>
+							<string>Lovely Dog</string>
+							<key>showInKeyboard</key>
+							<true/>
+						</dict>
+						<dict>
+							<key>name</key>
 							<string>AdorableFace</string>
 							<key>showName</key>
 							<string>Adorable Face</string>
@@ -5170,8 +5221,6 @@
 						<dict>
 							<key>name</key>
 							<string>LoveGif</string>
-							<key>showAnimatedMark</key>
-							<true/>
 							<key>showName</key>
 							<string>Animated Love</string>
 						</dict>
@@ -5190,26 +5239,20 @@
 						<dict>
 							<key>name</key>
 							<string>Festival</string>
-							<key>showAnimatedMark</key>
-							<true/>
 							<key>showName</key>
 							<string>Animated Festival</string>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>BigFace01</string>
-							<key>showAnimatedMark</key>
-							<true/>
-							<key>showInKeyboard</key>
-							<true/>
 							<key>showName</key>
 							<string>Animated Smiley</string>
+							<key>showInKeyboard</key>
+							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>LoveGif02</string>
-							<key>showAnimatedMark</key>
-							<true/>
 							<key>showName</key>
 							<string>Animated Lover</string>
 						</dict>
@@ -5222,10 +5265,10 @@
 						<dict>
 							<key>name</key>
 							<string>FunnyEmoji</string>
-							<key>showInKeyboard</key>
-							<true/>
 							<key>showName</key>
 							<string>Funny Emoji</string>
+							<key>showInKeyboard</key>
+							<true/>
 						</dict>
 						<dict>
 							<key>name</key>

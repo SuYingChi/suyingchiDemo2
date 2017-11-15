@@ -6,24 +6,20 @@ build_job:
   stage: build
   script:
   - git submodule update --init
-  - ./gradlew assembleRelease
+  - ./gradlew assembleGrinRelease
   - ./gradlew app:dependencies > app/build/outputs/build-dependencies.txt
   - cd app/ziptool/
-  - ./build_apk_color.sh
-  - ./build_apk_master.sh
-  - ./build_apk_smiley.sh
-  - ./build_apk_tiger.sh
+  - ./build_apk_grin.sh
   artifacts:
     paths:
-    - app/build/outputs/apk/*.apk
-    - app/build/outputs/mapping/*/*/mapping.txt
-    - app/build/outputs/apk/*/*-release_signed_7zip_aligned.apk
-    - app/build/outputs/apk/*/resource_mapping_app-*-release.txt
+    - app/build/outputs/apk/*/release/*.apk
+    - app/build/outputs/mapping/*/release/mapping.txt
+    - app/build/outputs/apk/*/release/*/*-release_signed_7zip_aligned.apk
+    - app/build/outputs/apk/*/release/*/resource_mapping_app-*-release.txt
     - app/build/outputs/build-dependencies.txt
     expire_in: 1 week
   only:
-    - develop
-    - master
+    - develop_grin
   tags:
   - camera
 
@@ -32,3 +28,4 @@ cleanup_build_job:
   script:
   - ./gradlew clean
   when: on_failure
+
