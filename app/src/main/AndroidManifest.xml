@@ -233,6 +233,7 @@
 
         <activity
             android:name=".softgame.SoftGameDisplayActivity"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.Design.Light" />
     </application>
 
