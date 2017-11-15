@@ -271,7 +271,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         HSEmoticonActionBar.saveLastPanelName(HSEmoticonActionBar.PANEL_EMOJI);
         keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
-        functionBar.dismissMakeFacemojiTip();
+        if (functionBar != null) {
+            functionBar.dismissMakeFacemojiTip();
+        }
     }
 
     public void beforeStartInputView() {
