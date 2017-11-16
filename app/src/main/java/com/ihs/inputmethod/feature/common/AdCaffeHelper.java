@@ -45,9 +45,8 @@ import java.util.concurrent.TimeUnit;
 public class AdCaffeHelper {
 
     private Context context;
-    private HSServerAPIConnection connection;
-    private static final String SERVER_URL_AD_CAFFE = "http://52.205.105.87/adcaffe/ad/get";
-    private static final String KEYWORD_REQUEST_URL = "http://52.205.105.87/adcaffe/ad/keywords/get";
+    private static final String SERVER_URL_AD_CAFFE = "https://dev-service.appcloudbox.net/adcaffe/ad/get";
+    private static final String KEYWORD_REQUEST_URL = "https://dev-service.appcloudbox.net/adcaffe/ad/keywords/get";
     private static final String SEARCH_AD_UPDATE_TIME = "search_ad_update_time";
     private static final String ASSETS_KEYWORD_FILE_PATH = "Keyword";
     private static final String KEYWORD_FINAL_FILE_NAME = "keyword.txt";
@@ -97,6 +96,7 @@ public class AdCaffeHelper {
         osVersion = UserDataUtils.getOsVersion();
         networkType = getNetworkType(context);
         country = UserDataUtils.getCountry();
+        HSLog.e("lv_eee", country);
         this.onNativeAdLoadListener = onNativeAdLoadListener;
     }
 
@@ -175,7 +175,7 @@ public class AdCaffeHelper {
 
     public void checkKeywordAndLoad(List<String> words, OnKeywordCheckListener onKeywordCheckListener) {
         if (words.size() > 0) {
-            String currentWord = words.get(words.size()-1);
+            String currentWord = words.get(words.size() - 1);
             HSLog.e("lv_eee", currentWord);
             if (trie != null) {
                 if (trie.startsWith(currentWord)) {
@@ -211,6 +211,7 @@ public class AdCaffeHelper {
         fillJson(jsonObject, "network", networkType);
         fillJsonArray(jsonObject, "keyword", keywords);
 
+        HSServerAPIConnection connection;
         if (HSLog.isDebugging()) {
             connection = new HSServerAPIConnection(SERVER_URL_AD_CAFFE, HttpRequest.Method.GET, jsonObject);
             connection.setSigKey("x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!", "1");

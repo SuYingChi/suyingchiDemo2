@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -85,6 +86,7 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
                 }
             });
             adCaffeNativeAd.handleClick();
+            HSLog.e("lv_eee", adCaffeNativeAd.getVendor());
         });
 
         holder.adTitle.setText(adCaffeNativeAd.getTitle());
