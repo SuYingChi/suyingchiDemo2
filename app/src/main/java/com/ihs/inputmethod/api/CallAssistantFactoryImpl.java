@@ -38,8 +38,9 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
         };
     }
 
+
     @Override
-    public boolean isCallAssistantOpenDefault() {
+    public boolean isSMSAssistantOpenDefault() {
         return true;
     }
 
