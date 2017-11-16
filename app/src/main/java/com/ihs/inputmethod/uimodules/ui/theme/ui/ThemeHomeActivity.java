@@ -510,6 +510,11 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             if (AlertShowingUtils.isShowingAlert()) {
                 return;
             }
+
+            if (isFinishing()) {
+                return;
+            }
+
             AlertShowingUtils.startShowingAlert();
             CustomDesignAlert multiFunctionDialog = new CustomDesignAlert(HSApplication.getContext());
             multiFunctionDialog.setEnablePrivacy(true, v -> startBrowsePrivacy());
@@ -569,6 +574,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             if (AlertShowingUtils.isShowingAlert()) {
                 return false;
             }
+            if (isFinishing()) {
+                return false;
+            }
+
             AlertShowingUtils.startShowingAlert();
             CustomDesignAlert dialog = new CustomDesignAlert(HSApplication.getContext());
             dialog.setTitle(getString(R.string.charging_alert_title));
@@ -594,6 +603,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             if (AlertShowingUtils.isShowingAlert()) {
                 return false;
             }
+            if (isFinishing()) {
+                return false;
+            }
             AlertShowingUtils.startShowingAlert();
             CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
             lockerDialog.setTitle(getString(R.string.locker_alert_title));
@@ -617,6 +629,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private boolean showCallAssistantDialog() {
         if (CallAssistantConfigUtils.shouldShowCallAssistantAlert(true)) {
             if (AlertShowingUtils.isShowingAlert()) {
+                return false;
+            }
+            if (isFinishing()) {
                 return false;
             }
             AlertShowingUtils.startShowingAlert();
