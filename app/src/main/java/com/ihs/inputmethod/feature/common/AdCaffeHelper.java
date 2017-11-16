@@ -20,6 +20,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.utils.Trie;
+import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.libcommon.utils.HSAdUtils;
 
 import org.json.JSONArray;
@@ -100,7 +101,7 @@ public class AdCaffeHelper {
     }
 
     public void requestKeywordListIfConditionSatisfied(String packageName) {
-        if (!shouldShowSearchAdForCurrentApp(packageName)) {
+        if (!shouldShowSearchAdForCurrentApp(packageName) || KCFeatureRestrictionConfig.isFeatureRestricted("AdSearch")) {
             return;
         }
         HSAnalytics.logEvent("searchads_search_entry", "appName", packageName);

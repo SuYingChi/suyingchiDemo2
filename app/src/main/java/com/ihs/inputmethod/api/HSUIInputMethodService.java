@@ -554,7 +554,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     }
 
     private void checkKeywordAndLoad(int codePoint) {
-        if (!adCaffeHelper.shouldShowSearchAdForCurrentApp(currentAppPackageName)) {
+        if (!adCaffeHelper.shouldShowSearchAdForCurrentApp(currentAppPackageName) || KCFeatureRestrictionConfig.isFeatureRestricted("AdSearch")) {
             return;
         }
         if (codePoint == CODE_DELETE || //delete key
