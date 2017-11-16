@@ -13,6 +13,7 @@ build_job:
   - ./build_apk_master.sh
   - ./build_apk_smiley.sh
   - ./build_apk_tiger.sh
+  - ./build_apk_grin.sh
   artifacts:
     paths:
     - app/build/outputs/apk/*/release/*.apk
