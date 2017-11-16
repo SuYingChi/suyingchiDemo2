@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme;
 
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -467,8 +468,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
     private void saveTheme() {
         if (!isThemeSaving) {
-
             isThemeSaving = true;
+
             if (savingDialog == null) {
                 savingDialog = new MaterialDialog.Builder(CustomThemeActivity.this)
                         .content(getString(R.string.saving))
@@ -486,13 +487,23 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             Resources res = getContext().getResources();
             Bitmap bitmap = Bitmap.createBitmap(HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
-            Drawable drawable = new BitmapDrawable(BitmapFactory.decodeFile(customThemeData.getBackgroundElement().getKeyboardImageContentPath()));
-            drawable.setBounds(0, 0, HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res));
-            drawable.draw(canvas);
-            getKeyboardView().draw(canvas);
-            new SaveThemeChangesTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bitmap);
+            try {
+                Bitmap bmp = BitmapFactory.decodeFile(customThemeData.getBackgroundElement().getKeyboardImageContentPath());
+                Drawable drawable = new BitmapDrawable(res,bmp);
+                drawable.setBounds(0, 0, HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res));
+                drawable.draw(canvas);
+                getKeyboardView().draw(canvas);
+                new SaveThemeChangesTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bitmap);
 
-            HSAnalytics.logEvent("app_customize_save", "save_state", "Save_Success");
+                HSAnalytics.logEvent("app_customize_save", "save_state", "Save_Success");
+            }catch (OutOfMemoryError e){
+                dismissDialog(savingDialog);
+                Toast.makeText(this,R.string.save_theme_failed,Toast.LENGTH_SHORT).show();
+                setResult(RESULT_CANCELED);
+                finish();
+                return;
+            }
+
         }
     }
 
@@ -649,13 +660,18 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
             } else {
                 setResult(RESULT_CANCELED);
+                Toast.makeText(CustomThemeActivity.this,R.string.save_theme_failed,Toast.LENGTH_SHORT).show();
                 HSLog.e("generate custom theme failed.");
                 finish();
             }
 
-            if (savingDialog.isShowing() && !isFinishing()) {
-                savingDialog.dismiss();
-            }
+            dismissDialog(savingDialog);
+        }
+    }
+
+    private void dismissDialog(Dialog dialog){
+        if (dialog != null && dialog.isShowing() && !isFinishing()) {
+            dialog.dismiss();
         }
     }
 }
