@@ -48,6 +48,8 @@ public class AdCaffeHelper {
     private Context context;
     private static final String SERVER_URL_AD_CAFFE = "https://dev-service.appcloudbox.net/adcaffe/ad/get";
     private static final String KEYWORD_REQUEST_URL = "https://dev-service.appcloudbox.net/adcaffe/ad/keywords/get";
+    private static final String SERVER_URL_AD_CAFFE_RELEASE = "https://api.adcaffe.com/adcaffe/ad/get";
+    private static final String KEYWORD_REQUEST_URL_RELEASE = "https://api.adcaffe.com/adcaffe/ad/keywords/get";
     private static final String SEARCH_AD_UPDATE_TIME = "search_ad_update_time";
     private static final String ASSETS_KEYWORD_FILE_PATH = "Keyword";
     private static final String KEYWORD_FINAL_FILE_NAME = "keyword.txt";
@@ -119,7 +121,7 @@ public class AdCaffeHelper {
             return;
         }
 
-        HSHttpConnection connection = new HSHttpConnection(KEYWORD_REQUEST_URL);
+        HSHttpConnection connection = new HSHttpConnection(HSLog.isDebugging() ? KEYWORD_REQUEST_URL : KEYWORD_REQUEST_URL_RELEASE);
         connection.setDownloadFile(tempFile);
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
@@ -217,7 +219,9 @@ public class AdCaffeHelper {
             connection.setSigKey("x5UJ~fb}3_Dma>l B]YB/?'1As[\"E<I!", "1");
             connection.setEncryptKey("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", "1");
         } else {
-            connection = new ServerAPIConnection("/ad/get", HttpRequest.Method.GET, jsonObject);
+            connection = new HSServerAPIConnection(SERVER_URL_AD_CAFFE_RELEASE, HttpRequest.Method.GET, jsonObject);
+            connection.setSigKey("%2f&%awCJegDaq^,n>yPlh`Z9DoHB<Hn", "1");
+            connection.setEncryptKey("QlQ9>5-s_sc]a_J]0~]&FN-f kc[~0X9", "1");
         }
 
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {

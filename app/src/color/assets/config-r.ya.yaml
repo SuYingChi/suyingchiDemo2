@@ -31,6 +31,8 @@ libCommons:
   Connection:
     SigKey: "603_3"
     HashKey: "u)};]_4&ydQ4?`|!f?nziKZ/ho_L`on{"
+    EncryptionKey: "QlQ9>5-s_sc]a_J]0~]&FN-f kc[~0X9"
+    EncryptionKeyVersion: "1"
   AppID: "603"
 libFramework:
   Push:
