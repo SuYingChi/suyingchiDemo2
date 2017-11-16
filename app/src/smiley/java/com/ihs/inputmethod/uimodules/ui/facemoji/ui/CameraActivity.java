@@ -471,6 +471,7 @@ public class CameraActivity extends HSAppCompatActivity {
     @Override
     protected void onStop() {
         closeProcessingDialog();
+        releaseCamera();
         super.onStop();
     }
 
