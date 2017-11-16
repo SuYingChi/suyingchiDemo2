@@ -101,6 +101,9 @@ public final class MediaShareUtils {
     }
 
     private static boolean commitStickerImage(Uri contentUri, String imageDescription, String fileType) {
+        if (contentUri == null) {
+            return false;
+        }
         InputContentInfoCompat inputContentInfo = new InputContentInfoCompat(contentUri,
                 new ClipDescription(imageDescription, new String[]{fileType}), null);
         InputConnection inputConnection = HSInputMethodService.getInstance().getCurrentInputConnection();
@@ -108,6 +111,9 @@ public final class MediaShareUtils {
         int flags = 0;
         if (android.os.Build.VERSION.SDK_INT >= 25) {
             flags |= InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION;
+        }
+        if (inputConnection == null || editorInfo == null) {
+            return false;
         }
         return InputConnectionCompat.commitContent(inputConnection, editorInfo, inputContentInfo, flags, null);
     }
