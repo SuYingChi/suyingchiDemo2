@@ -8,8 +8,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -136,6 +138,11 @@ public class StickerUtils {
     public static void sendStickerToPackage(final Sticker sticker, final String packageName) {
         if (!DirectoryUtils.isSDCardEnabled() || !StickerPrefsUtil.getInstance().isAppSupportSticker(packageName)) {
             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.sticker_share_toast), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(sticker.getStickerName()) || TextUtils.isEmpty(sticker.getStickerFileSuffix())) {
+            CrashlyticsCore.getInstance().log("sendStickerToPackage has wrong sticker");
+            HSLog.e("wrong sticker state");
             return;
         }
         StickerPrefsUtil.getInstance().recordStickerSelect(sticker.getStickerName());
