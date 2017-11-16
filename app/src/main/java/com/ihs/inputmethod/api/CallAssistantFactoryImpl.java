@@ -30,6 +30,11 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
             public boolean shouldHideSMSFunctionToUser() {
                 return !HSConfig.optBoolean(true,"Application","EnableMessageFunction");
             }
+
+            @Override
+            public boolean hideNotificationGuide() {
+                return true;
+            }
         };
     }
 
