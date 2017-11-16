@@ -39,6 +39,11 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
     }
 
     @Override
+    public boolean isCallAssistantOpenDefault() {
+        return true;
+    }
+
+    @Override
     public CallIdleAlert.Config getCallIdleConfig() {
         return new CPCallIdleConfig();
     }
