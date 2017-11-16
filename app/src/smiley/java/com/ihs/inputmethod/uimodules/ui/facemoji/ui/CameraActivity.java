@@ -647,6 +647,10 @@ public class CameraActivity extends HSAppCompatActivity {
         }
 
         camera = Camera.open(cameraId); // 打开摄像头
+        if (camera == null){
+            return;
+        }
+
         final Camera.Parameters parameters = camera.getParameters();
         final ViewGroup.LayoutParams previewContainerLayoutParams = previewContainer.getLayoutParams();
 
