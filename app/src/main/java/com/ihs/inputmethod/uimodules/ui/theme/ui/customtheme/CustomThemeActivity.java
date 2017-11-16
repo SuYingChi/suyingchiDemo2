@@ -593,7 +593,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         protected Drawable doInBackground(Void... params) {
             try {
                 Bitmap bitmap = BitmapFactory.decodeFile(defaultBackgroundElement.getKeyboardImageContentPath());
-                Drawable backgroundDrawable = new BitmapDrawable(bitmap);
+                Drawable backgroundDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), bitmap);
                 keyboardView.loadKeyboard();
                 return backgroundDrawable;
             }catch (OutOfMemoryError e){
