@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -43,8 +44,6 @@ import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.app.framework.activity.HSAppCompatActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.background.BackgroundFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.button.ButtonFragment;
@@ -592,13 +591,24 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
         @Override
         protected Drawable doInBackground(Void... params) {
-            Drawable backgroundDrawable = new BitmapDrawable(BitmapFactory.decodeFile(defaultBackgroundElement.getKeyboardImageContentPath()));
-            keyboardView.loadKeyboard();
-            return backgroundDrawable;
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(defaultBackgroundElement.getKeyboardImageContentPath());
+                Drawable backgroundDrawable = new BitmapDrawable(bitmap);
+                keyboardView.loadKeyboard();
+                return backgroundDrawable;
+            }catch (OutOfMemoryError e){
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
         protected void onPostExecute(Drawable backgroundDrawable) {
+            if (backgroundDrawable == null){ //内存不足，导致背景图片没创建成功
+                Toast.makeText(CustomThemeActivity.this,R.string.low_memory_tip,Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
             mp4HSBackgroundView.setHSBackground(backgroundDrawable);
             rootView.addView(keyboardFrameLayout);
             ObjectAnimator animator = ObjectAnimator.ofFloat(keyboardFrameLayout, "translationY", height, 0);
