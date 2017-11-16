@@ -430,6 +430,15 @@
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
+				<key>AdSearch</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array/>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
 				<key>BoostNotification</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
