@@ -143,13 +143,14 @@ public class CameraActivity extends HSAppCompatActivity {
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             if (camera != null) {
-                camera.startPreview();
+                saveStartPreview();
                 final Camera.Parameters parameters = camera.getParameters();
                 final ViewGroup.LayoutParams previewContainerLayoutParams = previewContainer.getLayoutParams();
                 Camera.Size size = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
                 parameters.setPictureSize(size.width, size.height);
                 camera.setParameters(parameters);
             }
+
         }
 
         // 开始拍照时调用该方法
@@ -290,7 +291,7 @@ public class CameraActivity extends HSAppCompatActivity {
                 Intent i = new Intent(CameraActivity.this, MyFacemojiActivity.class);
                 startActivity(i);
             } else {
-                camera.startPreview();
+                saveStartPreview();
             }
         }
     }
@@ -664,11 +665,17 @@ public class CameraActivity extends HSAppCompatActivity {
         }
 
         camera.setDisplayOrientation(getPreviewDegree());
-        try {
-            camera.startPreview(); // 开始预览
-        }catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(this,R.string.camera_start_error_tip,Toast.LENGTH_LONG).show();
+        saveStartPreview();
+    }
+
+    private void saveStartPreview() {
+        if (camera != null) {
+            try {
+                camera.startPreview(); // 开始预览
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, R.string.camera_start_error_tip, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
