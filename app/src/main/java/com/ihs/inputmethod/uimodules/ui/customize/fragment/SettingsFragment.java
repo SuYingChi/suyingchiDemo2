@@ -41,6 +41,6 @@ public class SettingsFragment extends Fragment {
             generalHomePreferenceFragment = new SettingsActivity.GeneralHomePreferenceFragment();
             fragmentTransaction.add(R.id.settings_content, generalHomePreferenceFragment, GENERAL_HOME_PREF);
         }
-        fragmentTransaction.show(generalHomePreferenceFragment).commit();
+        fragmentTransaction.show(generalHomePreferenceFragment).commitAllowingStateLoss();
     }
 }

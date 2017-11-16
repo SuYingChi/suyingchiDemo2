@@ -141,7 +141,7 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
                 }
             }
             hideOtherFragment(position, fragmentTransaction, fragmentManager);
-            fragmentTransaction.show(currentFragment).commit();
+            fragmentTransaction.show(currentFragment).commitAllowingStateLoss();
         }
 
         @Override

@@ -335,7 +335,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 currentFragment = getFragmentClasses().get(pageIndex).newInstance();
                 currentFragment.setCustomThemeData(customThemeData);
-                transaction.replace(R.id.custom_theme_items_container, currentFragment).commit();
+                transaction.replace(R.id.custom_theme_items_container, currentFragment).commitAllowingStateLoss();
 
                 updateHeaderView();
 
