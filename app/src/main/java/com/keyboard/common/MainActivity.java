@@ -575,7 +575,9 @@ public class MainActivity extends HSDeepLinkActivity {
             public void run() {
                 videoView.start();
                 logOneTimeGA(app_accessibility_guide_viewed);
-                customViewDialog.show();
+                if (!isFinishing()) {
+                    customViewDialog.show();
+                }
             }
         }, GUIDE_DELAY);
     }
@@ -584,38 +586,40 @@ public class MainActivity extends HSDeepLinkActivity {
      * Show keyboard enabling dialog
      */
     private void showKeyboardEnableDialog() {
-        CustomDesignAlert dialog = new CustomDesignAlert(this);
-        dialog.setTitle(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
-        dialog.setMessage(getString(R.string.alert_attention_messenger, getString(R.string.app_name)));
-        dialog.setImageResource(R.drawable.enable_keyboard_alert_top_bg);
-        dialog.setPositiveButton(getString(R.string.got_it), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
-                    setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
-                    logEventWithSource(APP_STEP_ONE_HINT_CLICKED);
-                }
-
-                ImageView imageCodeProject = new ImageView(getApplicationContext());
-                imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
-                final KeyboardActivationGuideActivity.CustomViewDialog customViewDialog = new KeyboardActivationGuideActivity.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!MainActivity.this.isFinishing()) {
-                            customViewDialog.show();
-                        }
+        if (!isFinishing()) {
+            CustomDesignAlert dialog = new CustomDesignAlert(this);
+            dialog.setTitle(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
+            dialog.setMessage(getString(R.string.alert_attention_messenger, getString(R.string.app_name)));
+            dialog.setImageResource(R.drawable.enable_keyboard_alert_top_bg);
+            dialog.setPositiveButton(getString(R.string.got_it), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT_CLICKED)) {
+                        setEventRecorded(APP_STEP_ONE_HINT_CLICKED);
+                        logEventWithSource(APP_STEP_ONE_HINT_CLICKED);
                     }
-                }, 500);
 
-                Intent intent = new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS);
-                intent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
-                isInStepOne = true;
-            }
-        });
-        dialog.show();
+                    ImageView imageCodeProject = new ImageView(getApplicationContext());
+                    imageCodeProject.setBackgroundResource(com.ihs.inputmethod.uimodules.R.drawable.toast_enable_rain);
+                    final KeyboardActivationGuideActivity.CustomViewDialog customViewDialog = new KeyboardActivationGuideActivity.CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!MainActivity.this.isFinishing()) {
+                                customViewDialog.show();
+                            }
+                        }
+                    }, 500);
+
+                    Intent intent = new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS);
+                    intent.setFlags(FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(intent);
+                    isInStepOne = true;
+                }
+            });
+            dialog.show();
+        }
 
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
             setEventRecorded(APP_STEP_ONE_HINT);
@@ -695,7 +699,7 @@ public class MainActivity extends HSDeepLinkActivity {
     }
 
     private void showChooseManualAlertIfNecessary() {
-        if (!alertDialogShowing && shouldShowEnableDialog && !HSAccessibilityService.isAvailable()) {
+        if (!alertDialogShowing && shouldShowEnableDialog && !HSAccessibilityService.isAvailable() && !isFinishing()) {
             AlertDialog.Builder alertDialogBuilder;
             alertDialogBuilder = new AlertDialog.Builder(MainActivity.this, R.style.AppCompactDialogStyle);
             alertDialogBuilder.setTitle(getString(R.string.alert_enable_access_warn_title));//设置标题
