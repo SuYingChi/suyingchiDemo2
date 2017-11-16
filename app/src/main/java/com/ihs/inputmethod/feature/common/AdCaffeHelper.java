@@ -62,7 +62,6 @@ public class AdCaffeHelper {
     public String osVersion;
     public String networkType;
     public String country;
-    public String vendor;
     public List<String> keywords;
     public int offset = -1;
 
