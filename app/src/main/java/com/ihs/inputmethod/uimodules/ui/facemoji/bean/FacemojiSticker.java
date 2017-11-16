@@ -94,54 +94,57 @@ public class FacemojiSticker implements ISequenceFramesImageItem {
     }
 
     private void parseMojimeSticker() {
-        Map<String, Object> mStyleMap = HSYamlUtils.getYamlConfigMap(getMojimeConfigFilePath(), false);
-
-        if (mStyleMap == null){
-            Crashlytics.setString("category_name", this.categoryName != null?this.categoryName:"null");
-            Crashlytics.setString("sticker_name", this.name != null?this.name:"null");
-            Crashlytics.logException(new IllegalStateException("exception_parse_facemoji_sticker_failure"));
-            return;
-        }
-
-        String stickername = (String) mStyleMap.get("name");
-        version = (Integer) mStyleMap.get("version");
-        width = HSMapUtils.getInteger(mStyleMap, "size", "width");
-        height = HSMapUtils.getInteger(mStyleMap, "size", "height");
-        HSLog.d("stickername is " + stickername + " version " + version + " width " + width + " height " + height);
-        List<?> frames = HSMapUtils.getList(mStyleMap, "frames");
-        animFrames = new ArrayList<>(frames.size());
-        for (Object f : frames) {
-            int w = 0;
-            int h = 0;
-            float transX = 0;
-            float transY = 0;
-            float sclX = 0;
-            float sclY = 0;
-            float skewX = 0;
-            float skewY = 0;
-            int interval = HSMapUtils.getInteger((Map<String, ?>) f, "interval");
-            HSLog.d("frame interval is " + interval);
-            List<?> layers = HSMapUtils.getList((Map<String, ?>) f, "layers");
-            List<FacemojiFrame.FacemojiLayer> layerFileNames = new ArrayList<>(layers.size());
-            for (Object l : layers) {
-                int type = HSMapUtils.getInteger((Map<String, ?>) l, "type");
-                if (type == 1) {
-                    layerFileNames.add(new FacemojiFrame.FacemojiLayer(type,HSMapUtils.getString((Map<String, ?>) l, "src")));
-                } else {
-                    layerFileNames.add(new FacemojiFrame.FacemojiLayer(type,null));
-                    w = HSMapUtils.getInteger((Map<String, ?>) l, "size", "width");
-                    h = HSMapUtils.getInteger((Map<String, ?>) l, "size", "height");
-                    transX = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "translateX");
-                    transY = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "translateY");
-                    sclX = HSMapUtils.optFloat((Map<String, ?>) l, 1, "transform", "scaleX");
-                    sclY = HSMapUtils.optFloat((Map<String, ?>) l, 1, "transform", "scaleY");
-                    skewX = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "skewX");
-                    skewY = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "skewY");
-                }
+        try {
+            Map<String, Object> mStyleMap = HSYamlUtils.getYamlConfigMap(getMojimeConfigFilePath(), false);
+            if (mStyleMap == null){
+                Crashlytics.setString("category_name", this.categoryName != null?this.categoryName:"null");
+                Crashlytics.setString("sticker_name", this.name != null?this.name:"null");
+                Crashlytics.logException(new IllegalStateException("exception_parse_facemoji_sticker_failure"));
+                return;
             }
-            FacePictureParam param = new FacePictureParam(w, h, transX, transY, sclX, sclY, skewX, skewY);
-            FacemojiFrame frame = new FacemojiFrame(interval, param, layerFileNames);
-            animFrames.add(frame);
+
+            String stickername = (String) mStyleMap.get("name");
+            version = (Integer) mStyleMap.get("version");
+            width = HSMapUtils.getInteger(mStyleMap, "size", "width");
+            height = HSMapUtils.getInteger(mStyleMap, "size", "height");
+            HSLog.d("stickername is " + stickername + " version " + version + " width " + width + " height " + height);
+            List<?> frames = HSMapUtils.getList(mStyleMap, "frames");
+            animFrames = new ArrayList<>(frames.size());
+            for (Object f : frames) {
+                int w = 0;
+                int h = 0;
+                float transX = 0;
+                float transY = 0;
+                float sclX = 0;
+                float sclY = 0;
+                float skewX = 0;
+                float skewY = 0;
+                int interval = HSMapUtils.getInteger((Map<String, ?>) f, "interval");
+                HSLog.d("frame interval is " + interval);
+                List<?> layers = HSMapUtils.getList((Map<String, ?>) f, "layers");
+                List<FacemojiFrame.FacemojiLayer> layerFileNames = new ArrayList<>(layers.size());
+                for (Object l : layers) {
+                    int type = HSMapUtils.getInteger((Map<String, ?>) l, "type");
+                    if (type == 1) {
+                        layerFileNames.add(new FacemojiFrame.FacemojiLayer(type,HSMapUtils.getString((Map<String, ?>) l, "src")));
+                    } else {
+                        layerFileNames.add(new FacemojiFrame.FacemojiLayer(type,null));
+                        w = HSMapUtils.getInteger((Map<String, ?>) l, "size", "width");
+                        h = HSMapUtils.getInteger((Map<String, ?>) l, "size", "height");
+                        transX = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "translateX");
+                        transY = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "translateY");
+                        sclX = HSMapUtils.optFloat((Map<String, ?>) l, 1, "transform", "scaleX");
+                        sclY = HSMapUtils.optFloat((Map<String, ?>) l, 1, "transform", "scaleY");
+                        skewX = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "skewX");
+                        skewY = HSMapUtils.optFloat((Map<String, ?>) l, 0, "transform", "skewY");
+                    }
+                }
+                FacePictureParam param = new FacePictureParam(w, h, transX, transY, sclX, sclY, skewX, skewY);
+                FacemojiFrame frame = new FacemojiFrame(interval, param, layerFileNames);
+                animFrames.add(frame);
+            }
+        }catch (Exception e){
+
         }
     }
 

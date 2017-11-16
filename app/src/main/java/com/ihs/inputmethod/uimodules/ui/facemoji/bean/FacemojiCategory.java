@@ -44,22 +44,26 @@ public class FacemojiCategory {
     }
 
     public void parseYaml() {
-        String filePath = HSApplication.getContext().getFilesDir().getAbsolutePath();
-        String path = filePath + "/Mojime/" + name + "/package.yaml";
-        Map<String, Object> mStyleMap = HSYamlUtils.getYamlConfigMap(path, false);
-        iconFileName = HSMapUtils.getString(mStyleMap, "icon");
-        List<?> stickers = HSMapUtils.getList(mStyleMap, "stickers");
+        try {
+            String filePath = HSApplication.getContext().getFilesDir().getAbsolutePath();
+            String path = filePath + "/Mojime/" + name + "/package.yaml";
+            Map<String, Object> mStyleMap = HSYamlUtils.getYamlConfigMap(path, false);
+            iconFileName = HSMapUtils.getString(mStyleMap, "icon");
+            List<?> stickers = HSMapUtils.getList(mStyleMap, "stickers");
 
-        if (stickers == null || stickers.size() == 0) {
-            FacemojiDownloadManager.setFacemojiCategoryDownloadedFailed(name);
-            return;
-        }
+            if (stickers == null || stickers.size() == 0) {
+                FacemojiDownloadManager.setFacemojiCategoryDownloadedFailed(name);
+                return;
+            }
 
-        List<FacemojiSticker> newFacemojiStickerList = new ArrayList<>();
-        for (Object stickerName : stickers) {
-            newFacemojiStickerList.add(new FacemojiSticker(name, (String) ((Map<String, ?>) stickerName).get("name")));
+            List<FacemojiSticker> newFacemojiStickerList = new ArrayList<>();
+            for (Object stickerName : stickers) {
+                newFacemojiStickerList.add(new FacemojiSticker(name, (String) ((Map<String, ?>) stickerName).get("name")));
+            }
+            stickerList = newFacemojiStickerList;
+        }catch (Exception e){
+
         }
-        stickerList = newFacemojiStickerList;
     }
 
     public List<FacemojiSticker> getStickerList() {
