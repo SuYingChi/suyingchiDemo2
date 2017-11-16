@@ -66,6 +66,7 @@ import com.keyboard.core.themes.custom.elements.KCSoundElement;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -490,7 +491,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             Bitmap bitmap = Bitmap.createBitmap(HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             try {
-                Bitmap bmp = ImageLoader.getInstance().loadImageSync(defaultBackgroundElement.getKeyboardImageContentPath(), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
+                Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
                         HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
                 Drawable drawable = new BitmapDrawable(res,bmp);
                 drawable.setBounds(0, 0, HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res));
@@ -606,7 +607,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         protected Drawable doInBackground(Void... params) {
             try {
                 Resources res = HSApplication.getContext().getResources();
-                Bitmap bmp = ImageLoader.getInstance().loadImageSync(defaultBackgroundElement.getKeyboardImageContentPath(), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
+                Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
                         HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
                 Drawable backgroundDrawable = new BitmapDrawable(res,bmp);
                 keyboardView.loadKeyboard();
