@@ -290,4 +290,5 @@
     <string name="custom_share_alert_message">Wanna unlock this theme for FREE? Share RainbowKey on Instagram and @rainbowkeyapp to unlock it.</string>
     <string name="custom_share_alert_button_text">Unlock for Free</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="setting_sms_assistant_title">SMS assistant</string>
 </resources>

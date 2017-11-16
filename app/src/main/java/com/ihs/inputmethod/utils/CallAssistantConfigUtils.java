@@ -14,7 +14,7 @@ public class CallAssistantConfigUtils {
     private static final int MAX_SHOW_COUNT = 2;
 
     public static boolean shouldShowCallAssistantAlert(boolean limitShowCount) {
-        if (CPSettings.isScreenFlashModuleEnabled()) {
+        if (CPSettings.isCallAssistantModuleEnabled()) {
             return false;
         }
         if (CPSettings.isScreenFlashEverEnabled()) {

@@ -182,7 +182,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
     private void enableCallFlash() {
         HSPreferenceHelper.getDefault().putBoolean(CALL_ASSISTANT_HAS_SWITCHED_ON, true);
-        CPSettings.setScreenFlashModuleEnabled(true);
         CPSettings.setCallAssistantModuleEnabled(true);
     }
 
@@ -249,6 +248,8 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
                         mPreviewView.playAnimation(type);
                         mSetCallThemeButton.setVisibility(View.VISIBLE);
                     }
+
+
 
                     @Override
                     public void onFail(GifDownloadManager.GifDownLoadTask task, String msg) {

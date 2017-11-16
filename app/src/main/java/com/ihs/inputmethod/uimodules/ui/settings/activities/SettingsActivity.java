@@ -44,6 +44,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.acb.call.CPSettings;
+import com.acb.call.customize.AcbCallManager;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -228,6 +229,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
             setLocker();
             setBoost();
             setCallAssistant();
+            setSMSAssistant();
             setupActionBar(getString(R.string.setting_item_more_settings));
         }
 
@@ -259,16 +261,33 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
 
         private void setCallAssistant() {
             SwitchPreference preference = (SwitchPreference) findPreference(getResources().getString(R.string.setting_key_call_assistant));
-            boolean screenFlashSetting = CPSettings.isScreenFlashModuleEnabled();
+            boolean screenFlashSetting = CPSettings.isCallAssistantModuleEnabled();
             preference.setChecked(screenFlashSetting);
-            CPSettings.setScreenFlashModuleEnabled(screenFlashSetting);
             preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     boolean isSwitchOn = (boolean) newValue;
                     HSPreferenceHelper.getDefault().putBoolean(CALL_ASSISTANT_HAS_SWITCHED_ON, true);
-                    CPSettings.setScreenFlashModuleEnabled(isSwitchOn);
                     CPSettings.setCallAssistantModuleEnabled(isSwitchOn);
+                    return true;
+                }
+            });
+        }
+
+        private void setSMSAssistant() {
+            SwitchPreference preference = (SwitchPreference) findPreference(getResources().getString(R.string.setting_key_sms_assistant));
+            if (AcbCallManager.getInstance().getAcbCallFactory().getSMSConfig().shouldHideSMSFunctionToUser()) {
+                getPreferenceScreen().removePreference(preference);
+                return;
+            }
+
+            boolean screenFlashSetting = CPSettings.isSMSAssistantModuleEnabled();
+            preference.setChecked(screenFlashSetting);
+            preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    boolean isSwitchOn = (boolean) newValue;
+                    CPSettings.setSMSAssistantModuleEnabled(isSwitchOn);
                     return true;
                 }
             });
@@ -457,7 +476,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
             if (getResources().getBoolean(R.bool.hideRemoveAds)
                     || RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 preferenceCategoryMore.removePreference(findPreference("removeAd"));
-            } else{
+            } else {
                 findPreference("removeAd").setOnPreferenceClickListener(this);
             }
 

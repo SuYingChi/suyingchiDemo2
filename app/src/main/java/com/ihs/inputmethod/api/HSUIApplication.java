@@ -47,7 +47,6 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
-import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
@@ -233,12 +232,9 @@ public class HSUIApplication extends HSInputMethodApplication {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
         }
-        AcbCallManager.initWithDefaultFactory(callAdPlacement, () -> {
-            boolean callAssistantHasSwitchedOn = HSPreferenceHelper.getDefault().getBoolean(SettingsActivity.CALL_ASSISTANT_HAS_SWITCHED_ON, false);
-            return !callAssistantHasSwitchedOn;
-        });
-        AcbCallManager.setAdPlacement(callAdPlacement);
 
+        AcbCallManager.init(callAdPlacement,new CallAssistantFactoryImpl());
+        AcbCallManager.setAdPlacement(callAdPlacement);
 
         StickerSuggestionManager.getInstance();
 

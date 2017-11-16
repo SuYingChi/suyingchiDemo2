@@ -21,4 +21,6 @@
     <string name="settings_button_sound">@string/setting_item_sounds</string>
     <string name="dialog_agree">@string/allow</string>
     <string name="dialog_disagree">@string/cancel</string>
+
+    <string name="setting_key_sms_assistant">setting_key_sms_assistant</string>
 </resources>

@@ -104,7 +104,7 @@ public class TrialKeyboardDialogAlertUtils {
                 @Override
                 public void onClick(View view) {
                     HSAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen", "occasion", "after_try");
-                    CPSettings.setScreenFlashModuleEnabled(true);
+                    CPSettings.setCallAssistantModuleEnabled(true);
                 }
             });
             dialog.show();

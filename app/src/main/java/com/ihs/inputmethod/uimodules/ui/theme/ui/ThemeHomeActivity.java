@@ -521,7 +521,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 HSAnalytics.logEvent("alert_multi_function_click", "size", "half_screen", "occasion", "open_app");
                 ChargingManagerUtil.enableCharging(false);
                 enableLocker();
-                CPSettings.setScreenFlashModuleEnabled(true);
+                CPSettings.setCallAssistantModuleEnabled(true);
             });
             multiFunctionDialog.show();
             multiFunctionDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
@@ -628,7 +628,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             callAssistantDialog.setEnablePrivacy(true, v -> startBrowsePrivacy());
             callAssistantDialog.setPositiveButton(getString(R.string.enable), view -> {
                 HSAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen", "occasion", "open_app");
-                CPSettings.setScreenFlashModuleEnabled(true);
+                CPSettings.setCallAssistantModuleEnabled(true);
             });
             callAssistantDialog.show();
             callAssistantDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());

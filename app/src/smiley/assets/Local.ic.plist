@@ -5142,6 +5142,8 @@
 					</dict>
 				</array>
 			</dict>
+			<key>EnableMessageFunction</key>
+			<true/>
 			<key>SearchEngine</key>
 			<dict>
 				<key>url</key>

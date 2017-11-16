@@ -23,4 +23,8 @@
         android:key="@string/setting_key_call_assistant"
         android:title="@string/setting_call_assistant_title" />
 
+
+    <SwitchPreference
+        android:key="@string/setting_key_sms_assistant"
+        android:title="@string/setting_sms_assistant_title" />
 </PreferenceScreen>
