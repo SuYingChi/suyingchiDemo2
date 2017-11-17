@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.softgame;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,10 +13,14 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
+import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
+
 
 public class GameActivity extends AppCompatActivity {
 
     private static final int TIME_OUT_LIMIT = 5000;
+    private Handler handler = new Handler();
+    private boolean adShowed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +38,24 @@ public class GameActivity extends AppCompatActivity {
             return;
         }
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            KCInterstitialAd.loadAndShow(getResources().getString(R.string.placement_full_screen_game), "", "",false, b -> {
-                KCInterstitialAd.load(getResources().getString(R.string.placement_full_screen_game));
-            }, null, TIME_OUT_LIMIT);
+            String adPlacement = getResources().getString(R.string.placement_full_screen_game);
+            KCInterstitialAd.load(adPlacement);
+            AcbInterstitialAdLoader loader = KCInterstitialAd.loadAndShow(adPlacement, "", "", new KCInterstitialAd.OnAdShowListener() {
+                @Override
+                public void onAdShow(boolean b) {
+                    adShowed = b;
+                }
+            }, null);
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!adShowed) {
+                        loader.cancel();
+                    }
+                }
+            }, TIME_OUT_LIMIT);
+
         }
         WebView webView = (WebView) findViewById(R.id.web_view);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -52,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        handler.removeCallbacksAndMessages(null);
         KCInterstitialAd.show(getResources().getString(R.string.placement_full_screen_game), "", "");
         super.onBackPressed();
     }

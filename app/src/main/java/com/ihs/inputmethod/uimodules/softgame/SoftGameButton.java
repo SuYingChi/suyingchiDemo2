@@ -47,7 +47,8 @@ import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTranspa
  */
 
 public class SoftGameButton extends FrameLayout {
-    private static final String NEW_GAME_URL = "http://api.famobi.com/feed?a=A-KCVWU&n=1";
+    public static final String TOP_50_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50&sort=top_games";
+
     private static final String LAST_GAME_ID = "last_game_id";
     private static final String IMG_MENU_GAME = "menu_game.png";
 
@@ -109,7 +110,7 @@ public class SoftGameButton extends FrameLayout {
     }
 
     public void checkNewGame() {
-        HSHttpConnection hsHttpConnection = new HSHttpConnection(NEW_GAME_URL);
+        HSHttpConnection hsHttpConnection = new HSHttpConnection(TOP_50_GAME);
         hsHttpConnection.startAsync();
         hsHttpConnection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override

@@ -269,6 +269,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
         if (functionBar != null) {
             functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
+            functionBar.showMenuButton(functionBar.getSoftGameButton());
         }
     }
 
