@@ -16,14 +16,13 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.thread.AsyncThreadPools;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class DataManager {
 
     private static final int RECENT_SIZE = 50;
     private static DataManager instance;
 
-    private ConcurrentHashMap<String, ArrayList<GifItem>> tabData = new ConcurrentHashMap<>();
+    private HashMap<String, ArrayList<GifItem>> tabData = new HashMap<>();
     private HashMap<String, ArrayList<GifItem>> tagData = new HashMap<>();
 
     private HashMap<String, String> nextPos = new HashMap<>();
@@ -296,7 +295,7 @@ public final class DataManager {
 
     }
 
-    public void switchLanguage() {
+    public synchronized void switchLanguage() {
         DaoHelper.getInstance().switchLanguage();
         for (final String category : tabData.keySet()) {
             if (!GifCategory.isUserTab(category) && tabData.get(category) != null) {
