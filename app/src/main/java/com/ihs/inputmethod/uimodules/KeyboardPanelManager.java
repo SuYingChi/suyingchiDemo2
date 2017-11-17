@@ -101,7 +101,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             } else if (HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD.equals(s)) {
                 showKeyboardWithMenu();
                 functionBar.showNewMarkIfNeed();
-                functionBar.showMakeFacemojiTipIfNeed(keyboardPanelSwitchContainer);
             }else if(HSInputMethod.HS_NOTIFICATION_FIRST_OPEN_KEYBOARD_TODAY.equals(s)){
                 functionBar.checkNewGame();
             }
@@ -223,7 +222,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 case SettingsButton.SettingButtonType.MENU:
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
-                    functionBar.hideMenuButton(functionBar.getFacemojiView());
                     functionBar.hideMenuButton(functionBar.getSoftGameButton());
                     HSAnalytics.logEvent("keyboard_function_button_click");
                     break;
@@ -231,7 +229,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 case SettingsButton.SettingButtonType.SETTING:
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.backToParentPanel(false);
-                    functionBar.showMenuButton(functionBar.getFacemojiView());
                     functionBar.showMenuButton(functionBar.getSoftGameButton());
                     break;
 
@@ -239,7 +236,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     keyboardPanelSwitchContainer.backToParentPanel(false);
                     if (keyboardPanelSwitchContainer.getCurrentPanel() == keyboardPanelSwitchContainer.getKeyboardPanel()) {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
-                        functionBar.showMenuButton(functionBar.getFacemojiView());
                         functionBar.showMenuButton(functionBar.getSoftGameButton());
                     } else {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.SETTING);
@@ -264,7 +260,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             HSEmoticonActionBar.saveLastPanelName(HSEmoticonActionBar.PANEL_FACEEMOJI);
             keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
             keyboardPanelSwitchContainer.setBarVisibility(GONE);
-            functionBar.dismissMakeFacemojiTip();
         }
     }
 
@@ -281,9 +276,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         HSEmoticonActionBar.saveLastPanelName(HSEmoticonActionBar.PANEL_EMOJI);
         keyboardPanelSwitchContainer.showPanelAndKeepSelf(HSEmoticonPanel.class);
         keyboardPanelSwitchContainer.setBarVisibility(GONE);
-        if (functionBar != null) {
-            functionBar.dismissMakeFacemojiTip();
-        }
     }
 
     public void beforeStartInputView() {
