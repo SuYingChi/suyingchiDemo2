@@ -4,11 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.acb.adcaffe.common.AdCaffeError;
+import com.acb.adcaffe.common.NetworkType;
 import com.acb.adcaffe.common.ServerAPIConnection;
 import com.acb.adcaffe.common.UserDataUtils;
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
 import com.acb.adcaffe.nativead.imp.NativeAd;
-import com.acb.adcaffe.nativead.imp.NativeAdLoadCoreConnection;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -433,7 +433,8 @@ public class AdCaffeHelper {
     }
 
     public String getDeviceType(Context context) {
-        return (String) callMethod(context, "getDeviceType");
+        int screenLayoutSize = context.getResources().getConfiguration().screenLayout & 15;
+        return screenLayoutSize != 3 && screenLayoutSize != 4 ? "phone" : "tablet";
     }
 
     public NativeAd newNativeAd() {
@@ -482,34 +483,9 @@ public class AdCaffeHelper {
         }
     }
 
-    private Object callMethod(Context context, String methodName) {
-        Constructor<NativeAdLoadCoreConnection> coreConnectionConstructor = null;
-        try {
-            coreConnectionConstructor = NativeAdLoadCoreConnection.class.getDeclaredConstructor(
-                    Context.class, String.class, int.class);
-            coreConnectionConstructor.setAccessible(true);
-            NativeAdLoadCoreConnection coreConnection;
-            coreConnection = coreConnectionConstructor.newInstance(context, "haha", 1);
-            Method method = NativeAdLoadCoreConnection.class.getDeclaredMethod(methodName, Context.class);
-            method.setAccessible(true);
-            return method.invoke(coreConnection, context);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
-
     private String getNetworkType(Context context) {
-        return (String) callMethod(context, "getNetworkType");
+        String networkType = UserDataUtils.getNetwork(context);
+        return TextUtils.equals(networkType, NetworkType.Wifi) ? "wifi" : (TextUtils.equals(networkType, NetworkType.Cell_3G) ? "3g" : (TextUtils.equals(networkType, NetworkType.Cell_4G) ? "4g" : ""));
     }
 
     private List<AdCaffeNativeAd> parseJsonResponse(JSONArray adsJsonArray) {
