@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.CommonStickerAdapter;
@@ -75,7 +76,11 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
         }
         stickerCardViewHolder.downloadBtn.setVisibility(View.VISIBLE);
-        stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.ic_download_icon);
+        if (LockerManager.getInstance().shouldGuidToDownloadLocker()){
+            stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.lock_normal);
+        }else {
+            stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.ic_download_icon);
+        }
         stickerCardViewHolder.downloadBtn.setTag(stickerModel);
         stickerCardViewHolder.downloadBtn.setTag(R.id.theme_card_view_tag_key_action, TAG_DOWNLOAD);
         stickerCardViewHolder.downloadBtn.setOnClickListener(new View.OnClickListener() {

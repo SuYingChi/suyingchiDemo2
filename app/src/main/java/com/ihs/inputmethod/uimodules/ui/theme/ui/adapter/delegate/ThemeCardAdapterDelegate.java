@@ -14,6 +14,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -102,7 +103,11 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
                 themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
                 break;
             case NEED_DOWNLOAD:
-                themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
+                if (LockerManager.getInstance().shouldGuidToDownloadLocker()){
+                    themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.lock_normal);
+                }else {
+                    themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
+                }
             case DOWNLOADED:
                 final String smallPreviewImgUrl = keyboardTheme.getSmallPreivewImgUrl();
                 if (smallPreviewImgUrl != null) {

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Key-->
-    <string name="setting_key_more" >setting_key_more</string>
+    <string name="setting_key_more" translatable="false">setting_key_more</string>
 
     <!--Preference key-->
-    <string name="setting_key_call_assistant">setting_key_call_assistant</string>
-    <string name="locker_switcher">locker_screen_enabled</string>
+    <string name="setting_key_call_assistant" translatable="false">setting_key_call_assistant</string>
+    <string name="locker_switcher" translatable="false">locker_screen_enabled</string>
 
     <!--Copy-->
-    <string name="setting_item_correction">@string/setting_auto_correction</string>
-    <string name="setting_item_capitalization">@string/setting_auto_capitalization</string>
-    <string name="setting_item_word_prediction">@string/setting_word_prediction</string>
-    <string name="settings_button_auto_correction">@string/setting_auto_correction</string>
-    <string name="settings_button_auto_capitalization">@string/setting_auto_capitalization</string>
-    <string name="settings_button_word_prediction">@string/setting_word_prediction</string>
-    <string name="settings_button_swipe">@string/setting_item_swipe</string>
-    <string name="settings_button_add_language">@string/setting_item_add_languages</string>
-    <string name="settings_button_more_settings">@string/setting_item_more_settings</string>
-    <string name="settings_button_fonts">@string/setting_item_fonts</string>
-    <string name="settings_button_sound">@string/setting_item_sounds</string>
-    <string name="dialog_agree">@string/allow</string>
-    <string name="dialog_disagree">@string/cancel</string>
+    <string name="setting_item_correction" translatable="false">@string/setting_auto_correction</string>
+    <string name="setting_item_capitalization" translatable="false">@string/setting_auto_capitalization</string>
+    <string name="setting_item_word_prediction" translatable="false">@string/setting_word_prediction</string>
+    <string name="settings_button_auto_correction" translatable="false">@string/setting_auto_correction</string>
+    <string name="settings_button_auto_capitalization" translatable="false">@string/setting_auto_capitalization</string>
+    <string name="settings_button_word_prediction" translatable="false">@string/setting_word_prediction</string>
+    <string name="settings_button_swipe" translatable="false">@string/setting_item_swipe</string>
+    <string name="settings_button_add_language" translatable="false">@string/setting_item_add_languages</string>
+    <string name="settings_button_more_settings" translatable="false">@string/setting_item_more_settings</string>
+    <string name="settings_button_fonts" translatable="false">@string/setting_item_fonts</string>
+    <string name="settings_button_sound" translatable="false">@string/setting_item_sounds</string>
+    <string name="dialog_agree" translatable="false">@string/allow</string>
+    <string name="dialog_disagree" translatable="false">@string/cancel</string>
 
-    <string name="setting_key_sms_assistant">setting_key_sms_assistant</string>
-    <string name="smart_locker_app_package_name">com.wallpaper.theme.privacy.smart.lock.screen</string>
+    <string name="setting_key_sms_assistant" translatable="false">setting_key_sms_assistant</string>
+    <string name="smart_locker_app_package_name" translatable="false">com.wallpaper.theme.privacy.smart.lock.screen</string>
 </resources>

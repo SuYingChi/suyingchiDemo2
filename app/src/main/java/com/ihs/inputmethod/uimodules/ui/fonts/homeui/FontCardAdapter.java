@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerManager;
 
 import java.util.List;
 
@@ -83,7 +84,11 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
         if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_HOME.ordinal()) {
             ((FontHomeViewHolder) holder).downloadIcon.setVisibility(View.VISIBLE);
-            ((FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.ic_download_icon);
+            if (LockerManager.getInstance().shouldGuidToDownloadLocker()){
+                ((FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.lock_normal);
+            }else {
+                ((FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.ic_download_icon);
+            }
         } else if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_MY.ordinal()) {
             AppCompatRadioButton appCompatRadioButton = ((MyFontViewHolder) holder).radioButton;
             appCompatRadioButton.setVisibility(View.VISIBLE);
