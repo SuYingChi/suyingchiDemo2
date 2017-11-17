@@ -53,6 +53,7 @@ public class GameActivity extends AppCompatActivity {
                     if (!adShowed) {
                         loader.cancel();
                     }
+                    KCInterstitialAd.load(adPlacement);
                 }
             }, TIME_OUT_LIMIT);
 
