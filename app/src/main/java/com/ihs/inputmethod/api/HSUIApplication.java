@@ -47,6 +47,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
@@ -188,6 +189,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             public void run() {
                 FacemojiManager.getInstance().init();
                 ThemeDirManager.moveCustomAssetsToFileIfNecessary();
+                LockerManager.getInstance().init();
                 AcbInterstitialAdManager.getInstance().init(HSUIApplication.this);
                 AcbNativeAdManager.sharedInstance().init(HSUIApplication.this);
                 AcbExpressAdManager.getInstance().init(HSUIApplication.this);
