@@ -3417,6 +3417,16 @@
 						</dict>
 						<dict>
 							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
+							<key>showName</key>
+							<string>System White</string>
+							<key>themeDesc</key>
+							<string>No color will ever be brighter than white.</string>
+							<key>zipName</key>
+							<string>White</string>
+						</dict>
+						<dict>
+							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Classic.jpg</string>
 							<key>showName</key>
 							<string>Classic</string>
@@ -3454,16 +3464,6 @@
 							<string>Addicted to black.</string>
 							<key>zipName</key>
 							<string>Dark</string>
-						</dict>
-						<dict>
-							<key>largePreviewUrl</key>
-							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/SystemWhite.jpg</string>
-							<key>showName</key>
-							<string>System White</string>
-							<key>themeDesc</key>
-							<string>No color will ever be brighter than white.</string>
-							<key>zipName</key>
-							<string>White</string>
 						</dict>
 					</array>
 				</dict>
@@ -5228,7 +5228,7 @@
 				<key>RemoteContentDownloadURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
 				<key>StickerDownloadBaseURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers/</string>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers</string>
 				<key>StickerSuggestionBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/sticker_suggestion</string>
 			</dict>
@@ -8630,6 +8630,135 @@
 		</dict>
 		<key>interstitialAds</key>
 		<dict>
+			<key>Smiley_A(InterstitialAds)H5GameAd</key>
+			<dict>
+				<key>deDuplicate</key>
+				<false/>
+				<key>packageFilter</key>
+				<true/>
+				<key>parallelCount</key>
+				<integer>1</integer>
+				<key>parallelList</key>
+				<array/>
+				<key>preCacheIcon</key>
+				<true/>
+				<key>preCacheImage</key>
+				<true/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>adType</key>
+						<string>Facebookinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_735223910007857</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebookinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_735224010007847</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebookinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_735224160007832</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebookinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>333786680151584_735224326674482</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+				</array>
+			</dict>
 			<key>Smiley_A(InterstitialAds)AppOpenedFullScreenAd</key>
 			<dict>
 				<key>deDuplicate</key>
