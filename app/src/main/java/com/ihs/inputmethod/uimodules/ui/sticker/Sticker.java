@@ -71,6 +71,11 @@ public class Sticker {
     }
 
     @Override
+    public int hashCode() {
+        return stickerUri != null ? stickerUri.hashCode() : 17;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
