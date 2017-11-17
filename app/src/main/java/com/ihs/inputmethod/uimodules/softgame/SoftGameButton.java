@@ -122,7 +122,7 @@ public class SoftGameButton extends FrameLayout {
                         String newId = object.get("package_id");
                         String lastId = HSPreferenceHelper.getDefault().getString(LAST_GAME_ID, "");
                         if (lastId.equals(newId)) {
-//                            return;
+                            return;
                         } else {
                             HSPreferenceHelper.getDefault().putString(LAST_GAME_ID, newId);
                         }

@@ -9,9 +9,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.iap.RemoveAdsManager;
 
 
 public class GameActivity extends AppCompatActivity {
+
+    private static final int TIME_OUT_LIMIT = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,16 +26,21 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
 
-        Intent intent=getIntent();//getIntent将该项目中包含的原始intent检索出来，将检索出来的intent赋值给一个Intent类型的变量intent
+        Intent intent = getIntent();//getIntent将该项目中包含的原始intent检索出来，将检索出来的intent赋值给一个Intent类型的变量intent
         String url = intent.getStringExtra("url");
-        if(android.text.TextUtils.isEmpty(url)){
+        if (android.text.TextUtils.isEmpty(url)) {
             finish();
             return;
+        }
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            KCInterstitialAd.loadAndShow(getResources().getString(R.string.placement_full_screen_game), "", "",false, b -> {
+                KCInterstitialAd.load(getResources().getString(R.string.placement_full_screen_game));
+            }, null, TIME_OUT_LIMIT);
         }
         WebView webView = (WebView) findViewById(R.id.web_view);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(WebView view, String url){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // do your handling codes here, which url is the requested url
                 // probably you need to open that url rather than redirect:
                 view.loadUrl(url);
@@ -39,5 +48,11 @@ public class GameActivity extends AppCompatActivity {
             }
         });
         webView.loadUrl(url);
+    }
+
+    @Override
+    public void onBackPressed() {
+        KCInterstitialAd.show(getResources().getString(R.string.placement_full_screen_game), "", "");
+        super.onBackPressed();
     }
 }
