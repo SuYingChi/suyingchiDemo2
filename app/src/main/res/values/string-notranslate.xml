@@ -23,4 +23,5 @@
     <string name="dialog_disagree">@string/cancel</string>
 
     <string name="setting_key_sms_assistant">setting_key_sms_assistant</string>
+    <string name="smart_locker_app_package_name">com.wallpaper.theme.privacy.smart.lock.screen</string>
 </resources>

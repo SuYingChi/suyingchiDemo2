@@ -83,6 +83,7 @@ android {
             manifestPlaceholders = [APPLY_SCHEME: "lockerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
+            buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             signingConfig signingConfigs.masterReleaseConfig
         }
 
@@ -94,6 +95,7 @@ android {
             manifestPlaceholders = [APPLY_SCHEME: "smileyKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "true"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
+            buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             signingConfig signingConfigs.smileyReleaseConfig
         }
 
@@ -104,6 +106,7 @@ android {
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true" //MainActivity开启时显示video，只有color特殊
+            buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             signingConfig signingConfigs.colorReleaseConfig
         }
 
@@ -114,6 +117,7 @@ android {
             manifestPlaceholders = [APPLY_SCHEME: "tigerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
+            buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             signingConfig signingConfigs.tigerReleaseConfig
         }
 
@@ -124,6 +128,7 @@ android {
             manifestPlaceholders = [APPLY_SCHEME: "grinKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
+            buildConfigField "boolean", "LOCKER_APP_GUIDE", "true"
             signingConfig signingConfigs.grinReleaseConfig
         }
     }

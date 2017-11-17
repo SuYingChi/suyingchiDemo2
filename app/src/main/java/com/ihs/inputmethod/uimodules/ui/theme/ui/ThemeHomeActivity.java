@@ -35,6 +35,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.inner.HomeKeyTracker;
+import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -48,6 +49,7 @@ import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.BaseCustomizeActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.BottomNavigationViewHelper;
@@ -609,13 +611,25 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             AlertShowingUtils.startShowingAlert();
             CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
             lockerDialog.setTitle(getString(R.string.locker_alert_title));
-            lockerDialog.setMessage(getString(R.string.locker_alert_message));
+            if(BuildConfig.LOCKER_APP_GUIDE){
+                lockerDialog.setMessage(getString(R.string.locker_app_guide_message));
+            }else{
+                lockerDialog.setMessage(getString(R.string.locker_alert_message));
+            }
             lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
             lockerDialog.setCancelable(true);
-            lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
-                HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
-                enableLocker();
-            });
+
+            if(BuildConfig.LOCKER_APP_GUIDE){
+                lockerDialog.setPositiveButton(getString(R.string.download_capital), view -> {
+                    HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
+                    HSMarketUtils.browseAPP(getString(R.string.smart_locker_app_package_name));
+                });
+            }else{
+                lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
+                    HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
+                    enableLocker();
+                });
+            }
             lockerDialog.show();
             lockerDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
             HSAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");

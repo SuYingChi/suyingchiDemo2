@@ -3,4 +3,6 @@
     <string name="low_memory_tip">Low memory,please clean your memory!</string>
     <string name="save_theme_failed">Sorry,save theme failed!</string>
     <string name="loading">Loading…</string>
+
+    <string name="locker_app_guide_message">Download Smart Locker to add your favorite themes on lock screen and protect your phone privacy!</string>
 </resources>
