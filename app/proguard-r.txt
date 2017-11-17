@@ -63,7 +63,7 @@
     @com.facebook.common.internal.DoNotStrip *;
 }
 
--keepclasseswithmembernames class com.acb.adcaffe.nativead.imp.** {
+-keep class com.acb.adcaffe.nativead.imp.NativeAd {
     *;
 }
 
