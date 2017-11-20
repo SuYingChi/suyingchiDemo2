@@ -36,7 +36,6 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.inner.HomeKeyTracker;
-import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -602,6 +601,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     private boolean showScreenLockerDialog() {
+        if(BuildConfig.LOCKER_APP_GUIDE && LockerAppGuideManager.getInstance().isLockerInstall()){
+            return false;
+        }
+
         if (ScreenLockerConfigUtils.shouldShowScreenLockerAlert(true)) {
             if (AlertShowingUtils.isShowingAlert()) {
                 return false;
@@ -622,7 +625,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
             if(BuildConfig.LOCKER_APP_GUIDE){
                 lockerDialog.setPositiveButton(getString(R.string.download_capital), view -> {
-                    HSMarketUtils.browseAPP(getString(R.string.smart_locker_app_package_name));
+                    LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_ALERT_OPEN_APP);
                     HSAnalytics.logEvent("app_lockerAlert_button_clicked", "app_lockerAlert_button_clicked", LockerAppGuideManager.FLURRY_ALERT_OPEN_APP);
 
                 });
