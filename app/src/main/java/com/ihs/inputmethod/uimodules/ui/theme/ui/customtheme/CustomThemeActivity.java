@@ -648,6 +648,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                     themeName = KCCustomThemeManager.getInstance().generateCustomTheme(customThemeData);
                 }catch (Exception e){
                     e.printStackTrace();
+                }catch (OutOfMemoryError e1){
+                    e1.printStackTrace();
                 }
             }
             return themeName;
