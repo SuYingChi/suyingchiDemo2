@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
-import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.DialogUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
@@ -22,10 +21,12 @@ import java.util.List;
  * Created by jixiang on 17/11/17.
  */
 
-public class LockerManager {
-    private static final LockerManager ourInstance = new LockerManager();
+public class LockerAppGuideManager {
+    private static final LockerAppGuideManager ourInstance = new LockerAppGuideManager();
+    private String lockerAppPkgName;
+    private boolean shouldGuideToLockerApp;
 
-    public static LockerManager getInstance() {
+    public static LockerAppGuideManager getInstance() {
         return ourInstance;
     }
 
@@ -33,11 +34,11 @@ public class LockerManager {
     private List<ILockerInstallStatusChangeListener> lockerInstallStatusChangeListeners;
 
 
-    private LockerManager() {
+    private LockerAppGuideManager() {
     }
 
-    public void init() {
-        isLockerInstall = ApkUtils.isInstalled(HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name));
+    public void init(String pkgName,boolean shouldGuideToLockerApp) {
+        isLockerInstall = ApkUtils.isInstalled(pkgName);
         if (!isLockerInstall) {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
@@ -46,6 +47,8 @@ public class LockerManager {
             PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver();
             HSApplication.getContext().registerReceiver(packageInstallReceiver, intentFilter);
         }
+        lockerAppPkgName = pkgName;
+        this.shouldGuideToLockerApp = shouldGuideToLockerApp;
     }
 
     public void addLockerInstallStatusChangeListener(ILockerInstallStatusChangeListener lockerInstallStatusChangeListener) {
@@ -74,20 +77,17 @@ public class LockerManager {
         return isLockerInstall;
     }
 
-    public boolean shouldGuidToDownloadLocker(){
-        return isLockerInstall && BuildConfig.LOCKER_APP_GUIDE;
+    public boolean shouldGuideToDownloadLocker(){
+        return isLockerInstall && shouldGuideToLockerApp;
     }
 
-    public static String getSmartLockerPkName() {
-        return HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name);
-    }
 
     public void showDownloadLockerAlert(Context context){
         HSAlertDialog.build(context,R.style.AppCompactDialogStyle).setTitle(context.getString(R.string.locker_guide_unlock_for_free_dialog_title))
                 .setPositiveButton(context.getString(R.string.enable), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        HSMarketUtils.browseAPP(getSmartLockerPkName());
+                        HSMarketUtils.browseAPP(lockerAppPkgName);
                         DialogUtils.safeDismissDialog((Dialog) dialogInterface,context);
                     }
                 })
@@ -108,7 +108,7 @@ public class LockerManager {
             final String packageName = intent.getData().getEncodedSchemeSpecificPart();
             if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
                 if (HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name).endsWith(packageName)) {
-                    LockerManager.getInstance().setLockerInstall();
+                    LockerAppGuideManager.getInstance().setLockerInstall();
                 }
             }
         }

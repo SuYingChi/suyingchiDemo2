@@ -42,11 +42,13 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerAppGuideManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
@@ -233,7 +235,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
         }
 
-        AcbCallManager.init(callAdPlacement,new CallAssistantFactoryImpl());
+        AcbCallManager.init(callAdPlacement, new CallAssistantFactoryImpl());
         AcbCallManager.setAdPlacement(callAdPlacement);
 
         StickerSuggestionManager.getInstance();
@@ -258,7 +260,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                     }
                 });
             }
-        },30000);
+        }, 30000);
+        LockerAppGuideManager.getInstance().init(HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name), BuildConfig.LOCKER_APP_GUIDE);
     }
 
     private void activeAdPlacements() {

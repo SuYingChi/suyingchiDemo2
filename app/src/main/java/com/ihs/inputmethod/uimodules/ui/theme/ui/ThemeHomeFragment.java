@@ -20,7 +20,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.locker.LockerManager;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerAppGuideManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.ThemeHomeAdapter;
@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapter.ThemeCardItemClickListener, ThemeHomeAdapter.OnThemeAdItemClickListener, LockerManager.ILockerInstallStatusChangeListener {
+public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapter.ThemeCardItemClickListener, ThemeHomeAdapter.OnThemeAdItemClickListener, LockerAppGuideManager.ILockerInstallStatusChangeListener {
 
     public final static String NOTIFICATION_THEME_HOME_DESTROY = "ThemeHomeFragment.destroy";
     public final static String NOTIFICATION_THEME_HOME_STOP = "ThemeHomeFragment.stop";
@@ -69,7 +69,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LockerManager.getInstance().addLockerInstallStatusChangeListener(this);
+        LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);
     }
 
     @Override
@@ -278,7 +278,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
     public void onDestroy() {
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
         HSGlobalNotificationCenter.sendNotificationOnMainThread(NOTIFICATION_THEME_HOME_DESTROY);
-        LockerManager.getInstance().removeLockerInstallStatusChangeListener(this);
+        LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
         super.onDestroy();
     }
 

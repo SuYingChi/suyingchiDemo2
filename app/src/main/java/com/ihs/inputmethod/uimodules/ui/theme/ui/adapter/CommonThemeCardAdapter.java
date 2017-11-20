@@ -26,7 +26,7 @@ import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegatesManager;
-import com.ihs.inputmethod.uimodules.ui.locker.LockerManager;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerAppGuideManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate.BlankViewAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate.ThemeCardAdapterDelegate;
@@ -140,8 +140,8 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         switch (key) {
             case ThemeCardAdapterDelegate.TAG_DOWNLOAD:
                 if (keyboardTheme.getThemePkName() != null) {
-                    if (LockerManager.getInstance().shouldGuidToDownloadLocker()){
-                        LockerManager.getInstance().showDownloadLockerAlert(v.getContext());
+                    if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
+                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(v.getContext());
                     }else {
                         //直接下载主题zip包
                         boolean downloadThemeZip = HSConfig.optBoolean(false, "Application", "KeyboardTheme", "DownloadThemeZip", "DownloadInApp");
