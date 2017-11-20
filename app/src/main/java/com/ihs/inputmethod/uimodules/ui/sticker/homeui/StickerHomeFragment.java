@@ -101,32 +101,36 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
 
             @Override
             public void onDownloadClick(final StickerHomeModel stickerHomeModel, Drawable drawable) {
-                final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
-                final String stickerGroupName =stickerGroup.getStickerGroupName();
-                final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()) {
+                    LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity());
+                } else {
+                    final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
+                    final String stickerGroupName = stickerGroup.getStickerGroupName();
+                    final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
-                // 移除点击过的new角标
-                StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
-                stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
+                    // 移除点击过的new角标
+                    StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
+                    stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
 
-                DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
-                        stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                        new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
-                            @Override
-                            public void onDismiss(boolean success) {
-                                if (success) {
-                                    HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
-                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+                    DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
+                            stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                            new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
+                                @Override
+                                public void onDismiss(boolean success) {
+                                    if (success) {
+                                        HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                                        StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
-                                    int position = stickerModelList.indexOf(stickerHomeModel);
-                                    if (position > 0 && position < stickerModelList.size()) {
-                                        stickerModelList.remove(position);
-                                        stickerCardAdapter.notifyItemRemoved(position);
+                                        int position = stickerModelList.indexOf(stickerHomeModel);
+                                        if (position > 0 && position < stickerModelList.size()) {
+                                            stickerModelList.remove(position);
+                                            stickerCardAdapter.notifyItemRemoved(position);
+                                        }
                                     }
                                 }
-                            }
 
-                        });
+                            });
+                }
             }
 
         });

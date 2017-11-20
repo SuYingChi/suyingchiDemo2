@@ -67,7 +67,7 @@ public class LockerAppGuideManager {
 
     private void setLockerInstall() {
         isLockerInstall = true;
-        if (lockerInstallStatusChangeListeners == null) {
+        if (lockerInstallStatusChangeListeners != null) {
             for (ILockerInstallStatusChangeListener lockerInstallStatusChangeListener : lockerInstallStatusChangeListeners) {
                 lockerInstallStatusChangeListener.onLockerInstallStatusChange();
             }
@@ -88,7 +88,7 @@ public class LockerAppGuideManager {
                 .setPositiveButton(context.getString(R.string.enable), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        HSMarketUtils.browseAPP(lockerAppPkgName);
+                        browseSmartLocker();
                         KCCommonUtils.dismissDialog((Dialog) dialogInterface);
                     }
                 })
@@ -99,6 +99,10 @@ public class LockerAppGuideManager {
                     }
                 }).create();
         KCCommonUtils.showDialog(alertDialog);
+    }
+
+    public void browseSmartLocker() {
+        HSMarketUtils.browseAPP(lockerAppPkgName);
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {

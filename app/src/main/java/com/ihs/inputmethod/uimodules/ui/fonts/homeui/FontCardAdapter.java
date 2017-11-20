@@ -38,6 +38,10 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
         this.fontModelList = fontModels;
     }
 
+    public void setData(List<FontModel> fontModels) {
+        this.fontModelList = fontModels;
+    }
+
     @Override
     public FontCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE.ITEM_TYPE_MY.ordinal()) {

@@ -144,21 +144,26 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     @Override
     public void onFontCardClick(final int position) {
-        final FontModel fontModel = fontModelList.get(position);
-        final String fontName = fontModel.getFontName();
-        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
-                null, success -> {
-                    if (success) {
-                        HSFontDownloadManager.getInstance().updateFontModel(fontModel);
-                        HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
-                    }
-                });
+        if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
+            LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity());
+        }else {
+            final FontModel fontModel = fontModelList.get(position);
+            final String fontName = fontModel.getFontName();
+            DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
+                    null, success -> {
+                        if (success) {
+                            HSFontDownloadManager.getInstance().updateFontModel(fontModel);
+                            HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
+                        }
+                    });
+        }
     }
 
     @Override
     public void onLockerInstallStatusChange() {
         if (fontCardAdapter != null){
             loadFontModel();
+            fontCardAdapter.setData(fontModelList);
             fontCardAdapter.notifyDataSetChanged();
         }
     }

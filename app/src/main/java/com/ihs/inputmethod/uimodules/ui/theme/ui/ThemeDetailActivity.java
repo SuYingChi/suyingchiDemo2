@@ -39,6 +39,7 @@ import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerAppGuideManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
@@ -61,7 +62,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnClickListener, CommonThemeCardAdapter.ThemeCardItemClickListener {
+public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnClickListener, CommonThemeCardAdapter.ThemeCardItemClickListener, LockerAppGuideManager.ILockerInstallStatusChangeListener {
     public final static String INTENT_KEY_THEME_NAME = "themeName";
     private NestedScrollView rootView;
     private View screenshotContainer;
@@ -209,6 +210,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
+        LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);
     }
 
     private void initView() {
@@ -279,7 +281,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_downloading));
                     rightBtn.setEnabled(false);
                 } else {
-                    rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_download));
+                    if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
+                        rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free));
+                    }else {
+                        rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_download));
+                    }
                     rightBtn.setEnabled(true);
                 }
                 break;
@@ -379,6 +385,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 }
             }
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_applied).equalsIgnoreCase(text)) {
+
+        } else if (HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free).equalsIgnoreCase(text)) {
+            LockerAppGuideManager.getInstance().browseSmartLocker();
         }
     }
 
@@ -471,11 +480,12 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             nativeAdView.release();
             nativeAdView = null;
         }
-        HSGlobalNotificationCenter.removeObserver(notificationObserver);
         if (trialKeyboardDialog != null) {
             trialKeyboardDialog.dismiss();
             trialKeyboardDialog = null;
         }
+        HSGlobalNotificationCenter.removeObserver(notificationObserver);
+        LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
         super.onDestroy();
     }
 
@@ -522,4 +532,8 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         }
     }
 
+    @Override
+    public void onLockerInstallStatusChange() {
+        setButtonText();
+    }
 }
