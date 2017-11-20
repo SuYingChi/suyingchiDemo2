@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.artw.lockscreen.LockerAppGuideManager;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
@@ -39,7 +40,6 @@ import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.locker.LockerAppGuideManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
@@ -387,7 +387,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_applied).equalsIgnoreCase(text)) {
 
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free).equalsIgnoreCase(text)) {
-            LockerAppGuideManager.getInstance().browseSmartLocker();
+            LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
         }
     }
 

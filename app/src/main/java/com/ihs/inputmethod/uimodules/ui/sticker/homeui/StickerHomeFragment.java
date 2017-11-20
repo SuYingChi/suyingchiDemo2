@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.artw.lockscreen.LockerAppGuideManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -22,7 +23,6 @@ import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
-import com.ihs.inputmethod.uimodules.ui.locker.LockerAppGuideManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -102,7 +102,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
             @Override
             public void onDownloadClick(final StickerHomeModel stickerHomeModel, Drawable drawable) {
                 if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()) {
-                    LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity());
+                    LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
                 } else {
                     final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
                     final String stickerGroupName = stickerGroup.getStickerGroupName();
