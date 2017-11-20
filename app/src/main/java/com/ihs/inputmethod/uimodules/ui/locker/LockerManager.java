@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.locker;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,9 +8,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.utils.DialogUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 
 import java.util.ArrayList;
@@ -75,18 +78,23 @@ public class LockerManager {
         return isLockerInstall && BuildConfig.LOCKER_APP_GUIDE;
     }
 
+    public static String getSmartLockerPkName() {
+        return HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name);
+    }
+
     public void showDownloadLockerAlert(Context context){
         HSAlertDialog.build(context,R.style.AppCompactDialogStyle).setTitle(context.getString(R.string.locker_guide_unlock_for_free_dialog_title))
                 .setPositiveButton(context.getString(R.string.enable), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        HSMarketUtils.browseAPP(getSmartLockerPkName());
+                        DialogUtils.safeDismissDialog((Dialog) dialogInterface,context);
                     }
                 })
                 .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        DialogUtils.safeDismissDialog((Dialog) dialogInterface,context);
                     }
                 }).create().show();
     }
