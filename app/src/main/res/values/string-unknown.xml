@@ -2,10 +2,6 @@
 <resources
 	xmlns:tools="http://schemas.android.com/tools"
 	>
-
-	<string name="toast_enable_keyboard_1">1</string>
-	<string name="toast_enable_keyboard_2">2</string>
-
 	<string name="gif_view_animation_loading_message">Loading</string>
 	<string name="gif_view_animation_save_message">The animation has been saved to your gallery</string>
 	<string name="gif_view_animation_link_message">Double tap to insert full animation link</string>
