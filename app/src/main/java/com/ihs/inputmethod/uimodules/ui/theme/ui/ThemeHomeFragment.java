@@ -310,6 +310,8 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
     @Override
     public void onLockerInstallStatusChange() {
-
+        if (adapter != null) {
+            updateThemeList();
+        }
     }
 }

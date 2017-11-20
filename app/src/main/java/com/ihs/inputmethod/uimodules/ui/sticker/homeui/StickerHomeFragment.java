@@ -22,6 +22,7 @@ import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerAppGuideManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -42,7 +43,7 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
  * Created by guonan.lv on 17/8/10.
  */
 
-public class StickerHomeFragment extends Fragment {
+public class StickerHomeFragment extends Fragment implements LockerAppGuideManager.ILockerInstallStatusChangeListener {
     private boolean isVisibleToUser;
     private boolean isResume;
 
@@ -65,6 +66,12 @@ public class StickerHomeFragment extends Fragment {
         //随便设置一个，修复按Home键会crash的问题，方法来自https://stackoverflow.com/questions/14516804/nullpointerexception-android-support-v4-app-fragmentmanagerimpl-savefragmentbasi
         outState.putString("xxx",  "xxx");
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);
     }
 
     @Nullable
@@ -280,8 +287,15 @@ public class StickerHomeFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         HSGlobalNotificationCenter.removeObserver(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION, observer);
+        LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
+        super.onDestroy();
     }
 
+    @Override
+    public void onLockerInstallStatusChange() {
+        if (stickerCardAdapter != null) {
+            loadDatas();
+        }
+    }
 }

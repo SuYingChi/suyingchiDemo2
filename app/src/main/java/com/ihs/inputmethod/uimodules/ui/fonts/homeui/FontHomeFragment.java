@@ -20,6 +20,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
+import com.ihs.inputmethod.uimodules.ui.locker.LockerAppGuideManager;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 
@@ -33,7 +34,7 @@ import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManage
  * Created by guonan.lv on 17/8/14.
  */
 
-public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFontCardClickListener {
+public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFontCardClickListener, LockerAppGuideManager.ILockerInstallStatusChangeListener {
 
     private RecyclerView recyclerView;
     private FontCardAdapter fontCardAdapter;
@@ -67,6 +68,12 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +104,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     }
 
     private void loadFontModel() {
+        List<FontModel> fontModelList = new ArrayList<>();
         List<Map<String, Object>> fontList = (List<Map<String, Object>>) HSConfig.getList("Application", "FontList");
         for (Map<String, Object> map : fontList) {
             String fontName = (String) map.get("name");
@@ -114,6 +122,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                 fontModelList.add(fontModel);
             }
         }
+        this.fontModelList = fontModelList;
     }
 
     @Override
@@ -128,8 +137,9 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         HSGlobalNotificationCenter.removeObserver(observer);
+        LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
+        super.onDestroy();
     }
 
     @Override
@@ -143,5 +153,13 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                         HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
                     }
                 });
+    }
+
+    @Override
+    public void onLockerInstallStatusChange() {
+        if (fontCardAdapter != null){
+            loadFontModel();
+            fontCardAdapter.notifyDataSetChanged();
+        }
     }
 }

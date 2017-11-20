@@ -6,13 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v7.app.AlertDialog;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.utils.DialogUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,20 +84,21 @@ public class LockerAppGuideManager {
 
 
     public void showDownloadLockerAlert(Context context){
-        HSAlertDialog.build(context,R.style.AppCompactDialogStyle).setTitle(context.getString(R.string.locker_guide_unlock_for_free_dialog_title))
+        AlertDialog alertDialog = HSAlertDialog.build(context, R.style.AppCompactDialogStyle).setTitle(context.getString(R.string.locker_guide_unlock_for_free_dialog_title))
                 .setPositiveButton(context.getString(R.string.enable), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         HSMarketUtils.browseAPP(lockerAppPkgName);
-                        DialogUtils.safeDismissDialog((Dialog) dialogInterface,context);
+                        KCCommonUtils.dismissDialog((Dialog) dialogInterface);
                     }
                 })
                 .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DialogUtils.safeDismissDialog((Dialog) dialogInterface,context);
+                        KCCommonUtils.dismissDialog((Dialog) dialogInterface);
                     }
-                }).create().show();
+                }).create();
+        KCCommonUtils.showDialog(alertDialog);
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {
