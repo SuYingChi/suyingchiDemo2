@@ -79,7 +79,7 @@ public class LockerAppGuideManager {
     }
 
     public boolean shouldGuideToDownloadLocker(){
-        return isLockerInstall && shouldGuideToLockerApp;
+        return !isLockerInstall && shouldGuideToLockerApp;
     }
 
 
