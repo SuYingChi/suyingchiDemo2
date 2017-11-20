@@ -47,7 +47,6 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
-import com.ihs.inputmethod.uimodules.ui.locker.LockerManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
@@ -189,13 +188,6 @@ public class HSUIApplication extends HSInputMethodApplication {
             public void run() {
                 FacemojiManager.getInstance().init();
                 ThemeDirManager.moveCustomAssetsToFileIfNecessary();
-                LockerManager.getInstance().init();
-                AcbInterstitialAdManager.getInstance().init(HSUIApplication.this);
-                AcbNativeAdManager.sharedInstance().init(HSUIApplication.this);
-                AcbExpressAdManager.getInstance().init(HSUIApplication.this);
-                setChargingFunctionStatus();
-                registerNotificationEvent();
-                ScreenLockerManager.init();
             }
         });
         HSKeyboardThemeManager.init();
@@ -210,13 +202,19 @@ public class HSUIApplication extends HSInputMethodApplication {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
         }
 
-
+        AcbInterstitialAdManager.getInstance().init(this);
+        AcbNativeAdManager.sharedInstance().init(this);
+        AcbExpressAdManager.getInstance().init(this);
         HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
+        setChargingFunctionStatus();
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
         HSInputMethodService.initResourcesBeforeOnCreate();
 
 
+        registerNotificationEvent();
+
+        ScreenLockerManager.init();
         FloatWindowCompat.initLockScreen(this);
         initIAP();
 
