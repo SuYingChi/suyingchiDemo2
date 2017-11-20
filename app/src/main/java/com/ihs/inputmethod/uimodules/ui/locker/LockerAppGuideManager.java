@@ -45,8 +45,14 @@ public class LockerAppGuideManager {
             intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
             intentFilter.addDataScheme("package");
 
-            PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver();
+            PackageInstallReceiver packageInstallReceiver = new PackageInstallReceiver(pkgName);
             HSApplication.getContext().registerReceiver(packageInstallReceiver, intentFilter);
+
+            intentFilter = new IntentFilter();
+            intentFilter.addAction(Intent.ACTION_USER_PRESENT);
+
+            UnlockScreenReceiver unlockScreenReceiver = new UnlockScreenReceiver();
+            HSApplication.getContext().registerReceiver(unlockScreenReceiver, intentFilter);
         }
         lockerAppPkgName = pkgName;
         this.shouldGuideToLockerApp = shouldGuideToLockerApp;
@@ -106,17 +112,27 @@ public class LockerAppGuideManager {
     }
 
     private static class PackageInstallReceiver extends BroadcastReceiver {
-        private PackageInstallReceiver() {
+        private String pkgName;
+        private PackageInstallReceiver(String pkgName) {
+            this.pkgName = pkgName;
         }
 
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             final String packageName = intent.getData().getEncodedSchemeSpecificPart();
             if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
-                if (HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name).endsWith(packageName)) {
+                if (pkgName.endsWith(packageName)) {
                     LockerAppGuideManager.getInstance().setLockerInstall();
                 }
             }
+        }
+    }
+
+    private static class UnlockScreenReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            LockerAppGuideManager.getInstance().showDownloadLockerAlert(HSApplication.getContext());
         }
     }
 
