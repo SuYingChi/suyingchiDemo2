@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acb.call.CPSettings;
+import com.artw.lockscreen.LockerAppGuideManager;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.ihs.app.analytics.HSAnalytics;
@@ -621,8 +622,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
             if(BuildConfig.LOCKER_APP_GUIDE){
                 lockerDialog.setPositiveButton(getString(R.string.download_capital), view -> {
-                    HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
                     HSMarketUtils.browseAPP(getString(R.string.smart_locker_app_package_name));
+                    HSAnalytics.logEvent("app_lockerAlert_button_clicked", "app_lockerAlert_button_clicked", LockerAppGuideManager.FLURRY_ALERT_OPEN_APP);
+
                 });
             }else{
                 lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
@@ -633,6 +635,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             lockerDialog.show();
             lockerDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
             HSAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");
+            HSAnalytics.logEvent("app_lockerAlert_show", "app_lockerAlert_show", LockerAppGuideManager.FLURRY_ALERT_OPEN_APP);
             ScreenLockerConfigUtils.increaseEnableAlertShowCount();
             return true;
         } else {
