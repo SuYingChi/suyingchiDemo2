@@ -47,7 +47,7 @@ public class AdCaffeHelper {
 
     private Context context;
     private static final String SERVER_URL_AD_CAFFE = "https://dev-service.appcloudbox.net/adcaffe/ad/get";
-    private static final String KEYWORD_REQUEST_URL = "https://dev-service.appcloudbox.net/adcaffe/ad/keywords/get";
+    private static final String KEYWORD_REQUEST_URL = "https://api.adcaffe.com/adcaffe/ad/keywords/get";
     private static final String SERVER_URL_AD_CAFFE_RELEASE = "https://api.adcaffe.com/adcaffe/ad/get";
     private static final String KEYWORD_REQUEST_URL_RELEASE = "https://api.adcaffe.com/adcaffe/ad/keywords/get";
     private static final String SEARCH_AD_UPDATE_TIME = "search_ad_update_time";
@@ -67,10 +67,6 @@ public class AdCaffeHelper {
     public String country;
     public List<String> keywords;
     public int offset = -1;
-
-    public Trie getTrie() {
-        return trie;
-    }
 
     private Trie trie;
 

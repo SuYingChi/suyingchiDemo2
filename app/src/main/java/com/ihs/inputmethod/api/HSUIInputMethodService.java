@@ -594,7 +594,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public void onNativeAdLoadFail(HSError hsError) {
-        HSLog.e("lv_eee AdCaff Error", hsError.getMessage() + " " + hsError.getCode());
+        HSLog.e("lv_eee AdCaffe Error", hsError.getMessage() + " " + hsError.getCode());
     }
 
     @Override
