@@ -504,6 +504,8 @@
 					<integer>14</integer>
 				</dict>
 				<dict>
+					<key>downloadLockerToUnlock</key>
+					<true/>
 					<key>example</key>
 					<string>S̶t̶r̶i̶k̶e̶ o̶u̶t̶</string>
 					<key>name</key>
@@ -1894,6 +1896,8 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/LuxuryBlack.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/LuxuryBlack.jpg</string>
+							<key>downloadLockerToUnlock</key>
+							<true/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/LuxuryBlack.jpg</string>
 							<key>lockerImgUrl</key>
@@ -5194,6 +5198,8 @@
 							<string>Adorable Face</string>
 						</dict>
 						<dict>
+							<key>downloadLockerToUnlock</key>
+							<true/>
 							<key>name</key>
 							<string>LoveBear</string>
 							<key>showName</key>

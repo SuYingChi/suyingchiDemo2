@@ -101,10 +101,11 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
 
             @Override
             public void onDownloadClick(final StickerHomeModel stickerHomeModel, Drawable drawable) {
-                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()) {
+                final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
+
+                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && stickerGroup.downloadLockerToUnlock) {
                     LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
                 } else {
-                    final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
                     final String stickerGroupName = stickerGroup.getStickerGroupName();
                     final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 

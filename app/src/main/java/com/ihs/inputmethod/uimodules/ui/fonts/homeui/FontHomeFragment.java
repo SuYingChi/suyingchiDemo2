@@ -19,6 +19,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
+import com.ihs.inputmethod.api.utils.HSYamlUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.utils.DownloadUtils;
@@ -118,6 +119,10 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
             hsSpecialCharacter.name = fontName;
             hsSpecialCharacter.example = example;
             FontModel fontModel = new FontModel(hsSpecialCharacter);
+            fontModel.downloadLockerToUnlock = HSYamlUtils.convertObjectToBool(map.get("downloadLockerToUnlock"));
+            fontModel.needNewVersionToUnlock = HSYamlUtils.convertObjectToBool(map.get("needNewVersionToUnlock"));
+            fontModel.rateToUnlock = HSYamlUtils.convertObjectToBool(map.get("rateToUnlock"));
+            fontModel.shareToUnlock = HSYamlUtils.convertObjectToBool(map.get("shareToUnlock"));
             if (!fontModel.isFontDownloaded() && Build.VERSION.SDK_INT >= minSDKVersion) {
                 fontModelList.add(fontModel);
             }
@@ -144,10 +149,10 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     @Override
     public void onFontCardClick(final int position) {
-        if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
+        final FontModel fontModel = fontModelList.get(position);
+        if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && fontModel.downloadLockerToUnlock){
             LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
         }else {
-            final FontModel fontModel = fontModelList.get(position);
             final String fontName = fontModel.getFontName();
             DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
                     null, success -> {

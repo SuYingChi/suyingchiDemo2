@@ -88,7 +88,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
         if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_HOME.ordinal()) {
             ((FontHomeViewHolder) holder).downloadIcon.setVisibility(View.VISIBLE);
-            if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
+            if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && fontModel.downloadLockerToUnlock){
                 ((FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.lock_normal);
             }else {
                 ((FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.ic_download_icon);

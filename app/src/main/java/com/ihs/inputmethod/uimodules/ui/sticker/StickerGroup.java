@@ -31,6 +31,10 @@ public class StickerGroup {
     private String stickerGroupPreviewImageUri;
     private String stickerGroupDownloadPreviewImageUri;
     private String stickerGroupDownloadUri;
+    public boolean downloadLockerToUnlock = false;
+    public boolean needNewVersionToUnlock = false;
+    public boolean rateToUnlock = false;
+    public boolean shareToUnlock = false;
     private boolean isInternalStickerGroup = false;
     private List<Sticker> stickerList = new ArrayList<>();
     public static final String ASSETS_STICKER_FILE_NAME = "Stickers";

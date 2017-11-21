@@ -76,7 +76,7 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
         }
         stickerCardViewHolder.downloadBtn.setVisibility(View.VISIBLE);
-        if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
+        if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && stickerGroup.downloadLockerToUnlock){
             stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.lock_normal);
         }else {
             stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.ic_download_icon);

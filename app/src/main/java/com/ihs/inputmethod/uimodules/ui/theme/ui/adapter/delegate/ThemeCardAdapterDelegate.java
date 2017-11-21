@@ -103,7 +103,7 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
                 themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
                 break;
             case NEED_DOWNLOAD:
-                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
+                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && keyboardTheme.isDownloadLockerToUnlock()){
                     themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.lock_normal);
                 }else {
                     themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
