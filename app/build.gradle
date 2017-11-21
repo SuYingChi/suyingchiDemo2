@@ -78,8 +78,8 @@ android {
 
         master {
             applicationId = "com.masterkeyboard.emoji"
-            versionCode 7
-            versionName "1.2.0"
+            versionCode 8
+            versionName "1.2.1"
             manifestPlaceholders = [APPLY_SCHEME: "lockerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
