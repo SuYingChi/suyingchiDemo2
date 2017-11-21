@@ -6,6 +6,49 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>DownloadScreenLocker</key>
+			<dict>
+				<key>UnlockForFree</key>
+				<dict>
+					<key>title</key>
+					<string>Screen Locker</string>
+					<key>body</key>
+					<string>Download Screen Locker and you can use this for free.</string>
+					<key>button</key>
+					<string>UNLOCK FOR FREE</string>
+				</dict>
+				<key>Wallpaper</key>
+				<dict>
+					<key>title</key>
+					<string>Oops</string>
+					<key>body</key>
+					<string>Because of policy constraints, you need to download Screen Locker app to apply this theme.</string>
+					<key>button</key>
+					<string>DOWNLOAD</string>
+				</dict>
+				<key>AppOpen</key>
+				<dict>
+					<key>title</key>
+					<string>Screen Locker</string>
+					<key>body</key>
+					<string>Download Screen Locker and add your favorite themes on lock screen!</string>
+					<key>button</key>
+					<string>DOWNLOAD</string>
+				</dict>
+				<key>UnlockScreen</key>
+				<dict>
+					<key>AlertIntervalInHour</key>
+					<integer>0</integer>
+					<key>ShowUnlockScreenAlert</key>
+					<true/>
+					<key>title</key>
+					<string>Try New Screen Locker</string>
+					<key>body</key>
+					<string>1. 5000+ beautiful themes to choose\n2. Live weather forecas\n3. Secure your privacy</string>
+					<key>button</key>
+					<string>TRY NOW</string>
+				</dict>
+			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -361,13 +404,6 @@
 			<dict>
 				<key>LaunchDelayTime</key>
 				<integer>3000</integer>
-			</dict>
-			<key>DownloadLockerAlert</key>
-			<dict>
-				<key>AlertIntervalInHour</key>
-				<integer>0</integer>
-				<key>ShowUnlockScreenAlert</key>
-				<true/>
 			</dict>
 			<key>FeaturePrompt</key>
 			<dict>
