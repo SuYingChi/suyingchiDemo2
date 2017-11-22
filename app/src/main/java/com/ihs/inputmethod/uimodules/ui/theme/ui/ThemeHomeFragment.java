@@ -26,6 +26,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.ThemeHomeAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.keyboard.common.KeyboardActivationGuideActivity;
@@ -56,7 +57,9 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
+            if (LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW.equals(s)
+                    || LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW.equals(s)
+                    || HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
                 updateThemeList();
             } else if (RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 removeAds();
@@ -86,6 +89,8 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
         initView();
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW, notificationObserver);
         return recyclerView;
     }
 

@@ -55,7 +55,10 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
     private INotificationObserver observer = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (FacemojiManager.FACEMOJI_SAVED.equals(s) || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
+            if (LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW.equals(s)
+                    || LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW.equals(s)
+                    || FacemojiManager.FACEMOJI_SAVED.equals(s)
+                    || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
                     || (FacemojiManager.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */ ){
                 loadDatas();
             }
@@ -84,6 +87,8 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_SAVED, observer);
         HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACE_DELETED, observer);
+        HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW, observer);
+        HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW, observer);
         return view;
     }
 
@@ -113,7 +118,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                         StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
                         stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
 
-                        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
+                        DownloadUtils.getInstance().startForegroundDownloading(getActivity(), stickerGroupName,
                                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                                 new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
                                     @Override
@@ -135,7 +140,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                 };
 
                 if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
-                    LockedCardActionUtils.handleLockAction(getActivity(),stickerHomeModel,runnable);
+                    LockedCardActionUtils.handleLockAction(getActivity(), stickerHomeModel, runnable);
                 } else {
                     runnable.run();
                 }

@@ -100,4 +100,9 @@ public class FontModel implements ICondition {
     public boolean isShareToUnlock() {
         return shareToUnlock;
     }
+
+    @Override
+    public boolean isDownloadInApp() {
+        return true;
+    }
 }

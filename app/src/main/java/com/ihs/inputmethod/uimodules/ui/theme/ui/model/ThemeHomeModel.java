@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.uimodules.R;
 
@@ -105,5 +106,10 @@ public final class ThemeHomeModel implements ICondition {
 			return keyboardTheme.isShareToUnlock();
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isDownloadInApp() {
+		return HSConfig.optBoolean(false, "Application", "KeyboardTheme", "DownloadThemeZip", "DownloadInApp");
 	}
 }

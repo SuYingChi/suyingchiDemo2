@@ -59,6 +59,9 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                     fontCardAdapter.notifyItemRemoved(position);
                     fontCardAdapter.notifyItemRangeChanged(position, fontModelList.size());
                 }
+            }else if (LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW.equals(s)
+                    || LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW.equals(s)){
+                reloadData();
             }
         }
     };
@@ -83,6 +86,8 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         initView();
         HSGlobalNotificationCenter.addObserver(FONT_NAME_SAVE_TO_JSON_SUCCESS, observer);
+        HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW, observer);
+        HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW, observer);
         return view;
     }
 
@@ -166,7 +171,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         };
 
         if (LockedCardActionUtils.shouldLock(fontModel)){
-            LockedCardActionUtils.handleLockAction(getActivity(),fontModel,runnable);
+            LockedCardActionUtils.handleLockAction(getActivity(), fontModel, runnable);
         }else {
             runnable.run();
         }
@@ -174,6 +179,10 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     @Override
     public void onLockerInstallStatusChange() {
+        reloadData();
+    }
+
+    private void reloadData() {
         if (fontCardAdapter != null){
             loadFontModel();
             fontCardAdapter.setData(fontModelList);

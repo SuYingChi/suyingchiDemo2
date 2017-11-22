@@ -9,4 +9,5 @@ public interface ICondition {
     boolean isNeedNewVersionToUnlock();
     boolean isRateToUnlock();
     boolean isShareToUnlock();
+    boolean isDownloadInApp();
 }

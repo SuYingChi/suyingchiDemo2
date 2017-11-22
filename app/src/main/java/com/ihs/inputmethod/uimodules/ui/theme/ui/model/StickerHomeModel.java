@@ -69,4 +69,9 @@ public final class StickerHomeModel implements ICondition {
 		}
         return false;
     }
+
+	@Override
+	public boolean isDownloadInApp() {
+		return true;
+	}
 }
