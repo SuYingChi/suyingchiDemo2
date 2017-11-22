@@ -754,6 +754,8 @@
 							<true/>
 						</dict>
 						<dict>
+							<key>downloadLockerToUnlock</key>
+							<true/>
 							<key>name</key>
 							<string>Green Nebula</string>
 							<key>showNewMark</key>
@@ -762,18 +764,24 @@
 						<dict>
 							<key>name</key>
 							<string>Tropical Forest</string>
+							<key>needNewVersionToUnlock</key>
+							<true/>
 							<key>showNewMark</key>
 							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>Pink Leopard</string>
+							<key>rateToUnlock</key>
+							<true/>
 							<key>showNewMark</key>
 							<true/>
 						</dict>
 						<dict>
 							<key>name</key>
 							<string>Giant Panda</string>
+							<key>shareToUnlock</key>
+							<true/>
 							<key>showNewMark</key>
 							<true/>
 						</dict>
@@ -1890,6 +1898,8 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Phoenix.jpg</string>
 							<key>mediumPreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Phoenix.jpg</string>
+							<key>shareToUnlock</key>
+							<true/>
 							<key>showName</key>
 							<string>Phoenix</string>
 							<key>showNewMark</key>
@@ -1904,14 +1914,14 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/LuxuryBlack.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/LuxuryBlack.jpg</string>
-							<key>downloadLockerToUnlock</key>
-							<true/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/LuxuryBlack.jpg</string>
 							<key>lockerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/luxuryblack.jpg</string>
 							<key>mediumPreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/LuxuryBlack.jpg</string>
+							<key>rateToUnlock</key>
+							<true/>
 							<key>showName</key>
 							<string>Luxury Black</string>
 							<key>showNewMark</key>
@@ -1932,6 +1942,8 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/galaxy.jpg</string>
 							<key>mediumPreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/Galaxy.jpg</string>
+							<key>needNewVersionToUnlock</key>
+							<true/>
 							<key>showName</key>
 							<string>Galaxy</string>
 							<key>themeDesc</key>
@@ -1954,10 +1966,6 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/rosegold.jpg</string>
 							<key>mediumPreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/RoseGold.jpg</string>
-							<key>needNewVersionToUnlock</key>
-							<true/>
-							<key>rateToUnlock</key>
-							<true/>
 							<key>shareToUnlock</key>
 							<true/>
 							<key>showName</key>
@@ -1978,6 +1986,8 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/keyboardforos11.jpg</string>
 							<key>mediumPreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/KeyboardforOs11.jpg</string>
+							<key>rateToUnlock</key>
+							<true/>
 							<key>showAnimatedMark</key>
 							<true/>
 							<key>showName</key>
@@ -5216,14 +5226,16 @@
 						<dict>
 							<key>downloadLockerToUnlock</key>
 							<true/>
-                            <key>needNewVersionToUnlock</key>
-                            <true/>
-                            <key>rateToUnlock</key>
-                            <true/>
-                            <key>shareToUnlock</key>
-                            <true/>
 							<key>name</key>
 							<string>LoveBear</string>
+							<key>needNewVersionToUnlock</key>
+							<true/>
+							<key>rateToUnlock</key>
+							<true/>
+							<key>shareToUnlock</key>
+							<true/>
+							<key>showInKeyboard</key>
+							<true/>
 							<key>showName</key>
 							<string>Love</string>
 						</dict>
