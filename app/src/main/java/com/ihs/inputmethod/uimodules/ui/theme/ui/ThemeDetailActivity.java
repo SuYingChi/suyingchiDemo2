@@ -365,7 +365,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             HSAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
             HSAnalytics.logEvent("keyboard_setaslockscreen_button_clicked", "occasion", "app_theme_detail");
-            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, getString(R.string.locker_enable_title_no_desc), new LockerEnableDialog.OnLockerBgLoadingListener() {
+            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, getString(R.string.locker_enable_title_no_desc),themeName, new LockerEnableDialog.OnLockerBgLoadingListener() {
                 @Override
                 public void onFinish() {
                 }
