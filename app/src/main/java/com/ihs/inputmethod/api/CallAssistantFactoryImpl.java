@@ -38,6 +38,10 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
         };
     }
 
+    @Override
+    public boolean isCallAssistantOpenDefault() {
+        return HSConfig.optBoolean(false, "Application", "ScreenFlash", "DefaultSwitch");
+    }
 
     @Override
     public boolean isSMSAssistantOpenDefault() {
