@@ -17,8 +17,8 @@ public class ScreenLockerConfigUtils {
     private final static int MAX_SHOW_COUNT = 2;
 
     private static boolean shouldFocusOnEnableEvent() {
-        if (LockerSettings.getLockerEnableStates() != LockerSettings.LOCKER_DEFAULT_DISABLED) {
-            HSLog.i(LOG_TAG, "Screen locker is NOT default disabled");
+        if (LockerSettings.getLockerEnableStates() == LockerSettings.LOCKER_MUTED) {
+            HSLog.i(LOG_TAG, "Screen locker is MUTED");
             return false;
         }
 
