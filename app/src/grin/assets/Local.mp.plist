@@ -405,6 +405,51 @@
 				<key>LaunchDelayTime</key>
 				<integer>3000</integer>
 			</dict>
+			<key>DownloadScreenLocker</key>
+			<dict>
+				<key>UnlockForFree</key>
+				<dict>
+					<key>title</key>
+					<string>Screen Locker</string>
+					<key>body</key>
+					<string>Download Screen Locker and you can use this for free.</string>
+					<key>button</key>
+					<string>UNLOCK FOR FREE</string>
+				</dict>
+				<key>Wallpaper</key>
+				<dict>
+					<key>title</key>
+					<string>Oops</string>
+					<key>body</key>
+					<string>Because of policy constraints, you need to download Screen Locker app to apply this theme.</string>
+					<key>button</key>
+					<string>DOWNLOAD</string>
+				</dict>
+				<key>AppOpen</key>
+				<dict>
+					<key>title</key>
+					<string>Screen Locker</string>
+					<key>body</key>
+					<string>Download Screen Locker and add your favorite themes on lock screen!</string>
+					<key>button</key>
+					<string>DOWNLOAD</string>
+				</dict>
+				<key>UnlockScreen</key>
+				<dict>
+					<key>AlertIntervalInHour</key>
+					<integer>12</integer>
+					<key>ShowUnlockScreenAlert</key>
+					<true/>
+					<key>title</key>
+					<string>Try New Screen Locker</string>
+					<key>body</key>
+					<string>1. 5000+ beautiful themes to choose \n 2. Live weather forecas \n 3. Secure your privacy</string>
+					<key>button</key>
+					<string>TRY NOW</string>
+				</dict>
+			</dict>
+			<key>EnableMessageFunction</key>
+			<false/>
 			<key>FeaturePrompt</key>
 			<dict>
 				<key>ChargerLockerAlert</key>
@@ -1888,6 +1933,8 @@
 							<string>galaxydream</string>
 						</dict>
 						<dict>
+							<key>downloadLockerToUnlock</key>
+							<true/>
 							<key>apkUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Clown Fish.apk</string>
 							<key>bannerImgUrl</key>
@@ -5171,7 +5218,11 @@
 				<key>RemoteContentDownloadURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
 				<key>StickerDownloadBaseURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers/</string>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers</string>
+				<key>StickerSuggestionBaseURL</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/sticker_suggestion</string>
+				<key>ThemeZipDownloadBaseURL</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/theme/</string>
 			</dict>
 			<key>StickersGifs</key>
 			<dict>
@@ -5211,6 +5262,12 @@
 					</array>
 					<key>StickerGroupList</key>
 					<array>
+						<dict>
+							<key>name</key>
+							<string>Cute3DEmoji</string>
+							<key>showName</key>
+							<string>Cute 3D Emoji</string>
+						</dict>
 						<dict>
 							<key>name</key>
 							<string>3DEmoji</string>
