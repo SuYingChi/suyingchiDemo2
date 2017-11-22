@@ -69,16 +69,24 @@ import pl.droidsonroids.gif.GifImageView;
 
 
 public class CameraActivity extends HSAppCompatActivity {
+    private static final int SAMPLE_SIZE = 8;
+    private static final int SELECT_PIC = 5566;
+    private static final int FACE_LIST_COUNT = 5;
+    private static final String TEMP_FACE_FILE_NAME = "face.png";
+    private final int[] faceResIdList = new int[]{R.drawable.face0,
+            R.drawable.face1,R.drawable.face2,R.drawable.face3,R.drawable.face4};
+    private final int[] faceChoosenResIdList = new int[]{R.drawable.face0_choosen,
+            R.drawable.face1_choosen,R.drawable.face2_choosen,R.drawable.face3_choosen,R.drawable.face4_choosen};
+    private final int[] faceMaskResIdList = new int[]{R.drawable.facemask1,
+            R.drawable.facemask2,R.drawable.facemask3,R.drawable.facemask4,R.drawable.facemask5};
+    private final int[] faceMaskBlackResIdList = new int[]{R.drawable.facemask1_black,
+            R.drawable.facemask2_black,R.drawable.facemask3_black,R.drawable.facemask4_black,R.drawable.facemask5_black};
     private int previewWidth;
     private int previewHeight;
-
-    private static final int SAMPLE_SIZE = 8;
     private Bitmap srcBitmap;
     private Bitmap beautyBitmap;
     private boolean useBeautyNow = true;
-
     private View cameraLayout;
-
     private INotificationObserver mImeActionObserver = new INotificationObserver() {
         @Override
         public void onReceive(String eventName, HSBundle notificaiton) {
@@ -91,82 +99,49 @@ public class CameraActivity extends HSAppCompatActivity {
             }
         }
     };
-
-    private final int[] faceResIdList = new int[]{R.drawable.face0,
-            R.drawable.face1,R.drawable.face2,R.drawable.face3,R.drawable.face4};
-
-    private final int[] faceChoosenResIdList = new int[]{R.drawable.face0_choosen,
-            R.drawable.face1_choosen,R.drawable.face2_choosen,R.drawable.face3_choosen,R.drawable.face4_choosen};
-
-    private final int[] faceMaskResIdList = new int[]{R.drawable.facemask1,
-            R.drawable.facemask2,R.drawable.facemask3,R.drawable.facemask4,R.drawable.facemask5};
-
-    private final int[] faceMaskBlackResIdList = new int[]{R.drawable.facemask1_black,
-            R.drawable.facemask2_black,R.drawable.facemask3_black,R.drawable.facemask4_black,R.drawable.facemask5_black};
-
-    private final class MyPictureCallback implements Camera.PictureCallback {
+    private Camera camera;
+    private SurfaceView surfaceView;
+    private ImageView photoView;
+    private FrameLayout previewContainer;
+    private int currentCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
+    private Dialog mCreatingDialog;
+    private GifImageView mCreatingView;
+    private boolean isSynthesisingImage;
+    private View confirmMakeFaceBtn;
+    Handler handler = new Handler() {
 
         @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            Bitmap src = BitmapFactory.decodeByteArray(data, 0, data.length);
-            Bitmap des;
-            Matrix matrix = new Matrix();
-
-            //adjust picture
-            if (currentCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                //front camera   scale and rotate picture
-                matrix.postTranslate(src.getWidth(), 0);
-                matrix.setScale(-1, 1);
-                Bitmap modifiedBitmap = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-                src.recycle();
-
-                matrix.reset();
-                matrix.setRotate(getPreviewDegree(), modifiedBitmap.getWidth() / 2, modifiedBitmap.getHeight() / 2);
-                des = Bitmap.createBitmap(modifiedBitmap, 0, 0, modifiedBitmap.getWidth(), modifiedBitmap.getHeight(), matrix, true);
-
-                modifiedBitmap.recycle();
-            } else {
-                //back camera  rotate picture
-                matrix.setRotate(getPreviewDegree(), src.getWidth() / 2, src.getHeight() / 2);
-                des = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-                src.recycle();
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    synthesisImage(confirmMakeFaceBtn);
+                    break;
             }
-
-            synthesisingPhoto(des);
         }
+    };
+
+    /**
+     * 将拍下来的照片存放在SD卡中
+     *
+     * @param face
+     */
+    private static void saveToSDCardTempFile(Bitmap face, File pngFile) {
+        FileOutputStream outputStream = null; // 文件输出流
+        try {
+            outputStream = new FileOutputStream(pngFile);
+            face.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.close(); // 关闭输出流
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FacemojiManager.setTempFacePicUri(Uri.fromFile(pngFile));
     }
 
-
-    private final class SurfaceCallback implements SurfaceHolder.Callback {
-
-        // 拍照状态变化时调用该方法
-        @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            if (camera != null) {
-                saveStartPreview();
-                final Camera.Parameters parameters = camera.getParameters();
-                final ViewGroup.LayoutParams previewContainerLayoutParams = previewContainer.getLayoutParams();
-                Camera.Size size = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
-                parameters.setPictureSize(size.width, size.height);
-                camera.setParameters(parameters);
-            }
-
-        }
-
-        // 开始拍照时调用该方法
-        @Override
-        public void surfaceCreated(SurfaceHolder holder) {
-            releaseCamera();
-            startCameraAndPreview(holder);
-        }
-
-        // 停止拍照时调用该方法
-        @Override
-        public void surfaceDestroyed(SurfaceHolder holder) {
-            releaseCamera();
-        }
+    public static String getTempFaceFilePath() {
+        return HSPictureManager.getTempDirectory() + TEMP_FACE_FILE_NAME;
     }
-
 
     /**
      * 显示处理等待对话框
@@ -199,104 +174,6 @@ public class CameraActivity extends HSAppCompatActivity {
     }
 
     /**
-     * 异步任务处理图片
-     */
-    private class PictureProcessor extends AsyncTask<byte[], Void, Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            showProcessingDialog();
-            cameraLayout.setClickable(true);
-
-        }
-
-        @Override
-        protected Boolean doInBackground(byte[][] params) {
-            try {
-                byte[] data = params[0];
-
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = SAMPLE_SIZE;
-
-                Bitmap src = BitmapFactory.decodeByteArray(data, 0, data.length, options);
-                Bitmap des;
-                Matrix matrix = new Matrix();
-
-                //adjust picture
-                if (currentCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                    //front camera   scale and rotate picture
-                    matrix.postTranslate(src.getWidth(), 0);
-                    matrix.setScale(-1, 1);
-                    Bitmap modifiedBitmap = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-                    src.recycle();
-
-                    matrix.reset();
-                    matrix.setRotate(getPreviewDegree(), modifiedBitmap.getWidth() / 2, modifiedBitmap.getHeight() / 2);
-                    des = Bitmap.createBitmap(modifiedBitmap, 0, 0, modifiedBitmap.getWidth(), modifiedBitmap.getHeight(), matrix, true);
-                    modifiedBitmap.recycle();
-                } else {
-                    //back camera  rotate picture
-                    matrix.setRotate(getPreviewDegree(), src.getWidth() / 2, src.getHeight() / 2);
-                    des = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-                    src.recycle();
-                }
-
-                int cropHeight = Integer.valueOf(new String(params[2])) / SAMPLE_SIZE;
-                boolean isTablet = getResources().getBoolean(R.bool.isTablet);
-                if (isTablet) {
-                    cropHeight = (int) (cropHeight * BitmapUtils.TABLET_WIDTH_SCALE_FACTOR);
-                }
-
-                matrix.reset();
-
-                if (cropHeight + des.getWidth() > des.getHeight()) {
-                    des = Bitmap.createBitmap(des, (des.getWidth() + cropHeight - des.getHeight()) / 2, cropHeight, des.getHeight() - cropHeight, des.getHeight() - cropHeight, matrix, true);
-                } else {
-                    int cropWidth = (int) (des.getWidth() * (isTablet ? BitmapUtils.TABLET_WIDTH_SCALE_FACTOR : 1));
-                    des = Bitmap.createBitmap(des, (des.getWidth() - cropWidth) / 2, cropHeight, cropWidth, cropWidth, matrix, true);
-                }
-
-                String index = new String(params[1]);
-                Bitmap mask = BitmapFactory.decodeResource(getResources(),
-                        getResources().getIdentifier("drawable/facemask" + index + "_black", null, getPackageName()));
-                matrix.setScale(mask.getWidth() * 1.0f / des.getWidth(), mask.getHeight() * 1.0f / des.getHeight());
-                Bitmap finalPic = Bitmap.createBitmap(des, 0, 0, des.getWidth(), des.getHeight(), matrix, true);
-                des.recycle();
-
-                //get face
-                boolean face = dealBitmapWithMask(finalPic, mask);
-
-                //reduce memory
-                if (!mask.isRecycled()) {
-                    mask.recycle();
-                }
-                if (!finalPic.isRecycled()) {
-                    finalPic.recycle();
-                }
-
-                return face;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-            if (result) {
-                Intent i = new Intent(CameraActivity.this, MyFacemojiActivity.class);
-                startActivity(i);
-            } else {
-                saveStartPreview();
-            }
-        }
-    }
-
-    /**
      * 关闭等待对话框
      */
     private void closeProcessingDialog() {
@@ -305,19 +182,6 @@ public class CameraActivity extends HSAppCompatActivity {
             mCreatingDialog.dismiss();
         }
     }
-
-    private static final int SELECT_PIC = 5566;
-    private static final int FACE_LIST_COUNT = 5;
-    private static final String TEMP_FACE_FILE_NAME = "face.png";
-    private Camera camera;
-    private SurfaceView surfaceView;
-    private ImageView photoView;
-    private FrameLayout previewContainer;
-    private int currentCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
-    private Dialog mCreatingDialog;
-    private GifImageView mCreatingView;
-    private boolean isSynthesisingImage;
-    private View confirmMakeFaceBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -647,7 +511,11 @@ public class CameraActivity extends HSAppCompatActivity {
             return;
         }
 
-        camera = Camera.open(cameraId); // 打开摄像头
+        try {
+            camera = Camera.open(cameraId); // 打开摄像头
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         if (camera == null){
             return;
         }
@@ -782,24 +650,6 @@ public class CameraActivity extends HSAppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
     }
 
-    /**
-     * 将拍下来的照片存放在SD卡中
-     *
-     * @param face
-     */
-    private static void saveToSDCardTempFile(Bitmap face, File pngFile) {
-        FileOutputStream outputStream = null; // 文件输出流
-        try {
-            outputStream = new FileOutputStream(pngFile);
-            face.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            outputStream.close(); // 关闭输出流
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FacemojiManager.setTempFacePicUri(Uri.fromFile(pngFile));
-    }
-
     private String getHairStyle() {
         final ImageView maskView = (ImageView) findViewById(R.id.mask_view);
         int index = Integer.parseInt(maskView.getTag().toString());
@@ -825,10 +675,6 @@ public class CameraActivity extends HSAppCompatActivity {
                 break;
         }
         return result;
-    }
-
-    public static String getTempFaceFilePath() {
-        return HSPictureManager.getTempDirectory() + TEMP_FACE_FILE_NAME;
     }
 
     public boolean dealBitmapWithMask(Bitmap bmp, Bitmap mask) {
@@ -981,20 +827,6 @@ public class CameraActivity extends HSAppCompatActivity {
         updateUIIfStatusChange();
     }
 
-    Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    synthesisImage(confirmMakeFaceBtn);
-                    break;
-            }
-        }
-    };
-
-
     public void synthesisImage(View v) {
         View view = getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);
@@ -1053,7 +885,6 @@ public class CameraActivity extends HSAppCompatActivity {
         isSynthesisingImage = false;
     }
 
-
     private void saveFaceToSDCard() {
         // Save to sd card
         String tempFaceFilePath = CameraActivity.getTempFaceFilePath();
@@ -1082,5 +913,165 @@ public class CameraActivity extends HSAppCompatActivity {
         useBeautyNow = !useBeautyNow;
         v.setSelected(useBeautyNow);
         photoView.setImageBitmap(useBeautyNow ? beautyBitmap : srcBitmap);
+    }
+
+    private final class MyPictureCallback implements Camera.PictureCallback {
+
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            Bitmap src = BitmapFactory.decodeByteArray(data, 0, data.length);
+            Bitmap des;
+            Matrix matrix = new Matrix();
+
+            //adjust picture
+            if (currentCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                //front camera   scale and rotate picture
+                matrix.postTranslate(src.getWidth(), 0);
+                matrix.setScale(-1, 1);
+                Bitmap modifiedBitmap = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+                src.recycle();
+
+                matrix.reset();
+                matrix.setRotate(getPreviewDegree(), modifiedBitmap.getWidth() / 2, modifiedBitmap.getHeight() / 2);
+                des = Bitmap.createBitmap(modifiedBitmap, 0, 0, modifiedBitmap.getWidth(), modifiedBitmap.getHeight(), matrix, true);
+
+                modifiedBitmap.recycle();
+            } else {
+                //back camera  rotate picture
+                matrix.setRotate(getPreviewDegree(), src.getWidth() / 2, src.getHeight() / 2);
+                des = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+                src.recycle();
+            }
+
+            synthesisingPhoto(des);
+        }
+    }
+
+    private final class SurfaceCallback implements SurfaceHolder.Callback {
+
+        // 拍照状态变化时调用该方法
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            if (camera != null) {
+                saveStartPreview();
+                final Camera.Parameters parameters = camera.getParameters();
+                final ViewGroup.LayoutParams previewContainerLayoutParams = previewContainer.getLayoutParams();
+                Camera.Size size = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
+                parameters.setPictureSize(size.width, size.height);
+                camera.setParameters(parameters);
+            }
+
+        }
+
+        // 开始拍照时调用该方法
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            releaseCamera();
+            startCameraAndPreview(holder);
+        }
+
+        // 停止拍照时调用该方法
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            releaseCamera();
+        }
+    }
+
+    /**
+     * 异步任务处理图片
+     */
+    private class PictureProcessor extends AsyncTask<byte[], Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            showProcessingDialog();
+            cameraLayout.setClickable(true);
+
+        }
+
+        @Override
+        protected Boolean doInBackground(byte[][] params) {
+            try {
+                byte[] data = params[0];
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = SAMPLE_SIZE;
+
+                Bitmap src = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+                Bitmap des;
+                Matrix matrix = new Matrix();
+
+                //adjust picture
+                if (currentCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                    //front camera   scale and rotate picture
+                    matrix.postTranslate(src.getWidth(), 0);
+                    matrix.setScale(-1, 1);
+                    Bitmap modifiedBitmap = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+                    src.recycle();
+
+                    matrix.reset();
+                    matrix.setRotate(getPreviewDegree(), modifiedBitmap.getWidth() / 2, modifiedBitmap.getHeight() / 2);
+                    des = Bitmap.createBitmap(modifiedBitmap, 0, 0, modifiedBitmap.getWidth(), modifiedBitmap.getHeight(), matrix, true);
+                    modifiedBitmap.recycle();
+                } else {
+                    //back camera  rotate picture
+                    matrix.setRotate(getPreviewDegree(), src.getWidth() / 2, src.getHeight() / 2);
+                    des = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+                    src.recycle();
+                }
+
+                int cropHeight = Integer.valueOf(new String(params[2])) / SAMPLE_SIZE;
+                boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+                if (isTablet) {
+                    cropHeight = (int) (cropHeight * BitmapUtils.TABLET_WIDTH_SCALE_FACTOR);
+                }
+
+                matrix.reset();
+
+                if (cropHeight + des.getWidth() > des.getHeight()) {
+                    des = Bitmap.createBitmap(des, (des.getWidth() + cropHeight - des.getHeight()) / 2, cropHeight, des.getHeight() - cropHeight, des.getHeight() - cropHeight, matrix, true);
+                } else {
+                    int cropWidth = (int) (des.getWidth() * (isTablet ? BitmapUtils.TABLET_WIDTH_SCALE_FACTOR : 1));
+                    des = Bitmap.createBitmap(des, (des.getWidth() - cropWidth) / 2, cropHeight, cropWidth, cropWidth, matrix, true);
+                }
+
+                String index = new String(params[1]);
+                Bitmap mask = BitmapFactory.decodeResource(getResources(),
+                        getResources().getIdentifier("drawable/facemask" + index + "_black", null, getPackageName()));
+                matrix.setScale(mask.getWidth() * 1.0f / des.getWidth(), mask.getHeight() * 1.0f / des.getHeight());
+                Bitmap finalPic = Bitmap.createBitmap(des, 0, 0, des.getWidth(), des.getHeight(), matrix, true);
+                des.recycle();
+
+                //get face
+                boolean face = dealBitmapWithMask(finalPic, mask);
+
+                //reduce memory
+                if (!mask.isRecycled()) {
+                    mask.recycle();
+                }
+                if (!finalPic.isRecycled()) {
+                    finalPic.recycle();
+                }
+
+                return face;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                Intent i = new Intent(CameraActivity.this, MyFacemojiActivity.class);
+                startActivity(i);
+            } else {
+                saveStartPreview();
+            }
+        }
     }
 }
