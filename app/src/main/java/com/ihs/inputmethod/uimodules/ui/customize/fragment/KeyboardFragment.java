@@ -109,6 +109,7 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
                 } else {
                     createThemeLayout.setVisibility(View.GONE);
                 }
+                HSAnalytics.logEvent("app_tab_top_keyboard_clicked", "tabName", String.valueOf(tab.getText()).toLowerCase());
             }
         });
 
