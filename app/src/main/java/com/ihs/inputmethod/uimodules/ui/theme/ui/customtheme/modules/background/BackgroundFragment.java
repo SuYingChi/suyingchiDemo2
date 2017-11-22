@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.artw.lockscreen.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -31,7 +32,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by chenyuanming on 31/10/2016.
  */
 
-public class BackgroundFragment extends BaseThemeFragment {
+public class BackgroundFragment extends BaseThemeFragment implements LockerAppGuideManager.ILockerInstallStatusChangeListener {
     public static final int CROPPER_IMAGE_REQUEST_CODE = 102;
     private final static int TYPE_OPEN_CAMERA = 1000;
     private final static int TYPE_OPEN_GALLERY = 1001;
@@ -41,6 +42,12 @@ public class BackgroundFragment extends BaseThemeFragment {
 
     public EntryMode getEntryMode() {
         return entryMode;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);
     }
 
     public void setEntryMode(EntryMode entryMode) {
@@ -98,6 +105,12 @@ public class BackgroundFragment extends BaseThemeFragment {
             }
             refreshKeyboardView();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
+        super.onDestroy();
     }
 
     @Override
@@ -166,6 +179,11 @@ public class BackgroundFragment extends BaseThemeFragment {
         String oldCropperImagePath = getCustomThemeData().getCustomizedBackgroundImagePath();
         openBackgroundCropperIntent.putExtra(CustomThemeBackgroundCropperActivity.OldCropperImagePath, oldCropperImagePath == null ? "" : oldCropperImagePath);
         startActivityForResult(openBackgroundCropperIntent, CROPPER_IMAGE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onLockerInstallStatusChange() {
+        notifyDataSetChange();
     }
 
     public enum EntryMode {

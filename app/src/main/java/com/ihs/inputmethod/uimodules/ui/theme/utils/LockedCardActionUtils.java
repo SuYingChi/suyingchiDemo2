@@ -44,10 +44,18 @@ public class LockedCardActionUtils {
             if (ApkUtils.showCustomRateAlert(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (action.isDownloadInApp()) {
-                        UIController.getInstance().getUIHandler().postDelayed(nextAction, 3000);
-                    }
-                    HSGlobalNotificationCenter.sendNotification(UNLOCK_RATE_ALERT_SHOW);
+                    UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (action.isDownloadInApp()) {
+                                if (nextAction != null) {
+                                    nextAction.run();
+                                }
+                            }
+                            HSGlobalNotificationCenter.sendNotification(UNLOCK_RATE_ALERT_SHOW);
+                        }
+                    },3000);
+
                 }
             })) {
                 return;
@@ -56,15 +64,24 @@ public class LockedCardActionUtils {
             ApkUtils.showCustomShareAlert(context, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (action.isDownloadInApp()) {
-                        UIController.getInstance().getUIHandler().postDelayed(nextAction, 3000);
-                    }
-                    HSGlobalNotificationCenter.sendNotification(UNLOCK_SHARE_ALERT_SHOW);
+                    UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (action.isDownloadInApp()) {
+                                if (nextAction != null) {
+                                    nextAction.run();
+                                }
+                            }
+                            HSGlobalNotificationCenter.sendNotification(UNLOCK_SHARE_ALERT_SHOW);
+                        }
+                    },3000);
                 }
             });
             return;
         } else {
-            nextAction.run();
+            if (nextAction != null) {
+                nextAction.run();
+            }
         }
     }
 

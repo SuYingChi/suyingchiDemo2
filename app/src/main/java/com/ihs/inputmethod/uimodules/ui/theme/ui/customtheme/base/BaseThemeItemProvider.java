@@ -21,6 +21,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.artw.lockscreen.LockerAppGuideManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
@@ -238,7 +239,8 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         } else {
             holder.mNewMarkImageView.setVisibility(View.INVISIBLE);
             if (!item.hasLocalContent()
-                    && ((HSConfigUtils.toBoolean(item.getConfigData().get("rateToUnlock"), false)
+                    && ((LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && (HSConfigUtils.toBoolean(item.getConfigData().get("downloadLockerToUnlock"), false)))
+                    ||(HSConfigUtils.toBoolean(item.getConfigData().get("rateToUnlock"), false)
                     && ApkUtils.shouldShowRateAlert())
                     || (HSConfigUtils.toBoolean(item.getConfigData().get("shareToUnlock"), false)
                     && ApkUtils.isInstagramInstalled() && !ApkUtils.isSharedKeyboardOnInstagramBefore()))) {
@@ -492,6 +494,13 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                             doSelectAnimationOnItemViewRelease(v);
                             final KCBaseElement baseElement = (KCBaseElement) item;
                             if (ClickUtils.isFastDoubleClick()) {
+                                return true;
+                            }
+
+                            if (!baseElement.hasLocalContent()
+                                    && LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()
+                                    && HSConfigUtils.toBoolean(baseElement.getConfigData().get("downloadLockerToUnlock"), false)) {
+                                LockerAppGuideManager.getInstance().showDownloadLockerAlert(fragment.getActivity(), HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title), LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
                                 return true;
                             }
 
