@@ -31,11 +31,11 @@ import android.widget.Toast;
 import com.acb.call.CPSettings;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.inner.HomeKeyTracker;
-import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -601,6 +601,16 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     private boolean showScreenLockerDialog() {
+        if (BuildConfig.LOCKER_APP_GUIDE && !LockerAppGuideManager.getInstance().isLockerInstall()) {
+            if(!HSPreferenceHelper.getDefault().getBoolean("locker_guide_app_open_showed",false)){
+                HSPreferenceHelper.getDefault().putBoolean("locker_guide_app_open_showed",true);
+                LockerAppGuideManager.getInstance().showDownloadLockerAlert(ThemeHomeActivity.this,LockerAppGuideManager.FLURRY_ALERT_OPEN_APP);
+                return true;
+            }else{
+                return false;
+            }
+        }
+
         if (ScreenLockerConfigUtils.shouldShowScreenLockerAlert(true)) {
             if (AlertShowingUtils.isShowingAlert()) {
                 return false;
@@ -611,25 +621,18 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             AlertShowingUtils.startShowingAlert();
             CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
             lockerDialog.setTitle(getString(R.string.locker_alert_title));
-            if(BuildConfig.LOCKER_APP_GUIDE){
+            if (BuildConfig.LOCKER_APP_GUIDE) {
                 lockerDialog.setMessage(getString(R.string.locker_app_guide_message));
-            }else{
+            } else {
                 lockerDialog.setMessage(getString(R.string.locker_alert_message));
             }
             lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
             lockerDialog.setCancelable(true);
 
-            if(BuildConfig.LOCKER_APP_GUIDE){
-                lockerDialog.setPositiveButton(getString(R.string.download_capital), view -> {
-                    HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
-                    HSMarketUtils.browseAPP(getString(R.string.smart_locker_app_package_name));
-                });
-            }else{
-                lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
-                    HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
-                    enableLocker();
-                });
-            }
+            lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
+                HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
+                enableLocker();
+            });
             lockerDialog.show();
             lockerDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
             HSAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");

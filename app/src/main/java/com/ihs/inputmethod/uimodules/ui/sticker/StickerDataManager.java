@@ -10,6 +10,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
+import com.ihs.inputmethod.api.utils.HSYamlUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -125,6 +126,10 @@ public class StickerDataManager {
             String stickerGroupDownloadDisplayName = (String) map.get("showName");
             StickerGroup stickerGroup = new StickerGroup(stickerGroupName);
             stickerGroup.setDownloadDisplayName(stickerGroupDownloadDisplayName);
+            stickerGroup.downloadLockerToUnlock = HSYamlUtils.convertObjectToBool(map.get("downloadLockerToUnlock"));
+            stickerGroup.needNewVersionToUnlock = HSYamlUtils.convertObjectToBool(map.get("needNewVersionToUnlock"));
+            stickerGroup.rateToUnlock = HSYamlUtils.convertObjectToBool(map.get("rateToUnlock"));
+            stickerGroup.shareToUnlock = HSYamlUtils.convertObjectToBool(map.get("shareToUnlock"));
             if (showInKeyboard != null) {
                 stickerGroup.setShowInKeyboard(showInKeyboard);
             }

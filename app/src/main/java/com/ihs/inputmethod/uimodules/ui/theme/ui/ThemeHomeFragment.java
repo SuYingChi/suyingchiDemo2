@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -37,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapter.ThemeCardItemClickListener, ThemeHomeAdapter.OnThemeAdItemClickListener {
+public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapter.ThemeCardItemClickListener, ThemeHomeAdapter.OnThemeAdItemClickListener, LockerAppGuideManager.ILockerInstallStatusChangeListener {
 
     public final static String NOTIFICATION_THEME_HOME_DESTROY = "ThemeHomeFragment.destroy";
     public final static String NOTIFICATION_THEME_HOME_STOP = "ThemeHomeFragment.stop";
@@ -68,6 +69,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);
     }
 
     @Override
@@ -276,6 +278,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
     public void onDestroy() {
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
         HSGlobalNotificationCenter.sendNotificationOnMainThread(NOTIFICATION_THEME_HOME_DESTROY);
+        LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
         super.onDestroy();
     }
 
@@ -302,6 +305,13 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
         if (requestCode == KEYBOARD_ACTIVATION_FROM_CARD) {
             adapter.finishKeyboardActivation(resultCode == Activity.RESULT_OK);
+        }
+    }
+
+    @Override
+    public void onLockerInstallStatusChange() {
+        if (adapter != null) {
+            updateThemeList();
         }
     }
 }

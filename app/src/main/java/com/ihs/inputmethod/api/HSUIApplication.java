@@ -11,6 +11,7 @@ import android.text.TextUtils;
 
 import com.acb.call.customize.AcbCallManager;
 import com.artw.lockscreen.ScreenLockerManager;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
@@ -42,6 +43,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
+import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
@@ -233,7 +235,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
         }
 
-        AcbCallManager.init(callAdPlacement,new CallAssistantFactoryImpl());
+        AcbCallManager.init(callAdPlacement, new CallAssistantFactoryImpl());
         AcbCallManager.setAdPlacement(callAdPlacement);
 
         StickerSuggestionManager.getInstance();
@@ -258,7 +260,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                     }
                 });
             }
-        },30000);
+        }, 30000);
+        LockerAppGuideManager.getInstance().init(HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name), BuildConfig.LOCKER_APP_GUIDE);
     }
 
     private void activeAdPlacements() {

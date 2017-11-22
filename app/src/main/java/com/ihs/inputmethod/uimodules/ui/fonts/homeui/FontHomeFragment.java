@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -18,6 +19,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
+import com.ihs.inputmethod.api.utils.HSYamlUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.utils.DownloadUtils;
@@ -33,7 +35,7 @@ import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManage
  * Created by guonan.lv on 17/8/14.
  */
 
-public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFontCardClickListener {
+public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFontCardClickListener, LockerAppGuideManager.ILockerInstallStatusChangeListener {
 
     private RecyclerView recyclerView;
     private FontCardAdapter fontCardAdapter;
@@ -67,6 +69,12 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +105,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     }
 
     private void loadFontModel() {
+        List<FontModel> fontModelList = new ArrayList<>();
         List<Map<String, Object>> fontList = (List<Map<String, Object>>) HSConfig.getList("Application", "FontList");
         for (Map<String, Object> map : fontList) {
             String fontName = (String) map.get("name");
@@ -110,10 +119,15 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
             hsSpecialCharacter.name = fontName;
             hsSpecialCharacter.example = example;
             FontModel fontModel = new FontModel(hsSpecialCharacter);
+            fontModel.downloadLockerToUnlock = HSYamlUtils.convertObjectToBool(map.get("downloadLockerToUnlock"));
+            fontModel.needNewVersionToUnlock = HSYamlUtils.convertObjectToBool(map.get("needNewVersionToUnlock"));
+            fontModel.rateToUnlock = HSYamlUtils.convertObjectToBool(map.get("rateToUnlock"));
+            fontModel.shareToUnlock = HSYamlUtils.convertObjectToBool(map.get("shareToUnlock"));
             if (!fontModel.isFontDownloaded() && Build.VERSION.SDK_INT >= minSDKVersion) {
                 fontModelList.add(fontModel);
             }
         }
+        this.fontModelList = fontModelList;
     }
 
     @Override
@@ -128,20 +142,34 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         HSGlobalNotificationCenter.removeObserver(observer);
+        LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
+        super.onDestroy();
     }
 
     @Override
     public void onFontCardClick(final int position) {
         final FontModel fontModel = fontModelList.get(position);
-        final String fontName = fontModel.getFontName();
-        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
-                null, success -> {
-                    if (success) {
-                        HSFontDownloadManager.getInstance().updateFontModel(fontModel);
-                        HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
-                    }
-                });
+        if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && fontModel.downloadLockerToUnlock){
+            LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
+        }else {
+            final String fontName = fontModel.getFontName();
+            DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
+                    null, success -> {
+                        if (success) {
+                            HSFontDownloadManager.getInstance().updateFontModel(fontModel);
+                            HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onLockerInstallStatusChange() {
+        if (fontCardAdapter != null){
+            loadFontModel();
+            fontCardAdapter.setData(fontModelList);
+            fontCardAdapter.notifyDataSetChanged();
+        }
     }
 }

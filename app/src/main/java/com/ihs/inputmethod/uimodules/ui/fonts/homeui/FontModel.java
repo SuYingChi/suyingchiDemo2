@@ -22,6 +22,10 @@ public class FontModel {
     private static final String FONT_FILE_SUFFIX = ".json";
 
     private boolean needDownload = true;
+    public boolean downloadLockerToUnlock = false;
+    public boolean needNewVersionToUnlock = false;
+    public boolean rateToUnlock = false;
+    public boolean shareToUnlock = false;
 
     public FontModel(HSSpecialCharacter specialCharacter) {
         hsSpecialCharacter = specialCharacter;

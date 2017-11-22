@@ -26,9 +26,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.appcloudbox.ads.base.AcbNativeAd;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
 import com.artw.lockscreen.LockerSettings;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
@@ -55,6 +54,9 @@ import com.ihs.inputmethod.uimodules.ui.customize.view.PreviewViewPage;
 import com.ihs.inputmethod.uimodules.ui.customize.view.ProgressDialog;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity;
 import com.ihs.keyboardutils.utils.ToastUtils;
+
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -219,6 +221,9 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 //        mReturnArrow.setBackgroundResource(R.drawable.moment_round_material_compat_dark);
         mSetWallpaperButton = (TextView) findViewById(R.id.set_wallpaper_button);
         mSetWallpaperButton.setOnClickListener(this);
+        if(BuildConfig.LOCKER_APP_GUIDE){
+            mSetWallpaperButton.setText(R.string.locker_set_lock_screen);
+        }
 
         mSetKeyThemeButton = (TextView) findViewById(R.id.set_key_theme_button);
         mSetKeyThemeButton.setOnClickListener(this);
@@ -343,7 +348,16 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                     ToastUtils.showToast(R.string.online_wallpaper_loading);
                     return;
                 }
-                showSetWallpaperDialog();
+
+                if(BuildConfig.LOCKER_APP_GUIDE){
+                    if(LockerAppGuideManager.getInstance().isLockerInstall()){
+                        LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
+                    }else{
+                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(this,LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
+                    }
+                }else {
+                    showSetWallpaperDialog();
+                }
 //                mSetSelectPopWin.showAtLocation(findViewById(R.id.main), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.set_key_theme_button:

@@ -6,4 +6,6 @@
 
     <string name="locker_app_guide_message">Download Smart Locker to add your favorite themes on lock screen and protect your phone privacy!</string>
     <string name="locker_guide_unlock_for_free_dialog_title">Download Smart Locker to unlock for free</string>
+    <string name="theme_card_menu_unlock_for_free">Unlock for Free</string>
+    <string name="locker_set_lock_screen">Set Lock Screen</string>
 </resources>

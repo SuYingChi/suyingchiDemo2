@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.locker.LockerManager;
 
 import java.util.List;
 
@@ -35,6 +35,10 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
     public FontCardAdapter(List<FontModel> fontModels, OnFontCardClickListener onFontCardClickListener) {
         this.onFontCardClickListener = onFontCardClickListener;
+        this.fontModelList = fontModels;
+    }
+
+    public void setData(List<FontModel> fontModels) {
         this.fontModelList = fontModels;
     }
 
@@ -84,7 +88,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
         if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_HOME.ordinal()) {
             ((FontHomeViewHolder) holder).downloadIcon.setVisibility(View.VISIBLE);
-            if (LockerManager.getInstance().shouldGuidToDownloadLocker()){
+            if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && fontModel.downloadLockerToUnlock){
                 ((FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.lock_normal);
             }else {
                 ((FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.ic_download_icon);
