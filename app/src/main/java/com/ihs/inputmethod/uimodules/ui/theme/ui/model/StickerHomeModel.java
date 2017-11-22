@@ -5,7 +5,7 @@ import android.view.View;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 
-public final class StickerHomeModel {
+public final class StickerHomeModel implements ICondition {
 
 	public StickerGroup stickerGroup;
 	public FacemojiSticker facemojiSticker;
@@ -38,4 +38,35 @@ public final class StickerHomeModel {
 		span=1;
 	}
 
+    @Override
+    public boolean isDownloadLockerToUnlock() {
+		if (stickerGroup != null){
+			return stickerGroup.downloadLockerToUnlock;
+		}
+        return false;
+    }
+
+    @Override
+    public boolean isNeedNewVersionToUnlock() {
+		if (stickerGroup != null){
+			return stickerGroup.needNewVersionToUnlock;
+		}
+        return false;
+    }
+
+    @Override
+    public boolean isRateToUnlock() {
+		if (stickerGroup != null){
+			return stickerGroup.rateToUnlock;
+		}
+        return false;
+    }
+
+    @Override
+    public boolean isShareToUnlock() {
+		if (stickerGroup != null){
+			return stickerGroup.shareToUnlock;
+		}
+        return false;
+    }
 }

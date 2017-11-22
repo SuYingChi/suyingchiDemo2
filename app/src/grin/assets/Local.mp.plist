@@ -514,12 +514,20 @@
 					<integer>21</integer>
 				</dict>
 				<dict>
+					<key>downloadLockerToUnlock</key>
+					<true/>
 					<key>example</key>
 					<string>s̸l̸a̸s̸h̸</string>
 					<key>name</key>
 					<string>slash</string>
+					<key>needNewVersionToUnlock</key>
+					<true/>
+					<key>rateToUnlock</key>
+					<true/>
 					<key>sdkVersion</key>
 					<integer>21</integer>
+					<key>shareToUnlock</key>
+					<true/>
 				</dict>
 				<dict>
 					<key>example</key>
@@ -1938,12 +1946,20 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/RoseGold.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/RoseGold.jpg</string>
+							<key>downloadLockerToUnlock</key>
+							<true/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/RoseGold.jpg</string>
 							<key>lockerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_lockerbg/rosegold.jpg</string>
 							<key>mediumPreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/RoseGold.jpg</string>
+							<key>needNewVersionToUnlock</key>
+							<true/>
+							<key>rateToUnlock</key>
+							<true/>
+							<key>shareToUnlock</key>
+							<true/>
 							<key>showName</key>
 							<string>Rose Gold</string>
 							<key>themePkName</key>
@@ -5200,6 +5216,12 @@
 						<dict>
 							<key>downloadLockerToUnlock</key>
 							<true/>
+                            <key>needNewVersionToUnlock</key>
+                            <true/>
+                            <key>rateToUnlock</key>
+                            <true/>
+                            <key>shareToUnlock</key>
+                            <true/>
 							<key>name</key>
 							<string>LoveBear</string>
 							<key>showName</key>

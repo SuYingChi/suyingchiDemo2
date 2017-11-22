@@ -2,7 +2,7 @@ libCommons:
   RemoteConfig:
     UpdateInterval: 10
     PlistFile: "Local.mp"
-    PlistUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/grinkeyboard/configs/config-grinkeyboard-1.0.0.mp"
+    PlistUrl: "1http://cdn.appcloudbox.net/keyboardarts/apps/grinkeyboard/configs/config-grinkeyboard-1.0.0.mp"
   Analytics:
       FlurryKey: "VFHX539WKM27R8ZZ5398"
       FacebookID: "2017803811838675"

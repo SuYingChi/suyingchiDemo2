@@ -22,6 +22,7 @@ import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.utils.HSYamlUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 
@@ -150,17 +151,24 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     @Override
     public void onFontCardClick(final int position) {
         final FontModel fontModel = fontModelList.get(position);
-        if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && fontModel.downloadLockerToUnlock){
-            LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                final String fontName = fontModel.getFontName();
+                DownloadUtils.getInstance().startForegroundDownloading(getActivity(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
+                        null, success -> {
+                            if (success) {
+                                HSFontDownloadManager.getInstance().updateFontModel(fontModel);
+                                HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
+                            }
+                        });
+            }
+        };
+
+        if (LockedCardActionUtils.shouldLock(fontModel)){
+            LockedCardActionUtils.handleLockAction(getActivity(),fontModel,runnable);
         }else {
-            final String fontName = fontModel.getFontName();
-            DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
-                    null, success -> {
-                        if (success) {
-                            HSFontDownloadManager.getInstance().updateFontModel(fontModel);
-                            HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
-                        }
-                    });
+            runnable.run();
         }
     }
 

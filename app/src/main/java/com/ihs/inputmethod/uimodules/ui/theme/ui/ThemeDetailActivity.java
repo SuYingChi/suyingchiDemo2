@@ -43,6 +43,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.CommonThemeCardAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeZipDownloadUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
@@ -281,7 +282,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_downloading));
                     rightBtn.setEnabled(false);
                 } else {
-                    if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && keyboardTheme.isDownloadLockerToUnlock()){
+                    ThemeHomeModel themeHomeModel = new ThemeHomeModel();
+                    themeHomeModel.keyboardTheme = keyboardTheme;
+                    if (LockedCardActionUtils.shouldLock(themeHomeModel)){
                         rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free));
                     }else {
                         rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_download));
@@ -329,7 +332,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     return;
                 }
                 String from = "detail";
-                ThemeZipDownloadUtils.startDownloadThemeZip(from,keyboardTheme.mThemeName,keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
+                ThemeZipDownloadUtils.startDownloadThemeZip(this,from,keyboardTheme.mThemeName,keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
                     @Override
                     public void onDismiss(boolean success) {
                         if (success){
@@ -387,7 +390,14 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_applied).equalsIgnoreCase(text)) {
 
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free).equalsIgnoreCase(text)) {
-            LockerAppGuideManager.getInstance().showDownloadLockerAlert(this,HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
+            ThemeHomeModel themeHomeModel = new ThemeHomeModel();
+            themeHomeModel.keyboardTheme = keyboardTheme;
+            LockedCardActionUtils.handleLockAction(this, themeHomeModel, new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
         }
     }
 

@@ -11,7 +11,7 @@ import com.ihs.inputmethod.uimodules.R;
  * Created by wenbinduan on 2016/12/22.
  */
 
-public final class ThemeHomeModel {
+public final class ThemeHomeModel implements ICondition {
 
 	public HSKeyboardTheme keyboardTheme;
 	public boolean deleteEnable;
@@ -72,6 +72,38 @@ public final class ThemeHomeModel {
 			return true;
 		}
 
+		return false;
+	}
+
+	@Override
+	public boolean isDownloadLockerToUnlock() {
+		if (keyboardTheme != null) {
+			return keyboardTheme.isDownloadLockerToUnlock();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isNeedNewVersionToUnlock() {
+		if (keyboardTheme != null) {
+			return keyboardTheme.isNeedNewVersionToUnlock();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isRateToUnlock() {
+		if (keyboardTheme != null) {
+			return keyboardTheme.isRateToUnlock();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isShareToUnlock() {
+		if (keyboardTheme != null) {
+			return keyboardTheme.isShareToUnlock();
+		}
 		return false;
 	}
 }

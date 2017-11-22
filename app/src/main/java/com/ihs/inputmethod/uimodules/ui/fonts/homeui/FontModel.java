@@ -6,6 +6,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ICondition;
 
 import java.io.File;
 
@@ -16,7 +17,7 @@ import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManage
  * Created by guonan.lv on 17/8/14.
  */
 
-public class FontModel {
+public class FontModel implements ICondition {
     private HSSpecialCharacter hsSpecialCharacter;
     private String baseDownloadUrl;
     private static final String FONT_FILE_SUFFIX = ".json";
@@ -78,5 +79,25 @@ public class FontModel {
     @Override
     public int hashCode() {
         return hsSpecialCharacter.name.hashCode();
+    }
+
+    @Override
+    public boolean isDownloadLockerToUnlock() {
+        return downloadLockerToUnlock;
+    }
+
+    @Override
+    public boolean isNeedNewVersionToUnlock() {
+        return needNewVersionToUnlock;
+    }
+
+    @Override
+    public boolean isRateToUnlock() {
+        return rateToUnlock;
+    }
+
+    @Override
+    public boolean isShareToUnlock() {
+        return shareToUnlock;
     }
 }

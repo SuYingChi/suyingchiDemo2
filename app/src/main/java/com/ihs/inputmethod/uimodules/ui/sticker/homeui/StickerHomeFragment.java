@@ -29,6 +29,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerFacemojiAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -102,35 +103,41 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
             @Override
             public void onDownloadClick(final StickerHomeModel stickerHomeModel, Drawable drawable) {
                 final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        final String stickerGroupName = stickerGroup.getStickerGroupName();
+                        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
-                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && stickerGroup.downloadLockerToUnlock) {
-                    LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
-                } else {
-                    final String stickerGroupName = stickerGroup.getStickerGroupName();
-                    final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+                        // 移除点击过的new角标
+                        StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
+                        stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
 
-                    // 移除点击过的new角标
-                    StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
-                    stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
+                        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
+                                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                                new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
+                                    @Override
+                                    public void onDismiss(boolean success) {
+                                        if (success) {
+                                            HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                                            StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
-                    DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
-                            stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                            new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
-                                @Override
-                                public void onDismiss(boolean success) {
-                                    if (success) {
-                                        HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
-                                        StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-
-                                        int position = stickerModelList.indexOf(stickerHomeModel);
-                                        if (position > 0 && position < stickerModelList.size()) {
-                                            stickerModelList.remove(position);
-                                            stickerCardAdapter.notifyItemRemoved(position);
+                                            int position = stickerModelList.indexOf(stickerHomeModel);
+                                            if (position > 0 && position < stickerModelList.size()) {
+                                                stickerModelList.remove(position);
+                                                stickerCardAdapter.notifyItemRemoved(position);
+                                            }
                                         }
                                     }
-                                }
 
-                            });
+                                });
+                    }
+                };
+
+                if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
+                    LockedCardActionUtils.handleLockAction(getActivity(),stickerHomeModel,runnable);
+                } else {
+                    runnable.run();
                 }
             }
 

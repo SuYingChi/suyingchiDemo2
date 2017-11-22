@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.artw.lockscreen.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -17,6 +16,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -68,8 +68,8 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
         ThemeCardViewHolder themeCardViewHolder = (ThemeCardViewHolder) holder;
 
         themeCardViewHolder.themeRealImage.setImageDrawable(null);
-
-        final HSKeyboardTheme keyboardTheme = items.get(position).keyboardTheme;
+        ThemeHomeModel themeHomeModel = items.get(position);
+        final HSKeyboardTheme keyboardTheme = themeHomeModel.keyboardTheme;
         holder.itemView.setTag(keyboardTheme.mThemeName);
         themeCardViewHolder.themeDelete.setVisibility(View.GONE);
         // show animated mark and new mark judgement
@@ -96,14 +96,14 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
             case CUSTOM:
                 themeCardViewHolder.themeName.setText(HSApplication.getContext().getString(R.string.theme_card_custom_theme_default_name));
                 themeCardViewHolder.themeRealImage.setImageDrawable(HSKeyboardThemeManager.getThemePreviewDrawable(keyboardTheme.mThemeName));
-                themeCardViewHolder.themeDelete.setVisibility(items.get(position).deleteEnable ? View.VISIBLE : View.GONE);
+                themeCardViewHolder.themeDelete.setVisibility(themeHomeModel.deleteEnable ? View.VISIBLE : View.GONE);
                 break;
             case BUILD_IN:
                 themeCardViewHolder.themeRealImage.setImageDrawable(HSKeyboardThemeManager.getThemePreviewDrawable(keyboardTheme.mThemeName));
                 themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
                 break;
             case NEED_DOWNLOAD:
-                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && keyboardTheme.isDownloadLockerToUnlock()){
+                if (LockedCardActionUtils.shouldLock(themeHomeModel)){
                     themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.lock_normal);
                 }else {
                     themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
@@ -118,7 +118,7 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
                 break;
         }
 
-        ThemeHomeModel model = items.get(position);
+        ThemeHomeModel model = themeHomeModel;
 
         themeCardViewHolder.themeDelete.setTag(model);
         themeCardViewHolder.themeDelete.setTag(R.id.theme_card_view_tag_key_action, TAG_DELETE);

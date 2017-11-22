@@ -338,7 +338,7 @@ public class ApkUtils {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static void shareKeyboardToInstagram(Activity activity) {
+    public static void shareKeyboardToInstagram(Context context) {
         Intent intent = HSApplication.getContext().getPackageManager().getLaunchIntentForPackage("com.instagram.android");
         if (intent != null) {
             Intent shareIntent = new Intent();
@@ -353,13 +353,16 @@ public class ApkUtils {
             Uri uri = Uri.fromFile(media);
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
             shareIntent.setType("image/*");
-            activity.startActivity(shareIntent);
+            if (!(context instanceof Activity)) {
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+            context.startActivity(shareIntent);
             HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).putBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, true);
         }
     }
 
     @SuppressLint("InflateParams")
-    public static void showCustomShareAlert(Activity activity, final View.OnClickListener shareButtonClickListener) {
+    public static void showCustomShareAlert(Context context, final View.OnClickListener shareButtonClickListener) {
         String preferredLanguageString = Locale.getDefault().getLanguage();
         HSLog.d("showCustomShareAlert preferredLanguageString: " + preferredLanguageString);
 
@@ -386,7 +389,7 @@ public class ApkUtils {
                 if (shareButtonClickListener != null) {
                     shareButtonClickListener.onClick(v);
                 }
-                shareKeyboardToInstagram(activity);
+                shareKeyboardToInstagram(context);
                 alertDialog.dismiss();
             }
         });
