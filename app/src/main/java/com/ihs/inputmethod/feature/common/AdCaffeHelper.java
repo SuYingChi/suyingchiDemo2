@@ -112,7 +112,7 @@ public class AdCaffeHelper {
         if (System.currentTimeMillis() - HSPreferenceHelper.getDefault().getLong(SEARCH_AD_UPDATE_TIME, 0)
                 < TimeUnit.MINUTES.toMillis(HSConfig.getInteger("Application", "SearchAd", "updateTimeInMin"))) {
             if (trie == null) {
-                new Thread(() -> readKeywordListFromFile(destFile)).start();
+                new Thread(() -> trie = readKeywordListFromFile(destFile)).start();
             }
             return;
         }
@@ -122,7 +122,7 @@ public class AdCaffeHelper {
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
-                readKeywordListFromFile(tempFile);
+                trie = readKeywordListFromFile(tempFile);
                 HSPreferenceHelper.getDefault().putLong(SEARCH_AD_UPDATE_TIME, System.currentTimeMillis());
                 if (destFile.exists()) {
                     destFile.delete();
@@ -141,7 +141,7 @@ public class AdCaffeHelper {
         connection.startAsync();
     }
 
-    private void readKeywordListFromFile(File file) {
+    private Trie readKeywordListFromFile(File file) {
         List<String> tempKeywordList = new ArrayList<>();
         try {
             InputStreamReader read = new InputStreamReader(
@@ -152,14 +152,16 @@ public class AdCaffeHelper {
             while ((lineTxt = bufferedReader.readLine()) != null) {
                 tempKeywordList.add(lineTxt);
             }
-            trie = new Trie();
+            Trie result = new Trie();
             for (String keyword : tempKeywordList) {
-                trie.insert(keyword);
+                result.insert(keyword);
             }
             bufferedReader.close();
             read.close();
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
