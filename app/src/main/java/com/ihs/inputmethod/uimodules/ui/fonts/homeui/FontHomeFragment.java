@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.artw.lockscreen.LockerAppGuideManager;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
@@ -151,7 +151,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     public void onFontCardClick(final int position) {
         final FontModel fontModel = fontModelList.get(position);
         if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && fontModel.downloadLockerToUnlock){
-            LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
+            LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
         }else {
             final String fontName = fontModel.getFontName();
             DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),

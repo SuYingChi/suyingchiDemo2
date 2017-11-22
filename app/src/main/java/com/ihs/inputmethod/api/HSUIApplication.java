@@ -10,8 +10,8 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.acb.call.customize.AcbCallManager;
-import com.artw.lockscreen.LockerAppGuideManager;
 import com.artw.lockscreen.ScreenLockerManager;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;

@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.artw.lockscreen.LockerAppGuideManager;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.commons.config.HSConfig;
@@ -141,7 +141,7 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             case ThemeCardAdapterDelegate.TAG_DOWNLOAD:
                 if (keyboardTheme.getThemePkName() != null) {
                     if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
-                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(v.getContext(),HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
+                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(v.getContext(),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
                     }else {
                         //直接下载主题zip包
                         boolean downloadThemeZip = HSConfig.optBoolean(false, "Application", "KeyboardTheme", "DownloadThemeZip", "DownloadInApp");

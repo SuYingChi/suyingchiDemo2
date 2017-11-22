@@ -26,8 +26,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.artw.lockscreen.LockerAppGuideManager;
 import com.artw.lockscreen.LockerSettings;
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
@@ -353,7 +353,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                     if(LockerAppGuideManager.getInstance().isLockerInstall()){
                         LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
                     }else{
-                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(this,getString(R.string.locker_app_guide_message),LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
+                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(this,LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
                     }
                 }else {
                     showSetWallpaperDialog();
