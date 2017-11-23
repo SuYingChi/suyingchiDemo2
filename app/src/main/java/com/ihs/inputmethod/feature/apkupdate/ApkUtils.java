@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -371,13 +372,14 @@ public class ApkUtils {
         final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
         TextView message = (TextView) view.findViewById(R.id.tv_share_message);
         message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_message), "Application", "Update", "ShareAlert", "Message", preferredLanguageString));
-        Button positiveBtn = (Button) view.findViewById(R.id.btn_share);
-        positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
+        TextView shareText =  view.findViewById(R.id.text_share);
+        shareText.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_button_text), "Application", "Update", "ShareAlert", "ButtonText", preferredLanguageString));
+        LinearLayout shareBtn = view.findViewById(R.id.btn_share);
+        shareBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
                 HSApplication.getContext().getResources().getColor(R.color.custom_share_alert_button_bg),
                 HSApplication.getContext().getResources().getColor(R.color.guide_bg_disable_color),
                 HSApplication.getContext().getResources().getDimension(R.dimen.apk_update_alert_button_radius)));
-        positiveBtn.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_button_text), "Application", "Update", "ShareAlert", "ButtonText", preferredLanguageString));
-        positiveBtn.setOnClickListener(new View.OnClickListener() {
+        shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HSAnalytics.logEvent("Alert_shareToUnlock_clicked","from",from);

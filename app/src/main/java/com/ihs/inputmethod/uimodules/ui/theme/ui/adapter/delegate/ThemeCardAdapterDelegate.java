@@ -104,7 +104,7 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
                 break;
             case NEED_DOWNLOAD:
                 if (LockedCardActionUtils.shouldLock(themeHomeModel)){
-                    themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.lock_normal);
+                    themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_theme_gift);
                 }else {
                     themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
                 }

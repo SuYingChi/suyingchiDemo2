@@ -27,22 +27,35 @@
         android:textColor="#343434"
         android:textSize="15.3sp" />
 
-    <Button
+    <LinearLayout
         android:id="@+id/btn_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_share_message"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="23.3dp"
-        android:drawableLeft="@drawable/ic_instagram"
-        android:drawableStart="@drawable/ic_instagram"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:text="@string/custom_share_alert_button_text"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_instagram" />
+
+        <TextView
+            android:id="@+id/text_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/custom_share_alert_button_text"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/iv_close_image"
