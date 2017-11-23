@@ -152,8 +152,7 @@ public final class HSThemeSelectPanel extends BasePanel {
 			List<HSKeyboardTheme> allKeyboardThemeList = HSKeyboardThemeManager.getAllKeyboardThemeList();
 			for (int i = 0; i < allKeyboardThemeList.size(); i++) {
 				ThemePanelModel theme = new ThemePanelModel();
-				theme.themeName = HSKeyboardThemeManager.getThemeNameByIndex(i);
-				theme.themeShowName = allKeyboardThemeList.get(i).getThemeShowName();
+				theme.keyboardTheme = allKeyboardThemeList.get(i);
 				panelModels.add(theme);
 			}
 			return;
@@ -174,8 +173,7 @@ public final class HSThemeSelectPanel extends BasePanel {
 				ThemePanelModel theme = new ThemePanelModel();
 				theme.isCustomTheme = true;
 				theme.isCustomThemeInEditMode=isCustomThemeInEditMode;
-				theme.themeName = customKeyboardThemeList.get(i).getThemeId();
-				theme.themeShowName = customKeyboardThemeList.get(i).getThemeShowName();
+				theme.keyboardTheme = customKeyboardThemeList.get(i);
 				panelModels.add(theme);
 			}
 
@@ -193,8 +191,7 @@ public final class HSThemeSelectPanel extends BasePanel {
 			keyboardThemeList.addAll(getDownloadedTheme());
 			for (int i = 0; i < keyboardThemeList.size(); i++) {
 				ThemePanelModel theme = new ThemePanelModel();
-				theme.themeName = keyboardThemeList.get(i).mThemeName;
-				theme.themeShowName = keyboardThemeList.get(i).getThemeShowName();
+				theme.keyboardTheme = keyboardThemeList.get(i);
 				panelModels.add(theme);
 			}
 
@@ -215,8 +212,7 @@ public final class HSThemeSelectPanel extends BasePanel {
 			keyboardThemeList.addAll(getDownloadedTheme());
 			for (int i = 0; i < keyboardThemeList.size(); i++) {
 				ThemePanelModel theme = new ThemePanelModel();
-				theme.themeName = keyboardThemeList.get(i).mThemeName;
-				theme.themeShowName = keyboardThemeList.get(i).getThemeShowName();
+				theme.keyboardTheme = keyboardThemeList.get(i);
 				panelModels.add(theme);
 			}
 		}

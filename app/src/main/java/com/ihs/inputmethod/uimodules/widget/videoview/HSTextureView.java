@@ -12,11 +12,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView;
 import com.ihs.inputmethod.uimodules.widget.videoview.videoplayerview.ui.VideoPlayerView;
 
@@ -119,7 +119,13 @@ class HSTextureView extends RelativeLayout implements IMediaView {
             return;
         }
         this.imgFilePath = filePath[0];
-        setHSBackground(Uri.parse(filePath[0]));
+        Uri uri;
+        if (HSKeyboardThemeManager.getCurrentTheme().getThemeType() == HSKeyboardTheme.ThemeType.BUILD_IN){
+            uri = Uri.parse("file:///android_asset/"+imgFilePath);
+        }else {
+            uri = Uri.parse(filePath[0]);
+        }
+        setHSBackground(uri);
         if (filePath.length > 1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             this.mp4FilePath = filePath[1];
             setBackgroundMedia(filePath[1]);
