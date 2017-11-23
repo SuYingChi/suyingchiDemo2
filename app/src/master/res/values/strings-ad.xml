@@ -50,5 +50,5 @@
     <string name="ad_placement_result_page">Master_A(NativeAds)BoostDone</string>
     <string name="ad_placement_call_assist">Master_A(NativeAds)Lumen</string>
 
-    <string name="placement_full_screen_game" translatable="false">Master_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
+    <string name="placement_full_screen_game" translatable="false">Master_A(InterstitialAds)H5GameAd</string>
 </resources>

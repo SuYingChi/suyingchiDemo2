@@ -162,13 +162,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
         void updateBackgroundList() {
             destroyCurrentData();
-            Map themeContents = HSConfig.getMap("Application", "KeyboardTheme", "ThemeContents");
-            List homeBackgrounds = (List) themeContents.get("custom_theme_backgrounds_home");
-            for (int i = 0; i < homeBackgrounds.size(); i++) {
-                Map<String, Object> item = (Map<String, Object>) homeBackgrounds.get(i);
-                KCBackgroundElement kcBackgroundElement = new KCBackgroundElement(item);
-                backgrounds.add(kcBackgroundElement);
-            }
+            backgrounds.addAll(KCCustomThemeManager.getInstance().getBackgroundHomeElements());
 
             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 // 插入广告信息

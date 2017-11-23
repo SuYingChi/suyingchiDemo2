@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -103,11 +102,11 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
                 themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
                 break;
             case NEED_DOWNLOAD:
-                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && keyboardTheme.isDownloadLockerToUnlock()){
-                    themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.lock_normal);
-                }else {
-                    themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
-                }
+//                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && keyboardTheme.isDownloadLockerToUnlock()){
+//                    themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.lock_normal);
+//                }else {
+//                    themeCardViewHolder.moreMenuImage.setImageResource(R.drawable.ic_download_icon);
+//                }
             case DOWNLOADED:
                 final String smallPreviewImgUrl = keyboardTheme.getSmallPreivewImgUrl();
                 if (smallPreviewImgUrl != null) {
