@@ -55,13 +55,15 @@ public class ThemeZipDownloadUtils {
                 resources.getString(R.string.ad_placement_lucky),
                 downloadSuccess -> {
                     if (downloadSuccess) {
-
+                        //设置下载成功移到此处，如果用户在AdLoadingView最后的缓冲时间内点击close按钮则应该不设置为下载成功
+                        HSKeyboardThemeManager.setThemeZipFileDownloadAndUnzipSuccess(themeName);
                     } else {
                         // 没下载成功
                         HSHttpConnection conn = (HSHttpConnection) adLoadingView.getTag();
                         if (conn != null) {
                             conn.cancel();
                         }
+                        HSKeyboardThemeManager.setThemeZipFileDownloadAndUnzipSuccess(themeName);
                     }
                     HSFileUtils.delete(downloadFile);
                     if (onAdBufferingListener != null) {
@@ -95,7 +97,6 @@ public class ThemeZipDownloadUtils {
                     File desFile = new File(KeyboardThemeManager.getThemeRootDirectoryPath());
                     try {
                         HSZipUtils.unzip(downloadFile,desFile);
-                        HSKeyboardThemeManager.setThemeZipFileDownloadAndUnzipSuccess(themeName);
                     } catch (ZipException e) {
                         e.printStackTrace();
                         logDownloadFailedEvent(themeName,from);
