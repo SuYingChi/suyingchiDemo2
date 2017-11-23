@@ -177,7 +177,7 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     };
 
                     if (LockedCardActionUtils.shouldLock(model)){
-                        LockedCardActionUtils.handleLockAction(v.getContext(), model, runnable);
+                        LockedCardActionUtils.handleLockAction(v.getContext(),LockedCardActionUtils.LOCKED_CARD_FROM_THEME, model, runnable);
                     }else {
                         runnable.run();
                     }

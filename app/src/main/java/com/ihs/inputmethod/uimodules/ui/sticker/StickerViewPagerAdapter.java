@@ -150,7 +150,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                     return;
                 }
                 if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
-                    LockedCardActionUtils.handleLockAction(v.getContext(), stickerHomeModel, null);
+                    LockedCardActionUtils.handleLockAction(v.getContext(),LockedCardActionUtils.LOCKED_CARD_FROM_KEYBOARD_STICKER, stickerHomeModel, null);
                 } else {
                     HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
                     final String stickerGroupName = stickerGroup.getStickerGroupName();

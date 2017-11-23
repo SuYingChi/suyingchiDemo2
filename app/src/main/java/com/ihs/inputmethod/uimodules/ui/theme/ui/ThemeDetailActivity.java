@@ -361,7 +361,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free).equalsIgnoreCase(text)) {
             ThemeHomeModel themeHomeModel = new ThemeHomeModel();
             themeHomeModel.keyboardTheme = keyboardTheme;
-            LockedCardActionUtils.handleLockAction(this, themeHomeModel, new Runnable() {
+            LockedCardActionUtils.handleLockAction(this, LockedCardActionUtils.LOCKED_CARD_FROM_THEME_DETAIL , themeHomeModel, new Runnable() {
                 @Override
                 public void run() {
                     downloadTheme();

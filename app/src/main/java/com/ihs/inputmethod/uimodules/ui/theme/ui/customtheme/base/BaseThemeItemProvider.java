@@ -31,6 +31,7 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -508,13 +509,13 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.isNewVersionAvailable()) {
                                 holder.mNewMarkImageView.setVisibility(View.GONE);
-                                ApkUtils.showCustomUpdateAlert();
+                                ApkUtils.showCustomUpdateAlert(LockedCardActionUtils.LOCKED_CARD_FROM_CUSTOMIZE);
                                 return true;
                             }
 
                             if (!baseElement.hasLocalContent()
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("rateToUnlock"), false)) {
-                                if (ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                if (ApkUtils.showCustomRateAlert(LockedCardActionUtils.LOCKED_CARD_FROM_CUSTOMIZE, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {
@@ -541,7 +542,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                                     && HSConfigUtils.toBoolean(baseElement.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled()
                                     && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-                                ApkUtils.showCustomShareAlert(fragment.getActivity(), new View.OnClickListener() {
+                                ApkUtils.showCustomShareAlert(LockedCardActionUtils.LOCKED_CARD_FROM_CUSTOMIZE, fragment.getActivity(), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (holder.mGiftIconImageView.getVisibility() == View.VISIBLE) {

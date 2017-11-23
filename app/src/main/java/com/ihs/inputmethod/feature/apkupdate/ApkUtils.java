@@ -362,7 +362,7 @@ public class ApkUtils {
     }
 
     @SuppressLint("InflateParams")
-    public static void showCustomShareAlert(Context context, final View.OnClickListener shareButtonClickListener) {
+    public static void showCustomShareAlert(String from, Context context, final View.OnClickListener shareButtonClickListener) {
         String preferredLanguageString = Locale.getDefault().getLanguage();
         HSLog.d("showCustomShareAlert preferredLanguageString: " + preferredLanguageString);
 
@@ -380,6 +380,7 @@ public class ApkUtils {
         positiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSAnalytics.logEvent("Alert_shareToUnlock_clicked","from",from);
                 if (!CommonUtils.isNetworkAvailable(-1)) {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                     return;
@@ -402,10 +403,11 @@ public class ApkUtils {
         });
         alertDialog.show();
         HSAnalytics.logEvent("customizeTheme_shareToUnlock_show");
+        HSAnalytics.logEvent("Alert_shareToUnlock_show","from",from);
     }
 
     @SuppressLint("InflateParams")
-    public static boolean showCustomRateAlert(final View.OnClickListener rateButtonClickListener) {
+    public static boolean showCustomRateAlert(String from, final View.OnClickListener rateButtonClickListener) {
         if (!shouldShowRateAlert()) {
             return false;
         }
@@ -426,6 +428,7 @@ public class ApkUtils {
         positiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSAnalytics.logEvent("Alert_rateToUnlock_clicked","from",from);
                 if (!CommonUtils.isNetworkAvailable(-1)) {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                     return;
@@ -454,11 +457,12 @@ public class ApkUtils {
         });
         alertDialog.show();
         HSAnalytics.logEvent("customizeTheme_rateToUnlock_show");
+        HSAnalytics.logEvent("Alert_rateToUnlock_show","from",from);
         return true;
     }
 
     @SuppressWarnings({"deprecation"})
-    public static void showCustomUpdateAlert() {
+    public static void showCustomUpdateAlert(String from) {
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.apk_update_alert, null, false);
         final AlertDialog dialog = HSAlertDialog.build(R.style.AppCompactTransparentDialogStyle).setView(view).create();
@@ -480,6 +484,7 @@ public class ApkUtils {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        HSAnalytics.logEvent("Alert_needNewVersionToUnlock_clicked","from",from);
                         if (!CommonUtils.isNetworkAvailable(-1)) {
                             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                             return;
@@ -500,5 +505,6 @@ public class ApkUtils {
 
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();
+        HSAnalytics.logEvent("Alert_needNewVersionToUnlock_show","from",from);
     }
 }

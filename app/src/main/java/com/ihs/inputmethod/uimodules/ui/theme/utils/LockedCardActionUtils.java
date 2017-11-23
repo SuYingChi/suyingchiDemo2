@@ -17,6 +17,15 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ICondition;
 
 public class LockedCardActionUtils {
 
+    public final static String LOCKED_CARD_FROM_THEME = "theme";
+    public final static String LOCKED_CARD_FROM_STICKER = "sticker";
+    public final static String LOCKED_CARD_FROM_KEYBOARD_STICKER = "keyboardSticker";
+    public final static String LOCKED_CARD_FROM_FONT = "font";
+    public final static String LOCKED_CARD_FROM_CUSTOMIZE = "customize";
+    public final static String LOCKED_CARD_FROM_HOME_BACKGROUND = "homeBackground";
+    public final static String LOCKED_CARD_FROM_THEME_DETAIL = "homeDetail";
+
+
     public final static String UNLOCK_RATE_ALERT_SHOW = "UNLOCK_RATE_ALERT_SHOW";
     public final static String UNLOCK_SHARE_ALERT_SHOW = "UNLOCK_SHARE_ALERT_SHOW";
 
@@ -33,15 +42,15 @@ public class LockedCardActionUtils {
      * @param action
      * @param nextAction
      */
-    public static void handleLockAction(Context context, ICondition action , Runnable nextAction) {
+    public static void handleLockAction(Context context,String from, ICondition action , Runnable nextAction) {
         if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && action.isDownloadLockerToUnlock()) {
             LockerAppGuideManager.getInstance().showDownloadLockerAlert(context, HSApplication.getContext().getResources().getString(R.string.locker_guide_unlock_for_free_dialog_title), LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
             return;
         } else if (action.isNeedNewVersionToUnlock() && ApkUtils.isNewVersionAvailable()) {
-            ApkUtils.showCustomUpdateAlert();
+            ApkUtils.showCustomUpdateAlert(from);
             return;
         } else if (action.isRateToUnlock() && ApkUtils.shouldShowRateAlert()) {
-            if (ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+            if (ApkUtils.showCustomRateAlert(from,new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
@@ -61,7 +70,7 @@ public class LockedCardActionUtils {
                 return;
             }
         } else if (action.isShareToUnlock() && ApkUtils.isInstagramInstalled() && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-            ApkUtils.showCustomShareAlert(context, new View.OnClickListener() {
+            ApkUtils.showCustomShareAlert(from,context, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     UIController.getInstance().getUIHandler().postDelayed(new Runnable() {

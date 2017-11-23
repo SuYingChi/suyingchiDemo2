@@ -171,7 +171,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
         };
 
         if (LockedCardActionUtils.shouldLock(fontModel)){
-            LockedCardActionUtils.handleLockAction(getActivity(), fontModel, runnable);
+            LockedCardActionUtils.handleLockAction(getActivity(), LockedCardActionUtils.LOCKED_CARD_FROM_FONT,fontModel, runnable);
         }else {
             runnable.run();
         }

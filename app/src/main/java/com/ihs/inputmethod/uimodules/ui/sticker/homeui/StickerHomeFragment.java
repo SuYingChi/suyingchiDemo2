@@ -140,7 +140,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                 };
 
                 if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
-                    LockedCardActionUtils.handleLockAction(getActivity(), stickerHomeModel, runnable);
+                    LockedCardActionUtils.handleLockAction(getActivity(),LockedCardActionUtils.LOCKED_CARD_FROM_STICKER, stickerHomeModel, runnable);
                 } else {
                     runnable.run();
                 }
