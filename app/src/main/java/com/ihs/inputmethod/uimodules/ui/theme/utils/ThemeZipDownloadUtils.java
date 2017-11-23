@@ -63,7 +63,6 @@ public class ThemeZipDownloadUtils {
                         if (conn != null) {
                             conn.cancel();
                         }
-                        HSKeyboardThemeManager.setThemeZipFileDownloadAndUnzipSuccess(themeName);
                     }
                     HSFileUtils.delete(downloadFile);
                     if (onAdBufferingListener != null) {
