@@ -281,11 +281,11 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                     rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_downloading));
                     rightBtn.setEnabled(false);
                 } else {
-                    if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && keyboardTheme.isDownloadLockerToUnlock()){
-                        rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free));
-                    }else {
-                        rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_download));
-                    }
+//                    if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && keyboardTheme.isDownloadLockerToUnlock()){
+//                        rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free));
+//                    }else {
+//                        rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_download));
+//                    }
                     rightBtn.setEnabled(true);
                 }
                 break;
