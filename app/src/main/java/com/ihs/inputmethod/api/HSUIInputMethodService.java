@@ -500,11 +500,13 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         return TextUtils.equals(currentAppPackageName, GOOGLE_PLAY_PACKAGE_NAME) || TextUtils.equals(currentAppPackageName, GOOGLE_SEARCH_BAR_PACKAGE_NAME);
     }
 
-    private List<String> splitIntoWords(String sentence) {
-        Matcher matcher = Pattern.compile("\\w+").matcher(sentence);
+    private List<String> splitIntoWords(CharSequence sentence) {
         List<String> words = new ArrayList<>();
-        while (matcher.find()) {
-            words.add(matcher.group());
+        if (!TextUtils.isEmpty(sentence)) {
+            Matcher matcher = Pattern.compile("\\w+").matcher(sentence);
+            while (matcher.find()) {
+                words.add(matcher.group());
+            }
         }
         return words;
     }
@@ -559,7 +561,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         }
         if (codePoint == CODE_DELETE || //delete key
                 (codePoint > 0 && (Character.isLetter(codePoint) || Character.isDigit(codePoint)))) {
-            adCaffeHelper.checkKeywordAndLoad(splitIntoWords(getInputLogic().mConnection.getAllText().toString()), success -> {
+            adCaffeHelper.checkKeywordAndLoad(splitIntoWords(getInputLogic().mConnection.getAllText()), success -> {
                 if (!success) {
                     getKeyboardPanelMananger().hideCustomBar();
                 } else {
