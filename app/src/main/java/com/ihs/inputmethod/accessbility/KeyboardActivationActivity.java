@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
@@ -88,7 +89,7 @@ public class KeyboardActivationActivity extends HSActivity {
                     actIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
                     KeyboardActivationActivity.this.startActivity(actIntent);
 
-                    View coverView = HSFloatWindowManager.getInstance().getCoverView();
+                    View coverView = HSFloatWindowManager.getInstance().getAccessibilityCoverView();
                     logOneTimeGA(app_setting_up_page_viewed);
 
 
@@ -348,8 +349,7 @@ public class KeyboardActivationActivity extends HSActivity {
             return;
         }
 
-        Display display = HSFloatWindowManager.getInstance().getWindowManager().getDefaultDisplay();
-        int width = display.getWidth();
+        int width = DisplayUtils.getScreenWidthPixels();
         if (HSApplication.getContext().getResources().getBoolean(R.bool.isTablet)) {
             width = (int) (width * 0.85);
         }

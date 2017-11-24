@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.RemoteException;
 import android.view.View;
 import android.widget.TextView;
@@ -61,7 +60,7 @@ public class KeyboardWakeUpActivity extends HSActivity {
                                 accessibilityEventListener.onDestroy();
 
 
-                                View coverView = HSFloatWindowManager.getInstance().getCoverView();
+                                View coverView = HSFloatWindowManager.getInstance().getAccessibilityCoverView();
 
                                 if (coverView != null) {
                                     coverView.findViewById(R.id.progressBar).setVisibility(GONE);

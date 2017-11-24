@@ -545,33 +545,26 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         keyboardPanelSwitchContainer.setCustomizeBar(new KeyboardBannerAdLayout(HSApplication.getContext()));
     }
 
-    private View inflate;
 
     public void showSuggestedStickers(String stickerTag, List<Sticker> stickerList) {
         if (stickerList.size() > 0) {
             StickerSuggestionAdapter stickerSuggestionAdapter;
-            if (inflate == null) {
-                inflate = View.inflate(HSApplication.getContext(), R.layout.view_sticker_suggestion, null);
-                RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.rv_sticker);
-                LinearLayoutManager linearLayoutManager
-                        = new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.HORIZONTAL, false);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                stickerSuggestionAdapter = new StickerSuggestionAdapter(stickerList);
-                recyclerView.setAdapter(stickerSuggestionAdapter);
-                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                        HSFloatWindowManager.getInstance().refreshStickerWindowTimer();
-                    }
-                });
-            } else {
-                RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.rv_sticker);
-                stickerSuggestionAdapter = (StickerSuggestionAdapter) recyclerView.getAdapter();
-                stickerSuggestionAdapter.refreshData(stickerList);
-            }
+            View stickerSuggestionView = View.inflate(HSApplication.getContext(), R.layout.view_sticker_suggestion, null);
+            RecyclerView recyclerView = (RecyclerView) stickerSuggestionView.findViewById(R.id.rv_sticker);
+            LinearLayoutManager linearLayoutManager
+                    = new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            stickerSuggestionAdapter = new StickerSuggestionAdapter(stickerList);
+            recyclerView.setAdapter(stickerSuggestionAdapter);
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    HSFloatWindowManager.getInstance().refreshStickerWindowTimer();
+                }
+            });
             stickerSuggestionAdapter.setStickerTag(stickerTag);
-            HSFloatWindowManager.getInstance().showStickerSuggestionWindow(inflate,
+            HSFloatWindowManager.getInstance().showStickerSuggestionWindow(stickerSuggestionView,
                     (int) keyboardPanelSwitchContainer.findViewById(R.id.container_group_wrapper).getY(), stickerList.size());
         } else {
             HSFloatWindowManager.getInstance().removeFloatingWindow();

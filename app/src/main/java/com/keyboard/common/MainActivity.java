@@ -214,7 +214,7 @@ public class MainActivity extends HSDeepLinkActivity {
                         MainActivity.this.doStepTwoFinish();
                         style = CurrentUIStyle.UISTYLE_STEP_THREE_TEST;
                     } else if (currentType == TYPE_AUTO) {
-                        View coverView = HSFloatWindowManager.getInstance().getCoverView();
+                        View coverView = HSFloatWindowManager.getInstance().getAccessibilityCoverView();
                         logOneTimeGA(app_setting_up_page_viewed);
 
                         if (coverView != null) {
@@ -289,7 +289,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 public void run() {
 
                     if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
-                        HSFloatWindowManager.getInstance().initAccessibilityCover();
+                        HSFloatWindowManager.getInstance().getAccessibilityCoverView();
                         progressLayout.setVisibility(View.VISIBLE);
                         progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
                     }
@@ -329,7 +329,7 @@ public class MainActivity extends HSDeepLinkActivity {
                         launchVideoView.setVisibility(View.VISIBLE);
                         launchVideoView.start();
                         if (!shouldShowThemeHome()) {
-                            HSFloatWindowManager.getInstance().initAccessibilityCover();
+                            HSFloatWindowManager.getInstance().getAccessibilityCoverView();
                             if (!isSettingButtonAnimationPlayed) {
                                 if (!hasPlayed) {
                                     progressLayout.setVisibility(View.VISIBLE);

@@ -60,7 +60,7 @@ public class HSFloatWindowManager {
         return (WindowManager) HSApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
     }
 
-    public void initAccessibilityCover() {
+    public View getAccessibilityCoverView() {
         if (coverView == null) {
             coverView = View.inflate(HSApplication.getContext(), R.layout.layout_accessbility_cover, null);
             LayoutParams layoutParams = new LayoutParams();
@@ -77,6 +77,7 @@ public class HSFloatWindowManager {
             coverView.setLayoutParams(layoutParams);
             coverView.setAnimation(null);
         }
+        return coverView;
     }
 
     public void showAccessibilityCover() {
@@ -85,17 +86,12 @@ public class HSFloatWindowManager {
         }
         final WindowManager windowManager = getWindowManager();
         try {
-            HSLog.e(" cover adding ");
-            windowManager.addView(coverView, coverView.getLayoutParams());
+            windowManager.addView(getAccessibilityCoverView(), getAccessibilityCoverView().getLayoutParams());
             windowAdded = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-
-    public View getCoverView() {
-        return coverView;
     }
 
     public void removeAccessibilityCover() {
@@ -171,7 +167,7 @@ public class HSFloatWindowManager {
         final WindowManager windowManager = getWindowManager();
         LayoutParams layoutParams = new LayoutParams();
         layoutParams.y = DisplayUtils.getScreenHeightPixels() - HSResourceUtils.getDefaultKeyboardHeight(resources) - HSResourceUtils.getDefaultSuggestionStripHeight(resources) - DisplayUtils.dip2px(102)
-        - getNavigationBarSize(HSApplication.getContext()).y;
+                - getNavigationBarSize(HSApplication.getContext()).y;
 
 
         if (isCanDrawOverlays()) {
@@ -210,6 +206,7 @@ public class HSFloatWindowManager {
         final WindowManager windowManager = getWindowManager();
         try {
             windowManager.removeViewImmediate(floatWindow);
+            floatWindow = null;
             windowAdded = false;
         } catch (Exception e) {
             e.printStackTrace();
@@ -271,7 +268,10 @@ public class HSFloatWindowManager {
             try {
                 size.x = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
                 size.y = (Integer) Display.class.getMethod("getRawHeight").invoke(display);
-            } catch (IllegalAccessException e) {} catch (InvocationTargetException e) {} catch (NoSuchMethodException e) {}
+            } catch (IllegalAccessException e) {
+            } catch (InvocationTargetException e) {
+            } catch (NoSuchMethodException e) {
+            }
         }
 
         return size;
