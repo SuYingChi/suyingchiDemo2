@@ -9,8 +9,11 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 import java.io.File;
 
@@ -108,10 +111,14 @@ class HSVideoView extends RelativeLayout implements IMediaView {
         if(filePath == null || filePath.length == 0) {
             return;
         }
-        File file = new File(filePath[0]);
-        if (!file.exists() || !file.isFile()) {
-            return;
+
+        if (HSKeyboardThemeManager.getCurrentTheme().getThemeType() != HSKeyboardTheme.ThemeType.BUILD_IN) {
+            File file = new File(filePath[0]);
+            if (!file.exists() || !file.isFile()) {
+                return;
+            }
         }
+
         if (shouldChangeBackground(filePath)) {
             this.filePath = filePath;
             if (filePath.length > 1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -167,7 +174,15 @@ class HSVideoView extends RelativeLayout implements IMediaView {
 
     public Drawable loadDrawableFromAbsolutePath(String path){
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).build();
-        Bitmap itemBitmap = ImageLoader.getInstance().loadImageSync("file://"+path, options);
+
+        String uri;
+        if (HSKeyboardThemeManager.getCurrentTheme().getThemeType() == HSKeyboardTheme.ThemeType.BUILD_IN){
+            uri = ImageDownloader.Scheme.ASSETS.wrap(path);
+        }else {
+            uri = ImageDownloader.Scheme.FILE.wrap(path);
+        }
+
+        Bitmap itemBitmap = ImageLoader.getInstance().loadImageSync(uri, options);
         return new BitmapDrawable(itemBitmap);
     }
 }

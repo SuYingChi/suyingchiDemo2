@@ -119,7 +119,7 @@ public class ThemeMenuUtils {
             }
             File shareTempFile = new File(getShareFileDir(), themeName + "_share_app.png");
             if (!shareTempFile.exists() || !shareTempFile.isFile()) {
-                HSFileUtils.copyFile(HSKeyboardThemeManager.getCustomThemeShareFile(keyboardTheme.mThemeName), shareTempFile.getAbsolutePath());
+                HSFileUtils.copyFile(HSKeyboardThemeManager.getCustomThemeShareFile(keyboardTheme), shareTempFile.getAbsolutePath());
             }
             return shareTempFile.getAbsolutePath();
         }

@@ -57,7 +57,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 
     @Override
     protected boolean isForViewType(@NonNull List<ThemePanelModel> items, int position) {
-        String themeName = items.get(position).themeName;
+        String themeName = items.get(position).keyboardTheme.mThemeName;
         return themeName != null && themeName.trim().length() > 0;
     }
 
@@ -85,8 +85,10 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
     protected void onBindViewHolder(@NonNull List<ThemePanelModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
         final PanelThemeViewHolder viewHolder = (PanelThemeViewHolder) holder;
         final ThemePanelModel model = items.get(position);
+        final String themeName = model.keyboardTheme.mThemeName;
+        final String themeShowName = model.keyboardTheme.getThemeShowName();
 
-        HSKeyboardThemeManager.loadThemePreviewPanelDrawable(model.themeName, contentContainerWidth, contentContainerHeight, new ImageLoadingListener() {
+        HSKeyboardThemeManager.loadThemePreviewPanelDrawable(model.keyboardTheme, contentContainerWidth, contentContainerHeight, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 viewHolder.content.setImageDrawable(null);
@@ -101,9 +103,9 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 viewHolder.content.setImageBitmap(loadedImage);
-                viewHolder.check.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(model.themeName) ? View.VISIBLE : View.GONE);
+                viewHolder.check.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(themeName) ? View.VISIBLE : View.GONE);
                 if (model.isCustomTheme && model.isCustomThemeInEditMode) {
-                    viewHolder.delete.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(model.themeName) ? View.GONE : View.VISIBLE);
+                    viewHolder.delete.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(themeName) ? View.GONE : View.VISIBLE);
                 }
             }
 
@@ -121,34 +123,34 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                 }
 
                 final int enableShowed = HSPreferenceHelper.getDefault().getInt("locker_enable_showed", 0);
-                if (!HSKeyboardThemeManager.getCurrentTheme().mThemeName.equals(model.themeName)) {
+                if (!HSKeyboardThemeManager.getCurrentTheme().mThemeName.equals(themeName)) {
                     if (enableShowed < HSConfig.optInteger(3, "Application", "Locker", "EnableAlertMaxShowCount") && LockerSettings.getLockerEnableStates() == 1 && !LockerSettings.isUserTouchedLockerSettings()) {
-                        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), ThemeLockerBgUtil.getInstance().getThemeBgUrl(model.themeName),
+                        LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), ThemeLockerBgUtil.getInstance().getThemeBgUrl(themeName),
                                 HSApplication.getContext().getString(R.string.locker_enable_title_has_text),
                                 new LockerEnableDialog.OnLockerBgLoadingListener() {
                             @Override
                             public void onFinish() {
-                                if (!HSKeyboardThemeManager.setKeyboardTheme(model.themeName)) {
+                                if (!HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
                                     String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
-                                    HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
+                                    HSToastUtils.toastCenterLong(String.format(failedString, themeShowName));
                                 }
 
-                                HSAnalytics.logEvent("keyboard_theme_chosed", "themeType", HSKeyboardThemeManager.isCustomTheme(model.themeName) ? "mytheme" : model.themeName);
+                                HSAnalytics.logEvent("keyboard_theme_chosed", "themeType", HSKeyboardThemeManager.isCustomTheme(themeName) ? "mytheme" : themeName);
                                 if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
-                                    ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
+                                    ThemeAnalyticsReporter.getInstance().recordThemeUsage(themeName);
                                 }
                                 int count = enableShowed + 1;
                                 HSPreferenceHelper.getDefault().putInt("locker_enable_showed", count);
                             }
                         });
                     } else {
-                        if (!HSKeyboardThemeManager.setKeyboardTheme(model.themeName)) {
+                        if (!HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
                             String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
-                            HSToastUtils.toastCenterLong(String.format(failedString, model.themeShowName));
+                            HSToastUtils.toastCenterLong(String.format(failedString, themeShowName));
                         }
 
                         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
-                            ThemeAnalyticsReporter.getInstance().recordThemeUsage(model.themeName);
+                            ThemeAnalyticsReporter.getInstance().recordThemeUsage(themeName);
                         }
 
                     }
@@ -162,7 +164,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
             viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    KCCustomThemeManager.getInstance().removeCustomTheme(model.themeName);
+                    KCCustomThemeManager.getInstance().removeCustomTheme(themeName);
                     HSAnalytics.logEvent("keyboard_customtheme_deleted");
                 }
             });

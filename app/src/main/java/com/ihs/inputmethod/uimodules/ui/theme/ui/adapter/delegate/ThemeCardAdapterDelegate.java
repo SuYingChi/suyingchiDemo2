@@ -95,11 +95,11 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
         switch (keyboardTheme.getThemeType()) {
             case CUSTOM:
                 themeCardViewHolder.themeName.setText(HSApplication.getContext().getString(R.string.theme_card_custom_theme_default_name));
-                themeCardViewHolder.themeRealImage.setImageDrawable(HSKeyboardThemeManager.getThemePreviewDrawable(keyboardTheme.mThemeName));
+                themeCardViewHolder.themeRealImage.setImageDrawable(HSKeyboardThemeManager.getThemePreviewDrawable(keyboardTheme));
                 themeCardViewHolder.themeDelete.setVisibility(themeHomeModel.deleteEnable ? View.VISIBLE : View.GONE);
                 break;
             case BUILD_IN:
-                themeCardViewHolder.themeRealImage.setImageDrawable(HSKeyboardThemeManager.getThemePreviewDrawable(keyboardTheme.mThemeName));
+                themeCardViewHolder.themeRealImage.setImageDrawable(HSKeyboardThemeManager.getThemePreviewDrawable(keyboardTheme));
                 themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
                 break;
             case NEED_DOWNLOAD:
