@@ -15,6 +15,8 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -138,24 +140,34 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                 }
             });
             TextView downloadButton = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_button);
+            StickerHomeModel  stickerHomeModel = new StickerHomeModel();
+            stickerHomeModel.stickerGroup = stickerGroup;
+            if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
+                downloadButton.setText(R.string.theme_card_menu_unlock_for_free);
+            }
             downloadButton.setOnClickListener(v -> {
-                        if (ClickUtils.isFastDoubleClick()) {
-                            return;
-                        }
-                        HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
-                        final String stickerGroupName = stickerGroup.getStickerGroupName();
-                        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
-                        DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
-                                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                                sticker_download_preview.getDrawable(), success -> {
-                                    HSPreferenceHelper.getDefault().putBoolean(KeyboardPanelManager.SHOW_EMOJI_PANEL, true);
-                                    if (success) {
-                                        lastDownloadPosition = position;
-                                        HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
-                                        StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-                                    }
-                                }, false);
-                    });
+                if (ClickUtils.isFastDoubleClick()) {
+                    return;
+                }
+                if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
+                    LockedCardActionUtils.handleLockAction(v.getContext(),LockedCardActionUtils.LOCKED_CARD_FROM_KEYBOARD_STICKER, stickerHomeModel, null);
+                } else {
+                    HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
+                    final String stickerGroupName = stickerGroup.getStickerGroupName();
+                    final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+                    DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
+                            stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                            sticker_download_preview.getDrawable(), success -> {
+                                HSPreferenceHelper.getDefault().putBoolean(KeyboardPanelManager.SHOW_EMOJI_PANEL, true);
+                                if (success) {
+                                    lastDownloadPosition = position;
+                                    HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
+                                    StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+                                }
+                            }, false);
+                }
+
+            });
             stickerDownloadView.setTag(position);
             container.addView(stickerDownloadView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return stickerDownloadView;

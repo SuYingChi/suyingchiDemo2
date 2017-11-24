@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
@@ -30,6 +31,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.ui.theme.ui.decoration.BackgroundItemDecoration;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
@@ -285,7 +287,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundNewMark.setImageDrawable(null);
                             holder.backgroundNewMark.setVisibility(GONE);
                             if (!customThemeItemBase.hasLocalContent()
-                                    && ((HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
+                                    && ((LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && (HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("downloadLockerToUnlock"), false)))
+                                    ||(HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)
                                     && ApkUtils.shouldShowRateAlert())
                                     || (HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled() && !ApkUtils.isSharedKeyboardOnInstagramBefore()))) {
@@ -305,16 +308,24 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             }
 
                             if (!customThemeItemBase.hasLocalContent()
+                                    && LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()
+                                    && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("downloadLockerToUnlock"), false)) {
+                                LockerAppGuideManager.getInstance().showDownloadLockerAlert(activity, LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
+                                return;
+                            }
+
+
+                            if (!customThemeItemBase.hasLocalContent()
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)
                                     && ApkUtils.isNewVersionAvailable()) {
                                 holder.backgroundNewMark.setVisibility(GONE);
-                                ApkUtils.showCustomUpdateAlert();
+                                ApkUtils.showCustomUpdateAlert(LockedCardActionUtils.LOCKED_CARD_FROM_HOME_BACKGROUND);
                                 return;
                             }
 
                             if (!customThemeItemBase.hasLocalContent()
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("rateToUnlock"), false)) {
-                                if (ApkUtils.showCustomRateAlert(new View.OnClickListener() {
+                                if (ApkUtils.showCustomRateAlert(LockedCardActionUtils.LOCKED_CARD_FROM_HOME_BACKGROUND, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {
@@ -341,7 +352,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                                     && HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("shareToUnlock"), false)
                                     && ApkUtils.isInstagramInstalled()
                                     && !ApkUtils.isSharedKeyboardOnInstagramBefore()) {
-                                ApkUtils.showCustomShareAlert(activity, new View.OnClickListener() {
+                                ApkUtils.showCustomShareAlert(LockedCardActionUtils.LOCKED_CARD_FROM_HOME_BACKGROUND, activity, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         if (holder.backgroundGiftIcon.getVisibility() == View.VISIBLE) {

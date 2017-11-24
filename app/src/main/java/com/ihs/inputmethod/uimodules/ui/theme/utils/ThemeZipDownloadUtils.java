@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -38,7 +39,7 @@ public class ThemeZipDownloadUtils {
      * @param from 调用来源，用于统计事件
      * @param onAdBufferingListener
      */
-    public static void startDownloadThemeZip(String from, final String themeName, final String thumbnailUrl, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+    public static void startDownloadThemeZip(Context context,String from, final String themeName, final String thumbnailUrl, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
 
         File themeDirectory = new File(KeyboardThemeManager.getThemeDirectoryPath(themeName));
         File downloadFile = new File(themeDirectory, System.currentTimeMillis() + ".zip");
@@ -46,15 +47,16 @@ public class ThemeZipDownloadUtils {
             themeDirectory.mkdirs();
         }
 
-        final AdLoadingView adLoadingView = new AdLoadingView(HSApplication.getContext());
-        final Resources resources = HSApplication.getContext().getResources();
+        final AdLoadingView adLoadingView = new AdLoadingView(context);
+        final Resources resources = context.getResources();
         adLoadingView.configParams(null,null,
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
                 resources.getString(R.string.ad_placement_lucky),
                 downloadSuccess -> {
                     if (downloadSuccess) {
-
+                        //设置下载成功移到此处，如果用户在AdLoadingView最后的缓冲时间内点击close按钮则应该不设置为下载成功
+                        HSKeyboardThemeManager.setThemeZipFileDownloadAndUnzipSuccess(themeName);
                     } else {
                         // 没下载成功
                         HSHttpConnection conn = (HSHttpConnection) adLoadingView.getTag();
@@ -94,7 +96,6 @@ public class ThemeZipDownloadUtils {
                     File desFile = new File(KeyboardThemeManager.getThemeRootDirectoryPath());
                     try {
                         HSZipUtils.unzip(downloadFile,desFile);
-                        HSKeyboardThemeManager.setThemeZipFileDownloadAndUnzipSuccess(themeName);
                     } catch (ZipException e) {
                         e.printStackTrace();
                         logDownloadFailedEvent(themeName,from);

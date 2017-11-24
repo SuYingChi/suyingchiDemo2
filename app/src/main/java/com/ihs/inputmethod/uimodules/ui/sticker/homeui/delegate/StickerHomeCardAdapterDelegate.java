@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -18,6 +17,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.CommonStickerAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -75,9 +75,10 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
         } else {
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
         }
+
         stickerCardViewHolder.downloadBtn.setVisibility(View.VISIBLE);
-        if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && stickerGroup.downloadLockerToUnlock){
-            stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.lock_normal);
+        if (LockedCardActionUtils.shouldLock(stickerModel)){
+            stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.ic_theme_gift);
         }else {
             stickerCardViewHolder.downloadBtn.setImageResource(R.drawable.ic_download_icon);
         }

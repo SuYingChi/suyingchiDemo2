@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
-import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.commons.config.HSConfig;
@@ -31,6 +30,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate.BlankViewAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate.ThemeCardAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeMenuUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeZipDownloadUtils;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
@@ -140,39 +140,46 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         switch (key) {
             case ThemeCardAdapterDelegate.TAG_DOWNLOAD:
                 if (keyboardTheme.getThemePkName() != null) {
-                    if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker()){
-                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(v.getContext(),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
-                    }else {
-                        //直接下载主题zip包
-                        boolean downloadThemeZip = HSConfig.optBoolean(false, "Application", "KeyboardTheme", "DownloadThemeZip", "DownloadInApp");
-                        if (downloadThemeZip) {
-                            if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)) {
-                                return;
-                            }
-                            String from = "store";
-                            ThemeZipDownloadUtils.startDownloadThemeZip(from, model.keyboardTheme.mThemeName, keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
-                                @Override
-                                public void onDismiss(boolean success) {
-                                    if (success) {
-                                        ThemeZipDownloadUtils.logDownloadSuccessEvent(keyboardTheme.mThemeName, from);
-                                        if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)) {
-                                            HSKeyboardThemeManager.moveNeedDownloadThemeToDownloadedList(keyboardTheme.mThemeName, true);
-                                            if (themeCardItemClickListener != null) {
-                                                themeCardItemClickListener.onKeyboardActivationStart();
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            //直接下载主题zip包
+                            boolean downloadThemeZip = HSConfig.optBoolean(false, "Application", "KeyboardTheme", "DownloadThemeZip", "DownloadInApp");
+                            if (downloadThemeZip) {
+                                if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)) {
+                                    return;
+                                }
+                                String from = "store";
+                                ThemeZipDownloadUtils.startDownloadThemeZip(v.getContext(),from, model.keyboardTheme.mThemeName, keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
+                                    @Override
+                                    public void onDismiss(boolean success) {
+                                        if (success) {
+                                            ThemeZipDownloadUtils.logDownloadSuccessEvent(keyboardTheme.mThemeName, from);
+                                            if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)) {
+                                                HSKeyboardThemeManager.moveNeedDownloadThemeToDownloadedList(keyboardTheme.mThemeName, true);
+                                                if (themeCardItemClickListener != null) {
+                                                    themeCardItemClickListener.onKeyboardActivationStart();
+                                                }
+                                                keyboardThemeOnKeyboardActivation = keyboardTheme;
                                             }
-                                            keyboardThemeOnKeyboardActivation = keyboardTheme;
                                         }
                                     }
+                                });
+                                ThemeZipDownloadUtils.logDownloadClickEvent(keyboardTheme.mThemeName, from);
+                            } else {
+                                boolean shouldDownloadThemeAPK = ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
+                                if (shouldDownloadThemeAPK) {
+                                    Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.theme_card_downloading_tip), Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                            ThemeZipDownloadUtils.logDownloadClickEvent(keyboardTheme.mThemeName, from);
-                        } else {
-                            boolean shouldDownloadThemeAPK = ThemeDownloadManager.getInstance().downloadTheme(keyboardTheme);
-                            if (shouldDownloadThemeAPK) {
-                                Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.theme_card_downloading_tip), Toast.LENGTH_SHORT).show();
                             }
+                            setThemeNotNew(keyboardTheme);
                         }
-                        setThemeNotNew(keyboardTheme);
+                    };
+
+                    if (LockedCardActionUtils.shouldLock(model)){
+                        LockedCardActionUtils.handleLockAction(v.getContext(),LockedCardActionUtils.LOCKED_CARD_FROM_THEME, model, runnable);
+                    }else {
+                        runnable.run();
                     }
                 }
                 if (themeCardItemClickListener != null) {

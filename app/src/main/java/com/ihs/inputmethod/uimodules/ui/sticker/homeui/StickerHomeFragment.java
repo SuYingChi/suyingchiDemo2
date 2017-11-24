@@ -29,6 +29,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.uimodules.ui.sticker.homeui.delegate.StickerFacemojiAdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -54,7 +55,10 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
     private INotificationObserver observer = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (FacemojiManager.FACEMOJI_SAVED.equals(s) || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
+            if (LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW.equals(s)
+                    || LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW.equals(s)
+                    || FacemojiManager.FACEMOJI_SAVED.equals(s)
+                    || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
                     || (FacemojiManager.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */ ){
                 loadDatas();
             }
@@ -83,6 +87,8 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_SAVED, observer);
         HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACE_DELETED, observer);
+        HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW, observer);
+        HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW, observer);
         return view;
     }
 
@@ -102,35 +108,41 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
             @Override
             public void onDownloadClick(final StickerHomeModel stickerHomeModel, Drawable drawable) {
                 final StickerGroup stickerGroup = stickerHomeModel.stickerGroup;
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        final String stickerGroupName = stickerGroup.getStickerGroupName();
+                        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
-                if (LockerAppGuideManager.getInstance().shouldGuideToDownloadLocker() && stickerGroup.downloadLockerToUnlock) {
-                    LockerAppGuideManager.getInstance().showDownloadLockerAlert(getActivity(),LockerAppGuideManager.FLURRY_ALERT_UNLOCK);
-                } else {
-                    final String stickerGroupName = stickerGroup.getStickerGroupName();
-                    final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+                        // 移除点击过的new角标
+                        StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
+                        stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
 
-                    // 移除点击过的new角标
-                    StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
-                    stickerCardAdapter.notifyItemChanged(stickerModelList.indexOf(stickerHomeModel));
+                        DownloadUtils.getInstance().startForegroundDownloading(getActivity(), stickerGroupName,
+                                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                                new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
+                                    @Override
+                                    public void onDismiss(boolean success) {
+                                        if (success) {
+                                            HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                                            StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
-                    DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
-                            stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                            new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
-                                @Override
-                                public void onDismiss(boolean success) {
-                                    if (success) {
-                                        HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
-                                        StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
-
-                                        int position = stickerModelList.indexOf(stickerHomeModel);
-                                        if (position > 0 && position < stickerModelList.size()) {
-                                            stickerModelList.remove(position);
-                                            stickerCardAdapter.notifyItemRemoved(position);
+                                            int position = stickerModelList.indexOf(stickerHomeModel);
+                                            if (position > 0 && position < stickerModelList.size()) {
+                                                stickerModelList.remove(position);
+                                                stickerCardAdapter.notifyItemRemoved(position);
+                                            }
                                         }
                                     }
-                                }
 
-                            });
+                                });
+                    }
+                };
+
+                if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
+                    LockedCardActionUtils.handleLockAction(getActivity(),LockedCardActionUtils.LOCKED_CARD_FROM_STICKER, stickerHomeModel, runnable);
+                } else {
+                    runnable.run();
                 }
             }
 

@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -338,7 +339,7 @@ public class ApkUtils {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static void shareKeyboardToInstagram(Activity activity) {
+    public static void shareKeyboardToInstagram(Context context) {
         Intent intent = HSApplication.getContext().getPackageManager().getLaunchIntentForPackage("com.instagram.android");
         if (intent != null) {
             Intent shareIntent = new Intent();
@@ -353,13 +354,16 @@ public class ApkUtils {
             Uri uri = Uri.fromFile(media);
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
             shareIntent.setType("image/*");
-            activity.startActivity(shareIntent);
+            if (!(context instanceof Activity)) {
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
+            context.startActivity(shareIntent);
             HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).putBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, true);
         }
     }
 
     @SuppressLint("InflateParams")
-    public static void showCustomShareAlert(Activity activity, final View.OnClickListener shareButtonClickListener) {
+    public static void showCustomShareAlert(String from, Context context, final View.OnClickListener shareButtonClickListener) {
         String preferredLanguageString = Locale.getDefault().getLanguage();
         HSLog.d("showCustomShareAlert preferredLanguageString: " + preferredLanguageString);
 
@@ -368,15 +372,17 @@ public class ApkUtils {
         final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
         TextView message = (TextView) view.findViewById(R.id.tv_share_message);
         message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_message), "Application", "Update", "ShareAlert", "Message", preferredLanguageString));
-        Button positiveBtn = (Button) view.findViewById(R.id.btn_share);
-        positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
+        TextView shareText =  view.findViewById(R.id.text_share);
+        shareText.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_button_text), "Application", "Update", "ShareAlert", "ButtonText", preferredLanguageString));
+        LinearLayout shareBtn = view.findViewById(R.id.btn_share);
+        shareBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
                 HSApplication.getContext().getResources().getColor(R.color.custom_share_alert_button_bg),
                 HSApplication.getContext().getResources().getColor(R.color.guide_bg_disable_color),
                 HSApplication.getContext().getResources().getDimension(R.dimen.apk_update_alert_button_radius)));
-        positiveBtn.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_button_text), "Application", "Update", "ShareAlert", "ButtonText", preferredLanguageString));
-        positiveBtn.setOnClickListener(new View.OnClickListener() {
+        shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSAnalytics.logEvent("Alert_shareToUnlock_clicked","from",from);
                 if (!CommonUtils.isNetworkAvailable(-1)) {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                     return;
@@ -386,7 +392,7 @@ public class ApkUtils {
                 if (shareButtonClickListener != null) {
                     shareButtonClickListener.onClick(v);
                 }
-                shareKeyboardToInstagram(activity);
+                shareKeyboardToInstagram(context);
                 alertDialog.dismiss();
             }
         });
@@ -399,10 +405,11 @@ public class ApkUtils {
         });
         alertDialog.show();
         HSAnalytics.logEvent("customizeTheme_shareToUnlock_show");
+        HSAnalytics.logEvent("Alert_shareToUnlock_show","from",from);
     }
 
     @SuppressLint("InflateParams")
-    public static boolean showCustomRateAlert(final View.OnClickListener rateButtonClickListener) {
+    public static boolean showCustomRateAlert(String from, final View.OnClickListener rateButtonClickListener) {
         if (!shouldShowRateAlert()) {
             return false;
         }
@@ -423,6 +430,7 @@ public class ApkUtils {
         positiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HSAnalytics.logEvent("Alert_rateToUnlock_clicked","from",from);
                 if (!CommonUtils.isNetworkAvailable(-1)) {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                     return;
@@ -451,11 +459,12 @@ public class ApkUtils {
         });
         alertDialog.show();
         HSAnalytics.logEvent("customizeTheme_rateToUnlock_show");
+        HSAnalytics.logEvent("Alert_rateToUnlock_show","from",from);
         return true;
     }
 
     @SuppressWarnings({"deprecation"})
-    public static void showCustomUpdateAlert() {
+    public static void showCustomUpdateAlert(String from) {
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.apk_update_alert, null, false);
         final AlertDialog dialog = HSAlertDialog.build(R.style.AppCompactTransparentDialogStyle).setView(view).create();
@@ -477,6 +486,7 @@ public class ApkUtils {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        HSAnalytics.logEvent("Alert_needNewVersionToUnlock_clicked","from",from);
                         if (!CommonUtils.isNetworkAvailable(-1)) {
                             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                             return;
@@ -497,5 +507,6 @@ public class ApkUtils {
 
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         dialog.show();
+        HSAnalytics.logEvent("Alert_needNewVersionToUnlock_show","from",from);
     }
 }

@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.uimodules.R;
 
@@ -11,7 +12,7 @@ import com.ihs.inputmethod.uimodules.R;
  * Created by wenbinduan on 2016/12/22.
  */
 
-public final class ThemeHomeModel {
+public final class ThemeHomeModel implements ICondition {
 
 	public HSKeyboardTheme keyboardTheme;
 	public boolean deleteEnable;
@@ -73,5 +74,42 @@ public final class ThemeHomeModel {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isDownloadLockerToUnlock() {
+		if (keyboardTheme != null) {
+			return keyboardTheme.isDownloadLockerToUnlock();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isNeedNewVersionToUnlock() {
+		if (keyboardTheme != null) {
+			return keyboardTheme.isNeedNewVersionToUnlock();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isRateToUnlock() {
+		if (keyboardTheme != null) {
+			return keyboardTheme.isRateToUnlock();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isShareToUnlock() {
+		if (keyboardTheme != null) {
+			return keyboardTheme.isShareToUnlock();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isDownloadInApp() {
+		return HSConfig.optBoolean(false, "Application", "KeyboardTheme", "DownloadThemeZip", "DownloadInApp");
 	}
 }
