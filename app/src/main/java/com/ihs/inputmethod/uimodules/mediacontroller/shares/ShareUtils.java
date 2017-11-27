@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSMapUtils;
 import com.ihs.inputmethod.api.utils.HSPictureUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
@@ -152,7 +151,6 @@ public class ShareUtils {
      * @return
      */
     private static String[] getMmsPackages() {
-        HSLog.d("AAAAA getMmsPackages");
         List<String> packages = new ArrayList<>();
         PackageManager packageManager = HSApplication.getContext().getPackageManager();
 
@@ -170,7 +168,6 @@ public class ShareUtils {
                 continue;
             }
             if (!packages.contains(activityInfo.packageName)) {
-                HSLog.d("AAAAA available mms packageName :" + activityInfo.packageName);
                 packages.add(activityInfo.packageName);
             }
         }
@@ -185,7 +182,6 @@ public class ShareUtils {
      * @return
      */
     private static String[] getEmailPackages() {
-        HSLog.d("AAAAA getEmailPackages");
         List<String> packages = new ArrayList<>();
 
         Uri uri = Uri.parse("mailto:" + "test@qq.com");
@@ -196,7 +192,6 @@ public class ShareUtils {
         for (ResolveInfo resolveInfo : resolveInfos) {
             final ActivityInfo activityInfo = resolveInfo.activityInfo;
             if (!packages.contains(activityInfo.packageName)) {
-                HSLog.d("AAAAA available email packageName :" + activityInfo.packageName);
                 packages.add(activityInfo.packageName);
             }
         }
@@ -209,7 +204,6 @@ public class ShareUtils {
     public static boolean isIntentAvailable(Intent intent) {
         PackageManager packageManager = HSApplication.getContext().getPackageManager();
         List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        HSLog.d("AAAAA resolveInfos size :" + resolveInfos.size());
         return resolveInfos == null ? false : resolveInfos.size() > 0;
     }
 

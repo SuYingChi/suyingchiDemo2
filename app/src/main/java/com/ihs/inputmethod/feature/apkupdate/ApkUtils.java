@@ -357,7 +357,13 @@ public class ApkUtils {
             if (!(context instanceof Activity)) {
                 shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
-            context.startActivity(shareIntent);
+
+            if (com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils.isIntentAvailable(shareIntent)) {
+                context.startActivity(shareIntent);
+            } else {
+                Toast.makeText(HSApplication.getContext(), R.string.label_share_to_instagram_failed, Toast.LENGTH_SHORT).show();
+            }
+
             HSPreferenceHelper.create(HSApplication.getContext(), PREF_APKUTILS_FILE_NAME).putBoolean(PREF_KEY_SHARED_KEYBOARD_ON_INSTAGRAM, true);
         }
     }
