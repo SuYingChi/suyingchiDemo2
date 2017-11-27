@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.accessbility;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,6 +38,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.view.View.GONE;
@@ -279,7 +281,7 @@ public class KeyboardActivationActivity extends HSActivity {
                 public void onClick(View v) {
                     logOneTimeGA(app_accessibility_guide_gotit_clicked);
 
-                    customViewDialog.dismiss();
+                    KCCommonUtils.dismissDialog(customViewDialog);
                 }
             });
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -296,7 +298,7 @@ public class KeyboardActivationActivity extends HSActivity {
                 videoView.start();
                 logOneTimeGA(app_accessibility_guide_viewed);
 
-                customViewDialog.show();
+                KCCommonUtils.showDialog(customViewDialog);
             }
         }, GUIDE_DELAY);
     }
@@ -326,7 +328,7 @@ public class KeyboardActivationActivity extends HSActivity {
                     actIntent.putExtra("skip", true);
                     actIntent.setAction(ACTION_MAIN_ACTIVITY);
                     startActivity(actIntent);
-                    dialog.dismiss();
+                    KCCommonUtils.dismissDialog((Dialog) dialog);
                     finish();
                 }
             });

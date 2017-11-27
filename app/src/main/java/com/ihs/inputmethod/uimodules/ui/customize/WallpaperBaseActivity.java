@@ -29,6 +29,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.view.DrawView;
 import com.ihs.inputmethod.uimodules.ui.customize.view.EditWallpaperHintDrawer;
 import com.ihs.inputmethod.uimodules.ui.customize.view.ProgressDialog;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.io.IOException;
 
@@ -84,7 +85,7 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
         super.onDestroy();
         unbindService(this);
         if (mDialog != null) {
-            mDialog.dismiss();
+            KCCommonUtils.dismissDialog(mDialog);
         }
     }
 
@@ -125,8 +126,8 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
 
         final Handler mHandler = new Handler();
         mDialog = ProgressDialog.createDialog(this, getString(R.string.wallpaper_setting_progress_dialog_text));
-        mDialog.show();
         mDialog.setCancelable(false);
+        KCCommonUtils.showDialog(mDialog);
         final Bitmap wallpaper = tryGetWallpaperToSet();
         if (wallpaper != null) {
             ConcurrentUtils.postOnThreadPoolExecutor(new Runnable() {
@@ -148,11 +149,11 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
                                 }
                             });
                             if (success) {
-                                mDialog.dismiss();
+                                KCCommonUtils.dismissDialog(mDialog);
                                 ToastUtils.showToast(R.string.interstitial_ad_title_after_try_keyboard);
                                 finish();
                             } else {
-                                mDialog.dismiss();
+                                KCCommonUtils.dismissDialog(mDialog);
                                 ToastUtils.showToast(R.string.wallpaper_toast_set_failed);
                             }
                         }
@@ -160,7 +161,7 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
                 }
             });
         } else {
-            mDialog.dismiss();
+            KCCommonUtils.dismissDialog(mDialog);
             ToastUtils.showToast(R.string.wallpaper_toast_set_failed);
             finish();
         }

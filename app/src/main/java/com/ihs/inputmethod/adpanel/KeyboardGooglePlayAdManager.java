@@ -11,6 +11,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.kc.commons.utils.KCCommonUtils;
 
 
 /**
@@ -41,7 +42,7 @@ public class KeyboardGooglePlayAdManager implements KCNativeAdView.OnAdLoadedLis
 
     private void initAndShowDialog() {
         adGooglePlayDialog = new AdGooglePlayDialog(HSApplication.getContext(), nativeAdView);
-        adGooglePlayDialog.show();
+        KCCommonUtils.showDialog(adGooglePlayDialog);
         //HSPreferenceHelper.getDefault().putLong(PREF_AD_SHOW_TIME, System.currentTimeMillis());
     }
 
@@ -83,8 +84,8 @@ public class KeyboardGooglePlayAdManager implements KCNativeAdView.OnAdLoadedLis
 
     @Override
     public void onAdClicked(KCNativeAdView nativeAdView) {
-        if (adGooglePlayDialog != null && adGooglePlayDialog.isShowing()) {
-            adGooglePlayDialog.dismiss();
+        if (adGooglePlayDialog != null) {
+            KCCommonUtils.dismissDialog(adGooglePlayDialog);
         }
     }
 }

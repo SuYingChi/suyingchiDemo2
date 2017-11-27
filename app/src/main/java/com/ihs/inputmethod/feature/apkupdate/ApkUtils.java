@@ -36,6 +36,7 @@ import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.utils.AlertShowingUtils;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.io.File;
 import java.util.Locale;
@@ -399,17 +400,17 @@ public class ApkUtils {
                     shareButtonClickListener.onClick(v);
                 }
                 shareKeyboardToInstagram(context);
-                alertDialog.dismiss();
+                KCCommonUtils.dismissDialog(alertDialog);
             }
         });
         ImageView closeIcon = (ImageView) view.findViewById(R.id.iv_close_image);
         closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
+                KCCommonUtils.dismissDialog(alertDialog);
             }
         });
-        alertDialog.show();
+        KCCommonUtils.showDialog(alertDialog);
         HSAnalytics.logEvent("customizeTheme_shareToUnlock_show");
         HSAnalytics.logEvent("Alert_shareToUnlock_show","from",from);
     }
@@ -453,17 +454,17 @@ public class ApkUtils {
                 if (rateButtonClickListener != null) {
                     rateButtonClickListener.onClick(v);
                 }
-                alertDialog.dismiss();
+                KCCommonUtils.dismissDialog(alertDialog);
             }
         });
         ImageView closeIcon = (ImageView) view.findViewById(R.id.iv_close_image);
         closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
+                KCCommonUtils.dismissDialog(alertDialog);
             }
         });
-        alertDialog.show();
+        KCCommonUtils.showDialog(alertDialog);
         HSAnalytics.logEvent("customizeTheme_rateToUnlock_show");
         HSAnalytics.logEvent("Alert_rateToUnlock_show","from",from);
         return true;
@@ -498,7 +499,7 @@ public class ApkUtils {
                             return;
                         }
                         doUpdate();
-                        dialog.dismiss();
+                        KCCommonUtils.dismissDialog(dialog);
                     }
                 });
 
@@ -507,12 +508,12 @@ public class ApkUtils {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
+                        KCCommonUtils.dismissDialog(dialog);
                     }
                 });
 
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
+        KCCommonUtils.showDialog(dialog);
         HSAnalytics.logEvent("Alert_needNewVersionToUnlock_show","from",from);
     }
 }

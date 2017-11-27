@@ -17,6 +17,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
+import com.kc.commons.utils.KCCommonUtils;
 
 /**
  * Created by yanxia on 2017/8/29.
@@ -77,7 +78,7 @@ public class TrialKeyboardDialogAlertUtils {
                 }
             });
 
-            dialog.show();
+            KCCommonUtils.showDialog(dialog);
             HSAnalytics.logEvent("alert_charging_show", "size", "half_screen", "occasion", "after_try");
             increaseAlertShowCount();
             setLastShowFunctionTag(TAG_CHARGING);
@@ -107,7 +108,7 @@ public class TrialKeyboardDialogAlertUtils {
                     CPSettings.setCallAssistantModuleEnabled(true);
                 }
             });
-            dialog.show();
+            KCCommonUtils.showDialog(dialog);
             HSAnalytics.logEvent("alert_call_assistant_show", "size", "half_screen", "occasion", "after_try");
             increaseAlertShowCount();
             setLastShowFunctionTag(TAG_CALL_ASSISTANT);

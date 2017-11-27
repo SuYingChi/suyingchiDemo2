@@ -52,6 +52,7 @@ import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
+import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -265,8 +266,8 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     @Override
     protected void onStop() {
         super.onStop();
-        if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
-            trialKeyboardDialog.dismiss();
+        if (trialKeyboardDialog != null) {
+            KCCommonUtils.dismissDialog(trialKeyboardDialog);
         }
     }
 
@@ -496,7 +497,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             nativeAdView = null;
         }
         if (trialKeyboardDialog != null) {
-            trialKeyboardDialog.dismiss();
+            KCCommonUtils.dismissDialog(trialKeyboardDialog);
             trialKeyboardDialog = null;
         }
         HSGlobalNotificationCenter.removeObserver(notificationObserver);

@@ -470,9 +470,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     setView(R.layout.layout_dialog_loading).
                     setCancelable(true).create();
         }
-        if (!loadingDialog.isShowing()) {
-            loadingDialog.show();
-        }
+        KCCommonUtils.showDialog(loadingDialog);
     }
 
     public void showGoogleAdBar() {

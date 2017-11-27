@@ -55,6 +55,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.utils.easyphotopicker.EasyImageFil
 import com.ihs.inputmethod.uimodules.utils.BitmapUtils;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.ihs.inputmethod.uimodules.utils.UriUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -164,11 +165,11 @@ public class CameraActivity extends HSAppCompatActivity {
                 mCreatingView.setLayoutParams(lp);
             }
             mCreatingView.setImageURI(Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.creating));
-            mCreatingDialog.show();
+            KCCommonUtils.showDialog(mCreatingDialog);
         } else {
             if (!mCreatingDialog.isShowing()) {
                 mCreatingView.setImageURI(Uri.parse("android.resource://" + HSApplication.getContext().getPackageName() + "/" + R.raw.creating));
-                mCreatingDialog.show();
+                KCCommonUtils.showDialog(mCreatingDialog);
             }
         }
     }
@@ -179,7 +180,7 @@ public class CameraActivity extends HSAppCompatActivity {
     private void closeProcessingDialog() {
         //close dialog
         if (mCreatingDialog != null) {
-            mCreatingDialog.dismiss();
+            KCCommonUtils.dismissDialog(mCreatingDialog);
         }
     }
 

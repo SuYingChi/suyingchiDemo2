@@ -2,6 +2,7 @@ package com.ihs.inputmethod.accessbility;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.List;
 
@@ -34,7 +36,6 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 import static android.content.Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
-import static com.ihs.app.framework.HSApplication.instance;
 
 
 /**
@@ -199,13 +200,13 @@ public class SetupKeyboardAccessibilityService {
                 intent.setAction(KeyboardActivationActivity.ACTION_MAIN_ACTIVITY);
                 intent.setFlags(FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | FLAG_ACTIVITY_REORDER_TO_FRONT | FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);
-                dialog.dismiss();
+                KCCommonUtils.dismissDialog((Dialog) dialog);
             }
         });
         alertDialogBuilder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+                KCCommonUtils.dismissDialog((Dialog) dialog);
                 onServiceConnected();
             }
         });
@@ -235,7 +236,7 @@ public class SetupKeyboardAccessibilityService {
                 }
             }
 
-            alertDialog.show();
+            KCCommonUtils.showDialog(alertDialog);
         } catch (Exception e) {
             e.printStackTrace();
         }

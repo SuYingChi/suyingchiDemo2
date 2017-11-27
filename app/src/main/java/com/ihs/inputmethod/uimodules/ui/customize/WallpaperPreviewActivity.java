@@ -54,6 +54,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.view.PreviewViewPage;
 import com.ihs.inputmethod.uimodules.ui.customize.view.ProgressDialog;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.commons.utils.KCCommonUtils;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
@@ -185,7 +186,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         if (mIsOnLineWallpaper) {
         }
         if (mDialog != null) {
-            mDialog.dismiss();
+            KCCommonUtils.dismissDialog(mDialog);
             mDialog = null;
         }
     }
@@ -370,8 +371,8 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                     return;
                 }
                 mDialog = ProgressDialog.createDialog(WallpaperPreviewActivity.this, getString(R.string.key_theme_loading_progress_dialog_text));
-                mDialog.show();
                 mDialog.setCancelable(true);
+                KCCommonUtils.showDialog(mDialog);
                 GetFilePathTask getFilePathTask = new GetFilePathTask();
                 getFilePathTask.execute(mCurrentWallpaper.getWallpaperUrl());
                 break;
@@ -632,7 +633,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         @Override
         protected void onPostExecute(String result) {
             if (mDialog != null) {
-                mDialog.dismiss();
+                KCCommonUtils.dismissDialog(mDialog);
             }
             if (result == null) {
                 ToastUtils.showToast(getString(R.string.access_set_up_failed));

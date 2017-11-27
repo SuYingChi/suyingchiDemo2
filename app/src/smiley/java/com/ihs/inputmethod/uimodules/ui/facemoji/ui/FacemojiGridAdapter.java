@@ -39,6 +39,7 @@ import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareChannel;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiAnimationView;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +69,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         public void stopProgress() {
             mProgressBar.setVisibility(View.GONE);
             dialog.setCancelable(true);
-            dialog.dismiss();
+            KCCommonUtils.dismissDialog(dialog);
         }
     };
 
@@ -204,17 +205,15 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         if (dialog == null) {
             initShareAlert();
         } else {
-            if (dialog.isShowing()) {
-                stickerPlayer.stop();
-                dialog.dismiss();
-            }
+            KCCommonUtils.dismissDialog(dialog);
+            stickerPlayer.stop();
         }
         stickerPlayer.setSticker(sticker);
         stickerPlayer.start();
         shareAdapter.setSticker(sticker);
         mProgressBar.setVisibility(View.GONE);
         dialog.setCancelable(true);
-        dialog.show();
+        KCCommonUtils.showDialog(dialog);
     }
 
     private void initShareAlert() {
@@ -245,7 +244,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                KCCommonUtils.dismissDialog(dialog);
             }
         });
 
@@ -371,7 +370,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
 
     public void finish() {
         if (dialog != null) {
-            dialog.dismiss();
+            KCCommonUtils.dismissDialog(dialog);
         }
     }
 

@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.activity.IDialogHolder;
+import com.kc.commons.utils.KCCommonUtils;
 
 /**
  * Created by xu.zhang on 9/23/16.
@@ -84,7 +85,7 @@ public class HSAppCompatPreferenceActivity extends AppCompatPreferenceActivity i
         this.dismissDialog();
 
         this.dialog = alertDialog;
-        this.dialog.show();
+        KCCommonUtils.showDialog(dialog);
         return true;
     }
 
@@ -95,7 +96,7 @@ public class HSAppCompatPreferenceActivity extends AppCompatPreferenceActivity i
     @Override
     public void dismissDialog() {
         if (this.dialog != null) {
-            this.dialog.dismiss();
+            KCCommonUtils.dismissDialog(dialog);
             this.dialog = null;
         }
     }

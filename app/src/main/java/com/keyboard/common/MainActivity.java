@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -70,6 +71,7 @@ import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.utils.Constants;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.text.MessageFormat;
 
@@ -559,7 +561,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 @Override
                 public void onClick(View v) {
                     logOneTimeGA(app_accessibility_guide_gotit_clicked);
-                    customViewDialog.dismiss();
+                    KCCommonUtils.dismissDialog(customViewDialog);
                 }
             });
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -575,9 +577,7 @@ public class MainActivity extends HSDeepLinkActivity {
             public void run() {
                 videoView.start();
                 logOneTimeGA(app_accessibility_guide_viewed);
-                if (!isFinishing()) {
-                    customViewDialog.show();
-                }
+                KCCommonUtils.showDialog(customViewDialog);
             }
         }, GUIDE_DELAY);
     }
@@ -606,9 +606,7 @@ public class MainActivity extends HSDeepLinkActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if (!MainActivity.this.isFinishing()) {
-                                customViewDialog.show();
-                            }
+                            KCCommonUtils.showDialog(customViewDialog);
                         }
                     }, 500);
 
@@ -618,7 +616,7 @@ public class MainActivity extends HSDeepLinkActivity {
                     isInStepOne = true;
                 }
             });
-            dialog.show();
+            KCCommonUtils.showDialog(dialog);
         }
 
         if (versionFilterForRecordEvent && !isEventRecorded(APP_STEP_ONE_HINT)) {
@@ -709,7 +707,7 @@ public class MainActivity extends HSDeepLinkActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     logOneTimeGA(app_manual_setkey_clicked);
-                    dialog.dismiss();
+                    KCCommonUtils.dismissDialog((Dialog) dialog);
                     playManualButtonShowAnimation();
                 }
             });

@@ -16,6 +16,7 @@ import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
+import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.core.themes.custom.KCCustomThemeHelper;
 
 import java.io.File;
@@ -75,7 +76,7 @@ public class ThemeMenuUtils {
                 File file = new File(shareImagePath);
                 if (!file.exists() || file.length() == 0){
                     final AlertDialog loadingDialog = HSAlertDialog.build(activity).setView(R.layout.dialog_loading).setCancelable(false).create();
-                    loadingDialog.show();
+                    KCCommonUtils.showDialog(loadingDialog);
                     HSThreadUtils.execute(new Runnable() {
                         @Override
                         public void run() {
@@ -83,7 +84,7 @@ public class ThemeMenuUtils {
                             new Handler(Looper.getMainLooper()).post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    loadingDialog.dismiss();
+                                    KCCommonUtils.dismissDialog(loadingDialog);
                                     ShareUtils.shareImageFilterBlackList(activity, shareActionTitle, title, content, shareImagePath);
                                 }
                             });

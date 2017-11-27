@@ -12,6 +12,7 @@ import com.ihs.keyboardutils.alerts.CustomUIRateBaseAlert;
 import com.ihs.keyboardutils.alerts.CustomUIRateOneAlert;
 import com.ihs.keyboardutils.alerts.CustomUIRateThreeAlert;
 import com.ihs.keyboardutils.alerts.CustomUIRateTwoAlert;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.List;
 
@@ -188,7 +189,7 @@ public class CustomUIRateAlertUtils {
                 break;
         }
 
-        dialog.show();
+        KCCommonUtils.showDialog(dialog);
     }
 
     private static void updateRateAlertInfo(String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {

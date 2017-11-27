@@ -31,6 +31,7 @@ import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
+import com.kc.commons.utils.KCCommonUtils;
 
 public class KeyboardActivationGuideActivity extends HSActivity {
     public static final String EXTRA_DISABLE_ACTIVATION_PROMPT = "disable_activation_prompt";
@@ -160,7 +161,7 @@ public class KeyboardActivationGuideActivity extends HSActivity {
                         enableOrSelectKeyboard();
                     }
                 }).create();
-        alertDialog.show();
+        KCCommonUtils.showDialog(alertDialog);
         HSAnalytics.logEvent("activate_alert_show");
 
         alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -213,11 +214,11 @@ public class KeyboardActivationGuideActivity extends HSActivity {
                 ImageView imageCodeProject = new ImageView(KeyboardActivationGuideActivity.this);
                 imageCodeProject.setBackgroundResource(R.drawable.toast_enable_rain);
                 CustomViewDialog customViewDialog = new CustomViewDialog(imageCodeProject, 3000, Gravity.BOTTOM, 0, HSDisplayUtils.dip2px(20));
-                customViewDialog.show();
+                KCCommonUtils.showDialog(customViewDialog);
             }
         });
 
-        dialog.show();
+        KCCommonUtils.showDialog(dialog);
     }
 
     private void showKeyboardPicker() {

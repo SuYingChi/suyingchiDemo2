@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
@@ -19,6 +20,7 @@ import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.settings.AdditionalSubtypeUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SwipeLayout.OnLanguageChangedListener;
+import com.kc.commons.utils.KCCommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,7 +167,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
     private void releaseDialog() {
         if (dialog != null) {
-            dialog.dismiss();
+            KCCommonUtils.dismissDialog(dialog);
             dialog = null;
         }
     }
@@ -310,7 +312,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
             }
         });
 
-        dialog.show();
+        KCCommonUtils.showDialog(dialog);
     }
 
     @Override
@@ -338,7 +340,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         }
         dialogSelectPosition = -1;
 
-        HSAlertDialog.build(this).setTitle(getResources().getString(R.string.key_layout_dialog_title))
+        AlertDialog alertDialog = HSAlertDialog.build(this).setTitle(getResources().getString(R.string.key_layout_dialog_title))
                 .setSingleChoiceItems(copy.toArray(new CharSequence[copy.size()]), checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -353,7 +355,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
                                 if (dialogSelectPosition != -1 && dialogSelectPosition != checkedItem) {
                                     onLayoutClick(copy.get(dialogSelectPosition).toLowerCase(Locale.ROOT), language);
                                 }
-                                dialog.dismiss();
+                                KCCommonUtils.dismissDialog((Dialog) dialog);
                             }
                         })
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -361,10 +363,11 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // negative button logic
-                                dialog.dismiss();
+                                KCCommonUtils.dismissDialog((Dialog) dialog);
                             }
                         })
-                .create().show();
+                .create();
+        KCCommonUtils.showDialog(alertDialog);
     }
 
     @Override

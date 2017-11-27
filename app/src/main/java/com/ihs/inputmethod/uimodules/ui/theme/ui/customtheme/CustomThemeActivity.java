@@ -53,6 +53,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSCommonHeaderView;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.core.themes.ThemeDirManager;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -486,9 +487,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                         .build();
             }
 
-            if (!savingDialog.isShowing() && !isFinishing()) {
-                savingDialog.show();
-            }
+            KCCommonUtils.showDialog(savingDialog);
 
             Resources res = getContext().getResources();
             Bitmap bitmap = Bitmap.createBitmap(HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res), Bitmap.Config.ARGB_8888);
@@ -680,8 +679,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     }
 
     private void dismissDialog(Dialog dialog){
-        if (dialog != null && dialog.isShowing() && !isFinishing()) {
-            dialog.dismiss();
+        if (dialog != null){
+            KCCommonUtils.dismissDialog(dialog);
         }
     }
 }

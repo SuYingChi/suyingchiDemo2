@@ -25,6 +25,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.homeui.MyStickerFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.keyboardutils.permission.PermissionUtils;
+import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 
 import java.util.ArrayList;
@@ -145,8 +146,8 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
     @Override
     protected void onStop() {
         super.onStop();
-        if (trialKeyboardDialog != null && trialKeyboardDialog.isShowing()) {
-            trialKeyboardDialog.dismiss();
+        if (trialKeyboardDialog != null ) {
+            KCCommonUtils.dismissDialog(trialKeyboardDialog);
         }
     }
 
@@ -191,7 +192,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
     @Override
     protected void onDestroy() {
         if (trialKeyboardDialog != null) {
-            trialKeyboardDialog.dismiss();
+            KCCommonUtils.dismissDialog(trialKeyboardDialog);
             trialKeyboardDialog = null;
         }
 
