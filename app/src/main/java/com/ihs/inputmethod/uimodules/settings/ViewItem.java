@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -56,11 +55,7 @@ final class ViewItem {
         textView.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());
 
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                imageView.setBackgroundResource(R.drawable.settings_key_common_background_selector);
-            } else {
-                imageView.setBackgroundResource(R.drawable.settings_key_common_background_selector);
-            }
+            imageView.setBackgroundResource(R.drawable.settings_key_common_background_selector);
         } else {
             imageView.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
         }
