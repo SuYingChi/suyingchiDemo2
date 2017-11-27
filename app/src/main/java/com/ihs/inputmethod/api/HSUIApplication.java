@@ -261,7 +261,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 });
             }
         }, 30000);
-        LockerAppGuideManager.getInstance().init(HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name), BuildConfig.LOCKER_APP_GUIDE);
+        LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
     }
 
     private void activeAdPlacements() {
