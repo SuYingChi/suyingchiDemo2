@@ -262,10 +262,10 @@ final class ViewItemBuilder {
             DrawableCompat.setTint(defPressedDrawable, Color.WHITE);
         }
 
-        stateListDrawable.addState(new int[]{android.R.attr.state_focused}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS));
-        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS));
-        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, HSKeyboardThemeManager.getStyledDrawable(defPressedDrawable, SETTINGS_KEY_FONTS));
-        stateListDrawable.addState(new int[]{}, HSKeyboardThemeManager.getStyledDrawable(defNormalDrawable, SETTINGS_KEY_FONTS));
+        stateListDrawable.addState(new int[]{android.R.attr.state_focused}, defPressedDrawable);
+        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, defPressedDrawable);
+        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, defPressedDrawable);
+        stateListDrawable.addState(new int[]{}, defNormalDrawable);
 
         return stateListDrawable;
     }
