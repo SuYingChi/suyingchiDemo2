@@ -8,7 +8,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -66,6 +65,7 @@ import com.keyboard.core.themes.custom.elements.KCSoundElement;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 import java.util.ArrayList;
@@ -283,7 +283,10 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                     mp4HSBackgroundView.setHSBackground(new String[]{backgroundElement.getKeyboardImageContentPath()});
                 }
             } else {
-                mp4HSBackgroundView.setHSBackground(new BitmapDrawable(BitmapFactory.decodeFile(customThemeData.getCustomizedBackgroundImagePath())));
+                Bitmap bitmap = ImageLoader.getInstance().loadImageSync(BaseImageDownloader.Scheme.FILE.wrap(customThemeData.getCustomizedBackgroundImagePath()));
+                if (bitmap != null){
+                    mp4HSBackgroundView.setHSBackground(new BitmapDrawable(bitmap));
+                }
             }
         }
     }
