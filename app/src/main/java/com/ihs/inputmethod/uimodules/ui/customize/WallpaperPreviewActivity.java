@@ -352,7 +352,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
                 if(BuildConfig.LOCKER_APP_GUIDE){
                     if(LockerAppGuideManager.getInstance().isLockerInstall()){
-                        LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
+                        LockerAppGuideManager.setLockerAppWallpaper(this,mCurrentWallpaper.getWallpaperUrl(),mCurrentWallpaper.getThumbnailUrl());
                     }else{
                         LockerAppGuideManager.getInstance().showDownloadLockerAlert(this,LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
                     }
