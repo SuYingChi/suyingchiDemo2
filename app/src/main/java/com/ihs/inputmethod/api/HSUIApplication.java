@@ -329,6 +329,11 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSDiverseSession.start();
     }
 
+    @Override
+    protected String getConfigFileName() {
+        return BuildConfig.DEBUG ? "config-d.ya" : "config-r.ya";
+    }
+
     private void recordInstallType() {
         boolean alreadyRecord = HSPreferenceHelper.getDefault().getBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, false);
         if (!alreadyRecord) {
