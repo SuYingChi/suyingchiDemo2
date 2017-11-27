@@ -155,6 +155,10 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
 
     @Override
     public void onFontCardClick(final int position) {
+        if (position >= fontModelList.size()) {
+            return;
+        }
+
         final FontModel fontModel = fontModelList.get(position);
         Runnable runnable = new Runnable() {
             @Override
