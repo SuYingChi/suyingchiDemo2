@@ -10,5 +10,5 @@
     <string name="locker_set_lock_screen">Set Lock Screen</string>
     <string name="locker_item_applied_guide_installed">Open Screen Locker to use it.</string>
     <string name="locker_item_applied_guide_not_install">Download Screen Locker to use it.</string>
-    <string name="label_share_to_instagram_failed">Share to instagram failed</string>
+    <string name="label_share_to_instagram_failed">Sharing to instagram has failed.</string>
 </resources>
