@@ -32,6 +32,7 @@ public class AdGooglePlayDialog extends Dialog {
     public AdGooglePlayDialog(@NonNull Context context, KCNativeAdView nativeAdView) {
         super(context, R.style.DesignDialog);
         this.nativeAdView = nativeAdView;
+
         init();
     }
 
@@ -74,11 +75,13 @@ public class AdGooglePlayDialog extends Dialog {
             @Override
             public void run() {
                 progressBarContainer.setVisibility(View.GONE);
-                if (nativeAdView.getParent() != null) {
-                    ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
+                if (nativeAdView != null) {
+                    if (nativeAdView.getParent() != null) {
+                        ((ViewGroup) nativeAdView.getParent()).removeView(nativeAdView);
+                    }
+                    frameLayoutAdContainer.addView(nativeAdView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    frameLayoutAdContainer.setVisibility(View.VISIBLE);
                 }
-                frameLayoutAdContainer.addView(nativeAdView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                frameLayoutAdContainer.setVisibility(View.VISIBLE);
                 setCanceledOnTouchOutside(true);
             }
         }, AD_DELAY);
