@@ -14,4 +14,14 @@
         android:layout_marginBottom="10dp"
         app:layout_marginTopPercent="5%" />
 
+    <com.ihs.inputmethod.uimodules.widget.DotsRadioGroup
+        android:id="@+id/settingsViewPager_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible" />
 </android.support.percent.PercentRelativeLayout>
