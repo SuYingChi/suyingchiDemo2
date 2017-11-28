@@ -28,6 +28,8 @@ final class ViewItemBuilder {
 
     private final static String SETTINGS_KEY_MY_THEME = "ic_settings_key_create_theme";
 
+    private final static String SETTINGS_KEY_SELECTOR = "ic_selector";
+
     private final static String SETTINGS_KEY_FONTS = "ic_settings_key_fonts";
 
     private final static String SETTINGS_KEY_SOUND_OFF = "ic_settings_key_sound_off";
@@ -67,6 +69,12 @@ final class ViewItemBuilder {
     static ViewItem getThemesItem(ViewItem.ViewItemListener viewItemListener) {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_themes),
                 getStateListDrawable(SETTINGS_KEY_THEME, SETTINGS_KEY_THEME)
+                , viewItemListener, false);
+    }
+
+    static ViewItem getSelectorItem(ViewItem.ViewItemListener viewItemListener) {
+        return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_selector),
+                getStateListDrawable(SETTINGS_KEY_SELECTOR, SETTINGS_KEY_SELECTOR)
                 , viewItemListener, false);
     }
 

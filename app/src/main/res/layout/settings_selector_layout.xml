@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="220.7dp">
+
+    <ImageView
+        android:id="@+id/selector_direction_left"
+        android:layout_centerVertical="true"
+        android:rotation="-90"
+        app:layout_aspectRatio="100%"
+        app:layout_marginStartPercent="10.6%"
+        app:layout_widthPercent="5.5%"
+        app:srcCompat="@drawable/ic_selector_arrow_top" />
+
+    <ImageView
+        android:id="@+id/selector_select"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/selector_direction_left"
+        android:layout_toRightOf="@+id/selector_direction_left"
+        app:layout_aspectRatio="100%"
+        app:layout_marginStartPercent="7.5%"
+        app:layout_widthPercent="14.9%"
+        app:srcCompat="@drawable/ic_selector_select_all" />
+
+    <ImageView
+        android:id="@+id/selector_direction_right"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/selector_select"
+        android:layout_toRightOf="@+id/selector_select"
+        android:rotation="90"
+        app:layout_aspectRatio="100%"
+        app:layout_marginStartPercent="7.5%"
+        app:layout_widthPercent="5.5%"
+        app:srcCompat="@drawable/ic_selector_arrow_top" />
+
+    <ImageView
+        android:id="@+id/selector_direction_up"
+        android:layout_above="@+id/selector_select"
+        app:layout_aspectRatio="100%"
+        app:layout_marginBottomPercent="11.9%"
+        app:layout_marginLeftPercent="27%"
+        app:layout_widthPercent="5.5%"
+        app:srcCompat="@drawable/ic_selector_arrow_top" />
+
+    <ImageView
+        android:id="@+id/selector_direction_down"
+        android:layout_below="@+id/selector_select"
+        android:rotation="180"
+        app:layout_aspectRatio="100%"
+        app:layout_marginLeftPercent="27%"
+        app:layout_marginTopPercent="11.9%"
+        app:layout_widthPercent="5.5%"
+        app:srcCompat="@drawable/ic_selector_arrow_top" />
+
+</android.support.percent.PercentRelativeLayout>
