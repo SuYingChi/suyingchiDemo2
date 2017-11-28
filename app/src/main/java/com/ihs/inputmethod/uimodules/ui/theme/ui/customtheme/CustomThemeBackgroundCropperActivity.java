@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
@@ -100,6 +101,11 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 cropperImageMaskView.getLocationInWindow(imageMaskViewLocation);
 
                 Bitmap cropperBitmap = takeViewShot(cropperImageView, imageMaskViewLocation[0] - imageViewLocation[0], imageMaskViewLocation[1] - imageViewLocation[1], keyboardWidth, keyboardHeight);
+                if (cropperBitmap == null) {
+                    Toast.makeText(CustomThemeBackgroundCropperActivity.this,R.string.label_use_photo_unsuccessfully,Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 //HSKeyboardThemeManager.getCustomThemeData().setCustomizedBitmap(cropperBitmap);
                 String cropperImagePath = KCCustomThemeData.saveCustomizedBackgroundBitmap(cropperBitmap, oldCropperImagePath);
 
@@ -140,6 +146,11 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
         Bitmap activityShot = view.getDrawingCache();
+
+        if (activityShot == null) {
+            return null;
+        }
+
 //        width = left + width > activityShot.getWidth() ? activityShot.getWidth() - left : width;
 //        height = top + height > activityShot.getHeight() ? activityShot.getHeight() - top : height;
         if (left + width > activityShot.getWidth()) {
