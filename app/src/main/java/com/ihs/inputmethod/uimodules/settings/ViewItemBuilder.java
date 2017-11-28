@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.ihs.app.analytics.HSAnalytics;
@@ -243,9 +244,9 @@ final class ViewItemBuilder {
         Drawable defNormalDrawable = getStyledDrawableFromResources(normalImageName);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()), PorterDuff.Mode.SRC_IN);
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal), PorterDuff.Mode.SRC_IN);
             } else {
-                DrawableCompat.setTint(defNormalDrawable, getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()));
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal));
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -257,9 +258,9 @@ final class ViewItemBuilder {
 
         Drawable defPressedDrawable = getStyledDrawableFromResources(pressedImageName);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            defPressedDrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+            defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_press), PorterDuff.Mode.SRC_IN);
         } else {
-            DrawableCompat.setTint(defPressedDrawable, Color.WHITE);
+            DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_press));
         }
 
         stateListDrawable.addState(new int[]{android.R.attr.state_focused}, defPressedDrawable);
@@ -274,7 +275,7 @@ final class ViewItemBuilder {
         int resId = HSApplication.getContext().getResources().getIdentifier(resName, "drawable", HSApplication.getContext().getPackageName());
         if (resId != 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                return HSApplication.getContext().getResources().getDrawable(resId);
+                return ContextCompat.getDrawable(HSApplication.getContext(), resId);
             } else {
                 return VectorDrawableCompat.create(HSApplication.getContext().getResources(), resId, null);
             }

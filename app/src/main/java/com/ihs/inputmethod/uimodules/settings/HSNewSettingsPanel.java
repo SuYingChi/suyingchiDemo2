@@ -24,6 +24,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
+import com.ihs.inputmethod.uimodules.widget.DotsRadioGroup;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -44,6 +45,7 @@ public class HSNewSettingsPanel extends BasePanel {
     private ViewItem themeItem;
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
+    private DotsRadioGroup dotsRadioGroup;
 
     public HSNewSettingsPanel() {
         mContext = HSApplication.getContext();
@@ -58,8 +60,11 @@ public class HSNewSettingsPanel extends BasePanel {
         if (settingPanelView == null) {
             View view = View.inflate(getContext(), R.layout.panel_settings, null);
             settingsViewPager = (SettingsViewPager) view.findViewById(R.id.settingsViewPager);
-
             settingsViewPager.setItems(prepareItems());
+
+            dotsRadioGroup = view.findViewById(R.id.settingsViewPager_indicator);
+            dotsRadioGroup.setDotView(settingsViewPager, settingsViewPager.getPageCount());
+
             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                 nativeAdHelper = new NativeAdHelper();
                 nativeAdHelper.createAd();

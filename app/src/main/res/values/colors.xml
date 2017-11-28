@@ -126,6 +126,9 @@
     <color name="custom_rate_alert_button_bg">#d53bf1</color>
     <color name="custom_share_alert_button_bg">#4589f3</color>
 
+    <color name="settings_button_light_normal">#33ffffff</color>
+    <color name="settings_button_dark_normal">#cc000000</color>
+    <color name="settings_button_press">#cc0f126d</color>
 
     <!-- Wallpaper -->
     <color name="wallpaper_activities_control_highlight">#dadada</color>
