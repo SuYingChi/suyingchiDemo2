@@ -250,9 +250,9 @@ final class ViewItemBuilder {
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(Color.parseColor("#29A0CB"), PorterDuff.Mode.SRC_IN);
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon), PorterDuff.Mode.SRC_IN);
             } else {
-                DrawableCompat.setTint(defNormalDrawable, Color.parseColor("#29A0CB"));
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon));
             }
         }
 

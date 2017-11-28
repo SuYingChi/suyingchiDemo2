@@ -60,7 +60,7 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             DrawableCompat.setTint(selectedDrawable, getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()));
         } else {
-            DrawableCompat.setTint(selectedDrawable, Color.parseColor("#29A0CB"));
+            DrawableCompat.setTint(selectedDrawable, ContextCompat.getColor(context, R.color.settings_button_light_icon));
         }
         ShapeDrawable normalDrawable = new ShapeDrawable(new OvalShape());
         normalDrawable.setIntrinsicHeight(7);
