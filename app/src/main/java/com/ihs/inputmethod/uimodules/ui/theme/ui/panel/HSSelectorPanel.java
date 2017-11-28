@@ -3,10 +3,14 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.panel;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
@@ -17,13 +21,24 @@ import com.ihs.panelcontainer.BasePanel;
  */
 
 public class HSSelectorPanel extends BasePanel {
+
     @Override
     protected View onCreatePanelView() {
         //set functionBar setting button type
+        FrameLayout panelView = new FrameLayout(HSApplication.getContext());
         BaseFunctionBar functionBar = (BaseFunctionBar) panelActionListener.getBarView();
         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.BACK);
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.settings_selector_layout, null);
-        return view;
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(R.layout.settings_selector_layout, null);
+        view.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) HSApplication.getContext().getResources().getDimension(R.dimen.config_default_keyboard_height));
+        panelView.addView(view, layoutParams);
+        return panelView;
     }
 
     public HSSelectorPanel() {
