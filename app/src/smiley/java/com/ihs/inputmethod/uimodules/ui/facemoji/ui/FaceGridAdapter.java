@@ -20,7 +20,9 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,18 +219,36 @@ public class FaceGridAdapter extends BaseAdapter {
 
         nowUsed.setVisibility((!isInEditMode()&&(face.getUri()!=null)&&face.getUri().equals(FacemojiManager.getCurrentFacePicUri()))?View.VISIBLE:View.GONE);
 
-
-        // face bitmap
-        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(
+        ImageLoader.getInstance().loadImage(
                 face.getUri().toString(),
-                new DisplayImageOptions.Builder().imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true).build()
-                );
+                new DisplayImageOptions.Builder().imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).build()
+                , new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
 
-        if (!isInEditMode()) {
-            faceView.setImageDrawable(HSDrawableUtils.getDimmedForegroundDrawable(bitmap));
-        } else {
-            faceView.setImageBitmap(bitmap);
-        }
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        if (loadedImage != null) {
+                            if (!isInEditMode()) {
+                                faceView.setImageDrawable(HSDrawableUtils.getDimmedForegroundDrawable(loadedImage));
+                            } else {
+                                faceView.setImageBitmap(loadedImage);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+
+                    }
+                });
     }
 
     public void resetAllItems() {
