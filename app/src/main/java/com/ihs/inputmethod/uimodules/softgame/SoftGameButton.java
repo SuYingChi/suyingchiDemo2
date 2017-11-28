@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -176,11 +175,7 @@ public class SoftGameButton extends FrameLayout {
         newGameTip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HSApplication.getContext(), GameActivity.class);
-                intent.putExtra("url", softGameItemBean.getLink());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                HSApplication.getContext().startActivity(intent);
-                HSAnalytics.logEvent("keyboard_game_bubble_clicked");
+                GameActivity.startGame(softGameItemBean.getLink(),"keyboard_game_bubble_clicked");
             }
         });
 

@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.Gravity;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -92,21 +90,13 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             softGameItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(HSApplication.getContext(), GameActivity.class);
-                    intent.putExtra("url", softGameDisplayItem.getLink());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    HSApplication.getContext().startActivity(intent);
-                    HSAnalytics.logEvent("game_play_clicked", "game_play_clicked", softGameDisplayItem.getName());
+                    GameActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName());
                 }
             });
             softGameItemViewHolder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(HSApplication.getContext(), GameActivity.class);
-                    intent.putExtra("url", softGameDisplayItem.getLink());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    HSApplication.getContext().startActivity(intent);
-                    HSAnalytics.logEvent("game_play_clicked", "game_play_clicked", softGameDisplayItem.getName());
+                    GameActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName());
                 }
             });
         }
