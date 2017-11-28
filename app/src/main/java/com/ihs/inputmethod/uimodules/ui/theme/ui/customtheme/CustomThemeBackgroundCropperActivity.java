@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.HSMatrixImageView;
@@ -51,8 +52,8 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
         setContentView(R.layout.custom_theme_image_cropper);
 
         imagePath = getIntent().getStringExtra(CopperImagePath);
-        keyboardWidth = getIntent().getIntExtra(KeyboardWidth, 0);
-        keyboardHeight = getIntent().getIntExtra(KeyboardHeight, 0);
+        keyboardWidth = getIntent().getIntExtra(KeyboardWidth, HSResourceUtils.getDefaultKeyboardWidth(getResources()));
+        keyboardHeight = getIntent().getIntExtra(KeyboardHeight, HSResourceUtils.getDefaultKeyboardHeight(getResources()));
         oldCropperImagePath = getIntent().getStringExtra(OldCropperImagePath);
         HSLog.d(String.format("page:%s,imagePath:%s", getClass().getSimpleName(), imagePath));
         cropperImage = extractThumbNail(imagePath, keyboardWidth, keyboardHeight);
@@ -118,8 +119,8 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("CropperImagePath", cropperImagePath);
                     setResult(Activity.RESULT_OK, resultIntent);
-                    CustomThemeBackgroundCropperActivity.this.finish();
                 }
+                CustomThemeBackgroundCropperActivity.this.finish();
             }
         });
     }
