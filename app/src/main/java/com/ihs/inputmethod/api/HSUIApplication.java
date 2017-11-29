@@ -270,6 +270,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
         // 全屏插页广告
         AcbInterstitialAdManager.getInstance().activePlacementInProcess(getString(R.string.placement_full_screen_open_keyboard));
+        AcbInterstitialAdManager.getInstance().activePlacementInProcess(getString(R.string.placement_full_screen_game));
 
         // Native广告
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_cardad));
