@@ -1,7 +1,9 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.panel;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
@@ -29,6 +32,9 @@ public class HSSelectorPanel extends BasePanel {
     private final static String SELECTOR_KEY_SELECTOR = "ic_selector";
     private final static String SELECTOR_KEY_SELECT_ALL = "ic_selector_select_all";
     private final static String SELECTOR_KEY_CUT = "ic_selector_cut";
+    private final static String SELECTOR_KEY_COPY = "ic_selector_copy";
+    private final static String SELECTOR_KEY_PASTE = "ic_selector_copy";
+    private final static String SELECTOR_KEY_DELETE = "ic_selector_delete";
 
     private ImageView selectorDirectionUp;
     private ImageView selectorDirectionDown;
@@ -36,6 +42,10 @@ public class HSSelectorPanel extends BasePanel {
     private ImageView selectorDirectionRight;
     private ImageView selectorDirectionSelect;
     private ImageView selectorSelectAllOrCut;
+    private ImageView selectorCopy;
+    private ImageView selectorPaste;
+    private ImageView selectorDelete;
+    private TextView selectorSelectAllOrCutTextView;
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
@@ -58,6 +68,12 @@ public class HSSelectorPanel extends BasePanel {
                     selectorSelectAllOrCut.setSelected(true);
                     HSLog.d("");
                 }
+            } else if (v == selectorCopy) {
+                HSLog.d("");
+            } else if (v == selectorPaste) {
+                HSLog.d("");
+            } else if (v == selectorDelete) {
+                HSLog.d("");
             }
         }
     };
@@ -107,6 +123,23 @@ public class HSSelectorPanel extends BasePanel {
         selectorSelectAllOrCut.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_SELECT_ALL, SELECTOR_KEY_CUT));
         selectorSelectAllOrCut.setOnClickListener(clickListener);
 
+        selectorCopy = selectorView.findViewById(R.id.selector_copy_image);
+        selectorCopy.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_COPY, SELECTOR_KEY_COPY));
+        selectorCopy.setOnClickListener(clickListener);
+
+        selectorPaste = selectorView.findViewById(R.id.selector_paste_image);
+        selectorPaste.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_PASTE, SELECTOR_KEY_PASTE));
+        selectorPaste.setOnClickListener(clickListener);
+
+        selectorDelete = selectorView.findViewById(R.id.selector_delete_image);
+        selectorDelete.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_DELETE, SELECTOR_KEY_DELETE));
+        selectorDelete.setOnClickListener(clickListener);
+
+        selectorSelectAllOrCutTextView = selectorView.findViewById(R.id.selector_select_all_and_cut_text);
+        TextView selectorCopyTextView = selectorView.findViewById(R.id.selector_copy_text);
+        TextView selectorPasteTextView = selectorView.findViewById(R.id.selector_paste_text);
+        TextView selectorDeleteTextView = selectorView.findViewById(R.id.selector_delete_text);
+
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             selectorDirectionUp.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDirectionDown.setBackgroundResource(R.drawable.settings_key_common_background_selector);
@@ -114,6 +147,13 @@ public class HSSelectorPanel extends BasePanel {
             selectorDirectionRight.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDirectionSelect.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorSelectAllOrCut.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            selectorCopy.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            selectorPaste.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            selectorDelete.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            selectorSelectAllOrCutTextView.setTextColor(Color.WHITE);
+            selectorCopyTextView.setTextColor(Color.WHITE);
+            selectorPasteTextView.setTextColor(Color.WHITE);
+            selectorDeleteTextView.setTextColor(Color.WHITE);
         } else {
             selectorDirectionUp.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionDown.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
@@ -121,6 +161,14 @@ public class HSSelectorPanel extends BasePanel {
             selectorDirectionRight.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionSelect.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorSelectAllOrCut.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
+            selectorCopy.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
+            selectorPaste.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
+            selectorDelete.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
+            int color = ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon);
+            selectorSelectAllOrCutTextView.setTextColor(color);
+            selectorCopyTextView.setTextColor(color);
+            selectorPasteTextView.setTextColor(color);
+            selectorDeleteTextView.setTextColor(color);
         }
     }
 
