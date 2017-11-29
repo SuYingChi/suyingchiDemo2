@@ -6,10 +6,10 @@ build_job:
   stage: build
   script:
   - git submodule update --init
-  - ./gradlew assembleGrinRelease
+  - ./gradlew assembleSmileyRelease
   - ./gradlew app:dependencies > app/build/outputs/build-dependencies.txt
   - cd app/ziptool/
-  - ./build_apk_grin.sh
+  - ./build_apk_smiley.sh
   artifacts:
     paths:
     - app/build/outputs/apk/*/release/*.apk
@@ -19,8 +19,7 @@ build_job:
     - app/build/outputs/build-dependencies.txt
     expire_in: 1 week
   only:
-    - develop
-    - master
+    - cjx_boost_speedup
   tags:
   - camera
 
