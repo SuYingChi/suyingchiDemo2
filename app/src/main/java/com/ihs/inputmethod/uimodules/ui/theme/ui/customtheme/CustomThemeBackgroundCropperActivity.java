@@ -134,6 +134,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                 intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
                 intent.putExtra(ThemeHomeActivity.EXTRA_SHOW_AD_ON_TRIAL_KEYBOARD_DISMISS, false);
                 startActivity(intent);
+                CustomThemeBackgroundCropperActivity.this.finish();
             }
         }
     }
@@ -237,7 +238,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
             while (b == null && scale <= 16) {
                 try {
                     b = BitmapFactory.decodeStream(fis, null, o2);
-                } catch (OutOfMemoryError e){
+                } catch (OutOfMemoryError e) {
                     scale *= 2;
                 }
             }
