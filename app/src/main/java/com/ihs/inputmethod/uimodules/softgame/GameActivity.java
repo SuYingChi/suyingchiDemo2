@@ -91,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
     public static void startGame(String gameUrl, String callFrom, String gameName) {
         Intent intent = new Intent(HSApplication.getContext(), GameActivity.class);
         intent.putExtra("url", gameUrl);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         HSApplication.getContext().startActivity(intent);
         if (TextUtils.isEmpty(gameName)) {
             HSAnalytics.logEvent(callFrom);
