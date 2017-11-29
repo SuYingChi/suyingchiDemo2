@@ -119,8 +119,8 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("CropperImagePath", cropperImagePath);
                     setResult(Activity.RESULT_OK, resultIntent);
+                    CustomThemeBackgroundCropperActivity.this.finish();
                 }
-                CustomThemeBackgroundCropperActivity.this.finish();
             }
         });
     }
