@@ -4192,15 +4192,6 @@
 				</dict>
 				<key>NativeAdPosition</key>
 				<dict>
-					<key>HomeBackgroundAd</key>
-					<array>
-						<dict>
-							<key>NativeAd</key>
-							<string>Grin_A(NativeAds)ShortcutAd</string>
-							<key>Position</key>
-							<integer>2</integer>
-						</dict>
-					</array>
 					<key>ThemeAd</key>
 					<array>
 						<dict>
