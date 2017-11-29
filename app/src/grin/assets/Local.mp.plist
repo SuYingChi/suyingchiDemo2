@@ -6,51 +6,6 @@
 	<dict>
 		<key>Application</key>
 		<dict>
-			<key>DownloadScreenLocker</key>
-			<dict>
-				<key>LockerApp</key>
-				<string>com.wallpaper.theme.privacy.smart.lock.screen</string>
-				<key>UnlockForFree</key>
-				<dict>
-					<key>title</key>
-					<string>Screen Locker</string>
-					<key>body</key>
-					<string>Download Screen Locker and you can use this for free.</string>
-					<key>button</key>
-					<string>UNLOCK FOR FREE</string>
-				</dict>
-				<key>Wallpaper</key>
-				<dict>
-					<key>title</key>
-					<string>Oops</string>
-					<key>body</key>
-					<string>Because of policy constraints, you need to download Screen Locker app to apply this theme.</string>
-					<key>button</key>
-					<string>DOWNLOAD</string>
-				</dict>
-				<key>AppOpen</key>
-				<dict>
-					<key>title</key>
-					<string>Screen Locker</string>
-					<key>body</key>
-					<string>Download Screen Locker and add your favorite themes on lock screen!</string>
-					<key>button</key>
-					<string>DOWNLOAD</string>
-				</dict>
-				<key>UnlockScreen</key>
-				<dict>
-					<key>AlertIntervalInHour</key>
-					<integer>12</integer>
-					<key>ShowUnlockScreenAlert</key>
-					<true/>
-					<key>title</key>
-					<string>Try New Screen Locker</string>
-					<key>body</key>
-					<string>1. 5000+ Beautiful themes to choose \n2. Live weather forecast \n3. Secure your privacy</string>
-					<key>button</key>
-					<string>TRY NOW</string>
-				</dict>
-			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -407,6 +362,51 @@
 				<key>LaunchDelayTime</key>
 				<integer>3000</integer>
 			</dict>
+			<key>DownloadScreenLocker</key>
+			<dict>
+				<key>AppOpen</key>
+				<dict>
+					<key>body</key>
+					<string>INSTALL Screen Locker and add your favorite themes on lock screen!</string>
+					<key>button</key>
+					<string>INSTALL</string>
+					<key>title</key>
+					<string>Screen Locker</string>
+				</dict>
+				<key>LockerApp</key>
+				<string>com.keyboard.lock.theme.wallpaper</string>
+				<key>UnlockForFree</key>
+				<dict>
+					<key>body</key>
+					<string>Download Screen Locker and you can use this for free.</string>
+					<key>button</key>
+					<string>UNLOCK FOR FREE</string>
+					<key>title</key>
+					<string>Screen Locker</string>
+				</dict>
+				<key>UnlockScreen</key>
+				<dict>
+					<key>AlertIntervalInHour</key>
+					<integer>4</integer>
+					<key>ShowUnlockScreenAlert</key>
+					<true/>
+					<key>body</key>
+					<string>1. 5000+ beautiful themes to choose \n2. Live weather forecast \n3. Secure your privacy</string>
+					<key>button</key>
+					<string>OK</string>
+					<key>title</key>
+					<string>Try New Screen Locker</string>
+				</dict>
+				<key>Wallpaper</key>
+				<dict>
+					<key>body</key>
+					<string>Because of policy constraints, you need to download Screen Locker app to apply this theme.</string>
+					<key>button</key>
+					<string>DOWNLOAD</string>
+					<key>title</key>
+					<string>Oops</string>
+				</dict>
+			</dict>
 			<key>EnableMessageFunction</key>
 			<false/>
 			<key>FeaturePrompt</key>
@@ -544,8 +544,6 @@
 					<integer>14</integer>
 				</dict>
 				<dict>
-					<key>downloadLockerToUnlock</key>
-					<true/>
 					<key>example</key>
 					<string>S̶t̶r̶i̶k̶e̶ o̶u̶t̶</string>
 					<key>name</key>
@@ -562,6 +560,8 @@
 					<integer>21</integer>
 				</dict>
 				<dict>
+					<key>downloadLockerToUnlock</key>
+					<true/>
 					<key>example</key>
 					<string>ꋪꀎꈤꍟꌗ</string>
 					<key>name</key>
@@ -1892,12 +1892,12 @@
 							<string>galaxydream</string>
 						</dict>
 						<dict>
-							<key>downloadLockerToUnlock</key>
-							<true/>
 							<key>apkUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Clown Fish.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Clown Fish.jpg</string>
+							<key>downloadLockerToUnlock</key>
+							<true/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Clown Fish.jpg</string>
 							<key>lockerImgUrl</key>
@@ -1938,8 +1938,6 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/LuxuryBlack.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/LuxuryBlack.jpg</string>
-							<key>downloadLockerToUnlock</key>
-							<true/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/LuxuryBlack.jpg</string>
 							<key>lockerImgUrl</key>
@@ -1960,6 +1958,8 @@
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/Galaxy.apk</string>
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Galaxy.jpg</string>
+							<key>downloadLockerToUnlock</key>
+							<true/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Galaxy.jpg</string>
 							<key>lockerImgUrl</key>
@@ -6151,7 +6151,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6177,7 +6177,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6203,7 +6203,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6229,7 +6229,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6255,7 +6255,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6281,7 +6281,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6307,7 +6307,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6333,7 +6333,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3</real>
+								<integer>3</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6359,7 +6359,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6395,7 +6395,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6431,7 +6431,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6467,7 +6467,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6503,7 +6503,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6539,7 +6539,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6575,7 +6575,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6614,7 +6614,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6653,7 +6653,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6692,7 +6692,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6731,7 +6731,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3</real>
+								<integer>3</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6829,7 +6829,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6855,7 +6855,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6881,7 +6881,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6907,7 +6907,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6933,7 +6933,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6959,7 +6959,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6985,7 +6985,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7011,7 +7011,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7047,7 +7047,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7083,7 +7083,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7119,7 +7119,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7155,7 +7155,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7191,7 +7191,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7227,7 +7227,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7266,7 +7266,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7305,7 +7305,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7344,7 +7344,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7383,7 +7383,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7449,7 +7449,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7475,7 +7475,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7501,7 +7501,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7527,7 +7527,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7553,7 +7553,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7579,7 +7579,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7605,7 +7605,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7631,7 +7631,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3</real>
+								<integer>3</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7657,7 +7657,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7693,7 +7693,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7729,7 +7729,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7765,7 +7765,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7801,7 +7801,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7837,7 +7837,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7873,7 +7873,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7912,7 +7912,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7951,7 +7951,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7990,7 +7990,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8029,7 +8029,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8082,7 +8082,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8108,7 +8108,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8134,7 +8134,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8160,7 +8160,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8186,7 +8186,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8212,7 +8212,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8238,7 +8238,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8264,7 +8264,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8300,7 +8300,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8336,7 +8336,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8372,7 +8372,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8408,7 +8408,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8444,7 +8444,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8480,7 +8480,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8519,7 +8519,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8558,7 +8558,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8597,7 +8597,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8636,7 +8636,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8717,7 +8717,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8743,7 +8743,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8769,7 +8769,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8795,7 +8795,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8821,7 +8821,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8857,7 +8857,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8893,7 +8893,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8929,7 +8929,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8968,7 +8968,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9007,7 +9007,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9060,7 +9060,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9086,7 +9086,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9112,7 +9112,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9138,7 +9138,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9164,7 +9164,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9190,7 +9190,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9216,7 +9216,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9242,7 +9242,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9278,7 +9278,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9314,7 +9314,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9350,7 +9350,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9386,7 +9386,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9422,7 +9422,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9458,7 +9458,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9497,7 +9497,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9536,7 +9536,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9575,7 +9575,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9614,7 +9614,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
