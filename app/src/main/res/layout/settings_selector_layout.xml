@@ -9,9 +9,9 @@
         android:layout_centerVertical="true"
         android:padding="8dp"
         android:rotation="-90"
-        app:layout_aspectRatio="57.7%"
-        app:layout_marginStartPercent="8.3%"
-        app:layout_widthPercent="8.6%"
+        app:layout_aspectRatio="173.2%"
+        app:layout_marginStartPercent="5%"
+        app:layout_widthPercent="15%"
         app:srcCompat="@drawable/ic_selector_arrow_top" />
 
     <ImageView
@@ -21,7 +21,7 @@
         android:layout_toRightOf="@+id/selector_direction_left"
         android:padding="13dp"
         app:layout_aspectRatio="100%"
-        app:layout_marginStartPercent="5.2%"
+        app:layout_marginStartPercent="3.2%"
         app:layout_widthPercent="15%"
         app:srcCompat="@drawable/ic_selector" />
 
@@ -32,9 +32,9 @@
         android:layout_toRightOf="@+id/selector_select"
         android:padding="8dp"
         android:rotation="90"
-        app:layout_aspectRatio="57.7%"
-        app:layout_marginStartPercent="5.2%"
-        app:layout_widthPercent="8.6%"
+        app:layout_aspectRatio="173.2%"
+        app:layout_marginStartPercent="3.2%"
+        app:layout_widthPercent="15%"
         app:srcCompat="@drawable/ic_selector_arrow_top" />
 
     <ImageView
@@ -68,7 +68,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/selector_direction_up"
         android:orientation="vertical"
-        app:layout_marginRightPercent="9.2%">
+        app:layout_marginRightPercent="5%">
 
         <ImageView
             android:id="@+id/selector_copy_image"
@@ -83,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11.7dp"
+            android:gravity="center_horizontal"
             android:text="@string/setting_item_selector_copy" />
 
         <ImageView
@@ -99,6 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11.7dp"
+            android:gravity="center_horizontal"
             android:text="@string/setting_item_selector_delete" />
     </LinearLayout>
 
@@ -110,7 +112,7 @@
         android:layout_toLeftOf="@+id/selector_right_container"
         android:layout_toStartOf="@+id/selector_right_container"
         android:orientation="vertical"
-        app:layout_marginRightPercent="8%">
+        app:layout_marginRightPercent="5%">
 
         <ImageView
             android:id="@+id/selector_select_all_and_cut_image"
@@ -125,6 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11.7dp"
+            android:gravity="center_horizontal"
             android:text="@string/setting_item_selector_select_all" />
 
         <ImageView
@@ -141,6 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11.7dp"
+            android:gravity="center_horizontal"
             android:text="@string/setting_item_selector_paste" />
     </LinearLayout>
 
