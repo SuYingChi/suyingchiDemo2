@@ -13,7 +13,6 @@ import android.webkit.WebViewClient;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -98,10 +97,10 @@ public class GameActivity extends AppCompatActivity {
         } else {
             HSAnalytics.logEvent(callFrom, callFrom, gameName);
         }
-        if (!HSPreferenceHelper.getDefault().getBoolean("game_shortcut_created", false)) {
-            HSPreferenceHelper.getDefault().putBoolean("game_shortcut_created", true);
-            addShortcut(HSApplication.getContext());
-        }
+//        if (!HSPreferenceHelper.getDefault().getBoolean("game_shortcut_created", false)) {
+//            HSPreferenceHelper.getDefault().putBoolean("game_shortcut_created", true);
+//            addShortcut(HSApplication.getContext());
+//        }
     }
 
     private static void addShortcut(Context context) {
