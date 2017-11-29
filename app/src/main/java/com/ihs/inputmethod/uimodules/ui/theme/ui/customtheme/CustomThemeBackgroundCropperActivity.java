@@ -179,17 +179,19 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
 
             boolean isRotateNeeded = orientation == ExifInterface.ORIENTATION_ROTATE_90 || orientation == ExifInterface.ORIENTATION_ROTATE_270;
             Bitmap bitmap = decodeFile(new File(path), keyboardWidth, isRotateNeeded);
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    bitmap = rotateImage(bitmap, 90);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    bitmap = rotateImage(bitmap, 180);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    bitmap = rotateImage(bitmap, 270);
-                    break;
-                // etc.
+            if (bitmap != null) {
+                switch (orientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        bitmap = rotateImage(bitmap, 90);
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        bitmap = rotateImage(bitmap, 180);
+                        break;
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        bitmap = rotateImage(bitmap, 270);
+                        break;
+                    // etc.
+                }
             }
             return bitmap;
         } catch (IOException e) {
@@ -229,9 +231,16 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
 
             //Decode with inSampleSize
             BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale + 1;
+            scale++;
+            o2.inSampleSize = scale;
             fis = new FileInputStream(f);
-            b = BitmapFactory.decodeStream(fis, null, o2);
+            while (b == null && scale <= 16) {
+                try {
+                    b = BitmapFactory.decodeStream(fis, null, o2);
+                } catch (OutOfMemoryError e){
+                    scale *= 2;
+                }
+            }
             fis.close();
         } catch (IOException e) {
             e.printStackTrace();
