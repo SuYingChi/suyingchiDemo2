@@ -105,7 +105,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/selector_select_all_and_cut_container"
+        android:id="@+id/selector_select_all_or_cut_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/selector_right_container"
@@ -115,7 +115,7 @@
         app:layout_marginRightPercent="5%">
 
         <ImageView
-            android:id="@+id/selector_select_all_and_cut_image"
+            android:id="@+id/selector_select_all_or_cut_image"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_gravity="center_horizontal"

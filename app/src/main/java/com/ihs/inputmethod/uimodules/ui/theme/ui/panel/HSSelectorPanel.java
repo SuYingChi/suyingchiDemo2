@@ -1,11 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.panel;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RotateDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,10 +11,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
+import com.ihs.inputmethod.uimodules.settings.ViewItemBuilder;
 import com.ihs.panelcontainer.BasePanel;
 
 /**
@@ -27,11 +25,42 @@ import com.ihs.panelcontainer.BasePanel;
 
 public class HSSelectorPanel extends BasePanel {
 
+    private final static String SELECTOR_KEY_ARROW = "ic_selector_arrow_top";
+    private final static String SELECTOR_KEY_SELECTOR = "ic_selector";
+    private final static String SELECTOR_KEY_SELECT_ALL = "ic_selector_select_all";
+    private final static String SELECTOR_KEY_CUT = "ic_selector_cut";
+
     private ImageView selectorDirectionUp;
     private ImageView selectorDirectionDown;
     private ImageView selectorDirectionLeft;
     private ImageView selectorDirectionRight;
     private ImageView selectorDirectionSelect;
+    private ImageView selectorSelectAllOrCut;
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == selectorDirectionUp) {
+                HSLog.d("");
+            } else if (v == selectorDirectionDown) {
+                HSLog.d("");
+            } else if (v == selectorDirectionLeft) {
+                HSLog.d("");
+            } else if (v == selectorDirectionRight) {
+                HSLog.d("");
+            } else if (v == selectorDirectionSelect) {
+                HSLog.d("");
+            } else if (v == selectorSelectAllOrCut) {
+                if (selectorSelectAllOrCut.isSelected()) {
+                    selectorSelectAllOrCut.setSelected(false);
+                    HSLog.d("");
+                } else {
+                    selectorSelectAllOrCut.setSelected(true);
+                    HSLog.d("");
+                }
+            }
+        }
+    };
 
     @Override
     protected View onCreatePanelView() {
@@ -55,15 +84,28 @@ public class HSSelectorPanel extends BasePanel {
             }
         });
         selectorDirectionUp = selectorView.findViewById(R.id.selector_direction_up);
-        selectorDirectionUp.setImageDrawable(VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.ic_selector_arrow_top, null));
+        selectorDirectionUp.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
+        selectorDirectionUp.setOnClickListener(clickListener);
+
         selectorDirectionDown = selectorView.findViewById(R.id.selector_direction_down);
-        selectorDirectionDown.setImageDrawable(VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.ic_selector_arrow_top, null));
+        selectorDirectionDown.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
+        selectorDirectionDown.setOnClickListener(clickListener);
+
         selectorDirectionLeft = selectorView.findViewById(R.id.selector_direction_left);
-        selectorDirectionLeft.setImageDrawable(VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.ic_selector_arrow_top, null));
+        selectorDirectionLeft.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
+        selectorDirectionLeft.setOnClickListener(clickListener);
+
         selectorDirectionRight = selectorView.findViewById(R.id.selector_direction_right);
-        selectorDirectionRight.setImageDrawable(VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.ic_selector_arrow_top, null));
+        selectorDirectionRight.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
+        selectorDirectionRight.setOnClickListener(clickListener);
+
         selectorDirectionSelect = selectorView.findViewById(R.id.selector_select);
-        selectorDirectionSelect.setImageDrawable(VectorDrawableCompat.create(HSApplication.getContext().getResources(), R.drawable.ic_selector, null));
+        selectorDirectionSelect.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_SELECTOR, SELECTOR_KEY_SELECTOR));
+        selectorDirectionSelect.setOnClickListener(clickListener);
+
+        selectorSelectAllOrCut = selectorView.findViewById(R.id.selector_select_all_or_cut_image);
+        selectorSelectAllOrCut.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_SELECT_ALL, SELECTOR_KEY_CUT));
+        selectorSelectAllOrCut.setOnClickListener(clickListener);
 
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             selectorDirectionUp.setBackgroundResource(R.drawable.settings_key_common_background_selector);
@@ -71,18 +113,15 @@ public class HSSelectorPanel extends BasePanel {
             selectorDirectionLeft.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDirectionRight.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDirectionSelect.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            selectorSelectAllOrCut.setBackgroundResource(R.drawable.settings_key_common_background_selector);
         } else {
             selectorDirectionUp.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionDown.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionLeft.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionRight.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionSelect.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
+            selectorSelectAllOrCut.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
         }
-    }
-
-    private Drawable getBgDrawable() {
-        StateListDrawable stateListDrawable = new StateListDrawable();
-        return stateListDrawable;
     }
 
     public HSSelectorPanel() {

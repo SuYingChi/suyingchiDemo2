@@ -22,7 +22,7 @@ import com.ihs.inputmethod.uimodules.R;
  * Created by chenyuanming on 22/09/2016.
  */
 
-final class ViewItemBuilder {
+public final class ViewItemBuilder {
 
     private final static String SETTINGS_KEY_THEME = "ic_menu_cloth";
 
@@ -247,7 +247,7 @@ final class ViewItemBuilder {
     }
 
 
-    private static StateListDrawable getStateListDrawable(String normalImageName, String pressedImageName) {
+    public static StateListDrawable getStateListDrawable(String normalImageName, String pressedImageName) {
         StateListDrawable stateListDrawable = new StateListDrawable();
         Drawable defNormalDrawable = getStyledDrawableFromResources(normalImageName);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
@@ -279,7 +279,7 @@ final class ViewItemBuilder {
         return stateListDrawable;
     }
 
-    private static Drawable getStyledDrawableFromResources(String resName) {
+    public static Drawable getStyledDrawableFromResources(String resName) {
         int resId = HSApplication.getContext().getResources().getIdentifier(resName, "drawable", HSApplication.getContext().getPackageName());
         if (resId != 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
