@@ -95,7 +95,7 @@ public class DownloadUtils {
         adLoadingView.configParams(null, thumbnailDrawable != null ? thumbnailDrawable : resources.getDrawable(R.drawable.ic_sticker_loading_image),
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
-                resources.getString(R.string.ad_placement_lucky),
+                resources.getString(R.string.ad_placement_applying),
                 downloadSuccess -> {
                     if (downloadSuccess) {
                     } else {

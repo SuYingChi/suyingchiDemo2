@@ -52,7 +52,7 @@ public class ThemeZipDownloadUtils {
         adLoadingView.configParams(null,null,
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
-                resources.getString(R.string.ad_placement_lucky),
+                resources.getString(R.string.ad_placement_applying),
                 downloadSuccess -> {
                     if (downloadSuccess) {
                         //设置下载成功移到此处，如果用户在AdLoadingView最后的缓冲时间内点击close按钮则应该不设置为下载成功
