@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.acb.call.customize.AcbCallManager;
 import com.artw.lockscreen.ScreenLockerManager;
@@ -135,25 +137,33 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     @Override
     public void onCreate() {
+        long t = SystemClock.elapsedRealtime();
         super.onCreate();
+
 
         /**
          * !!注意，application下不要初始化东西，需要初始化的请放在 onMainProcessApplicationCreate
          */
         String packageName = getPackageName();
         String processName = getProcessName();
+        Log.w("cjx","super.onCreate() cost time :" + (SystemClock.elapsedRealtime() - t) + " processName:"+processName);
+
         if (TextUtils.equals(processName, packageName)) {
             onMainProcessApplicationCreate();
         } else {
             String processSuffix = processName.replace(packageName + ":", "");
             onRemoteProcessApplicationCreate(processSuffix);
         }
+
+        Log.w("cjx","onCreate() cost time :" + (SystemClock.elapsedRealtime() - t) + " processName:"+processName);
     }
 
     protected void onRemoteProcessApplicationCreate(String processSuffix) {
     }
 
     protected void onMainProcessApplicationCreate() {
+        long t = SystemClock.elapsedRealtime();
+        long start = t;
         Fabric.with(this, new Crashlytics());
 
 //        HSAdCaffeReportManager.getInstance().start();
@@ -183,6 +193,9 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
+        Log.w("cjx","step 1 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         //init facemoji
         HSDirectoryManager.getInstance().init(HSApplication.getContext());
         HSThreadUtils.execute(new Runnable() {
@@ -192,32 +205,62 @@ public class HSUIApplication extends HSInputMethodApplication {
                 ThemeDirManager.moveCustomAssetsToFileIfNecessary();
             }
         });
+
+        Log.w("cjx","step 2 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         HSKeyboardThemeManager.init();
+
+        Log.w("cjx","step 3 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         StickerDataManager.getInstance();
         MediaController.setHandler(UIController.getInstance().getUIHandler());
-        ThemeDirManager.moveCustomAssetsToFileIfNecessary();
 
         CustomUIRateAlertUtils.initialize();
-
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
         }
 
+        Log.w("cjx","step 4 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         AcbInterstitialAdManager.getInstance().init(this);
         AcbNativeAdManager.sharedInstance().init(this);
         AcbExpressAdManager.getInstance().init(this);
+
+        Log.w("cjx","step 5 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
+
+        Log.w("cjx","step 6 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         setChargingFunctionStatus();
 
+        Log.w("cjx","step 7 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
+
+        Log.w("cjx","step 8 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         HSInputMethodService.initResourcesBeforeOnCreate();
 
+        Log.w("cjx","step 9 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
 
         registerNotificationEvent();
 
         ScreenLockerManager.init();
         FloatWindowCompat.initLockScreen(this);
+
+        Log.w("cjx","step 10 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         initIAP();
 
         if (Build.VERSION.SDK_INT >= 16) {
@@ -240,6 +283,9 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         StickerSuggestionManager.getInstance();
 
+        Log.w("cjx","step 11 cost time :" + (SystemClock.elapsedRealtime() - t));
+        t = SystemClock.elapsedRealtime();
+
         UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -260,8 +306,10 @@ public class HSUIApplication extends HSInputMethodApplication {
                     }
                 });
             }
-        }, 30000);
+        },30000);
+
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
+        Log.w("cjx","onMainProcessApplicationCreate cost time :" + (SystemClock.elapsedRealtime() - start));
     }
 
     private void activeAdPlacements() {
