@@ -254,8 +254,8 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 
-    compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
-    compile "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
+//    compile "com.ihandy.device:device-clean-memory$LIB_DEVICE_VERSION"
+//    compile "com.ihandy.device:device-clean-junk$LIB_DEVICE_VERSION"
     compile "com.ihandy.device:device-accessibility-task$LIB_DEVICE_VERSION"
     compile 'com.annimon:stream:1.1.7'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
