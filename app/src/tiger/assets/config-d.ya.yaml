@@ -2,7 +2,7 @@ libCommons:
   RemoteConfig:
     UpdateInterval: 10
     PlistFile: "Local.mp"
-    PlistUrl: "xxxhttp://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/configs/config-smileykeyboard-2.0.0.mp"
+    PlistUrl: "xxxhttp://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/configs/config-smileykeyboard-2.0.1.mp"
   Analytics:
       FlurryKey: "VFHX539WKM27R8ZZ5398"
       FacebookID: "2017803811838675"
@@ -36,7 +36,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.mp"
-    RemoteUrl: "http://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/alerts/smileykeyboard-2.0.0-alerts.mp"
+    RemoteUrl: "http://cdn.appcloudbox.net/mobipioneer/apps/smileykeyboard/alerts/smileykeyboard-2.0.1-alerts.mp"
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
