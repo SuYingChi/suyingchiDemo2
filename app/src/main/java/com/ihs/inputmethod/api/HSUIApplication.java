@@ -248,7 +248,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         Log.w("cjx","step 8 cost time :" + (SystemClock.elapsedRealtime() - t));
         t = SystemClock.elapsedRealtime();
 
-        HSInputMethodService.initResourcesBeforeOnCreate();
+//        HSInputMethodService.initResourcesBeforeOnCreate();
 
         Log.w("cjx","step 9 cost time :" + (SystemClock.elapsedRealtime() - t));
         t = SystemClock.elapsedRealtime();
