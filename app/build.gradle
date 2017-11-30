@@ -119,7 +119,7 @@ android {
         tiger {
             applicationId = "com.mobipioneer.emojikeyboard"
             versionName "2.0.1"
-            versionCode 12
+            versionCode 13
             manifestPlaceholders = [APPLY_SCHEME: "tigerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"

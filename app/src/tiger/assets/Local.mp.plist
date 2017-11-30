@@ -5194,7 +5194,7 @@
 				<key>RemoteContentDownloadURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
 				<key>StickerDownloadBaseURL</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers/</string>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers</string>
 				<key>ThemeZipDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/theme/</string>
 			</dict>
