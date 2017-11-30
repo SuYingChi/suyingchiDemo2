@@ -14,6 +14,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
@@ -57,8 +58,8 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 
     @Override
     protected boolean isForViewType(@NonNull List<ThemePanelModel> items, int position) {
-        String themeName = items.get(position).keyboardTheme.mThemeName;
-        return themeName != null && themeName.trim().length() > 0;
+        HSKeyboardTheme keyboardTheme = items.get(position).keyboardTheme;
+        return keyboardTheme != null && keyboardTheme.mThemeName != null && keyboardTheme.mThemeName.trim().length() > 0;
     }
 
     @NonNull
