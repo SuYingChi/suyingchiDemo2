@@ -18,7 +18,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.inputlogic.InputLogic;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
@@ -64,18 +63,21 @@ public class HSSelectorPanel extends BasePanel {
             } else if (v == selectorDirectionSelect) {
                 HSInputMethodService.getInstance().getInputLogic().setSelectionBeforeMoveCursor();
             } else if (v == selectorSelectAllOrCut) {
-                if (selectorSelectAllOrCut.isSelected()) {
+                if (selectorSelectAllOrCut.isSelected()) { // 选中了
                     selectorSelectAllOrCut.setSelected(false);
+                    selectorSelectAllOrCutTextView.setText(R.string.setting_item_selector_select_all);
                     //cut
-                } else {
+                    HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.cut);
+                } else { //未选中
                     selectorSelectAllOrCut.setSelected(true);
+                    selectorSelectAllOrCutTextView.setText(R.string.setting_item_selector_cut);
                     //select all
-                    HSInputMethodService.getInstance().getInputLogic().selectAllText();
+                    HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.selectAll);
                 }
             } else if (v == selectorCopy) {
-                HSLog.d("");
+                HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.copy);
             } else if (v == selectorPaste) {
-                HSLog.d("");
+                HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.paste);
             } else if (v == selectorDelete) {
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
             }
