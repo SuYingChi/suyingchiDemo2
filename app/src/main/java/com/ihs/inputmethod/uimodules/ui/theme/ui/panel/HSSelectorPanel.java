@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
@@ -53,15 +52,47 @@ public class HSSelectorPanel extends BasePanel {
         @Override
         public void onClick(View v) {
             if (v == selectorDirectionUp) {
+//                if (HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0) != null
+//                        && HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0).length() > 0) {
+//                    HSInputMethodService.getInstance().moveCursorWithOffset();
+//                } else {
+//                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
+//                }
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
             } else if (v == selectorDirectionDown) {
+//                if (HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0) != null
+//                        && HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0).length() > 0) {
+//                    HSInputMethodService.getInstance().getInputLogic().moveCursorWithDirection(InputLogic.CURSOR_DIRECTION_DOWN);
+//                } else {
+//                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
+//                }
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
             } else if (v == selectorDirectionLeft) {
+//                if (HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0) != null
+//                        && HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0).length() > 0) {
+//                    HSInputMethodService.getInstance().getInputLogic().moveCursorWithDirection(InputLogic.CURSOR_DIRECTION_LEFT);
+//                } else {
+//                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
+//                }
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
             } else if (v == selectorDirectionRight) {
+//                if (HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0) != null
+//                        && HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0).length() > 0) {
+//                    HSInputMethodService.getInstance().getInputLogic().moveCursorWithDirection(InputLogic.CURSOR_DIRECTION_RIGHT);
+//                } else {
+//                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
+//                }
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
             } else if (v == selectorDirectionSelect) {
-                HSInputMethodService.getInstance().getInputLogic().setSelectionBeforeMoveCursor();
+                if (selectorDirectionSelect.isSelected()) {
+                    selectorDirectionSelect.setSelected(false);
+                    //选中当前选择的文本
+                    HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.stopSelectingText);
+                } else {
+                    selectorDirectionSelect.setSelected(true);
+                    //开始选择文本
+                    HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.startSelectingText);
+                }
             } else if (v == selectorSelectAllOrCut) {
                 if (selectorSelectAllOrCut.isSelected()) { // 选中了
                     selectorSelectAllOrCut.setSelected(false);
@@ -73,6 +104,7 @@ public class HSSelectorPanel extends BasePanel {
                     selectorSelectAllOrCutTextView.setText(R.string.setting_item_selector_cut);
                     //select all
                     HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.selectAll);
+                    //HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.startSelectingText);
                 }
             } else if (v == selectorCopy) {
                 HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.copy);
