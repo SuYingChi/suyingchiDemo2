@@ -6,12 +6,10 @@ build_job:
   stage: build
   script:
   - git submodule update --init
-  - ./gradlew assembleTigerRelease
-  - ./gradlew assembleMasterRelease
+  - ./gradlew assembleGrinRelease
   - ./gradlew app:dependencies > app/build/outputs/build-dependencies.txt
   - cd app/ziptool/
-  - ./build_apk_tiger.sh
-  - ./build_apk_master.sh
+  - ./build_apk_grin.sh
   artifacts:
     paths:
     - app/build/outputs/apk/*/release/*.apk

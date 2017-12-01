@@ -37,7 +37,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager.STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION;
 import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 /**
@@ -304,7 +303,9 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
 
     @Override
     public void onDestroy() {
-        HSGlobalNotificationCenter.removeObserver(STICKER_GROUP_DOWNLOAD_SUCCESS_NOTIFICATION, observer);
+        HSGlobalNotificationCenter.removeObserver(FacemojiManager.FACEMOJI_SAVED, observer);
+        HSGlobalNotificationCenter.removeObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
+        HSGlobalNotificationCenter.removeObserver(FacemojiManager.FACE_DELETED, observer);
         LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
         super.onDestroy();
     }

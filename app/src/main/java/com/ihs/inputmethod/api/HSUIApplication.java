@@ -188,7 +188,9 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSThreadUtils.execute(new Runnable() {
             @Override
             public void run() {
-                FacemojiManager.getInstance().init();
+                if (BuildConfig.ENABLE_FACEMOJI) {
+                    FacemojiManager.getInstance().init();
+                }
                 ThemeDirManager.moveCustomAssetsToFileIfNecessary();
             }
         });

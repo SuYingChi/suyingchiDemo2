@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="feedback_email">feedback.glowdesign@hotmail.com</string>
+    <string name="fb_app_id">1651195371844917</string>
+
+<string name="accessibility_service_description">เปิดสวิตซ์ทางขวาบน ↗️⊙.⊙↗️
+    ด้วยการอนุญาตตัวช่วยการเข้าถึง คุณจะได้รับประสบการณ์การพิมพ์ที่ดีที่สุดบนแอปต่างๆ กัน!
+    
+    หมายเหตุ: คุณอาจได้รับการแจ้งเตือนจากระบบเกี่ยวกับการอนุญาต, %1$sจะไม่เก็บข้อมูลใดๆ ของคุณเด็ดขาด</string>
+<string name="theme_share_text_content">คีย์บอร์ดปรับแต่งเองของฉันสร้างด้วย #%1$s https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+<string name="theme_share_text_content_for_custom_theme">ปรับแต่งคีย์บอร์ดของคุณเองด้วยรูปภาพสุดโปรด! ดาวน์โหลด #%1$s ฟรีที่: https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+<string name="settings_button_tell_a_friend_content">นี่ สมควรลองแอปคีย์บอร์ด %1$s เลย คุณสามารถปรับแต่งคีย์บอร์ดได้ด้วยรูปภาพของคุณเอง! และทั้ง ⒻⓄⓃⓉⓈ ทั้งอีโมจิก็เจ๋งมาก ดาวน์โหลด #%2$s ได้ฟรีที่: https://play.google.com/store/apps/details?id=com.masterkeyboard.emoji</string>
+</resources>

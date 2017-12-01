@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -736,6 +737,22 @@ public class MainActivity extends HSDeepLinkActivity {
         }
     }
 
+    //NOTE: fix a VideoView memory leak on Android 5-7:
+    // https://stackoverflow.com/questions/43280440/videoview-memory-leak
+    @Override
+    protected  void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new ContextWrapper(newBase) {
+            @Override
+            public Object getSystemService(String name) {
+                if (Context.AUDIO_SERVICE.equals(name)) {
+                    return getApplicationContext().getSystemService(name);
+                } else {
+                    return super.getSystemService(name);
+                }
+            }
+        });
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -754,16 +771,29 @@ public class MainActivity extends HSDeepLinkActivity {
         if (videoView != null) {
             try {
                 videoView.stopPlayback();
-                videoView = null;
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                videoView = null;
             }
         }
+        if (launchVideoView != null) {
+            try {
+                launchVideoView.stopPlayback();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                launchVideoView = null;
+            }
+        }
+
         if (accessibilityEventListener != null) {
             accessibilityEventListener.onDestroy();
         }
         HSAccessibilityService.unregisterEvent(listenerKey);
         handler.removeCallbacksAndMessages(null);
+
+        KCCommonUtils.fixSystemLeaks(this);
     }
 
     private void refreshUIState() {

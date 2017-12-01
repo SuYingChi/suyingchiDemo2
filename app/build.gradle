@@ -45,6 +45,12 @@ android {
             storeFile file('KeyboardArts')
             storePassword "zdhszyzs"
         }
+        ecstasyReleaseConfig {
+            keyAlias 'glowdesign'
+            keyPassword 'zdhszyzs'
+            storeFile file('GlowDesign')
+            storePassword 'zdhszyzs'
+        }
     }
     buildTypes {
         //设置Deubug和Release下的编译模式，即proguard文件路径
@@ -113,7 +119,7 @@ android {
         tiger {
             applicationId = "com.mobipioneer.emojikeyboard"
             versionName "2.0.1"
-            versionCode 12
+            versionCode 13
             manifestPlaceholders = [APPLY_SCHEME: "tigerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
@@ -124,12 +130,23 @@ android {
         grin {
             applicationId = "com.keyboard.font.theme.emoji"
             versionName "1.1.1"
-            versionCode 3
+            versionCode 4
             manifestPlaceholders = [APPLY_SCHEME: "grinKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "true"
             signingConfig signingConfigs.grinReleaseConfig
+        }
+
+        ecstasy {
+            applicationId = "com.masterkeyboard.emoji"
+            versionCode 8
+            versionName "1.2.1"
+            manifestPlaceholders = [APPLY_SCHEME: "ecstasyKeyboard"]
+            buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
+            buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
+            signingConfig signingConfigs.masterReleaseConfig
         }
     }
 
