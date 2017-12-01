@@ -15,6 +15,7 @@
     <string name="setting_item_selector">Selector</string>
     <string name="setting_item_selector_copy">Copy</string>
     <string name="setting_item_selector_select_all">Select All</string>
+    <string name="setting_item_selector_cut">Cut</string>
     <string name="setting_item_selector_delete">Delete</string>
     <string name="setting_item_selector_paste">Paste</string>
 </resources>

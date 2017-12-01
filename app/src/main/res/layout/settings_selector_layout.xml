@@ -62,13 +62,13 @@
 
     <LinearLayout
         android:id="@+id/selector_right_container"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/selector_direction_up"
         android:orientation="vertical"
-        app:layout_marginRightPercent="5%">
+        app:layout_marginRightPercent="3%"
+        app:layout_widthPercent="20%">
 
         <ImageView
             android:id="@+id/selector_copy_image"
@@ -79,11 +79,12 @@
 
         <TextView
             android:id="@+id/selector_copy_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11.7dp"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/setting_item_selector_copy" />
 
         <ImageView
@@ -96,23 +97,24 @@
 
         <TextView
             android:id="@+id/selector_delete_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11.7dp"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/setting_item_selector_delete" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/selector_select_all_or_cut_container"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/selector_right_container"
         android:layout_toLeftOf="@+id/selector_right_container"
         android:layout_toStartOf="@+id/selector_right_container"
         android:orientation="vertical"
-        app:layout_marginRightPercent="5%">
+        app:layout_marginRightPercent="3%"
+        app:layout_widthPercent="20%">
 
         <ImageView
             android:id="@+id/selector_select_all_or_cut_image"
@@ -123,11 +125,13 @@
 
         <TextView
             android:id="@+id/selector_select_all_and_cut_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11.7dp"
+            android:ellipsize="end"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/setting_item_selector_select_all" />
 
         <ImageView
@@ -140,11 +144,12 @@
 
         <TextView
             android:id="@+id/selector_paste_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="11.7dp"
             android:gravity="center_horizontal"
+            android:singleLine="true"
             android:text="@string/setting_item_selector_paste" />
     </LinearLayout>
 
