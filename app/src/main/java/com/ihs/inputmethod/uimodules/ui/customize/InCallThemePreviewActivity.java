@@ -31,6 +31,7 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
@@ -176,6 +177,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
                 enableCallFlash();
                 HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeType.getValue());
                 ToastUtils.showToast(R.string.interstitial_ad_title_after_try_keyboard);
+                KeyboardFullScreenAd.showSessionOneTimeAd();
             }
         });
     }

@@ -39,6 +39,7 @@ import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -261,6 +262,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
 
         onNewIntent(getIntent());
+
+        KeyboardFullScreenAd.showSessionOneTimeAd();
     }
 
     private void enableUsageAccessPermission() {
@@ -419,6 +422,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     @Override
     protected void onDestroy() {
+        KeyboardFullScreenAd.showSessionOneTimeAd();
+
         if (trialKeyboardDialog != null) {
             KCCommonUtils.dismissDialog(trialKeyboardDialog);
             trialKeyboardDialog = null;

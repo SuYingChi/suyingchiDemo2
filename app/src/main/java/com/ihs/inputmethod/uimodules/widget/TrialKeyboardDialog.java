@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -114,9 +113,10 @@ public final class TrialKeyboardDialog extends Dialog {
         this.showAdOnDismiss = showAdOnDismiss;
 
         setLayoutListenerToRootView();
-        if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
-        }
+        //此处广告不再请求，因为需求每个session只请求一个全屏。
+//        if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+//            KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
+//        }
     }
 
     @Override

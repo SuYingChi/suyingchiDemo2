@@ -19,6 +19,7 @@ import android.view.WindowManager;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.feature.common.ConcurrentUtils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -151,6 +152,7 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
                             if (success) {
                                 KCCommonUtils.dismissDialog(mDialog);
                                 ToastUtils.showToast(R.string.interstitial_ad_title_after_try_keyboard);
+                                KeyboardFullScreenAd.showSessionOneTimeAd();
                                 finish();
                             } else {
                                 KCCommonUtils.dismissDialog(mDialog);

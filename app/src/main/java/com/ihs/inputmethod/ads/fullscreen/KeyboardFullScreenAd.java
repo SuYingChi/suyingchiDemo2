@@ -6,9 +6,13 @@ import android.text.format.DateUtils;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.keyboard.core.session.KCKeyboardSession;
+
+import net.appcloudbox.ads.base.AcbInterstitialAd;
+import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,15 +26,16 @@ public class KeyboardFullScreenAd {
     public static final String PREF_KEY_PREFIX_AD_HIT_SESSION_INDEX = "AD_HIT_SESSION_INDEX_";
     public static final String PREF_KEY_PREFIX_AD_HIT_TIME = "AD_HIT_TIME_";
 
+
     private String occasion;
 
     private SharedPreferences prefs;
 
     public void preLoad() {
-        // 满足加载条件
-        if (isConditionSatisfied()) {
-            KCInterstitialAd.load(placementName);
-        }
+        //此处屏蔽ad加载 因为OpenKeyboardFullScreenAd一个session只出现一次。
+//        if (isConditionSatisfied()) {
+//            KCInterstitialAd.load(placementName);
+//        }
     }
 
     public boolean show() {
@@ -105,5 +110,34 @@ public class KeyboardFullScreenAd {
         prefs.edit().putLong(PREF_KEY_PREFIX_AD_HIT_SESSION_INDEX + occasion, hitIndex).apply();
         prefs.edit().putLong(PREF_KEY_PREFIX_AD_HIT_TIME + occasion, hitTime).apply();
 
+    }
+
+    private static final String ONE_SESSION_ADPLACEMENT = HSApplication.getContext().getResources().getString(R.string.placement_full_screen_open_keyboard);
+
+    /**
+     * 这个ad 一个session只出现一次 即主页进入加载 直到退出程序只出现一次。
+     */
+    public static void loadSessionOneTimeAd(){
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            KCInterstitialAd.load(ONE_SESSION_ADPLACEMENT);
+        }
+    }
+
+    /**
+     * 这个ad 一个session只出现一次 即主页进入加载，直到退出程序只出现一次。
+     * 1.开屏前
+     2.进入theme详情页前
+     3.自定义主题后（原来就有）
+     4.facemoji制作后（loading动画之后）
+     5.theme、wallpapper和call flash应用后
+     6.退出app后
+     */
+    public static void showSessionOneTimeAd(){
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            List<AcbInterstitialAd> fetch = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
+            if (!fetch.isEmpty()) {
+                fetch.get(0).show();
+            }
+        }
     }
 }
