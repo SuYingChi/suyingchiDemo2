@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.inputlogic.InputLogic;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
@@ -51,29 +54,30 @@ public class HSSelectorPanel extends BasePanel {
         @Override
         public void onClick(View v) {
             if (v == selectorDirectionUp) {
-                HSLog.d("");
+                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
             } else if (v == selectorDirectionDown) {
-                HSLog.d("");
+                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
             } else if (v == selectorDirectionLeft) {
-                HSLog.d("");
+                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
             } else if (v == selectorDirectionRight) {
-                HSLog.d("");
+                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
             } else if (v == selectorDirectionSelect) {
-                HSLog.d("");
+                HSInputMethodService.getInstance().getInputLogic().setSelectionBeforeMoveCursor();
             } else if (v == selectorSelectAllOrCut) {
                 if (selectorSelectAllOrCut.isSelected()) {
                     selectorSelectAllOrCut.setSelected(false);
-                    HSLog.d("");
+                    //cut
                 } else {
                     selectorSelectAllOrCut.setSelected(true);
-                    HSLog.d("");
+                    //select all
+                    HSInputMethodService.getInstance().getInputLogic().selectAllText();
                 }
             } else if (v == selectorCopy) {
                 HSLog.d("");
             } else if (v == selectorPaste) {
                 HSLog.d("");
             } else if (v == selectorDelete) {
-                HSLog.d("");
+                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
             }
         }
     };
