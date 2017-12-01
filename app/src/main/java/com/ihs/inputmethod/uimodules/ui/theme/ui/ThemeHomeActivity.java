@@ -427,7 +427,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         unregisterReceiver(broadcastReceiver);
         super.onDestroy();
 
-        KCCommonUtils.fixInputMethodManagerLeak(this);
+        KCCommonUtils.fixSystemLeaks(this);
     }
 
     @Override
