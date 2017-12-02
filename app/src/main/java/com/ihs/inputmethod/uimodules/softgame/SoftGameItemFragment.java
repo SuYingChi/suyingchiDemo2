@@ -37,7 +37,6 @@ public class SoftGameItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Object url = getArguments().get("url");
-        String placementName = getArguments().getString("placementName");
         if (url == null) {
             return null;
         }
@@ -46,7 +45,7 @@ public class SoftGameItemFragment extends Fragment {
 
         recyclerView = (RecyclerView) v.findViewById(R.id.soft_game_main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.VERTICAL, false));
-        softGameItemAdapter = new SoftGameItemAdapter(placementName);
+        softGameItemAdapter = new SoftGameItemAdapter();
         recyclerView.setAdapter(softGameItemAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 

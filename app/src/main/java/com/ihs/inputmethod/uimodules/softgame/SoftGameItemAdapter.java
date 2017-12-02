@@ -42,8 +42,8 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
     private static final int TYPE_AD = 1;
     private KCNativeAdView nativeAdView;
 
-    public SoftGameItemAdapter(String placementName) {
-        this.placementName = placementName;
+    public SoftGameItemAdapter() {
+        this.placementName = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
     }
 
     @Override
