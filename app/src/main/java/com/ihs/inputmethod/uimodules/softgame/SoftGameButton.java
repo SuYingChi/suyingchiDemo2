@@ -1,13 +1,20 @@
 package com.ihs.inputmethod.uimodules.softgame;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.pm.ShortcutManagerCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -104,8 +111,53 @@ public class SoftGameButton extends FrameLayout {
                 HSAnalytics.logEvent("keyboard_game_clicked");
                 SoftGameDisplayHelper.DisplaySoftGames(getContext().getString(R.string.ad_placement_themetryad));
                 hideNewMark();
+                addGameShortcut();
             }
         });
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private static void addShortcutV26() {
+        Context context = HSApplication.getContext();
+        if (ShortcutManagerCompat.isRequestPinShortcutSupported(context)) {
+            final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+
+            ShortcutInfo pinShortcutInfo = new ShortcutInfo.Builder(context, "game")
+                    .setIcon(Icon.createWithResource(context, R.drawable.ic_h5game))
+                    .setShortLabel("Game")
+                    .setIntent(new Intent(context, SoftGameDisplayActivity.class).setAction(Intent.ACTION_MAIN))
+                    .build();
+            shortcutManager.requestPinShortcut(pinShortcutInfo, null);
+        }
+    }
+
+    public static void addGameShortcut() {
+        if (!HSPreferenceHelper.getDefault().getBoolean("game_shortcut_created", false)) {
+            HSPreferenceHelper.getDefault().putBoolean("game_shortcut_created", true);
+        } else {
+            return;
+        }
+
+        Context context = HSApplication.getContext();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            addShortcutV26();
+        } else {
+            Intent shortcutIntent = new Intent(context,
+                    SoftGameDisplayActivity.class);
+            shortcutIntent.setAction(Intent.ACTION_MAIN);
+
+            Intent addIntent = new Intent();
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Game");
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                    Intent.ShortcutIconResource.fromContext(context,
+                            R.drawable.ic_h5game));
+            addIntent.putExtra("duplicate", false);
+
+            addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+            context.sendBroadcast(addIntent);
+        }
     }
 
     public void checkNewGame() {
