@@ -152,7 +152,7 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
                             if (success) {
                                 KCCommonUtils.dismissDialog(mDialog);
                                 ToastUtils.showToast(R.string.interstitial_ad_title_after_try_keyboard);
-                                KeyboardFullScreenAd.showSessionOneTimeAd();
+                                KeyboardFullScreenAd.showSessionOneTimeAd("afterApply");
                                 finish();
                             } else {
                                 KCCommonUtils.dismissDialog(mDialog);

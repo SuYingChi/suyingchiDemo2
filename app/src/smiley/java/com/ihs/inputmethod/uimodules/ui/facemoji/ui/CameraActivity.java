@@ -885,7 +885,7 @@ public class CameraActivity extends HSAppCompatActivity {
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
 
-        KeyboardFullScreenAd.showSessionOneTimeAd();
+        KeyboardFullScreenAd.showSessionOneTimeAd("Facemoji");
         isSynthesisingImage = false;
     }
 

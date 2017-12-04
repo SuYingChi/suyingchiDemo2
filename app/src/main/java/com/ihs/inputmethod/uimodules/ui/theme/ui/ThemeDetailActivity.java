@@ -204,7 +204,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        KeyboardFullScreenAd.showSessionOneTimeAd();
+        KeyboardFullScreenAd.showSessionOneTimeAd("themeDetail");
 
         setContentView(R.layout.activity_theme_detail);
         initView();

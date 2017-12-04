@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.uimodules.R;
@@ -117,7 +118,7 @@ public class KeyboardFullScreenAd {
     /**
      * 这个ad 一个session只出现一次 即主页进入加载 直到退出程序只出现一次。
      */
-    public static void loadSessionOneTimeAd(){
+    public static void loadSessionOneTimeAd() {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             KCInterstitialAd.load(ONE_SESSION_ADPLACEMENT);
         }
@@ -126,17 +127,18 @@ public class KeyboardFullScreenAd {
     /**
      * 这个ad 一个session只出现一次 即主页进入加载，直到退出程序只出现一次。
      * 1.开屏前
-     2.进入theme详情页前
-     3.自定义主题后（原来就有）
-     4.facemoji制作后（loading动画之后）
-     5.theme、wallpapper和call flash应用后
-     6.退出app后
+     * 2.进入theme详情页前
+     * 3.自定义主题后（原来就有）
+     * 4.facemoji制作后（loading动画之后）
+     * 5.theme、wallpapper和call flash应用后
+     * 6.退出app后
      */
-    public static void showSessionOneTimeAd(){
+    public static void showSessionOneTimeAd(String from) {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             List<AcbInterstitialAd> fetch = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
             if (!fetch.isEmpty()) {
                 fetch.get(0).show();
+                HSAnalytics.logEvent("app_springAd_show", "from", from);
             }
         }
     }

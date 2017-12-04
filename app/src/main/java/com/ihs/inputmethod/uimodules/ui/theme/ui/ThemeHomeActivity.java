@@ -263,7 +263,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
         onNewIntent(getIntent());
 
-        KeyboardFullScreenAd.showSessionOneTimeAd();
+        KeyboardFullScreenAd.showSessionOneTimeAd("appOpened");
     }
 
     private void enableUsageAccessPermission() {
@@ -422,7 +422,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     @Override
     protected void onDestroy() {
-        KeyboardFullScreenAd.showSessionOneTimeAd();
+        KeyboardFullScreenAd.showSessionOneTimeAd("appClosed");
 
         if (trialKeyboardDialog != null) {
             KCCommonUtils.dismissDialog(trialKeyboardDialog);

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ihs.app.alerts.HSAlertMgr;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -69,6 +70,8 @@ public final class TrialKeyboardDialog extends Dialog {
                     getContext().getString(R.string.interstitial_ad_subtitle_after_try_keyboard));
             if (!adShown) {
                 showChargingEnableAlert();
+            }else{
+                HSAnalytics.logEvent("app_springAd_show","from","customTheme");
             }
         }
     }
