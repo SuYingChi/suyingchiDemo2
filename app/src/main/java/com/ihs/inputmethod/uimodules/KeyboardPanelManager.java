@@ -46,6 +46,7 @@ import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarSearchAdAdapte
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.inputmethod.view.KBImageView;
+import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
@@ -155,6 +156,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         hsBackgroundVideoView.init();
         keyboardPanelSwitchContainer.setBackgroundView(hsBackgroundVideoView);
         keyboardPanelSwitchContainer.setWhitePanel(HSNewSettingsPanel.class);
+
+        keyboardPanelSwitchContainer.setWebHistoryView(WebContentSearchManager.getInstance().getWebSearchHistoryView());
 
         createDefaultFunctionBar();
         setFunctionBar(functionBar);

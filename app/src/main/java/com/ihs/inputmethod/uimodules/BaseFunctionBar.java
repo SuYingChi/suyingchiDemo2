@@ -9,6 +9,7 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -23,6 +24,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.inputmethod.uimodules.softgame.SoftGameButton;
@@ -68,7 +70,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
 
     // TODO: 17/4/7 需求要求隐藏web搜索，但是没有去掉。如果不再用，需要完整去除。
-//    private BaseFunction webSeachView;
+    private BaseFunction webSeachView;
     private BaseFunction clothView;
 
 
@@ -97,6 +99,25 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         LayoutParams emptyViewLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 0);
         emptyViewLayoutParams.weight = 1;
         functionLayout.addView(emptyView, emptyViewLayoutParams);
+
+                //search view
+        webSeachView = new BaseFunction(getContext());
+        ImageView webIcon = new ImageView(getContext());
+        refreshDrawable(webIcon, "menu_search.png", R.drawable.web_search_icon_funcbar);
+        webIcon.setScaleType(ImageView.ScaleType.CENTER);
+        webSeachView.setFunctionView(webIcon);
+        webSeachView.setId(R.id.web_search_icon);
+        webSeachView.setOnClickListener(this);
+
+        LayoutParams param = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT, 1.0f);
+        functionLayout.addView(new View(getContext()), param);
+
+        if (HSDisplayUtils.getRotation(getContext()) == Surface.ROTATION_0) {
+            functionLayout.addView(webSeachView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
+
 
         softGameButton = new SoftGameButton(getContext());
         functionLayout.addView(softGameButton, new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.config_suggestions_strip_height), LinearLayout.LayoutParams.MATCH_PARENT));
@@ -165,7 +186,11 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
     public void setSettingButtonType(int type) {
         settingsButton.setButtonType(type);
-
+        if (type == SettingsButton.SettingButtonType.MENU) {
+            webSeachView.setVisibility(VISIBLE);
+        } else {
+            webSeachView.setVisibility(GONE);
+        }
         updateFunctionAndSettingButtonSize();
     }
 
