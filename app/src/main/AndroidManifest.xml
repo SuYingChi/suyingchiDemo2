@@ -239,7 +239,7 @@
         <activity
             android:name=".softgame.SoftGameDisplayActivity"
             android:launchMode="singleTask"
-            android:taskAffinity="h5game"
+            android:taskAffinity=".h5game"
             android:theme="@style/Theme.Design.Light" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
