@@ -306,6 +306,8 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
         HSGlobalNotificationCenter.removeObserver(FacemojiManager.FACEMOJI_SAVED, observer);
         HSGlobalNotificationCenter.removeObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
         HSGlobalNotificationCenter.removeObserver(FacemojiManager.FACE_DELETED, observer);
+        HSGlobalNotificationCenter.removeObserver(LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW, observer);
+        HSGlobalNotificationCenter.removeObserver(LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW, observer);
         LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
         super.onDestroy();
     }
