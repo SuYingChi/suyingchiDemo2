@@ -2,9 +2,14 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.panel;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -164,6 +169,32 @@ public class HSSelectorPanel extends BasePanel {
         return et == null ? 0 : et.selectionStart;
     }
 
+    private Drawable getSelectAllOrCutImageDrawable() {
+        StateListDrawable stateListDrawable = new StateListDrawable();
+        Drawable defNormalDrawable = ViewItemBuilder.getStyledDrawableFromResources(SELECTOR_KEY_SELECT_ALL);
+        Drawable defPressedDrawable = ViewItemBuilder.getStyledDrawableFromResources(SELECTOR_KEY_CUT);
+        if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal), PorterDuff.Mode.SRC_IN);
+                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal), PorterDuff.Mode.SRC_IN);
+            } else {
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal));
+                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal));
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon), PorterDuff.Mode.SRC_IN);
+                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon), PorterDuff.Mode.SRC_IN);
+            } else {
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon));
+                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon));
+            }
+        }
+        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, defPressedDrawable);
+        stateListDrawable.addState(new int[]{}, defNormalDrawable);
+        return stateListDrawable;
+    }
+
     @Override
     protected View onCreatePanelView() {
         //set functionBar setting button type
@@ -206,7 +237,7 @@ public class HSSelectorPanel extends BasePanel {
         selectorDirectionSelectButton.setOnClickListener(clickListener);
 
         selectorSelectAllOrCut = selectorView.findViewById(R.id.selector_select_all_or_cut_image);
-        selectorSelectAllOrCut.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_SELECT_ALL, SELECTOR_KEY_CUT));
+        selectorSelectAllOrCut.setImageDrawable(getSelectAllOrCutImageDrawable());
         selectorSelectAllOrCut.setOnClickListener(clickListener);
 
         selectorCopy = selectorView.findViewById(R.id.selector_copy_image);
@@ -232,7 +263,7 @@ public class HSSelectorPanel extends BasePanel {
             selectorDirectionLeft.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDirectionRight.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDirectionSelectButton.setBackgroundResource(R.drawable.settings_key_common_background_selector);
-            selectorSelectAllOrCut.setBackgroundResource(R.drawable.settings_key_common_background_selector);
+            selectorSelectAllOrCut.setBackgroundResource(R.drawable.selector_button_backgroud);
             selectorCopy.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorPaste.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDelete.setBackgroundResource(R.drawable.settings_key_common_background_selector);
@@ -246,7 +277,7 @@ public class HSSelectorPanel extends BasePanel {
             selectorDirectionLeft.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionRight.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionSelectButton.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
-            selectorSelectAllOrCut.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
+            selectorSelectAllOrCut.setBackgroundResource(R.drawable.selector_button_background_light);
             selectorCopy.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorPaste.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDelete.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
