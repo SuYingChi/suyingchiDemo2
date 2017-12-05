@@ -61,6 +61,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     private TextView selectorSelectAllOrCutTextView;
 
     private long lastDownTime;
+    private static final int WHAT_SET_STATE = 1;
     private Handler handler = new Handler() {
         /**
          * Subclasses must implement this to receive messages.
@@ -69,45 +70,42 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
          */
         @Override
         public void handleMessage(Message msg) {
-            int viewId = msg.what;
-            this.removeMessages(viewId);
-            switch (viewId) {
+            int what = msg.what;
+            switch (what) {
                 case R.id.selector_direction_up:
                     if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
                         pressDownShiftKey();
                     }
                     HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
-                    postDelayed(runnable, 50);
+                    sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
                     break;
                 case R.id.selector_direction_down:
                     if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
                         pressDownShiftKey();
                     }
                     HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
-                    postDelayed(runnable, 50);
+                    sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
                     break;
                 case R.id.selector_direction_left:
                     if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
                         pressDownShiftKey();
                     }
                     HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
-                    postDelayed(runnable, 50);
+                    sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
                     break;
                 case R.id.selector_direction_right:
                     if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
                         pressDownShiftKey();
                     }
                     HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
-                    postDelayed(runnable, 50);
+                    sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
                     break;
+                case WHAT_SET_STATE:
+                    setState();
+                    break;
+                default:
+                    HSLog.w("unknown what.");
             }
-        }
-    };
-
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            setState();
         }
     };
 
@@ -153,7 +151,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         } else if (v == selectorDelete) {
             releaseShiftKey();
             HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-            handler.postDelayed(runnable, 100);
+            handler.sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
         }
     }
 
