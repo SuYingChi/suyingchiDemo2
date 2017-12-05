@@ -38,7 +38,8 @@ import com.ihs.panelcontainer.BasePanel;
  * Created by yanxia on 2017/11/28.
  */
 
-public class HSSelectorPanel extends BasePanel {
+public class HSSelectorPanel extends BasePanel implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
+    private static final String TAG = "HSSelectorPanel";
 
     private final static String SELECTOR_KEY_ARROW = "ic_selector_arrow_top";
     private final static String SELECTOR_KEY_SELECTOR = "ic_selector";
@@ -53,7 +54,7 @@ public class HSSelectorPanel extends BasePanel {
     private ImageView selectorDirectionLeft;
     private ImageView selectorDirectionRight;
     private ImageView selectorDirectionSelectButton;
-    private ImageView selectorSelectAllOrCut;
+    private ImageView selectorSelectAllOrCutButton;
     private ImageView selectorCopy;
     private ImageView selectorPaste;
     private ImageView selectorDelete;
@@ -68,72 +69,119 @@ public class HSSelectorPanel extends BasePanel {
         }
     };
 
-    private View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == selectorDirectionUp) {
-                if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
-                    pressDownShiftKey();
-                }
-                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
-                setState();
-            } else if (v == selectorDirectionDown) {
-                if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
-                    pressDownShiftKey();
-                }
-                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
-                setState();
-            } else if (v == selectorDirectionLeft) {
-                if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
-                    pressDownShiftKey();
-                }
-                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
-                setState();
-            } else if (v == selectorDirectionRight) {
-                if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
-                    pressDownShiftKey();
-                }
-                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
-                setState();
-            } else if (v == selectorDirectionSelectButton) {
-                if (selectorDirectionSelectButton.isSelected()) {
-                    selectorDirectionSelectButton.setSelected(false);
-                    //结束选择文本
-                    releaseShiftKey();
-                } else {
-                    if (!isEditTextEmpty()) {
-                        selectorDirectionSelectButton.setSelected(true);
-                        //开始选择文本
-                        pressDownShiftKey();
-                    } else {
-                        HSLog.d("edit text is empty");
-                    }
-                }
-            } else if (v == selectorSelectAllOrCut) {
-                if (selectorSelectAllOrCut.isSelected()) { // 选中了
-                    //cut
-                    releaseShiftKey();
-                    HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.cut);
-                } else { //未选中
-                    //select all
-                    HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.selectAll);
-                }
-                setState();
-            } else if (v == selectorCopy) {
-                releaseShiftKey();
-                HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.copy);
-                setState();
-            } else if (v == selectorPaste) {
-                releaseShiftKey();
-                HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.paste);
-                setState();
-            } else if (v == selectorDelete) {
-                releaseShiftKey();
-                HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-                handler.postDelayed(runnable, 100);
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        if (v == selectorDirectionUp) {
+            if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
+                pressDownShiftKey();
             }
+            HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
+            setState();
+        } else if (v == selectorDirectionDown) {
+            if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
+                pressDownShiftKey();
+            }
+            HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
+            setState();
+        } else if (v == selectorDirectionLeft) {
+            if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
+                pressDownShiftKey();
+            }
+            HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
+            setState();
+        } else if (v == selectorDirectionRight) {
+            if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
+                pressDownShiftKey();
+            }
+            HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
+            setState();
+        } else if (v == selectorDirectionSelectButton) {
+            if (selectorDirectionSelectButton.isSelected()) {
+                selectorDirectionSelectButton.setSelected(false);
+                //结束选择文本
+                releaseShiftKey();
+            } else {
+                if (!isEditTextEmpty()) {
+                    selectorDirectionSelectButton.setSelected(true);
+                    //开始选择文本
+                    pressDownShiftKey();
+                } else {
+                    HSLog.d("edit text is empty");
+                }
+            }
+        } else if (v == selectorSelectAllOrCutButton) {
+            if (selectorSelectAllOrCutButton.isSelected()) { // 选中了
+                //cut
+                releaseShiftKey();
+                HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.cut);
+            } else { //未选中
+                //select all
+                HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.selectAll);
+            }
+            setState();
+        } else if (v == selectorCopy) {
+            releaseShiftKey();
+            HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.copy);
+            setState();
+        } else if (v == selectorPaste) {
+            releaseShiftKey();
+            HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.paste);
+            setState();
+        } else if (v == selectorDelete) {
+            releaseShiftKey();
+            HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+            handler.postDelayed(runnable, 100);
         }
-    };
+    }
+
+    /**
+     * Called when a view has been clicked and held.
+     *
+     * @param v The view that was clicked and held.
+     * @return true if the callback consumed the long click, false otherwise.
+     */
+    @Override
+    public boolean onLongClick(View v) {
+//        if (v == selectorDirectionUp) {
+//            HSLog.d(TAG, "up");
+//        } else if (v == selectorDirectionDown) {
+//            HSLog.d(TAG, "down");
+//        } else if (v == selectorDirectionLeft) {
+//            HSLog.d(TAG, "left");
+//        } else if (v == selectorDirectionRight) {
+//            HSLog.d(TAG, "right");
+//        }
+        return true;
+    }
+
+    /**
+     * Called when a touch event is dispatched to a view. This allows listeners to
+     * get a chance to respond before the target view.
+     *
+     * @param v     The view the touch event has been dispatched to.
+     * @param event The MotionEvent object containing full information about
+     *              the event.
+     * @return True if the listener has consumed the event, false otherwise.
+     */
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        int eventAction = event.getAction();
+        if (v == selectorDirectionUp) {
+            HSLog.d(TAG, "action = " + eventAction + " up");
+        } else if (v == selectorDirectionDown) {
+            HSLog.d(TAG, "action = " + eventAction + " down");
+        } else if (v == selectorDirectionLeft) {
+            HSLog.d(TAG, "action = " + eventAction + " left");
+        } else if (v == selectorDirectionRight) {
+            HSLog.d(TAG, "action = " + eventAction + " right");
+        }
+        return false;
+    }
 
     private void pressDownShiftKey() {
         HSInputMethodService.getInstance().getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT));
@@ -150,11 +198,11 @@ public class HSSelectorPanel extends BasePanel {
     private void setState() {
         if (hasSelection()) {
             selectorDirectionSelectButton.setSelected(true);
-            selectorSelectAllOrCut.setSelected(true);
+            selectorSelectAllOrCutButton.setSelected(true);
             selectorSelectAllOrCutTextView.setText(R.string.setting_item_selector_cut);
         } else {
             selectorDirectionSelectButton.setSelected(false);
-            selectorSelectAllOrCut.setSelected(false);
+            selectorSelectAllOrCutButton.setSelected(false);
             selectorSelectAllOrCutTextView.setText(R.string.setting_item_selector_select_all);
         }
     }
@@ -218,39 +266,43 @@ public class HSSelectorPanel extends BasePanel {
         });
         selectorDirectionUp = selectorView.findViewById(R.id.selector_direction_up);
         selectorDirectionUp.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
-        selectorDirectionUp.setOnClickListener(clickListener);
+        selectorDirectionUp.setOnClickListener(this);
+        selectorDirectionUp.setOnTouchListener(this);
 
         selectorDirectionDown = selectorView.findViewById(R.id.selector_direction_down);
         selectorDirectionDown.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
-        selectorDirectionDown.setOnClickListener(clickListener);
+        selectorDirectionDown.setOnClickListener(this);
+        selectorDirectionDown.setOnTouchListener(this);
 
         selectorDirectionLeft = selectorView.findViewById(R.id.selector_direction_left);
         selectorDirectionLeft.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
-        selectorDirectionLeft.setOnClickListener(clickListener);
+        selectorDirectionLeft.setOnClickListener(this);
+        selectorDirectionLeft.setOnTouchListener(this);
 
         selectorDirectionRight = selectorView.findViewById(R.id.selector_direction_right);
         selectorDirectionRight.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
-        selectorDirectionRight.setOnClickListener(clickListener);
+        selectorDirectionRight.setOnClickListener(this);
+        selectorDirectionRight.setOnTouchListener(this);
 
         selectorDirectionSelectButton = selectorView.findViewById(R.id.selector_select);
         selectorDirectionSelectButton.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_SELECTOR, SELECTOR_KEY_SELECTOR));
-        selectorDirectionSelectButton.setOnClickListener(clickListener);
+        selectorDirectionSelectButton.setOnClickListener(this);
 
-        selectorSelectAllOrCut = selectorView.findViewById(R.id.selector_select_all_or_cut_image);
-        selectorSelectAllOrCut.setImageDrawable(getSelectAllOrCutImageDrawable());
-        selectorSelectAllOrCut.setOnClickListener(clickListener);
+        selectorSelectAllOrCutButton = selectorView.findViewById(R.id.selector_select_all_or_cut_image);
+        selectorSelectAllOrCutButton.setImageDrawable(getSelectAllOrCutImageDrawable());
+        selectorSelectAllOrCutButton.setOnClickListener(this);
 
         selectorCopy = selectorView.findViewById(R.id.selector_copy_image);
         selectorCopy.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_COPY, SELECTOR_KEY_COPY));
-        selectorCopy.setOnClickListener(clickListener);
+        selectorCopy.setOnClickListener(this);
 
         selectorPaste = selectorView.findViewById(R.id.selector_paste_image);
         selectorPaste.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_PASTE, SELECTOR_KEY_PASTE));
-        selectorPaste.setOnClickListener(clickListener);
+        selectorPaste.setOnClickListener(this);
 
         selectorDelete = selectorView.findViewById(R.id.selector_delete_image);
         selectorDelete.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_DELETE, SELECTOR_KEY_DELETE));
-        selectorDelete.setOnClickListener(clickListener);
+        selectorDelete.setOnClickListener(this);
 
         selectorSelectAllOrCutTextView = selectorView.findViewById(R.id.selector_select_all_and_cut_text);
         TextView selectorCopyTextView = selectorView.findViewById(R.id.selector_copy_text);
@@ -263,7 +315,7 @@ public class HSSelectorPanel extends BasePanel {
             selectorDirectionLeft.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDirectionRight.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDirectionSelectButton.setBackgroundResource(R.drawable.settings_key_common_background_selector);
-            selectorSelectAllOrCut.setBackgroundResource(R.drawable.selector_button_backgroud);
+            selectorSelectAllOrCutButton.setBackgroundResource(R.drawable.selector_button_backgroud);
             selectorCopy.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorPaste.setBackgroundResource(R.drawable.settings_key_common_background_selector);
             selectorDelete.setBackgroundResource(R.drawable.settings_key_common_background_selector);
@@ -277,7 +329,7 @@ public class HSSelectorPanel extends BasePanel {
             selectorDirectionLeft.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionRight.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDirectionSelectButton.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
-            selectorSelectAllOrCut.setBackgroundResource(R.drawable.selector_button_background_light);
+            selectorSelectAllOrCutButton.setBackgroundResource(R.drawable.selector_button_background_light);
             selectorCopy.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorPaste.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
             selectorDelete.setBackgroundResource(R.drawable.settings_key_common_background_selector_light);
