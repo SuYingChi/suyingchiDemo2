@@ -651,6 +651,8 @@
 			</array>
 			<key>InterstitialAds</key>
 			<dict>
+				<key>HomeStartDelayTime</key>
+				<integer>1000</integer>
 				<key>BackButton</key>
 				<dict>
 					<key>MaxCountPerDay</key>

@@ -19,8 +19,9 @@ public class SplashActivity extends HSDeepLinkActivity {
 
         int delayMillis = 0;
         if (!HSPreferenceHelper.getDefault().getBoolean("first_start_app", true)) {
-            HSPreferenceHelper.getDefault().putBoolean("first_start_app", false);
             delayMillis = HSConfig.optInteger(0, "Application", "InterstitialAds", "HomeStartDelayTime");
+        }else{
+            HSPreferenceHelper.getDefault().putBoolean("first_start_app", false);
         }
         Handler handler = new Handler();
         handler.postDelayed(() -> {
