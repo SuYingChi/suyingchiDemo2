@@ -8,6 +8,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
@@ -38,7 +39,7 @@ import com.ihs.panelcontainer.BasePanel;
  * Created by yanxia on 2017/11/28.
  */
 
-public class HSSelectorPanel extends BasePanel implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
+public class HSSelectorPanel extends BasePanel implements View.OnClickListener, View.OnTouchListener {
     private static final String TAG = "HSSelectorPanel";
 
     private final static String SELECTOR_KEY_ARROW = "ic_selector_arrow_top";
@@ -60,7 +61,54 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     private ImageView selectorDelete;
     private TextView selectorSelectAllOrCutTextView;
 
-    private Handler handler = new Handler();
+    private Handler handler = new Handler() {
+        /**
+         * Subclasses must implement this to receive messages.
+         *
+         * @param msg
+         */
+        @Override
+        public void handleMessage(Message msg) {
+            int viewId = msg.what;
+            this.removeMessages(viewId);
+            switch (viewId) {
+                case R.id.selector_direction_up:
+                    HSLog.d(TAG, "up clicked");
+                    if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
+                        pressDownShiftKey();
+                    }
+                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
+                    setState();
+                    break;
+                case R.id.selector_direction_down:
+                    HSLog.d(TAG, "down clicked");
+                    if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
+                        pressDownShiftKey();
+                    }
+                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
+                    setState();
+                    break;
+                case R.id.selector_direction_left:
+                    HSLog.d(TAG, "left clicked");
+                    if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
+                        pressDownShiftKey();
+                    }
+                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
+                    setState();
+                    break;
+                case R.id.selector_direction_right:
+                    HSLog.d(TAG, "right clicked");
+                    if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
+                        pressDownShiftKey();
+                    }
+                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
+                    setState();
+                    break;
+            }
+            sendEmptyMessageDelayed(viewId, 100);
+        }
+    };
+
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -77,24 +125,28 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         if (v == selectorDirectionUp) {
+            HSLog.d(TAG, "up clicked");
             if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
                 pressDownShiftKey();
             }
             HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
             setState();
         } else if (v == selectorDirectionDown) {
+            HSLog.d(TAG, "down clicked");
             if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
                 pressDownShiftKey();
             }
             HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
             setState();
         } else if (v == selectorDirectionLeft) {
+            HSLog.d(TAG, "left clicked");
             if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
                 pressDownShiftKey();
             }
             HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
             setState();
         } else if (v == selectorDirectionRight) {
+            HSLog.d(TAG, "right clicked");
             if (HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection() && selectorDirectionSelectButton.isSelected()) {
                 pressDownShiftKey();
             }
@@ -140,26 +192,6 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     }
 
     /**
-     * Called when a view has been clicked and held.
-     *
-     * @param v The view that was clicked and held.
-     * @return true if the callback consumed the long click, false otherwise.
-     */
-    @Override
-    public boolean onLongClick(View v) {
-//        if (v == selectorDirectionUp) {
-//            HSLog.d(TAG, "up");
-//        } else if (v == selectorDirectionDown) {
-//            HSLog.d(TAG, "down");
-//        } else if (v == selectorDirectionLeft) {
-//            HSLog.d(TAG, "left");
-//        } else if (v == selectorDirectionRight) {
-//            HSLog.d(TAG, "right");
-//        }
-        return true;
-    }
-
-    /**
      * Called when a touch event is dispatched to a view. This allows listeners to
      * get a chance to respond before the target view.
      *
@@ -171,16 +203,34 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int eventAction = event.getAction();
-        if (v == selectorDirectionUp) {
-            HSLog.d(TAG, "action = " + eventAction + " up");
-        } else if (v == selectorDirectionDown) {
-            HSLog.d(TAG, "action = " + eventAction + " down");
-        } else if (v == selectorDirectionLeft) {
-            HSLog.d(TAG, "action = " + eventAction + " left");
-        } else if (v == selectorDirectionRight) {
-            HSLog.d(TAG, "action = " + eventAction + " right");
+        if (eventAction == MotionEvent.ACTION_UP || eventAction == MotionEvent.ACTION_CANCEL) {
+            HSLog.d(TAG, "remove message");
+            v.setPressed(false);
+            handler.removeMessages(v.getId());
+        } else {
+            HSLog.d(TAG, "send message");
+            v.setPressed(true);
+            handler.sendEmptyMessageDelayed(v.getId(), 50);
         }
-        return false;
+        return true;
+    }
+
+    private class Move implements Runnable {
+        /**
+         * When an object implementing interface <code>Runnable</code> is used
+         * to create a thread, starting the thread causes the object's
+         * <code>run</code> method to be called in that separately executing
+         * thread.
+         * <p>
+         * The general contract of the method <code>run</code> is that it may
+         * take any action whatsoever.
+         *
+         * @see Thread#run()
+         */
+        @Override
+        public void run() {
+
+        }
     }
 
     private void pressDownShiftKey() {
@@ -266,22 +316,22 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         });
         selectorDirectionUp = selectorView.findViewById(R.id.selector_direction_up);
         selectorDirectionUp.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
-        selectorDirectionUp.setOnClickListener(this);
+        //selectorDirectionUp.setOnClickListener(this);
         selectorDirectionUp.setOnTouchListener(this);
 
         selectorDirectionDown = selectorView.findViewById(R.id.selector_direction_down);
         selectorDirectionDown.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
-        selectorDirectionDown.setOnClickListener(this);
+        //selectorDirectionDown.setOnClickListener(this);
         selectorDirectionDown.setOnTouchListener(this);
 
         selectorDirectionLeft = selectorView.findViewById(R.id.selector_direction_left);
         selectorDirectionLeft.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
-        selectorDirectionLeft.setOnClickListener(this);
+        //selectorDirectionLeft.setOnClickListener(this);
         selectorDirectionLeft.setOnTouchListener(this);
 
         selectorDirectionRight = selectorView.findViewById(R.id.selector_direction_right);
         selectorDirectionRight.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
-        selectorDirectionRight.setOnClickListener(this);
+        //selectorDirectionRight.setOnClickListener(this);
         selectorDirectionRight.setOnTouchListener(this);
 
         selectorDirectionSelectButton = selectorView.findViewById(R.id.selector_select);
