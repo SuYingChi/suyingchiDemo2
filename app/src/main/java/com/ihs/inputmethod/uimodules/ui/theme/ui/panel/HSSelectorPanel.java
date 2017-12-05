@@ -3,6 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.panel;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -10,11 +11,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.inputmethod.ExtractedText;
+import android.view.inputmethod.ExtractedTextRequest;
+import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
@@ -48,41 +53,50 @@ public class HSSelectorPanel extends BasePanel {
     private ImageView selectorDelete;
     private TextView selectorSelectAllOrCutTextView;
 
+    private Handler handler = new Handler();
+
+    private int start;
+    private int end;
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (v == selectorDirectionUp) {
-//                if (HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0) != null
-//                        && HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0).length() > 0) {
-//                    HSInputMethodService.getInstance().moveCursorWithOffset();
-//                } else {
-//                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
-//                }
+                cancelSelection();
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        selectText();
+                    }
+                });
             } else if (v == selectorDirectionDown) {
-//                if (HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0) != null
-//                        && HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0).length() > 0) {
-//                    HSInputMethodService.getInstance().getInputLogic().moveCursorWithDirection(InputLogic.CURSOR_DIRECTION_DOWN);
-//                } else {
-//                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
-//                }
+                cancelSelection();
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        selectText();
+                    }
+                });
             } else if (v == selectorDirectionLeft) {
-//                if (HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0) != null
-//                        && HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0).length() > 0) {
-//                    HSInputMethodService.getInstance().getInputLogic().moveCursorWithDirection(InputLogic.CURSOR_DIRECTION_LEFT);
-//                } else {
-//                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
-//                }
+                cancelSelection();
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        selectText();
+                    }
+                });
             } else if (v == selectorDirectionRight) {
-//                if (HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0) != null
-//                        && HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0).length() > 0) {
-//                    HSInputMethodService.getInstance().getInputLogic().moveCursorWithDirection(InputLogic.CURSOR_DIRECTION_RIGHT);
-//                } else {
-//                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
-//                }
+                cancelSelection();
                 HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        selectText();
+                    }
+                });
             } else if (v == selectorDirectionSelect) {
                 if (selectorDirectionSelect.isSelected()) {
                     selectorDirectionSelect.setSelected(false);
@@ -91,6 +105,7 @@ public class HSSelectorPanel extends BasePanel {
                 } else {
                     selectorDirectionSelect.setSelected(true);
                     //开始选择文本
+                    //HSInputMethodService.getInstance().getInputLogic().setSelectionBeforeMoveCursor();
                     HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.startSelectingText);
                 }
             } else if (v == selectorSelectAllOrCut) {
@@ -104,7 +119,6 @@ public class HSSelectorPanel extends BasePanel {
                     selectorSelectAllOrCutTextView.setText(R.string.setting_item_selector_cut);
                     //select all
                     HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.selectAll);
-                    //HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.startSelectingText);
                 }
             } else if (v == selectorCopy) {
                 HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.copy);
@@ -115,6 +129,36 @@ public class HSSelectorPanel extends BasePanel {
             }
         }
     };
+
+    private void selectText() {
+        if (selectorDirectionSelect.isSelected() || HSInputMethodService.getInstance().getInputLogic().mConnection.hasSelection()) {
+            InputConnection ic = HSInputMethodService.getInstance().getCurrentInputConnection();
+            int position = getCursorPosition();
+            if (position >= end) {
+                ic.setSelection(start, position);
+            } else if (position <= start) {
+                ic.setSelection(position, end);
+            }
+            ExtractedText et = ic.getExtractedText(new ExtractedTextRequest(), 0);
+            int selectionStart = et == null ? 0 : et.selectionStart;
+            int selectionEnd = et == null ? 0 : et.selectionEnd;
+            HSLog.d("xiayan selectionStart = " + selectionStart + " selectionEnd = " + selectionEnd);
+            start = selectionStart;
+            end = selectionEnd;
+        }
+    }
+
+    private int getCursorPosition() {
+        InputConnection ic = HSInputMethodService.getInstance().getCurrentInputConnection();
+        ExtractedText et = ic.getExtractedText(new ExtractedTextRequest(), 0);
+        return et == null ? 0 : et.selectionStart;
+    }
+
+    private void cancelSelection() {
+        int position = getCursorPosition();
+        InputConnection ic = HSInputMethodService.getInstance().getCurrentInputConnection();
+        ic.setSelection(position, position);
+    }
 
     @Override
     protected View onCreatePanelView() {
