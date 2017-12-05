@@ -142,6 +142,7 @@ public class HSUIApplication extends HSInputMethodApplication {
          */
         String packageName = getPackageName();
         String processName = getProcessName();
+
         if (TextUtils.equals(processName, packageName)) {
             onMainProcessApplicationCreate();
         } else {
@@ -198,13 +199,13 @@ public class HSUIApplication extends HSInputMethodApplication {
                 ThemeDirManager.moveCustomAssetsToFileIfNecessary();
             }
         });
+
         HSKeyboardThemeManager.init();
+
         StickerDataManager.getInstance();
         MediaController.setHandler(UIController.getInstance().getUIHandler());
-        ThemeDirManager.moveCustomAssetsToFileIfNecessary();
 
         CustomUIRateAlertUtils.initialize();
-
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
@@ -213,17 +214,20 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbInterstitialAdManager.getInstance().init(this);
         AcbNativeAdManager.sharedInstance().init(this);
         AcbExpressAdManager.getInstance().init(this);
+
         HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
+
         setChargingFunctionStatus();
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
-        HSInputMethodService.initResourcesBeforeOnCreate();
 
+//        HSInputMethodService.initResourcesBeforeOnCreate();
 
         registerNotificationEvent();
 
         ScreenLockerManager.init();
         FloatWindowCompat.initLockScreen(this);
+
         initIAP();
 
         if (Build.VERSION.SDK_INT >= 16) {
@@ -266,7 +270,8 @@ public class HSUIApplication extends HSInputMethodApplication {
                     }
                 });
             }
-        }, 30000);
+        },30000);
+
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
     }
 
