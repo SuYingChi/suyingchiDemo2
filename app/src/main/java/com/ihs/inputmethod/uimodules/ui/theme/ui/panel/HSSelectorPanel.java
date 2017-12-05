@@ -61,6 +61,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     private ImageView selectorDelete;
     private TextView selectorSelectAllOrCutTextView;
 
+    private long lastDownTime;
     private Handler handler = new Handler() {
         /**
          * Subclasses must implement this to receive messages.
@@ -105,7 +106,6 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
                     setState();
                     break;
             }
-            sendEmptyMessageDelayed(viewId, 100);
         }
     };
 
@@ -204,33 +204,18 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     public boolean onTouch(View v, MotionEvent event) {
         int eventAction = event.getAction();
         if (eventAction == MotionEvent.ACTION_UP || eventAction == MotionEvent.ACTION_CANCEL) {
-            HSLog.d(TAG, "remove message");
+            lastDownTime = 0;
             v.setPressed(false);
             handler.removeMessages(v.getId());
         } else {
-            HSLog.d(TAG, "send message");
             v.setPressed(true);
-            handler.sendEmptyMessageDelayed(v.getId(), 50);
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastDownTime > 100) {
+                handler.sendEmptyMessageDelayed(v.getId(), 40);
+                lastDownTime = currentTime;
+            }
         }
         return true;
-    }
-
-    private class Move implements Runnable {
-        /**
-         * When an object implementing interface <code>Runnable</code> is used
-         * to create a thread, starting the thread causes the object's
-         * <code>run</code> method to be called in that separately executing
-         * thread.
-         * <p>
-         * The general contract of the method <code>run</code> is that it may
-         * take any action whatsoever.
-         *
-         * @see Thread#run()
-         */
-        @Override
-        public void run() {
-
-        }
     }
 
     private void pressDownShiftKey() {
