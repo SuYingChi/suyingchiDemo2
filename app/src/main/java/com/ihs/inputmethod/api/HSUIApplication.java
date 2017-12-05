@@ -156,6 +156,10 @@ public class HSUIApplication extends HSInputMethodApplication {
     protected void onMainProcessApplicationCreate() {
         Fabric.with(this, new Crashlytics());
 
+        if(!HSPreferenceHelper.getDefault().getBoolean("app_first_open",false)){
+            HSPreferenceHelper.getDefault().putBoolean("app_first_open",true);
+            HSAnalytics.logEvent("app_first_opened");
+        }
 //        HSAdCaffeReportManager.getInstance().start();
 //        HSAdCaffeReportManager.getInstance().enableReportInstalledPackages();
 
