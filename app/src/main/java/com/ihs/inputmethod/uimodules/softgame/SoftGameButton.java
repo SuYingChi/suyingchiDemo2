@@ -125,7 +125,7 @@ public class SoftGameButton extends FrameLayout {
             ShortcutInfo pinShortcutInfo = new ShortcutInfo.Builder(context, "game")
                     .setIcon(Icon.createWithResource(context, R.drawable.ic_h5game))
                     .setShortLabel("Game")
-                    .setIntent(new Intent(context, SoftGameDisplayActivity.class).setAction(Intent.ACTION_MAIN))
+                    .setIntent(new Intent(context, SoftGameDisplayActivity.class).setAction(Intent.ACTION_MAIN).putExtra("fromShortcut",true))
                     .build();
             shortcutManager.requestPinShortcut(pinShortcutInfo, null);
         }
@@ -145,7 +145,7 @@ public class SoftGameButton extends FrameLayout {
         } else {
             Intent shortcutIntent = new Intent(context,
                     SoftGameDisplayActivity.class);
-            shortcutIntent.setAction(Intent.ACTION_MAIN);
+            shortcutIntent.setAction(Intent.ACTION_MAIN).putExtra("fromShortcut",true);
 
             Intent addIntent = new Intent();
             addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);

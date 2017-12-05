@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.activity.HSFragmentActivity;
 import com.ihs.inputmethod.uimodules.R;
 
@@ -24,6 +25,9 @@ public class SoftGameDisplayActivity extends HSFragmentActivity implements ViewP
 
         if (getIntent() != null) {
             placementName = getIntent().getStringExtra(SOFT_GAME_PLACEMENT_MESSAGE);
+            if(getIntent().getBooleanExtra("fromShortcut",false)){
+                HSAnalytics.logEvent("h5games_shortcut_clicked");
+            }
         }
 
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabs);
