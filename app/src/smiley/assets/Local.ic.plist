@@ -5211,7 +5211,7 @@
 			<key>SearchEngine</key>
 			<dict>
 				<key>url</key>
-				<string>http://www.searchmobileonline.com/?pubid=201720503&amp;q=</string>
+				<string>http://trends.mobitech-search.xyz/v1/search/%s?user_id=%s&amp;c=%s&amp;keywords=%s</string>
 			</dict>
 			<key>Server</key>
 			<dict>
