@@ -149,4 +149,9 @@
     <color name="emoji_panel_tab_selected_color">#37474f</color>
     <color name="emoji_panel_tab_normal_color_when_theme_dark_bg">#88ffffff</color>
     <color name="emoji_panel_tab_selected_color_when_theme_dark_bg">@color/white</color>
+
+    <color name="selector_button_bg_dark_normal">#B3FFFFFF</color>
+    <color name="selector_button_bg_dark_press">#26FFFFFF</color>
+    <color name="selector_button_bg_light_normal">#D9FFFFFF</color>
+    <color name="selector_button_bg_light_press">#4DFFFFFF</color>
 </resources>
