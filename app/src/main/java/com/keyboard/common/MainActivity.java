@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
@@ -49,6 +51,7 @@ import android.widget.VideoView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -56,7 +59,6 @@ import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.accessbility.AccGALogger;
 import com.ihs.inputmethod.accessbility.AccessibilityEventListener;
 import com.ihs.inputmethod.accessbility.CustomViewDialog;
-import com.ihs.inputmethod.api.HSDeepLinkActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -91,7 +93,7 @@ import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
 import static com.ihs.inputmethod.accessbility.KeyboardActivationActivity.PREF_THEME_HOME_SHOWED;
 
 
-public class MainActivity extends HSDeepLinkActivity {
+public class MainActivity extends HSAppCompatActivity {
 
 
     public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
@@ -253,8 +255,12 @@ public class MainActivity extends HSDeepLinkActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setBackgroundDrawable(null);
         super.onCreate(savedInstanceState);
         HSLog.d("MainActivity onCreate.");
+        Log.w("cjx","onCreate");
+        long start = SystemClock.elapsedRealtime();
+        long start2 = SystemClock.elapsedRealtime();
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
@@ -298,24 +304,24 @@ public class MainActivity extends HSDeepLinkActivity {
         if (!BuildConfig.MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START) {
             ImageView logoImage = findViewById(R.id.logo_image_view);
             logoImage.setVisibility(View.VISIBLE);
-            logoImage.post(new Runnable() {
-                @Override
-                public void run() {
 
-                    if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
-                        HSFloatWindowManager.getInstance().getAccessibilityCoverView();
-                        progressLayout.setVisibility(View.VISIBLE);
-                        progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
-                    }
-                    if (isSettingButtonAnimationPlayed) {
-                        HSLog.w("setting button already showed.");
-                        return;
-                    }
-                    if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
-                        startThemeHomeActivity();
-                    }
+            handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+                    HSFloatWindowManager.getInstance().getAccessibilityCoverView();
+                    progressLayout.setVisibility(View.VISIBLE);
+                    progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
                 }
-            });
+                if (isSettingButtonAnimationPlayed) {
+                    HSLog.w("setting button already showed.");
+                    return;
+                }
+                if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
+                    startThemeHomeActivity();
+                }
+            }
+        },1200);
 
         }else {
             launchImageView = findViewById(R.id.launch_image_view);
@@ -329,29 +335,6 @@ public class MainActivity extends HSDeepLinkActivity {
                     HSLog.e("MainActivity mp4 play error: what = " + what + " extra = " + extra);
                     startThemeHomeActivity();
                     return true;
-                }
-            });
-
-            launchImageView.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (!isLaunchAnimationPlayed) {
-                        Log.w("cjx","start play anim");
-                        isLaunchAnimationPlayed = true;
-                        launchImageView.setVisibility(GONE);
-                        launchVideoView.setVisibility(View.VISIBLE);
-                        launchVideoView.start();
-                        if (!shouldShowThemeHome()) {
-                            HSFloatWindowManager.getInstance().getAccessibilityCoverView();
-                            if (!isSettingButtonAnimationPlayed) {
-                                if (!hasPlayed) {
-                                    progressLayout.setVisibility(View.VISIBLE);
-                                    progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
-                                }
-                                HSLog.w("show setting button in abnormal way");
-                            }
-                        }
-                    }
                 }
             });
 
@@ -372,6 +355,29 @@ public class MainActivity extends HSDeepLinkActivity {
                     }
                 }
             });
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!isLaunchAnimationPlayed) {
+                        Log.w("cjx","start play anim");
+                        isLaunchAnimationPlayed = true;
+                        launchImageView.setVisibility(GONE);
+                        launchVideoView.setVisibility(View.VISIBLE);
+                        launchVideoView.start();
+                        if (!shouldShowThemeHome()) {
+                            HSFloatWindowManager.getInstance().getAccessibilityCoverView();
+                            if (!isSettingButtonAnimationPlayed) {
+                                if (!hasPlayed) {
+                                    progressLayout.setVisibility(View.VISIBLE);
+                                    progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+                                }
+                                HSLog.w("show setting button in abnormal way");
+                            }
+                        }
+                    }
+                }
+            },1200);
 
         }
 
@@ -489,6 +495,8 @@ public class MainActivity extends HSDeepLinkActivity {
         registerReceiver(imeChangeReceiver, filter);
 
         refreshUIState();
+
+        Log.w("cjx","onCreate cost " + ( SystemClock.elapsedRealtime() -start2));
     }
 
 
@@ -670,6 +678,32 @@ public class MainActivity extends HSDeepLinkActivity {
     protected void onResume() {
         super.onResume();
         HSLog.d("MainActivity onResume.");
+        Log.w("cjx","MainActivity onResume.");
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                playProgressAnim();
+//            }
+//        },1200);
+
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+//                    HSFloatWindowManager.getInstance().getAccessibilityCoverView();
+//                    progressLayout.setVisibility(View.VISIBLE);
+//                    progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
+//                }
+//                if (isSettingButtonAnimationPlayed) {
+//                    HSLog.w("setting button already showed.");
+//                    return;
+//                }
+//                if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
+//                    startThemeHomeActivity();
+//                }
+//            }
+//        },1200);
+
         if (currentType == TYPE_MANUAL) {
             if (!HSInputMethodListManager.isMyInputMethodEnabled()) {
                 getApplicationContext().getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false,
@@ -706,6 +740,51 @@ public class MainActivity extends HSDeepLinkActivity {
             showChooseManualAlertIfNecessary();
         }
     }
+
+    private void playProgressAnim() {
+        ValueAnimator animator = ValueAnimator.ofInt(5, 100);
+        animator.setDuration(3000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                Log.w("cjx","onAnimationUpdate -> value:"+value);
+                ivProgress.getDrawable().setLevel(value);
+                tvProgress.setText(MessageFormat.format("{0}%", value));
+            }
+        });
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                Log.w("cjx","onAnimationStart");
+                progressLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                Log.w("cjx","onAnimationEnd");
+                ivProgress.setVisibility(GONE);
+                tvProgress.setVisibility(GONE);
+                img_choose_one.setVisibility(View.VISIBLE);
+                img_choose_two.setVisibility(View.VISIBLE);
+                img_enter_one.setVisibility(View.VISIBLE);
+                img_enter_two.setVisibility(View.VISIBLE);
+                textOne.setVisibility(View.VISIBLE);
+                textTwo.setVisibility(View.VISIBLE);
+
+                // 开始渐变动画
+                if (isAccessibilityEnable()) {
+                    playAccessibilityButtonShowAnimation();
+                } else {
+                    playManualButtonShowAnimation();
+                }
+            }
+        });
+        animator.start();
+    }
+
 
     private void showChooseManualAlertIfNecessary() {
         if (!alertDialogShowing && shouldShowEnableDialog && !HSAccessibilityService.isAvailable() && !isFinishing()) {
