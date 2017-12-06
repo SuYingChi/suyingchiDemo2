@@ -381,10 +381,18 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         }
 
         Drawable defPressedDrawable = ViewItemBuilder.getStyledDrawableFromResources(pressedImageName);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_press), PorterDuff.Mode.SRC_IN);
+        if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_press), PorterDuff.Mode.SRC_IN);
+            } else {
+                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_press));
+            }
         } else {
-            DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_press));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_press), PorterDuff.Mode.SRC_IN);
+            } else {
+                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_press));
+            }
         }
 
         stateListDrawable.addState(new int[]{android.R.attr.state_focused}, defPressedDrawable);

@@ -153,9 +153,9 @@
     <color name="selector_button_bg_dark_normal">#00000000</color>
     <color name="selector_button_bg_dark_press">#B3FFFFFF</color>
     <color name="selector_button_bg_light_normal">#00000000</color>
-    <color name="selector_button_bg_light_press">#4DFFFFFF</color>
+    <color name="selector_button_bg_light_press">#CCFFFFFF</color>
     <color name="selector_button_ic_dark_normal">#FFFFFF</color>
     <color name="selector_button_ic_dark_press">#000000</color>
-    <color name="selector_button_ic_light_normal">#000000</color>
-    <color name="selector_button_ic_light_press">#000000</color>
+    <color name="selector_button_ic_light_normal">#29A0CB</color>
+    <color name="selector_button_ic_light_press">#29A0CB</color>
 </resources>
