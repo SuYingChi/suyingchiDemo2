@@ -34,7 +34,6 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardThemePreview;
@@ -491,10 +490,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
             KCCommonUtils.showDialog(savingDialog);
 
-            Resources res = getContext().getResources();
-            Bitmap bitmap = Bitmap.createBitmap(HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
             try {
+                Resources res = getContext().getResources();
+                Bitmap bitmap = Bitmap.createBitmap(HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+
                 Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
                         HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
                 Drawable drawable = new BitmapDrawable(res,bmp);
@@ -504,14 +504,20 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 new SaveThemeChangesTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bitmap);
                 HSAnalytics.logEvent("app_customize_save", "save_state", "Save_Success");
             }catch (Exception e) {
-                e.printStackTrace();
-                dismissDialog(savingDialog);
-                Toast.makeText(this,R.string.save_theme_failed,Toast.LENGTH_SHORT).show();
-                setResult(RESULT_CANCELED);
-                finish();
+                exitWhenSaveFailed();
+                return;
+            }catch (OutOfMemoryError error){
+                exitWhenSaveFailed();
                 return;
             }
         }
+    }
+
+    private void exitWhenSaveFailed() {
+        dismissDialog(savingDialog);
+        Toast.makeText(this, R.string.save_theme_failed,Toast.LENGTH_SHORT).show();
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     @Override
@@ -664,16 +670,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             if (!TextUtils.isEmpty(name)) {
                 KCCustomThemeManager.getInstance().addCustomTheme(name);
                 HSKeyboardThemeManager.setPreviewCustomTheme(false);
-                HSLog.e("custome ximu +" + name);
                 HSKeyboardThemeManager.setKeyboardTheme(name);
                 setResult(RESULT_OK);
                 onNewThemeCreated();
-
             } else {
-                setResult(RESULT_CANCELED);
-                Toast.makeText(CustomThemeActivity.this,R.string.save_theme_failed,Toast.LENGTH_SHORT).show();
-                HSLog.e("generate custom theme failed.");
-                finish();
+                exitWhenSaveFailed();
             }
 
             dismissDialog(savingDialog);
