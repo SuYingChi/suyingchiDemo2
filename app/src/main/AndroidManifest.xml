@@ -46,6 +46,11 @@
 
     <!-- 新增权限 -->
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
+    <uses-permission
+        android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        tools:node="remove" />
+
     <application>
         <activity
             android:name=".ui.theme.ui.ThemeHomeActivity"
@@ -81,7 +86,7 @@
             android:name=".ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="com.keyboard.setkeyboardbg" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -114,7 +119,7 @@
         <service
             android:name="com.ihs.devicemonitor.accessibility.HSAccessibilityService"
             android:label="@string/english_service_label"
-            tools:remove="process"
+            tools:remove="process,permission"
             tools:replace="android:label"></service>
 
         <activity
@@ -239,7 +244,7 @@
             android:name=".softgame.SoftGameDisplayActivity"
             android:launchMode="singleTask"
             android:taskAffinity=".h5game"
-            android:theme="@style/Theme.Design.Light" >
+            android:theme="@style/Theme.Design.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.category.HOME" />
