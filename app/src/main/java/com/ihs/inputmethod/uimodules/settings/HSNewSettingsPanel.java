@@ -118,6 +118,7 @@ public class HSNewSettingsPanel extends BasePanel {
             selectorItem = ViewItemBuilder.getSelectorItem(new ViewItem.ViewItemListener() {
                 @Override
                 public void onItemClick(ViewItem item) {
+                    HSAnalytics.logEvent("keyboard_selector_clicked");
                     getPanelActionListener().showChildPanel(HSSelectorPanel.class, new Bundle());
                 }
             });
