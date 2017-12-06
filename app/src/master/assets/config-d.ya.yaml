@@ -2,7 +2,7 @@ libCommons:
   RemoteConfig:
     UpdateInterval: 10
     PlistFile: "Local.gd"
-    PlistUrl: "1https://emojidevelop.s3.amazonaws.com/apps_android/config/config-master_keyboard-1.1.1.gd"
+    PlistUrl: "1https://emojidevelop.s3.amazonaws.com/apps_android/config/config-master_keyboard-1.2.2.gd"
   Analytics:
       FlurryKey: "JX3NQ5RVMN4PMYH8J86C"
       FacebookID: "1651195371844917"
@@ -38,7 +38,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.gd"
-    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/masterboard-1.1.1-alerts.mp"
+    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/masterboard-1.2.2-alerts.mp"
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"

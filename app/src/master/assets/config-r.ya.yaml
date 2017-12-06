@@ -1,7 +1,7 @@
 libCommons:
   RemoteConfig:
     PlistFile: "Local.gd"
-    PlistUrl: "http://cdn.appcloudbox.net/glowdesign/apps/masterkeyboard/configs/config-master_keyboard-1.2.1.gd"
+    PlistUrl: "http://cdn.appcloudbox.net/glowdesign/apps/masterkeyboard/configs/config-master_keyboard-1.2.2.gd"
   Analytics:
       FlurryKey: "JX3NQ5RVMN4PMYH8J86C"
       FacebookID: "1651195371844917"
@@ -34,7 +34,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.gd"
-    RemoteUrl: "http://cdn.appcloudbox.net/glowdesign/apps/masterkeyboard/alerts/master_keyboard-1.2.1-alert.gd"
+    RemoteUrl: "http://cdn.appcloudbox.net/glowdesign/apps/masterkeyboard/alerts/master_keyboard-1.2.2-alert.gd"
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"

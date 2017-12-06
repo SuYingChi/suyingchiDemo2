@@ -355,13 +355,15 @@
 				<key>StateDescription</key>
 				<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
 				<key>state</key>
-				<integer>1</integer>
+				<integer>0</integer>
 			</dict>
 			<key>CurrentTheme</key>
 			<dict>
 				<key>LaunchDelayTime</key>
 				<integer>3000</integer>
 			</dict>
+			<key>EnableMessageFunction</key>
+			<true/>
 			<key>FeaturePrompt</key>
 			<dict>
 				<key>ChargerLockerAlert</key>
@@ -419,15 +421,6 @@
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
-				<key>AdSearch</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>0</integer>
-					<key>RegionException</key>
-					<array/>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
 				<key>AdKeyboardOpen</key>
 				<dict>
 					<key>HoursFromFirstUse</key>
@@ -436,6 +429,15 @@
 					<array>
 						<string>CN</string>
 					</array>
+					<key>TimeZoneException</key>
+					<array/>
+				</dict>
+				<key>AdSearch</key>
+				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>0</integer>
+					<key>RegionException</key>
+					<array/>
 					<key>TimeZoneException</key>
 					<array/>
 				</dict>
@@ -628,6 +630,8 @@
 					<key>Show</key>
 					<false/>
 				</dict>
+				<key>HomeStartDelayTime</key>
+				<integer>1000</integer>
 				<key>KeyboardAds</key>
 				<dict>
 					<key>KeyboardClose</key>
@@ -660,7 +664,7 @@
 				<key>DownloadThemeZip</key>
 				<dict>
 					<key>DownloadInApp</key>
-					<false/>
+					<true/>
 				</dict>
 				<key>ThemeContents</key>
 				<dict>
@@ -1354,6 +1358,10 @@
 						</dict>
 						<dict>
 							<key>name</key>
+							<string>Little Rascal</string>
+						</dict>
+						<dict>
+							<key>name</key>
 							<string>Camera Shot</string>
 						</dict>
 						<dict>
@@ -1856,6 +1864,24 @@
 					</array>
 					<key>offical_themes</key>
 					<array>
+						<dict>
+							<key>apkUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/StarrySky.apk</string>
+							<key>bannerImgUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/StarrySky.jpg</string>
+							<key>largePreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/StarrySky.jpg</string>
+							<key>mediumPreviewUrl</key>
+							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_medium_preview/StarrySky.jpg</string>
+							<key>showName</key>
+							<string>Starry Sky</string>
+							<key>showNewMark</key>
+							<true/>
+							<key>themePkName</key>
+							<string>com.keyboard.theme.starrysky</string>
+							<key>zipName</key>
+							<string>StarrySky</string>
+						</dict>
 						<dict>
 							<key>apkUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/apk/PinkBlack.apk</string>
@@ -4146,7 +4172,7 @@
 					</dict>
 				</array>
 				<key>state</key>
-				<integer>1</integer>
+				<integer>0</integer>
 			</dict>
 			<key>NativeAds</key>
 			<dict>
@@ -4229,7 +4255,7 @@
 						<key>body</key>
 						<dict>
 							<key>en</key>
-							<string>Tap the number of stars you&apos;d give us.</string>
+							<string>Tap the number of stars you'd give us.</string>
 						</dict>
 						<key>title</key>
 						<dict>
@@ -4338,7 +4364,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación? </string>
 							<key>fr</key>
-							<string>Vous aimez l&apos;application?</string>
+							<string>Vous aimez l'application?</string>
 							<key>hi</key>
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
@@ -4447,11 +4473,11 @@
 								<key>es</key>
 								<string>¡Nos alegra oírlo! ¡Danos 5 estrellas!</string>
 								<key>fr</key>
-								<string>Nous sommes heureux de l&apos;apprendre ! Donnez-lui 5 étoiles.</string>
+								<string>Nous sommes heureux de l'apprendre ! Donnez-lui 5 étoiles.</string>
 								<key>hi</key>
 								<string>यह जानकर खुशी हुई! इसे 5-स्टार का मूल्यांकन दें हमारे पास</string>
 								<key>it</key>
-								<string>Ci fa piacere saperlo! Valuta l&apos;app con 5 stelle.</string>
+								<string>Ci fa piacere saperlo! Valuta l'app con 5 stelle.</string>
 								<key>ja</key>
 								<string>それが聞けて何よりです。5つ星をぜひお願いします！</string>
 								<key>ko</key>
@@ -4516,7 +4542,7 @@
 								<key>es</key>
 								<string>Somos un equipo pequeño y nos esforzamos mucho para ofrecerte la mejor aplicación gratis. ¡Tu valoración de 5 estrellas es mejor que todo el dinero del mundo!</string>
 								<key>fr</key>
-								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l&apos;argent du monde !</string>
+								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l'argent du monde !</string>
 								<key>hi</key>
 								<string>एक छोटी टीम है जो आपको निशुल्क में बेहतर एप्स‍ देने के लिए कड़ी मेहनत करती है। आपका 5-स्टार विश्व की पूरी दौलत से भी अच्छा है!</string>
 								<key>it</key>
@@ -4546,7 +4572,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación?</string>
 							<key>fr</key>
-							<string>Vous aimez l&apos;application ?</string>
+							<string>Vous aimez l'application ?</string>
 							<key>it</key>
 							<string>Ti piace la nostra app?</string>
 							<key>nl</key>
@@ -4696,7 +4722,7 @@
 								<key>es</key>
 								<string>¿Qué te parecería valorar el trabajo del equipo?</string>
 								<key>fr</key>
-								<string>Que diriez-vous d&apos;un avis pour des équipes qui travaillent dur ?</string>
+								<string>Que diriez-vous d'un avis pour des équipes qui travaillent dur ?</string>
 								<key>hi</key>
 								<string>तो कड़ी मेहनत वाली टीमों के लिए एक मूल्यांकन के बारे में क्या?</string>
 								<key>it</key>
@@ -4741,7 +4767,7 @@
 							<key>es</key>
 							<string>Tengo algunos comentarios</string>
 							<key>fr</key>
-							<string>J&apos;ai des commentaires</string>
+							<string>J'ai des commentaires</string>
 							<key>hi</key>
 							<string>मेरे पास कुछ प्रतिक्रिया है</string>
 							<key>it</key>
@@ -4764,15 +4790,15 @@
 							<key>de</key>
 							<string>Ich würde sie mit 5 Sternen bewerten</string>
 							<key>en</key>
-							<string>I&apos;d like to give it a 5-star rating.</string>
+							<string>I'd like to give it a 5-star rating.</string>
 							<key>es</key>
 							<string>Me gustaría darle una valoración de 5 estrellas.</string>
 							<key>fr</key>
-							<string>J&apos;aimerais lui donner 5 étoiles.</string>
+							<string>J'aimerais lui donner 5 étoiles.</string>
 							<key>hi</key>
 							<string>मैं इसे 5-स्टार मूल्‍यांकन देना चाहता/चाहती हूं।</string>
 							<key>it</key>
-							<string>Voglio valutare l&apos;app con 5 stelle.</string>
+							<string>Voglio valutare l'app con 5 stelle.</string>
 							<key>nl</key>
 							<string>Ik wil een beoordeling van 5 sterren geven.</string>
 							<key>pt</key>
@@ -5195,6 +5221,8 @@
 				<string>http://cdn.appcloudbox.net/keyboardarts/download</string>
 				<key>StickerDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/stickers</string>
+				<key>StickerSuggestionBaseURL</key>
+				<string>http://cdn.appcloudbox.net/keyboardarts/download/sticker_suggestion</string>
 				<key>ThemeZipDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/theme/</string>
 			</dict>
@@ -6194,7 +6222,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>27</real>
+								<integer>27</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6272,7 +6300,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>21</real>
+								<integer>21</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6298,7 +6326,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>19</real>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6402,7 +6430,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6454,7 +6482,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6480,7 +6508,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6506,7 +6534,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6532,7 +6560,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3</real>
+								<integer>3</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6558,7 +6586,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>27</real>
+								<integer>27</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6630,7 +6658,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>23</real>
+								<integer>23</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6702,7 +6730,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>19</real>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6810,7 +6838,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6846,7 +6874,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6882,7 +6910,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6918,7 +6946,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -6954,7 +6982,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7068,7 +7096,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7146,7 +7174,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7224,7 +7252,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7263,7 +7291,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7347,7 +7375,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>27</real>
+								<integer>27</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7503,7 +7531,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>19</real>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7529,7 +7557,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7555,7 +7583,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7581,7 +7609,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7607,7 +7635,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7659,7 +7687,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7685,7 +7713,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7711,7 +7739,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3</real>
+								<integer>3</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7737,7 +7765,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>27</real>
+								<integer>27</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7809,7 +7837,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>25</real>
+								<integer>25</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7845,7 +7873,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>23</real>
+								<integer>23</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7881,7 +7909,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>21</real>
+								<integer>21</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7917,7 +7945,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>19</real>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7953,7 +7981,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -7989,7 +8017,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8025,7 +8053,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8061,7 +8089,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8097,7 +8125,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8169,7 +8197,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8208,7 +8236,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8247,7 +8275,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8286,7 +8314,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8325,7 +8353,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8364,7 +8392,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8403,7 +8431,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8478,6 +8506,650 @@
 		</dict>
 		<key>interstitialAds</key>
 		<dict>
+			<key>Smileykey_A(InterstitialAds)H5GameAd</key>
+			<dict>
+				<key>deDuplicate</key>
+				<false/>
+				<key>packageFilter</key>
+				<true/>
+				<key>parallelCount</key>
+				<integer>0</integer>
+				<key>parallelList</key>
+				<array/>
+				<key>preCacheIcon</key>
+				<true/>
+				<key>preCacheImage</key>
+				<true/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795813463802592</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/4394813786</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795813983802540</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>11</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795814860469119</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>9</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/9088134811</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>7</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/9596092185</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795815840469021</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/7469332731</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795816450468960</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/1768649180</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795817073802231</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>11</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/8193766200</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>9</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795817597135512</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>7</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/4076882631</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795808713803067</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/5064147719</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795809483802990</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Facebooknative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>5</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>1295069217210355_1795809730469632</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobinterstitial</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>3</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/4036643740</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+				</array>
+			</dict>
 			<key>Smileykey_A(InterstitialAds)OpenKeyboardFullScreenAd</key>
 			<dict>
 				<key>deDuplicate</key>
@@ -8511,7 +9183,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8537,7 +9209,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8563,7 +9235,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8589,7 +9261,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8615,7 +9287,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8641,7 +9313,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8667,7 +9339,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8693,7 +9365,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3</real>
+								<integer>3</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8719,7 +9391,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8755,7 +9427,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8791,7 +9463,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8827,7 +9499,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8863,7 +9535,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8899,7 +9571,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8935,7 +9607,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -8974,7 +9646,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9013,7 +9685,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9052,7 +9724,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9091,7 +9763,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3</real>
+								<integer>3</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9157,6 +9829,14 @@
 				</dict>
 			</dict>
 		</dict>
+		<key>libCommons</key>
+		<dict>
+			<key>RemoteConfig</key>
+			<dict>
+				<key>UpdateInterval</key>
+				<integer>43200</integer>
+			</dict>
+		</dict>
 		<key>nativeAds</key>
 		<dict>
 			<key>Smileykey_A(NativeAds)ApplyingItem</key>
@@ -9181,7 +9861,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9207,7 +9887,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9233,7 +9913,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9259,7 +9939,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9285,7 +9965,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9311,7 +9991,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9337,7 +10017,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9363,7 +10043,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9399,7 +10079,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9435,7 +10115,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9471,7 +10151,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9507,7 +10187,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9543,7 +10223,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9579,7 +10259,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9618,7 +10298,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9696,7 +10376,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9735,7 +10415,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9801,7 +10481,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9827,7 +10507,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9853,7 +10533,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9879,7 +10559,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9905,7 +10585,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9931,7 +10611,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9957,7 +10637,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -9983,7 +10663,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>3</real>
+								<integer>3</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10009,7 +10689,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10045,7 +10725,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10081,7 +10761,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10117,7 +10797,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10153,7 +10833,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10189,7 +10869,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10225,7 +10905,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10264,7 +10944,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10342,7 +11022,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10381,7 +11061,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10434,7 +11114,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10460,7 +11140,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10486,7 +11166,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10512,7 +11192,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10538,7 +11218,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10564,7 +11244,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10590,7 +11270,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10616,7 +11296,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10652,7 +11332,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10688,7 +11368,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10724,7 +11404,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10760,7 +11440,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10796,7 +11476,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10832,7 +11512,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10871,7 +11551,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10910,7 +11590,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10949,7 +11629,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -10988,7 +11668,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11069,7 +11749,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11095,7 +11775,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11121,7 +11801,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11147,7 +11827,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11173,7 +11853,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11199,7 +11879,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11235,7 +11915,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11271,7 +11951,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11307,7 +11987,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11343,7 +12023,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11379,7 +12059,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11418,7 +12098,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11457,7 +12137,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11496,7 +12176,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11535,7 +12215,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11588,7 +12268,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>17</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11614,7 +12294,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11666,7 +12346,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11692,7 +12372,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11718,7 +12398,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11744,7 +12424,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>5</real>
+								<integer>5</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11770,12 +12450,12 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
-							<string>1295069217210355_1764236083626997</string>
+							<string>1295069217210355_1801199249930680</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
@@ -11806,7 +12486,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>15</real>
+								<integer>15</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11842,7 +12522,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11878,7 +12558,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11914,7 +12594,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11950,7 +12630,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>7</real>
+								<integer>7</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -11986,12 +12666,12 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>17</real>
+								<integer>19</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
 						<array>
-							<string>1295069217210355_1764227616961177</string>
+							<string>1295069217210355_1801215946595677</string>
 						</array>
 						<key>loadCount</key>
 						<integer>1</integer>
@@ -12064,7 +12744,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>13</real>
+								<integer>13</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -12103,7 +12783,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>11</real>
+								<integer>11</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -12142,7 +12822,7 @@
 							<key>Others</key>
 							<dict>
 								<key>cpm</key>
-								<real>9</real>
+								<integer>9</integer>
 							</dict>
 						</dict>
 						<key>ids</key>
@@ -12174,14 +12854,6 @@
 				</array>
 			</dict>
 		</dict>
-		<key>libCommons</key>
-		<dict>
-			<key>RemoteConfig</key>
-			<dict>
-				<key>UpdateInterval</key>
-				<integer>43200</integer>
-			</dict>
-		</dict>
 	</dict>
 	<key>GP</key>
 	<dict>
@@ -12191,32 +12863,6 @@
 			<dict>
 				<key>Application</key>
 				<dict>
-					<key>ChargeLocker</key>
-					<dict>
-						<key>Alert</key>
-						<dict>
-							<key>AdText</key>
-							<string>(contains ads)</string>
-							<key>Body</key>
-							<string>Enable battery protection to speed up the phone charging by 50%</string>
-							<key>Button</key>
-							<string>OK</string>
-							<key>Title</key>
-							<string>Battery Protection</string>
-						</dict>
-						<key>EnableAlertStyle</key>
-						<integer>0</integer>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
-						<key>ShowAppInfo</key>
-						<true/>
-						<key>ShowSettingIcon</key>
-						<true/>
-						<key>StateDescription</key>
-						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
-						<key>state</key>
-						<integer>2</integer>
-					</dict>
 					<key>InterstitialAds</key>
 					<dict>
 						<key>BackButton</key>
@@ -12705,196 +13351,6 @@
 								</dict>
 							</array>
 						</dict>
-					</dict>
-					<key>Locker</key>
-					<dict>
-						<key>Ads</key>
-						<dict>
-							<key>MinCountToShowAds</key>
-							<integer>0</integer>
-							<key>ShowAd</key>
-							<true/>
-							<key>ShowAdsInterval</key>
-							<integer>0</integer>
-						</dict>
-						<key>Alert</key>
-						<dict>
-							<key>AdText</key>
-							<string>(contains sponsored contents)</string>
-							<key>Body</key>
-							<string>Open camera directly from lock screen and never miss a shot agian</string>
-							<key>Button</key>
-							<string>OK</string>
-							<key>Title</key>
-							<string>Quickly Open Camera</string>
-						</dict>
-						<key>Calculator</key>
-						<array>
-							<string>com.android.calculator2</string>
-							<string>com.sec.android.app.popupcalculator</string>
-							<string>com.meizu.flyme.calculator</string>
-							<string>com.sec.android.app.calculator</string>
-							<string>com.htc.calculator</string>
-							<string>com.asus.calculator</string>
-							<string>com.android.calculator</string>
-							<string>com.google.android.calculator</string>
-							<string>cn.nubia.calculator2.preset</string>
-							<string>com.zui.calculator</string>
-							<string>com.android.bbkcalculator</string>
-						</array>
-						<key>EnableAlertMaxShowCount</key>
-						<integer>6</integer>
-						<key>EnableAlertStyle</key>
-						<integer>1</integer>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
-						<key>LockerAutoRefreshAdsEnable</key>
-						<false/>
-						<key>UseNewLockScreen</key>
-						<false/>
-						<key>Wallpapers</key>
-						<array>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/1.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/1_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/2.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/2_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/3.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/3_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/4.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/4_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/5.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/5_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/6.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/6_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/7.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/7_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/8.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/8_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/9.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/9_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/10.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/10_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/11.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/11_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/12.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/12_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/13.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/13_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/14.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/14_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/15.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/15_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/16.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/16_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/17.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/17_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/18.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/18_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/19.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/19_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/20.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/20_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/21.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/21_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/22.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/22_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/23.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/23_s.jpg</string>
-							</dict>
-						</array>
-						<key>state</key>
-						<integer>2</integer>
 					</dict>
 				</dict>
 			</dict>
@@ -12907,32 +13363,6 @@
 			<dict>
 				<key>Application</key>
 				<dict>
-					<key>ChargeLocker</key>
-					<dict>
-						<key>Alert</key>
-						<dict>
-							<key>AdText</key>
-							<string>(contains ads)</string>
-							<key>Body</key>
-							<string>Enable battery protection to speed up the phone charging by 50%</string>
-							<key>Button</key>
-							<string>OK</string>
-							<key>Title</key>
-							<string>Battery Protection</string>
-						</dict>
-						<key>EnableAlertStyle</key>
-						<integer>0</integer>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
-						<key>ShowAppInfo</key>
-						<true/>
-						<key>ShowSettingIcon</key>
-						<true/>
-						<key>StateDescription</key>
-						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
-						<key>state</key>
-						<integer>2</integer>
-					</dict>
 					<key>InterstitialAds</key>
 					<dict>
 						<key>BackButton</key>
@@ -13421,196 +13851,6 @@
 								</dict>
 							</array>
 						</dict>
-					</dict>
-					<key>Locker</key>
-					<dict>
-						<key>Ads</key>
-						<dict>
-							<key>MinCountToShowAds</key>
-							<integer>0</integer>
-							<key>ShowAd</key>
-							<true/>
-							<key>ShowAdsInterval</key>
-							<integer>0</integer>
-						</dict>
-						<key>Alert</key>
-						<dict>
-							<key>AdText</key>
-							<string>(contains sponsored contents)</string>
-							<key>Body</key>
-							<string>Open camera directly from lock screen and never miss a shot agian</string>
-							<key>Button</key>
-							<string>OK</string>
-							<key>Title</key>
-							<string>Quickly Open Camera</string>
-						</dict>
-						<key>Calculator</key>
-						<array>
-							<string>com.android.calculator2</string>
-							<string>com.sec.android.app.popupcalculator</string>
-							<string>com.meizu.flyme.calculator</string>
-							<string>com.sec.android.app.calculator</string>
-							<string>com.htc.calculator</string>
-							<string>com.asus.calculator</string>
-							<string>com.android.calculator</string>
-							<string>com.google.android.calculator</string>
-							<string>cn.nubia.calculator2.preset</string>
-							<string>com.zui.calculator</string>
-							<string>com.android.bbkcalculator</string>
-						</array>
-						<key>EnableAlertMaxShowCount</key>
-						<integer>6</integer>
-						<key>EnableAlertStyle</key>
-						<integer>1</integer>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
-						<key>LockerAutoRefreshAdsEnable</key>
-						<false/>
-						<key>UseNewLockScreen</key>
-						<false/>
-						<key>Wallpapers</key>
-						<array>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/1.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/1_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/2.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/2_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/3.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/3_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/4.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/4_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/5.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/5_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/6.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/6_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/7.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/7_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/8.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/8_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/9.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/9_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/10.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/10_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/11.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/11_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/12.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/12_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/13.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/13_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/14.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/14_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/15.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/15_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/16.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/16_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/17.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/17_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/18.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/18_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/19.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/19_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/20.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/20_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/21.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/21_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/22.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/22_s.jpg</string>
-							</dict>
-							<dict>
-								<key>HD</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/HD/23.jpg</string>
-								<key>thumb</key>
-								<string>http://cdn.appcloudbox.net/launcherapps/apps/launcher/locker/wallpaper/thumb/23_s.jpg</string>
-							</dict>
-						</array>
-						<key>state</key>
-						<integer>2</integer>
 					</dict>
 				</dict>
 			</dict>

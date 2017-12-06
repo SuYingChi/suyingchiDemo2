@@ -84,8 +84,8 @@ android {
 
         master {
             applicationId = "com.masterkeyboard.emoji"
-            versionCode 8
-            versionName "1.2.1"
+            versionCode 9
+            versionName "1.2.2"
             manifestPlaceholders = [APPLY_SCHEME: "lockerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
@@ -118,8 +118,8 @@ android {
 
         tiger {
             applicationId = "com.mobipioneer.emojikeyboard"
-            versionName "2.0.1"
-            versionCode 13
+            versionName "2.0.2"
+            versionCode 14
             manifestPlaceholders = [APPLY_SCHEME: "tigerKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
