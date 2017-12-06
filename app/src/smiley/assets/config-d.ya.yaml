@@ -2,7 +2,7 @@ libCommons:
   RemoteConfig:
     UpdateInterval: 10
     PlistFile: "Local.ic"
-    PlistUrl: "https://emojidevelop.s3.amazonaws.com/apps_android/config/config-emojikeyboard-2.1.1.ic"
+    PlistUrl: "xxhttps://emojidevelop.s3.amazonaws.com/apps_android/config/config-emojikeyboard-2.1.2.ic"
   Analytics:
       FlurryKey: "FC2GWXDVFTZHFK7KX6KV"
       FacebookID: "1474873346171463"
@@ -35,28 +35,10 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.ic"
-    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/emojikeyboard-2.1.0-alerts.ic"
+    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/emojikeyboard-2.1.2-alerts.ic"
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
 
 Application:
   WallpaperAPIURL: "https://dev-service.appcloudbox.net/wallpapers/"
-
-adAdapter:
-  admobNative:
-    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
-  admobBanner:
-    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
-  admobInterstitial:
-    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
-  adxNative:
-    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
-  adxBanner:
-    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
-  adxInterstitial:
-    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
-  openxBanner:
-    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
-  ironsourceInterstitial:
-    initsdkwhenstart : false     //false表示在 load广告时进行SDK的初始化，true表示在App启动时进行初始化，如果没有配置默认是在App启动时进行SDK初始化
