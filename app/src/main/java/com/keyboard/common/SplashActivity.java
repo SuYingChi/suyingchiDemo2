@@ -13,20 +13,22 @@ public class SplashActivity extends HSDeepLinkActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        KeyboardFullScreenAd.loadSessionOneTimeAd();
         super.onCreate(savedInstanceState);
         this.overridePendingTransition(0, 0);
 
+        int delayMillis = 0;
         if (!HSPreferenceHelper.getDefault().getBoolean("first_start_app", true)) {
-            int delayMillis = HSConfig.optInteger(0, "Application", "InterstitialAds", "HomeStartDelayTime");
-            Handler handler = new Handler();
-            handler.postDelayed(() -> {
-                HSUIApplication application = (HSUIApplication) getApplication();
-                application.startActivityAfterSplash(SplashActivity.this);
-                finish();
-            }, delayMillis);
+            delayMillis = HSConfig.optInteger(0, "Application", "InterstitialAds", "HomeStartDelayTime");
+            KeyboardFullScreenAd.loadSessionOneTimeAd();
         }else{
             HSPreferenceHelper.getDefault().putBoolean("first_start_app", false);
         }
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            HSUIApplication application = (HSUIApplication) getApplication();
+            application.startActivityAfterSplash(SplashActivity.this);
+            finish();
+        }, delayMillis);
+
     }
 }
