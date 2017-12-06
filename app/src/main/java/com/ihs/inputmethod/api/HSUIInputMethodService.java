@@ -140,7 +140,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-
             if (lastBackAdShownTime > 0) {
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastBackAdShownTime >= 2_000) {
@@ -206,7 +205,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
                     prefs.putLong("LastBackAdShowTime", currentTimeMillis);
                     return true;
                 } else {
-                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                    //此处广告不再请求，因为需求每个session只请求一个全屏。
+//                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
                     return false;
                 }
             } else {

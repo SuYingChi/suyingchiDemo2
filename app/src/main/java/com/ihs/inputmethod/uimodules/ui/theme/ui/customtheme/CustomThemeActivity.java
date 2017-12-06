@@ -330,11 +330,13 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
     public void showFragment(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < getFragmentClasses().size()) {
-            if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD) {
-                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
-                }
-            }
+
+            //此处广告不再请求，因为需求每个session只请求一个全屏。
+//            if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD) {
+//                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+//                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+//                }
+//            }
 
             try {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

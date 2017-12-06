@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -17,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ihs.app.alerts.HSAlertMgr;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -70,6 +70,8 @@ public final class TrialKeyboardDialog extends Dialog {
                     getContext().getString(R.string.interstitial_ad_subtitle_after_try_keyboard));
             if (!adShown) {
                 showChargingEnableAlert();
+            }else{
+                HSAnalytics.logEvent("app_springAd_show","from","customTheme");
             }
         }
     }
@@ -114,9 +116,10 @@ public final class TrialKeyboardDialog extends Dialog {
         this.showAdOnDismiss = showAdOnDismiss;
 
         setLayoutListenerToRootView();
-        if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
-        }
+        //此处广告不再请求，因为需求每个session只请求一个全屏。
+//        if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+//            KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
+//        }
     }
 
     @Override
