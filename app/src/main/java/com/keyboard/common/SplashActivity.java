@@ -17,18 +17,16 @@ public class SplashActivity extends HSDeepLinkActivity {
         super.onCreate(savedInstanceState);
         this.overridePendingTransition(0, 0);
 
-        int delayMillis = 0;
         if (!HSPreferenceHelper.getDefault().getBoolean("first_start_app", true)) {
-            delayMillis = HSConfig.optInteger(0, "Application", "InterstitialAds", "HomeStartDelayTime");
+            int delayMillis = HSConfig.optInteger(0, "Application", "InterstitialAds", "HomeStartDelayTime");
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                HSUIApplication application = (HSUIApplication) getApplication();
+                application.startActivityAfterSplash(SplashActivity.this);
+                finish();
+            }, delayMillis);
         }else{
             HSPreferenceHelper.getDefault().putBoolean("first_start_app", false);
         }
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            HSUIApplication application = (HSUIApplication) getApplication();
-            application.startActivityAfterSplash(SplashActivity.this);
-            finish();
-        }, delayMillis);
-
     }
 }
