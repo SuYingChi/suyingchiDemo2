@@ -217,11 +217,11 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         Drawable defPressedDrawable = ViewItemBuilder.getStyledDrawableFromResources(SELECTOR_KEY_CUT);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal), PorterDuff.Mode.SRC_IN);
-                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal), PorterDuff.Mode.SRC_IN);
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal), PorterDuff.Mode.SRC_IN);
+                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal), PorterDuff.Mode.SRC_IN);
             } else {
-                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal));
-                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_dark_normal));
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal));
+                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal));
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -290,23 +290,23 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
             }
         });
         selectorDirectionUp = selectorView.findViewById(R.id.selector_direction_up);
-        selectorDirectionUp.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
+        selectorDirectionUp.setImageDrawable(getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
         selectorDirectionUp.setOnTouchListener(this);
 
         selectorDirectionDown = selectorView.findViewById(R.id.selector_direction_down);
-        selectorDirectionDown.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
+        selectorDirectionDown.setImageDrawable(getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
         selectorDirectionDown.setOnTouchListener(this);
 
         selectorDirectionLeft = selectorView.findViewById(R.id.selector_direction_left);
-        selectorDirectionLeft.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
+        selectorDirectionLeft.setImageDrawable(getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
         selectorDirectionLeft.setOnTouchListener(this);
 
         selectorDirectionRight = selectorView.findViewById(R.id.selector_direction_right);
-        selectorDirectionRight.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
+        selectorDirectionRight.setImageDrawable(getStateListDrawable(SELECTOR_KEY_ARROW, SELECTOR_KEY_ARROW));
         selectorDirectionRight.setOnTouchListener(this);
 
         selectorDirectionSelectButton = selectorView.findViewById(R.id.selector_select);
-        selectorDirectionSelectButton.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_SELECTOR, SELECTOR_KEY_SELECTOR));
+        selectorDirectionSelectButton.setImageDrawable(getStateListDrawable(SELECTOR_KEY_SELECTOR, SELECTOR_KEY_SELECTOR));
         selectorDirectionSelectButton.setOnClickListener(this);
 
         selectorSelectAllOrCutButton = selectorView.findViewById(R.id.selector_select_all_or_cut_image);
@@ -314,15 +314,15 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         selectorSelectAllOrCutButton.setOnClickListener(this);
 
         selectorCopy = selectorView.findViewById(R.id.selector_copy_image);
-        selectorCopy.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_COPY, SELECTOR_KEY_COPY));
+        selectorCopy.setImageDrawable(getStateListDrawable(SELECTOR_KEY_COPY, SELECTOR_KEY_COPY));
         selectorCopy.setOnClickListener(this);
 
         selectorPaste = selectorView.findViewById(R.id.selector_paste_image);
-        selectorPaste.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_PASTE, SELECTOR_KEY_PASTE));
+        selectorPaste.setImageDrawable(getStateListDrawable(SELECTOR_KEY_PASTE, SELECTOR_KEY_PASTE));
         selectorPaste.setOnClickListener(this);
 
         selectorDelete = selectorView.findViewById(R.id.selector_delete_image);
-        selectorDelete.setImageDrawable(ViewItemBuilder.getStateListDrawable(SELECTOR_KEY_DELETE, SELECTOR_KEY_DELETE));
+        selectorDelete.setImageDrawable(getStateListDrawable(SELECTOR_KEY_DELETE, SELECTOR_KEY_DELETE));
         selectorDelete.setOnClickListener(this);
 
         selectorSelectAllOrCutTextView = selectorView.findViewById(R.id.selector_select_all_and_cut_text);
@@ -332,14 +332,14 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         selectorDirectionSelectButton.setBackgroundDrawable(getSelectButtonBackgroundDrawable());
 
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
-            selectorDirectionUp.setBackgroundResource(R.drawable.selector_button_backgroud);
-            selectorDirectionDown.setBackgroundResource(R.drawable.selector_button_backgroud);
-            selectorDirectionLeft.setBackgroundResource(R.drawable.selector_button_backgroud);
-            selectorDirectionRight.setBackgroundResource(R.drawable.selector_button_backgroud);
-            selectorSelectAllOrCutButton.setBackgroundResource(R.drawable.selector_button_backgroud);
-            selectorCopy.setBackgroundResource(R.drawable.selector_button_backgroud);
-            selectorPaste.setBackgroundResource(R.drawable.selector_button_backgroud);
-            selectorDelete.setBackgroundResource(R.drawable.selector_button_backgroud);
+            selectorDirectionUp.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
+            selectorDirectionDown.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
+            selectorDirectionLeft.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
+            selectorDirectionRight.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
+            selectorSelectAllOrCutButton.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
+            selectorCopy.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
+            selectorPaste.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
+            selectorDelete.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
 
             selectorSelectAllOrCutTextView.setTextColor(Color.WHITE);
             selectorCopyTextView.setTextColor(Color.WHITE);
@@ -361,6 +361,37 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
             selectorPasteTextView.setTextColor(color);
             selectorDeleteTextView.setTextColor(color);
         }
+    }
+
+    private static StateListDrawable getStateListDrawable(String normalImageName, String pressedImageName) {
+        StateListDrawable stateListDrawable = new StateListDrawable();
+        Drawable defNormalDrawable = ViewItemBuilder.getStyledDrawableFromResources(normalImageName);
+        if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal), PorterDuff.Mode.SRC_IN);
+            } else {
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal));
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon), PorterDuff.Mode.SRC_IN);
+            } else {
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon));
+            }
+        }
+
+        Drawable defPressedDrawable = ViewItemBuilder.getStyledDrawableFromResources(pressedImageName);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_press), PorterDuff.Mode.SRC_IN);
+        } else {
+            DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_press));
+        }
+
+        stateListDrawable.addState(new int[]{android.R.attr.state_focused}, defPressedDrawable);
+        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, defPressedDrawable);
+        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, defPressedDrawable);
+        stateListDrawable.addState(new int[]{}, defNormalDrawable);
+        return stateListDrawable;
     }
 
     public HSSelectorPanel() {
