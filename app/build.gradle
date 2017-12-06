@@ -235,8 +235,6 @@ dependencies {
 
     compile 'com.android.support:multidex:1.0.2'
 
-    compile 'com.ihandy.thirdparty:tapjoyconnectlibrary:11.11'
-
     compile "com.ihandy.iap:iap.gm:4.0.+"
 
     smileyCompile project(':gpuimage')

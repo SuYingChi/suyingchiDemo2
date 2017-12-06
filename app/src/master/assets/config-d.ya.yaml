@@ -6,8 +6,6 @@ libCommons:
   Analytics:
       FlurryKey: "JX3NQ5RVMN4PMYH8J86C"
       FacebookID: "1651195371844917"
-      TapjoySDKKey: "kCPYXFb7QbKg0Lrtzre6zQECtyL84OEver49TGEFbddQqLxpN6galX3fzPwp"
-      TapjoyEngagementID: "372155a4-fa46-4f69-a404-36c1128b35a7"
       FlyerKey: "d4VKN2yBPk7gqTRBZcwkbc"
       FlurryStoredMaxCount: 1000
       GoogleTrackId: ""
