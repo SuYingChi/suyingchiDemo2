@@ -422,8 +422,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     @Override
     protected void onDestroy() {
-        KeyboardFullScreenAd.showSessionOneTimeAd("appClosed");
-
         if (trialKeyboardDialog != null) {
             KCCommonUtils.dismissDialog(trialKeyboardDialog);
             trialKeyboardDialog = null;
