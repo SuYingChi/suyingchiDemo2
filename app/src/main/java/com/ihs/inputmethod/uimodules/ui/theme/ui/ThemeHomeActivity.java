@@ -57,6 +57,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.view.LayoutWrapper;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
+import com.ihs.inputmethod.uimodules.widget.LockerGuideAlert;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.utils.CallAssistantConfigUtils;
 import com.ihs.inputmethod.utils.ScreenLockerConfigUtils;
@@ -70,6 +71,8 @@ import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 
 import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
+import net.appcloudbox.autopilot.AutopilotConfig;
+import net.appcloudbox.autopilot.AutopilotEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -344,10 +347,22 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             mLayoutWrapper.show();
         }
 
+        LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
+
+        lockerDialog.setEnableClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_button_clicked");
+            }
+        });
+        lockerDialog.setCancelable(true);
+        KCCommonUtils.showDialog(lockerDialog);
+        AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
+
         // Place here to get a right session id from appframework
-        if (isResumeOnCreate) {
-            showOpenAlertIfNeeded();
-        }
+//        if (isResumeOnCreate) {
+//            showOpenAlertIfNeeded();
+//        }
         isResumeOnCreate = false;
 
     }
@@ -619,25 +634,40 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             if (isFinishing()) {
                 return false;
             }
-            AlertShowingUtils.startShowingAlert();
-            CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
-            lockerDialog.setTitle(getString(R.string.locker_alert_title));
-            if (BuildConfig.LOCKER_APP_GUIDE) {
-                lockerDialog.setMessage(getString(R.string.locker_app_guide_message));
-            } else {
-                lockerDialog.setMessage(getString(R.string.locker_alert_message));
-            }
-            lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
-            lockerDialog.setCancelable(true);
 
-            lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
-                HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
-                enableLocker();
-            });
-            KCCommonUtils.showDialog(lockerDialog);
-            lockerDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
-            HSAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");
-            ScreenLockerConfigUtils.increaseEnableAlertShowCount();
+            if (BuildConfig.LOCKER_APP_GUIDE){
+                int type = Double.valueOf(AutopilotConfig.getDoubleToTestNow("topic-1512033355055", "ui_type", 0)).intValue();
+                if (type == 0){
+                    LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
+                    lockerDialog.setEnableClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_button_clicked");
+                        }
+                    });
+                    lockerDialog.setCancelable(true);
+                    KCCommonUtils.showDialog(lockerDialog);
+                    AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
+                }
+                HSLog.d("cjx","type:"+type);
+            }else {
+
+                AlertShowingUtils.startShowingAlert();
+                CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
+                lockerDialog.setTitle(getString(R.string.locker_alert_title));
+                lockerDialog.setMessage(getString(R.string.locker_alert_message));
+                lockerDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);//locker image
+                lockerDialog.setCancelable(true);
+
+                lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
+                    HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
+                    enableLocker();
+                });
+                KCCommonUtils.showDialog(lockerDialog);
+                lockerDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
+                HSAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");
+                ScreenLockerConfigUtils.increaseEnableAlertShowCount();
+            }
             return true;
         } else {
             return false;
