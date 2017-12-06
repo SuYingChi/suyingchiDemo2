@@ -70,7 +70,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
 
     // TODO: 17/4/7 需求要求隐藏web搜索，但是没有去掉。如果不再用，需要完整去除。
-    private BaseFunction webSeachView;
+    private BaseFunction webSeachButton;
     private BaseFunction clothView;
 
 
@@ -101,13 +101,13 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         functionLayout.addView(emptyView, emptyViewLayoutParams);
 
                 //search view
-        webSeachView = new BaseFunction(getContext());
+        webSeachButton = new BaseFunction(getContext());
         ImageView webIcon = new ImageView(getContext());
         refreshDrawable(webIcon, "menu_search.png", R.drawable.web_search_icon_funcbar);
         webIcon.setScaleType(ImageView.ScaleType.CENTER);
-        webSeachView.setFunctionView(webIcon);
-        webSeachView.setId(R.id.web_search_icon);
-        webSeachView.setOnClickListener(this);
+        webSeachButton.setFunctionView(webIcon);
+        webSeachButton.setId(R.id.web_search_icon);
+        webSeachButton.setOnClickListener(this);
 
         LayoutParams param = new LayoutParams(
                 LayoutParams.MATCH_PARENT,
@@ -115,7 +115,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
         functionLayout.addView(new View(getContext()), param);
 
         if (HSDisplayUtils.getRotation(getContext()) == Surface.ROTATION_0) {
-            functionLayout.addView(webSeachView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            functionLayout.addView(webSeachButton, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
 
 
@@ -186,11 +186,6 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
     public void setSettingButtonType(int type) {
         settingsButton.setButtonType(type);
-        if (type == SettingsButton.SettingButtonType.MENU) {
-            webSeachView.setVisibility(VISIBLE);
-        } else {
-            webSeachView.setVisibility(GONE);
-        }
         updateFunctionAndSettingButtonSize();
     }
 
@@ -270,5 +265,9 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
 
     public PlusButton getPLusButton() {
         return plusButton;
+    }
+
+    public BaseFunction getWebSeachButton() {
+        return webSeachButton;
     }
 }

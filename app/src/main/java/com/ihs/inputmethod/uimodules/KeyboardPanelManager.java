@@ -226,6 +226,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
                     functionBar.hideMenuButton(functionBar.getSoftGameButton());
+                    functionBar.hideMenuButton(functionBar.getWebSeachButton());
                     HSAnalytics.logEvent("keyboard_function_button_click");
                     break;
 
@@ -233,6 +234,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     settingsButton.doFunctionButtonSwitchAnimation();
                     keyboardPanelSwitchContainer.backToParentPanel(false);
                     functionBar.showMenuButton(functionBar.getSoftGameButton());
+                    functionBar.showMenuButton(functionBar.getWebSeachButton());
                     break;
 
                 case SettingsButton.SettingButtonType.BACK:
@@ -240,6 +242,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     if (keyboardPanelSwitchContainer.getCurrentPanel() == keyboardPanelSwitchContainer.getKeyboardPanel()) {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
                         functionBar.showMenuButton(functionBar.getSoftGameButton());
+                        functionBar.showMenuButton(functionBar.getWebSeachButton());
                     } else {
                         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.SETTING);
                     }
@@ -273,6 +276,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (functionBar != null) {
             functionBar.setSettingButtonType(SettingsButton.SettingButtonType.MENU);
             functionBar.showMenuButton(functionBar.getSoftGameButton());
+            functionBar.showMenuButton(functionBar.getWebSeachButton());
         }
     }
 
