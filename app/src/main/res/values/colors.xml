@@ -152,10 +152,10 @@
 
     <color name="selector_button_bg_dark_normal">#00000000</color>
     <color name="selector_button_bg_dark_press">#B3FFFFFF</color>
-    <color name="selector_button_bg_light_normal">#D9FFFFFF</color>
+    <color name="selector_button_bg_light_normal">#00000000</color>
     <color name="selector_button_bg_light_press">#4DFFFFFF</color>
-    <color name="selector_button_dark_normal">#FFFFFF</color>
-    <color name="selector_button_dark_press">#000000</color>
-    <color name="selector_button_light_normal">#000000</color>
-    <color name="selector_button_light_press">#000000</color>
+    <color name="selector_button_ic_dark_normal">#FFFFFF</color>
+    <color name="selector_button_ic_dark_press">#000000</color>
+    <color name="selector_button_ic_light_normal">#000000</color>
+    <color name="selector_button_ic_light_press">#000000</color>
 </resources>

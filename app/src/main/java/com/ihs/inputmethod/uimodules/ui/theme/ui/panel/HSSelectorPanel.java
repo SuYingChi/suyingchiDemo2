@@ -217,19 +217,19 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         Drawable defPressedDrawable = ViewItemBuilder.getStyledDrawableFromResources(SELECTOR_KEY_CUT);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal), PorterDuff.Mode.SRC_IN);
-                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal), PorterDuff.Mode.SRC_IN);
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_normal), PorterDuff.Mode.SRC_IN);
+                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_normal), PorterDuff.Mode.SRC_IN);
             } else {
-                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal));
-                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal));
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_normal));
+                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_normal));
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon), PorterDuff.Mode.SRC_IN);
-                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon), PorterDuff.Mode.SRC_IN);
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_normal), PorterDuff.Mode.SRC_IN);
+                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_press), PorterDuff.Mode.SRC_IN);
             } else {
-                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon));
-                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon));
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_normal));
+                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_press));
             }
         }
         stateListDrawable.addState(new int[]{android.R.attr.state_selected}, defPressedDrawable);
@@ -355,7 +355,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
             selectorPaste.setBackgroundResource(R.drawable.selector_button_background_light);
             selectorDelete.setBackgroundResource(R.drawable.selector_button_background_light);
 
-            int color = ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon);
+            int color = ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_normal);
             selectorSelectAllOrCutTextView.setTextColor(color);
             selectorCopyTextView.setTextColor(color);
             selectorPasteTextView.setTextColor(color);
@@ -368,23 +368,23 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         Drawable defNormalDrawable = ViewItemBuilder.getStyledDrawableFromResources(normalImageName);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal), PorterDuff.Mode.SRC_IN);
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_normal), PorterDuff.Mode.SRC_IN);
             } else {
-                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_normal));
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_normal));
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon), PorterDuff.Mode.SRC_IN);
+                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_normal), PorterDuff.Mode.SRC_IN);
             } else {
-                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.settings_button_light_icon));
+                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_light_normal));
             }
         }
 
         Drawable defPressedDrawable = ViewItemBuilder.getStyledDrawableFromResources(pressedImageName);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_press), PorterDuff.Mode.SRC_IN);
+            defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_press), PorterDuff.Mode.SRC_IN);
         } else {
-            DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_dark_press));
+            DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_press));
         }
 
         stateListDrawable.addState(new int[]{android.R.attr.state_focused}, defPressedDrawable);
