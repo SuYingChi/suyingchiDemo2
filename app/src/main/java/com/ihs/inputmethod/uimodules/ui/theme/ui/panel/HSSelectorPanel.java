@@ -28,6 +28,7 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
@@ -275,7 +276,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         functionBar.setSettingButtonType(SettingsButton.SettingButtonType.BACK);
         @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(R.layout.settings_selector_layout, null);
         initView(view);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) HSApplication.getContext().getResources().getDimension(R.dimen.config_default_keyboard_height));
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, HSResourceUtils.getDefaultKeyboardHeight(HSApplication.getContext().getResources()));
         panelView.addView(view, layoutParams);
         return panelView;
     }
