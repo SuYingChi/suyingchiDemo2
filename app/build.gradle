@@ -45,12 +45,6 @@ android {
             storeFile file('KeyboardArts')
             storePassword "zdhszyzs"
         }
-        ecstasyReleaseConfig {
-            keyAlias 'glowdesign'
-            keyPassword 'zdhszyzs'
-            storeFile file('GlowDesign')
-            storePassword 'zdhszyzs'
-        }
     }
     buildTypes {
         //设置Deubug和Release下的编译模式，即proguard文件路径
@@ -146,7 +140,6 @@ android {
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
-            signingConfig signingConfigs.masterReleaseConfig
         }
     }
 
