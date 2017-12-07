@@ -22,6 +22,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 
 import net.appcloudbox.autopilot.AutopilotConfig;
 
@@ -51,6 +52,7 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
         title.setText(HSConfig.optString(getContext().getResources().getString(R.string.locker_alert_title), "Application", "DownloadScreenLocker", "title"));
 
         Button enableBtn = findViewById(R.id.enable_btn);
+        enableBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.colorAccent));
         enableBtn.setText(HSConfig.optString(getContext().getResources().getString(R.string.enable_now), "Application", "DownloadScreenLocker", "button"));
         enableBtn.setOnClickListener(this);
 
@@ -90,6 +92,10 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             recyclerView.setPadding((int) (100.0 * width / 1080), 0, (int) (80.0 * width / 1080), 0);
         } else {
+            headBg.setImageResource(R.drawable.locker_guide_alert_style1_head);
+            bottomBg.setImageResource(R.drawable.locker_guide_alert_style1_bottom);
+            recyclerView.setBackgroundResource(R.drawable.locker_guide_alert_style1_middle_bg);
+
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
             gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
@@ -98,7 +104,7 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
                 }
             });
             recyclerView.setLayoutManager(gridLayoutManager);
-            recyclerView.setBackgroundResource(R.drawable.locker_guide_alert_style1_middle_bg);
+
             recyclerView.setPadding((int) (107.0 * width / 1080), 0, (int) (86.0 * width / 1080), 0);
 
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) enableBtn.getLayoutParams();
@@ -106,9 +112,6 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
 
             FrameLayout.LayoutParams titleLayoutParms = (FrameLayout.LayoutParams) title.getLayoutParams();
             titleLayoutParms.topMargin = HSDisplayUtils.dip2px(100);
-
-            headBg.setImageResource(R.drawable.locker_guide_alert_style1_head);
-            bottomBg.setImageResource(R.drawable.locker_guide_alert_style1_bottom);
         }
         recyclerView.setAdapter(adapter);
     }

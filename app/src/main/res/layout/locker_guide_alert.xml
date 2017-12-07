@@ -7,15 +7,14 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/head_bg"
             android:adjustViewBounds="true"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
             android:src="@drawable/locker_guide_alert_style0_head" />
 
         <TextView
@@ -40,15 +39,14 @@
         android:overScrollMode="never" />
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:adjustViewBounds="true"
             android:id="@+id/bottom_bg"
-            android:layout_width="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
             android:src="@drawable/locker_guide_alert_style0_bottom" />
 
         <Button
@@ -56,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/colorAccent"
             android:elevation="12dp"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
