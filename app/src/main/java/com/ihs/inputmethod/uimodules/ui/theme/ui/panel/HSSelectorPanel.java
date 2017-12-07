@@ -122,6 +122,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
                 selectorDirectionSelectButton.setSelected(false);
                 //结束选择文本
                 releaseShiftKey();
+                cancelSelectText();
             } else {
                 if (!isEditTextEmpty()) {
                     selectorDirectionSelectButton.setSelected(true);
@@ -181,6 +182,11 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
             }
         }
         return true;
+    }
+
+    private void cancelSelectText() {
+        int start = HSInputMethodService.getInstance().getInputLogic().mConnection.getExpectedSelectionStart();
+        HSInputMethodService.getInstance().getCurrentInputConnection().setSelection(start, start);
     }
 
     private void pressDownShiftKey() {
