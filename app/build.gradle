@@ -133,7 +133,7 @@ android {
         }
 
         ecstasy {
-            applicationId = "com.masterkeyboard.emoji"
+            applicationId = "ecstasy.applicationId"
             versionCode 8
             versionName "1.2.1"
             manifestPlaceholders = [APPLY_SCHEME: "ecstasyKeyboard"]
