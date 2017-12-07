@@ -21,6 +21,7 @@ import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
+import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.analytics.publisher.HSPublisherMgr;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.diversesession.HSDiverseSession;
@@ -215,6 +216,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbNativeAdManager.sharedInstance().init(this);
         AcbExpressAdManager.getInstance().init(this);
 
+        initLockerChargingNoAdConfig();
+
         HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
 
         setChargingFunctionStatus();
@@ -275,6 +278,15 @@ public class HSUIApplication extends HSInputMethodApplication {
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
     }
 
+    private void initLockerChargingNoAdConfig() {
+        //如果第一次启动版本大于等于需要不显示广告的版本，则为新用户
+        if( HSApplication.getFirstLaunchInfo().appVersionCode >= BuildConfig.LOCKER_CHARGING_NO_ADS_START_VERSION){
+            LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.SPECIAL_USER_NEW);
+        }else{
+            LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.NOT_SPECIAL_USER);
+        }
+    }
+
     private void activeAdPlacements() {
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return;
@@ -311,7 +323,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 }
                 return false;
             }
-        }, false);
+        }, null,false);
     }
 
     /**

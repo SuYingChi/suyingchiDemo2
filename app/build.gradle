@@ -11,6 +11,7 @@ android {
         targetSdkVersion 22
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "10000"
     }
     flavorDimensions "default"
     signingConfigs {
@@ -84,6 +85,7 @@ android {
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
+            buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "9"
             signingConfig signingConfigs.masterReleaseConfig
         }
 
@@ -118,6 +120,7 @@ android {
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
+            buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "14"
             signingConfig signingConfigs.tigerReleaseConfig
         }
 
