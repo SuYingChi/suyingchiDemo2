@@ -71,7 +71,6 @@ import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 
 import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
-import net.appcloudbox.autopilot.AutopilotConfig;
 import net.appcloudbox.autopilot.AutopilotEvent;
 
 import java.util.ArrayList;
@@ -347,22 +346,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             mLayoutWrapper.show();
         }
 
-        LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
-
-        lockerDialog.setEnableClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_button_clicked");
-            }
-        });
-        lockerDialog.setCancelable(true);
-        KCCommonUtils.showDialog(lockerDialog);
-        AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
-
         // Place here to get a right session id from appframework
-//        if (isResumeOnCreate) {
-//            showOpenAlertIfNeeded();
-//        }
+        if (isResumeOnCreate) {
+            showOpenAlertIfNeeded();
+        }
         isResumeOnCreate = false;
 
     }
@@ -636,20 +623,16 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             }
 
             if (BuildConfig.LOCKER_APP_GUIDE){
-                int type = Double.valueOf(AutopilotConfig.getDoubleToTestNow("topic-1512033355055", "ui_type", 0)).intValue();
-                if (type == 0){
-                    LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
-                    lockerDialog.setEnableClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_button_clicked");
-                        }
-                    });
-                    lockerDialog.setCancelable(true);
-                    KCCommonUtils.showDialog(lockerDialog);
-                    AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
-                }
-                HSLog.d("cjx","type:"+type);
+                LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
+                lockerDialog.setEnableClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_button_clicked");
+                    }
+                });
+                lockerDialog.setCancelable(true);
+                KCCommonUtils.showDialog(lockerDialog);
+                AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
             }else {
 
                 AlertShowingUtils.startShowingAlert();

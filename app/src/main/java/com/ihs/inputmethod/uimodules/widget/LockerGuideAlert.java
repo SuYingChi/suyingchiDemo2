@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -26,7 +27,6 @@ import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 
 import net.appcloudbox.autopilot.AutopilotConfig;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LockerGuideAlert extends AlertDialog implements View.OnClickListener {
@@ -52,7 +52,7 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
         title.setText(HSConfig.optString(getContext().getResources().getString(R.string.locker_alert_title), "Application", "DownloadScreenLocker", "title"));
 
         Button enableBtn = findViewById(R.id.enable_btn);
-        enableBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.colorAccent));
+        enableBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.locker_guide_button_bg));
         enableBtn.setText(HSConfig.optString(getContext().getResources().getString(R.string.enable_now), "Application", "DownloadScreenLocker", "button"));
         enableBtn.setOnClickListener(this);
 
@@ -60,6 +60,7 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
         closeBtn.setOnClickListener(this);
 
         ImageView headBg = findViewById(R.id.head_bg);
+        View middleContainer = findViewById(R.id.middle_container);
         ImageView bottomBg = findViewById(R.id.bottom_bg);
 
         if (!(getContext() instanceof Activity)) {
@@ -72,29 +73,27 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
+
         int type = Double.valueOf(AutopilotConfig.getDoubleToTestNow("topic-1512033355055", "ui_type", TYPE_0)).intValue();
-        type = 1;//test
-
         List<String> text = (List<String>) HSConfig.getList("Application", "DownloadScreenLocker", "body");
-        if (text == null || text.size() == 0) {
-            text = new ArrayList<>();
-            text.add("Security");
-            text.add("Efficiency");
-            text.add("Personalization");
-            text.add("Small size");
-        }
 
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(type,HSDisplayUtils.dip2px(8),HSDisplayUtils.dip2px(16)));
         ItemAdapter adapter = new ItemAdapter(text, type);
 
         int width = HSDisplayUtils.getScreenWidthForContent();
 
         if (type == TYPE_0) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-            recyclerView.setPadding((int) (100.0 * width / 1080), 0, (int) (80.0 * width / 1080), 0);
+            middleContainer.setPadding((int) (100.0 * width / 1080), HSDisplayUtils.dip2px(10), (int) (80.0 * width / 1080), HSDisplayUtils.dip2px(10));
+
+            FrameLayout.LayoutParams enableBtnLayoutParams = (FrameLayout.LayoutParams) enableBtn.getLayoutParams();
+            enableBtnLayoutParams.leftMargin = (100 - 82) / 2;
         } else {
             headBg.setImageResource(R.drawable.locker_guide_alert_style1_head);
             bottomBg.setImageResource(R.drawable.locker_guide_alert_style1_bottom);
-            recyclerView.setBackgroundResource(R.drawable.locker_guide_alert_style1_middle_bg);
+
+            middleContainer.setBackgroundResource(R.drawable.locker_guide_alert_style1_middle_bg);
+            middleContainer.setPadding((int) (107.0 * width / 1080), 0, (int) (86.0 * width / 1080), 0);
 
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
             gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -105,7 +104,6 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
             });
             recyclerView.setLayoutManager(gridLayoutManager);
 
-            recyclerView.setPadding((int) (107.0 * width / 1080), 0, (int) (86.0 * width / 1080), 0);
 
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) enableBtn.getLayoutParams();
             layoutParams.gravity = Gravity.CENTER;
@@ -114,6 +112,33 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
             titleLayoutParms.topMargin = HSDisplayUtils.dip2px(100);
         }
         recyclerView.setAdapter(adapter);
+    }
+
+    private final static class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+        private int rowSpacing;
+        private int columnSpacing;
+        private int type;
+
+        public GridSpacingItemDecoration(int type, int rowSpacing, int columnSpacing) {
+            this.type = type;
+            this.rowSpacing = rowSpacing / 2;
+            this.columnSpacing = columnSpacing / 2;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            if (type == TYPE_1){
+                int position = parent.getChildAdapterPosition(view); // item position
+                if ((position & 1) != 0) {
+                    outRect.left = columnSpacing;
+                } else {
+                    outRect.right = columnSpacing;
+                }
+            }
+
+            outRect.bottom = rowSpacing;
+            outRect.top = rowSpacing;
+        }
     }
 
     private class ItemAdapter extends RecyclerView.Adapter<VHolder> {
@@ -133,7 +158,7 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
             if (type == TYPE_1) {
                 vHolder.itemView.setLayoutParams(new ViewGroup.LayoutParams(width / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
             } else {
-                vHolder.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//                vHolder.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
             return vHolder;
         }

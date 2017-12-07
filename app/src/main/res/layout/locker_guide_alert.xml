@@ -12,9 +12,9 @@
 
         <ImageView
             android:id="@+id/head_bg"
-            android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:src="@drawable/locker_guide_alert_style0_head" />
 
         <TextView
@@ -22,21 +22,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="60dp"
             android:text="@string/locker_alert_title"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <FrameLayout
+        android:id="@+id/middle_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/locker_guide_alert_style0_middle_bg"
-        android:overScrollMode="never" />
+        android:background="@drawable/locker_guide_alert_style0_middle_bg">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never" />
+
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -44,9 +54,9 @@
 
         <ImageView
             android:id="@+id/bottom_bg"
-            android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:src="@drawable/locker_guide_alert_style0_bottom" />
 
         <Button
