@@ -227,7 +227,7 @@ public class SoftGameButton extends FrameLayout {
         newGameTip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameActivity.startGame(softGameItemBean.getLink(),"keyboard_game_bubble_clicked");
+                GameStarterActivity.startGame(softGameItemBean.getLink(),"keyboard_game_bubble_clicked");
             }
         });
 

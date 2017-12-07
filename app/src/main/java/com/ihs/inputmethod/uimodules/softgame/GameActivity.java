@@ -2,28 +2,16 @@ package com.ihs.inputmethod.uimodules.softgame;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.ads.KCInterstitialAd;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
-
-import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
 
 
 public class GameActivity extends AppCompatActivity {
-
-    private static final int TIME_OUT_LIMIT = 5000;
-    private Handler handler = new Handler();
-    private boolean adShowed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +28,6 @@ public class GameActivity extends AppCompatActivity {
             finish();
             return;
         }
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            String adPlacement = getResources().getString(R.string.placement_full_screen_game);
-            KCInterstitialAd.load(adPlacement);
-            AcbInterstitialAdLoader loader = KCInterstitialAd.loadAndShow(adPlacement, "", "", new KCInterstitialAd.OnAdShowListener() {
-                @Override
-                public void onAdShow(boolean b) {
-                    adShowed = b;
-                }
-            }, null);
-
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!adShowed) {
-                        loader.cancel();
-                    }
-                    KCInterstitialAd.load(adPlacement);
-                }
-            }, TIME_OUT_LIMIT);
-
-        }
         WebView webView = (WebView) findViewById(R.id.web_view);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
@@ -76,25 +43,8 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        handler.removeCallbacksAndMessages(null);
-        KCInterstitialAd.show(getResources().getString(R.string.placement_full_screen_game), "", "");
+        setResult(0);
         super.onBackPressed();
     }
 
-
-    public static void startGame(String gameUrl, String callFrom) {
-        startGame(gameUrl, callFrom, "");
-    }
-
-    public static void startGame(String gameUrl, String callFrom, String gameName) {
-        Intent intent = new Intent(HSApplication.getContext(), GameActivity.class);
-        intent.putExtra("url", gameUrl);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        HSApplication.getContext().startActivity(intent);
-        if (TextUtils.isEmpty(gameName)) {
-            HSAnalytics.logEvent(callFrom);
-        } else {
-            HSAnalytics.logEvent(callFrom, callFrom, gameName);
-        }
-    }
 }

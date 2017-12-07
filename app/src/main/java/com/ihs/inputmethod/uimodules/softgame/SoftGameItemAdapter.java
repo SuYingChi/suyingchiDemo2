@@ -90,13 +90,13 @@ public class SoftGameItemAdapter extends RecyclerView.Adapter<ViewHolder> {
             softGameItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GameActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName());
+                    GameStarterActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName());
                 }
             });
             softGameItemViewHolder.softGamePlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GameActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName());
+                    GameStarterActivity.startGame(softGameDisplayItem.getLink(),"game_play_clicked",softGameDisplayItem.getName());
                 }
             });
         }

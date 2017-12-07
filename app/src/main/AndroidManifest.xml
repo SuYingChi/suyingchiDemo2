@@ -178,6 +178,13 @@
         <activity
             android:name=".softgame.GameActivity"
             android:label="@string/title_activity_game"
+            android:process=":h5game"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".softgame.GameStarterActivity"
+            android:label="@string/title_activity_game"
             android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
