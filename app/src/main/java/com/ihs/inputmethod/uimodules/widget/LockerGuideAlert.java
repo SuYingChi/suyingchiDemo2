@@ -18,29 +18,24 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 
 import net.appcloudbox.autopilot.AutopilotConfig;
+import net.appcloudbox.autopilot.AutopilotEvent;
 
 import java.util.List;
 
 public class LockerGuideAlert extends AlertDialog implements View.OnClickListener {
-    private static final int TYPE_0 = 0;
-    private static final int TYPE_1 = 1;
-
-    private View.OnClickListener enableClickListener;
+    private static final int TYPE_0 = 0; //蓝色
+    private static final int TYPE_1 = 1; //紫色
 
     public LockerGuideAlert(@NonNull Context context) {
         super(context, R.style.LockerGuideDialog);
-    }
-
-    public void setEnableClickListener(View.OnClickListener enableClickListener) {
-        this.enableClickListener = enableClickListener;
     }
 
     @Override
@@ -49,11 +44,11 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
         setContentView(R.layout.locker_guide_alert);
 
         TextView title = findViewById(R.id.title);
-        title.setText(HSConfig.optString(getContext().getResources().getString(R.string.locker_alert_title), "Application", "DownloadScreenLocker", "title"));
+        title.setText(HSConfig.optString(getContext().getResources().getString(R.string.locker_alert_title), "Application", "DownloadScreenLocker", "AppOpen", "title"));
 
         Button enableBtn = findViewById(R.id.enable_btn);
         enableBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.locker_guide_button_bg));
-        enableBtn.setText(HSConfig.optString(getContext().getResources().getString(R.string.enable_now), "Application", "DownloadScreenLocker", "button"));
+        enableBtn.setText(HSConfig.optString(getContext().getResources().getString(R.string.enable_now), "Application", "DownloadScreenLocker","AppOpen", "button"));
         enableBtn.setOnClickListener(this);
 
         ImageView closeBtn = findViewById(R.id.close_btn);
@@ -73,9 +68,8 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-
         int type = Double.valueOf(AutopilotConfig.getDoubleToTestNow("topic-1512033355055", "ui_type", TYPE_0)).intValue();
-        List<String> text = (List<String>) HSConfig.getList("Application", "DownloadScreenLocker", "body");
+        List<String> text = (List<String>) HSConfig.getList("Application", "DownloadScreenLocker", "AppOpen", "body");
 
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(type,HSDisplayUtils.dip2px(8),HSDisplayUtils.dip2px(16)));
         ItemAdapter adapter = new ItemAdapter(text, type);
@@ -153,13 +147,6 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
         @Override
         public VHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             VHolder vHolder = new VHolder(View.inflate(parent.getContext(), R.layout.item_locker_introduce, null));
-            int width = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels - parent.getPaddingLeft() - parent.getPaddingRight();
-            HSLog.d("cjx", "parent.getMeasuredWidth():" + width + ",parent.getPaddingLeft():" + parent.getPaddingLeft() + ",parent.getPaddingRight():" + parent.getPaddingRight());
-            if (type == TYPE_1) {
-                vHolder.itemView.setLayoutParams(new ViewGroup.LayoutParams(width / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
-            } else {
-//                vHolder.itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            }
             return vHolder;
         }
 
@@ -193,14 +180,12 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
     public void onClick(View v) {
         int id = v.getId();
 
-        dismiss();
-
         if (id == R.id.enable_btn) {
-            if (enableClickListener != null) {
-                enableClickListener.onClick(v);
-            }
+            AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_button_clicked");
+            LockerAppGuideManager.getInstance().downloadOrRedirectToLockerApp(LockerAppGuideManager.FLURRY_ALERT_OPEN_APP);
+            dismiss();
         } else if (id == R.id.close_btn) {
-
+            dismiss();
         }
     }
 

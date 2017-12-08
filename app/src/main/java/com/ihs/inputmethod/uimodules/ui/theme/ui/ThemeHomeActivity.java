@@ -607,7 +607,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         if (BuildConfig.LOCKER_APP_GUIDE && !LockerAppGuideManager.getInstance().isLockerInstall()) {
             if(!HSPreferenceHelper.getDefault().getBoolean("locker_guide_app_open_showed",false)){
                 HSPreferenceHelper.getDefault().putBoolean("locker_guide_app_open_showed",true);
-                LockerAppGuideManager.getInstance().showDownloadLockerAlert(ThemeHomeActivity.this,LockerAppGuideManager.FLURRY_ALERT_OPEN_APP);
+                showLockerGuideAlert();
                 return true;
             }else{
                 return false;
@@ -623,18 +623,8 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             }
 
             if (BuildConfig.LOCKER_APP_GUIDE){
-                LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
-                lockerDialog.setEnableClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_button_clicked");
-                    }
-                });
-                lockerDialog.setCancelable(true);
-                KCCommonUtils.showDialog(lockerDialog);
-                AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
+                showLockerGuideAlert();
             }else {
-
                 AlertShowingUtils.startShowingAlert();
                 CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
                 lockerDialog.setTitle(getString(R.string.locker_alert_title));
@@ -655,6 +645,13 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         } else {
             return false;
         }
+    }
+
+    private void showLockerGuideAlert() {
+        LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
+        lockerDialog.setCancelable(true);
+        KCCommonUtils.showDialog(lockerDialog);
+        AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
     }
 
     private boolean showCallAssistantDialog() {
