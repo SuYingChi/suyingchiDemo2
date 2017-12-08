@@ -23,6 +23,7 @@ import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSSelectorPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
 import com.ihs.inputmethod.uimodules.widget.DotsRadioGroup;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -43,6 +44,7 @@ public class HSNewSettingsPanel extends BasePanel {
     int animDuration = 300;
     private Context mContext;
     private ViewItem themeItem;
+    private ViewItem selectorItem;
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
     private DotsRadioGroup dotsRadioGroup;
@@ -112,6 +114,16 @@ public class HSNewSettingsPanel extends BasePanel {
         }));
         items.add(ViewItemBuilder.getSoundsPositionItem());
         items.add(ViewItemBuilder.getAutoCorrectionItem());
+        if (selectorItem == null) {
+            selectorItem = ViewItemBuilder.getSelectorItem(new ViewItem.ViewItemListener() {
+                @Override
+                public void onItemClick(ViewItem item) {
+                    HSAnalytics.logEvent("keyboard_selector_clicked");
+                    getPanelActionListener().showChildPanel(HSSelectorPanel.class, new Bundle());
+                }
+            });
+        }
+        items.add(selectorItem);
         // items.add(ViewItemBuilder.getAutoCapitalizationItem());
         // items.add(ViewItemBuilder.getPredicationItem());
         // items.add(ViewItemBuilder.getSwipeItem());
@@ -190,6 +202,7 @@ public class HSNewSettingsPanel extends BasePanel {
         }
         items = null;
         themeItem = null;
+        selectorItem = null;
         settingPanelView = null;
         ViewItemBuilder.release();
         HSGlobalNotificationCenter.removeObserver(notificationObserver);

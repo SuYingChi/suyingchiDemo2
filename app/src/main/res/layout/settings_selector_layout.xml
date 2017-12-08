@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/config_default_keyboard_height">
+
+    <ImageView
+        android:id="@+id/selector_direction_left"
+        android:layout_centerVertical="true"
+        android:padding="4dp"
+        android:rotation="-90"
+        app:layout_aspectRatio="173.2%"
+        app:layout_marginStartPercent="4%"
+        app:layout_widthPercent="15%"
+        app:srcCompat="@drawable/ic_selector_arrow_top" />
+
+    <ImageView
+        android:id="@+id/selector_select"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/selector_direction_left"
+        android:layout_toRightOf="@+id/selector_direction_left"
+        android:padding="6dp"
+        app:layout_aspectRatio="100%"
+        app:layout_marginStartPercent="3.2%"
+        app:layout_widthPercent="15%"
+        app:srcCompat="@drawable/ic_selector" />
+
+    <ImageView
+        android:id="@+id/selector_direction_right"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/selector_select"
+        android:layout_toRightOf="@+id/selector_select"
+        android:padding="4dp"
+        android:rotation="90"
+        app:layout_aspectRatio="173.2%"
+        app:layout_marginStartPercent="3.2%"
+        app:layout_widthPercent="15%"
+        app:srcCompat="@drawable/ic_selector_arrow_top" />
+
+    <ImageView
+        android:id="@+id/selector_direction_up"
+        android:layout_above="@+id/selector_select"
+        android:layout_alignLeft="@+id/selector_select"
+        android:layout_alignStart="@+id/selector_select"
+        android:padding="4dp"
+        app:layout_aspectRatio="173.2%"
+        app:layout_marginBottomPercent="8.9%"
+        app:layout_widthPercent="15%"
+        app:srcCompat="@drawable/ic_selector_arrow_top" />
+
+    <ImageView
+        android:id="@+id/selector_direction_down"
+        android:layout_alignLeft="@+id/selector_select"
+        android:layout_alignStart="@+id/selector_select"
+        android:layout_below="@+id/selector_select"
+        android:padding="4dp"
+        android:rotation="180"
+        app:layout_aspectRatio="173.2%"
+        app:layout_marginTopPercent="8.9%"
+        app:layout_widthPercent="15%"
+        app:srcCompat="@drawable/ic_selector_arrow_top" />
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/selector_right_container"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        app:layout_marginRightPercent="3%"
+        app:layout_marginTopPercent="8%"
+        app:layout_widthPercent="20%">
+
+        <ImageView
+            android:id="@+id/selector_copy_image"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="4dp"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="80%"
+            app:srcCompat="@drawable/ic_selector_copy" />
+
+        <TextView
+            android:id="@+id/selector_copy_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selector_copy_image"
+            android:foregroundGravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:text="@string/setting_item_selector_copy"
+            app:layout_marginTopPercent="2%" />
+
+        <ImageView
+            android:id="@+id/selector_delete_image"
+            android:layout_below="@+id/selector_copy_text"
+            android:layout_centerHorizontal="true"
+            android:padding="4dp"
+            app:layout_aspectRatio="100%"
+            app:layout_marginTopPercent="2%"
+            app:layout_widthPercent="80%"
+            app:srcCompat="@drawable/ic_selector_delete" />
+
+        <TextView
+            android:id="@+id/selector_delete_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selector_delete_image"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:text="@string/setting_item_selector_delete"
+            app:layout_marginTopPercent="2%" />
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/selector_select_all_or_cut_container"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/selector_right_container"
+        android:layout_toStartOf="@+id/selector_right_container"
+        app:layout_marginRightPercent="3%"
+        app:layout_marginTopPercent="8%"
+        app:layout_widthPercent="20%">
+
+        <ImageView
+            android:id="@+id/selector_select_all_or_cut_image"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="4dp"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="80%"
+            app:srcCompat="@drawable/ic_selector_select_all" />
+
+        <TextView
+            android:id="@+id/selector_select_all_and_cut_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selector_select_all_or_cut_image"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:text="@string/setting_item_selector_select_all"
+            app:layout_marginTopPercent="2%" />
+
+        <ImageView
+            android:id="@+id/selector_paste_image"
+            android:layout_below="@+id/selector_select_all_and_cut_text"
+            android:layout_centerHorizontal="true"
+            android:padding="4dp"
+            app:layout_aspectRatio="100%"
+            app:layout_marginTopPercent="2%"
+            app:layout_widthPercent="80%"
+            app:srcCompat="@drawable/ic_selector_paste" />
+
+        <TextView
+            android:id="@+id/selector_paste_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selector_paste_image"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:text="@string/setting_item_selector_paste"
+            app:layout_marginTopPercent="2%" />
+    </android.support.percent.PercentRelativeLayout>
+
+</android.support.percent.PercentRelativeLayout>

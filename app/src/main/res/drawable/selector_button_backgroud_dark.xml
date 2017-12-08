@@ -3,19 +3,13 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
-            <solid android:color="#4DFFFFFF" />
-        </shape>
-    </item>
-    <item android:state_selected="true">
-        <shape android:shape="rectangle">
-            <corners android:radius="5dp" />
-            <solid android:color="#4DFFFFFF" />
+            <solid android:color="@color/selector_button_bg_dark_press" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="5dp" />
-            <solid android:color="#D9FFFFFF" />
+            <solid android:color="@color/selector_button_bg_dark_normal" />
         </shape>
     </item>
 </selector>

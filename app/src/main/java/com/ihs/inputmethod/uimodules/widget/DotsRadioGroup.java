@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.support.v4.view.ViewPager;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 
@@ -24,15 +25,6 @@ import com.ihs.inputmethod.uimodules.R;
  */
 
 public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChangeListener {
-
-    /**
-     * 上下文
-     */
-    private Context mContext;
-    /**
-     * 关联的Viewpager
-     */
-    private ViewPager mVPContent;
 
     /**
      * 当前显示指示点
@@ -52,7 +44,6 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
 
     public DotsRadioGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.mContext = context;
         stateListDrawable = new StateListDrawable();
         ShapeDrawable selectedDrawable = new ShapeDrawable(new OvalShape());
         selectedDrawable.setIntrinsicHeight(7);
@@ -149,8 +140,7 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
         setVisibility(View.VISIBLE);
         removeAllViews();
         mDotsButton = new RadioButton[pageCount];
-        this.mVPContent = viewPager;
-        mVPContent.addOnPageChangeListener(this);
+        viewPager.addOnPageChangeListener(this);
         // 设置属性
         RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -159,7 +149,7 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
 
         RadioButton radioButton = null;
         for (int i = 0; i < pageCount; i++) {
-            radioButton = new RadioButton(mContext);
+            radioButton = new RadioButton(HSApplication.getContext());
             //TODO: 为什么 stateListDrawable.mutate() 不起作用？
             radioButton.setButtonDrawable(stateListDrawable.getConstantState().newDrawable().mutate());
             radioButton.setLayoutParams(params);
@@ -170,15 +160,5 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
 
         // 第一个默认选中
         mDotsButton[0].setChecked(true);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mVPContent != null) {
-            mVPContent.removeOnPageChangeListener(this);
-        }
-        mVPContent = null;
-        mContext = null;
     }
 }
