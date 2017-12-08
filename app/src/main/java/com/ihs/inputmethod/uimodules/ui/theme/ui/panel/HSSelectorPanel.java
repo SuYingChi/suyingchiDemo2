@@ -34,6 +34,8 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
 import com.ihs.panelcontainer.BasePanel;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by yanxia on 2017/11/28.
  */
@@ -62,7 +64,14 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
 
     private long lastDownTime;
     private static final int WHAT_SET_STATE = 1;
-    private Handler handler = new Handler() {
+
+    private class MyHandler extends Handler {
+        private final WeakReference<HSSelectorPanel> panelWeakReference;
+
+        MyHandler(HSSelectorPanel panel) {
+            panelWeakReference = new WeakReference<HSSelectorPanel>(panel);
+        }
+
         /**
          * Subclasses must implement this to receive messages.
          *
@@ -70,28 +79,33 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
          */
         @Override
         public void handleMessage(Message msg) {
-            int what = msg.what;
-            switch (what) {
-                case R.id.selector_direction_up:
-                    sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
-                    break;
-                case R.id.selector_direction_down:
-                    sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
-                    break;
-                case R.id.selector_direction_left:
-                    sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
-                    break;
-                case R.id.selector_direction_right:
-                    sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
-                    break;
-                case WHAT_SET_STATE:
-                    updateButtonStates();
-                    break;
-                default:
-                    HSLog.w("unknown what.");
+            HSSelectorPanel panel = panelWeakReference.get();
+            if (panel != null) {
+                int what = msg.what;
+                switch (what) {
+                    case R.id.selector_direction_up:
+                        sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
+                        break;
+                    case R.id.selector_direction_down:
+                        sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
+                        break;
+                    case R.id.selector_direction_left:
+                        sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
+                        break;
+                    case R.id.selector_direction_right:
+                        sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
+                        break;
+                    case WHAT_SET_STATE:
+                        updateButtonStates();
+                        break;
+                    default:
+                        HSLog.w("unknown what.");
+                }
             }
         }
-    };
+    }
+
+    private final MyHandler handler = new MyHandler(this);
 
     /**
      * Called when a view has been clicked.
@@ -421,7 +435,6 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     @Override
     protected void onDestroy() {
         handler.removeCallbacksAndMessages(null);
-        releaseShiftKey();
         super.onDestroy();
     }
 }
