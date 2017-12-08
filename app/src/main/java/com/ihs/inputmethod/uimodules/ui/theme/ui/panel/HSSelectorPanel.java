@@ -7,9 +7,9 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,11 +27,11 @@ import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.settings.SettingsButton;
-import com.ihs.inputmethod.uimodules.settings.ViewItemBuilder;
 import com.ihs.panelcontainer.BasePanel;
 
 /**
@@ -42,13 +41,13 @@ import com.ihs.panelcontainer.BasePanel;
 public class HSSelectorPanel extends BasePanel implements View.OnClickListener, View.OnTouchListener {
     private static final String TAG = "HSSelectorPanel";
 
-    private final static String SELECTOR_KEY_ARROW = "ic_selector_arrow_top";
-    private final static String SELECTOR_KEY_SELECTOR = "ic_selector";
-    private final static String SELECTOR_KEY_SELECT_ALL = "ic_selector_select_all";
-    private final static String SELECTOR_KEY_CUT = "ic_selector_cut";
-    private final static String SELECTOR_KEY_COPY = "ic_selector_copy";
-    private final static String SELECTOR_KEY_PASTE = "ic_selector_paste";
-    private final static String SELECTOR_KEY_DELETE = "ic_selector_delete";
+    private final static int SELECTOR_KEY_ARROW = R.drawable.ic_selector_arrow_top;
+    private final static int SELECTOR_KEY_SELECTOR = R.drawable.ic_selector;
+    private final static int SELECTOR_KEY_SELECT_ALL = R.drawable.ic_selector_select_all;
+    private final static int SELECTOR_KEY_CUT = R.drawable.ic_selector_cut;
+    private final static int SELECTOR_KEY_COPY = R.drawable.ic_selector_copy;
+    private final static int SELECTOR_KEY_PASTE = R.drawable.ic_selector_paste;
+    private final static int SELECTOR_KEY_DELETE = R.drawable.ic_selector_delete;
 
     private ImageView selectorDirectionUp;
     private ImageView selectorDirectionDown;
@@ -106,7 +105,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
                     sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
                     break;
                 case WHAT_SET_STATE:
-                    setState();
+                    updateButtonStates();
                     break;
                 default:
                     HSLog.w("unknown what.");
@@ -145,21 +144,29 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
                 //select all
                 HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.selectAll);
             }
-            setState();
+            updateButtonStates();
         } else if (v == selectorCopy) {
-            releaseShiftKey();
-            HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.copy);
-            setState();
+            performContextMenuAction(android.R.id.copy);
         } else if (v == selectorPaste) {
-            releaseShiftKey();
-            HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.paste);
-            setState();
+            performContextMenuAction(android.R.id.paste);
         } else if (v == selectorDelete) {
             releaseShiftKey();
             HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
             handler.sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
         }
     }
+
+    private void sendKeyEvent() {
+        HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+        handler.sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
+    }
+
+    private void performContextMenuAction(int id) {
+        releaseShiftKey();
+        HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(id);
+        updateButtonStates();
+    }
+
 
     /**
      * Called when a touch event is dispatched to a view. This allows listeners to
@@ -174,6 +181,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     public boolean onTouch(View v, MotionEvent event) {
         int eventAction = event.getAction();
         if (eventAction == MotionEvent.ACTION_UP || eventAction == MotionEvent.ACTION_CANCEL) {
+            v.performClick();
             lastDownTime = 0;
             v.setPressed(false);
             handler.removeMessages(v.getId());
@@ -205,7 +213,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         return !TextUtils.isEmpty(HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0));
     }
 
-    private void setState() {
+    private void updateButtonStates() {
         if (hasSelection()) {
             selectorDirectionSelectButton.setSelected(true);
             selectorSelectAllOrCutButton.setSelected(true);
@@ -223,8 +231,8 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
 
     private Drawable getSelectAllOrCutImageDrawable() {
         StateListDrawable stateListDrawable = new StateListDrawable();
-        Drawable defNormalDrawable = ViewItemBuilder.getStyledDrawableFromResources(SELECTOR_KEY_SELECT_ALL);
-        Drawable defPressedDrawable = ViewItemBuilder.getStyledDrawableFromResources(SELECTOR_KEY_CUT);
+        Drawable defNormalDrawable = getStyledDrawableFromResources(SELECTOR_KEY_SELECT_ALL);
+        Drawable defPressedDrawable = getStyledDrawableFromResources(SELECTOR_KEY_CUT);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_normal), PorterDuff.Mode.SRC_IN);
@@ -373,9 +381,9 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         }
     }
 
-    private static StateListDrawable getStateListDrawable(String normalImageName, String pressedImageName) {
+    private static StateListDrawable getStateListDrawable(int normalImageName, int pressedImageName) {
         StateListDrawable stateListDrawable = new StateListDrawable();
-        Drawable defNormalDrawable = ViewItemBuilder.getStyledDrawableFromResources(normalImageName);
+        Drawable defNormalDrawable = getStyledDrawableFromResources(normalImageName);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_normal), PorterDuff.Mode.SRC_IN);
@@ -390,7 +398,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
             }
         }
 
-        Drawable defPressedDrawable = ViewItemBuilder.getStyledDrawableFromResources(pressedImageName);
+        Drawable defPressedDrawable = getStyledDrawableFromResources(pressedImageName);
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_ic_dark_press), PorterDuff.Mode.SRC_IN);
@@ -412,82 +420,26 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         return stateListDrawable;
     }
 
+    private static Drawable getStyledDrawableFromResources(int resId) {
+        if (resId != 0) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return ContextCompat.getDrawable(HSApplication.getContext(), resId);
+            } else {
+                return VectorDrawableCompat.create(HSApplication.getContext().getResources(), resId, null);
+            }
+        } else {
+            HSLog.e(TAG, "getStyledDrawableFromResources called with wrong resId = [" + resId + "]");
+            return HSDrawableUtils.getTransparentBitmapDrawable();
+        }
+    }
+
     public HSSelectorPanel() {
         super();
     }
 
     @Override
-    protected boolean onHidePanelView(int appearMode) {
-        return super.onHidePanelView(appearMode);
-    }
-
-    @Override
-    protected boolean onShowPanelView(int appearMode) {
-        return super.onShowPanelView(appearMode);
-    }
-
-    @Override
     protected void onDestroy() {
+        handler.removeCallbacksAndMessages(null);
         super.onDestroy();
-    }
-
-    @Override
-    public View getPanelView() {
-        return super.getPanelView();
-    }
-
-    @Override
-    public void setPanelView(View rootView) {
-        super.setPanelView(rootView);
-    }
-
-    @Override
-    public void showChildPanel(Class panelClass, Bundle bundle) {
-        super.showChildPanel(panelClass, bundle);
-    }
-
-    @Override
-    protected Bundle getBundle() {
-        return super.getBundle();
-    }
-
-    @Override
-    public void setBarVisibility(int visibility) {
-        super.setBarVisibility(visibility);
-    }
-
-    @Override
-    public View getKeyboardView() {
-        return super.getKeyboardView();
-    }
-
-    @Override
-    public Animation getAppearAnimator() {
-        return super.getAppearAnimator();
-    }
-
-    @Override
-    public Animation getDismissAnimator() {
-        return super.getDismissAnimator();
-    }
-
-    @Override
-    public void setOnAnimationListener(OnAnimationListener onAnimationListener) {
-        super.setOnAnimationListener(onAnimationListener);
-    }
-
-    @Override
-    public void setPanelActionListener(OnPanelActionListener onPanelActionListener) {
-        super.setPanelActionListener(onPanelActionListener);
-    }
-
-    @Override
-    public OnPanelActionListener getPanelActionListener() {
-        return super.getPanelActionListener();
-    }
-
-    @Override
-    public void backToParentPanel(boolean keepSelf) {
-        super.backToParentPanel(keepSelf);
     }
 }
