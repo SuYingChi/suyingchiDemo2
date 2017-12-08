@@ -73,36 +73,16 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
             int what = msg.what;
             switch (what) {
                 case R.id.selector_direction_up:
-                    if (hasSelection() && selectorDirectionSelectButton.isSelected()) {
-                        pressDownShiftKey();
-                    }
-                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
-                    removeMessages(WHAT_SET_STATE);
-                    sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
+                    sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
                     break;
                 case R.id.selector_direction_down:
-                    if (hasSelection() && selectorDirectionSelectButton.isSelected()) {
-                        pressDownShiftKey();
-                    }
-                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
-                    removeMessages(WHAT_SET_STATE);
-                    sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
+                    sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
                     break;
                 case R.id.selector_direction_left:
-                    if (hasSelection() && selectorDirectionSelectButton.isSelected()) {
-                        pressDownShiftKey();
-                    }
-                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
-                    removeMessages(WHAT_SET_STATE);
-                    sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
+                    sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_LEFT);
                     break;
                 case R.id.selector_direction_right:
-                    if (hasSelection() && selectorDirectionSelectButton.isSelected()) {
-                        pressDownShiftKey();
-                    }
-                    HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
-                    removeMessages(WHAT_SET_STATE);
-                    sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
+                    sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_RIGHT);
                     break;
                 case WHAT_SET_STATE:
                     updateButtonStates();
@@ -138,26 +118,27 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         } else if (v == selectorSelectAllOrCutButton) {
             if (selectorSelectAllOrCutButton.isSelected()) { // 选中了
                 //cut
-                releaseShiftKey();
-                HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.cut);
+                performContextMenuAction(android.R.id.cut);
             } else { //未选中
                 //select all
-                HSInputMethodService.getInstance().getCurrentInputConnection().performContextMenuAction(android.R.id.selectAll);
+                performContextMenuAction(android.R.id.selectAll);
             }
-            updateButtonStates();
         } else if (v == selectorCopy) {
             performContextMenuAction(android.R.id.copy);
         } else if (v == selectorPaste) {
             performContextMenuAction(android.R.id.paste);
         } else if (v == selectorDelete) {
+            sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
             releaseShiftKey();
-            HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
-            handler.sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
         }
     }
 
-    private void sendKeyEvent() {
-        HSInputMethodService.getInstance().sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+    private void sendDownUpKeyEvents(int keyCode) {
+        if (hasSelection() && selectorDirectionSelectButton.isSelected()) {
+            pressDownShiftKey();
+        }
+        HSInputMethodService.getInstance().sendDownUpKeyEvents(keyCode);
+        handler.removeMessages(WHAT_SET_STATE);
         handler.sendEmptyMessageDelayed(WHAT_SET_STATE, 50);
     }
 
@@ -440,6 +421,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     @Override
     protected void onDestroy() {
         handler.removeCallbacksAndMessages(null);
+        releaseShiftKey();
         super.onDestroy();
     }
 }
