@@ -48,6 +48,7 @@ import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -183,20 +184,30 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
             return false;
         }
 
-        if (isInRightAppForBackAd()) {
-            HSPreferenceHelper prefs = HSPreferenceHelper.create(this, "BackAd");
+        HSPreferenceHelper prefs = HSPreferenceHelper.create(this, "BackAd");
 
-            long lastBackAdShowTimeMillis = prefs.getLong("LastBackAdShowTime", 0);
-            long currentTimeMillis = System.currentTimeMillis();
-            long backAdShowCountOfDay = prefs.getLong("BackAdShowCountOfDay", 0);
-            if (!DateUtils.isToday(lastBackAdShowTimeMillis)) {
-                backAdShowCountOfDay = 0;
-                prefs.putLong("BackAdShowCountOfDay", 0);
-            }
+        long lastBackAdShowTimeMillis = prefs.getLong("LastBackAdShowTime", 0);
+        long currentTimeMillis = System.currentTimeMillis();
+        long backAdShowCountOfDay = prefs.getLong("BackAdShowCountOfDay", 0);
 
-            float minIntervalByHour = HSConfig.optFloat(0, "Application", "InterstitialAds", "BackButton", "MinIntervalByHour");
-            int maxCountPerDay = HSConfig.optInteger(0, "Application", "InterstitialAds", "BackButton", "MaxCountPerDay");
+        if (!DateUtils.isToday(lastBackAdShowTimeMillis)) {
+            backAdShowCountOfDay = 0;
+            prefs.putLong("BackAdShowCountOfDay", 0);
+        }
 
+        float minIntervalByHour = HSConfig.optFloat(0, "Application", "InterstitialAds", "BackButton", "MinIntervalByHour");
+        int maxCountPerDay = HSConfig.optInteger(0, "Application", "InterstitialAds", "BackButton", "MaxCountPerDay");
+
+        int minCountPerDay = HSConfig.optInteger(0, "Application", "InterstitialAds", "BackButton", "MinCountPerDay");
+        int minCountTriggerHour = HSConfig.optInteger(-1, "Application", "InterstitialAds", "BackButton", "MinCountTriggerHour");
+        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        boolean isAggressive = false;
+        if (minCountPerDay > 0 && minCountTriggerHour >= 0 &&
+                backAdShowCountOfDay < minCountPerDay && currentHour >= minCountTriggerHour) {
+            isAggressive = true;
+        }
+
+        if (isInRightAppForBackAd(isAggressive)) {
             if (currentTimeMillis - lastBackAdShowTimeMillis >= minIntervalByHour * 3600 * 1000 && backAdShowCountOfDay < maxCountPerDay) {
                 boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, null, true);
                 if (adShown) {
@@ -217,7 +228,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         }
     }
 
-    private boolean isInRightAppForBackAd() {
+    private boolean isInRightAppForBackAd(boolean isAggressive) {
         if (isInOwnApp() || isInputViewShowing) {
             return false;
         }
@@ -226,9 +237,14 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
             return false;
         }
 
-        List<String> packageNameBlackList = (List<String>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "PackageNameExclude");
-        if (packageNameBlackList == null) {
-            return true;
+        List<String> packageNameBlackList = new ArrayList<>();
+        packageNameBlackList.add("android");
+
+        if (!isAggressive) {
+            List<String> configBlackList = (List<String>) HSConfig.getList("Application", "InterstitialAds", "BackButton", "PackageNameExclude");
+            if (configBlackList != null) {
+                packageNameBlackList.addAll(configBlackList);
+            }
         }
 
         for (String blockedPackageName : packageNameBlackList) {
