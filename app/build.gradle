@@ -92,8 +92,8 @@ android {
         smiley {
             applicationId = "com.smartkeyboard.emoji"
             minSdkVersion 15
-            versionCode 25
-            versionName "2.1.2"
+            versionCode 26
+            versionName "2.1.3"
             manifestPlaceholders = [APPLY_SCHEME: "smileyKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "true"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
