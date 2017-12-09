@@ -344,9 +344,10 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         TextView selectorCopyTextView = selectorView.findViewById(R.id.selector_copy_text);
         TextView selectorPasteTextView = selectorView.findViewById(R.id.selector_paste_text);
         TextView selectorDeleteTextView = selectorView.findViewById(R.id.selector_delete_text);
-        selectorDirectionSelectButton.setBackgroundDrawable(getSelectButtonBackgroundDrawable());
+        //selectorDirectionSelectButton.setBackgroundDrawable(getSelectButtonBackgroundDrawable());
 
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
+            selectorDirectionSelectButton.setBackgroundResource(R.drawable.selector_select_button_background_dark);
             selectorDirectionUp.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
             selectorDirectionDown.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
             selectorDirectionLeft.setBackgroundResource(R.drawable.selector_button_backgroud_dark);
@@ -361,6 +362,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
             selectorPasteTextView.setTextColor(Color.WHITE);
             selectorDeleteTextView.setTextColor(Color.WHITE);
         } else {
+            selectorDirectionSelectButton.setBackgroundResource(R.drawable.selector_select_button_background_light);
             selectorDirectionUp.setBackgroundResource(R.drawable.selector_button_background_light);
             selectorDirectionDown.setBackgroundResource(R.drawable.selector_button_background_light);
             selectorDirectionLeft.setBackgroundResource(R.drawable.selector_button_background_light);
