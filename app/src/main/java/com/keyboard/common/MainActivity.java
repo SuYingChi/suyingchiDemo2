@@ -73,7 +73,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.ihs.inputmethod.uimodules.widget.CustomDesignAlert;
 import com.ihs.inputmethod.utils.Constants;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.kc.commons.utils.KCCommonUtils;
 
 import java.text.MessageFormat;
@@ -526,7 +525,7 @@ public class MainActivity extends HSAppCompatActivity {
 
     private boolean isAccessibilityEnable() {
         Log.e("access", "accessi read");
-        boolean isAccessibilityEnabledInConfig = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
+        boolean isAccessibilityEnabledInConfig = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable");
         boolean isHSAccessibilityServiceAvailable = HSAccessibilityService.isAvailable();
         boolean isSDKSatisfied = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
         boolean oneTapPageViewed = AccGALogger.isOneTapPageViewed();

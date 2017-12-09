@@ -56,7 +56,6 @@ import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.MainActivity;
 import com.keyboard.core.themes.ThemeDirManager;
@@ -110,7 +109,7 @@ public class HSUIApplication extends HSInputMethodApplication {
     }
 
     final public void startActivityAfterSplash(Activity splashActivity) {
-        boolean isAccessibilityEnabled = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable") && !KCFeatureRestrictionConfig.isFeatureRestricted("AccessibilityToEnableKeyboard");
+        boolean isAccessibilityEnabled = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable");
         // 携带其他页面的数据
         Intent intent = splashActivity.getIntent();
         if (intent == null) {
@@ -179,7 +178,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             LeakCanary.install(this);
         }
 
-        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable") && !KCFeatureRestrictionConfig.isFeatureRestricted("RemindChangeKeyboard")) {
+        if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
             startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
         }
 

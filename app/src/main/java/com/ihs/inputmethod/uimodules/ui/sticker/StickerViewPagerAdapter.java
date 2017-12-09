@@ -157,7 +157,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                     final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
                     DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
                             stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                            sticker_download_preview.getDrawable(), success -> {
+                            sticker_download_preview.getDrawable(), (success, manually) -> {
                                 HSPreferenceHelper.getDefault().putBoolean(KeyboardPanelManager.SHOW_EMOJI_PANEL, true);
                                 if (success) {
                                     lastDownloadPosition = position;

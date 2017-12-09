@@ -152,7 +152,7 @@ public class CommonThemeCardAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                 String from = "store";
                                 ThemeZipDownloadUtils.startDownloadThemeZip(v.getContext(),from, model.keyboardTheme.mThemeName, keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
                                     @Override
-                                    public void onDismiss(boolean success) {
+                                    public void onDismiss(boolean success, boolean manually) {
                                         if (success) {
                                             ThemeZipDownloadUtils.logDownloadSuccessEvent(keyboardTheme.mThemeName, from);
                                             if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)) {

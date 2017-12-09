@@ -53,7 +53,7 @@ public class ThemeZipDownloadUtils {
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
                 resources.getString(R.string.ad_placement_applying),
-                downloadSuccess -> {
+                (downloadSuccess, manually) -> {
                     if (downloadSuccess) {
                         //设置下载成功移到此处，如果用户在AdLoadingView最后的缓冲时间内点击close按钮则应该不设置为下载成功
                         HSKeyboardThemeManager.setThemeZipFileDownloadAndUnzipSuccess(themeName);
@@ -66,7 +66,7 @@ public class ThemeZipDownloadUtils {
                     }
                     HSFileUtils.delete(downloadFile);
                     if (onAdBufferingListener != null) {
-                        onAdBufferingListener.onDismiss(downloadSuccess);
+                        onAdBufferingListener.onDismiss(downloadSuccess, manually);
                     }
                 }, 2000, false);
 

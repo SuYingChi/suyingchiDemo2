@@ -385,7 +385,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             String from = "detail";
             ThemeZipDownloadUtils.startDownloadThemeZip(this, from, keyboardTheme.mThemeName, keyboardTheme.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
                 @Override
-                public void onDismiss(boolean success) {
+                public void onDismiss(boolean success, boolean manually) {
                     if (success) {
                         ThemeZipDownloadUtils.logDownloadSuccessEvent(keyboardTheme.mThemeName, from);
                         if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(keyboardTheme.mThemeName)) {

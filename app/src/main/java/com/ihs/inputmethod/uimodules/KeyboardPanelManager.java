@@ -19,7 +19,6 @@ import com.acb.adcaffe.nativead.AdCaffeNativeAd;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.chargingscreen.utils.FeatureDelayReleaseUtil;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -49,11 +48,11 @@ import com.ihs.inputmethod.view.KBImageView;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.FeatureDelayReleaseUtils;
 import com.keyboard.core.session.KCKeyboardSession;
 
 import net.appcloudbox.ads.base.AcbAd;
@@ -293,7 +292,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             hsBackgroundVideoView.setHSBackground(HSKeyboardThemeManager.getCurrentThemeBackgroundPath());
         }
 
-        if (FeatureDelayReleaseUtil.checkFeatureReadyToWork("feature_clipboard_bar", 1)) {
+        if (FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "feature_clipboard_bar", 1)) {
             keyboardPanelSwitchContainer.showClipboardBar();
         }
     }
@@ -488,8 +487,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
-                || !HSConfig.optBoolean(true, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowAd")
-                || KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayIcon")) {
+                || !HSConfig.optBoolean(true, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowAd")) {
             return;
         }
 
@@ -542,9 +540,13 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         boolean show = HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardBannerAd", "Show");
+        int hoursDelay = HSConfig.optInteger(0, "Application", "NativeAds", "KeyboardBannerAd", "HoursFromFirstUse");
 
-        if (!show || !bannerAdSessionList.contains((int) KCKeyboardSession.getCurrentSessionIndexOfDay())
-                || KCFeatureRestrictionConfig.isFeatureRestricted("KeyboardBannerAd")) {
+        if (!FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "KeyboardBannerAd", hoursDelay)) {
+            return;
+        }
+
+        if (!show || !bannerAdSessionList.contains((int) KCKeyboardSession.getCurrentSessionIndexOfDay())) {
             HSLog.e("cannt show banner ad");
             return;
         }

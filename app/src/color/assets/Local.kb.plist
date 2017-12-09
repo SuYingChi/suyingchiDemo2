@@ -4605,6 +4605,8 @@
 			</dict>
 			<key>SearchAd</key>
 			<dict>
+			    <key>Enabled</key>
+			    <true/>
 				<key>PackageNameList</key>
 				<array>
 					<string>com.google.android.googlequicksearchbox</string>
@@ -16782,6 +16784,8 @@
 						<dict>
 							<key>KeyboardClose</key>
 							<dict>
+							    <key>HoursFromFirstUse<key>
+							    <integer>5</integer>
 								<key>SessionIndexOfDay</key>
 								<array>
 									<integer>8</integer>
@@ -16791,6 +16795,8 @@
 							</dict>
 							<key>KeyboardOpen</key>
 							<dict>
+							    <key>HoursFromFirstUse<key>
+                                <integer>5</integer>
 								<key>SessionIndexOfDay</key>
 								<array/>
 								<key>Show</key>

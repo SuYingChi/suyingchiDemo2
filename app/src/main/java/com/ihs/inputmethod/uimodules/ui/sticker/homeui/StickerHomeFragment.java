@@ -121,7 +121,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
                                 new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
                                     @Override
-                                    public void onDismiss(boolean success) {
+                                    public void onDismiss(boolean success, boolean manually) {
                                         if (success) {
                                             HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
                                             StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
