@@ -217,7 +217,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
                     return true;
                 } else {
                     //此处广告不再请求，因为需求每个session只请求一个全屏。
-//                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
                     return false;
                 }
             } else {
