@@ -139,6 +139,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
             }
         } else if (v == selectorCopy) {
             performContextMenuAction(android.R.id.copy);
+            cancelSelectText();
         } else if (v == selectorPaste) {
             performContextMenuAction(android.R.id.paste);
         } else if (v == selectorDelete) {
@@ -194,6 +195,7 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     private void cancelSelectText() {
         int start = HSInputMethodService.getInstance().getInputLogic().mConnection.getExpectedSelectionStart();
         HSInputMethodService.getInstance().getCurrentInputConnection().setSelection(start, start);
+        updateButtonStates();
     }
 
     private void pressDownShiftKey() {

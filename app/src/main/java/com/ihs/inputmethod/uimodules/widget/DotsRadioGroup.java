@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.support.v4.view.ViewPager;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 
@@ -46,16 +47,16 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
         super(context, attrs);
         stateListDrawable = new StateListDrawable();
         ShapeDrawable selectedDrawable = new ShapeDrawable(new OvalShape());
-        selectedDrawable.setIntrinsicHeight(7);
-        selectedDrawable.setIntrinsicWidth(7);
+        selectedDrawable.setIntrinsicHeight(DisplayUtils.dip2px(5));
+        selectedDrawable.setIntrinsicWidth(DisplayUtils.dip2px(5));
         if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             DrawableCompat.setTint(selectedDrawable, getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()));
         } else {
             DrawableCompat.setTint(selectedDrawable, ContextCompat.getColor(context, R.color.settings_button_light_icon));
         }
         ShapeDrawable normalDrawable = new ShapeDrawable(new OvalShape());
-        normalDrawable.setIntrinsicHeight(7);
-        normalDrawable.setIntrinsicWidth(7);
+        normalDrawable.setIntrinsicHeight(DisplayUtils.dip2px(5));
+        normalDrawable.setIntrinsicWidth(DisplayUtils.dip2px(5));
         DrawableCompat.setTint(normalDrawable, ContextCompat.getColor(getContext(), R.color.theme_trial_keyboard_edit_text_cursor_color));
         stateListDrawable.addState(new int[]{android.R.attr.state_checked}, selectedDrawable);
         stateListDrawable.addState(new int[]{}, normalDrawable);
