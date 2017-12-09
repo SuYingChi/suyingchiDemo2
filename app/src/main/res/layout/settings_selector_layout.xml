@@ -72,8 +72,6 @@
 
         <ImageView
             android:id="@+id/selector_copy_image"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:padding="8dp"
