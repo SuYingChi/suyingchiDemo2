@@ -10,10 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
-
 import com.ihs.keyboardutils.view.FlashFrameLayout;
 
 /**
@@ -23,22 +23,25 @@ import com.ihs.keyboardutils.view.FlashFrameLayout;
 public class NativeAdHelper {
     KCNativeAdView nativeAdView;
     private static FlashFrameLayout flashAdContainer;
-    String adPoolName = HSApplication.getContext().getResources().getString(R.string.ad_placement_keyboardsettingsad);
+    private static String adPoolName = HSApplication.getContext().getResources().getString(R.string.ad_placement_keyboardsettingsad);
     private boolean isAdFlashAnimationPlayed = false;
     private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
+
+    public static boolean isAdPoolExist(){
+        return HSConfig.exists("nativeAds",adPoolName);
+    }
 
     public NativeAdHelper() {
     }
 
     public void createAd() {
-        if (nativeAdView == null) {
+        if (nativeAdView == null && ViewItemBuilder.getAdsItem().viewContainer != null) {
             AdView adView = new AdView(HSApplication.getContext());
             //it will change its parent(NativeContentAdView) LayoutParams too
             adView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             nativeAdView = new KCNativeAdView(HSApplication.getContext());
             nativeAdView.setAdLayoutView(adView);
             nativeAdView.setNativeAdType(KCNativeAdView.NativeAdType.ICON);
-
             nativeAdView.load(adPoolName);
             ViewItemBuilder.getAdsItem().viewContainer.removeAllViews();
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);

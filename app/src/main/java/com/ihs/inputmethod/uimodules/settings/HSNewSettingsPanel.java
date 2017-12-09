@@ -67,7 +67,7 @@ public class HSNewSettingsPanel extends BasePanel {
             dotsRadioGroup = view.findViewById(R.id.settingsViewPager_indicator);
             dotsRadioGroup.setDotView(settingsViewPager, settingsViewPager.getPageCount());
 
-            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && NativeAdHelper.isAdPoolExist()) {
                 nativeAdHelper = new NativeAdHelper();
                 nativeAdHelper.createAd();
             }
@@ -156,7 +156,7 @@ public class HSNewSettingsPanel extends BasePanel {
             }
         }));
 
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && NativeAdHelper.isAdPoolExist()) {
             items.add(ViewItemBuilder.getAdsItem());
         }
 
