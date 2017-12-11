@@ -96,7 +96,7 @@ public class DownloadUtils {
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
                 resources.getString(R.string.ad_placement_applying),
-                downloadSuccess -> {
+                (downloadSuccess, manually) -> {
                     if (downloadSuccess) {
                     } else {
                         // 没下载成功
@@ -107,7 +107,7 @@ public class DownloadUtils {
                         }
                     }
                     if (onAdBufferingListener != null) {
-                        onAdBufferingListener.onDismiss(downloadSuccess);
+                        onAdBufferingListener.onDismiss(downloadSuccess, manually);
                     }
                 }, 2000, false);
         adLoadingView.showInDialog();

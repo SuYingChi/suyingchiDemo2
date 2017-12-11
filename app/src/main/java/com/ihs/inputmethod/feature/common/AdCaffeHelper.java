@@ -20,7 +20,6 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.utils.Trie;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.ihs.libcommon.utils.HSAdUtils;
 
 import org.json.JSONArray;
@@ -99,7 +98,7 @@ public class AdCaffeHelper {
     }
 
     public void requestKeywordListIfConditionSatisfied(String packageName) {
-        if (!shouldShowSearchAdForCurrentApp(packageName) || KCFeatureRestrictionConfig.isFeatureRestricted("AdSearch")) {
+        if (!shouldShowSearchAdForCurrentApp(packageName)) {
             return;
         }
         HSAnalytics.logEvent("searchads_search_entry", "appName", packageName);
@@ -165,8 +164,12 @@ public class AdCaffeHelper {
         }
     }
 
+    public boolean isSearchAdEnabled() {
+        return HSConfig.optBoolean(false, "Application", "SearchAd", "Enabled");
+    }
+
     public boolean shouldShowSearchAdForCurrentApp(String packageName) {
-        return HSConfig.getList("Application", "SearchAd", "PackageNameList").contains(packageName);
+        return isSearchAdEnabled() && HSConfig.getList("Application", "SearchAd", "PackageNameList").contains(packageName);
     }
 
     private String getKeywordFilePathBase() {

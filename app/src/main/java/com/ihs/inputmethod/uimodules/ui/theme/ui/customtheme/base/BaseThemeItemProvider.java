@@ -138,7 +138,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                     new AdLoadingView.OnAdBufferingListener() {
 
                         @Override
-                        public void onDismiss(boolean success) {
+                        public void onDismiss(boolean success, boolean manually) {
                             if (holder.downloadingProgressListener != null) {
                                 onItemDownloadSucceeded(holder, item);
                             } else {

@@ -165,7 +165,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
             public void run() {
                 final String fontName = fontModel.getFontName();
                 DownloadUtils.getInstance().startForegroundDownloading(getActivity(), fontName, fontModel.getFontDownloadFilePath(fontName), fontModel.getFontDownloadBaseURL(),
-                        null, success -> {
+                        null, (success, manually) -> {
                             if (success) {
                                 HSFontDownloadManager.getInstance().updateFontModel(fontModel);
                                 HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);

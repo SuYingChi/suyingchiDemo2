@@ -44,7 +44,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
+import com.kc.utils.FeatureDelayReleaseUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -153,7 +153,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
             if (isInputViewShowing) {
                 getKeyboardPanelMananger().onBackPressed();
                 if (!isInOwnApp()) {
-                    if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                    if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                         closeFullScreenAd.show();
                     }
                 }
@@ -170,17 +170,18 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     }
 
     private boolean showBackAdIfNeeded() {
+        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            return false;
+        }
+
         boolean enabled = HSConfig.optBoolean(false, "Application", "InterstitialAds", "BackButton", "Show");
 
         if (!enabled) {
             return false;
         }
 
-        if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            return false;
-        }
-
-        if (KCFeatureRestrictionConfig.isFeatureRestricted("AdBackButton")) {
+        int hours = HSConfig.optInteger(0, "Application", "InterstitialAds", "BackButton", "HoursFromFirstUse");
+        if (!FeatureDelayReleaseUtils.isFeatureAvailable(this, "BackButton", hours)) {
             return false;
         }
 
@@ -389,12 +390,12 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
         if (!restarting) {
             if (!isInOwnApp()) {
-                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardOpen") && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                     openFullScreenAd.show();
                     openFullScreenAd.preLoad();
                 }
 
-                if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdKeyboardClose") && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                     closeFullScreenAd.preLoad();
                 }
             }
@@ -572,7 +573,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     }
 
     private void checkKeywordAndLoad(int codePoint) {
-        if (!adCaffeHelper.shouldShowSearchAdForCurrentApp(currentAppPackageName) || KCFeatureRestrictionConfig.isFeatureRestricted("AdSearch")) {
+        if (!adCaffeHelper.shouldShowSearchAdForCurrentApp(currentAppPackageName)) {
             return;
         }
         if (codePoint == CODE_DELETE || //delete key

@@ -35,7 +35,6 @@ import com.ihs.inputmethod.utils.CommonUtils;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.ihs.keyboardutils.alerts.KCAlert;
 import com.ihs.keyboardutils.utils.AlertShowingUtils;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.kc.commons.utils.KCCommonUtils;
 
 import java.io.File;
@@ -292,7 +291,8 @@ public class ApkUtils {
     }
 
     public static boolean shouldShowRateAlert() {
-        return !(KCFeatureRestrictionConfig.isFeatureRestricted("RateToUnlock") || isRateButtonClicked());
+        boolean isRateToUnlockEnabled = HSConfig.optBoolean(false, "Application", "RateToUnlock", "Enabled");
+        return isRateToUnlockEnabled || isRateButtonClicked();
     }
 
     public static boolean isSharedKeyboardOnInstagramBefore() {

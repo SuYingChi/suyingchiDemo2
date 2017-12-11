@@ -10,8 +10,8 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
-import com.ihs.keyboardutils.utils.KCFeatureRestrictionConfig;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.FeatureDelayReleaseUtils;
 
 
 /**
@@ -59,8 +59,10 @@ public class KeyboardGooglePlayAdManager implements KCNativeAdView.OnAdLoadedLis
     }
 
     public boolean loadAndShowAdIfConditionSatisfied() {
-        if (!KCFeatureRestrictionConfig.isFeatureRestricted("AdGooglePlayNative")
-                && HSConfig.optBoolean(false, "Application", "NativeAds", "GooglePlayNativeAd", "ShowAd")) {
+        int delayHours = HSConfig.optInteger(0, "Application", "NativeAds", "GooglePlayNativeAd", "HoursFromFirstUse");
+        boolean isEnabled = HSConfig.optBoolean(false, "Application", "NativeAds", "GooglePlayNativeAd", "ShowAd");
+
+        if (isEnabled && FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "GooglePlayNativeAd", delayHours)) {
             initNativeAdView();
             return true;
         } else {
