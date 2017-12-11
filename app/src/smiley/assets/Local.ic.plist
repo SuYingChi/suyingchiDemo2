@@ -656,12 +656,15 @@
 				<key>BackButton</key>
 				<dict>
 					<key>MaxCountPerDay</key>
-					<integer>4</integer>
+					<integer>0</integer>
+					<key>MinCountPerDay</key>
+					<integer>0</integer>
+					<key>MinCountTriggerHour</key>
+					<integer>20</integer>
 					<key>MinIntervalByHour</key>
 					<integer>1</integer>
 					<key>PackageNameExclude</key>
 					<array>
-						<string>android</string>
 						<string>facebook</string>
 						<string>com.whatsapp</string>
 					</array>
@@ -13759,11 +13762,14 @@
 						<dict>
 							<key>MaxCountPerDay</key>
 							<integer>6</integer>
+							<key>MinCountPerDay</key>
+							<integer>3</integer>
+							<key>MinCountTriggerHour</key>
+							<integer>20</integer>
 							<key>MinIntervalByHour</key>
 							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
-								<string>android</string>
 								<string>com.facebook.orca</string>
 								<string>com.facebook.katana</string>
 								<string>com.whatsapp</string>
@@ -14473,11 +14479,14 @@
 						<dict>
 							<key>MaxCountPerDay</key>
 							<integer>6</integer>
+							<key>MinCountPerDay</key>
+							<integer>3</integer>
+							<key>MinCountTriggerHour</key>
+							<integer>20</integer>
 							<key>MinIntervalByHour</key>
 							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
-								<string>android</string>
 								<string>com.facebook.orca</string>
 								<string>com.facebook.katana</string>
 								<string>com.whatsapp</string>

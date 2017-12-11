@@ -16734,43 +16734,20 @@
 			<dict>
 				<key>Application</key>
 				<dict>
-					<key>ChargeLocker</key>
-					<dict>
-						<key>Alert</key>
-						<dict>
-							<key>AdText</key>
-							<string>(contains ads)</string>
-							<key>Body</key>
-							<string>Enable battery protection to speed up the phone charging by 50%</string>
-							<key>Button</key>
-							<string>OK</string>
-							<key>Title</key>
-							<string>Battery Protection</string>
-						</dict>
-						<key>EnableAlertStyle</key>
-						<integer>0</integer>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
-						<key>ShowAppInfo</key>
-						<true/>
-						<key>ShowSettingIcon</key>
-						<true/>
-						<key>StateDescription</key>
-						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
-						<key>state</key>
-						<integer>2</integer>
-					</dict>
 					<key>InterstitialAds</key>
 					<dict>
 						<key>BackButton</key>
 						<dict>
 							<key>MaxCountPerDay</key>
-							<integer>5</integer>
+							<integer>6</integer>
+							<key>MinCountPerDay</key>
+							<integer>3</integer>
+							<key>MinCountTriggerHour</key>
+							<integer>20</integer>
 							<key>MinIntervalByHour</key>
 							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
-								<string>android</string>
 								<string>com.facebook.orca</string>
 								<string>com.facebook.katana</string>
 								<string>com.whatsapp</string>
@@ -16797,6 +16774,32 @@
 								<false/>
 							</dict>
 						</dict>
+					</dict>
+					<key>ChargeLocker</key>
+					<dict>
+						<key>Alert</key>
+						<dict>
+							<key>AdText</key>
+							<string>(contains ads)</string>
+							<key>Body</key>
+							<string>Enable battery protection to speed up the phone charging by 50%</string>
+							<key>Button</key>
+							<string>OK</string>
+							<key>Title</key>
+							<string>Battery Protection</string>
+						</dict>
+						<key>EnableAlertStyle</key>
+						<integer>0</integer>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+						<key>ShowAppInfo</key>
+						<true/>
+						<key>ShowSettingIcon</key>
+						<true/>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+						<key>state</key>
+						<integer>2</integer>
 					</dict>
 					<key>Locker</key>
 					<dict>
@@ -17042,43 +17045,20 @@
 			<dict>
 				<key>Application</key>
 				<dict>
-					<key>ChargeLocker</key>
-					<dict>
-						<key>Alert</key>
-						<dict>
-							<key>AdText</key>
-							<string>(contains ads)</string>
-							<key>Body</key>
-							<string>Enable battery protection to speed up the phone charging by 50%</string>
-							<key>Button</key>
-							<string>OK</string>
-							<key>Title</key>
-							<string>Battery Protection</string>
-						</dict>
-						<key>EnableAlertStyle</key>
-						<integer>0</integer>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
-						<key>ShowAppInfo</key>
-						<true/>
-						<key>ShowSettingIcon</key>
-						<true/>
-						<key>StateDescription</key>
-						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
-						<key>state</key>
-						<integer>2</integer>
-					</dict>
 					<key>InterstitialAds</key>
 					<dict>
 						<key>BackButton</key>
 						<dict>
 							<key>MaxCountPerDay</key>
-							<integer>5</integer>
+							<integer>6</integer>
+							<key>MinCountPerDay</key>
+							<integer>3</integer>
+							<key>MinCountTriggerHour</key>
+							<integer>20</integer>
 							<key>MinIntervalByHour</key>
 							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
-								<string>android</string>
 								<string>com.facebook.orca</string>
 								<string>com.facebook.katana</string>
 								<string>com.whatsapp</string>
@@ -17105,6 +17085,32 @@
 								<false/>
 							</dict>
 						</dict>
+					</dict>
+					<key>ChargeLocker</key>
+					<dict>
+						<key>Alert</key>
+						<dict>
+							<key>AdText</key>
+							<string>(contains ads)</string>
+							<key>Body</key>
+							<string>Enable battery protection to speed up the phone charging by 50%</string>
+							<key>Button</key>
+							<string>OK</string>
+							<key>Title</key>
+							<string>Battery Protection</string>
+						</dict>
+						<key>EnableAlertStyle</key>
+						<integer>0</integer>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+						<key>ShowAppInfo</key>
+						<true/>
+						<key>ShowSettingIcon</key>
+						<true/>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+						<key>state</key>
+						<integer>2</integer>
 					</dict>
 					<key>Locker</key>
 					<dict>
