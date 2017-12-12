@@ -166,8 +166,11 @@ public class HSUIApplication extends HSInputMethodApplication {
 //        HSAdCaffeReportManager.getInstance().start();
 //        HSAdCaffeReportManager.getInstance().enableReportInstalledPackages();
 
-        AcbHSFrameworkAdapter.initialize(this);
-        AutopilotConfig.initialize(this, "Autopilot_10024_Config_test_20171205_150249.json");
+        if (getResources().getBoolean(R.bool.use_auto_pilot)) {
+            AcbHSFrameworkAdapter.initialize(this);
+            AutopilotConfig.initialize(this, getResources().getString(R.string.auto_pilot_config_file));
+        }
+
 
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 
