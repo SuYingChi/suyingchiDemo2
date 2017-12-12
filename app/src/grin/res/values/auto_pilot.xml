@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="use_auto_pilot">true</bool>
+    <string name="auto_pilot_config_file">Autopilot_10024_Config_test_20171205_150249.json</string>
+</resources>

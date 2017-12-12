@@ -67,6 +67,8 @@ import com.squareup.leakcanary.LeakCanary;
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import net.appcloudbox.ads.interstitialads.AcbInterstitialAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
+import net.appcloudbox.autopilot.AutopilotConfig;
+import net.appcloudbox.common.HSFrameworkAdapter.AcbHSFrameworkAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -163,6 +165,12 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
 //        HSAdCaffeReportManager.getInstance().start();
 //        HSAdCaffeReportManager.getInstance().enableReportInstalledPackages();
+
+        if (getResources().getBoolean(R.bool.use_auto_pilot)) {
+            AcbHSFrameworkAdapter.initialize(this);
+            AutopilotConfig.initialize(this, getResources().getString(R.string.auto_pilot_config_file));
+        }
+
 
         int memoryCacheSize = (int) Math.max(Runtime.getRuntime().maxMemory() / 16, 20 * 1024 * 1024);
 

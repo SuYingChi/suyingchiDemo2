@@ -189,6 +189,10 @@ dependencies {
     compile 'net.appcloudbox.ads:libAcbAds.gm:1.2.1.gm'
     compile 'net.appcloudbox.common:libAcbCommonUtils.gm:1.1.5.gm'
 
+    // Autopilot
+    compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.0.gm"
+    compile "net.appcloudbox.common:libAcbHSFrameworkAdapter.gm:+"
+
 //    // Native Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdAvocarrotNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'

@@ -158,4 +158,6 @@
     <color name="selector_button_ic_dark_press">#000000</color>
     <color name="selector_button_ic_light_normal">#29A0CB</color>
     <color name="selector_button_ic_light_press">#29A0CB</color>
+
+    <color name="locker_guide_button_bg">#5978ff</color>
 </resources>
