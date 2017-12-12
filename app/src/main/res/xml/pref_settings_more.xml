@@ -2,6 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:defaultValue="false"
+        android:key="@string/config_charge_alert_switchpreference_key"
+        android:summary="@string/enable_charging_detail"
+        android:title="@string/charging_alert_title" />
+
+    <SwitchPreference
+        android:defaultValue="false"
         android:key="@string/config_charge_switchpreference_key"
         android:summary="@string/enable_charging_detail"
         android:title="@string/charging_alert_title" />

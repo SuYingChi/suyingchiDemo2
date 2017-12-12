@@ -347,7 +347,18 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
         }
 
         private void setCharging() {
-            SwitchPreference chargingPreference = (SwitchPreference) findPreference(getResources().getString(R.string.config_charge_switchpreference_key));
+            if (ChargingPrefsUtil.isChargingAlertEnabled()){
+                getPreferenceScreen().removePreference(findPreference(getString(R.string.config_charge_switchpreference_key)));
+                initChargingSetting(R.string.config_charge_alert_switchpreference_key);
+            }else {
+                getPreferenceScreen().removePreference(findPreference(getString(R.string.config_charge_alert_switchpreference_key)));
+                initChargingSetting(R.string.config_charge_switchpreference_key);
+            }
+
+        }
+
+        private void initChargingSetting(int preferenceKeyResId) {
+            SwitchPreference chargingPreference = (SwitchPreference) findPreference(getResources().getString(preferenceKeyResId));
 
             int chargingEnableStates = ChargingPrefsUtil.getInstance().getChargingEnableStates();
             if (chargingEnableStates == ChargingPrefsUtil.CHARGING_MUTED) {
