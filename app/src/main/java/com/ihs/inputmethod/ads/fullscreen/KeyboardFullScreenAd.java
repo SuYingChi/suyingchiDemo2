@@ -10,7 +10,7 @@ import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.kc.utils.FeatureDelayReleaseUtils;
+import com.kc.utils.KCFeatureControlUtils;
 import com.keyboard.core.session.KCKeyboardSession;
 
 import net.appcloudbox.ads.base.AcbInterstitialAd;
@@ -83,7 +83,7 @@ public class KeyboardFullScreenAd {
         }
 
         int delayHours = HSConfig.optInteger(0, "Application", "InterstitialAds", "KeyboardAds", "Keyboard" + occasion, "HoursFromFirstUse");
-        if (!FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "Keyboard" + occasion, delayHours)) {
+        if (!KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(), "Keyboard" + occasion, delayHours)) {
             return false;
         }
 

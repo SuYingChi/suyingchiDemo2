@@ -44,7 +44,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.kc.utils.FeatureDelayReleaseUtils;
+import com.kc.utils.KCFeatureControlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -181,7 +181,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         }
 
         int hours = HSConfig.optInteger(0, "Application", "InterstitialAds", "BackButton", "HoursFromFirstUse");
-        if (!FeatureDelayReleaseUtils.isFeatureAvailable(this, "BackButton", hours)) {
+        if (!KCFeatureControlUtils.isFeatureReleased(this, "BackButton", hours)) {
             return false;
         }
 

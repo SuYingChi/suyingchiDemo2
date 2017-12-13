@@ -52,7 +52,7 @@ import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.commons.utils.KCCommonUtils;
-import com.kc.utils.FeatureDelayReleaseUtils;
+import com.kc.utils.KCFeatureControlUtils;
 import com.keyboard.core.session.KCKeyboardSession;
 
 import net.appcloudbox.ads.base.AcbAd;
@@ -292,7 +292,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             hsBackgroundVideoView.setHSBackground(HSKeyboardThemeManager.getCurrentThemeBackgroundPath());
         }
 
-        if (FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "feature_clipboard_bar", 1)) {
+        if (KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(), "feature_clipboard_bar", 1)) {
             keyboardPanelSwitchContainer.showClipboardBar();
         }
     }
@@ -542,7 +542,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         boolean show = HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardBannerAd", "Show");
         int hoursDelay = HSConfig.optInteger(0, "Application", "NativeAds", "KeyboardBannerAd", "HoursFromFirstUse");
 
-        if (!FeatureDelayReleaseUtils.isFeatureAvailable(HSApplication.getContext(), "KeyboardBannerAd", hoursDelay)) {
+        if (!KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(), "KeyboardBannerAd", hoursDelay)) {
             return;
         }
 
