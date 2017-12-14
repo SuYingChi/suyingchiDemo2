@@ -18,4 +18,5 @@
     <string name="setting_item_selector_cut">Cut</string>
     <string name="setting_item_selector_delete">Delete</string>
     <string name="setting_item_selector_paste">Paste</string>
+    <string name="setting_app_suggestion_title">App Suggestions</string>
 </resources>

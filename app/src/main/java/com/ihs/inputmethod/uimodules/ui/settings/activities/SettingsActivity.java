@@ -62,6 +62,7 @@ import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.keyboardutils.appsuggestion.AppSuggestionSetting;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.keyboard.common.DebugActivity;
 
@@ -230,6 +231,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
             setBoost();
             setCallAssistant();
             setSMSAssistant();
+            setAppSuggestion();
             setupActionBar(getString(R.string.setting_item_more_settings));
         }
 
@@ -288,6 +290,22 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     boolean isSwitchOn = (boolean) newValue;
                     CPSettings.setSMSAssistantModuleEnabled(isSwitchOn);
+                    return true;
+                }
+            });
+        }
+
+        private void setAppSuggestion() {
+            SwitchPreference preference = (SwitchPreference) findPreference(getResources().getString(R.string.pref_key_app_suggestion_enabled));
+            if (AppSuggestionSetting.getInstance().isMuted()) {
+                getPreferenceScreen().removePreference(preference);
+                return;
+            }
+            preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    boolean isSwitchOn = (boolean) newValue;
+                    AppSuggestionSetting.getInstance().setEnabled(isSwitchOn);
                     return true;
                 }
             });

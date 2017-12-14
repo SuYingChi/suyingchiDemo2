@@ -33,4 +33,8 @@
     <SwitchPreference
         android:key="@string/setting_key_sms_assistant"
         android:title="@string/setting_sms_assistant_title" />
+
+    <SwitchPreference
+        android:key="@string/pref_key_app_suggestion_enabled"
+        android:title="@string/setting_app_suggestion_title" />
 </PreferenceScreen>
