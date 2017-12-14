@@ -12,8 +12,12 @@
 				<integer>2</integer>
 				<key>MiniInterval</key>
 				<integer>0</integer>
+				<key>Description</key>
+				<string>unit of MiniInterval is ms</string>
 				<key>ApkExpection</key>
-				<array/>
+				<array>
+					<string>com.keyboard.font.theme.emoji</string>
+				</array>
 				<key>HoursFromFirstUse</key>
 				<integer>0</integer>
 			</dict>
