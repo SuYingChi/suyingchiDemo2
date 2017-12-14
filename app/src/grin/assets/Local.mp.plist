@@ -14,7 +14,7 @@
 				<integer>0</integer>
 				<key>Description</key>
 				<string>unit of MiniInterval is ms</string>
-				<key>ApkExpection</key>
+				<key>ApkException</key>
 				<array>
 					<string>com.keyboard.font.theme.emoji</string>
 				</array>
