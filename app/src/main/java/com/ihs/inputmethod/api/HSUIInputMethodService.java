@@ -43,6 +43,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerPrefsUtil;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
+import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCFeatureControlUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -478,6 +479,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
         currentAppPackageName = editorInfo.packageName;
         isAppSupportSticker = true;
+        AppSuggestionManager.getInstance().addNewRecentApp(currentAppPackageName);
 //        if (!restarting) {
 //            isAppSupportSticker = StickerUtils.isEditTextSupportSticker(currentAppPackageName);
 //        }

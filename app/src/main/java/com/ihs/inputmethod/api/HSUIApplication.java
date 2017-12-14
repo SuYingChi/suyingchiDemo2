@@ -53,6 +53,7 @@ import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
+import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
@@ -159,8 +160,8 @@ public class HSUIApplication extends HSInputMethodApplication {
     protected void onMainProcessApplicationCreate() {
         Fabric.with(this, new Crashlytics());
 
-        if(!HSPreferenceHelper.getDefault().getBoolean("app_first_open",false)){
-            HSPreferenceHelper.getDefault().putBoolean("app_first_open",true);
+        if (!HSPreferenceHelper.getDefault().getBoolean("app_first_open", false)) {
+            HSPreferenceHelper.getDefault().putBoolean("app_first_open", true);
             HSAnalytics.logEvent("app_first_opened");
         }
 //        HSAdCaffeReportManager.getInstance().start();
@@ -225,7 +226,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         initLockerChargingNoAdConfig();
 
-        HSChargingScreenManager.init(true,getResources().getString(R.string.ad_placement_charging), getResources().getString(R.string.ad_placement_cable_report));
+        HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging), getResources().getString(R.string.ad_placement_cable_report));
 
         setChargingFunctionStatus();
 
@@ -280,16 +281,17 @@ public class HSUIApplication extends HSInputMethodApplication {
                     }
                 });
             }
-        },30000);
+        }, 30000);
 
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
+        AppSuggestionManager.getInstance().init(true);
     }
 
     private void initLockerChargingNoAdConfig() {
         //如果第一次启动版本大于等于需要不显示广告的版本，则为新用户
-        if( HSApplication.getFirstLaunchInfo().appVersionCode >= BuildConfig.LOCKER_CHARGING_NO_ADS_START_VERSION){
+        if (HSApplication.getFirstLaunchInfo().appVersionCode >= BuildConfig.LOCKER_CHARGING_NO_ADS_START_VERSION) {
             LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.SPECIAL_USER_NEW);
-        }else{
+        } else {
             LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.NOT_SPECIAL_USER);
         }
     }
@@ -330,7 +332,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 }
                 return false;
             }
-        }, null,false);
+        }, null, false);
     }
 
     /**
