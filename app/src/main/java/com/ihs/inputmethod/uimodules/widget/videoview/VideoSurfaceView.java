@@ -10,6 +10,8 @@ import android.widget.VideoView;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 
+import java.io.File;
+
 /**
  * Created by ihandysoft on 16/12/6.
  */
@@ -110,6 +112,9 @@ class VideoSurfaceView extends VideoView {
         if (HSKeyboardThemeManager.getCurrentTheme().getThemeType() != HSKeyboardTheme.ThemeType.BUILD_IN) {
             uri = "file://" + mp4File;
         } else {
+            if (!new File(mp4File).exists()) {
+                return;
+            }
             uri = "file:///android_asset/" + mp4File;
         }
 
