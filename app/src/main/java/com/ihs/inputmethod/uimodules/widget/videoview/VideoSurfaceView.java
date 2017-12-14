@@ -2,13 +2,9 @@ package com.ihs.inputmethod.uimodules.widget.videoview;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.VideoView;
-
-import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 
 import java.io.File;
 
@@ -79,7 +75,7 @@ class VideoSurfaceView extends VideoView {
         setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                
+
             }
         });
     }
@@ -108,16 +104,10 @@ class VideoSurfaceView extends VideoView {
 
 
     public void playMedia(final String mp4File, final OnVedioListener onVedioListener) {
-        String uri;
-        if (HSKeyboardThemeManager.getCurrentTheme().getThemeType() != HSKeyboardTheme.ThemeType.BUILD_IN) {
-            uri = "file://" + mp4File;
-        } else {
-            if (!new File(mp4File).exists()) {
-                return;
-            }
-            uri = "file:///android_asset/" + mp4File;
-        }
 
+        if (!new File(mp4File).exists()) {
+            return;
+        }
         this.filePath = mp4File;
         this.onVedioListener = onVedioListener;
         post(new Runnable() {
@@ -126,11 +116,7 @@ class VideoSurfaceView extends VideoView {
                 if(isPlaying()) {
                     stopPlayback();
                 }
-                try {
-                    setVideoURI(Uri.parse(uri));
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                setVideoPath(mp4File);
             }
         });
     }
