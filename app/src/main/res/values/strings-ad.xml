@@ -26,6 +26,7 @@
     <string name="ad_placement_locker" translatable="false">Master_A(NativeAds)Fuse</string>
     <string name="ad_placement_keyboard_banner" translatable="false">Master_A(NativeAds)KeyboardBanner</string>
     <string name="ad_placement_result_page" translatable="false">Master_A((NativeAds)BoostDone</string>
+    <string name="ad_placement_cable_report" translatable="false">Master_A((NativeAds)CableReport</string>
 
     <string name="ad_placement_call_assist" translatable="false">Master_A(NativeAds)ThemeTryAd</string>
 

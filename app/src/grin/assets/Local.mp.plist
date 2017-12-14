@@ -331,6 +331,19 @@
 					<integer>30</integer>
 				</dict>
 			</dict>
+			<key>ChargeAlert</key>
+			<dict>
+				<key>ChargingAlertEnabled</key>
+				<true/>
+				<key>StartVersion</key>
+				<integer>3</integer>
+				<key>MiniInterval</key>
+				<integer>0</integer>
+				<key>State</key>
+				<integer>2</integer>
+				<key>StateDescription</key>
+				<string>0: no charger; 1:charger enabled &amp;amp; defalut off; 2:charger enable &amp;amp; defalut on</string>
+			</dict>
 			<key>ChargeLocker</key>
 			<dict>
 				<key>Alert</key>
@@ -369,7 +382,7 @@
 					<key>body</key>
 					<array>
 						<string>5000+ beautiful themes to choose</string>
-						<string>Live weather forecas</string>
+						<string>Live weather forecast</string>
 						<string>Secure your privacy</string>
 					</array>
 					<key>button</key>
@@ -4227,7 +4240,7 @@
 						<key>body</key>
 						<dict>
 							<key>en</key>
-							<string>Tap the number of stars you'd give us.</string>
+							<string>Tap the number of stars you&apos;d give us.</string>
 						</dict>
 						<key>title</key>
 						<dict>
@@ -4336,7 +4349,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación? </string>
 							<key>fr</key>
-							<string>Vous aimez l'application?</string>
+							<string>Vous aimez l&apos;application?</string>
 							<key>hi</key>
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
@@ -4445,11 +4458,11 @@
 								<key>es</key>
 								<string>¡Nos alegra oírlo! ¡Danos 5 estrellas!</string>
 								<key>fr</key>
-								<string>Nous sommes heureux de l'apprendre ! Donnez-lui 5 étoiles.</string>
+								<string>Nous sommes heureux de l&apos;apprendre ! Donnez-lui 5 étoiles.</string>
 								<key>hi</key>
 								<string>यह जानकर खुशी हुई! इसे 5-स्टार का मूल्यांकन दें हमारे पास</string>
 								<key>it</key>
-								<string>Ci fa piacere saperlo! Valuta l'app con 5 stelle.</string>
+								<string>Ci fa piacere saperlo! Valuta l&apos;app con 5 stelle.</string>
 								<key>ja</key>
 								<string>それが聞けて何よりです。5つ星をぜひお願いします！</string>
 								<key>ko</key>
@@ -4514,7 +4527,7 @@
 								<key>es</key>
 								<string>Somos un equipo pequeño y nos esforzamos mucho para ofrecerte la mejor aplicación gratis. ¡Tu valoración de 5 estrellas es mejor que todo el dinero del mundo!</string>
 								<key>fr</key>
-								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l'argent du monde !</string>
+								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l&apos;argent du monde !</string>
 								<key>hi</key>
 								<string>एक छोटी टीम है जो आपको निशुल्क में बेहतर एप्स‍ देने के लिए कड़ी मेहनत करती है। आपका 5-स्टार विश्व की पूरी दौलत से भी अच्छा है!</string>
 								<key>it</key>
@@ -4544,7 +4557,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación?</string>
 							<key>fr</key>
-							<string>Vous aimez l'application ?</string>
+							<string>Vous aimez l&apos;application ?</string>
 							<key>it</key>
 							<string>Ti piace la nostra app?</string>
 							<key>nl</key>
@@ -4694,7 +4707,7 @@
 								<key>es</key>
 								<string>¿Qué te parecería valorar el trabajo del equipo?</string>
 								<key>fr</key>
-								<string>Que diriez-vous d'un avis pour des équipes qui travaillent dur ?</string>
+								<string>Que diriez-vous d&apos;un avis pour des équipes qui travaillent dur ?</string>
 								<key>hi</key>
 								<string>तो कड़ी मेहनत वाली टीमों के लिए एक मूल्यांकन के बारे में क्या?</string>
 								<key>it</key>
@@ -4739,7 +4752,7 @@
 							<key>es</key>
 							<string>Tengo algunos comentarios</string>
 							<key>fr</key>
-							<string>J'ai des commentaires</string>
+							<string>J&apos;ai des commentaires</string>
 							<key>hi</key>
 							<string>मेरे पास कुछ प्रतिक्रिया है</string>
 							<key>it</key>
@@ -4762,15 +4775,15 @@
 							<key>de</key>
 							<string>Ich würde sie mit 5 Sternen bewerten</string>
 							<key>en</key>
-							<string>I'd like to give it a 5-star rating.</string>
+							<string>I&apos;d like to give it a 5-star rating.</string>
 							<key>es</key>
 							<string>Me gustaría darle una valoración de 5 estrellas.</string>
 							<key>fr</key>
-							<string>J'aimerais lui donner 5 étoiles.</string>
+							<string>J&apos;aimerais lui donner 5 étoiles.</string>
 							<key>hi</key>
 							<string>मैं इसे 5-स्टार मूल्‍यांकन देना चाहता/चाहती हूं।</string>
 							<key>it</key>
-							<string>Voglio valutare l'app con 5 stelle.</string>
+							<string>Voglio valutare l&apos;app con 5 stelle.</string>
 							<key>nl</key>
 							<string>Ik wil een beoordeling van 5 sterren geven.</string>
 							<key>pt</key>
@@ -8694,9 +8707,9 @@
 				<key>preload</key>
 				<dict>
 					<key>inventory</key>
-					<integer>0</integer>
+					<integer>1</integer>
 					<key>strategy</key>
-					<string>initiative</string>
+					<string>app</string>
 				</dict>
 				<key>preloadOnlyInWifi</key>
 				<false/>
@@ -9636,6 +9649,123 @@
 							<string>DK</string>
 							<string>FI</string>
 							<string>TO</string>
+						</array>
+					</dict>
+				</array>
+			</dict>
+			<key>Grin_A(NativeAds)CableReport</key>
+			<dict>
+				<key>deDuplicate</key>
+				<true/>
+				<key>packageFilter</key>
+				<true/>
+				<key>parallelCount</key>
+				<integer>0</integer>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>1</integer>
+					<key>strategy</key>
+					<string>app</string>
+				</dict>
+				<key>parallelList</key>
+				<array/>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/6582459081</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/3415051971</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/5269376778</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/6763393755</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
 						</array>
 					</dict>
 				</array>

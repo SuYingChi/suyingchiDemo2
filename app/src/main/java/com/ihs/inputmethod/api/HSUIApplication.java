@@ -225,7 +225,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         initLockerChargingNoAdConfig();
 
-        HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging));
+        HSChargingScreenManager.init(true,getResources().getString(R.string.ad_placement_charging), getResources().getString(R.string.ad_placement_cable_report));
 
         setChargingFunctionStatus();
 
