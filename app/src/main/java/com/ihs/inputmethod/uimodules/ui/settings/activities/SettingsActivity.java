@@ -271,6 +271,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                     boolean isSwitchOn = (boolean) newValue;
                     HSPreferenceHelper.getDefault().putBoolean(CALL_ASSISTANT_HAS_SWITCHED_ON, true);
                     CPSettings.setCallAssistantModuleEnabled(isSwitchOn);
+                    CPSettings.setScreenFlashModuleEnabled(isSwitchOn,true);
                     return true;
                 }
             });

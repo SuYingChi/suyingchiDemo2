@@ -106,6 +106,7 @@ public class TrialKeyboardDialogAlertUtils {
                 public void onClick(View view) {
                     HSAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen", "occasion", "after_try");
                     CPSettings.setCallAssistantModuleEnabled(true);
+                    CPSettings.setScreenFlashModuleEnabled(true,true);
                 }
             });
             KCCommonUtils.showDialog(dialog);
