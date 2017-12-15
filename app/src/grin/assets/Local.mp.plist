@@ -19,7 +19,7 @@
 					<string>com.keyboard.font.theme.emoji</string>
 				</array>
 				<key>HoursFromFirstUse</key>
-				<integer>0</integer>
+				<integer>5</integer>
 			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
