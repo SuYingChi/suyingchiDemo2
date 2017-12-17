@@ -614,13 +614,17 @@
 					<key>HoursFromFirstUse</key>
 					<integer>5</integer>
 					<key>MaxCountPerDay</key>
-					<integer>4</integer>
+					<integer>6</integer>
+					<key>MinCountPerDay</key>
+					<integer>3</integer>
+					<key>MinCountTriggerHour</key>
+					<integer>20</integer>
 					<key>MinIntervalByHour</key>
 					<integer>1</integer>
 					<key>PackageNameExclude</key>
 					<array>
-						<string>android</string>
-						<string>facebook</string>
+						<string>com.facebook.orca</string>
+						<string>com.facebook.katana</string>
 						<string>com.whatsapp</string>
 					</array>
 					<key>Show</key>
@@ -9791,14 +9795,20 @@
 					<dict>
 						<key>BackButton</key>
 						<dict>
+							<key>HoursFromFirstUse</key>
+							<integer>5</integer>
 							<key>MaxCountPerDay</key>
 							<integer>6</integer>
+							<key>MinCountPerDay</key>
+							<integer>3</integer>
+							<key>MinCountTriggerHour</key>
+							<integer>20</integer>
 							<key>MinIntervalByHour</key>
 							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
-								<string>android</string>
-								<string>facebook</string>
+								<string>com.facebook.orca</string>
+								<string>com.facebook.katana</string>
 								<string>com.whatsapp</string>
 							</array>
 							<key>Show</key>
@@ -10313,14 +10323,20 @@
 					<dict>
 						<key>BackButton</key>
 						<dict>
+							<key>HoursFromFirstUse</key>
+							<integer>5</integer>
 							<key>MaxCountPerDay</key>
 							<integer>6</integer>
+							<key>MinCountPerDay</key>
+							<integer>3</integer>
+							<key>MinCountTriggerHour</key>
+							<integer>20</integer>
 							<key>MinIntervalByHour</key>
 							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
-								<string>android</string>
-								<string>facebook</string>
+								<string>com.facebook.orca</string>
+								<string>com.facebook.katana</string>
 								<string>com.whatsapp</string>
 							</array>
 							<key>Show</key>
