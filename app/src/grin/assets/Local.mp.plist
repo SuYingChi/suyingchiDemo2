@@ -6,10 +6,17 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>BoostNotification</key>
+			<dict>
+				<key>Enabled</key>
+				<true/>
+				<key>HoursFromFirstUse</key>
+				<integer>5</integer>
+			</dict>
 			<key>AppSuggestion</key>
 			<dict>
 				<key>state</key>
-				<integer>2</integer>
+				<integer>0</integer>
 				<key>MiniInterval</key>
 				<integer>0</integer>
 				<key>Description</key>
@@ -458,80 +465,6 @@
 					<integer>2</integer>
 				</dict>
 			</dict>
-			<key>FeatureRestriction</key>
-			<dict>
-				<key>AdBackButton</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdGooglePlayIcon</key>
-				<dict>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdGooglePlayNative</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>24</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdKeyboardClose</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>3</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdKeyboardOpen</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>3</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>BoostNotification</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>KeyboardBannerAd</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-			</dict>
 			<key>FeaturesGuide</key>
 			<dict>
 				<key>ScreenFlashGuide</key>
@@ -678,6 +611,8 @@
 			<dict>
 				<key>BackButton</key>
 				<dict>
+					<key>HoursFromFirstUse</key>
+					<integer>5</integer>
 					<key>MaxCountPerDay</key>
 					<integer>4</integer>
 					<key>MinIntervalByHour</key>
@@ -699,6 +634,8 @@
 						<array/>
 						<key>Show</key>
 						<false/>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
 					</dict>
 					<key>KeyboardOpen</key>
 					<dict>
@@ -706,6 +643,8 @@
 						<array/>
 						<key>Show</key>
 						<false/>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
 					</dict>
 				</dict>
 			</dict>
@@ -6027,6 +5966,8 @@
 					<string>Others</string>
 				</dict>
 			</array>
+			<key>RateToUnlock</key>
+			<false/>
 		</dict>
 		<key>adAdapter</key>
 		<dict>
@@ -9829,6 +9770,21 @@
 			<dict>
 				<key>Application</key>
 				<dict>
+					<key>AppSuggestion</key>
+					<dict>
+						<key>state</key>
+						<integer>2</integer>
+						<key>MiniInterval</key>
+						<integer>0</integer>
+						<key>Description</key>
+						<string>unit of MiniInterval is ms</string>
+						<key>ApkException</key>
+						<array>
+							<string>com.keyboard.font.theme.emoji</string>
+						</array>
+						<key>HoursFromFirstUse</key>
+						<integer>5</integer>
+					</dict>
 					<key>EnableMessageFunction</key>
 					<true/>
 					<key>InterstitialAds</key>
@@ -10336,6 +10292,21 @@
 			<dict>
 				<key>Application</key>
 				<dict>
+					<key>AppSuggestion</key>
+					<dict>
+						<key>state</key>
+						<integer>2</integer>
+						<key>MiniInterval</key>
+						<integer>0</integer>
+						<key>Description</key>
+						<string>unit of MiniInterval is ms</string>
+						<key>ApkException</key>
+						<array>
+							<string>com.keyboard.font.theme.emoji</string>
+						</array>
+						<key>HoursFromFirstUse</key>
+						<integer>5</integer>
+					</dict>
 					<key>EnableMessageFunction</key>
 					<true/>
 					<key>InterstitialAds</key>
