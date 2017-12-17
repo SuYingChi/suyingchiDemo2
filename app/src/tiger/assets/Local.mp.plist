@@ -6,6 +6,39 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>ChargeAlert</key>
+			<dict>
+				<key>ChargingAlertEnabled</key>
+				<false/>
+				<key>MiniInterval</key>
+				<integer>1</integer>
+				<key>StartVersion</key>
+				<integer>5</integer>
+				<key>State</key>
+				<integer>2</integer>
+				<key>StateDescription</key>
+				<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+			</dict>
+			<key>AppSuggestion</key>
+			<dict>
+				<key>ApkExpection</key>
+				<array>
+					<string>com.keyboard.font.theme.emoji</string>
+				</array>
+				<key>HoursFromFirstUse</key>
+				<integer>5</integer>
+				<key>MiniInterval</key>
+				<integer>0</integer>
+				<key>state</key>
+				<integer>0</integer>
+			</dict>
+			<key>BoostNotification</key>
+			<dict>
+				<key>Enabled</key>
+				<true/>
+				<key>HoursFromFirstUse</key>
+				<integer>5</integer>
+			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
 				<key>AskInterval</key>
@@ -363,7 +396,7 @@
 				<integer>3000</integer>
 			</dict>
 			<key>EnableMessageFunction</key>
-			<true/>
+			<false/>
 			<key>FeaturePrompt</key>
 			<dict>
 				<key>ChargerLockerAlert</key>
@@ -379,98 +412,6 @@
 					<integer>2</integer>
 					<key>SessionInterval</key>
 					<integer>2</integer>
-				</dict>
-			</dict>
-			<key>FeatureRestriction</key>
-			<dict>
-				<key>AdBackButton</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdGooglePlayIcon</key>
-				<dict>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdGooglePlayNative</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>24</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdKeyboardClose</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>3</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdKeyboardOpen</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>3</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>AdSearch</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>0</integer>
-					<key>RegionException</key>
-					<array/>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>BoostNotification</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>KeyboardBannerAd</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>5</integer>
-					<key>RegionException</key>
-					<array>
-						<string>CN</string>
-					</array>
-					<key>TimeZoneException</key>
-					<array/>
-				</dict>
-				<key>RateToUnlock</key>
-				<dict>
-					<key>HoursFromFirstUse</key>
-					<integer>0</integer>
-					<key>RegionException</key>
-					<array/>
-					<key>TimeZoneException</key>
-					<array/>
 				</dict>
 			</dict>
 			<key>FeaturesGuide</key>
@@ -6011,6 +5952,8 @@
 					<string>Others</string>
 				</dict>
 			</array>
+			<key>RateToUnlock</key>
+			<false/>
 		</dict>
 		<key>adAdapter</key>
 		<dict>
@@ -12865,20 +12808,55 @@
 			<dict>
 				<key>Application</key>
 				<dict>
+					<key>ChargeAlert</key>
+					<dict>
+						<key>ChargingAlertEnabled</key>
+						<true/>
+						<key>MiniInterval</key>
+						<integer>1</integer>
+						<key>StartVersion</key>
+						<integer>5</integer>
+						<key>State</key>
+						<integer>2</integer>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+					</dict>
+					<key>AppSuggestion</key>
+					<dict>
+						<key>state</key>
+						<integer>2</integer>
+						<key>MiniInterval</key>
+						<integer>0</integer>
+						<key>Description</key>
+						<string>unit of MiniInterval is ms</string>
+						<key>ApkException</key>
+						<array>
+							<string>com.keyboard.font.theme.emoji</string>
+						</array>
+						<key>HoursFromFirstUse</key>
+						<integer>5</integer>
+					</dict>
+					<key>EnableMessageFunction</key>
+					<true/>
 					<key>InterstitialAds</key>
 					<dict>
 						<key>BackButton</key>
 						<dict>
+							<key>HoursFromFirstUse</key>
+							<integer>5</integer>
 							<key>MaxCountPerDay</key>
 							<integer>6</integer>
+							<key>MinCountPerDay</key>
+							<integer>3</integer>
+							<key>MinCountTriggerHour</key>
+							<integer>20</integer>
 							<key>MinIntervalByHour</key>
 							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
-								<string>android</string>
 								<string>com.facebook.orca</string>
-								<string>com.whatsapp</string>
 								<string>com.facebook.katana</string>
+								<string>com.whatsapp</string>
 							</array>
 							<key>Show</key>
 							<true/>
@@ -12907,12 +12885,6 @@
 						<dict>
 							<key>custom_theme_backgrounds</key>
 							<array>
-								<dict>
-									<key>name</key>
-									<string>Lovely Dog</string>
-									<key>showNewMark</key>
-									<true/>
-								</dict>
 								<dict>
 									<key>name</key>
 									<string>Halloween</string>
@@ -13354,6 +13326,20 @@
 							</array>
 						</dict>
 					</dict>
+					<key>NativeAds</key>
+					<dict>
+						<key>KeyboardBannerAd</key>
+						<dict>
+							<key>SessionIndexOfDay</key>
+							<array>
+								<integer>3</integer>
+							</array>
+							<key>Show</key>
+							<true/>
+						</dict>
+					</dict>
+					<key>RateToUnlock</key>
+					<true/>
 				</dict>
 			</dict>
 		</dict>
@@ -13365,20 +13351,55 @@
 			<dict>
 				<key>Application</key>
 				<dict>
+					<key>ChargeAlert</key>
+					<dict>
+						<key>ChargingAlertEnabled</key>
+						<true/>
+						<key>MiniInterval</key>
+						<integer>1</integer>
+						<key>StartVersion</key>
+						<integer>5</integer>
+						<key>State</key>
+						<integer>2</integer>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+					</dict>
+					<key>AppSuggestion</key>
+					<dict>
+						<key>state</key>
+						<integer>2</integer>
+						<key>MiniInterval</key>
+						<integer>0</integer>
+						<key>Description</key>
+						<string>unit of MiniInterval is ms</string>
+						<key>ApkException</key>
+						<array>
+							<string>com.keyboard.font.theme.emoji</string>
+						</array>
+						<key>HoursFromFirstUse</key>
+						<integer>5</integer>
+					</dict>
+					<key>EnableMessageFunction</key>
+					<true/>
 					<key>InterstitialAds</key>
 					<dict>
 						<key>BackButton</key>
 						<dict>
+							<key>HoursFromFirstUse</key>
+							<integer>5</integer>
 							<key>MaxCountPerDay</key>
 							<integer>6</integer>
+							<key>MinCountPerDay</key>
+							<integer>3</integer>
+							<key>MinCountTriggerHour</key>
+							<integer>20</integer>
 							<key>MinIntervalByHour</key>
 							<integer>1</integer>
 							<key>PackageNameExclude</key>
 							<array>
-								<string>android</string>
 								<string>com.facebook.orca</string>
-								<string>com.whatsapp</string>
 								<string>com.facebook.katana</string>
+								<string>com.whatsapp</string>
 							</array>
 							<key>Show</key>
 							<true/>
@@ -13407,12 +13428,6 @@
 						<dict>
 							<key>custom_theme_backgrounds</key>
 							<array>
-								<dict>
-									<key>name</key>
-									<string>Lovely Dog</string>
-									<key>showNewMark</key>
-									<true/>
-								</dict>
 								<dict>
 									<key>name</key>
 									<string>Halloween</string>
@@ -13854,6 +13869,20 @@
 							</array>
 						</dict>
 					</dict>
+					<key>NativeAds</key>
+					<dict>
+						<key>KeyboardBannerAd</key>
+						<dict>
+							<key>SessionIndexOfDay</key>
+							<array>
+								<integer>3</integer>
+							</array>
+							<key>Show</key>
+							<true/>
+						</dict>
+					</dict>
+					<key>RateToUnlock</key>
+					<true/>
 				</dict>
 			</dict>
 		</dict>
