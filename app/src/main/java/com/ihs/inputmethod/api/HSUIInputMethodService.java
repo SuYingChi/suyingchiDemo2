@@ -46,6 +46,7 @@ import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCFeatureControlUtils;
+import com.keyboard.common.SplashActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -121,6 +122,9 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     public void onCreate() {
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateStart();
         super.onCreate();
+
+        SplashActivity.recordAppFirstOpen("keyboard enable");
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
