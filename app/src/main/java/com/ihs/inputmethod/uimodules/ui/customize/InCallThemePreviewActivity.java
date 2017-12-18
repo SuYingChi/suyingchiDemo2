@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +17,6 @@ import com.acb.call.CPSettings;
 import com.acb.call.GifDownloadManager;
 import com.acb.call.activity.HSAppCompatActivity;
 import com.acb.call.constant.CPConst;
-import com.acb.call.customize.AcbCallManager;
 import com.acb.call.receiver.IncomingCallReceiver;
 import com.acb.call.themes.Type;
 import com.acb.call.views.InCallActionView;
@@ -128,33 +125,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         mIsDestroyed = true;
         mGifDownloader.cancelAllDownload();
         super.onDestroy();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        AcbCallManager.getInstance().getAcbCallFactory().getViewConfig().onCreateOptionsMenu(getMenuInflater(), menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (AcbCallManager.getInstance().getAcbCallFactory().getViewConfig().onPrepareOptionsMenu(menu)) {
-            return true;
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int i = item.getItemId();
-        if (AcbCallManager.getInstance().getAcbCallFactory().getViewConfig().onOptionsItemSelected(item)) {
-            return true;
-        } else if (i == android.R.id.home) {
-            finish();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
     }
 
     private void requestPermissionsIfNeeded() {
