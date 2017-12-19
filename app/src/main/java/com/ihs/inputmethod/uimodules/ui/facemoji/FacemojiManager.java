@@ -15,7 +15,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 
-import com.artw.lockscreen.common.NetworkChangeReceiver;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -23,9 +22,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
-import com.ihs.inputmethod.api.utils.HSNetworkConnectionUtils;
 import com.ihs.inputmethod.api.utils.HSThreadUtils;
-import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacePictureParam;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
@@ -34,16 +31,12 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.utils.HSConfigUtils;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipException;
 
 
 public class FacemojiManager {
@@ -52,8 +45,7 @@ public class FacemojiManager {
         Keyboard,App
     }
 
-    public final static String FACEMOJI_CATEGORY_DOWNLOADED = "FACEMOJI_CATEGORY_DOWNLOADED";
-    public final static String FACEMOJI_CATEGORY_BUNDLE_KEY = "facemojiCategory";
+    public final static String FACEMOJI_DATA_CHANGED = "FACEMOJI_DATA_CHANGED";
 
     public static final String FACEMOJI_SAVED = "FACEMOJI_SAVED";
     public static final String FACE_CHANGED = "FACE_CHANGED";
@@ -84,35 +76,14 @@ public class FacemojiManager {
         public void onReceive(String s, HSBundle hsBundle) {
             if (HSConfig.HS_NOTIFICATION_CONFIG_CHANGED.equals(s)) {
                 onConfigChange();
-            }else if (NetworkChangeReceiver.NOTIFICATION_CONNECTIVITY_CHANGED.equals(s)){
-                if (HSNetworkConnectionUtils.isNetworkConnected()){
-                    retryDownloadFacemojiCategoryWhenNetworkConnective();
-                }
             }
         }
     };
 
-    private FacemojiDownloadManager.IFacemojiCategoryDownloadListener facemojiCategoryDownloadListener = new FacemojiDownloadManager.IFacemojiCategoryDownloadListener() {
-        @Override
-        public void onDownloadSuccess(FacemojiCategory facemojiCategory) {
-            List<FacemojiCategory> categories = FacemojiManager.getInstance().getCategories();
-            for (int i = 0 ; i < categories.size() ; i++ ){
-                FacemojiCategory category = categories.get(i);
-                if (category.getName().equals(facemojiCategory.getName())){
-                    category.parseYaml();
-                    HSBundle bundle = new HSBundle();
-                    bundle.putObject(FACEMOJI_CATEGORY_BUNDLE_KEY, category);
-                    HSGlobalNotificationCenter.sendNotification(FACEMOJI_CATEGORY_DOWNLOADED, bundle);
-                    break;
-                }
-            }
-        }
-    };
+
 
     static {
         buildInFacemojiCategories = new ArrayList<>();
-        buildInFacemojiCategories.add("star");
-        buildInFacemojiCategories.add("person");
     }
 
     private FacemojiManager() {
@@ -140,13 +111,10 @@ public class FacemojiManager {
         highQualityOption = new BitmapFactory.Options();
         highQualityOption.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
-        copyAndUnzipAsssetFacemjiZipFileToLocal();
         loadFacemojiCategoryFromConfig();
         getDefaultFacePicUri();
         loadFaceList();
-        FacemojiDownloadManager.getInstance();
         HSGlobalNotificationCenter.addObserver(HSConfig.HS_NOTIFICATION_CONFIG_CHANGED, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(NetworkChangeReceiver.NOTIFICATION_CONNECTIVITY_CHANGED, notificationObserver);
     }
 
     private synchronized void loadFacemojiCategoryFromConfig() { //可能config change和首次启动时间间隔短，导致同时解压同一个文件会解压不成功
@@ -164,36 +132,19 @@ public class FacemojiManager {
                 facemojiCategory.parseYaml();
             }else {
                 facemojiCategory.setFakeStickerListData();
-                if (!isBuildIn){
-                    FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(facemojiCategory, facemojiCategoryDownloadListener);
-                }
             }
         }
         this.facemojiCategories = facemojiCategoryList;
     }
 
-    private void copyAndUnzipAsssetFacemjiZipFileToLocal() {
-        for (String categoryName : buildInFacemojiCategories) {
-            copyAndUnzipAsssetFacemjiZipFileToLocal(categoryName);
-        }
-    }
-
     private void onConfigChange() {
-        FacemojiDownloadManager.getInstance().onConfigChange();
         HSThreadUtils.execute(new Runnable() {
             @Override
             public void run() {
                 loadFacemojiCategoryFromConfig();
+                HSGlobalNotificationCenter.sendNotificationOnMainThread(FACEMOJI_DATA_CHANGED);
             }
         });
-    }
-
-    private void retryDownloadFacemojiCategoryWhenNetworkConnective() {
-        for (FacemojiCategory facemojiCategory : FacemojiManager.getInstance().getCategories()){
-            if (!facemojiCategory.isBuildIn() && !FacemojiDownloadManager.getInstance().isFacemojiCategoryDownloadedSuccess(facemojiCategory.getName())){
-                FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(facemojiCategory, facemojiCategoryDownloadListener);
-            }
-        }
     }
 
     public static void destroyTempFace() {
@@ -459,11 +410,11 @@ public class FacemojiManager {
     }
 
     public List<FacemojiCategory> getCategories() {
-        return facemojiCategories;
+        return new ArrayList<>(facemojiCategories);
     }
 
     public List<FacemojiCategory> getFacemojiCategories() {
-        return facemojiCategories;
+        return new ArrayList<>(facemojiCategories);
     }
 
     public static File getFacemojiZipFile(String facemojiCategoryName){
@@ -486,39 +437,6 @@ public class FacemojiManager {
             parentFile.mkdirs();
         }
         return file;
-    }
-
-    private boolean copyAndUnzipAsssetFacemjiZipFileToLocal(String facemojiCategoryName) {
-        if (FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategoryName)) {
-            return true;
-        }
-
-        File mojimeZipFile = getFacemojiZipFile(facemojiCategoryName);
-        try {
-            InputStream isd = HSApplication.getContext().getAssets().open(facemojiCategoryName + ".zip");
-            OutputStream os = new FileOutputStream(mojimeZipFile);
-            byte[] b = new byte[1024];
-            int length;
-            while ((length = isd.read(b)) > 0) {
-                os.write(b, 0, length);
-            }
-            isd.close();
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        try {
-            HSZipUtils.unzip(mojimeZipFile,getFacemojiCategoryDir(facemojiCategoryName));
-            FacemojiDownloadManager.getInstance().setFacemojiCategoryDownloadedSuccess(facemojiCategoryName);
-            return true;
-        } catch (ZipException e) {
-            e.printStackTrace();
-        } finally {
-            mojimeZipFile.delete();
-        }
-        return false;
     }
 
     public List<FacemojiSticker> getStickerList(int postion) {

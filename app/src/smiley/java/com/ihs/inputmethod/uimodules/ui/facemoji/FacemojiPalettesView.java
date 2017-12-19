@@ -45,6 +45,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         FacemojiPageGridView.OnFacemojiClickListener, View.OnClickListener, BaseTabViewAdapter.OnTabChangeListener {
     private RecyclerView facemojiTabRecyclerView;
     private FacemoijTabAdapter facemoijTabAdapter;
+    private List<FacemojiCategory> facemojiCategoryList;
 
     private FacemojiViewPager mViewPager;
     private FacemojiIndicatorView pageIndicatorView;
@@ -86,7 +87,8 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
 
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACE_CHANGED, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_CATEGORY_DOWNLOADED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_DATA_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED, notificationObserver);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -100,21 +102,31 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
                 if (currentFaceImage != null) {
                     currentFaceImage.setImageURI(FacemojiManager.getCurrentFacePicUri());
                 }
-            }else if (FacemojiManager.FACEMOJI_CATEGORY_DOWNLOADED.equals(s)){
-                if (hsBundle != null){
-                    FacemojiCategory facemojiCategory = (FacemojiCategory) hsBundle.getObject(FacemojiManager.FACEMOJI_CATEGORY_BUNDLE_KEY);
-                    List<FacemojiCategory> categories = FacemojiManager.getInstance().getCategories();
-                    for (int i = 0 ; i < categories.size() ; i++ ){
-                        FacemojiCategory category = categories.get(i);
-                        if (category.getName().equals(facemojiCategory.getName())){
-                            if (mStickerPalettesAdapter != null) {
-                                mStickerPalettesAdapter.notifyDownloaded(i);
-                                mStickerPalettesAdapter.notifyDataSetChanged();
+            } else if (FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED.equals(s)) {
+                if (hsBundle != null) {
+                    if (facemojiCategoryList != null) {
+                        FacemojiCategory facemojiCategory = (FacemojiCategory) hsBundle.getObject(FacemojiDownloadManager.FACEMOJI_CATEGORY_BUNDLE_KEY);
+                        for (int i = 0; i < facemojiCategoryList.size(); i++) {
+                            FacemojiCategory category = facemojiCategoryList.get(i);
+                            if (category.getName().equals(facemojiCategory.getName())) {
+                                if (mStickerPalettesAdapter != null) {
+                                    mStickerPalettesAdapter.notifyDownloaded(i);
+                                    mStickerPalettesAdapter.notifyDataSetChanged();
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
-
+                }
+            } else if (FacemojiManager.FACEMOJI_DATA_CHANGED.equals(s)) {
+                if (facemoijTabAdapter != null) {
+                    facemojiCategoryList = FacemojiManager.getInstance().getCategories();
+                    List<String> facemojiCategoryNameList = new ArrayList<>();
+                    for(FacemojiCategory facemojiCategory : facemojiCategoryList){
+                        facemojiCategoryNameList.add(facemojiCategory.getName());
+                    }
+                    facemoijTabAdapter.setData(facemojiCategoryList,facemojiCategoryNameList);
+                    facemoijTabAdapter.notifyDataSetChanged();
                 }
             }
         }
@@ -150,8 +162,8 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
 
             facemojiTabRecyclerView = (RecyclerView) panelView.findViewById(R.id.facemoji_category_tab_host);
 
-            List<FacemojiCategory> facemojiCategoryList = FacemojiManager.getInstance().getCategories();
-            List<String> facemojiCategoryNameList     = new ArrayList<>();
+            facemojiCategoryList = FacemojiManager.getInstance().getCategories();
+            List<String> facemojiCategoryNameList = new ArrayList<>();
             for(FacemojiCategory facemojiCategory : facemojiCategoryList){
                 facemojiCategoryNameList.add(facemojiCategory.getName());
             }
@@ -290,6 +302,10 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         }
 
         facemoijTabAdapter.setTabSelected(newTabId);
+
+        if (!FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategoryList.get(categoryId).getName())) {
+            FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(facemojiCategoryList.get(categoryId),null);
+        }
     }
 
     @Override

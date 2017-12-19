@@ -55,6 +55,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     private TabHost mTabHost;
     private ViewPager mImagePager;
     private FacemojiPalettesAdapter mFacemojiPalettesAdapter;
+    private List<FacemojiCategory> categories;
     private int mCurrentPagerPosition = 0;
     private Drawable transparentDrawable;
     private int screenWidth;
@@ -65,17 +66,22 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     private INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
-            if (FacemojiManager.FACEMOJI_CATEGORY_DOWNLOADED.equals(s)){
+            if (FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED.equals(s)){
                 if (hsBundle != null){
-                    FacemojiCategory facemojiCategory = (FacemojiCategory) hsBundle.getObject(FacemojiManager.FACEMOJI_CATEGORY_BUNDLE_KEY);
-                    List<FacemojiCategory> categories = FacemojiManager.getInstance().getCategories();
-                    for (int i = 0 ; i < categories.size() ; i++ ){
+                    FacemojiCategory facemojiCategory = (FacemojiCategory) hsBundle.getObject(FacemojiDownloadManager.FACEMOJI_CATEGORY_BUNDLE_KEY);
+                    for (int i = 0; i < categories.size(); i++) {
                         FacemojiCategory category = categories.get(i);
-                        if (category.getName().equals(facemojiCategory.getName())){
-                            mFacemojiPalettesAdapter.notifyDownloaded(i,mCurrentPagerPosition);
+                        if (category.getName().equals(facemojiCategory.getName())) {
+                            mFacemojiPalettesAdapter.notifyDownloaded(i, mCurrentPagerPosition);
                             break;
                         }
                     }
+                }
+            }else if (FacemojiManager.FACEMOJI_DATA_CHANGED.equals(s)) {
+                if (mFacemojiPalettesAdapter != null) {
+                    categories = FacemojiManager.getInstance().getCategories();
+                    mFacemojiPalettesAdapter.setData(categories);
+                    mFacemojiPalettesAdapter.notifyDataSetChanged();
                 }
             }
         }
@@ -98,6 +104,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.my_facemoji_activity);
+        categories = FacemojiManager.getInstance().getCategories();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.my_facemoji_toolbar_title));
@@ -120,7 +127,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         TabWidget tabWidget = mTabHost.getTabWidget();
         tabWidget.setStripEnabled(false);
         mImagePager = (ViewPager) findViewById(R.id.facemoji_pager);
-        mFacemojiPalettesAdapter = new FacemojiPalettesAdapter(this, getGridViewHeight(), new PagerCallback() {
+        mFacemojiPalettesAdapter = new FacemojiPalettesAdapter(this, categories,getGridViewHeight(), new PagerCallback() {
             @Override
             public int getCurrentPagerPosition() {
                 return mCurrentPagerPosition;
@@ -175,7 +182,8 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             return;
         }
 
-        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_CATEGORY_DOWNLOADED,notificationObserver);
+        HSGlobalNotificationCenter.addObserver(FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED,notificationObserver);
+        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_DATA_CHANGED,notificationObserver);
     }
 
     private void showInitTabByCategoryName() {
@@ -317,6 +325,10 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     public void onPageSelected(int position) {
         setCurrentCategoryId(position);
         FacemojiManager.getInstance().setCurrentCategoryId(position);
+
+        if (!FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(categories.get(position).getName())) {
+            FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(categories.get(position),null);
+        }
         mCurrentPagerPosition = position;
     }
 

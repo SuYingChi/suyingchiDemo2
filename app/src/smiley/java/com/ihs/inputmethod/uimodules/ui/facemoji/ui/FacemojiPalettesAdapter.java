@@ -12,7 +12,9 @@ import android.widget.GridView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiAnimationView;
-import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
+
+import java.util.List;
 
 class FacemojiPalettesAdapter extends PagerAdapter {
     private static String TAG = "FacemojiPalettesAdapter";
@@ -24,20 +26,27 @@ class FacemojiPalettesAdapter extends PagerAdapter {
 
     private int pagerHeight;
     private int mActivePosition = 0;
+    private List<FacemojiCategory> categories;
     private SparseArray<GridView> mActivePageViews = new SparseArray<>();
 
     private Activity activity;
     private MyFacemojiActivity.PagerCallback callback;
 
-    public FacemojiPalettesAdapter(Activity activity, int pagerHeight, MyFacemojiActivity.PagerCallback callback) {
+    public FacemojiPalettesAdapter(Activity activity, List<FacemojiCategory> categories, int pagerHeight, MyFacemojiActivity.PagerCallback callback) {
+        this.categories = categories;
         this.activity = activity;
         this.callback = callback;
         this.pagerHeight = pagerHeight;
     }
 
+
+    public void setData(List<FacemojiCategory> categories) {
+        this.categories = categories;
+    }
+
     @Override
     public int getCount() {
-        return FacemojiManager.getInstance().getCategories().size();
+        return categories.size();
     }
 
     @Override
@@ -71,7 +80,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         final GridViewWithHeaderAndFooter stickerPageGridView = new GridViewWithHeaderAndFooter(HSApplication.getContext());
         stickerPageGridView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setGridViewLayoutProperties(stickerPageGridView);
-        FacemojiGridAdapter adapter = new FacemojiGridAdapter(activity,FacemojiManager.getInstance().getCategories().get(position).getStickerList());
+        FacemojiGridAdapter adapter = new FacemojiGridAdapter(activity,categories.get(position).getStickerList());
         stickerPageGridView.setAdapter(adapter);
         container.addView(stickerPageGridView);
         mActivePageViews.put(position, stickerPageGridView);
@@ -86,7 +95,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
                 if (position == currentPagerPosition) {
                     adapter.setAllowPlayAnim(true);
                 }
-                adapter.setFacemojiStickerList(FacemojiManager.getInstance().getCategories().get(position).getStickerList());
+                adapter.setFacemojiStickerList(categories.get(position).getStickerList());
                 adapter.notifyDataSetChanged();
             }
         }
@@ -175,4 +184,5 @@ class FacemojiPalettesAdapter extends PagerAdapter {
             ((FacemojiGridAdapter)currentPageView.getOriginalAdapter()).finish();
         }
     }
+
 }

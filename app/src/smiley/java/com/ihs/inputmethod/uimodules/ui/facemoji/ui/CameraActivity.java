@@ -14,11 +14,11 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -43,15 +43,15 @@ import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.commons.notificationcenter.INotificationObserver;
-import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.VectorCompat;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.easyphotopicker.EasyImageFiles;
 import com.ihs.inputmethod.uimodules.utils.BitmapUtils;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
@@ -89,18 +89,6 @@ public class CameraActivity extends HSAppCompatActivity {
     private Bitmap beautyBitmap;
     private boolean useBeautyNow = true;
     private View cameraLayout;
-    private INotificationObserver mImeActionObserver = new INotificationObserver() {
-        @Override
-        public void onReceive(String eventName, HSBundle notificaiton) {
-            if (eventName == null) {
-                return;
-            }
-
-            if (eventName.equals(FacemojiManager.FACEMOJI_SAVED)) {
-                finish();
-            }
-        }
-    };
     private Camera camera;
     private SurfaceView surfaceView;
     private ImageView photoView;
@@ -110,14 +98,20 @@ public class CameraActivity extends HSAppCompatActivity {
     private GifImageView mCreatingView;
     private boolean isSynthesisingImage;
     private View confirmMakeFaceBtn;
-    Handler handler = new Handler() {
 
+    private static final int MSG_SYNTHESIS_IMAGE_SUCCESS = 1;
+    private static final int MSG_SYNTHESIS_IMAGE_FAILED = 2;
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
             switch (msg.what) {
-                case 1:
-                    synthesisImage(confirmMakeFaceBtn);
+                case MSG_SYNTHESIS_IMAGE_SUCCESS:
+                    Intent i = new Intent(CameraActivity.this, MyFacemojiActivity.class);
+                    startActivity(i);
+                    finish();
+                    break;
+                case MSG_SYNTHESIS_IMAGE_FAILED:
+                    saveStartPreview();
                     break;
             }
         }
@@ -197,7 +191,6 @@ public class CameraActivity extends HSAppCompatActivity {
         initView();
 
 
-        HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_SAVED, mImeActionObserver);
     }
 
     private void initView() {
@@ -282,8 +275,7 @@ public class CameraActivity extends HSAppCompatActivity {
         confirmMakeFaceBtn.setOnClickListener(new View.OnClickListener() {
                                                   @Override
                                                   public void onClick(View v) {
-                                                      showProcessingDialog();
-                                                      handler.sendEmptyMessageDelayed(1, 1000);
+                                                      startSynthesisImage();
                                                   }
                                               }
         );
@@ -599,7 +591,6 @@ public class CameraActivity extends HSAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        HSGlobalNotificationCenter.removeObserver(mImeActionObserver);
     }
 
     private Camera.Size getOptimalCameraSize(List<Camera.Size> sizes, int w, int h) {
@@ -869,8 +860,6 @@ public class CameraActivity extends HSAppCompatActivity {
         mask.recycle();
         face.recycle();
 
-        showProcessingDialog();
-
         saveFaceToSDCard();
         // Destroy temp face
         FacemojiManager.destroyTempFace();
@@ -878,12 +867,6 @@ public class CameraActivity extends HSAppCompatActivity {
         HSGlobalNotificationCenter.sendNotificationOnMainThread(FacemojiManager.FACEMOJI_SAVED);
 
         HSAnalytics.logEvent("app_facemoji_created");
-
-        //跳转页面
-        Intent i = new Intent(CameraActivity.this, MyFacemojiActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
 
         KeyboardFullScreenAd.showSessionOneTimeAd("Facemoji");
         isSynthesisingImage = false;
@@ -900,6 +883,7 @@ public class CameraActivity extends HSAppCompatActivity {
         // Reload faces collection
         FacemojiManager.getInstance().loadFaceList();
         FacemojiManager.setCurrentFacePicUri(Uri.fromFile(dstFile));
+
     }
 
     /**
@@ -981,101 +965,59 @@ public class CameraActivity extends HSAppCompatActivity {
         }
     }
 
-    /**
-     * 异步任务处理图片
-     */
-    private class PictureProcessor extends AsyncTask<byte[], Void, Boolean> {
-
+    private boolean downloadFirstFacemojiOver = false;
+    private boolean synthesisImageOver = false;
+    private static final int DOWNLOAD_FIRST_FACEMOJI_WAIT_TIME = 5000;
+    private FacemojiDownloadManager.IFacemojiCategoryDownloadListener facemojiCategoryDownloadListener =  new FacemojiDownloadManager.IFacemojiCategoryDownloadListener() {
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            showProcessingDialog();
-            cameraLayout.setClickable(true);
-
+        public void onDownloadSuccess(FacemojiCategory facemojiCategory) {
+            downloadFirstFacemojiOver = true;
+            checkSynthesisImageSuccess();
         }
 
         @Override
-        protected Boolean doInBackground(byte[][] params) {
-            try {
-                byte[] data = params[0];
-
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = SAMPLE_SIZE;
-
-                Bitmap src = BitmapFactory.decodeByteArray(data, 0, data.length, options);
-                Bitmap des;
-                Matrix matrix = new Matrix();
-
-                //adjust picture
-                if (currentCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                    //front camera   scale and rotate picture
-                    matrix.postTranslate(src.getWidth(), 0);
-                    matrix.setScale(-1, 1);
-                    Bitmap modifiedBitmap = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-                    src.recycle();
-
-                    matrix.reset();
-                    matrix.setRotate(getPreviewDegree(), modifiedBitmap.getWidth() / 2, modifiedBitmap.getHeight() / 2);
-                    des = Bitmap.createBitmap(modifiedBitmap, 0, 0, modifiedBitmap.getWidth(), modifiedBitmap.getHeight(), matrix, true);
-                    modifiedBitmap.recycle();
-                } else {
-                    //back camera  rotate picture
-                    matrix.setRotate(getPreviewDegree(), src.getWidth() / 2, src.getHeight() / 2);
-                    des = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-                    src.recycle();
-                }
-
-                int cropHeight = Integer.valueOf(new String(params[2])) / SAMPLE_SIZE;
-                boolean isTablet = getResources().getBoolean(R.bool.isTablet);
-                if (isTablet) {
-                    cropHeight = (int) (cropHeight * BitmapUtils.TABLET_WIDTH_SCALE_FACTOR);
-                }
-
-                matrix.reset();
-
-                if (cropHeight + des.getWidth() > des.getHeight()) {
-                    des = Bitmap.createBitmap(des, (des.getWidth() + cropHeight - des.getHeight()) / 2, cropHeight, des.getHeight() - cropHeight, des.getHeight() - cropHeight, matrix, true);
-                } else {
-                    int cropWidth = (int) (des.getWidth() * (isTablet ? BitmapUtils.TABLET_WIDTH_SCALE_FACTOR : 1));
-                    des = Bitmap.createBitmap(des, (des.getWidth() - cropWidth) / 2, cropHeight, cropWidth, cropWidth, matrix, true);
-                }
-
-                String index = new String(params[1]);
-                Bitmap mask = BitmapFactory.decodeResource(getResources(),
-                        getResources().getIdentifier("drawable/facemask" + index + "_black", null, getPackageName()));
-                matrix.setScale(mask.getWidth() * 1.0f / des.getWidth(), mask.getHeight() * 1.0f / des.getHeight());
-                Bitmap finalPic = Bitmap.createBitmap(des, 0, 0, des.getWidth(), des.getHeight(), matrix, true);
-                des.recycle();
-
-                //get face
-                boolean face = dealBitmapWithMask(finalPic, mask);
-
-                //reduce memory
-                if (!mask.isRecycled()) {
-                    mask.recycle();
-                }
-                if (!finalPic.isRecycled()) {
-                    finalPic.recycle();
-                }
-
-                return face;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
+        public void onDownloadFailed(FacemojiCategory facemojiCategory,int failedCode) {
+            if (failedCode != FacemojiDownloadManager.IFacemojiCategoryDownloadListener.DOWNLOADING) {
+                downloadFirstFacemojiOver = true;
+                checkSynthesisImageSuccess();
             }
         }
+    };
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-            if (result) {
-                Intent i = new Intent(CameraActivity.this, MyFacemojiActivity.class);
-                startActivity(i);
-            } else {
-                saveStartPreview();
-            }
+    private void checkSynthesisImageSuccess() {
+        if (synthesisImageOver) {
+            handler.removeMessages(MSG_SYNTHESIS_IMAGE_SUCCESS);
+            handler.sendEmptyMessage(MSG_SYNTHESIS_IMAGE_SUCCESS);
         }
+    }
+
+    private void startSynthesisImage(){
+        showProcessingDialog();
+        downloadFirstFacemojiOver = true;
+        FacemojiCategory facemojiCategory = FacemojiManager.getInstance().getFacemojiCategories().get(0);
+        if (!FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategory.getName())) {
+            downloadFirstFacemojiOver = false;
+            FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(facemojiCategory, facemojiCategoryDownloadListener);
+        }
+
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    long start = SystemClock.elapsedRealtime();
+                    synthesisImageOver = false;
+                    synthesisImage(confirmMakeFaceBtn);
+                    synthesisImageOver = true;
+                    long synthesisImageCostTime = SystemClock.elapsedRealtime() - start;
+                    if (downloadFirstFacemojiOver || synthesisImageCostTime >= DOWNLOAD_FIRST_FACEMOJI_WAIT_TIME) {
+                        handler.sendEmptyMessage(MSG_SYNTHESIS_IMAGE_SUCCESS);
+                    }else {
+                        handler.sendEmptyMessageDelayed(MSG_SYNTHESIS_IMAGE_SUCCESS,DOWNLOAD_FIRST_FACEMOJI_WAIT_TIME - synthesisImageCostTime);
+                    }
+                }catch (Exception e){
+                    handler.sendEmptyMessage(MSG_SYNTHESIS_IMAGE_FAILED);
+                }
+            }
+        }.start();
     }
 }

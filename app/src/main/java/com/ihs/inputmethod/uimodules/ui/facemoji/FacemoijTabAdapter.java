@@ -37,6 +37,12 @@ public class FacemoijTabAdapter extends BaseTabViewAdapter {
         isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
     }
 
+
+    public void setData(List<FacemojiCategory> facemojiCategoryList, List<String> facemojiCategoryNameList) {
+        this.facemojiCategoryList = facemojiCategoryList;
+        tabNameList = facemojiCategoryNameList;
+    }
+
     @Override
     public void onBindViewHolder(TagViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
@@ -131,4 +137,5 @@ public class FacemoijTabAdapter extends BaseTabViewAdapter {
             }
         }
     }
+
 }
