@@ -19,9 +19,9 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemePanelModel;
+import com.keyboard.common.SplashActivity;
 
 import java.util.List;
 
@@ -120,7 +120,8 @@ public final class PanelCreateAdapterDelegate extends AdapterDelegate<List<Theme
 	private void startThemeHomeActivity() {
 		HSInputMethod.hideWindow();
 		final Context context = HSApplication.getContext();
-		final Intent intent = new Intent(context, ThemeHomeActivity.class);
+		final Intent intent = new Intent(context, SplashActivity.class);
+		intent.putExtra(SplashActivity.JUMP_TAG, SplashActivity.JUMP_TO_THEME_HOME);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		context.startActivity(intent);
 	}

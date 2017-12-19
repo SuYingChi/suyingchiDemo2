@@ -32,6 +32,7 @@ import com.ihs.inputmethod.uimodules.stickerplus.PlusButton;
 import com.ihs.inputmethod.uimodules.ui.common.BaseTabViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.customize.fragment.KeyboardFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.keyboard.common.SplashActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,8 +127,9 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
                 new Handler().postDelayed(() -> {
                     final Intent intent = new Intent();
-                    intent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
+                    intent.setClass(HSApplication.getContext(), SplashActivity.class);
                     intent.putExtras(bundle);
+                    intent.putExtra(SplashActivity.JUMP_TAG, SplashActivity.JUMP_TO_THEME_HOME);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     HSApplication.getContext().startActivity(intent);
                 }, 200);

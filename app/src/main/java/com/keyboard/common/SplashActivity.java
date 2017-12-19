@@ -1,5 +1,6 @@
 package com.keyboard.common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -15,12 +16,28 @@ import java.util.HashMap;
 
 public class SplashActivity extends HSDeepLinkActivity {
 
+    public static final int JUMP_TO_THEME_HOME = 1;
+    public static final int JUMP_TO_CUSTOM_THEME = 2;
+    public static final int JUMP_TO_FACEMOJI_CAMERA = 3;
+
+    public static final String JUMP_TAG = "jump";
+
     private static final String APP_FIRST_TIME_START = "app_first_time_start";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.overridePendingTransition(0, 0);
+
+        String openFrom;
+        //launcher category indicated app open from launcher icon
+        if (getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)) {
+            openFrom = "fromIcon";
+        } else {
+            openFrom = "fromKeyboard";
+        }
+        HSAnalytics.logEvent("app_opened_new", "from", openFrom);
+
 
         int delayMillis = 0;
         if (!HSPreferenceHelper.getDefault().getBoolean("first_start_app", true)) {

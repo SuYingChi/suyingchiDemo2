@@ -23,6 +23,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.fragment.KeyboardFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
+import com.keyboard.common.SplashActivity;
 
 public class HSFontSelectPanel extends BasePanel {
 
@@ -98,8 +99,9 @@ public class HSFontSelectPanel extends BasePanel {
 
                 new Handler().postDelayed(() -> {
                     final Intent intent = new Intent();
-                    intent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
+                    intent.setClass(HSApplication.getContext(), SplashActivity.class);
                     intent.putExtras(bundle);
+                    intent.putExtra(SplashActivity.JUMP_TAG,SplashActivity.JUMP_TO_THEME_HOME);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     HSApplication.getContext().startActivity(intent);
                 }, 200);
