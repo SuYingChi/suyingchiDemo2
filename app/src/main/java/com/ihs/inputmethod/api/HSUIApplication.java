@@ -193,6 +193,8 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
+        HSKeyboardThemeManager.init();
+
         //init facemoji
         HSDirectoryManager.getInstance().init(HSApplication.getContext());
         HSThreadUtils.execute(new Runnable() {
@@ -204,8 +206,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 ThemeDirManager.moveCustomAssetsToFileIfNecessary();
             }
         });
-
-        HSKeyboardThemeManager.init();
 
         StickerDataManager.getInstance();
         MediaController.setHandler(UIController.getInstance().getUIHandler());
