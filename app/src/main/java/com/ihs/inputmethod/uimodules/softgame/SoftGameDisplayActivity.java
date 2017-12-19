@@ -3,15 +3,15 @@ package com.ihs.inputmethod.uimodules.softgame;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.app.framework.activity.HSFragmentActivity;
 import com.ihs.inputmethod.uimodules.R;
 
-public class SoftGameDisplayActivity extends HSFragmentActivity implements ViewPager.OnPageChangeListener {
+public class SoftGameDisplayActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
     public static final String TOP_50_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50&sort=top_games";
     public static final String TOP_NEW_GAME = "http://api.famobi.com/feed?a=A-KCVWU&n=50";
     private ViewPager mViewPager;
