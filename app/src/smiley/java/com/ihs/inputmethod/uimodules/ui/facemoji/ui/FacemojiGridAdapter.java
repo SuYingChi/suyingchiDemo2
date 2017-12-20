@@ -11,7 +11,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.Telephony;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -56,6 +57,10 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     private Dialog dialog;
     private FacemojiAnimationView stickerPlayer;
     private ShareAdapter shareAdapter;
+
+    private final int[] colorArray = new int[]{
+        0xff00c3ff, 0xffd947ff,0xff00f3d4,0xff0063ff,0xffffc823,0xff4df6f9,
+    };
 
     private ProgressBar mProgressBar;
     private ProgressListener mShareProgressListener = new ProgressListener() {
@@ -133,7 +138,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             }
 
             final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
-            final ImageView facemojiPlaceholder = (ImageView) containerLayout.findViewById(R.id.facemoji_placeholder);
+            final ImageView facemojiPlaceholder = containerLayout.findViewById(R.id.facemoji_placeholder);
             facemojiView.setSticker(sticker);
             facemojiView.setTag(sticker);
             holder = new StickerViewHolder();
@@ -145,15 +150,20 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
 
         if (sticker.getName() == null){
-            Drawable drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image_grey);
-            int placeHolderWidth = (int) (HSApplication.getContext().getResources().getDisplayMetrics().density * 60);
-            int paddingLeft = (holder.facemojiContainer.getLayoutParams().width - placeHolderWidth ) / 2;
-            int paddingTop = (holder.facemojiContainer.getLayoutParams().height - placeHolderWidth ) / 2;
             holder.facemojiPlaceholder.setVisibility(View.VISIBLE);
-            holder.facemojiPlaceholder.setPadding(paddingLeft,paddingTop,paddingLeft,paddingTop);
-            holder.facemojiPlaceholder.setImageDrawable(drawable);
+            holder.facemojiView.setVisibility(View.GONE);
+            holder.facemojiContainer.setBackgroundColor(colorArray[position%colorArray.length]);
+
+            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+            alphaAnimation.setRepeatMode(Animation.REVERSE);
+            alphaAnimation.setRepeatCount(Animation.INFINITE);
+            alphaAnimation.setDuration(2000);
+            holder.facemojiPlaceholder.startAnimation(alphaAnimation);
         }else {
+            holder.facemojiView.setVisibility(View.VISIBLE);
+            holder.facemojiPlaceholder.clearAnimation();
             holder.facemojiPlaceholder.setVisibility(View.GONE);
+            holder.facemojiContainer.setBackgroundDrawable(null);
             if (allowPlayAnim){
                 holder.facemojiView.start();
             }else {

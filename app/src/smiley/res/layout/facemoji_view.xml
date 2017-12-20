@@ -15,6 +15,9 @@
 
     <ImageView
         android:id="@+id/facemoji_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_facemoji_placeholder"
+        android:scaleType="centerInside"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 </com.ihs.inputmethod.uimodules.ui.facemoji.ui.AnimationLayout>
