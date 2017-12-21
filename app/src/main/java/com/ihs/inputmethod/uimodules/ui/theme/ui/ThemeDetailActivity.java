@@ -243,9 +243,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             if (nativeAdView == null) {
                 final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
                 int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
-                View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
+                View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
                 LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
-                LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f));
+                LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f + HSApplication.getContext().getResources().getDimension(R.dimen.ad_style_theme_card_bottom_container_height)));
                 loadingView.setLayoutParams(loadingLP);
                 loadingView.setGravity(Gravity.CENTER);
                 nativeAdView = new KCNativeAdView(HSApplication.getContext());

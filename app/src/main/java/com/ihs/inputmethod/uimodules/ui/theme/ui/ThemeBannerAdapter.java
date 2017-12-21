@@ -114,6 +114,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         viewPager.addOnPageChangeListener(this);
     }
 
+    //广告的adChoice位置需要调整，因广告不用暂时不调
     public void startToFetchNativeAd() {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             if (adCardView == null) {

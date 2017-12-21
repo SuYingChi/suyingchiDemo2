@@ -17,7 +17,6 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -118,7 +117,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 			if (nativeAdViewCached.get(nativeAd) == null) {
 				View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_theme_card, null);
 				LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.theme_ad_loading, null);
-				LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f) + HSDisplayUtils.dip2px(65));
+				LinearLayout.LayoutParams loadingLP = new LinearLayout.LayoutParams(width, (int) (width / 1.9f + HSApplication.getContext().getResources().getDimension(R.dimen.ad_style_theme_card_bottom_container_height)));
 				loadingView.setLayoutParams(loadingLP);
 				loadingView.setGravity(Gravity.CENTER);
 				loadingView.setTag("loadingview");
