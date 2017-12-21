@@ -175,18 +175,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".softgame.GameActivity"
-            android:label="@string/title_activity_game"
-            android:process=":h5game"
-            android:launchMode="singleTask"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <activity
-            android:name=".softgame.GameStarterActivity"
-            android:label="@string/title_activity_game"
-            android:launchMode="singleTask"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!-- ShowQuietly Config End -->
         <!-- AppLovin全屏 -->
@@ -245,19 +233,6 @@
         <activity
             android:name="com.keyboard.common.KeyboardActivationGuideActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-
-        <activity
-            android:name=".softgame.SoftGameDisplayActivity"
-            android:launchMode="singleTask"
-            android:taskAffinity=".h5game"
-            android:theme="@style/Theme.Design.Light">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.category.HOME" />
-            </intent-filter>
-        </activity>
-
     </application>
 
 </manifest>

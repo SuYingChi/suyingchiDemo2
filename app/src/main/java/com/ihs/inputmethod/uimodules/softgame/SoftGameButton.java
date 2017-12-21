@@ -32,6 +32,11 @@ import com.ihs.commons.connection.HSHttpConnection;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSJsonUtil;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.softgame.GameStarterActivity;
+import com.ihs.feature.softgame.SoftGameDisplayActivity;
+import com.ihs.feature.softgame.SoftGameDisplayHelper;
+import com.ihs.feature.softgame.SoftGameItemBean;
+import com.ihs.feature.softgame.SoftGameItemFragment;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -45,7 +50,6 @@ import java.util.List;
 import java.util.Map;
 
 import static android.widget.RelativeLayout.ALIGN_PARENT_RIGHT;
-import static com.ihs.inputmethod.uimodules.softgame.SoftGameItemFragment.JSON_GAMES;
 import static com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils.getTransparentRippleBackground;
 
 /**
@@ -168,7 +172,7 @@ public class SoftGameButton extends FrameLayout {
             public void onConnectionFinished(HSHttpConnection hsHttpConnection) {
                 JSONObject bodyJSON = hsHttpConnection.getBodyJSON();
                 try {
-                    List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray(JSON_GAMES));
+                    List<Object> jsonMap = HSJsonUtil.toList(bodyJSON.getJSONArray(SoftGameItemFragment.JSON_GAMES));
                     if (!jsonMap.isEmpty()) {
                         Map<String, String> object = (Map<String, String>) jsonMap.get(0);
                         String newId = object.get("package_id");
