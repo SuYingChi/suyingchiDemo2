@@ -1,7 +1,9 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.AppCompatImageView;
@@ -36,6 +38,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
             }
         }
     };
+    private ObjectAnimator objectAnimator;
 
     public FacemojiSticker getSticker() {
         return sticker;
@@ -115,6 +118,48 @@ public class FacemojiAnimationView extends AppCompatImageView {
         }, Math.max(sticker.getFrames().get(mIndex).getInterval() - lastFramePrepareTime, 0), TimeUnit.MILLISECONDS);
     }
 
+    public void startAnim(){
+        if (sticker == null || sticker.getName() == null) {
+            startPlaceholderAnim();
+        }else {
+            start();
+        }
+    }
+
+    public void stopAnim() {
+        if (sticker == null || sticker.getName() == null) {
+            stopPlaceholderAnim();
+        }else {
+            stop();
+        }
+    }
+
+    private void startPlaceholderAnim() {
+        if (objectAnimator == null) {
+            objectAnimator = ObjectAnimator.ofFloat(this,"alpha",0,1.0f);
+            objectAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+            objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+            objectAnimator.setDuration(1000);
+            objectAnimator.start();
+        }else {
+            if (Build.VERSION.SDK_INT >= 19) {
+                objectAnimator.resume();
+            } else {
+                objectAnimator.start();
+            }
+        }
+    }
+
+    private void stopPlaceholderAnim() {
+        if (objectAnimator != null){
+            if (Build.VERSION.SDK_INT >= 19) {
+                objectAnimator.pause();
+            } else {
+                objectAnimator.cancel();
+            }
+        }
+    }
+
     final ScheduledThreadPoolExecutor mExecutor;
 
     private void show() {
@@ -145,6 +190,8 @@ public class FacemojiAnimationView extends AppCompatImageView {
         }
         mHandler.removeCallbacksAndMessages(null);
     }
+
+
 
     public boolean isRuning() {
         return mIsRunning;

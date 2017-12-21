@@ -1,18 +1,19 @@
 package com.ihs.inputmethod.uimodules.ui.facemoji;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
+import com.ihs.inputmethod.uimodules.ui.facemoji.ui.FacemojiGridAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,19 +96,27 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
 
         if (sticker.getName() == null){
             holder.facemojiAnimationView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            Drawable drawable;
-            if (isCurrentThemeDarkBg){
-                drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
-            }else {
-                drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image_grey);
-            }
-            holder.facemojiAnimationView.setImageDrawable(drawable);
+            holder.facemojiAnimationView.setImageResource(R.drawable.ic_facemoji_placeholder);
+            convertView.setBackgroundColor(FacemojiGridAdapter.colorArray[position%FacemojiGridAdapter.colorArray.length]);
+
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(HSDisplayUtils.dip2px(50), HSDisplayUtils.dip2px(50));
+            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            holder.facemojiAnimationView.setLayoutParams(layoutParams);
         }else {
+            RelativeLayout.LayoutParams layoutParams;
+            if (sticker.getWidth() == sticker.getHeight()) {//方形的需要修改宽高
+                layoutParams = new RelativeLayout.LayoutParams(stickerHeight, stickerHeight);
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            }else {
+                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            }
+            holder.facemojiAnimationView.setLayoutParams(layoutParams);
             holder.facemojiAnimationView.setImageDrawable(null);
             holder.facemojiAnimationView.setScaleType(ImageView.ScaleType.FIT_XY);
-            holder.facemojiAnimationView.start();
+            convertView.setBackgroundDrawable(null);
         }
-
+        //start facemoji anim or placeholder anim
+        holder.facemojiAnimationView.startAnim();
         return convertView;
     }
 

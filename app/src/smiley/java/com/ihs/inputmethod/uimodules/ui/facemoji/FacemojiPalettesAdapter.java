@@ -68,25 +68,20 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
 
         int height;
         int width;
-        if (data.get(0).getWidth() == data.get(0).getHeight()) {
-            mImageLayoutParams.setPageGridViewProperties(gifPageGridView);
-            height = width = Math.min(mImageLayoutParams.getViewWidth(), mImageLayoutParams.getViewHeight());
-        } else {
-            Resources resources = HSApplication.getContext().getResources();
-            int verticalSpacing = resources.getDimensionPixelSize(R.dimen.facemoji_keyboard_grid_vertical_space);
-            int horizontalSpacing = resources.getDimensionPixelSize(R.dimen.facemoji_keyboard_grid_horizontal_space);
-            int columns = 3;
-            gifPageGridView.setVerticalSpacing(verticalSpacing);
-            gifPageGridView.setHorizontalSpacing(horizontalSpacing);
-            gifPageGridView.setNumColumns(columns);
+        Resources resources = HSApplication.getContext().getResources();
+        int verticalSpacing = resources.getDimensionPixelSize(R.dimen.facemoji_keyboard_grid_vertical_space);
+        int horizontalSpacing = resources.getDimensionPixelSize(R.dimen.facemoji_keyboard_grid_horizontal_space);
+        int columns = 3;
+        gifPageGridView.setVerticalSpacing(verticalSpacing);
+        gifPageGridView.setHorizontalSpacing(horizontalSpacing);
+        gifPageGridView.setNumColumns(columns);
 
-            if (container.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                width = (container.getMeasuredWidth() - horizontalSpacing * (columns - 1)) / columns;
-                height = container.getMeasuredHeight();
-            } else {
-                height = (container.getMeasuredHeight() - verticalSpacing) / 2;
-                width = (container.getMeasuredWidth() - horizontalSpacing * (columns - 1)) / columns;
-            }
+        if (container.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            width = (container.getMeasuredWidth() - horizontalSpacing * (columns - 1)) / columns;
+            height = container.getMeasuredHeight();
+        } else {
+            height = (container.getMeasuredHeight() - verticalSpacing) / 2;
+            width = (container.getMeasuredWidth() - horizontalSpacing * (columns - 1)) / columns;
         }
 
         FacemojiPageGridAdapter adapter = new FacemojiPageGridAdapter(

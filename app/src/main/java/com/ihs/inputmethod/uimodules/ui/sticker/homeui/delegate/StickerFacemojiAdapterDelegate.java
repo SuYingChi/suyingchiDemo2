@@ -45,6 +45,7 @@ public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<Sticker
     protected void onBindViewHolder(@NonNull List<StickerHomeModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
         StickerFacemojiViewHolder h = (StickerFacemojiViewHolder) holder;
         FacemojiSticker facemojiSticker = items.get(position).facemojiSticker;
+        h.facemojiAnimationView.setImageDrawable(null);
         h.facemojiAnimationView.setSticker(facemojiSticker);
         h.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

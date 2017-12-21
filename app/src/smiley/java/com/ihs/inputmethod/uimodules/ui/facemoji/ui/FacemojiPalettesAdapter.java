@@ -111,7 +111,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
             for (int i = 0; i < gridView.getChildCount(); ++i) {
                 View view = gridView.getChildAt(i);
                 if (view instanceof AnimationLayout) {
-                    ((FacemojiAnimationView) ((AnimationLayout) view).getChildAt(0)).start();
+                    ((FacemojiAnimationView) ((AnimationLayout) view).getChildAt(0)).startAnim();
                 }
             }
         }
@@ -133,7 +133,7 @@ class FacemojiPalettesAdapter extends PagerAdapter {
             for (int i = 0; i < gridView.getChildCount(); ++i) {
                 View view =  gridView.getChildAt(i);
                 if (view instanceof AnimationLayout){
-                    ((FacemojiAnimationView)((AnimationLayout) view).getChildAt(0)).stop();
+                    ((FacemojiAnimationView)((AnimationLayout) view).getChildAt(0)).stopAnim();
                 }
             }
         }

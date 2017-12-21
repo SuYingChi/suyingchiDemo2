@@ -21,18 +21,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
@@ -57,8 +57,10 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     private Dialog dialog;
     private FacemojiAnimationView stickerPlayer;
     private ShareAdapter shareAdapter;
+    private final int stickerWidth;
+    private final int stickerHeight;
 
-    private final int[] colorArray = new int[]{
+    public static final int[] colorArray = new int[]{
         0xff00c3ff, 0xffd947ff,0xff00f3d4,0xff0063ff,0xffffc823,0xff4df6f9,
     };
 
@@ -78,10 +80,15 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
     };
 
+
     public FacemojiGridAdapter(Activity activity, List<FacemojiSticker> facemojiStickerList) {
         this.activity = activity;
         this.facemojiStickerList = facemojiStickerList;
         this.mInflater = LayoutInflater.from(HSApplication.getContext());
+
+        Resources resources = HSApplication.getContext().getResources();
+        stickerWidth = (int) ((resources.getDisplayMetrics().widthPixels - resources.getDimension(R.dimen.facemoji_grid_item_horizontal_space) - resources.getDimension(R.dimen.facemoji_grid_left_margin) * 2) / 2);
+        stickerHeight = (int) ((float) 3 / 4 * stickerWidth);
     }
 
     public void setFacemojiStickerList(List<FacemojiSticker> facemojiStickerList) {
@@ -123,53 +130,47 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }else {
             convertView = mInflater.inflate(R.layout.facemoji_view, null);
             final AnimationLayout containerLayout = (AnimationLayout) convertView.findViewById(R.id.facemoji_cell_layout);
-
-            if (sticker.getWidth() == sticker.getHeight()) { //方形的sticker，则尺寸用原来的
-                int height = (int) (parent.getMeasuredHeight() / 3.2f); //设置3.2，保证如果超过3行，则可以看到下面部分内容
-                int width = height;
-                containerLayout.setLayoutParams(new GridView.LayoutParams(width, height));
-            } else {
-                Resources resources = convertView.getResources();
-                int width = (int) ((resources.getDisplayMetrics().widthPixels - resources.getDimension(R.dimen.facemoji_grid_item_horizontal_space) - resources.getDimension(R.dimen.facemoji_grid_left_margin) * 2) / 2);
-                int height = (int) ((float) sticker.getHeight() / sticker.getWidth() * width);
-
-                GridView.LayoutParams layoutParams = new GridView.LayoutParams(width, height);
-                containerLayout.setLayoutParams(layoutParams);
-            }
+            containerLayout.setLayoutParams(new GridView.LayoutParams(stickerWidth, stickerHeight));
 
             final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
-            final ImageView facemojiPlaceholder = containerLayout.findViewById(R.id.facemoji_placeholder);
             facemojiView.setSticker(sticker);
             facemojiView.setTag(sticker);
+            if (sticker.getWidth() == sticker.getHeight()) { //方形的sticker，内容保持高度
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(stickerHeight, stickerHeight);
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                facemojiView.setLayoutParams(layoutParams);
+            }
+
             holder = new StickerViewHolder();
             holder.facemojiView = facemojiView;
             holder.facemojiContainer = containerLayout;
-            holder.facemojiPlaceholder = facemojiPlaceholder;
             holder.facemojiView.setOnClickListener(this);
             convertView.setTag(holder);
         }
 
         if (sticker.getName() == null){
-            holder.facemojiPlaceholder.setVisibility(View.VISIBLE);
-            holder.facemojiView.setVisibility(View.GONE);
+            holder.facemojiView.setImageResource(R.drawable.ic_facemoji_placeholder);
             holder.facemojiContainer.setBackgroundColor(colorArray[position%colorArray.length]);
 
-            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-            alphaAnimation.setRepeatMode(Animation.REVERSE);
-            alphaAnimation.setRepeatCount(Animation.INFINITE);
-            alphaAnimation.setDuration(2000);
-            holder.facemojiPlaceholder.startAnimation(alphaAnimation);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(HSDisplayUtils.dip2px(50), HSDisplayUtils.dip2px(50));
+            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            holder.facemojiView.setLayoutParams(layoutParams);
         }else {
-            holder.facemojiView.setVisibility(View.VISIBLE);
-            holder.facemojiPlaceholder.clearAnimation();
-            holder.facemojiPlaceholder.setVisibility(View.GONE);
-            holder.facemojiContainer.setBackgroundDrawable(null);
-            if (allowPlayAnim){
-                holder.facemojiView.start();
-            }else {
-                holder.facemojiView.stop();
+            RelativeLayout.LayoutParams layoutParams;
+            if (sticker.getWidth() == sticker.getHeight()) {//方形的需要修改宽高
+                layoutParams = new RelativeLayout.LayoutParams(stickerHeight, stickerHeight);
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
             }
+
+            holder.facemojiView.setVisibility(View.VISIBLE);
+            holder.facemojiContainer.setBackgroundDrawable(null);
         }
+        if (allowPlayAnim){
+            holder.facemojiView.startAnim();
+        }else {
+            holder.facemojiView.stopAnim();
+        }
+
         return convertView;
     }
 
@@ -208,7 +209,6 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
     class StickerViewHolder {
         public AnimationLayout facemojiContainer;
         public FacemojiAnimationView facemojiView;
-        public ImageView facemojiPlaceholder;
     }
 
     private void showShareAlert(FacemojiSticker sticker) {
