@@ -37,6 +37,7 @@ import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.managers.HSDirectoryManager;
@@ -89,6 +90,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             if (HSNotificationConstant.HS_SESSION_START.equals(notificationName)) {
                 HSAlertMgr.delayRateAlert();
                 onSessionStart();
+                KeyboardFullScreenAd.canShowSessionAd = true;
             } else if (HSNotificationConstant.HS_CONFIG_CHANGED.equals(notificationName)) {
                 StickerDataManager.getInstance().onConfigChange();
             } else if (RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED.equals(notificationName)) {

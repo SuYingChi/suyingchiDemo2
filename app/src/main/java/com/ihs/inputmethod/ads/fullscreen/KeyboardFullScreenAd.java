@@ -33,6 +33,8 @@ public class KeyboardFullScreenAd {
 
     private SharedPreferences prefs;
 
+    public static boolean canShowSessionAd = false;
+
     public void preLoad() {
         if (isConditionSatisfied()) {
             KCInterstitialAd.load(placementName);
@@ -121,16 +123,16 @@ public class KeyboardFullScreenAd {
     private static final String ONE_SESSION_ADPLACEMENT = HSApplication.getContext().getResources().getString(R.string.placement_full_screen_open_keyboard);
 
     /**
-     * 这个ad 一个session只出现一次 即主页进入加载 直到退出程序只出现一次。
+     * 这个ad 一个session只出现一次
      */
     public static void loadSessionOneTimeAd() {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+        if (canShowSessionAd && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             KCInterstitialAd.load(ONE_SESSION_ADPLACEMENT);
         }
     }
 
     /**
-     * 这个ad 一个session只出现一次 即主页进入加载，直到退出程序只出现一次。
+     * 这个ad 一个session只出现一次.
      * 1.开屏前
      * 2.进入theme详情页前
      * 3.自定义主题后（原来就有）
@@ -139,10 +141,12 @@ public class KeyboardFullScreenAd {
      * 6.退出app后
      */
     public static void showSessionOneTimeAd(String from) {
+        loadSessionOneTimeAd();
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             List<AcbInterstitialAd> fetch = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
             if (!fetch.isEmpty()) {
                 fetch.get(0).show();
+                canShowSessionAd = false;
                 HSAnalytics.logEvent("app_springAd_show", "from", from);
             }
         }
