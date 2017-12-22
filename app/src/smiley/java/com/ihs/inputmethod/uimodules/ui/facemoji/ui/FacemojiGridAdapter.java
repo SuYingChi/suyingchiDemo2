@@ -160,8 +160,10 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             if (sticker.getWidth() == sticker.getHeight()) {//方形的需要修改宽高
                 layoutParams = new RelativeLayout.LayoutParams(stickerHeight, stickerHeight);
                 layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            }else {
+                layoutParams = new RelativeLayout.LayoutParams(stickerWidth, stickerHeight);
             }
-
+            holder.facemojiView.setLayoutParams(layoutParams);
             holder.facemojiView.setVisibility(View.VISIBLE);
             holder.facemojiContainer.setBackgroundDrawable(null);
         }

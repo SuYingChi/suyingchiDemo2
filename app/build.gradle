@@ -180,7 +180,7 @@ repositories {
 //}
 
 
-final LIB_DEVICE_VERSION = '.gm:4.2.+'
+final LIB_DEVICE_VERSION = '.gm:4.3.1.gm'
 
 dependencies {
     // App Framework
@@ -194,9 +194,7 @@ dependencies {
     compile "net.appcloudbox.common:libAcbHSFrameworkAdapter.gm:+"
 
 //    // Native Ad Adapters
-    compile 'net.appcloudbox.adadapter:libAdAvocarrotNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdYeahmobiNativeAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.1.0.gm'

@@ -21,6 +21,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -57,6 +58,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
             if (LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW.equals(s)
                     || LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW.equals(s)
                     || FacemojiManager.FACEMOJI_SAVED.equals(s)
+                    || FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED.equals(s)
                     || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
                     || (FacemojiManager.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */ ){
                 loadDatas();
@@ -86,6 +88,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_SAVED, observer);
         HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACE_DELETED, observer);
+        HSGlobalNotificationCenter.addObserver(FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED, observer);
         HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW, observer);
         HSGlobalNotificationCenter.addObserver(LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW, observer);
         return view;
