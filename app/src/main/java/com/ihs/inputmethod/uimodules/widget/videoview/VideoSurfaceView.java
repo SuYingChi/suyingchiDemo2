@@ -75,7 +75,13 @@ class VideoSurfaceView extends VideoView {
         setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-
+                if (Build.VERSION.SDK_INT == 19) {
+                    if (mp != null) {
+                        mp.setDisplay(null);
+                        mp.reset();
+                        mp.setDisplay(getHolder());
+                    }
+                }
             }
         });
     }

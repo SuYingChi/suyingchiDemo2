@@ -336,6 +336,14 @@ public class MainActivity extends HSAppCompatActivity {
             launchVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
+                    if (Build.VERSION.SDK_INT == 19) {
+                        if (mp != null) {
+                            mp.setDisplay(null);
+                            mp.reset();
+                            mp.setDisplay(launchVideoView.getHolder());
+                        }
+                    }
+
                     if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
                         progressLayout.setVisibility(View.VISIBLE);
                         progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
