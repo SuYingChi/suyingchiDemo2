@@ -186,7 +186,7 @@ dependencies {
     // App Framework
     compile "com.ihandy.appframework:libAppframework.gm:4.5.2.gm"
     //Ads
-    compile 'net.appcloudbox.ads:libAcbAds.gm:1.2.1.gm'
+    compile 'net.appcloudbox.ads:libAcbAds.gm:1.2.3.gm'
     compile 'net.appcloudbox.common:libAcbCommonUtils.gm:1.1.5.gm'
 
     // Autopilot
@@ -194,7 +194,7 @@ dependencies {
     compile "net.appcloudbox.common:libAcbHSFrameworkAdapter.gm:+"
 
 //    // Native Ad Adapters
-    compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.1.3.gm'
     compile 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.1.0.gm'
@@ -204,7 +204,7 @@ dependencies {
     // Interstitial Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdxInterstitialAdapter.gm:5.1.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdFBInterstitialAdapter.gm:5.0.0.gm'
+    compile 'net.appcloudbox.adadapter:libAdFBInterstitialAdapter.gm:5.0.1.gm'
 
     // Express Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdMopubBannerAdapter.gm:5.0.1.gm'
