@@ -149,11 +149,12 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         }
 
         if (sticker.getName() == null){
-            holder.facemojiView.setImageResource(R.drawable.ic_facemoji_placeholder);
             holder.facemojiContainer.setBackgroundColor(colorArray[position%colorArray.length]);
+            holder.facemojiContainer.setClickable(false);
 
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(HSDisplayUtils.dip2px(50), HSDisplayUtils.dip2px(50));
             layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            holder.facemojiView.setImageResource(R.drawable.ic_facemoji_placeholder);
             holder.facemojiView.setLayoutParams(layoutParams);
         }else {
             RelativeLayout.LayoutParams layoutParams;
@@ -166,6 +167,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             holder.facemojiView.setLayoutParams(layoutParams);
             holder.facemojiView.setVisibility(View.VISIBLE);
             holder.facemojiContainer.setBackgroundDrawable(null);
+            holder.facemojiContainer.setClickable(true);
         }
         if (allowPlayAnim){
             holder.facemojiView.startAnim();

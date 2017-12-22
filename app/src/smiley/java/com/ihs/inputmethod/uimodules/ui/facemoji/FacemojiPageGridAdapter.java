@@ -97,6 +97,7 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
         if (sticker.getName() == null){
             holder.facemojiAnimationView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             holder.facemojiAnimationView.setImageResource(R.drawable.ic_facemoji_placeholder);
+            holder.facemojiAnimationView.setClickable(false);
             convertView.setBackgroundColor(FacemojiGridAdapter.colorArray[position%FacemojiGridAdapter.colorArray.length]);
 
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(HSDisplayUtils.dip2px(50), HSDisplayUtils.dip2px(50));
@@ -113,6 +114,7 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             holder.facemojiAnimationView.setLayoutParams(layoutParams);
             holder.facemojiAnimationView.setImageDrawable(null);
             holder.facemojiAnimationView.setScaleType(ImageView.ScaleType.FIT_XY);
+            holder.facemojiAnimationView.setClickable(true);
             convertView.setBackgroundDrawable(null);
         }
         //start facemoji anim or placeholder anim
