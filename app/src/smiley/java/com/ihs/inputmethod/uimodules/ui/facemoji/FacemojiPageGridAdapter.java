@@ -80,14 +80,6 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             holder = new StickerViewHolder();
             holder.facemojiAnimationView = facemojiAnimationView;
             holder.facemojiView = facemojiView;
-            holder.facemojiView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null){
-                        mListener.onFacemojiClicked(sticker);
-                    }
-                }
-            });
             convertView.setTag(holder);
         }
 
@@ -97,12 +89,12 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
         if (sticker.getName() == null){
             holder.facemojiAnimationView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             holder.facemojiAnimationView.setImageResource(R.drawable.ic_facemoji_placeholder);
-            holder.facemojiAnimationView.setClickable(false);
             convertView.setBackgroundColor(FacemojiGridAdapter.colorArray[position%FacemojiGridAdapter.colorArray.length]);
 
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(HSDisplayUtils.dip2px(50), HSDisplayUtils.dip2px(50));
             layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
             holder.facemojiAnimationView.setLayoutParams(layoutParams);
+            holder.facemojiView.setClickable(false);
         }else {
             RelativeLayout.LayoutParams layoutParams;
             if (sticker.getWidth() == sticker.getHeight()) {//方形的需要修改宽高
@@ -114,7 +106,15 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             holder.facemojiAnimationView.setLayoutParams(layoutParams);
             holder.facemojiAnimationView.setImageDrawable(null);
             holder.facemojiAnimationView.setScaleType(ImageView.ScaleType.FIT_XY);
-            holder.facemojiAnimationView.setClickable(true);
+            holder.facemojiView.setClickable(true);
+            holder.facemojiView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null){
+                        mListener.onFacemojiClicked(sticker);
+                    }
+                }
+            });
             convertView.setBackgroundDrawable(null);
         }
         //start facemoji anim or placeholder anim

@@ -23,6 +23,7 @@ import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
@@ -185,15 +186,27 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                 stickerHomeModel.isSmallCreateFacemoji = true;
                 stickerModelList.add(stickerHomeModel);
 
-                stickerHomeModel = new StickerHomeModel();
-                stickerHomeModel.isFacemoji = true;
-                stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(0).get(0);
-                stickerModelList.add(stickerHomeModel);
-                if (FacemojiManager.getFaceList().size() >= 2) {
-                    stickerHomeModel = new StickerHomeModel();
-                    stickerHomeModel.isFacemoji = true;
-                    stickerHomeModel.facemojiSticker = FacemojiManager.getInstance().getStickerList(1).get(0);
-                    stickerModelList.add(stickerHomeModel);
+                List<FacemojiCategory> facemojiCategories = FacemojiManager.getInstance().getFacemojiCategories();
+                if (facemojiCategories.size() > 0) {
+                    FacemojiCategory facemojiCategory = facemojiCategories.get(0);
+                    if (FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategory.getName())) {
+                        stickerHomeModel = new StickerHomeModel();
+                        stickerHomeModel.isFacemoji = true;
+                        stickerHomeModel.facemojiSticker = facemojiCategory.getStickerList().get(0);
+                        stickerModelList.add(stickerHomeModel);
+                    }
+
+                    if (facemojiCategories.size() > 1) {
+                        facemojiCategory = facemojiCategories.get(1);
+                        if (FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategory.getName())) {
+                            if (FacemojiManager.getFaceList().size() >= 2) {
+                                stickerHomeModel = new StickerHomeModel();
+                                stickerHomeModel.isFacemoji = true;
+                                stickerHomeModel.facemojiSticker = facemojiCategory.getStickerList().get(0);
+                                stickerModelList.add(stickerHomeModel);
+                            }
+                        }
+                    }
                 }
             } else {
                 stickerHomeModel.title = HSApplication.getContext().getResources().getString(R.string.sticker_title_create_my_facemojis);
