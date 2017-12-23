@@ -48,46 +48,43 @@ public class FacemoijTabAdapter extends BaseTabViewAdapter {
         super.onBindViewHolder(holder, position);
         final String tabName = tabNameList.get(position);
         FacemojiCategory facemojiCategory = facemojiCategoryList.get(position);
-        if (FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategory.getName())){
-            holder.iv_tab_icon.setImageDrawable(facemojiCategory.getCategoryIcon());
-            if (tabName.equals(currentTab)) {
-                holder.iv_tab_icon.setAlpha(1.0f);
-            } else {
-                holder.iv_tab_icon.setAlpha(0.5f);
-            }
-        }else {
-            Drawable drawable;
-            if (isCurrentThemeDarkBg){
-                drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
-            }else {
-                drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image_grey);
-            }
-            int padding = HSDisplayUtils.dip2px(4);
-            holder.iv_tab_icon.setPadding(padding, padding, padding, padding);
-            holder.iv_tab_icon.setAlpha(0.5f);
-            holder.iv_tab_icon.setImageDrawable(drawable);
+        Drawable drawable;
 
-            if (!facemojiCategory.isBuildIn()){
-                RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA);
-                Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).listener(new RequestListener<Bitmap>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                        holder.iv_tab_icon.setPadding(0, 0, 0, 0);
-                        if (tabName.equals(currentTab)) {
-                            holder.iv_tab_icon.setAlpha(1.0f);
-                        } else {
-                            holder.iv_tab_icon.setAlpha(0.5f);
-                        }
-                        return false;
-                    }
-                }).into(holder.iv_tab_icon);
-            }
+        if (isCurrentThemeDarkBg) {
+            drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image);
+        } else {
+            drawable = HSApplication.getContext().getResources().getDrawable(R.drawable.ic_sticker_loading_image_grey);
         }
+        int padding = HSDisplayUtils.dip2px(4);
+        holder.iv_tab_icon.setPadding(padding, padding, padding, padding);
+        holder.iv_tab_icon.setAlpha(0.5f);
+        holder.iv_tab_icon.setImageDrawable(drawable);
+
+        if (tabName.equals(currentTab)) {
+            holder.iv_tab_icon.setAlpha(1.0f);
+        } else {
+            holder.iv_tab_icon.setAlpha(0.5f);
+        }
+
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA);
+        Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(FacemojiDownloadManager.getInstance().getRemoteTabIconPath(facemojiCategory.getName())).listener(new RequestListener<Bitmap>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                holder.iv_tab_icon.setPadding(0, 0, 0, 0);
+                if (tabName.equals(currentTab)) {
+                    holder.iv_tab_icon.setAlpha(1.0f);
+                } else {
+                    holder.iv_tab_icon.setAlpha(0.5f);
+                }
+                return false;
+            }
+
+        }).into(holder.iv_tab_icon);
     }
 
     @Override

@@ -293,7 +293,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         if (KCFeatureControlUtils.isFeatureReleased(HSApplication.getContext(), "feature_clipboard_bar", 1)) {
-            keyboardPanelSwitchContainer.showClipboardBar();
+            if (keyboardPanelSwitchContainer != null) {
+                keyboardPanelSwitchContainer.showClipboardBar();
+            }
         }
     }
 

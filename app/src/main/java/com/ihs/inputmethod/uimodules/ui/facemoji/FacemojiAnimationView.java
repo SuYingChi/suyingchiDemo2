@@ -120,21 +120,22 @@ public class FacemojiAnimationView extends AppCompatImageView {
 
     public void startAnim(){
         if (sticker == null || sticker.getName() == null) {
-            startPlaceholderAnim();
+            resumePlaceholderAnim();
         }else {
+            stopPlaceholderAnim();
             start();
         }
     }
 
     public void stopAnim() {
         if (sticker == null || sticker.getName() == null) {
-            stopPlaceholderAnim();
+            pausePlaceholderAnim();
         }else {
             stop();
         }
     }
 
-    private void startPlaceholderAnim() {
+    private void resumePlaceholderAnim() {
         if (objectAnimator == null) {
             objectAnimator = ObjectAnimator.ofFloat(this,"alpha",0,1.0f);
             objectAnimator.setRepeatMode(ObjectAnimator.REVERSE);
@@ -150,13 +151,21 @@ public class FacemojiAnimationView extends AppCompatImageView {
         }
     }
 
-    private void stopPlaceholderAnim() {
+    private void pausePlaceholderAnim() {
         if (objectAnimator != null){
             if (Build.VERSION.SDK_INT >= 19) {
                 objectAnimator.pause();
             } else {
                 objectAnimator.cancel();
             }
+        }
+    }
+
+    private void stopPlaceholderAnim() {
+        if (objectAnimator != null){
+            objectAnimator.cancel();
+            objectAnimator = null;
+            setAlpha(1.0f);
         }
     }
 
