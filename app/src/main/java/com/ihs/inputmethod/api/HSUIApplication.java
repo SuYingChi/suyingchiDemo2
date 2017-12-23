@@ -64,6 +64,7 @@ import com.keyboard.core.themes.ThemeDirManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.L;
 import com.squareup.leakcanary.LeakCanary;
 
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
@@ -162,6 +163,8 @@ public class HSUIApplication extends HSInputMethodApplication {
     protected void onMainProcessApplicationCreate() {
         Fabric.with(this, new Crashlytics());
 
+        //关闭ImageLoader日志。
+        L.writeLogs(false);
 //        HSAdCaffeReportManager.getInstance().start();
 //        HSAdCaffeReportManager.getInstance().enableReportInstalledPackages();
 
