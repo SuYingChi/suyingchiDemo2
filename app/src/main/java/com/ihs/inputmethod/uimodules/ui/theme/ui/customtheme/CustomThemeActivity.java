@@ -34,6 +34,7 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardThemePreview;
@@ -332,12 +333,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     public void showFragment(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < getFragmentClasses().size()) {
 
-            //此处广告不再请求，因为需求每个session只请求一个全屏。
-//            if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD) {
-//                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-//                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
-//                }
-//            }
+            if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD && KeyboardFullScreenAd.canShowSessionAd) {
+                if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                }
+            }
 
             try {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

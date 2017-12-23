@@ -222,7 +222,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
                     prefs.putLong("LastBackAdShowTime", currentTimeMillis);
                     return true;
                 } else {
-                    //此处广告不再请求，因为需求每个session只请求一个全屏。
                     KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
                     return false;
                 }

@@ -19,6 +19,7 @@ import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -116,10 +117,9 @@ public final class TrialKeyboardDialog extends Dialog {
         this.showAdOnDismiss = showAdOnDismiss;
 
         setLayoutListenerToRootView();
-        //此处广告不再请求，因为需求每个session只请求一个全屏。
-//        if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-//            KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
-//        }
+        if (showAdOnDismiss && KeyboardFullScreenAd.canShowSessionAd &&!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+            KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
+        }
     }
 
     @Override

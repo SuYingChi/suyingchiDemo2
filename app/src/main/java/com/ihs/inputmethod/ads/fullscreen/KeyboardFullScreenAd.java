@@ -141,7 +141,6 @@ public class KeyboardFullScreenAd {
      * 6.退出app后
      */
     public static void showSessionOneTimeAd(String from) {
-        loadSessionOneTimeAd();
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             List<AcbInterstitialAd> fetch = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
             if (!fetch.isEmpty()) {
