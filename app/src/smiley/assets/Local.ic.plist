@@ -375,6 +375,14 @@
 			<array>
 				<dict>
 					<key>height</key>
+					<integer>300</integer>
+					<key>name</key>
+					<string>christmas</string>
+					<key>width</key>
+					<integer>400</integer>
+				</dict>
+				<dict>
+					<key>height</key>
 					<integer>200</integer>
 					<key>name</key>
 					<string>star</string>
@@ -4198,7 +4206,7 @@
 			<key>RateAlert</key>
 			<dict>
 				<key>CurrentType</key>
-				<string>0</string>
+				<string>1</string>
 				<key>Type0</key>
 				<dict>
 					<key>Step1</key>
@@ -4265,26 +4273,8 @@
 					<dict>
 						<key>body</key>
 						<dict>
-							<key>de</key>
-							<string>Gefällt Ihnen Beauty Cam? Bitte teilen Sie uns Ihre Erfahrungen mit. Vielen Dank für Ihr Feedback.</string>
 							<key>en</key>
-							<string>Do you like Beauty Cam? Please let us know about your experience.Thanks for your feedback.</string>
-							<key>es</key>
-							<string>¿Te gusta Beauty Cam? Cuéntanos tu experiencia. Gracias por tus comentarios.</string>
-							<key>fr</key>
-							<string>Vous aimez Beauty Cam ? Parlez-nous de votre expérience. Merci pour vos commentaires.</string>
-							<key>hi</key>
-							<string> क्या आप सुंदर कैम पसंद करते हो? कृपया हमें आपके अनुभव के बारे में बताएं। आपकी प्रतिक्रिया के लिए धन्यवाद।</string>
-							<key>it</key>
-							<string>Ti piace Beauty Cam? Raccontaci la tua esperienza. Grazie per la tua opinione.</string>
-							<key>ja</key>
-							<string>ビューティーカメラはお好きですか？ご経験について教えてください。ご意見ありがとうございます。</string>
-							<key>ko</key>
-							<string>Beauty Cam이 마음에 드시나요? 자신의 경험에 대해 알려주세요. 피드백에 감사드립니다.</string>
-							<key>nl</key>
-							<string>Vind je Beauty Cam leuk? Vertel ons over je ervaring. Alvast bedankt voor je feedback.</string>
-							<key>pt</key>
-							<string>Fale sobre sua experiência. Obrigado pelo seu feedback.</string>
+							<string>Great! Enjoy the creative keyboard of your own now! Like Emoji Keyboard?😍🎅🎄</string>
 						</dict>
 						<key>button1</key>
 						<dict>
@@ -4413,26 +4403,8 @@
 							</dict>
 							<key>title</key>
 							<dict>
-								<key>de</key>
-								<string>Ihr Feedback ist uns sehr wichtig. Helfen Sie uns BeautyCam noch besser zu machen. Danke~</string>
 								<key>en</key>
-								<string>Your feedback is very important. Help us make BeautyCam the best it can be. Thanks~</string>
-								<key>es</key>
-								<string>Tu opinión es muy importante para nosotros. Ayúdanos a que BeautyCam sea lo mejor posible. ¡Gracias!</string>
-								<key>fr</key>
-								<string>Vos commentaires sont très importants. Aidez-nous à améliorer BeautyCam le plus possible. Merci~</string>
-								<key>hi</key>
-								<string>आपकी प्रतिक्रिया बहुत महत्‍वपूर्ण है। ब्‍यूटीकैम को जितना हो सकता है, बेहतर बनाने में हमारी मदद करें। धन्‍यवाद~</string>
-								<key>it</key>
-								<string>La tua opinione è molto importante. Aiutaci a rendere BeautyCam il meglio possibile. Grazie~</string>
-								<key>ja</key>
-								<string>フィードバックは非常に重要です。BeautyCamを最高のものにするようご協力ください。ありがとう~</string>
-								<key>ko</key>
-								<string>BeautyCam을 최고의 앱으로 만들기 위해 회원님의 피드백은 너무도 중요하답니다. 감사합니다~</string>
-								<key>nl</key>
-								<string>Je feedback is erg belangrijk. Help ons om BeautyCam zo goed mogelijk te maken. Bedankt~</string>
-								<key>pt</key>
-								<string>Seu feedback é muito importante. Ajude-nos a melhorar o app BeautyCam o máximo possível. Obrigado~</string>
+								<string>Your feedback is very important. Help us make Emoji Keyboard the best it can be. Thanks~</string>
 							</dict>
 						</dict>
 						<key>YES</key>
@@ -5209,7 +5181,7 @@
 				<key>EmojiSuggestionBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/emoji_suggestion</string>
 				<key>FacemojiBasePath</key>
-				<string>http://cdn.appcloudbox.net/keyboardarts/download/facemoji/</string>
+				<string>http://s3.amazonaws.com/emojidevelop/apps_android/facemoji/</string>
 				<key>FontDownloadBaseURL</key>
 				<string>http://cdn.appcloudbox.net/keyboardarts/download/fonts/</string>
 				<key>IncomingCallThemeURL</key>
@@ -12337,56 +12309,6 @@
 						<array/>
 					</dict>
 				</array>
-			</dict>
-			<key>Smiley_A(NativeAds)KeyboardSettingsAd</key>
-			<dict>
-				<key>deDuplicate</key>
-				<true/>
-				<key>packageFilter</key>
-				<true/>
-				<key>parallelCount</key>
-				<integer>1</integer>
-				<key>parallelList</key>
-				<array>
-					<dict>
-						<key>adType</key>
-						<string>yeahmobinative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>25</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>3155</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-						<key>networkType</key>
-						<integer>0</integer>
-						<key>osVersionException</key>
-						<array/>
-						<key>osVersionFilter</key>
-						<array/>
-						<key>priceRatio</key>
-						<integer>1</integer>
-						<key>primaryViewOption</key>
-						<string></string>
-						<key>regionException</key>
-						<array/>
-						<key>regionFilter</key>
-						<array/>
-						<key>url</key>
-						<string></string>
-					</dict>
-				</array>
-				<key>serialList</key>
-				<array/>
 			</dict>
 			<key>Smiley_A(NativeAds)Lumen</key>
 			<dict>
