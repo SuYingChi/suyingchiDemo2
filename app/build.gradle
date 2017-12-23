@@ -199,7 +199,6 @@ dependencies {
     compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.gm:5.1.1.gm'
-    compile 'net.appcloudbox.adadapter:libAdBaiduNativeAdapter.gm:5.0.0.gm'
 
     // Interstitial Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter.gm:5.1.0.gm'
@@ -210,7 +209,6 @@ dependencies {
     compile 'net.appcloudbox.adadapter:libAdMopubBannerAdapter.gm:5.0.1.gm'
     compile 'net.appcloudbox.adadapter:libAdAdxBannerAdapter.gm:5.1.0.gm'
     compile 'net.appcloudbox.adadapter:libAdAdmobBannerAdapter.gm:5.1.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdNexageBannerAdapter.gm:5.1.0.gm'
 
     // Google Play Services
     compile "com.google.android.gms:play-services-ads:11.6.0"
