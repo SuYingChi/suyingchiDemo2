@@ -155,6 +155,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     private void enableCallFlash() {
         HSPreferenceHelper.getDefault().putBoolean(CALL_ASSISTANT_HAS_SWITCHED_ON, true);
         CPSettings.setCallAssistantModuleEnabled(true);
+        CPSettings.setScreenFlashModuleEnabled(true,true);
     }
 
     private void initThemeAnimation(final Type themeType) {
