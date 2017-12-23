@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.settings;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -112,6 +113,9 @@ public class HSNewSettingsPanel extends BasePanel {
                 HSAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            items.add(ViewItemBuilder.getLuckyItem());
+        }
         items.add(ViewItemBuilder.getSoundsPositionItem());
         items.add(ViewItemBuilder.getAutoCorrectionItem());
         if (selectorItem == null) {

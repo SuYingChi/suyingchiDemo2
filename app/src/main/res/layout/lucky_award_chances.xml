@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical"
+    tools:background="@android:color/background_dark"
+    tools:ignore="ContentDescription">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false">
+
+        <FrameLayout
+            android:id="@+id/lucky_game_award_chances_fragments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/lucky_game_award_chances_fragment_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="200dp"
+                android:layout_marginStart="200dp"
+                android:layout_marginTop="125dp"
+                android:src="@drawable/lucky_award_chances_fragment_orange" />
+
+            <ImageView
+                android:id="@+id/lucky_game_award_chances_fragment_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="140dp"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="185dp"
+                android:src="@drawable/lucky_award_chances_fragment_green" />
+
+            <ImageView
+                android:id="@+id/lucky_game_award_chances_fragment_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="160dp"
+                android:layout_marginStart="160dp"
+                android:layout_marginTop="205dp"
+                android:src="@drawable/lucky_award_chances_fragment_pink" />
+
+            <ImageView
+                android:id="@+id/lucky_game_award_chances_fragment_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="260dp"
+                android:layout_marginStart="260dp"
+                android:layout_marginTop="245dp"
+                android:src="@drawable/lucky_award_chances_fragment_pink" />
+
+            <ImageView
+                android:id="@+id/lucky_game_award_chances_fragment_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="290dp"
+                android:layout_marginStart="290dp"
+                android:layout_marginTop="145dp"
+                android:src="@drawable/lucky_award_chances_fragment_orange" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/lucky_game_award_chances_above_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/lucky_award_chances_above_light" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:clipChildren="false">
+
+            <ImageView
+                android:id="@+id/lucky_game_award_chances_halo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/lucky_award_chances_halo" />
+
+            <ImageView
+                android:id="@+id/lucky_game_award_chances_centralized_light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/lucky_award_chances_centralized_light" />
+
+            <FrameLayout
+                android:id="@+id/lucky_game_award_chances_stars"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="170dp"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="95dp"
+                    android:src="@drawable/lucky_award_chances_bright_star" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="250dp"
+                    android:layout_marginStart="250dp"
+                    android:layout_marginTop="150dp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:src="@drawable/lucky_award_chances_bright_star" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="190dp"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9"
+                    android:src="@drawable/lucky_award_chances_bright_star" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="246dp"
+                    android:layout_marginStart="246dp"
+                    android:layout_marginTop="210dp"
+                    android:scaleX="1.1"
+                    android:scaleY="1.1"
+                    android:src="@drawable/lucky_award_chances_bright_star" />
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:clipChildren="false">
+
+                <ImageView
+                    android:id="@+id/lucky_game_award_chances_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/lucky_award_chances_reward" />
+
+                <ImageView
+                    android:id="@+id/lucky_game_award_chances_arm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lucky_game_award_chances_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/lucky_award_chances_arm" />
+
+                <ImageView
+                    android:id="@+id/lucky_game_award_chances_bubble"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:translationX="-30dp"
+                    android:layout_alignTop="@id/lucky_game_award_chances_arm"
+                    android:layout_marginTop="15dp"
+                    android:layout_toEndOf="@id/lucky_game_award_chances_arm"
+                    android:layout_toRightOf="@id/lucky_game_award_chances_arm"
+                    android:src="@drawable/lucky_award_chances_3_bubble" />
+
+                <TextView
+                    android:id="@+id/lucky_game_award_chances_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lucky_game_award_chances_arm"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="@string/lucky_game_award_chances_description"
+                    android:textColor="#f9d533"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </FrameLayout>
+    </FrameLayout>
+
+    <com.ihs.inputmethod.feature.common.StrokeTextView
+        android:id="@+id/lucky_game_award_chances_receive_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/lucky_action_btn"
+        android:gravity="center"
+        android:text="@string/lucky_game_award_chances_receive_btn"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</LinearLayout>

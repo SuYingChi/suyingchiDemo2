@@ -98,7 +98,6 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
 
             final AcbNativeAdContainerView acbNativeAdContainerView = new AcbNativeAdContainerView(context);
             acbNativeAdContainerView.hideAdCorner();
-            acbNativeAdContainerView.setClickViewList(null);
             acbNativeAdContainerView.addContentView(containerView);
             AcbNativeAdIconView adIconView = (AcbNativeAdIconView) containerView.findViewById(R.id.ad_icon);
             acbNativeAdContainerView.setAdTitleView((TextView) containerView.findViewById(R.id.ad_title));

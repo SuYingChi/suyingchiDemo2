@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- ========================== Lucky game  start ========================== -->
+    <dimen name="lucky_game_belt_divider_width">4dp</dimen>
+    <dimen name="lucky_game_large_box_width">95dp</dimen>
+    <dimen name="lucky_game_small_box_width">79dp</dimen>
+    <dimen name="lucky_game_bomb_width">68dp</dimen>
+
+    <!-- Offset from top edge of active zone, to bottom of arm body (not including arm hands) -->
+    <dimen name="lucky_game_arm_bottom_offset_up">-40dp</dimen>
+
+    <!-- Pivot for rotation on resource R.drawable.lucky_arm_hand, with left-top origin -->
+    <dimen name="lucky_game_arm_hand_pivot_y">5dp</dimen>
+
+    <!-- Hand (left / right) installation points (by hands rotation pivots) on resource R.drawable.lucky_arm_body,
+         with left-bottom origin and reversed Y axis -->
+    <dimen name="lucky_game_arm_left_hand_install_x">5.7dp</dimen>
+    <dimen name="lucky_game_arm_right_hand_install_x">67dp</dimen>
+    <dimen name="lucky_game_arm_hands_install_y">8.3dp</dimen>
+    <dimen name="lucky_game_go_button_pressed_translation_y">10dp</dimen>
+    <dimen name="lucky_game_go_button_bottom_clip_radius">10dp</dimen>
+    <dimen name="lucky_game_border_line_width">1.7dp</dimen>
+    <dimen name="lucky_game_border_outer_line_width">1dp</dimen>
+    <dimen name="lucky_game_border_line_offset_inner">9dp</dimen>
+    <dimen name="lucky_game_border_line_offset_outer">18dp</dimen>
+    <dimen name="lucky_game_empty_catch_arm_anim_translation_y">30dp</dimen>
+
+    <dimen name="lucky_game_award_chances_fragment_translation_y">50dp</dimen>
+    <dimen name="lucky_game_award_chances_initial_arm_offset_below_receive_btn">30dp</dimen>
+
+    <!-- Assumed award view dimensions in design documents. This is used for calculating size to adapt
+         screen sizes by scaling the whole view. -->
+    <dimen name="lucky_award_view_design_width">411dp</dimen>
+    <dimen name="lucky_award_view_design_height">677dp</dimen>
+    <dimen name="lucky_award_ad_view_container_top_margin">80dp</dimen>
+    <!--  ========================== Lucky game  end ==========================  -->
+
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="theme_activity_horizontal_margin">8dp</dimen>
     <dimen name="theme_activity_vertical_margin">16dp</dimen>
