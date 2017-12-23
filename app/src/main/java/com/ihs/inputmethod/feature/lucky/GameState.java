@@ -117,7 +117,11 @@ public class GameState {
         mArmPosition = 0f;
         mChoreographer.removeFrameCallback(mFrameCallback);
         mHandler.removeCallbacksAndMessages(null);
-        mChanceCount = mPrefs.getInt(PREF_KEY_CHANCE_LEFT, FULL_CHANCE_COUNT);
+        if (!mPrefs.contains(PREF_KEY_CHANCE_LEFT)) {
+            mChanceCount = FULL_CHANCE_COUNT;
+        } else {
+            mChanceCount = mPrefs.getInt(PREF_KEY_CHANCE_LEFT, FULL_CHANCE_COUNT);
+        }
         if (mListener != null) {
             long now = System.currentTimeMillis();
             long lastRestored = mPrefs.getLong(PREF_KEY_RESTORE_COUNTDOWN_START_TIME, now);
