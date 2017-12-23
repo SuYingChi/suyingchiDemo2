@@ -11,9 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import net.appcloudbox.ads.base.AcbNativeAd;
-import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
-import net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
@@ -23,6 +20,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import net.appcloudbox.ads.base.AcbNativeAd;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
+import net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +98,6 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
 
             final AcbNativeAdContainerView acbNativeAdContainerView = new AcbNativeAdContainerView(context);
             acbNativeAdContainerView.hideAdCorner();
-            acbNativeAdContainerView.setClickViewList(null);
             acbNativeAdContainerView.addContentView(containerView);
             AcbNativeAdIconView adIconView = (AcbNativeAdIconView) containerView.findViewById(R.id.ad_icon);
             acbNativeAdContainerView.setAdTitleView((TextView) containerView.findViewById(R.id.ad_title));

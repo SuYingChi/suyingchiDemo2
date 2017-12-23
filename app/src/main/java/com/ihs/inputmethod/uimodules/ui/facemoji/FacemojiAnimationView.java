@@ -130,7 +130,7 @@ public class FacemojiAnimationView extends AppCompatImageView {
     public void stopAnim() {
         if (sticker == null || sticker.getName() == null) {
             pausePlaceholderAnim();
-        }else {
+        } else {
             stop();
         }
     }
