@@ -13,6 +13,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
+import com.ihs.inputmethod.uimodules.ui.facemoji.ui.AnimationLayout;
 import com.ihs.inputmethod.uimodules.ui.facemoji.ui.FacemojiGridAdapter;
 
 import java.util.ArrayList;
@@ -74,12 +75,12 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             final View containerLayout = convertView.findViewById(R.id.facemoji_layout);
             containerLayout.setLayoutParams(new GridView.LayoutParams(stickerWidth, stickerHeight));
             final FacemojiAnimationView facemojiAnimationView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
-            final FacemojiView facemojiView = (FacemojiView) containerLayout.findViewById(R.id.facemoji_layout);
+            final AnimationLayout facemojiLayout =  containerLayout.findViewById(R.id.facemoji_layout);
             facemojiAnimationView.setSticker(sticker);
             facemojiAnimationView.setTag(sticker);
             holder = new StickerViewHolder();
             holder.facemojiAnimationView = facemojiAnimationView;
-            holder.facemojiView = facemojiView;
+            holder.facemojiLayout = facemojiLayout;
             convertView.setTag(holder);
         }
 
@@ -94,7 +95,7 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(HSDisplayUtils.dip2px(50), HSDisplayUtils.dip2px(50));
             layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
             holder.facemojiAnimationView.setLayoutParams(layoutParams);
-            holder.facemojiView.setClickable(false);
+            holder.facemojiLayout.setClickable(false);
         }else {
             RelativeLayout.LayoutParams layoutParams;
             if (sticker.getWidth() == sticker.getHeight()) {//方形的需要修改宽高
@@ -106,8 +107,8 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             holder.facemojiAnimationView.setLayoutParams(layoutParams);
             holder.facemojiAnimationView.setImageDrawable(null);
             holder.facemojiAnimationView.setScaleType(ImageView.ScaleType.FIT_XY);
-            holder.facemojiView.setClickable(true);
-            holder.facemojiView.setOnClickListener(new View.OnClickListener() {
+            holder.facemojiLayout.setClickable(true);
+            holder.facemojiLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null){
@@ -127,7 +128,7 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
     }
 
     public static class StickerViewHolder {
-        FacemojiView facemojiView;
+        AnimationLayout facemojiLayout;
         FacemojiAnimationView facemojiAnimationView;
     }
 

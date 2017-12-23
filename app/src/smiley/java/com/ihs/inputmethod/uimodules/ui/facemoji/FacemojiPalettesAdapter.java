@@ -12,6 +12,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
+import com.ihs.inputmethod.uimodules.ui.facemoji.ui.AnimationLayout;
 
 import java.util.List;
 
@@ -140,8 +141,10 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
         HSLog.d("child count" + facemojiPageGridView.getChildCount());
 
         for (int i = 0; i < facemojiPageGridView.getChildCount(); ++i) {
-            FacemojiView facemojiView = (FacemojiView) facemojiPageGridView.getChildAt(i);
-            facemojiView.startAnimation();
+            View view =  facemojiPageGridView.getChildAt(i);
+            if (view instanceof AnimationLayout){
+                ((FacemojiAnimationView)((AnimationLayout) view).getChildAt(0)).startAnim();
+            }
         }
     }
 
@@ -168,8 +171,10 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
         HSLog.d("child count" + facemojiPageGridView.getChildCount());
 
         for (int i = 0; i < facemojiPageGridView.getChildCount(); ++i) {
-            FacemojiView facemojiView = (FacemojiView) facemojiPageGridView.getChildAt(i);
-            facemojiView.stopAnimation();
+            View view =  facemojiPageGridView.getChildAt(i);
+            if (view instanceof AnimationLayout){
+                ((FacemojiAnimationView)((AnimationLayout) view).getChildAt(0)).stopAnim();
+            }
         }
     }
 
