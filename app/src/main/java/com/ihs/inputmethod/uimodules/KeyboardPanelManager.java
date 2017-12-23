@@ -38,7 +38,6 @@ import com.ihs.inputmethod.uimodules.ui.emoticon.HSEmoticonPanel;
 import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerSuggestionAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.widget.bannerad.KeyboardBannerAdLayout;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarGPAdAdapter;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarSearchAdAdapter;
@@ -53,6 +52,7 @@ import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.commons.utils.KCCommonUtils;
 import com.kc.utils.KCFeatureControlUtils;
+import com.keyboard.common.SplashActivity;
 import com.keyboard.core.session.KCKeyboardSession;
 
 import net.appcloudbox.ads.base.AcbAd;
@@ -254,9 +254,10 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         if (view.getId() == R.id.func_cloth_button) {
-            Intent intent = new Intent(HSApplication.getContext(), ThemeHomeActivity.class);
+            Intent intent = new Intent(HSApplication.getContext(), SplashActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("From", "Keyboard");
+            intent.putExtra(SplashActivity.JUMP_TAG, SplashActivity.JUMP_TO_THEME_HOME);
             HSApplication.getContext().startActivity(intent);
             HSAnalytics.logEvent("keyboard_cloth_button_click");
         }

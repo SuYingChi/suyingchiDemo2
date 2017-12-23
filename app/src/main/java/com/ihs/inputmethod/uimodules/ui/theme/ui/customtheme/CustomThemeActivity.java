@@ -53,6 +53,7 @@ import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.commons.utils.KCCommonUtils;
+import com.keyboard.common.SplashActivity;
 import com.keyboard.core.themes.ThemeDirManager;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -137,11 +138,12 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             @Override
             public void run() {
                 final Intent intent = new Intent();
-                intent.setClass(context, com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity.class);
+                intent.setClass(context, SplashActivity.class);
                 if (bundle != null) {
                     intent.putExtras(bundle);
                 }
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(SplashActivity.JUMP_TAG, SplashActivity.JUMP_TO_CUSTOM_THEME);
                 context.startActivity(intent);
             }
         }, delay);
@@ -284,7 +286,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 }
             } else {
                 Bitmap bitmap = ImageLoader.getInstance().loadImageSync(BaseImageDownloader.Scheme.FILE.wrap(customThemeData.getCustomizedBackgroundImagePath()));
-                if (bitmap != null){
+                if (bitmap != null) {
                     mp4HSBackgroundView.setHSBackground(new BitmapDrawable(bitmap));
                 }
             }
@@ -497,16 +499,16 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
                 Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
                         HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
-                Drawable drawable = new BitmapDrawable(res,bmp);
+                Drawable drawable = new BitmapDrawable(res, bmp);
                 drawable.setBounds(0, 0, HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res));
                 drawable.draw(canvas);
                 getKeyboardView().draw(canvas);
                 new SaveThemeChangesTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bitmap);
                 HSAnalytics.logEvent("app_customize_save", "save_state", "Save_Success");
-            }catch (Exception e) {
+            } catch (Exception e) {
                 exitWhenSaveFailed();
                 return;
-            }catch (OutOfMemoryError error){
+            } catch (OutOfMemoryError error) {
                 exitWhenSaveFailed();
                 return;
             }
@@ -515,7 +517,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
     private void exitWhenSaveFailed() {
         dismissDialog(savingDialog);
-        Toast.makeText(this, R.string.save_theme_failed,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.save_theme_failed, Toast.LENGTH_SHORT).show();
         setResult(RESULT_CANCELED);
         finish();
     }
@@ -619,7 +621,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 Resources res = HSApplication.getContext().getResources();
                 Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
                         HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
-                Drawable backgroundDrawable = new BitmapDrawable(res,bmp);
+                Drawable backgroundDrawable = new BitmapDrawable(res, bmp);
                 keyboardView.loadKeyboard();
                 return backgroundDrawable;
             } catch (Exception e) {
@@ -630,8 +632,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
         @Override
         protected void onPostExecute(Drawable backgroundDrawable) {
-            if (backgroundDrawable == null){ //内存不足，导致背景图片没创建成功
-                Toast.makeText(CustomThemeActivity.this,R.string.low_memory_tip,Toast.LENGTH_LONG).show();
+            if (backgroundDrawable == null) { //内存不足，导致背景图片没创建成功
+                Toast.makeText(CustomThemeActivity.this, R.string.low_memory_tip, Toast.LENGTH_LONG).show();
                 finish();
                 return;
             }
@@ -656,9 +658,9 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             if (params != null && params.length > 0) {
                 try {
                     themeName = KCCustomThemeManager.getInstance().generateCustomTheme(customThemeData);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                }catch (OutOfMemoryError e1){
+                } catch (OutOfMemoryError e1) {
                     e1.printStackTrace();
                 }
             }
@@ -681,8 +683,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         }
     }
 
-    private void dismissDialog(Dialog dialog){
-        if (dialog != null){
+    private void dismissDialog(Dialog dialog) {
+        if (dialog != null) {
             KCCommonUtils.dismissDialog(dialog);
         }
     }

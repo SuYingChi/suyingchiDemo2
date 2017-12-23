@@ -16,7 +16,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
+import com.keyboard.common.SplashActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -121,11 +121,12 @@ public class FacePageGridViewAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     HSAnalytics.logEvent("keyboard_facemoji_create_clicked");
                     HSInputMethod.hideWindow();
-                    Intent i = new Intent(HSApplication.getContext(), CameraActivity.class);
+                    Intent i = new Intent(HSApplication.getContext(), SplashActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra(SplashActivity.JUMP_TAG,SplashActivity.JUMP_TO_FACEMOJI_CAMERA);
                     HSApplication.getContext().startActivity(i);
                 }
             });

@@ -50,9 +50,12 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
+import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -60,6 +63,7 @@ import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.MainActivity;
+import com.keyboard.common.SplashActivity;
 import com.keyboard.core.themes.ThemeDirManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -121,6 +125,24 @@ public class HSUIApplication extends HSInputMethodApplication {
         if (intent == null) {
             intent = new Intent();
         }
+
+        int jumpCode = intent.getIntExtra(SplashActivity.JUMP_TAG, -1);
+        if(jumpCode!=-1){
+            switch (jumpCode){
+                case SplashActivity.JUMP_TO_THEME_HOME:
+                    intent.setClass(this, ThemeHomeActivity.class);
+                    break;
+                case SplashActivity.JUMP_TO_FACEMOJI_CAMERA:
+                    intent.setClass(this, CameraActivity.class);
+                    break;
+                case SplashActivity.JUMP_TO_CUSTOM_THEME:
+                    intent.setClass(this, CustomThemeActivity.class);
+                    break;
+            }
+            splashActivity.startActivity(intent);
+            return;
+        }
+
 
         // need to pass the intent to the main activity
         if (!TextUtils.isEmpty(intent.getScheme())) {

@@ -35,8 +35,8 @@ import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareChannel;
 import com.ihs.inputmethod.uimodules.ui.common.BaseTabViewAdapter;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.ihs.inputmethod.uimodules.widget.KeyboardProgressView;
+import com.keyboard.common.SplashActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -272,8 +272,9 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
 
 
     private void startCameraActivity() {
-        Intent i = new Intent(HSApplication.getContext(), CameraActivity.class);
+        Intent i = new Intent(HSApplication.getContext(), SplashActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(SplashActivity.JUMP_TAG,SplashActivity.JUMP_TO_FACEMOJI_CAMERA);
         HSApplication.getContext().startActivity(i);
     }
 
