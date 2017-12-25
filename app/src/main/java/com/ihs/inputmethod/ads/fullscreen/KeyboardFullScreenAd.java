@@ -7,6 +7,7 @@ import android.text.format.DateUtils;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -128,6 +129,7 @@ public class KeyboardFullScreenAd {
     public static void loadSessionOneTimeAd() {
         if (canShowSessionAd && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             KCInterstitialAd.load(ONE_SESSION_ADPLACEMENT);
+            HSLog.e("load full ad");
         }
     }
 
@@ -141,12 +143,16 @@ public class KeyboardFullScreenAd {
      * 6.退出app后
      */
     public static void showSessionOneTimeAd(String from) {
+        HSLog.e("show full ad");
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             List<AcbInterstitialAd> fetch = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
             if (!fetch.isEmpty()) {
                 fetch.get(0).show();
+                HSLog.e("showed full ad");
                 canShowSessionAd = false;
                 HSAnalytics.logEvent("app_springAd_show", "from", from);
+            }else{
+                HSLog.e("cant show full ad");
             }
         }
     }

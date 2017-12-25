@@ -26,6 +26,15 @@ public class SplashActivity extends HSDeepLinkActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        KeyboardFullScreenAd.canShowSessionAd = true;
+        int delayMillis = 0;
+        if (!HSPreferenceHelper.getDefault().getBoolean("first_start_app", true)) {
+            delayMillis = HSConfig.optInteger(0, "Application", "InterstitialAds", "HomeStartDelayTime");
+            KeyboardFullScreenAd.loadSessionOneTimeAd();
+        } else {
+            HSPreferenceHelper.getDefault().putBoolean("first_start_app", false);
+        }
+
         super.onCreate(savedInstanceState);
         this.overridePendingTransition(0, 0);
 
@@ -38,14 +47,6 @@ public class SplashActivity extends HSDeepLinkActivity {
         }
         HSAnalytics.logEvent("app_opened_new", "from", openFrom);
 
-
-        int delayMillis = 0;
-        if (!HSPreferenceHelper.getDefault().getBoolean("first_start_app", true)) {
-            delayMillis = HSConfig.optInteger(0, "Application", "InterstitialAds", "HomeStartDelayTime");
-            KeyboardFullScreenAd.loadSessionOneTimeAd();
-        } else {
-            HSPreferenceHelper.getDefault().putBoolean("first_start_app", false);
-        }
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             HSUIApplication application = (HSUIApplication) getApplication();
@@ -77,5 +78,11 @@ public class SplashActivity extends HSDeepLinkActivity {
             HSAnalytics.logEvent(APP_FIRST_TIME_START, valueMap);
             spHelper.putBoolean(APP_FIRST_TIME_START, false);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        KeyboardFullScreenAd.showSessionOneTimeAd("appOpened");
     }
 }
