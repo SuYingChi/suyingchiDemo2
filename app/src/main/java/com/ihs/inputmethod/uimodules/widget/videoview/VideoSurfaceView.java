@@ -12,7 +12,7 @@ import java.io.File;
  * Created by ihandysoft on 16/12/6.
  */
 
-class VideoSurfaceView extends VideoView {
+class VideoSurfaceView extends MutedVideoView {
     private int mVideoWidth;
     private int mVideoHeight;
 
