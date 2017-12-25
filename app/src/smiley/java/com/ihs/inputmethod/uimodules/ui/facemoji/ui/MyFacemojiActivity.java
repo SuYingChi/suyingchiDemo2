@@ -36,6 +36,7 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
+import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiDownloadManager;
@@ -182,6 +183,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             return;
         }
 
+        KeyboardFullScreenAd.showSessionOneTimeAd("Facemoji");
         HSGlobalNotificationCenter.addObserver(FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED,notificationObserver);
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_DATA_CHANGED,notificationObserver);
     }
@@ -228,6 +230,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             Drawable drawable = HSDrawableUtils.getDimmedForegroundDrawable(bitmap);
             face_icon.setBackgroundDrawable(drawable);
         }
+
     }
 
     @Override

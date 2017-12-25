@@ -46,7 +46,6 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.VectorCompat;
-import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -869,8 +868,6 @@ public class CameraActivity extends HSAppCompatActivity {
         HSGlobalNotificationCenter.sendNotificationOnMainThread(FacemojiManager.FACEMOJI_SAVED);
 
         HSAnalytics.logEvent("app_facemoji_created");
-
-        KeyboardFullScreenAd.showSessionOneTimeAd("Facemoji");
         isSynthesisingImage = false;
     }
 
