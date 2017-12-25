@@ -30,7 +30,7 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
     private int stickerHeight;
     private LayoutInflater mInflater;
     boolean isCurrentThemeDarkBg;
-
+    private boolean allowPlayAnim;
 
     public FacemojiPageGridAdapter(final List<FacemojiSticker> data,
                                    FacemojiPageGridView.OnFacemojiClickListener listener,
@@ -119,8 +119,19 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             convertView.setBackgroundDrawable(null);
         }
         //start facemoji anim or placeholder anim
-        holder.facemojiAnimationView.startAnim();
+        if (allowPlayAnim){
+            holder.facemojiAnimationView.startAnim();
+        }else {
+            holder.facemojiAnimationView.stopAnim();
+        }
         return convertView;
+    }
+
+
+    public void setAllowPlayAnim(boolean allowPlayAnim) {
+        if (this.allowPlayAnim != allowPlayAnim){
+            this.allowPlayAnim = allowPlayAnim;
+        }
     }
 
     public void setData(List<FacemojiSticker> data) {

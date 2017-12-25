@@ -128,17 +128,10 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
             return;
         }
 
-        if (facemojiPageGridView.getChildCount() == 0) {
-            facemojiPageGridView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    HSLog.d("start animation for page delayed... " + pageId);
-                    startAnimation(pageId);
-                }
-            }, 50);
+        FacemojiPageGridAdapter adapter = (FacemojiPageGridAdapter) facemojiPageGridView.getOriginalAdapter();
+        if (adapter != null){
+            adapter.setAllowPlayAnim(true);
         }
-
-        HSLog.d("child count" + facemojiPageGridView.getChildCount());
 
         for (int i = 0; i < facemojiPageGridView.getChildCount(); ++i) {
             View view =  facemojiPageGridView.getChildAt(i);
@@ -165,6 +158,11 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
         if (facemojiPageGridView == null) {
             HSLog.d("failed to stop animation for page " + pageId);
             return;
+        }
+
+        FacemojiPageGridAdapter adapter = (FacemojiPageGridAdapter) facemojiPageGridView.getOriginalAdapter();
+        if (adapter != null){
+            adapter.setAllowPlayAnim(false);
         }
 
         HSLog.d("stop animation for page " + pageId);
