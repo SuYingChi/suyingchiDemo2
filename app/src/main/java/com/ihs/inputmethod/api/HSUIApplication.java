@@ -50,7 +50,6 @@ import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
-import com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
@@ -133,7 +132,11 @@ public class HSUIApplication extends HSInputMethodApplication {
                     intent.setClass(this, ThemeHomeActivity.class);
                     break;
                 case SplashActivity.JUMP_TO_FACEMOJI_CAMERA:
-                    intent.setClass(this, CameraActivity.class);
+                    try {
+                        intent.setClass(this, Class.forName("com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity"));
+                    } catch (ClassNotFoundException e) {
+                        HSLog.e(e.getMessage());
+                    }
                     break;
                 case SplashActivity.JUMP_TO_CUSTOM_THEME:
                     intent.setClass(this, CustomThemeActivity.class);
