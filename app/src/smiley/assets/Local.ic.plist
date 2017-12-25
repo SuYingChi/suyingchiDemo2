@@ -6,6 +6,21 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>AppSuggestion</key>
+			<dict>
+				<key>state</key>
+				<integer>0</integer>
+				<key>MiniInterval</key>
+				<integer>0</integer>
+				<key>Description</key>
+				<string>unit of MiniInterval is ms</string>
+				<key>ApkException</key>
+				<array>
+					<string>com.keyboard.font.theme.emoji</string>
+				</array>
+				<key>HoursFromFirstUse</key>
+				<integer>5</integer>
+			</dict>
 			<key>BoostNotification</key>
 			<dict>
 				<key>Enabled</key>
@@ -337,6 +352,19 @@
 					<key>OptimalRamUsageMbs</key>
 					<integer>30</integer>
 				</dict>
+			</dict>
+			<key>ChargeAlert</key>
+			<dict>
+				<key>ChargingAlertEnabled</key>
+				<false/>
+				<key>StartVersion</key>
+				<integer>5</integer>
+				<key>MiniInterval</key>
+				<integer>1</integer>
+				<key>State</key>
+				<integer>0</integer>
+				<key>StateDescription</key>
+				<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
 			</dict>
 			<key>ChargeLocker</key>
 			<dict>
