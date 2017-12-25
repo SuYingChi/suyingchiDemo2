@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * Created by vishna on 22/07/15.
+ * Created by vishna on 22/07/15. https://gist.github.com/vishna/7e9d3466bced8502fcdd
  */
 public class MutedVideoView extends SurfaceView
         implements MediaController.MediaPlayerControl {
