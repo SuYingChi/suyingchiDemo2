@@ -291,7 +291,8 @@ public class HSUIApplication extends HSInputMethodApplication {
     private void initLockerChargingNoAdConfig() {
         //如果第一次启动版本大于等于需要不显示广告的版本，则为新用户
         if (HSApplication.getFirstLaunchInfo().appVersionCode >= BuildConfig.LOCKER_CHARGING_NO_ADS_START_VERSION) {
-            LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.CLASSIC_LOCKER_TYPE,false);
+            LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.CLASSIC_LOCKER_TYPE,true);
+            LockerChargingSpecialConfig.getInstance().setHideLockerAndCharging(true);
         } else {
             LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.CLASSIC_LOCKER_TYPE,true);
         }

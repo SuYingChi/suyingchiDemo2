@@ -40,7 +40,6 @@ import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.ihs.app.analytics.HSAnalytics;
-import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
@@ -294,7 +293,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         setLockerScreen.setOnClickListener(this);
         setHomeAndLockerScreen = (LinearLayout) findViewById(R.id.set_home_and_locker_screen);
         setHomeAndLockerScreen.setOnClickListener(this);
-        findViewById(R.id.may_contain_ads).setVisibility(LockerChargingSpecialConfig.getInstance().canShowAd() ? View.VISIBLE : View.INVISIBLE);
     }
 
     private void hideViews() {
