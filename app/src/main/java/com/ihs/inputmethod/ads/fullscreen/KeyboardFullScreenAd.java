@@ -133,6 +133,16 @@ public class KeyboardFullScreenAd {
         }
     }
 
+
+
+    public interface OneTimeAdListener {
+        void onAdClose();
+    }
+
+
+    public static void showSessionOneTimeAd(String from) {
+        showSessionOneTimeAd(from,null);
+    }
     /**
      * 这个ad 一个session只出现一次.
      * 1.开屏前
@@ -142,17 +152,43 @@ public class KeyboardFullScreenAd {
      * 5.theme、wallpapper和call flash应用后
      * 6.退出app后
      */
-    public static void showSessionOneTimeAd(String from) {
+    public static void showSessionOneTimeAd(String from, OneTimeAdListener listener) {
         HSLog.e("show full ad");
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             List<AcbInterstitialAd> fetch = AcbInterstitialAdLoader.fetch(HSApplication.getContext(), ONE_SESSION_ADPLACEMENT, 1);
             if (!fetch.isEmpty()) {
-                fetch.get(0).show();
+                AcbInterstitialAd acbInterstitialAd = fetch.get(0);
+                acbInterstitialAd.setInterstitialAdListener(new AcbInterstitialAd.IAcbInterstitialAdListener() {
+                    @Override
+                    public void onAdDisplayed() {
+
+                    }
+
+                    @Override
+                    public void onAdClicked() {
+
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                        if (listener != null) {
+                            listener.onAdClose();
+                        }
+                    }
+                });
+                acbInterstitialAd.show();
                 HSLog.e("showed full ad");
                 canShowSessionAd = false;
                 HSAnalytics.logEvent("app_springAd_show", "from", from);
-            }else{
+            } else {
+                if (listener != null) {
+                    listener.onAdClose();
+                }
                 HSLog.e("cant show full ad");
+            }
+        } else {
+            if (listener != null) {
+                listener.onAdClose();
             }
         }
     }

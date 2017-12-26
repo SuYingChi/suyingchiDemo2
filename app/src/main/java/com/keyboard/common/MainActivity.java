@@ -167,7 +167,7 @@ public class MainActivity extends HSAppCompatActivity {
             switch (msg.what) {
                 case NAVIGATION_MAIN_PAGE:
                     if (progress == 0) {
-                        HSLog.w("cjx","start progress");
+                        HSLog.w("cjx", "start progress");
                     }
                     progress++;
                     if (progress <= 100) {
@@ -295,7 +295,6 @@ public class MainActivity extends HSAppCompatActivity {
         final int screenHeight = size.y;
 
 
-
         if (!BuildConfig.MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START) {
             ImageView logoImage = findViewById(R.id.logo_image_view);
             logoImage.setVisibility(View.VISIBLE);
@@ -318,7 +317,7 @@ public class MainActivity extends HSAppCompatActivity {
                 }
             }, 1200);
 
-        }else {
+        } else {
             launchImageView = findViewById(R.id.launch_image_view);
             launchVideoView = findViewById(R.id.launch_mp4_view);
             Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.launch_page_mp4_animation);
@@ -363,7 +362,7 @@ public class MainActivity extends HSAppCompatActivity {
                 @Override
                 public void run() {
                     if (!isLaunchAnimationPlayed) {
-                        Log.w("cjx","start play anim");
+                        Log.w("cjx", "start play anim");
                         isLaunchAnimationPlayed = true;
                         launchImageView.setVisibility(GONE);
                         launchVideoView.setVisibility(View.VISIBLE);
@@ -380,7 +379,7 @@ public class MainActivity extends HSAppCompatActivity {
                         }
                     }
                 }
-            },1200);
+            }, 1200);
 
         }
 
@@ -761,7 +760,7 @@ public class MainActivity extends HSAppCompatActivity {
     //NOTE: fix a VideoView memory leak on Android 5-7:
     // https://stackoverflow.com/questions/43280440/videoview-memory-leak
     @Override
-    protected  void attachBaseContext(Context newBase) {
+    protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(new ContextWrapper(newBase) {
             @Override
             public Object getSystemService(String name) {
@@ -859,7 +858,7 @@ public class MainActivity extends HSAppCompatActivity {
     }
 
     private void startThemeHomeActivity() {
-        if (!hasInitKeyboardBeforeOnCreate){
+        if (!hasInitKeyboardBeforeOnCreate) {
             HSUIInputMethodService.initResourcesBeforeOnCreate();
             hasInitKeyboardBeforeOnCreate = true;
         }
@@ -879,6 +878,9 @@ public class MainActivity extends HSAppCompatActivity {
             }
 
             needActiveThemePkName = null;
+        }
+        if (getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1) != -1) {
+            startThemeHomeIntent.putExtra(SplashActivity.JUMP_TAG, getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1));
         }
         startActivity(startThemeHomeIntent);
         overridePendingTransition(0, 0);
@@ -974,10 +976,10 @@ public class MainActivity extends HSAppCompatActivity {
     }
 
     private void logEventWithSource(String eventName) {
-        HSAnalytics.logEvent(eventName,"source",getSourceString());
+        HSAnalytics.logEvent(eventName, "source", getSourceString());
     }
 
-    private String getSourceString(){
+    private String getSourceString() {
         switch (currentType) {
             case TYPE_AUTO:
                 return "auto";

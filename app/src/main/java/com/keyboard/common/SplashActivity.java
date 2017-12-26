@@ -79,10 +79,4 @@ public class SplashActivity extends HSDeepLinkActivity {
             spHelper.putBoolean(APP_FIRST_TIME_START, false);
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        KeyboardFullScreenAd.showSessionOneTimeAd("appOpened");
-    }
 }

@@ -70,6 +70,7 @@ import com.ihs.keyboardutils.utils.AlertShowingUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
+import com.keyboard.common.SplashActivity;
 
 import net.appcloudbox.ads.interstitialads.AcbInterstitialAdLoader;
 import net.appcloudbox.autopilot.AutopilotEvent;
@@ -134,6 +135,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private AcbInterstitialAdLoader acbInterstitialAdLoader;
     private AlertDialog fullscreenAdLoadingDialog;
     private boolean fullscreenShowed = false;
+
+    private int splashJumpCode = -1;
+
 
     private Handler handler = new Handler() {
         @Override
@@ -216,6 +220,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.overridePendingTransition(0, 0);
 
         setContentView(R.layout.activity_theme_home);
 //        getWindow().setBackgroundDrawable(null);
@@ -263,9 +268,11 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             handler.sendEmptyMessageDelayed(HANDLER_SHOW_UPDATE_DIALOG, 500);
         }
 
+        splashJumpCode = getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1);
         onNewIntent(getIntent());
-
-        KeyboardFullScreenAd.showSessionOneTimeAd("appOpened");
+        if (splashJumpCode == -1) {
+            KeyboardFullScreenAd.showSessionOneTimeAd("appOpened");
+        }
     }
 
     private void enableUsageAccessPermission() {
@@ -334,25 +341,64 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     @Override
     protected void onResume() {
         super.onResume();
+        if (splashJumpCode != -1) {
+            Intent intent = new Intent();
+            switch (splashJumpCode) {
+                case SplashActivity.JUMP_TO_FACEMOJI_CAMERA:
+                    try {
+                        intent.setClass(this, Class.forName("com.ihs.inputmethod.uimodules.ui.facemoji.ui.CameraActivity"));
+                    } catch (ClassNotFoundException e) {
+                        HSLog.e(e.getMessage());
+                    }
+                    break;
+                case SplashActivity.JUMP_TO_CUSTOM_THEME:
+                    intent.setClass(this, CustomThemeActivity.class);
+                    break;
+            }
+            KeyboardFullScreenAd.showSessionOneTimeAd("appOpened", new KeyboardFullScreenAd.OneTimeAdListener() {
+                @Override
+                public void onAdClose() {
+                    if (splashJumpCode == SplashActivity.JUMP_TO_FACEMOJI_CAMERA || splashJumpCode == SplashActivity.JUMP_TO_CUSTOM_THEME) {
+                        try {
+                            startActivity(intent);
+                            finish();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+            });
+            splashJumpCode = -1;
+            return;
+        }
 
         restoreNavigationView();
         mContent.setChildSelected(currentTabIndex);
 
-        if (isFromUsageAccessActivity) {
+        if (isFromUsageAccessActivity)
+
+        {
             isFromUsageAccessActivity = false;
         }
 
 //        refreshApkUpdateViews();
-        HSThemeNewTipController.getInstance().removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
+        HSThemeNewTipController.getInstance().
 
-        if (mLayoutWrapper != null) {
+                removeNewTip(HSThemeNewTipController.ThemeTipType.NEW_TIP_THEME);
+
+        if (mLayoutWrapper != null)
+
+        {
             mLayoutWrapper.show();
         }
 
         // Place here to get a right session id from appframework
-        if (isResumeOnCreate) {
+        if (isResumeOnCreate)
+
+        {
             showOpenAlertIfNeeded();
         }
+
         isResumeOnCreate = false;
 
     }
@@ -535,7 +581,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 ChargingManagerUtil.enableCharging(false);
                 enableLocker();
                 CPSettings.setCallAssistantModuleEnabled(true);
-                CPSettings.setScreenFlashModuleEnabled(true,true);
+                CPSettings.setScreenFlashModuleEnabled(true, true);
             });
             multiFunctionDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
             KCCommonUtils.showDialog(multiFunctionDialog);
@@ -609,11 +655,11 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
 
     private boolean showScreenLockerDialog() {
         if (BuildConfig.LOCKER_APP_GUIDE && !LockerAppGuideManager.getInstance().isLockerInstall()) {
-            if(!HSPreferenceHelper.getDefault().getBoolean("locker_guide_app_open_showed",false)){
-                HSPreferenceHelper.getDefault().putBoolean("locker_guide_app_open_showed",true);
+            if (!HSPreferenceHelper.getDefault().getBoolean("locker_guide_app_open_showed", false)) {
+                HSPreferenceHelper.getDefault().putBoolean("locker_guide_app_open_showed", true);
                 showLockerGuideAlert();
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -626,9 +672,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 return false;
             }
 
-            if (BuildConfig.LOCKER_APP_GUIDE){
+            if (BuildConfig.LOCKER_APP_GUIDE) {
                 showLockerGuideAlert();
-            }else {
+            } else {
                 AlertShowingUtils.startShowingAlert();
                 CustomDesignAlert lockerDialog = new CustomDesignAlert(HSApplication.getContext());
                 lockerDialog.setTitle(getString(R.string.locker_alert_title));
@@ -676,7 +722,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             callAssistantDialog.setPositiveButton(getString(R.string.enable), view -> {
                 HSAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen", "occasion", "open_app");
                 CPSettings.setCallAssistantModuleEnabled(true);
-                CPSettings.setScreenFlashModuleEnabled(true,true);
+                CPSettings.setScreenFlashModuleEnabled(true, true);
             });
             KCCommonUtils.showDialog(callAssistantDialog);
             callAssistantDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
