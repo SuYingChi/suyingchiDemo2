@@ -363,12 +363,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                             startActivity(intent);
                             finish();
                         } catch (Exception e) {
-
+                            e.printStackTrace();
                         }
                     }
+                    splashJumpCode = -1;
                 }
             });
-            splashJumpCode = -1;
             return;
         }
 
