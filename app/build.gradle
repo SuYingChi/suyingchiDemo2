@@ -98,7 +98,7 @@ android {
             buildConfigField "boolean", "ENABLE_FACEMOJI", "true"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
-            buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "27"
+            buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "100000"
             signingConfig signingConfigs.smileyReleaseConfig
         }
 
