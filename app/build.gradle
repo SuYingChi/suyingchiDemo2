@@ -164,35 +164,17 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven { url 'https://maven.fabric.io/public' }
-    maven { url "http://dl.appnext.com/" }
-    maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist" }
-    maven { url "http://dl.bintray.com/waynejo/maven" }
-    flatDir {
-        dirs 'libs', 'libs/bin_chargingscreen_android'
-    }
-    google()
-}
 
-//android.applicationVariants.all { variant ->
-//    variant.generateBuildConfig.versionName = variant.mergedFlavor.versionName + (variant.buildType.versionNameSuffix != null ? variant.buildType.versionNameSuffix : "")
-//}
-
-
-final LIB_DEVICE_VERSION = '.gm:4.3.1.gm'
+final LIB_DEVICE_VERSION = '.gm:4.4.2.gm'
 
 dependencies {
     // App Framework
     compile "com.ihandy.appframework:libAppframework.gm:4.5.2.gm"
     //Ads
     compile 'net.appcloudbox.ads:libAcbAds.gm:1.2.3.gm'
-    compile 'net.appcloudbox.common:libAcbCommonUtils.gm:1.1.5.gm'
 
     // Autopilot
     compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.0.gm"
-    compile "net.appcloudbox.common:libAcbHSFrameworkAdapter.gm:+"
 
 //    // Native Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.1.3.gm'
@@ -239,7 +221,7 @@ dependencies {
     //ihs related
     compile(name: 'ihs/libKeyboard/libKeyboard', ext: 'aar')
     compile(name: 'ihs/libKeyboardUtils/keyboardutils', ext: 'aar')
-    compile(name: 'libcharging', ext: 'aar')
+    compile(name: 'libCharging/libcharging', ext: 'aar')
     compile(name: 'libKeyboardCommons/libKeyboardCommons', ext: 'aar')
     compile(name: 'ihs/libCommon', ext: 'aar')
     compile(name: 'ihs/libAdCaffe/libAdCaffeCommon', ext: 'jar')

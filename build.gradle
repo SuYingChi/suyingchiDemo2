@@ -7,8 +7,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'io.fabric.tools:gradle:1.25.1'
     }
 }
 
@@ -25,6 +25,9 @@ configurations.all {
 allprojects {
 
     repositories {
+        flatDir {
+            dirs '../libs'
+        }
         //////////////////iHandy Maven configuration begin//////////////////
         maven {
             url "http://git.ihandysoft.com:8081/nexus/content/repositories/beta" // beta仓库
@@ -48,17 +51,14 @@ allprojects {
                 password project.credentials."${project.username}" // 使用之前配置的密码
             }
         }
-
         //////////////////iHandy Maven configuration end//////////////////
-
+        google()
         jcenter()
-        flatDir {
-            dirs '../libs'
-        }
-
-        mavenCentral()
         maven {
             url 'https://maven.fabric.io/public'
+        }
+        maven {
+            url "http://dl.bintray.com/waynejo/maven"
         }
     }
 }
