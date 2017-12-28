@@ -277,7 +277,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     private void setButtonText() {
         switch (themeType) {
             case NEED_DOWNLOAD:
-                if (TextUtils.isEmpty(themeLockerBgUrl)) {
+                if (TextUtils.isEmpty(themeLockerBgUrl) || LockerSettings.isLockerMuted()) {
                     leftBtn.setText(R.string.theme_card_menu_share);
                 } else {
                     leftBtn.setText(R.string.theme_card_set_locker_bg);
@@ -288,9 +288,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 } else {
                     ThemeHomeModel themeHomeModel = new ThemeHomeModel();
                     themeHomeModel.keyboardTheme = keyboardTheme;
-                    if (LockedCardActionUtils.shouldLock(themeHomeModel)){
+                    if (LockedCardActionUtils.shouldLock(themeHomeModel)) {
                         rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free));
-                    }else {
+                    } else {
                         rightBtn.setText(HSApplication.getContext().getString(R.string.theme_card_menu_download));
                     }
                     rightBtn.setEnabled(true);
@@ -341,7 +341,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             HSAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
             HSAnalytics.logEvent("keyboard_setaslockscreen_button_clicked", "occasion", "app_theme_detail");
-            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, getString(R.string.locker_enable_title_no_desc),themeName, new LockerEnableDialog.OnLockerBgLoadingListener() {
+            LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, getString(R.string.locker_enable_title_no_desc), themeName, new LockerEnableDialog.OnLockerBgLoadingListener() {
                 @Override
                 public void onFinish() {
                 }
@@ -351,7 +351,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             File file = new File(ThemeDownloadManager.getThemeDownloadLocalFile(keyboardTheme.mThemeName));
             if (keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.DOWNLOADED && !HSInstallationUtils.isAppInstalled(keyboardTheme.getThemePkName()) && file.exists() && file.length() > 0) {
                 ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(file));
-            }else {
+            } else {
                 if (HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
                     Intent intent = new Intent(this, KeyboardActivationGuideActivity.class);
                     startActivityForResult(intent, KEYBOARD_ACTIVIATION_FROM_APPLY_BUTTON);
@@ -365,7 +365,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_unlock_for_free).equalsIgnoreCase(text)) {
             ThemeHomeModel themeHomeModel = new ThemeHomeModel();
             themeHomeModel.keyboardTheme = keyboardTheme;
-            LockedCardActionUtils.handleLockAction(this, LockedCardActionUtils.LOCKED_CARD_FROM_THEME_DETAIL , themeHomeModel, new Runnable() {
+            LockedCardActionUtils.handleLockAction(this, LockedCardActionUtils.LOCKED_CARD_FROM_THEME_DETAIL, themeHomeModel, new Runnable() {
                 @Override
                 public void run() {
                     downloadTheme();

@@ -357,7 +357,12 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                         LockerAppGuideManager.getInstance().showDownloadLockerAlert(this,LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
                     }
                 }else {
-                    showSetWallpaperDialog();
+                    if(LockerSettings.isLockerMuted()){
+                        HSAnalytics.logEvent("app_wallpaper_setwallpaper_homescreen_clicked", "wallpaperName", mCurrentWallpaper.getName());
+                        setHomeScreenWallpaper();
+                    }else{
+                        showSetWallpaperDialog();
+                    }
                 }
 //                mSetSelectPopWin.showAtLocation(findViewById(R.id.main), Gravity.BOTTOM, 0, 0);
                 break;
