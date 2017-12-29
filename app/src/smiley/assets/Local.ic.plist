@@ -8,6 +8,8 @@
 		<dict>
 			<key>AppSuggestion</key>
 			<dict>
+				<key>StartVersion</key>
+				<integer>27</integer>
 				<key>state</key>
 				<integer>0</integer>
 				<key>MiniInterval</key>
@@ -16,10 +18,18 @@
 				<string>unit of MiniInterval is ms</string>
 				<key>ApkException</key>
 				<array>
-					<string>com.keyboard.font.theme.emoji</string>
+					<string>com.smartkeyboard.emoji</string>
+				</array>
+				<key>ApkDefault</key>
+				<array>
+					<string>com.whatsapp</string>
+					<string>com.facebook.orca</string>
+					<string>com.facebook.katana</string>
+					<string>com.instagram.android</string>
+					<string>com.snapchat.android</string>
 				</array>
 				<key>HoursFromFirstUse</key>
-				<integer>5</integer>
+				<integer>0</integer>
 			</dict>
 			<key>BoostNotification</key>
 			<dict>
@@ -358,9 +368,9 @@
 				<key>ChargingAlertEnabled</key>
 				<false/>
 				<key>StartVersion</key>
-				<integer>5</integer>
+				<integer>27</integer>
 				<key>MiniInterval</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>State</key>
 				<integer>0</integer>
 				<key>StateDescription</key>
@@ -6076,6 +6086,8 @@
 		<dict>
 			<key>admobbanner</key>
 			<dict>
+				<key>initsdkwhenstart</key>
+				<false/>
 				<key>appid</key>
 				<string>ca-app-pub-2932269826321009~8590235974</string>
 				<key>expireTime</key>
@@ -6087,6 +6099,8 @@
 			</dict>
 			<key>admobinterstitial</key>
 			<dict>
+				<key>initsdkwhenstart</key>
+				<false/>
 				<key>appid</key>
 				<string>ca-app-pub-6755533317593143~3768285781</string>
 				<key>expireTime</key>
@@ -6098,6 +6112,8 @@
 			</dict>
 			<key>admobnative</key>
 			<dict>
+				<key>initsdkwhenstart</key>
+				<false/>
 				<key>appid</key>
 				<string>ca-app-pub-2932269826321009~8590235974</string>
 				<key>expireTime</key>
@@ -10558,6 +10574,107 @@
 		</dict>
 		<key>nativeAds</key>
 		<dict>
+			<key>Smiley_A(NativeAds)CableReport</key>
+			<dict>
+				<key>deDuplicate</key>
+				<true/>
+				<key>packageFilter</key>
+				<true/>
+				<key>parallelCount</key>
+				<integer>0</integer>
+				<key>parallelList</key>
+				<array/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>1</integer>
+					<key>strategy</key>
+					<string>app</string>
+				</dict>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/6582459081</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/3415051971</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/5269376778</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/6763393755</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+					</dict>
+				</array>
+			</dict>
 			<key>Smiley_A(NativeAds)ApplyingItem</key>
 			<dict>
 				<key>deDuplicate</key>
@@ -14032,6 +14149,31 @@
 			<dict>
 				<key>Application</key>
 				<dict>
+					<key>AppSuggestion</key>
+					<dict>
+						<key>StartVersion</key>
+						<integer>27</integer>
+						<key>state</key>
+						<integer>2</integer>
+						<key>MiniInterval</key>
+						<integer>0</integer>
+						<key>Description</key>
+						<string>unit of MiniInterval is ms</string>
+						<key>ApkException</key>
+						<array>
+							<string>com.smartkeyboard.emoji</string>
+						</array>
+						<key>ApkDefault</key>
+						<array>
+							<string>com.whatsapp</string>
+							<string>com.facebook.orca</string>
+							<string>com.facebook.katana</string>
+							<string>com.instagram.android</string>
+							<string>com.snapchat.android</string>
+						</array>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+					</dict>
 					<key>ChargeLocker</key>
 					<dict>
 						<key>Alert</key>
@@ -14078,7 +14220,6 @@
 							<array>
 								<string>com.facebook.orca</string>
 								<string>com.facebook.katana</string>
-								<string>com.whatsapp</string>
 							</array>
 							<key>Show</key>
 							<true/>
@@ -14088,7 +14229,7 @@
 							<key>KeyboardClose</key>
 							<dict>
 								<key>HoursFromFirstUse</key>
-								<integer>0</integer>
+								<integer>5</integer>
 								<key>SessionIndexOfDay</key>
 								<array>
 									<integer>8</integer>
@@ -14744,6 +14885,19 @@
 						<key>state</key>
 						<integer>2</integer>
 					</dict>
+					<key>ChargeAlert</key>
+					<dict>
+						<key>ChargingAlertEnabled</key>
+						<false/>
+						<key>StartVersion</key>
+						<integer>27</integer>
+						<key>MiniInterval</key>
+						<integer>0</integer>
+						<key>State</key>
+						<integer>2</integer>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+					</dict>
 					<key>RateToUnlock</key>
 					<true/>
 				</dict>
@@ -14757,6 +14911,44 @@
 			<dict>
 				<key>Application</key>
 				<dict>
+					<key>AppSuggestion</key>
+					<dict>
+						<key>StartVersion</key>
+						<integer>27</integer>
+						<key>state</key>
+						<integer>2</integer>
+						<key>MiniInterval</key>
+						<integer>0</integer>
+						<key>Description</key>
+						<string>unit of MiniInterval is ms</string>
+						<key>ApkException</key>
+						<array>
+							<string>com.smartkeyboard.emoji</string>
+						</array>
+						<key>ApkDefault</key>
+						<array>
+							<string>com.whatsapp</string>
+							<string>com.facebook.orca</string>
+							<string>com.facebook.katana</string>
+							<string>com.instagram.android</string>
+							<string>com.snapchat.android</string>
+						</array>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
+					</dict>
+					<key>ChargeAlert</key>
+					<dict>
+						<key>ChargingAlertEnabled</key>
+						<true/>
+						<key>StartVersion</key>
+						<integer>27</integer>
+						<key>MiniInterval</key>
+						<integer>0</integer>
+						<key>State</key>
+						<integer>2</integer>
+						<key>StateDescription</key>
+						<string>0: no charger; 1:charger enabled &amp; defalut off; 2:charger enable &amp; defalut on</string>
+					</dict>
 					<key>ChargeLocker</key>
 					<dict>
 						<key>Alert</key>
@@ -14773,7 +14965,7 @@
 						<key>EnableAlertStyle</key>
 						<integer>0</integer>
 						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
+						<integer>5</integer>
 						<key>ShowAppInfo</key>
 						<true/>
 						<key>ShowSettingIcon</key>
@@ -14803,7 +14995,6 @@
 							<array>
 								<string>com.facebook.orca</string>
 								<string>com.facebook.katana</string>
-								<string>com.whatsapp</string>
 							</array>
 							<key>Show</key>
 							<true/>
@@ -14813,7 +15004,7 @@
 							<key>KeyboardClose</key>
 							<dict>
 								<key>HoursFromFirstUse</key>
-								<integer>0</integer>
+								<integer>5</integer>
 								<key>SessionIndexOfDay</key>
 								<array>
 									<integer>8</integer>
