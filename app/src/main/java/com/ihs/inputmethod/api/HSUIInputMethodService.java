@@ -483,6 +483,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         currentAppPackageName = editorInfo.packageName;
         isAppSupportSticker = true;
         AppSuggestionManager.getInstance().addNewRecentApp(currentAppPackageName);
+        AppSuggestionManager.getInstance().setCurrentTopAppName(currentAppPackageName);
 //        if (!restarting) {
 //            isAppSupportSticker = StickerUtils.isEditTextSupportSticker(currentAppPackageName);
 //        }
