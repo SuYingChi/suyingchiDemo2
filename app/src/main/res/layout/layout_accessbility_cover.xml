@@ -10,7 +10,7 @@
         android:id="@+id/view_img_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher_keyboard"
+        android:src="@mipmap/ic_launcher"
         app:layout_aspectRatio="100%"
         app:layout_marginTopPercent="26.2%"
         app:layout_widthPercent="26.8%" />

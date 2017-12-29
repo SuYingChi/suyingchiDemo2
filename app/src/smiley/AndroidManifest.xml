@@ -72,7 +72,7 @@
     <application
         android:name="com.smartkeyboard.emoji.app.MyInputMethodApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_keyboard"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/english_ime_name"
         android:largeHeap="true"
         android:supportsRtl="true"
