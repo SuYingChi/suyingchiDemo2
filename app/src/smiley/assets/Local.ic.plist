@@ -14888,7 +14888,7 @@
 					<key>ChargeAlert</key>
 					<dict>
 						<key>ChargingAlertEnabled</key>
-						<false/>
+						<true/>
 						<key>StartVersion</key>
 						<integer>27</integer>
 						<key>MiniInterval</key>
