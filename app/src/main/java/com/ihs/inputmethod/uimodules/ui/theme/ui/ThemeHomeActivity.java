@@ -223,7 +223,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         this.overridePendingTransition(0, 0);
 
         setContentView(R.layout.activity_theme_home);
-//        getWindow().setBackgroundDrawable(null);
+        getWindow().setBackgroundDrawable(null);
 
         mContent = ViewUtils.findViewById(this, R.id.content_layout);
 
