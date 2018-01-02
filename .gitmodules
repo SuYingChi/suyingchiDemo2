@@ -16,3 +16,6 @@
 [submodule "libs/libCharging"]
 	path = libs/libCharging
 	url = http://git.ihandysoft.com/bingroup/bin_chargingscreen_android.git
+[submodule "libs/libColorPhone"]
+	path = libs/libColorPhone
+	url = http://git.ihandysoft.com/bingroup/Bin_ColorPhone_Android.git

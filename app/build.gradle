@@ -256,8 +256,8 @@ dependencies {
     compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
 
     //callassistant
-    compile (name: 'ihs/libCallAssistant/libColorPhone', ext: 'aar')
-    compile (name: 'ihs/libCallAssistant/libNotificationService', ext: 'aar')
+    compile (name: 'libColorPhone/libColorPhone', ext: 'aar')
+    compile (name: 'libColorPhone/libNotificationService', ext: 'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //----
 

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acb.call.CPSettings;
-import com.acb.call.GifDownloadManager;
+import com.acb.call.MediaDownloadManager;
 import com.acb.call.activity.HSAppCompatActivity;
 import com.acb.call.constant.CPConst;
 import com.acb.call.receiver.IncomingCallReceiver;
@@ -47,7 +47,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     private InCallActionView mCallView;
     private Toolbar mToolbar;
     private TextView mSetCallThemeButton;
-    private GifDownloadManager mGifDownloader = new GifDownloadManager();
+    private MediaDownloadManager mGifDownloader = new MediaDownloadManager();
     private int mThemeCurrentSelectedId = Type.NONE;
     private int mThemePreviousSelectedId = Type.NONE;
     private boolean mIsDestroyed;
@@ -170,7 +170,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     }
 
     private void prepareAndShowGif(final Type type) {
-        if (mGifDownloader.isDownloaded(type.getGifFileName())) {
+        if (mGifDownloader.isDownloaded(type.getFileName())) {
             mPreviewView.playAnimation(type);
             mSetCallThemeButton.setVisibility(View.VISIBLE);
             mCallView.setAutoRun(true);
@@ -182,8 +182,8 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
             Glide.with(this).asBitmap().apply(requestOptions)
                     .load(type.getPreviewImage())
                     .into((ImageView) mPreviewView.findViewById(R.id.animation_view));
-            if (!mGifDownloader.isDownloading(type.getGifFileName())) {
-                downloadGif(type);
+            if (!mGifDownloader.isDownloading(type.getFileName())) {
+                downloadMedia(type);
             } else {
                 findViewById(R.id.theme_progress_bar).setVisibility(View.VISIBLE);
                 findViewById(R.id.theme_progress_txt_holder).setVisibility(View.VISIBLE);
@@ -191,15 +191,15 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         }
     }
 
-    private void downloadGif(final Type type) {
+    private void downloadMedia(final Type type) {
         final ProgressBar horPro = (ProgressBar) findViewById(R.id.theme_progress_bar);
         final LinearLayout proHolder = (LinearLayout) findViewById(R.id.theme_progress_txt_holder);
 
         horPro.setVisibility(View.VISIBLE);
         proHolder.setVisibility(View.VISIBLE);
         ((TextView) proHolder.findViewById(R.id.theme_progress_txt)).setText("0 %");
-        mGifDownloader.downloadGif(type.getGifUrl(), type.getGifFileName(),
-                new GifDownloadManager.SimpleDownloadCallback() {
+        mGifDownloader.downloadMedia(type.getSuggestMediaUrl(), type.getFileName(),
+                new MediaDownloadManager.SimpleDownloadCallback() {
                     @Override
                     public void onUpdate(final long progress) {
 
@@ -208,7 +208,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccess(GifDownloadManager.GifDownLoadTask task) {
+                    public void onSuccess(MediaDownloadManager.MediaDownLoadTask task) {
                         if (mIsDestroyed) {
                             return;
                         }
@@ -225,7 +225,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
 
                     @Override
-                    public void onFail(GifDownloadManager.GifDownLoadTask task, String msg) {
+                    public void onFail(MediaDownloadManager.MediaDownLoadTask task, String msg) {
                         if (mIsDestroyed) {
                             return;
                         }
