@@ -11,7 +11,7 @@ import android.widget.TextView;
  * Created by zhijieli on 11/8/16.
  */
 
-public class StrokeTextView extends TextView {
+public class StrokeTextView extends android.support.v7.widget.AppCompatTextView {
 
     public StrokeTextView(Context context, AttributeSet attrs) {
         super(context, attrs);

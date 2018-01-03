@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 
-public class RoundCornerImageView extends ImageView {
+public class RoundCornerImageView extends android.support.v7.widget.AppCompatImageView {
 
     public static final String TAG = "RoundCornerImageView";
 

@@ -38,7 +38,6 @@
         android:id="@+id/install_app_ad_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif"
         android:layout_marginTop="7dp"
         android:lineSpacingExtra="2dp"

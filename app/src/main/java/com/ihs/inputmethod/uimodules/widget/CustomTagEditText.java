@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
 
-public final class CustomTagEditText extends EditText implements TextWatcher,View.OnFocusChangeListener{
+public final class CustomTagEditText extends android.support.v7.widget.AppCompatEditText implements TextWatcher,View.OnFocusChangeListener{
     public static final char  DIVIDER=',';
 	private static final int TAGS_COUNT_LIMIT = 50;
     private static final int SPANCOLOR=Color.parseColor("#19ff1e");

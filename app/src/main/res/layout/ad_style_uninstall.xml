@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:minHeight="40dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <FrameLayout
             android:layout_width="wrap_content"
