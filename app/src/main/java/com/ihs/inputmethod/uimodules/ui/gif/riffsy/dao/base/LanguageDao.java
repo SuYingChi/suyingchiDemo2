@@ -1,11 +1,11 @@
 package com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.DataManager;
 
 import java.util.Locale;
@@ -32,7 +32,7 @@ public final class LanguageDao {
         SharedPreferences pre = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
         if (!getCurrentLanguageForDB().equals(pre.getString(PRE_KEY_CURRENT_LANGUAAGE, "en_US"))) {
             pre.edit().putString(PRE_KEY_CURRENT_LANGUAAGE, getCurrentLanguageForDB()).apply();
-            HSThreadUtils.execute(new Runnable() {
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {

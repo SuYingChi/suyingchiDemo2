@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -8,7 +9,6 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.feature.common.ConcurrentUtils;
@@ -75,10 +75,10 @@ public class StickerDownloadManager {
             HSZipUtils.unzip(new File(stickerGroupZipFilePath), new File(StickerUtils.getStickerRootFolderPath()));
             DownloadUtils.getInstance().saveJsonArrayToPref(DOWNLOADED_STICKER_NAME_JOIN, stickerGroup.getStickerGroupName());
             StickerDataManager.getInstance().updateStickerGroupList(stickerGroup);
-            HSThreadUtils.execute(new Runnable() {
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
                 @Override
                 public void run() {
-                    StickerSuggestionManager.updateConfig();
+                    StickerSuggestionManager.getInstance().updateConfig(false);
                 }
             });
         } catch (ZipException e) {

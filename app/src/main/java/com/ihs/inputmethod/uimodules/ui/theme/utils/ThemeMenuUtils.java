@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.utils;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,7 +14,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.alerts.HSAlertDialog;
 import com.kc.commons.utils.KCCommonUtils;
@@ -77,7 +77,7 @@ public class ThemeMenuUtils {
                 if (!file.exists() || file.length() == 0){
                     final AlertDialog loadingDialog = HSAlertDialog.build(activity).setView(R.layout.dialog_loading).setCancelable(false).create();
                     KCCommonUtils.showDialog(loadingDialog);
-                    HSThreadUtils.execute(new Runnable() {
+                    AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
                         @Override
                         public void run() {
                             KCCustomThemeHelper.createAndSaveShareImage(keyboardTheme,shareImagePath);

@@ -2,21 +2,21 @@ package com.ihs.inputmethod.uimodules.ui.stickerdeprecated;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.util.Pair;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSMapUtils;
 import com.ihs.commons.utils.HSPlistParser;
-import com.ihs.inputmethod.api.managers.HSPictureManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
+import com.ihs.inputmethod.api.managers.HSPictureManager;
+import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.ihs.inputmethod.api.utils.HSPictureUtils;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareChannel;
 import com.ihs.inputmethod.uimodules.mediacontroller.shares.ShareUtils;
 import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.bean.BaseStickerItem;
-import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.api.utils.HSPictureUtils;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -74,7 +74,7 @@ public class StickerManager {
 	public static void init(){
 		if(mInstance==null){
 			mInstance=new StickerManager(HSApplication.getContext());
-			HSThreadUtils.execute(new Runnable() {
+			AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
 				@Override
 				public void run() {
 					mInstance.loadStickerFile();

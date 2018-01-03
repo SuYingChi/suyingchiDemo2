@@ -81,13 +81,6 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         }
     }
 
-    protected void showKeyboard() {
-        if (getCustomThemeActivity() != null) {
-            getCustomThemeActivity().showKeyboard();
-        }
-
-    }
-
     public void setHeaderNextEnable(boolean enable) {
         if (getCustomThemeActivity() != null) {
             getCustomThemeActivity().setHeaderNextEnable(enable);

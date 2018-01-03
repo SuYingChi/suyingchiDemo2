@@ -1,11 +1,11 @@
 package com.ihs.inputmethod.uimodules.ui.gif.riffsy.emojisearch;
 
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Build;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifCategory;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.control.GifManager;
@@ -61,7 +61,7 @@ public final class ESEmojiLoader {
     };
 
     public ESEmojiLoader() {
-	    HSThreadUtils.execute(new Runnable() {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
             @Override
             public void run() {
                 loadEmojis();
@@ -132,7 +132,7 @@ public final class ESEmojiLoader {
         final boolean should = mEmojis.size() > SIZE_TO_EABLE_EMOJI_SEARCH;
         if (!should) {
 	        HSLog.d("emoji search not enabled, support emoji size = "+mEmojis.size());
-            HSThreadUtils.execute(new Runnable() {
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
                 @Override
                 public void run() {
                     loadEmojis();

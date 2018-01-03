@@ -5,11 +5,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -22,6 +22,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
@@ -42,10 +49,6 @@ import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonShapeElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.download.ImageDownloader;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 
@@ -90,10 +93,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
     }
 
-    protected void adjustLayoutForDevice88(@NonNull BaseItemHolder holder, KCBaseElement item) {
-        holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
-    }
-
     private void onItemClickedWithDownloading(final V holder, final I item, boolean showAd) {
         if (holder == lastCheckedHolder) {
             return;
@@ -131,7 +130,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         setNotNew(holder, baseElement);
         if (!hasDownloadThemeContent) {
             final AdLoadingView adLoadingView = new AdLoadingView(fragment.getActivity());
-            adLoadingView.configParams(backgroundDrawable, baseElement.getPreview(),
+            adLoadingView.configParams(backgroundDrawable, null,
                     HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip),
                     HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard),
                     HSApplication.getContext().getResources().getString(R.string.ad_placement_applying),
@@ -153,7 +152,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             holder.downloadingProgressListener = new BaseItemHolder.OnDownloadingProgressListener() {
                 @Override
                 public void onUpdate(int percent) {
-                    HSLog.e("onUpdate +" + percent);
                     adLoadingView.updateProgressPercent(percent);
                 }
 
@@ -167,6 +165,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
                     adLoadingView.updateProgressPercent(0);
                 }
             };
+            Glide.with(HSApplication.getContext()).asBitmap().apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)).load(baseElement.getPreviewFileUrl()).into((ImageView) adLoadingView.findViewById(R.id.iv_icon));
             adLoadingView.showInDialog();
         } else {
             selectItem(holder, baseElement);
@@ -310,30 +309,23 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     protected void setItemDrawable(@NonNull final BaseItemHolder holder, @NonNull final Object obj) {
         final KCBaseElement item = (KCBaseElement) obj;
 
-        ImageLoader.getInstance().loadImage(ImageDownloader.Scheme.FILE.wrap(item.getLocalPreviewPath()), options, new ImageLoadingListener() {
+        holder.mPlaceholderView.setVisibility(View.VISIBLE);
+        holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
+        Glide.with(holder.mContentImageView).asBitmap().apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)).listener(new RequestListener<Bitmap>() {
             @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                holder.mPlaceholderView.setVisibility(View.VISIBLE);
-                holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 holder.mContentImageView.setImageDrawable(null);
                 downloadPreview(holder, item);
+                return false;
             }
 
             @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                 holder.mPlaceholderView.setVisibility(View.GONE);
-                holder.mContentImageView.setImageBitmap(loadedImage);
+                holder.mContentImageView.setImageBitmap(resource);
+                return false;
             }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-
-            }
-        });
+        }).load(item.getPreviewFileUrl()).into(holder.mContentImageView);
     }
 
     /**
@@ -374,14 +366,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     private void startDownloadContent(BaseItemHolder holder, I item) {
         downloadContent(holder, item);
     }
-
-
-//    private boolean isCustomBackgroundType(HSCustomThemeItemBase item) {
-//        return (item instanceof HSCustomThemeItemBackground)
-//                && (((HSCustomThemeItemBackground) item).getCustomizedSource() == CAMERA
-//                || ((HSCustomThemeItemBackground) item).getCustomizedSource() == PHOTO_ALBUM
-//        );
-//    }
 
     protected void setLayoutParams(final HSGifImageView mContentImageView, final View view) {
         handler.post(new Runnable() {
@@ -621,11 +605,6 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         view.startAnimation(smallScale);
     }
 
-
-    public interface loadPreviewResultListener {
-        void onLoadResult(Drawable drawable);
-    }
-
     public static class BaseItemHolder extends RecyclerView.ViewHolder {
 
         public HSGifImageView mGifView;
@@ -661,25 +640,4 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         }
     }
 
-    public static class LoadPreviewTask extends AsyncTask<Void, Void, Drawable> {
-        loadPreviewResultListener loadPreviewResultListener;
-        KCBaseElement item;
-
-        public LoadPreviewTask(KCBaseElement item, BaseThemeItemProvider.loadPreviewResultListener loadPreviewResultListener) {
-            this.item = item;
-            this.loadPreviewResultListener = loadPreviewResultListener;
-        }
-
-        @Override
-        protected Drawable doInBackground(Void... params) {
-            return item.getPreview();
-        }
-
-        @Override
-        protected void onPostExecute(Drawable drawable) {
-            if (loadPreviewResultListener != null) {
-                loadPreviewResultListener.onLoadResult(drawable);
-            }
-        }
-    }
 }

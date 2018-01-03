@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.text.TextUtils;
 
@@ -42,7 +43,6 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.managers.HSDirectoryManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.uimodules.BuildConfig;
@@ -60,7 +60,6 @@ import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.MainActivity;
-import com.keyboard.core.themes.ThemeDirManager;
 import com.launcher.FloatWindowCompat;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -200,13 +199,12 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         //init facemoji
         HSDirectoryManager.getInstance().init(HSApplication.getContext());
-        HSThreadUtils.execute(new Runnable() {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
             @Override
             public void run() {
                 if (BuildConfig.ENABLE_FACEMOJI) {
                     FacemojiManager.getInstance().init();
                 }
-                ThemeDirManager.moveCustomAssetsToFileIfNecessary();
             }
         });
 

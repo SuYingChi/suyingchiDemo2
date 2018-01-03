@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,7 +23,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.managers.HSPictureManager;
-import com.ihs.inputmethod.api.utils.HSThreadUtils;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacePictureParam;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiCategory;
@@ -138,7 +138,7 @@ public class FacemojiManager {
     }
 
     private void onConfigChange() {
-        HSThreadUtils.execute(new Runnable() {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
             @Override
             public void run() {
                 loadFacemojiCategoryFromConfig();
