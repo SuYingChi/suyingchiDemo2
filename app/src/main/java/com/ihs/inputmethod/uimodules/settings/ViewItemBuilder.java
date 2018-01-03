@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.settings;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.R;
 
 
@@ -82,6 +84,23 @@ final class ViewItemBuilder {
         return new ViewItem(HSApplication.getContext().getResources().getString(R.string.setting_item_my_theme),
                 getStateListDrawable(SETTINGS_KEY_MY_THEME, SETTINGS_KEY_MY_THEME)
                 , viewItemListener, false);
+    }
+
+    static ViewItem getLuckyItem() {
+        return new ViewItem(HSApplication.getContext().getResources().getString(R.string.lucky_game_title), HSApplication.getContext().getResources().getDrawable(R.drawable.ic_lucky_selector)
+                , new ViewItem.ViewItemListener() {
+            @Override
+            public void onItemClick(ViewItem item) {
+                Intent shortcutIntent = new Intent(HSApplication.getContext(), LuckyActivity.class);
+                shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                HSApplication.getContext().startActivity(shortcutIntent);
+            }
+
+            @Override
+            void onItemViewInvalidate(ViewItem item) {
+
+            }
+        }, false);
     }
 
     static ViewItem getSoundsPositionItem() {

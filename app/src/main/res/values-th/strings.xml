@@ -284,4 +284,18 @@
     
     <string name="custom_share_alert_message">อยากปลดล็อกธีมนี้ฟรีๆ ไหม? แชร์ RainbowKey บน Instagram แล้วพิมพ์ @rainbowkeyapp เพื่อปลดล็อก</string>
     <string name="custom_share_alert_button_text">ปลดล็อกได้ฟรี</string>
+    <string name="launcher_widget_lucky_title">โชคดี</string>
+    <string name="lucky_game_award_boom_description"> ครั้ง</string>
+    <string name="lucky_game_award_chances_description"> ยินดีด้วย +3 ครั้ง</string>
+    <string name="lucky_game_award_chances_receive_btn"> รับ</string>
+    <string name="lucky_game_award_empty_action"> ลองอีกครั้ง</string>
+    <string name="lucky_game_award_no_network_description"> ไม่มีการเชื่อมต่อเครือข่าย!</string>
+    <string name="no_network_connection"> ไม่มีการเชื่อมต่อเครือข่าย!</string>
+    <string name="lucky_game_award_theme_action"> ติดตั้ง</string>
+    <string name="lucky_game_award_theme_description"> พบธีมใหม่!</string>
+    <string name="lucky_game_award_wallpaper_description">ภาพพื้นหลังแสนสวย!</string>
+    <string name="lucky_game_award_wallpaper_action"> ตั้งเป็นภาพพื้นหลัง</string>
+    <string name="lucky_game_chance_counter"> สิทธิ: %1$s</string>
+    <string name="lucky_game_award_ad_related_title">คุณได้รับรางวัล!</string>
+    <string name="lucky_game_chance_restore_timer">มีให้รับอีกใน %1$s</string>
 </resources>

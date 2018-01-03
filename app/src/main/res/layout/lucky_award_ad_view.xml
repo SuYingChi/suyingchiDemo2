@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ihs.inputmethod.feature.lucky.view.PrizeView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/lucky_award_bg"
+    tools:ignore="ContentDescription">
+
+    <TextView
+        android:id="@+id/lucky_game_ad_found_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/lucky_award_ad_view_container_top_margin"
+        android:layout_marginBottom="17dp"
+        android:text="@string/lucky_game_award_ad_related_title"
+        android:textColor="#fff100"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/lucky_game_drag_ad_icon"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/lucky_award_ad_question_mark"
+        android:visibility="invisible" />
+</com.ihs.inputmethod.feature.lucky.view.PrizeView>
