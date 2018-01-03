@@ -3,11 +3,11 @@ package com.ihs.inputmethod.uimodules.mediacontroller.converts.gif2bitmap;
 /**
  * Created by ihandysoft on 16/7/27.
  */
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class GifDecoder{
 
@@ -575,11 +575,11 @@ public class GifDecoder{
                             break;
                         case 0xff: // application extension
                             readBlock();
-                            String app = "";
+                            StringBuilder app = new StringBuilder();
                             for (int i = 0; i < 11; i++) {
-                                app += (char) block[i];
+                                app.append((char) block[i]);
                             }
-                            if (app.equals("NETSCAPE2.0")) {
+                            if (app.toString().equals("NETSCAPE2.0")) {
                                 readNetscapeExt();
                             } else {
                                 skip(); // don't care
@@ -614,11 +614,11 @@ public class GifDecoder{
     }
 
     private void readHeader() {
-        String id = "";
+        StringBuilder id = new StringBuilder();
         for (int i = 0; i < 6; i++) {
-            id += (char) read();
+            id.append((char) read());
         }
-        if (!id.startsWith("GIF")) {
+        if (!id.toString().startsWith("GIF")) {
             status = STATUS_FORMAT_ERROR;
             return;
         }

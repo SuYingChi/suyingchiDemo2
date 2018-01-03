@@ -1,9 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
-import com.ihs.inputmethod.uimodules.R;
-
-import java.util.ArrayList;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

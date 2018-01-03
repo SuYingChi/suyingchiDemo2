@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.emoji;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Build;
-import android.util.Log;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
@@ -15,7 +14,6 @@ import com.kc.commons.configfile.KCMap;
 import com.kc.commons.configfile.KCParser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;

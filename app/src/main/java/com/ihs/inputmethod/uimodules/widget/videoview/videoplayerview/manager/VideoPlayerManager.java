@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.widget.videoview.videoplayerview.manager;
 
 import android.content.res.AssetFileDescriptor;
-import android.view.View;
 
 import com.ihs.inputmethod.uimodules.widget.videoview.videoplayerview.meta.MetaData;
 import com.ihs.inputmethod.uimodules.widget.videoview.videoplayerview.ui.VideoPlayerView;

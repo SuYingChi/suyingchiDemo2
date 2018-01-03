@@ -141,7 +141,6 @@ public class HSUIApplication extends HSInputMethodApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
         /**
          * !!注意，application下不要初始化东西，需要初始化的请放在 onMainProcessApplicationCreate
          */

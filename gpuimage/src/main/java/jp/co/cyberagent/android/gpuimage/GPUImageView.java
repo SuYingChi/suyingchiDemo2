@@ -30,7 +30,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -323,9 +322,7 @@ public class GPUImageView extends FrameLayout {
 
                 // Convert upside down mirror-reversed image to right-side up normal image.
                 for (int i = 0; i < height; i++) {
-                    for (int j = 0; j < width; j++) {
-                        pixelMirroredArray[(height - i - 1) * width + j] = pixelArray[i * width + j];
-                    }
+                    System.arraycopy(pixelArray, i * width + 0, pixelMirroredArray, (height - i - 1) * width + 0, width);
                 }
                 waiter.release();
             }

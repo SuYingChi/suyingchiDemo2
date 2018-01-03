@@ -96,19 +96,19 @@ public class UpdateConfig {
     }
 
     private static String getDescriptionConfig() {
-        String description = "";
+        StringBuilder description = new StringBuilder();
 
         @SuppressWarnings("unchecked") List<String> descriptionList = (List<String>) HSConfig.getList("Application", "Update", "NormalAlert", "Description");
 
         if (descriptionList != null && !descriptionList.isEmpty()) {
             for (int i = 0; i < descriptionList.size(); ++i) {
-                description += descriptionList.get(i) + ((i < (descriptionList.size() - 1)) ? "\n" : "");
+                description.append(descriptionList.get(i)).append((i < (descriptionList.size() - 1)) ? "\n" : "");
             }
         }
 
-        if (TextUtils.isEmpty(description)) {
-            description = HSApplication.getContext().getString(R.string.apk_update_alert_message);
+        if (TextUtils.isEmpty(description.toString())) {
+            description = new StringBuilder(HSApplication.getContext().getString(R.string.apk_update_alert_message));
         }
-        return description;
+        return description.toString();
     }
 }

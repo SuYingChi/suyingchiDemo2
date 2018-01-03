@@ -89,7 +89,7 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getActivity().getFragmentManager(), fragments);
         tabFragmentPagerAdapter.setTabTitles(homeTabTitles);
-        viewPager.setOffscreenPageLimit(fragments.size());
+        viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);

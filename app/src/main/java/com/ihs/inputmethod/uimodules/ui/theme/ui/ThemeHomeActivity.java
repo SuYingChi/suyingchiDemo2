@@ -400,7 +400,6 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
 
         isResumeOnCreate = false;
-
     }
 
     @Override

@@ -82,16 +82,12 @@ public final class ThemeAnalyticsReporter {
 	private void saveReportedTheme(){
 		SharedPreferences pre= PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
 		List<Object> themes=new ArrayList<>();
-		for(String theme:reportedTheme){
-			themes.add(theme);
-		}
+        themes.addAll(reportedTheme);
 		final String jsonStr = HSJsonUtils.listToJsonStr(themes);
 		pre.edit().putString("ThemeAnalyticsReporter.PRE_KEY_THEME_ANALYTICS_REPORTED_THEMES",jsonStr).apply();
 
 		List<Object> details=new ArrayList<>();
-		for(String theme:detailReported){
-			details.add(theme);
-		}
+        details.addAll(detailReported);
 		final String detailStr = HSJsonUtils.listToJsonStr(details);
 		pre.edit().putString("ThemeAnalyticsReporter.PRE_KEY_THEME_ANALYTICS_DETAIL_THEMES",detailStr).apply();
 	}

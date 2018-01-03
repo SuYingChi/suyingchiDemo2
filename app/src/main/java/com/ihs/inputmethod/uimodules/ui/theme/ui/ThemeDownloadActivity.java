@@ -79,7 +79,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
         tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker_my);
         tabTitles[2] = getApplicationContext().getString(R.string.tab_font_my);
         tabFragmentPagerAdapter.setTabTitles(tabTitles);
-        viewPager.setOffscreenPageLimit(fragments.size());
+        viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);

@@ -1,12 +1,10 @@
 package com.ihs.inputmethod.uimodules.widget.videoview.videoplayerview.ui;
 
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;

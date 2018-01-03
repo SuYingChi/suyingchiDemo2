@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
-import com.keyboard.core.themes.custom.KCCustomThemeHelper;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
