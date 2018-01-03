@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.stickerdeprecated.StickerManager;
 
 class FacemojiLayoutParams {
 	public int mEmojiPagerHeight;
@@ -75,7 +74,7 @@ class FacemojiLayoutParams {
 			mGridViewVerticalSpacing = (int)((mEmojiPagerHeight - mGridViewRowNumber*mViewHeight)/(mGridViewRowNumber + 1));
 		}
 		Log.e("FacemojiLayoutParams",mViewWidth+":"+mViewHeight);
-		StickerManager.getInstance().saveSize(mGridViewRowNumber*mGridViewColunmNumber);
+//		StickerManager.getInstance().saveSize(mGridViewRowNumber*mGridViewColunmNumber);
 	}
 
 	public void setPagerProperties(ViewPager vp) {

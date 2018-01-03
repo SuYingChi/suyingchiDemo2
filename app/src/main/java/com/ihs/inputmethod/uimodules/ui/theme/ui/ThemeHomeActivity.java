@@ -280,9 +280,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             HSApplication.getContext().startActivity(intent);
             PermissionFloatWindow.getInstance().createPermissionTip(PermissionTip.TYPE_TEXT_USAGE);
         }

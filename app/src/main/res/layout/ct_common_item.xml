@@ -9,7 +9,6 @@
         android:id="@+id/custom_theme_item_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:adjustViewBounds="true" />
 
     <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
@@ -23,7 +22,6 @@
         android:id="@+id/custom_theme_item_check_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:visibility="invisible" />
 
@@ -31,14 +29,12 @@
         android:id="@+id/custom_theme_item_locked"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:adjustViewBounds="true" />
 
     <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
         android:id="@+id/custom_theme_item_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:background="@color/custom_theme_preview_placeholder"
         android:visibility="gone" />
@@ -47,14 +43,12 @@
         android:id="@+id/custom_theme_item_new_mark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:adjustViewBounds="true" />
 
     <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
         android:id="@+id/custom_theme_item_gift_icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_keyboard_custom_theme_background_gift"
         android:visibility="gone" />

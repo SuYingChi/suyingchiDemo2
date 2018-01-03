@@ -10,7 +10,8 @@
 	<TextView
 		android:id="@+id/title_left"
 		style="@style/UiModuleThemeTitleTextView"
-		android:layout_weight="1"/>
+		android:layout_weight="1"
+        android:layout_width="0dp" />
 
 	<TextView
 		android:id="@+id/title_btn_right"

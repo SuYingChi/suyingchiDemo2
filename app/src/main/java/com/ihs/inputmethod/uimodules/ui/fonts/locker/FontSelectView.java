@@ -36,6 +36,7 @@ public class FontSelectView extends ListView {
         mItemSelectedBackground = new ColorDrawable(getResources().getColor(R.color.font_select_listview_item_selected_bg));
         setDivider(new ColorDrawable(fontItemDividerColor));
         setDividerHeight(1);
+        keyboardViewAttr.recycle();
     }
 
     @Override

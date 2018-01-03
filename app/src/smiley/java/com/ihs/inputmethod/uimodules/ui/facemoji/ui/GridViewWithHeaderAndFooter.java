@@ -271,20 +271,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
 
     @TargetApi(11)
     private int getNumColumnsCompatible() {
-        if (Build.VERSION.SDK_INT >= 11) {
-            return super.getNumColumns();
-        } else {
-            try {
-                Field numColumns = GridView.class.getDeclaredField("mNumColumns");
-                numColumns.setAccessible(true);
-                return numColumns.getInt(this);
-            } catch (Exception e) {
-                if (mNumColumns != -1) {
-                    return mNumColumns;
-                }
-                throw new RuntimeException("Can not determine the mNumColumns for this API platform, please call setNumColumns to set it.");
-            }
-        }
+        return super.getNumColumns();
     }
 
     @TargetApi(16)
@@ -393,21 +380,13 @@ public class GridViewWithHeaderAndFooter extends GridView {
     @TargetApi(11)
     public void tryToScrollToBottomSmoothly() {
         int lastPos = getAdapter().getCount() - 1;
-        if (Build.VERSION.SDK_INT >= 11) {
-            smoothScrollToPositionFromTop(lastPos, 0);
-        } else {
-            setSelection(lastPos);
-        }
+        smoothScrollToPositionFromTop(lastPos, 0);
     }
 
     @TargetApi(11)
     public void tryToScrollToBottomSmoothly(int duration) {
         int lastPos = getAdapter().getCount() - 1;
-        if (Build.VERSION.SDK_INT >= 11) {
-            smoothScrollToPositionFromTop(lastPos, 0, duration);
-        } else {
-            setSelection(lastPos);
-        }
+        smoothScrollToPositionFromTop(lastPos, 0, duration);
     }
 
     @Override
