@@ -10,7 +10,7 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
-    <uses-sdk tools:overrideLibrary="com.facebook,com.facebook.shimmer,android.support.customtabs,com.facebook.ads,com.google.android.gms,com.mopub.mobileads.banner,com.mopub.mobileads.base,com.mopub.mobileads.native_static,com.millennialmedia,jp.co.cyberagent.android.gpuimage" />
+    <uses-sdk tools:overrideLibrary="com.facebook,com.facebook.shimmer,android.support.customtabs,com.facebook.ads,com.google.android.gms,com.mopub.mobileads.banner,com.mopub.mobileads.base,com.mopub.mobileads.native_static,com.millennialmedia,jp.co.cyberagent.android.gpuimage,net.appcloudbox.autopilot" />
 
     <uses-feature
         android:name="android.hardware.telephony"
