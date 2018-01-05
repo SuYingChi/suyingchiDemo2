@@ -83,7 +83,7 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         final Type themeType = mThemes.get(themeIndex);
 
         RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.locker_theme_thumbnail_loading)
-                .error(R.drawable.locker_theme_thumbnail_failed).diskCacheStrategy(DiskCacheStrategy.DATA);
+                .error(R.drawable.locker_theme_thumbnail_failed).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
         Glide.with(mContext).asBitmap().apply(requestOptions)
                 .load(themeType.getPreviewImage()).transition(withCrossFade(500))
                 .into(themeHolder.themeThumbnail);
