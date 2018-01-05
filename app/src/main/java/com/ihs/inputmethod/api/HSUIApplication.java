@@ -229,8 +229,6 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
 
-//        HSInputMethodService.initResourcesBeforeOnCreate();
-
         registerNotificationEvent();
 
         ScreenLockerManager.init();

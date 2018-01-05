@@ -165,16 +165,16 @@ android {
 }
 
 
-final LIB_DEVICE_VERSION = '.gm:4.4.2.gm'
+final LIB_DEVICE_VERSION = '.gm:4.4.3.gm'
 
 dependencies {
     // App Framework
-    compile "com.ihandy.appframework:libAppframework.gm:4.5.2.gm"
+    compile "com.ihandy.appframework:libAppframework.gm:4.5.4.gm"
     //Ads
-    compile 'net.appcloudbox.ads:libAcbAds.gm:1.2.3.gm'
+    compile 'net.appcloudbox.ads:libAcbAds.gm:1.2.4.gm'
 
     // Autopilot
-    compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.0.gm"
+    compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.3.gm"
 
 //    // Native Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.1.3.gm'
