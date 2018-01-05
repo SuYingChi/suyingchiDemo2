@@ -61,7 +61,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                     || FacemojiManager.FACEMOJI_SAVED.equals(s)
                     || FacemojiDownloadManager.FACEMOJI_CATEGORY_DOWNLOADED.equals(s)
                     || StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)
-                    || (FacemojiManager.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */ ){
+                    || (FacemojiManager.FACE_DELETED.equals(s) && FacemojiManager.getDefaultFacePicUri() == null) /** face被删除光了，才重新加载页面数据 */) {
                 loadDatas();
             }
         }
@@ -70,7 +70,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
     @Override
     public void onSaveInstanceState(Bundle outState) {
         //随便设置一个，修复按Home键会crash的问题，方法来自https://stackoverflow.com/questions/14516804/nullpointerexception-android-support-v4-app-fragmentmanagerimpl-savefragmentbasi
-        outState.putString("xxx",  "xxx");
+        outState.putString("xxx", "xxx");
         super.onSaveInstanceState(outState);
     }
 
@@ -143,7 +143,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                 };
 
                 if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
-                    LockedCardActionUtils.handleLockAction(getActivity(),LockedCardActionUtils.LOCKED_CARD_FROM_STICKER, stickerHomeModel, runnable);
+                    LockedCardActionUtils.handleLockAction(getActivity(), LockedCardActionUtils.LOCKED_CARD_FROM_STICKER, stickerHomeModel, runnable);
                 } else {
                     runnable.run();
                 }
@@ -241,11 +241,11 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
         stickerCardAdapter.notifyDataSetChanged();
     }
 
-    private void goMyFacemojiActivity(String categoryName){
+    private void goMyFacemojiActivity(String categoryName) {
         try {
             Intent intent = new Intent(getActivity(), Class.forName("com.ihs.inputmethod.uimodules.ui.facemoji.ui.MyFacemojiActivity"));
-            if(!TextUtils.isEmpty(categoryName)){
-                intent.putExtra(FacemojiManager.INIT_SHOW_TAB_CATEGORY,categoryName);
+            if (!TextUtils.isEmpty(categoryName)) {
+                intent.putExtra(FacemojiManager.INIT_SHOW_TAB_CATEGORY, categoryName);
             }
             startActivity(intent);
         } catch (ClassNotFoundException e) {
@@ -268,7 +268,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
         super.onStop();
     }
 
-    private void startFacemojiAnim(){
+    private void startFacemojiAnim() {
         if (BuildConfig.ENABLE_FACEMOJI) {
             if (isVisibleToUser && isResume) {
                 setAnimStatus(true);
@@ -289,9 +289,9 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                 if (stickerModelList.get(i).isFacemoji) {
                     RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
                     if (viewHolder != null && viewHolder instanceof StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) {
-                        if (start){
+                        if (start) {
                             ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) viewHolder).facemojiAnimationView.start();
-                        }else {
+                        } else {
                             ((StickerFacemojiAdapterDelegate.StickerFacemojiViewHolder) viewHolder).facemojiAnimationView.stop();
                         }
                     }
@@ -304,9 +304,9 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
-        if (isVisibleToUser){
+        if (isVisibleToUser) {
             startFacemojiAnim();
-        }else {
+        } else {
             stopFacemojiAnim();
         }
     }
@@ -319,11 +319,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
 
     @Override
     public void onDestroy() {
-        HSGlobalNotificationCenter.removeObserver(FacemojiManager.FACEMOJI_SAVED, observer);
-        HSGlobalNotificationCenter.removeObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
-        HSGlobalNotificationCenter.removeObserver(FacemojiManager.FACE_DELETED, observer);
-        HSGlobalNotificationCenter.removeObserver(LockedCardActionUtils.UNLOCK_RATE_ALERT_SHOW, observer);
-        HSGlobalNotificationCenter.removeObserver(LockedCardActionUtils.UNLOCK_SHARE_ALERT_SHOW, observer);
+        HSGlobalNotificationCenter.removeObserver(observer);
         LockerAppGuideManager.getInstance().removeLockerInstallStatusChangeListener(this);
         super.onDestroy();
     }
