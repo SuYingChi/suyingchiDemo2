@@ -698,10 +698,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     }
 
     private void showLockerGuideAlert() {
-        LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
-        lockerDialog.setCancelable(true);
-        KCCommonUtils.showDialog(lockerDialog);
-        AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
+        if (HSConfig.optBoolean(false, "Application", "DownloadScreenLocker", "AppOpen", "enable")) {
+            LockerGuideAlert lockerDialog = new LockerGuideAlert(this);
+            lockerDialog.setCancelable(true);
+            KCCommonUtils.showDialog(lockerDialog);
+            AutopilotEvent.logTopicEvent("topic-1512033355055", "locker_alert_show");
+        }
     }
 
     private boolean showCallAssistantDialog() {

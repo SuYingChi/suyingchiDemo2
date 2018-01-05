@@ -27,7 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.artw.lockscreen.LockerSettings;
-import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
@@ -222,9 +221,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 //        mReturnArrow.setBackgroundResource(R.drawable.moment_round_material_compat_dark);
         mSetWallpaperButton = (TextView) findViewById(R.id.set_wallpaper_button);
         mSetWallpaperButton.setOnClickListener(this);
-        if(BuildConfig.LOCKER_APP_GUIDE){
-            mSetWallpaperButton.setText(R.string.locker_set_lock_screen);
-        }
 
         mSetKeyThemeButton = (TextView) findViewById(R.id.set_key_theme_button);
         mSetKeyThemeButton.setOnClickListener(this);
@@ -350,19 +346,11 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
                     return;
                 }
 
-                if(BuildConfig.LOCKER_APP_GUIDE){
-                    if(LockerAppGuideManager.getInstance().isLockerInstall()){
-                        LockerAppGuideManager.setLockerAppWallpaper(this,mCurrentWallpaper.getWallpaperUrl(),mCurrentWallpaper.getThumbnailUrl());
-                    }else{
-                        LockerAppGuideManager.getInstance().showDownloadLockerAlert(this,LockerAppGuideManager.FLURRY_ALERT_WALL_PAPER);
-                    }
-                }else {
-                    if(LockerSettings.isLockerMuted()){
-                        HSAnalytics.logEvent("app_wallpaper_setwallpaper_homescreen_clicked", "wallpaperName", mCurrentWallpaper.getName());
-                        setHomeScreenWallpaper();
-                    }else{
-                        showSetWallpaperDialog();
-                    }
+                if (LockerSettings.isLockerMuted()) {
+                    HSAnalytics.logEvent("app_wallpaper_setwallpaper_homescreen_clicked", "wallpaperName", mCurrentWallpaper.getName());
+                    setHomeScreenWallpaper();
+                } else {
+                    showSetWallpaperDialog();
                 }
 //                mSetSelectPopWin.showAtLocation(findViewById(R.id.main), Gravity.BOTTOM, 0, 0);
                 break;
