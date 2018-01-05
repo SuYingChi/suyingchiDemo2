@@ -53,7 +53,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_below="@id/theme_image_container"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -62,12 +62,10 @@
                     android:id="@+id/theme_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="@color/theme_card_theme_name"
                     android:textSize="14sp" />
 
