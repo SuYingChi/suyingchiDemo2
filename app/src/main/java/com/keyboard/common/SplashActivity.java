@@ -20,7 +20,7 @@ public class SplashActivity extends HSDeepLinkActivity {
     public static final int JUMP_TO_CUSTOM_THEME = 2;
     public static final int JUMP_TO_FACEMOJI_CAMERA = 3;
 
-    public static final String JUMP_TAG = "jump";
+    public static final String JUMP_TAG = "kbd_jump";
 
     private static final String APP_FIRST_TIME_START = "app_first_time_start";
 

@@ -48,10 +48,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.crashlytics.android.Crashlytics;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.utils.HSDeviceUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
@@ -879,9 +881,17 @@ public class MainActivity extends HSAppCompatActivity {
 
             needActiveThemePkName = null;
         }
-        if (getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1) != -1) {
-            startThemeHomeIntent.putExtra(SplashActivity.JUMP_TAG, getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1));
+
+        int jumpCode = -1;
+        try {
+            jumpCode = getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1);
+        } catch (Exception e) {
+            Crashlytics.log(getIntent().toString() + HSDeviceUtils.getDeviceModel() + " CJX");
         }
+        if (jumpCode != -1) {
+            startThemeHomeIntent.putExtra(SplashActivity.JUMP_TAG, jumpCode);
+        }
+
         startActivity(startThemeHomeIntent);
         overridePendingTransition(0, 0);
         finish();
