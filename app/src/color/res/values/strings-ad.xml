@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ad_placement_lucky" translatable="false">Colorkey_A(NativeAds)KeyboardLuckyAd</string>
     <string name="ad_placement_cardad" translatable="false">Colorkey_A(NativeAds)CardAd</string>
     <string name="ad_placement_keyboardemojiad" translatable="false">Colorkey_A(NativeAds)KeyboardEmojiAd</string>
     <string name="ad_placement_keyboardsettingsad" translatable="false">Colorkey_A(NativeAds)KeyboardSettingsAd</string>
@@ -20,6 +19,4 @@
     <string name="ad_placement_gift_ad" translatable="false">Colorkey_A(NativeAds)KeyboardGiftAd</string>
     <string name="theme_ad_placement_theme_ad" translatable="false">Colorkey_A(NativeAds)ThemeAd</string>
     <string name="ad_placement_call_assist" translatable="false">Colorkey_A(NativeAds)Lumen</string>
-
-    <string name="placement_full_screen_game" translatable="false">Colorkey_A(InterstitialAds)H5GameAd</string>
 </resources>

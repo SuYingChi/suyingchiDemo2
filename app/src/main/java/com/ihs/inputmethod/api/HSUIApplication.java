@@ -301,7 +301,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbInterstitialAdManager.getInstance().activePlacementInProcess(getString(R.string.placement_full_screen_game));
 
         // Native广告
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_lucky));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_cardad));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboardemojiad));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboardsettingsad));

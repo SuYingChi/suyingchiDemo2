@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources
-    xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="ad_placement_cardad" translatable="false">Master_A(NativeAds)CardAd</string>
     <string name="ad_placement_keyboardemojiad" translatable="false">Master_A(NativeAds)KeyboardEmojiAd</string>
@@ -22,7 +21,6 @@
 
     <string name="placement_full_screen_open_keyboard" translatable="false">Master_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
 
-    <string name="ad_placement_lucky" translatable="false">Master_A(NativeAds)KeyboardLuckyAd</string>
     <string name="ad_placement_locker" translatable="false">Master_A(NativeAds)Fuse</string>
     <string name="ad_placement_keyboard_banner" translatable="false">Master_A(NativeAds)KeyboardBanner</string>
     <string name="ad_placement_result_page" translatable="false">Master_A((NativeAds)BoostDone</string>
@@ -30,5 +28,5 @@
 
     <string name="ad_placement_call_assist" translatable="false">Master_A(NativeAds)ThemeTryAd</string>
 
-    <string name="placement_full_screen_game" translatable="false">Smiley_A(InterstitialAds)H5GameAd</string>
+    <string name="placement_full_screen_game" translatable="false">@string/placement_full_screen_open_keyboard</string>
 </resources>

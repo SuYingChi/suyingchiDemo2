@@ -204,7 +204,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                     shouldShowAd = mCurrentLargeAdCount < mLargeBoxAdCount;
                 }
                 if (shouldShowAd) {
-                    List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_lucky), 1);
+                    List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_themetryad), 1);
                     mAd = ads.isEmpty() ? null : ads.get(0);
 
                     String showed;

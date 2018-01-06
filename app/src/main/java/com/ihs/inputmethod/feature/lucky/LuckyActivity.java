@@ -2,8 +2,6 @@ package com.ihs.inputmethod.feature.lucky;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -37,7 +35,6 @@ import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
 
 import java.util.Locale;
 
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static com.ihs.inputmethod.feature.common.CommonUtils.setupTransparentSystemBarsForLmp;
 
 
@@ -424,7 +421,7 @@ public class LuckyActivity extends HSAppCompatActivity
 
     public void requestAds() {
         //request ad
-        AcbNativeAdLoader.preload(HSApplication.getContext(), 1, HSApplication.getContext().getString(R.string.ad_placement_lucky));
+        AcbNativeAdLoader.preload(HSApplication.getContext(), 1, HSApplication.getContext().getString(R.string.ad_placement_themetryad));
     }
 
     public int getChanceCount() {
