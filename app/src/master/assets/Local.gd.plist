@@ -368,7 +368,7 @@
 				<key>ChargingAlertEnabled</key>
 				<false/>
 				<key>StartVersion</key>
-				<integer>27</integer>
+				<integer>10</integer>
 				<key>MiniInterval</key>
 				<integer>0</integer>
 				<key>State</key>
