@@ -174,7 +174,7 @@ dependencies {
     compile 'net.appcloudbox.ads:libAcbAds.gm:1.2.4.gm'
 
     // Autopilot
-    compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.3.gm"
+    compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.4.gm"
 
 //    // Native Ad Adapters
     compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.1.3.gm'
