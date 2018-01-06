@@ -279,7 +279,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
 
         private void setSMSAssistant() {
             SwitchPreference preference = (SwitchPreference) findPreference(getResources().getString(R.string.setting_key_sms_assistant));
-            if (AcbCallManager.getInstance().getAcbCallFactory().getSMSConfig().shouldHideSMSFunctionToUser()) {
+            if (!AcbCallManager.getInstance().getAcbCallFactory().getSMSConfig().enable()) {
                 getPreferenceScreen().removePreference(preference);
                 return;
             }

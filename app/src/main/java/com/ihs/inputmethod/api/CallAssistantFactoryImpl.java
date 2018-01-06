@@ -27,13 +27,13 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
             }
 
             @Override
-            public boolean shouldHideSMSFunctionToUser() {
-                return !HSConfig.optBoolean(true,"Application","EnableMessageFunction");
+            public boolean hideNotificationGuide() {
+                return true;
             }
 
             @Override
-            public boolean hideNotificationGuide() {
-                return true;
+            public int getAppNameDrawable() {
+                return R.drawable.ic_charging_screen_logo;
             }
         };
     }
@@ -57,6 +57,11 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
         @Override
         public String getAdPlaceName() {
             return HSApplication.getContext().getResources().getString(R.string.ad_placement_call_assist);
+        }
+
+        @Override
+        public int getAppNameDrawable() {
+            return R.drawable.ic_charging_screen_logo;
         }
     }
 
