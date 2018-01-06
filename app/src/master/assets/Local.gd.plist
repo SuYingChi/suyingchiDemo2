@@ -626,7 +626,7 @@
 				<key>DownloadThemeZip</key>
 				<dict>
 					<key>DownloadInApp</key>
-					<false/>
+					<true/>
 				</dict>
 				<key>ThemeContents</key>
 				<dict>
