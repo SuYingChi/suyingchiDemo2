@@ -571,7 +571,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         protected Drawable doInBackground(Void... params) {
             try {
                 // 拷贝customThemeCommon到本地
-                if (KCCustomThemeManager.getInstance().saveCustomThemeCommonToLocalReady()) {
+                if (KCCustomThemeManager.getInstance().saveDefaultBackgroundToLocalReady() && KCCustomThemeManager.getInstance().saveCustomThemeCommonToLocalReady()) {
                     Resources res = HSApplication.getContext().getResources();
                     Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
                             HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
