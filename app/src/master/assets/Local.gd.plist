@@ -12381,7 +12381,15 @@
 						<string>unit of MiniInterval is ms</string>
 						<key>ApkException</key>
 						<array>
-							<string>com.keyboard.font.theme.emoji</string>
+							<string>com.masterkeyboard.emoji</string>
+						</array>
+						<key>ApkDefault</key>
+						<array>
+							<string>com.whatsapp</string>
+							<string>com.facebook.orca</string>
+							<string>com.facebook.katana</string>
+							<string>com.instagram.android</string>
+							<string>com.snapchat.android</string>
 						</array>
 						<key>HoursFromFirstUse</key>
 						<integer>5</integer>
@@ -12924,7 +12932,15 @@
 						<string>unit of MiniInterval is ms</string>
 						<key>ApkException</key>
 						<array>
-							<string>com.keyboard.font.theme.emoji</string>
+							<string>com.masterkeyboard.emoji</string>
+						</array>
+						<key>ApkDefault</key>
+						<array>
+							<string>com.whatsapp</string>
+							<string>com.facebook.orca</string>
+							<string>com.facebook.katana</string>
+							<string>com.instagram.android</string>
+							<string>com.snapchat.android</string>
 						</array>
 						<key>HoursFromFirstUse</key>
 						<integer>5</integer>
