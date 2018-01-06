@@ -311,7 +311,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
 
         holder.mPlaceholderView.setVisibility(View.VISIBLE);
         holder.mPlaceholderView.setImageDrawable(getPlaceHolderDrawable());
-        Glide.with(holder.mContentImageView).asBitmap().apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)).listener(new RequestListener<Bitmap>() {
+        Glide.with(HSApplication.getContext()).asBitmap().apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 holder.mContentImageView.setImageDrawable(null);

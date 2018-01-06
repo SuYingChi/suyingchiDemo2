@@ -15,18 +15,26 @@
 			</dict>
 			<key>AppSuggestion</key>
 			<dict>
-				<key>state</key>
-				<integer>0</integer>
-				<key>MiniInterval</key>
-				<integer>0</integer>
-				<key>Description</key>
-				<string>unit of MiniInterval is ms</string>
+				<key>ApkDefault</key>
+				<array>
+					<string>com.whatsapp</string>
+					<string>com.facebook.orca</string>
+					<string>com.facebook.katana</string>
+					<string>com.instagram.android</string>
+					<string>com.snapchat.android</string>
+				</array>
 				<key>ApkException</key>
 				<array>
 					<string>com.keyboard.font.theme.emoji</string>
 				</array>
 				<key>HoursFromFirstUse</key>
-				<integer>5</integer>
+				<integer>0</integer>
+				<key>MiniInterval</key>
+				<integer>0</integer>
+				<key>StartVersion</key>
+				<integer>0</integer>
+				<key>state</key>
+				<integer>0</integer>
 			</dict>
 			<key>AccessUsageAlert</key>
 			<dict>
@@ -401,6 +409,8 @@
 			<dict>
 				<key>AppOpen</key>
 				<dict>
+					<key>enable</key>
+					<false/>
 					<key>body</key>
 					<array>
 						<string>5000+ beautiful themes to choose</string>
@@ -526,7 +536,7 @@
 				</dict>
 				<dict>
 					<key>downloadLockerToUnlock</key>
-					<true/>
+					<false/>
 					<key>example</key>
 					<string>ꋪꀎꈤꍟꌗ</string>
 					<key>name</key>
@@ -1894,7 +1904,7 @@
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/GalaxyDream.jpg</string>
 							<key>downloadLockerToUnlock</key>
-							<true/>
+							<false/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/GalaxyDream.jpg</string>
 							<key>mediumPreviewUrl</key>
@@ -1914,7 +1924,7 @@
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Clown Fish.jpg</string>
 							<key>downloadLockerToUnlock</key>
-							<true/>
+							<false/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Clown Fish.jpg</string>
 							<key>lockerImgUrl</key>
@@ -1976,7 +1986,7 @@
 							<key>bannerImgUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_newbanner/Galaxy.jpg</string>
 							<key>downloadLockerToUnlock</key>
-							<true/>
+							<false/>
 							<key>largePreviewUrl</key>
 							<string>http://cdn.appcloudbox.net/keyboardarts/download/App_Theme_preview_large/Galaxy.jpg</string>
 							<key>lockerImgUrl</key>
@@ -4168,6 +4178,109 @@
 				<key>state</key>
 				<integer>0</integer>
 			</dict>
+			<key>Lucky</key>
+			<dict>
+				<key>ChanceIncrementPeriodSeconds</key>
+				<integer>600</integer>
+				<key>FullChanceCount</key>
+				<integer>20</integer>
+				<key>LargeBoxAdCount</key>
+				<integer>3</integer>
+				<key>PriorityThemes</key>
+				<array>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/royalbattle.png</string>
+						<key>Name</key>
+						<string>RoyalBattle</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/kawaii.png</string>
+						<key>Name</key>
+						<string>Kawaii</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/galaxy.png</string>
+						<key>Name</key>
+						<string>Galaxy</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pop.png</string>
+						<key>Name</key>
+						<string>Pop</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/rosegold.png</string>
+						<key>Name</key>
+						<string>RoseGold</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/neon.png</string>
+						<key>Name</key>
+						<string>Neon</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/gold.png</string>
+						<key>Name</key>
+						<string>Gold</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/loveletter.png</string>
+						<key>Name</key>
+						<string>LoveLetter</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/drops.png</string>
+						<key>Name</key>
+						<string>Drops</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pinkdrops.png</string>
+						<key>Name</key>
+						<string>PinkDrops</string>
+					</dict>
+					<dict>
+						<key>Icon</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/app_theme_icon/pinkgold.png</string>
+						<key>Name</key>
+						<string>PinkGold</string>
+					</dict>
+				</array>
+				<key>SmallBoxAdCount</key>
+				<integer>3</integer>
+				<key>SmallBoxColor</key>
+				<dict>
+					<key>Green</key>
+					<integer>8</integer>
+					<key>Red</key>
+					<integer>2</integer>
+				</dict>
+				<key>SmallBoxContent</key>
+				<dict>
+					<key>Chances</key>
+					<integer>2</integer>
+					<key>Empty</key>
+					<integer>8</integer>
+				</dict>
+				<key>Types</key>
+				<dict>
+					<key>Bomb</key>
+					<integer>15</integer>
+					<key>LargeBox</key>
+					<integer>10</integer>
+					<key>SmallBox</key>
+					<integer>75</integer>
+				</dict>
+			</dict>
 			<key>NativeAds</key>
 			<dict>
 				<key>GooglePlayNativeAd</key>
@@ -4232,7 +4345,7 @@
 			<key>RateAlert</key>
 			<dict>
 				<key>CurrentType</key>
-				<string>0</string>
+				<string>1</string>
 				<key>Type0</key>
 				<dict>
 					<key>Step1</key>
@@ -4245,7 +4358,7 @@
 						<key>title</key>
 						<dict>
 							<key>en</key>
-							<string>Great! Enjoy the creative keyboard of your own now! Like Emoji Keyboard?😍🎅🎄</string>
+							<string>Enjoy Emoji Keyboard?</string>
 						</dict>
 					</dict>
 					<key>Step2</key>
@@ -4299,18 +4412,8 @@
 					<dict>
 						<key>body</key>
 						<dict>
-							<key>de</key>
-							<string>Gefällt Ihnen Emoji Keyboard? Bitte teilen Sie uns Ihre Erfahrungen mit. Vielen Dank für Ihr Feedback.</string>
 							<key>en</key>
-							<string>Do you like Emoji Keyboard? Please let us know about your experience.Thanks for your feedback.</string>
-							<key>es</key>
-							<string>¿Te gusta Emoji Keyboard? Cuéntanos tu experiencia. Gracias por tus comentarios.</string>
-							<key>fr</key>
-							<string>Vous aimez Emoji Keyboard ? Parlez-nous de votre expérience. Merci pour vos commentaires.</string>
-							<key>it</key>
-							<string>Ti piace Emoji Keyboard? Raccontaci la tua esperienza. Grazie per la tua opinione.</string>
-							<key>nl</key>
-							<string>Vind je Emoji Keyboard leuk? Vertel ons over je ervaring. Alvast bedankt voor je feedback.</string>
+							<string>Great! Enjoy the creative keyboard of your own now! Like Emoji Keyboard?😍🎅🎄</string>
 						</dict>
 						<key>button1</key>
 						<dict>
@@ -4354,10 +4457,14 @@
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
 							<string>Ti piace la nostra app?</string>
+							<key>ja</key>
+							<string>このアプリを気に入りましたか?</string>
+							<key>ko</key>
+							<string>앱이 마음에 드시나요?</string>
 							<key>nl</key>
 							<string>Vind je onze app leuk?</string>
 							<key>pt</key>
-							<string>Gosta da Emoji Keyboard?</string>
+							<string>Gosta da Beauty Cam?</string>
 						</dict>
 					</dict>
 					<key>Step2</key>
@@ -4378,6 +4485,10 @@
 								<string>क्या आप बता सकते हैं कि हम कैसे सुधार करें?</string>
 								<key>it</key>
 								<string>Puoi farci sapere come potremmo migliorare?</string>
+								<key>ja</key>
+								<string>私たちがどうしたら改善できるか教えていただけますか？</string>
+								<key>ko</key>
+								<string>앱을 개선할 수 있는 의견을 주시겠습니까?</string>
 								<key>nl</key>
 								<string>Wil je ons vertellen wat we kunnen verbeteren?</string>
 								<key>pt</key>
@@ -4431,20 +4542,8 @@
 							</dict>
 							<key>title</key>
 							<dict>
-								<key>de</key>
-								<string>Ihr Feedback ist uns sehr wichtig. Helfen Sie uns Emoji Keyboard noch besser zu machen. Danke~</string>
 								<key>en</key>
 								<string>Your feedback is very important. Help us make Emoji Keyboard the best it can be. Thanks~</string>
-								<key>es</key>
-								<string>Tu opinión es muy importante para nosotros. Ayúdanos a que Emoji Keyboard sea lo mejor posible. ¡Gracias!</string>
-								<key>fr</key>
-								<string>Vos commentaires sont très importants. Aidez-nous à améliorer Emoji Keyboard le plus possible. Merci~</string>
-								<key>it</key>
-								<string>La tua opinione è molto importante. Aiutaci a rendere Emoji Keyboard il meglio possibile. Grazie~</string>
-								<key>nl</key>
-								<string>Je feedback is erg belangrijk. Help ons om Emoji Keyboard zo goed mogelijk te maken. Bedankt~</string>
-								<key>pt</key>
-								<string>Seu feedback é muito importante. Ajude-nos a melhorar o app Emoji Keyboard o máximo possível. Obrigado~</string>
 							</dict>
 						</dict>
 						<key>YES</key>
@@ -4558,12 +4657,18 @@
 							<string>¿Te gusta nuestra aplicación?</string>
 							<key>fr</key>
 							<string>Vous aimez l&apos;application ?</string>
+							<key>hi</key>
+							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
 							<string>Ti piace la nostra app?</string>
+							<key>ja</key>
+							<string>このアプリを気に入りましたか？</string>
+							<key>ko</key>
+							<string>앱이 마음에 드시나요?</string>
 							<key>nl</key>
 							<string>Vind je onze app leuk?</string>
 							<key>pt</key>
-							<string>Gosta da Emoji Keyboard?</string>
+							<string>Gosta da Beauty Cam?</string>
 						</dict>
 						<key>button1</key>
 						<dict>
@@ -4601,7 +4706,7 @@
 							<key>body</key>
 							<dict>
 								<key>en</key>
-								<string>Please leave your ideas here and help Emoji Keyboard to be better.Thank you~</string>
+								<string>Please leave your ideas here and help BeautyCam to be better.Thank you~</string>
 							</dict>
 							<key>button1</key>
 							<dict>
@@ -4712,6 +4817,10 @@
 								<string>तो कड़ी मेहनत वाली टीमों के लिए एक मूल्यांकन के बारे में क्या?</string>
 								<key>it</key>
 								<string>Allora cosa ne pensi di valutare il nostro duro lavoro?</string>
+								<key>ja</key>
+								<string>それでは、懸命なチームの評価をしていただけますか？</string>
+								<key>ko</key>
+								<string>열심히 일하는 저희 팀을 위해 평가를 해주시겠습니까?</string>
 								<key>nl</key>
 								<string>Wat dacht je dan van een beoordeling voor onze hardwerkende teams?</string>
 								<key>pt</key>
@@ -4738,6 +4847,10 @@
 							<string>नहीं</string>
 							<key>it</key>
 							<string>NO</string>
+							<key>ja</key>
+							<string>いいえ</string>
+							<key>ko</key>
+							<string>아니</string>
 							<key>nl</key>
 							<string>NEE</string>
 							<key>pt</key>
@@ -4757,6 +4870,10 @@
 							<string>मेरे पास कुछ प्रतिक्रिया है</string>
 							<key>it</key>
 							<string>Ho dei suggerimenti</string>
+							<key>ja</key>
+							<string>私は意見があります</string>
+							<key>ko</key>
+							<string>피드백 할 내용이 있습니다</string>
 							<key>nl</key>
 							<string>Ik heb wat feedback</string>
 							<key>pt</key>
@@ -4784,6 +4901,10 @@
 							<string>मैं इसे 5-स्टार मूल्‍यांकन देना चाहता/चाहती हूं।</string>
 							<key>it</key>
 							<string>Voglio valutare l&apos;app con 5 stelle.</string>
+							<key>ja</key>
+							<string>私は5つ星の評価を与えたいと思います。</string>
+							<key>ko</key>
+							<string>별5개를 주고 싶습니다.</string>
 							<key>nl</key>
 							<string>Ik wil een beoordeling van 5 sterren geven.</string>
 							<key>pt</key>
@@ -5237,7 +5358,7 @@
 						</dict>
 						<dict>
 							<key>downloadLockerToUnlock</key>
-							<true/>
+							<false/>
 							<key>name</key>
 							<string>Cute3DEmoji</string>
 							<key>showName</key>
@@ -5267,7 +5388,7 @@
 						</dict>
 						<dict>
 							<key>downloadLockerToUnlock</key>
-							<true/>
+							<false/>
 							<key>name</key>
 							<string>LoveBear</string>
 							<key>showName</key>
@@ -8078,6 +8199,359 @@
 					</dict>
 				</array>
 			</dict>
+			<key>Grin_A(NativeAds)CableReport</key>
+			<dict>
+				<key>deDuplicate</key>
+				<true/>
+				<key>packageFilter</key>
+				<true/>
+				<key>parallelCount</key>
+				<integer>0</integer>
+				<key>parallelList</key>
+				<array/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>1</integer>
+					<key>strategy</key>
+					<string>app</string>
+				</dict>
+				<key>serialList</key>
+				<array>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/6582459081</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/3415051971</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/5269376778</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/6763393755</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/2799431126</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/4971442114</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionFilter</key>
+						<array>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>19</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/7860184217</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>17</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/7194937317</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Adxnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>15</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-mb-app-pub-7176948080084743/6547101914</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+					<dict>
+						<key>adType</key>
+						<string>Admobnative</string>
+						<key>countPerLoad</key>
+						<integer>1</integer>
+						<key>cpmInfo</key>
+						<dict>
+							<key>Others</key>
+							<dict>
+								<key>cpm</key>
+								<integer>13</integer>
+							</dict>
+						</dict>
+						<key>ids</key>
+						<array>
+							<string>ca-app-pub-6755533317593143/6420255156</string>
+						</array>
+						<key>loadCount</key>
+						<integer>1</integer>
+						<key>regionException</key>
+						<array>
+							<string>US</string>
+							<string>AU</string>
+							<string>CA</string>
+							<string>GB</string>
+							<string>DE</string>
+							<string>FR</string>
+							<string>JP</string>
+							<string>CH</string>
+							<string>NO</string>
+							<string>NZ</string>
+							<string>SG</string>
+							<string>LI</string>
+							<string>SE</string>
+							<string>DK</string>
+							<string>FI</string>
+							<string>TO</string>
+						</array>
+					</dict>
+				</array>
+			</dict>
 			<key>Grin_A(NativeAds)KeyboardBanner</key>
 			<dict>
 				<key>deDuplicate</key>
@@ -9660,107 +10134,6 @@
 							<string>FI</string>
 							<string>TO</string>
 						</array>
-					</dict>
-				</array>
-			</dict>
-			<key>Grin_A(NativeAds)CableReport</key>
-			<dict>
-				<key>deDuplicate</key>
-				<true/>
-				<key>packageFilter</key>
-				<true/>
-				<key>parallelCount</key>
-				<integer>0</integer>
-				<key>preload</key>
-				<dict>
-					<key>inventory</key>
-					<integer>1</integer>
-					<key>strategy</key>
-					<string>app</string>
-				</dict>
-				<key>parallelList</key>
-				<array/>
-				<key>serialList</key>
-				<array>
-					<dict>
-						<key>adType</key>
-						<string>Adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>19</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-7176948080084743/6582459081</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>Admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>17</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-6755533317593143/3415051971</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>Adxnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>15</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-mb-app-pub-7176948080084743/5269376778</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
-					</dict>
-					<dict>
-						<key>adType</key>
-						<string>Admobnative</string>
-						<key>countPerLoad</key>
-						<integer>1</integer>
-						<key>cpmInfo</key>
-						<dict>
-							<key>Others</key>
-							<dict>
-								<key>cpm</key>
-								<integer>13</integer>
-							</dict>
-						</dict>
-						<key>ids</key>
-						<array>
-							<string>ca-app-pub-6755533317593143/6763393755</string>
-						</array>
-						<key>loadCount</key>
-						<integer>1</integer>
 					</dict>
 				</array>
 			</dict>

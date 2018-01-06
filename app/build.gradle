@@ -127,12 +127,13 @@ android {
 
         grin {
             applicationId = "com.keyboard.font.theme.emoji"
-            versionName "1.1.2"
-            versionCode 5
+            versionName "1.1.3"
+            versionCode 6
             manifestPlaceholders = [APPLY_SCHEME: "grinKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "true"
+            buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "6"
             signingConfig signingConfigs.grinReleaseConfig
         }
 
