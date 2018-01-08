@@ -37,8 +37,8 @@ libFramework:
     senderID: "485901558980"
     SendTokenToServer: yes
   Alerts:
-    LocalFile: "Alerts.gd"
-    RemoteUrl: "http://emojidevelop.s3.amazonaws.com/apps_android/alerts/masterboard-1.2.3-alerts.mp"
+    LocalFile: "Alerts.mp"
+    RemoteUrl: "1http://emojidevelop.s3.amazonaws.com/apps_android/alerts/masterboard-1.2.3-alerts.mp"
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
