@@ -5,18 +5,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.support.v4.view.ViewPager;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 
 
@@ -46,18 +43,21 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
     public DotsRadioGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
         stateListDrawable = new StateListDrawable();
+
         ShapeDrawable selectedDrawable = new ShapeDrawable(new OvalShape());
         selectedDrawable.setIntrinsicHeight(DisplayUtils.dip2px(5));
         selectedDrawable.setIntrinsicWidth(DisplayUtils.dip2px(5));
-        if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
-            DrawableCompat.setTint(selectedDrawable, getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()));
-        } else {
-            DrawableCompat.setTint(selectedDrawable, ContextCompat.getColor(context, R.color.settings_button_light_icon));
-        }
+//        if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
+//            selectedDrawable.getPaint().setColor(getDarkerColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor()));
+//        } else {
+        selectedDrawable.getPaint().setColor(getContext().getResources().getColor(R.color.settings_button_light_icon));
+//        }
+
         ShapeDrawable normalDrawable = new ShapeDrawable(new OvalShape());
         normalDrawable.setIntrinsicHeight(DisplayUtils.dip2px(5));
         normalDrawable.setIntrinsicWidth(DisplayUtils.dip2px(5));
-        DrawableCompat.setTint(normalDrawable, ContextCompat.getColor(getContext(), R.color.theme_trial_keyboard_edit_text_cursor_color));
+        normalDrawable.getPaint().setColor(getContext().getResources().getColor(R.color.theme_trial_keyboard_edit_text_cursor_color));
+
         stateListDrawable.addState(new int[]{android.R.attr.state_checked}, selectedDrawable);
         stateListDrawable.addState(new int[]{}, normalDrawable);
     }
