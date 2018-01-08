@@ -33,8 +33,8 @@ libFramework:
     SenderID: "956858875870ß"
     SendTokenToServer: yes
   Alerts:
-    LocalFile: "Alerts.mp"
-    RemoteUrl: "http://cdn.appcloudbox.net/glowdesign/apps/masterkeyboard/alerts/master_keyboard-1.2.3-alert.mp"
+    LocalFile: "Alerts.gd"
+    RemoteUrl: "http://cdn.appcloudbox.net/glowdesign/apps/masterkeyboard/alerts/master_keyboard-1.2.3-alert.gd"
 
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"
