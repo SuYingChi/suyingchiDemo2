@@ -12,12 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihs.app.analytics.HSAnalytics;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeZipDownloadUtils;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
@@ -110,8 +115,29 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.lucky_game_theme_action) {
-            ThemeDownloadManager.getInstance().downloadTheme(themeItem);
+//            ThemeDownloadManager.getInstance().downloadTheme(themeItem);
             HSAnalytics.logEvent("Lucky_Award_Theme_Install_Clicked");
+
+            String from = "lucky";
+            ThemeZipDownloadUtils.startDownloadThemeZip(getContext(), from, themeItem.mThemeName, themeItem.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {
+                @Override
+                public void onDismiss(boolean success, boolean manually) {
+                    if (success) {
+                        ThemeZipDownloadUtils.logDownloadSuccessEvent(themeItem.mThemeName, from);
+                        if (HSKeyboardThemeManager.isThemeZipFileDownloadAndUnzipSuccess(themeItem.mThemeName)) {
+                            HSKeyboardThemeManager.moveNeedDownloadThemeToDownloadedList(themeItem.mThemeName, true);
+                            //直接应用主题
+                            if (HSKeyboardThemeManager.setKeyboardTheme(themeItem.mThemeName)) {
+
+                            } else {
+                                String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                                HSToastUtils.toastCenterLong(String.format(failedString, themeItem.getThemeShowName()));
+                            }
+                        }
+                    }
+                }
+            });
+
         }
     }
 }
