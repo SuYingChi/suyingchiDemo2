@@ -22,6 +22,8 @@ import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -38,7 +40,6 @@ import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -57,7 +58,6 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIInputMethod;
-import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
@@ -179,12 +179,23 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
         }
 
         private void setEnabledLanguage() {
+            String packageName = getActivity().getPackageName();
+            ApplicationInfo applicationInfo = null;
+            try {
+                applicationInfo = getActivity().getPackageManager().getApplicationInfo(packageName, 0);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            if (applicationInfo == null) {
+                return;
+            }
+
             StringBuilder languageSb = new StringBuilder();
-            final InputMethodInfo imi = HSInputMethod.getInputMethodInfoOfThisIme();
             List<InputMethodSubtype> enabledList = HSImeSubtypeManager.getInputMethodSubtypeList(true);
             CharSequence subtypeLabel;
             for (int i = 0; i < enabledList.size(); i++) {
-                subtypeLabel = enabledList.get(i).getDisplayName(HSApplication.getContext(), imi.getPackageName(), imi.getServiceInfo().applicationInfo);
+                subtypeLabel = enabledList.get(i).getDisplayName(HSApplication.getContext(), packageName, applicationInfo);
                 if (i < enabledList.size() - 1) {
                     languageSb.append(subtypeLabel).append(", ");
                 } else {
@@ -477,21 +488,6 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
         }
 
         private void setLanguage() {
-            StringBuilder languageSb = new StringBuilder();
-            final InputMethodInfo imi = HSInputMethod.getInputMethodInfoOfThisIme();
-            List<InputMethodSubtype> enabledList = HSImeSubtypeManager.getInputMethodSubtypeList(true);
-            CharSequence subtypeLabel;
-            for (int i = 0; i < enabledList.size(); i++) {
-                subtypeLabel = enabledList.get(i).getDisplayName(HSApplication.getContext(), imi.getPackageName(), imi.getServiceInfo().applicationInfo);
-                if (i < enabledList.size() - 1) {
-                    languageSb.append(subtypeLabel).append(", ");
-                } else {
-                    languageSb.append(subtypeLabel);
-                    if (i > 0) {
-                        languageSb.append(".");
-                    }
-                }
-            }
             findPreference("choose_language").setOnPreferenceClickListener(this);
         }
 
