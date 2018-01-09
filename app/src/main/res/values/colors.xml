@@ -2,46 +2,20 @@
 <resources>
     <color name="theme_text_title">#dc000000</color>
     <color name="theme_card_theme_name">#000000</color>
-    <color name="theme_navigation_draw_bg">#ffffffff</color>
     <color name="theme_activity_bg">#eeeeee</color>
     <color name="theme_button_text_color">#536dfe</color>
     <color name="theme_button_text_color_light">#3259e9</color>
     <color name="theme_button_text_color_disable">#b6b7b8</color>
     <color name="theme_more_text_color">#f44336</color>
     <color name="theme_trial_keyboard_edit_text_cursor_color">#989898</color>
-    <color name="ripple_common_color">#cbcbd9</color>
-    <color name="home_create_keyboard_bg_normal">#536dfe</color>
-    <color name="home_create_keyboard_bg_pressed">#0285da</color>
-    <color name="home_create_keyboard_bg_pressed_ripple">#0285da</color>
 
     <color name="standard_gray">#FF888888</color>
-    <color name="black_normal">#ff161617</color>
     <color name="black_standard">#000000</color>
-    <color name="black_light">#2e2e2f</color>
     <color name="white_standard">#ffffff</color>
     <color name="white_text_color">#ffffff</color>
     <color name="white_text_color_press">#aaaaaa</color>
 
-    <color name="font_selection_listview_background">#ff181818</color>
-    <color name="settings_panel_background">#ff181818</color>
     <color name="font_item_text_color">#ffffffff</color>
-    <color name="settings_item_text_color">#ffffffff</color>
-    <color name="font_divider_color">#33ffffff</color>
-    <color name="progressdialog">#18181a</color>
-    <color name="gif_panel_background">#ff161617</color>
-    <color name="panel_background">#ff161617</color>
-    <color name="strip_view_tag">#FFFFFF</color>
-    <color name="strip_view_tag_pressed">#000000</color>
-
-    <color name="main_activity_step_one_button_background_pressed">#ff00ac59</color>
-    <color name="main_activity_step_one_button_background">#ff00ca69</color>
-    <color name="main_activity_step_two_button_background_pressed">#ff00b1ab</color>
-    <color name="main_activity_step_two_button_background">#ff00d0c9</color>
-
-    <color name="face_moji_bg">#20272636</color>
-    <color name="face_moji_panel_bg">#161617</color>
-
-    <color name="fragment_card_bg">#2d2d2f</color>
 
     <color name="keyboard_progress_view_bg">#cc000000</color>
 
@@ -50,17 +24,11 @@
     <color name="font_select_listview_bg">#161617</color>
     <color name="font_select_listview_item_selected_bg">#2e2e2f</color>
 
-    <color name="facemoji_delete_btn_text_disabled">#bbbbbb</color>
-    <color name="facemoji_face_pressed_color">#7fbbbbbb</color>
-    <color name="facemoji_face_deleted_bg">#ffffff</color>
-
     <!-- gif search widget -->
 
-    <color name="gif_primary_tab_search_widget_color">#7fffffff</color>
     <color name="suggestion_strip_bottom_line">#00000000</color>
 
     <!-- gif view animation circle color -->
-    <color name="gif_view_favorite_animation_bg">#e500afeb</color>
 
     <color name="gif_panel_hint_text_color">#80FFFFFF</color>
     <color name="gif_panel_result_text_color">#FFFFFFFF</color>
@@ -72,29 +40,17 @@
     <color name="gif_panel_search_button_color_light">#38474F</color>
     <color name="custom_theme_preview_placeholder">#32323c</color>
 
-    <color name="optimize_ad_subtitle">@color/ad_engine_ad_subtitle</color>
-    <color name="ad_engine_ad_subtitle">#99666666</color>
-
     <!-- Color used in Settings -->
-    <color name="settings_switch_line_color_gray">#b2b2b2</color>
     <color name="settings_main_title_bg_color">#263238</color>
     <color name="settings_main_title_bg_color_dark">#151c20</color>
     <color name="settings_switch_btn_color_gray">#ececec</color>
-    <color name="settings_switch_line_color_green">#b2dfdb</color>
     <color name="settings_switch_btn_color_green">#009385</color>
     <color name="settings_category_title_color">#009385</color>
-    <color name="settings_language_title_color">#212121</color>
-    <color name="settings_main_title_color">#ffffff</color>
     <color name="settings_background_color">#ffffff</color>
     <color name="settings_background_color_pressed">#18000000</color>
     <color name="settings_divder_line_color">#eee0e0e0</color>
     <color name="settings_switch_text_color">#212121</color>
     <color name="settings_switch_tip_text_color"> #757575</color>
-    <color name="settings_switch_btn_color_gray_pressed">#646464</color>
-    <color name="settings_more_language_title_color">#212121</color>
-    <color name="settings_more_language_download_txt_color">#ffffff</color>
-    <color name="settings_delete_language_dialog_btn_color">#00000000</color>
-    <color name="settings_delete_language_dialog_btn_color_pressed">#ffcccccc</color>
 
 
     <color name="emoticon_action_bar_bg">#33000000</color>
@@ -108,11 +64,8 @@
     <color name="search_ad_store_rating_text">#999999</color>
 
     <color name="ad_button_blue_pressed">#3000e0</color>
-    <color name="ad_button_green_state">#00c753</color>
-    <color name="ad_button_green_state_pressed">#00a947</color>
     <color name="base_function_bg_color">#30ffffff</color>
     <color name="selector_keyactive_onetap_normal">#ffffff</color>
-    <color name="selector_keyactive_manual_normal">#59bbfb</color>
     <color name="selector_keyactive_enable">#0db664</color>
 
     <color name="guide_bg_normal_color">#536dfe</color>
@@ -126,24 +79,14 @@
     <color name="custom_rate_alert_button_bg">#d53bf1</color>
     <color name="custom_share_alert_button_bg">#4589f3</color>
 
-    <color name="settings_button_light_normal">#33ffffff</color>
     <color name="settings_button_dark_normal">#cc0f126d</color>
     <color name="settings_button_press">#ccffffff</color>
     <color name="settings_button_light_icon">#29A0CB</color>
 
     <!-- Wallpaper -->
     <color name="wallpaper_activities_control_highlight">#dadada</color>
-    <color name="wallpaper_progressbar_bg">#bdbdbd</color>
-    <color name="wallpaper_progressbar_progress">#bdbdbd</color>
-    <color name="wallpaper_category_text_normal_bg">#ebebeb</color>
-    <color name="wallpaper_local_bg">#ffffff</color>
-    <color name="wallpaper_local_add_btn_text">#666666</color>
     <color name="wallpaper_preview_background">#F2000000</color>
-    <color name="customize_tab_highlight">#fff9224f</color>
     <color name="customize_tab_normal">#ff7f7f7f</color>
-    <color name="customize_tab_text_normal">#4d000000</color>
-    <color name="upload_wallpaper_container_normal">#ffeeeeee</color>
-    <color name="upload_wallpaper_container_pressed">#ffdedede</color>
 
     <color name="emoji_panel_tab_normal_color">#9ba3a7</color>
     <color name="emoji_panel_tab_selected_color">#37474f</color>

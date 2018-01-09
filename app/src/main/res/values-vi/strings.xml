@@ -5,7 +5,6 @@
     <string name="enabled">Được bật</string>
     <string name="disabled">Được tắt</string>
     <string name="language">Ngôn ngữ</string>
-    <string name="languages">Ngôn ngữ</string>
     <string name="next">Tiếp theo</string>
     <string name="back">Quay lại</string>
     <string name="cancel">Hủy</string>
@@ -25,8 +24,6 @@
 
     <string name="unknown">Không xác định</string>
 
-    <string name="alert_find_keyboard_and_switch_on">Bật %1$s</string>
-
     <!--main-->
     <string name="alert_attention_messenger">Bàn phím %1$s coi trọng sự riêng tư của người dùng. Chúng tôi sẽ KHÔNG BAO GIỜ thu thập bất kỳ dữ liệu nào như mật khẩu hoặc số thẻ tín dụng.</string>
     <string name="toast_enable_keyboard">Bật %1$s</string>
@@ -40,7 +37,6 @@
     <string name="dialog_msg_select_keyboard_apply_rain">Bạn cần kích hoạt bàn phím %1$s để sử dụng chủ đề này.</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">KÍCH HOẠT</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain"> Kích hoạt %1$s</string>
     <string name="dialog_msg_enable_keyboard_home_rain">%1$s mang tới cho bạn những chủ đề bàn phím được cá nhân hóa và biểu tượng cảm xúc dễ thương.</string>
 
     <!--language-->
@@ -86,17 +82,13 @@
     <string name="setting_item_more_settings">Cài đặt Khác</string>
 
     <!--settings panel-->
-    <string name="settings_button_tell_a_friend">Giới thiệu bạn bè</string>
-    <string name="settings_button_tell_a_friend_tip">Chia sẻ lời nhắn của bạn ngay</string>
 
 
     <!-- gif panel -->
     <string name="result_no">Không tìm thấy ảnh GIF hoặc nhãn dán.</string>
     <string name="result_no_recent">Không có mục Gần đây.</string>
-    <string name="result_no_suggestion">Không có ảnh GIF hoặc nhãn dán được đề xuất.</string>
     <string name="result_no_favorites">Không có mục Yêu thích.</string>
     <string name="result_no_data_on_fail">Vui lòng kiểm tra mạng của bạn và thử lại.</string>
-    <string name="result_no_data_on_complete">Không tìm thấy ảnh GIF hoặc nhãn dán.</string>
 
     <!--gif strip-->
     <string name="emoji_search_title">Chọn biểu tượng cảm xúc để tìm kiếm</string>
@@ -122,9 +114,7 @@
     <string name="dialog_app_usage_title">Cho phép các Ứng dụng có Quyền truy cập Mức sử dụng</string>
 
     <!--theme home nav-->
-    <string name="theme_nav_my_themes">Chủ đề của Tôi</string>
     <string name="theme_nav_languages">Ngôn ngữ</string>
-    <string name="theme_nav_settings">Cài đặt</string>
     <string name="theme_nav_update">Cập nhật</string>
     <string name="theme_nav_no_ads">Xóa Quảng cáo</string>
 
@@ -139,15 +129,7 @@
     <string name="theme_card_menu_delete">Xóa</string>
 
     <!--custom theme-->
-    <string name="custom_theme_background">Nền</string>
     <string name="custom_theme_font">Phông chữ</string>
-    <string name="custom_theme_sound">Âm thanh Bấm</string>
-    <string name="custom_theme_effect">Hiệu ứng Chạm</string>
-
-    <string name="custom_theme_backgrounds">nền</string>
-    <string name="custom_theme_fonts">Phông chữ</string>
-    <string name="custom_theme_sounds">âm thanh bấm</string>
-    <string name="custom_theme_effects">hiệu ứng chạm</string>
 
     <string name="custom_theme_title">Tạo Bàn phím</string>
     <string name="custom_theme_title_background">Chọn Nền</string>
@@ -156,19 +138,10 @@
     <string name="custom_theme_title_font">Chọn Phông chữ</string>
     <string name="custom_theme_title_font_color">Chọn Màu Phông chữ</string>
     <string name="custom_theme_title_sound">Chọn Âm thanh Bấm</string>
-    <string name="custom_theme_title_effect">Chọn Hiệu ứng Chạm</string>
     <string name="custom_theme_sound_tip">Để sử dụng hiệu ứng âm thanh bấm, hãy tắt chế độ im lặng hoặc bật Âm thanh khi bấm phím trong phần cài đặt.</string>
 
     <!--IAP Tip Info -->
-    <string name="current_theme_price" formatted="true">Mở khóa cho %1$s</string>
     <string name="purchase_success">Giao dịch mua hàng của bạn đã thành công.</string>
-    <string name="purchase_error">CÓ LỖI:</string>
-    <string name="purchase_error_message">Việc mua hàng của bạn hiện không khả dụng. Hãy thử lại sau.</string>
-    <string name="purchase_error_bill">LẬP HÓA ĐƠN KHÔNG KHẢ DỤNG</string>
-    <string name="purchase_error_item">MẶT HÀNG KHÔNG KHẢ DỤNG</string>
-    <string name="purchase_error_item_owned">MẶT HÀNG ĐÃ ĐƯỢC SỞ HỮU</string>
-    <string name="purchase_google_play_unavailable">Google Play không khả dụng trên thiết bị của bạn.</string>
-    <string name="purchase_unavailable">Việc mua hàng không khả dụng.</string>
 
     <!-- Theme new tip -->
     <string name="new_background_tip">Nền mới</string>
@@ -183,14 +156,11 @@
     <string name="apk_update_alert_negative_btn">ĐỂ SAU</string>
     <string name="apk_update_alert_positive_btn">CẬP NHẬT</string>
     <string name="apk_update_downloading">Đang tải xuống cập nhật</string>
-    <string name="apk_update_downloading_notification_title">Đang tải xuống</string>
 
 
     <string name="sd_card_unavailable_tip">Thẻ SD không khả dụng!</string>
 
     <string name="theme_create_custom_theme_failed">Tạo chủ đề không thành công, hãy đảm bảo rằng thiết bị của bạn còn đủ dung lượng và thử lại.</string>
-
-    <string name="home_create_keyboard">Tạo Chủ Đề Riêng Của Tôi</string>
 
     <string name="charging_alert_title">Sạc Thông Minh</string>
     <string name="charging_alert_message">Bật tính năng Sạc Thông Minh để tránh sạc quá tải một cách hiệu quả. Chứa nội dung được tài trợ.</string>
@@ -199,7 +169,6 @@
 
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">Kích hoạt %1$s, tận hưởng THÊM các chủ đề!</string>
-    <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">THIẾT LẬP THỦ CÔNG</string>
     <string name="tv_1_tap_to_set_up_keyboard">Bật %1$s</string>
     <string name="alter_enable_access_title">Bật %1$s</string>
@@ -235,13 +204,11 @@
     <string name="interstitial_ad_title_after_try_keyboard">Đã áp dụng thành công</string>
     <string name="interstitial_ad_subtitle_after_try_keyboard">--------------- Có Thể Bạn Thích ---------------</string>
 
-    <string name="interstitial_ad_subtitle_home_gift_button">--------------- Có Thể Bạn Thích ---------------</string>
     <string name="store_nav_download">Tải xuống của Tôi</string>
     <string name="tab_theme_my">HÌNH NỀN CỦA TÔI</string>
     <string name="tab_sticker">NHÃN DÁN</string>
     <string name="tab_sticker_my">NHÃN DÁN CỦA TÔI</string>
     <string name="tab_font_my">PHÔNG CHỮ CỦA TÔI</string>
-    <string name="item_sticker_more_coming">Sắp có thêm các nhãn dán</string>
     <string name="item_font_more_coming">Sắp có thêm các phông chữ</string>
 
     <string name="locker_alert_title">Trình Khóa Màn Hình</string>
@@ -265,7 +232,6 @@
 
     <!-- wallpaper preview -->
     <string name="key_theme_set_btn">ĐẶT CHỦ ĐỀ CHÍNH</string>
-    <string name="wallpaper_apply_fail">Áp dụng Không thành công</string>
     <string name="home_screen">Màn hình chính</string>
     <string name="locker_screen">Màn hình khóa</string>
     <string name="home_and_locker_screen">Màn hình chính và khóa</string>
@@ -275,7 +241,6 @@
     <string name="label_try_now">THỬ NGAY</string>
     <string name="label_create_funny_facemoji">Tạo những biểu tượng cảm xúc thú vị với chính khuôn mặt của bạn!</string>
 
-    <string name="keyboard_make_facemoji_tip">Tự tạo biểu tượng cảm xúc của riêng bạn!</string>
     <string name="sticker_title_create_my_facemojis">Tạo Facemoji Của Tôi</string>
     <string name="sticker_title_my_facemojis">Facemoji của Tôi</string>
     <string name="sticker_title_funny_stickers">Nhãn dán vui nhộn</string>

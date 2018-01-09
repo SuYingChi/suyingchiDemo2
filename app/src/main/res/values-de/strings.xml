@@ -5,7 +5,6 @@
         <string name="enabled">Eingeschalte</string>
         <string name="disabled">Löschen</string>
         <string name="language">ARTIKEL NICHT VERFÜGBAR</string>
-        <string name="languages">Sprachen</string>
         <string name="next">Nächste</string>
         <string name="back">Zurück</string>
         <string name="cancel">Abbrechen</string>
@@ -18,7 +17,6 @@
         <string name="filter">Crop</string>
         <string name="use">Benutzen</string>
         <string name="customize_keyboard_title">Tastatur</string>
-        <string name="alert_find_keyboard_and_switch_on">Wechsel auf %1$s</string>
         <string name="customize_wallpapers_title">Hintergründe</string>
         <string name="may_contains_ads">Kann Werbung enthalten</string>
         <string name="online_wallpaper_set_btn">ALS HINTERGRUND</string>
@@ -36,8 +34,7 @@
         <string name="dialog_title_select_keyboard_apply_rain">Aktiviere %1$s</string>
         <string name="dialog_msg_select_keyboard_apply_rain">Du musst die %1$s-Tastatur aktivieren, um dieses Design zu verwenden.</string>
         <string name="dialog_confirm_select_keyboard_apply_rain">AKTIVIEREN</string>
-        
-        <string name="dialog_title_enable_keyboard_home_rain">Aktiviere %1$s</string>
+
         <string name="dialog_msg_enable_keyboard_home_rain">Mit %1$s erhältst du personalisierte Tastaturdesigns und niedliche Emojis.</string>
         
         <!--language-->
@@ -84,18 +81,14 @@ Enthält Werbung.</string>
         <string name="setting_item_more_settings">Weitere Einstellungen</string>
         
         <!--settings panel-->
-        <string name="settings_button_tell_a_friend">Einem Freund weitersagen</string>
-        <string name="settings_button_tell_a_friend_tip">Teile jetzt deine Nachricht</string>
-        
-        
+
+
         <!-- gif panel -->
         <string name="result_no">Keine GIFs oder Sticker gefunden.</string>
         <string name="result_no_recent">Keine Einträge</string>
-        <string name="result_no_suggestion">Keine vorgeschlagenen GIFs oder Sticker.</string>
         <string name="result_no_favorites">Keine Favoriten.</string>
         <string name="result_no_data_on_fail">Bitte überprüfe deine Netzwerkverbindung und versuche es erneut.</string>
-        <string name="result_no_data_on_complete">Keine GIFs oder Sticker gefunden.</string>
-        
+
         <!--gif strip-->
         <string name="emoji_search_title">Emoji für Suche auswählen</string>
         <string name="emoji_search_hint">GIFs mit Text oder Emoji suchen</string>
@@ -120,9 +113,7 @@ Enthält Werbung.</string>
         <string name="dialog_app_usage_title">Apps mit Nutzungszugang erlauben</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_my_themes">Meine Designs</string>
         <string name="theme_nav_languages">Sprachen</string>
-        <string name="theme_nav_settings">Einstellungen</string>
         <string name="theme_nav_update">Aktualisieren</string>
         <string name="theme_nav_no_ads">Werbung entfernen</string>
         
@@ -137,16 +128,8 @@ Enthält Werbung.</string>
         <string name="theme_card_menu_delete">Löschen</string>
         
         <!--custom theme-->
-        <string name="custom_theme_background">Hintergrund</string>
         <string name="custom_theme_font">Schriftart</string>
-        <string name="custom_theme_sound">Effekt auswählen</string>
-        <string name="custom_theme_effect">Effekt</string>
-        
-        <string name="custom_theme_backgrounds">hintergrund</string>
-        <string name="custom_theme_fonts">schriftart</string>
-        <string name="custom_theme_sounds">Effekt auswählen</string>
-        <string name="custom_theme_effects">Tippeffekte</string>
-        
+
         <string name="custom_theme_title">Tastatur erstellen</string>
         <string name="custom_theme_title_background">Hintergrund auswählen</string>
         <string name="custom_theme_title_button_shape">Knopfform auswählen</string>
@@ -154,7 +137,6 @@ Enthält Werbung.</string>
         <string name="custom_theme_title_font">Schriftart auswählen</string>
         <string name="custom_theme_title_font_color">Schriftfarbe auswählen</string>
         <string name="custom_theme_title_sound">Klickton auswählen</string>
-        <string name="custom_theme_title_effect">Effekt auswählen</string>
         <string name="custom_theme_sound_tip">Um Klickgeräusche zu verwenden, deaktivieren Sie bitte den Ruhemodus oder aktivieren Sie die Option ‚Ton bei Tastendruck‘ in den Einstellungen.</string>
         
         <!--IAP Tip Info -->
@@ -174,15 +156,12 @@ Enthält Werbung.</string>
         <string name="apk_update_alert_negative_btn">Später</string>
         <string name="apk_update_alert_positive_btn">Aktualisieren</string>
         <string name="apk_update_downloading">Update wird heruntergeladen</string>
-        <string name="apk_update_downloading_notification_title">Wird heruntergeladen</string>
-        
-        
+
+
         <string name="sd_card_unavailable_tip">SD-Karte nicht verfügbar!</string>
         
         <string name="theme_create_custom_theme_failed">Design konnte nicht erstellt werden. Bitte sicherstellen, dass genügend Speicherplatz auf Ihrem Gerät vorhanden ist und erneut versuchen.</string>
-        
-        <string name="home_create_keyboard">Eigene Designs erstellen</string>
-        
+
         <string name="charging_alert_title">Intelligentes Laden</string>
         <string name="charging_alert_message">Intelligentes Aufladen aktivieren, um Überladung effizient zu vermeiden. Enthält Werbung.</string>
         
@@ -190,7 +169,6 @@ Enthält Werbung.</string>
         
         <!--Accessibility-->
         <string name="tv_enable_keyboard_tip">%1$s aktivieren und MEHR Designs genießen!</string>
-        <string name="accessibility_service_label">%1$s</string>
         <string name="tv_set_up_manually">MANUELL EINRICHTEN</string>
         <string name="tv_1_tap_to_set_up_keyboard">Aktiviere %1$s   </string>
         <string name="alter_enable_access_title">Aktiviere %1$s   </string>
@@ -225,14 +203,12 @@ Enthält Werbung.</string>
         
         <string name="interstitial_ad_title_after_try_keyboard">Erfolgreich übernommen</string>
         <string name="interstitial_ad_subtitle_after_try_keyboard">---------------Vielleicht gefällt dir auch---------------</string>
-        
-        <string name="interstitial_ad_subtitle_home_gift_button">---------------Vielleicht gefällt dir auch---------------</string>
+
         <string name="store_nav_download">Meine Downloads</string>
         <string name="tab_theme_my">Meine Designs</string>
         <string name="tab_sticker">STICKER</string>
         <string name="tab_sticker_my">MEINE STICKER</string>
         <string name="tab_font_my">MEINE SCHRIFTART</string>
-        <string name="item_sticker_more_coming">Mehr Sticker in Kürze</string>
         <string name="item_font_more_coming">Mehr Schriftarten in Kürze</string>
         
         <!--alert message-->
@@ -256,7 +232,6 @@ Enthält Werbung.</string>
 
         <!-- wallpaper preview -->
         <string name="key_theme_set_btn">TASTENDESIGN FESTLEGEN</string>
-        <string name="wallpaper_apply_fail">Startbildschirm</string>
         <string name="home_screen">Konfiguration fehlgeschlagen</string>
         <string name="locker_screen">Sperrbildschirm</string>
         <string name="home_and_locker_screen">Start- und Sperrbildschirme</string>
@@ -265,8 +240,7 @@ Enthält Werbung.</string>
     <string name="label_try_now">JETZT TESTEN</string>
     <string name="label_create_funny_facemoji">Kreiere coole Emojis mit deinem eigenen Gesicht!</string>
 
-    <string name="keyboard_make_facemoji_tip">Kreiere deine eigenen Emojis!</string>
-    <string name="sticker_title_create_my_facemojis">Mein Facemoji erstellen</string>
+        <string name="sticker_title_create_my_facemojis">Mein Facemoji erstellen</string>
     <string name="sticker_title_my_facemojis">Meine Facemojis</string>
     <string name="sticker_title_funny_stickers">Lustige Sticker</string>
     <string name="label_share">Teilen</string>

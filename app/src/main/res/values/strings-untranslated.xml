@@ -19,4 +19,6 @@
     <string name="setting_item_selector_delete">Delete</string>
     <string name="setting_item_selector_paste">Paste</string>
     <string name="setting_app_suggestion_title">App Suggestions</string>
+
+    <string name="item_sticker_more_coming">More stickers are coming soon</string>
 </resources>

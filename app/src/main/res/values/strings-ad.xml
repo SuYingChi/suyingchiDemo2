@@ -6,12 +6,8 @@
     <string name="ad_placement_keyboardemojiad" translatable="false">Master_A(NativeAds)KeyboardEmojiAd</string>
     <string name="ad_placement_keyboardsettingsad" translatable="false">Master_A(NativeAds)KeyboardSettingsAd</string>
     <string name="ad_placement_themetryad" translatable="false">Master_A(NativeAds)ThemeTryAd</string>
-    <string name="ad_placement_uninstall" translatable="false">Master_A((NativeAds)Uninstall</string>
     <string name="ad_placement_customize_theme" translatable="false">Master_A(NativeAds)CustomizeThemeAd</string>
 
-    <string name="ad_placement_boostdone" translatable="false">Master_A((NativeAds)BoostDone</string>
-    <string name="ad_placement_applock" translatable="false">Master_A((NativeAds)AppLock</string>
-    <string name="ad_placement_optimization" translatable="false">Master_A((NativeAds)Optimization</string>
     <string name="ad_placement_charging" translatable="false">Master_A(NativeAds)Charging</string>
     <string name="theme_ad_placement_theme_ad" translatable="false">Master_A(NativeAds)ThemeAd</string>
     <string name="ad_placement_google_play_ad" translatable="false">Master_A(NativeAds)GooglePlayIcon</string>
@@ -22,8 +18,6 @@
 
     <string name="placement_full_screen_open_keyboard" translatable="false">Master_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
 
-    <string name="ad_placement_lucky" translatable="false">Master_A(NativeAds)KeyboardLuckyAd</string>
-    <string name="ad_placement_locker" translatable="false">Master_A(NativeAds)Fuse</string>
     <string name="ad_placement_keyboard_banner" translatable="false">Master_A(NativeAds)KeyboardBanner</string>
     <string name="ad_placement_result_page" translatable="false">Master_A((NativeAds)BoostDone</string>
     <string name="ad_placement_cable_report" translatable="false">Master_A((NativeAds)CableReport</string>

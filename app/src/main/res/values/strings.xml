@@ -6,7 +6,6 @@
     <string name="enable">OK</string>
     <string name="disabled">Disabled</string>
     <string name="language">Language</string>
-    <string name="languages">Languages</string>
     <string name="next">Next</string>
     <string name="back">Back</string>
     <string name="cancel">CANCEL</string>
@@ -26,8 +25,6 @@
 
     <string name="unknown">Unknown</string>
 
-    <string name="alert_find_keyboard_and_switch_on">Switch on %1$s</string>
-
     <!--main-->
     <string name="alert_attention_messenger">%1$s treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
     <string name="toast_enable_keyboard">Enable %1$s</string>
@@ -42,7 +39,6 @@
     <string name="dialog_msg_select_keyboard_apply_rain">You need to activate %1$s keyboard to use this theme.</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">ACTIVATE</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain">Activate %1$s</string>
     <string name="dialog_msg_enable_keyboard_home_rain">%1$s provides you with personalized keyboard themes and cute emojis.</string>
 
     <!--language-->
@@ -88,17 +84,13 @@
     <string name="setting_item_more_settings">More Settings</string>
 
     <!--settings panel-->
-    <string name="settings_button_tell_a_friend">Tell a friend</string>
-    <string name="settings_button_tell_a_friend_tip">Share your message now</string>
 
 
     <!-- gif panel -->
     <string name="result_no">No GIFs or stickers found.</string>
     <string name="result_no_recent">No Recents.</string>
-    <string name="result_no_suggestion">No suggested GIFs or stickers.</string>
     <string name="result_no_favorites">No Favorites.</string>
     <string name="result_no_data_on_fail">Please check your network and try again.</string>
-    <string name="result_no_data_on_complete">No GIFs or stickers found.</string>
 
     <!--gif strip-->
     <string name="emoji_search_title">Select emoji to search</string>
@@ -124,9 +116,7 @@
     <string name="dialog_app_usage_title">Allow Apps with Usage Access</string>
 
     <!--theme home nav-->
-    <string name="theme_nav_my_themes">My Themes</string>
     <string name="theme_nav_languages">Languages</string>
-    <string name="theme_nav_settings">Settings</string>
     <string name="theme_nav_update">Update</string>
     <string name="theme_nav_no_ads">Remove Ads</string>
 
@@ -141,15 +131,7 @@
     <string name="theme_card_menu_delete">Delete</string>
 
     <!--custom theme-->
-    <string name="custom_theme_background">Background</string>
     <string name="custom_theme_font">Font</string>
-    <string name="custom_theme_sound">Click Sound</string>
-    <string name="custom_theme_effect">Tap Effect</string>
-
-    <string name="custom_theme_backgrounds">backgrounds</string>
-    <string name="custom_theme_fonts">fonts</string>
-    <string name="custom_theme_sounds">click sounds</string>
-    <string name="custom_theme_effects">tap effects</string>
 
     <string name="custom_theme_title">Create Keyboard</string>
     <string name="custom_theme_title_background">Choose Background</string>
@@ -158,19 +140,10 @@
     <string name="custom_theme_title_font">Choose Font</string>
     <string name="custom_theme_title_font_color">Choose Font Color</string>
     <string name="custom_theme_title_sound">Choose Click Sound</string>
-    <string name="custom_theme_title_effect">Choose Tap Effect</string>
     <string name="custom_theme_sound_tip">To use click sound effect, please turn off the silent mode or enable Sound on keypress in the settings section.</string>
 
     <!--IAP Tip Info -->
-    <string name="current_theme_price" formatted="true">Unlock for %1$s</string>
     <string name="purchase_success">Your purchase was successful.</string>
-    <string name="purchase_error">ERROR:</string>
-    <string name="purchase_error_message">Your purchase is now unavailable. Try again later.</string>
-    <string name="purchase_error_bill">BILLING UNAVAILABLE</string>
-    <string name="purchase_error_item">ITEM UNAVAILABLE</string>
-    <string name="purchase_error_item_owned">ITEM ALREADY OWNED</string>
-    <string name="purchase_google_play_unavailable">Google Play is not available on your device.</string>
-    <string name="purchase_unavailable">The purchase is not available.</string>
 
     <!-- Theme new tip -->
     <string name="new_background_tip">New background</string>
@@ -185,14 +158,11 @@
     <string name="apk_update_alert_negative_btn">LATER</string>
     <string name="apk_update_alert_positive_btn">UPDATE</string>
     <string name="apk_update_downloading">Update downloading</string>
-    <string name="apk_update_downloading_notification_title">Downloading</string>
 
 
     <string name="sd_card_unavailable_tip">SD card is not available!</string>
 
     <string name="theme_create_custom_theme_failed">Failed to create theme, please make sure there\'s enough disk space on your device and try again.</string>
-
-    <string name="home_create_keyboard">Create My Own Themes</string>
 
     <string name="charging_alert_title">Smart Charging</string>
     <string name="charging_alert_message">Enable Smart Charging to prevent overcharging efficiently. Contains sponsored contents.</string>
@@ -201,7 +171,6 @@
 
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">Activate %1$s, enjoy MORE themes!</string>
-    <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">SET UP MANUALLY</string>
     <string name="tv_1_tap_to_set_up_keyboard">Enable %1$s</string>
     <string name="alter_enable_access_title">Enable %1$s</string>
@@ -237,14 +206,11 @@
     <string name="interstitial_ad_title_after_try_keyboard">Applied successfully</string>
     <string name="interstitial_ad_subtitle_after_try_keyboard">--------------- You May Like ---------------</string>
 
-    <string name="interstitial_ad_title_home_gift_button"> </string>
-    <string name="interstitial_ad_subtitle_home_gift_button">--------------- You May Like ---------------</string>
     <string name="store_nav_download">My Downloads</string>
     <string name="tab_theme_my">MY THEME</string>
     <string name="tab_sticker">STICKER</string>
     <string name="tab_sticker_my">MY STICKER</string>
     <string name="tab_font_my">MY FONT</string>
-    <string name="item_sticker_more_coming">More stickers are coming soon</string>
     <string name="item_font_more_coming">More fonts are coming soon</string>
 
     <string name="locker_alert_title">Screen Locker</string>
@@ -268,7 +234,6 @@
 
     <!-- wallpaper preview -->
     <string name="key_theme_set_btn">SET KEY THEME</string>
-    <string name="wallpaper_apply_fail">Applied Failed</string>
     <string name="home_screen">Home screen</string>
     <string name="locker_screen">Lock screen</string>
     <string name="home_and_locker_screen">Home and lock screens</string>
@@ -279,7 +244,6 @@
     <string name="label_share">Share</string>
     <string name="label_create_funny_facemoji">Make cool emojis with your own face!</string>
 
-    <string name="keyboard_make_facemoji_tip">DIY your own emojis!</string>
     <string name="sticker_title_create_my_facemojis">Create My Facemoji</string>
     <string name="sticker_title_my_facemojis">My Facemojis</string>
     <string name="sticker_title_funny_stickers">Funny Stickers</string>

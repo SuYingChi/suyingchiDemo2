@@ -110,7 +110,6 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/gallery"
                     style="@style/CaptureImageViewStyle"
                     android:layout_gravity="center_vertical"
                     android:background="?selectableItemBackgroundBorderless"
@@ -142,7 +141,6 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/camera_switcher"
                     style="@style/CaptureImageViewStyle"
                     android:background="?selectableItemBackgroundBorderless"
                     android:tint="@color/standard_gray"

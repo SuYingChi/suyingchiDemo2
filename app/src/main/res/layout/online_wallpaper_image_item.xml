@@ -16,7 +16,6 @@
         android:scaleType="centerCrop"/>
 
     <ImageView
-        android:id="@+id/iv_3d_mark"
         android:layout_width="@dimen/customize_wallpaper_3d_mark"
         android:layout_height="@dimen/customize_wallpaper_3d_mark"
         android:layout_alignParentEnd="true"

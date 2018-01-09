@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <bool name="config_super_emoji_enabled">false</bool>
-    <bool name="config_sticker_enabled">false</bool>
-    <bool name="config_image_enabled">true</bool>
-    <bool name="config_slots_unlimited">false</bool>
-    <bool name="config_locker_drawer_visiable_enable">false</bool>
-    <bool name="config_ask_for_usage_permission">false</bool>
-    <string name="config_home_activity_class"></string>
-    <string name="config_main_activity_class"></string>
     <!-- Animation keyboard -->
-    <integer name="config_image_page_max_page_image_count">6</integer>
-    <integer name="config_image_page_max_page_column_count">3</integer>
-    <integer name="config_image_page_image_vertical_space">6</integer>
-    <integer name="config_image_page_image_horizontal_space">3</integer>
-    <fraction name="config_image_page_image_size">30%p</fraction>
-    <fraction name="config_image_page_image_width">33%p</fraction>
-    <fraction name="config_image_page_image_height">50%p</fraction>
     <bool name="hideRemoveAds">false</bool>
 </resources>

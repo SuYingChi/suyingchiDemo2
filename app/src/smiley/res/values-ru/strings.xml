@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="feedback_email">feedback.emoji@hotmail.com</string>
     <string name="fb_app_id">1474873346171463</string>
 
     <string name="accessibility_service_description">Переведите переключатель в верхней правом углу в положение «ON». ↗️⊙.⊙↗️
@@ -10,7 +9,6 @@
 
     <string name="theme_share_text_content">Моя личная клавиатура, созданная в #%1$s https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
     <string name="theme_share_text_content_for_custom_theme">Настройте собственную клавиатуру с любимыми картинками!✌️😍👍 Загрузите #%1$s бесплатно: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
-    <string name="settings_button_tell_a_friend_content">Hey, Du hast dir die App %1$s angesehen. Du kannst deine Tastatur mit deinen eigenen Bildern ausstatten! Und die Schriftarten und Fonts sind der Wahnsinn! Downloade #%2$s gratis: https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
     <string name="my_facemoji_send_facemoji_tip">Уже ROFL? Отправьте прямо на клавиатуру Emoji Keyboard!</string>
     <string name="camera_activity_title">Сделать селфи</string>
     <string name="facemoji_in_progress">Создание Facemoji...</string>

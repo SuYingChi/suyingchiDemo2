@@ -35,7 +35,6 @@
         android:visibility="invisible" />
 
     <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
-        android:id="@+id/custom_theme_item_locked"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true" />
