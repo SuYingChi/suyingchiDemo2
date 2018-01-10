@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.widget;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -152,7 +153,10 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
         for (int i = 0; i < pageCount; i++) {
             radioButton = new RadioButton(HSApplication.getContext());
             //TODO: 为什么 stateListDrawable.mutate() 不起作用？
-            radioButton.setButtonDrawable(stateListDrawable.getConstantState().newDrawable().mutate());
+            Drawable.ConstantState constantState = stateListDrawable.getConstantState();
+            if (constantState != null) {
+                radioButton.setButtonDrawable(constantState.newDrawable().mutate());
+            }
             radioButton.setLayoutParams(params);
             radioButton.setClickable(false);
             addView(radioButton, params);
