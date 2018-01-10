@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -10,6 +11,13 @@ import android.view.ViewGroup;
 
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -23,8 +31,6 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemePanelModel;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -85,41 +91,35 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
     @Override
     protected void onBindViewHolder(@NonNull List<ThemePanelModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
         final PanelThemeViewHolder viewHolder = (PanelThemeViewHolder) holder;
-        final ThemePanelModel model = items.get(position);
-        final String themeName = model.keyboardTheme.mThemeName;
-        final String themeShowName = model.keyboardTheme.getThemeShowName();
+        final ThemePanelModel themePanelModel = items.get(position);
+        final String themeName = themePanelModel.keyboardTheme.mThemeName;
+        final String themeShowName = themePanelModel.keyboardTheme.getThemeShowName();
 
-        HSKeyboardThemeManager.loadThemePreviewPanelDrawable(model.keyboardTheme, contentContainerWidth, contentContainerHeight, new ImageLoadingListener() {
+        viewHolder.content.setImageDrawable(null);
+        viewHolder.delete.setVisibility(View.GONE);
+        String url = themePanelModel.keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.BUILD_IN ? "file:///android_asset/" + themePanelModel.keyboardTheme.getThemePreviewPanelImageUrl() : themePanelModel.keyboardTheme.getThemePreviewPanelImageUrl();
+
+        Glide.with(HSApplication.getContext()).asBitmap().apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)).listener(new RequestListener<Bitmap>() {
             @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                viewHolder.content.setImageDrawable(null);
-                viewHolder.delete.setVisibility(View.GONE);
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                return false;
             }
 
             @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                viewHolder.content.setImageBitmap(loadedImage);
+            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                viewHolder.content.setImageBitmap(resource);
                 viewHolder.check.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(themeName) ? View.VISIBLE : View.GONE);
-                if (model.isCustomTheme && model.isCustomThemeInEditMode) {
+                if (themePanelModel.isCustomTheme && themePanelModel.isCustomThemeInEditMode) {
                     viewHolder.delete.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(themeName) ? View.GONE : View.VISIBLE);
                 }
+                return false;
             }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-
-            }
-        });
+        }).load(url).submit(contentContainerWidth, contentContainerHeight);
 
         viewHolder.contentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (model.isCustomTheme && model.isCustomThemeInEditMode) {
+                if (themePanelModel.isCustomTheme && themePanelModel.isCustomThemeInEditMode) {
                     return;
                 }
 
@@ -129,21 +129,21 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                         LockerEnableDialog.showLockerEnableDialog(HSApplication.getContext(), ThemeLockerBgUtil.getInstance().getThemeBgUrl(themeName),
                                 HSApplication.getContext().getString(R.string.locker_enable_title_has_text),
                                 new LockerEnableDialog.OnLockerBgLoadingListener() {
-                            @Override
-                            public void onFinish() {
-                                if (!HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
-                                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
-                                    HSToastUtils.toastCenterLong(String.format(failedString, themeShowName));
-                                }
+                                    @Override
+                                    public void onFinish() {
+                                        if (!HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
+                                            String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                                            HSToastUtils.toastCenterLong(String.format(failedString, themeShowName));
+                                        }
 
-                                HSAnalytics.logEvent("keyboard_theme_chosed", "themeType", HSKeyboardThemeManager.isCustomTheme(themeName) ? "mytheme" : themeName);
-                                if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
-                                    ThemeAnalyticsReporter.getInstance().recordThemeUsage(themeName);
-                                }
-                                int count = enableShowed + 1;
-                                HSPreferenceHelper.getDefault().putInt("locker_enable_showed", count);
-                            }
-                        });
+                                        HSAnalytics.logEvent("keyboard_theme_chosed", "themeType", HSKeyboardThemeManager.isCustomTheme(themeName) ? "mytheme" : themeName);
+                                        if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
+                                            ThemeAnalyticsReporter.getInstance().recordThemeUsage(themeName);
+                                        }
+                                        int count = enableShowed + 1;
+                                        HSPreferenceHelper.getDefault().putInt("locker_enable_showed", count);
+                                    }
+                                });
                     } else {
                         if (!HSKeyboardThemeManager.setKeyboardTheme(themeName)) {
                             String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
@@ -161,7 +161,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
             }
         });
 
-        if (model.isCustomTheme) {
+        if (themePanelModel.isCustomTheme) {
             viewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
