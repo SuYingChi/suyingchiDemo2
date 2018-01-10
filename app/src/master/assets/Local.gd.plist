@@ -11743,6 +11743,15 @@
 			</dict>
 			<key>Master_A(NativeAds)ThemeTryAd</key>
 			<dict>
+				<key>preloadOnlyInWifi</key>
+				<false/>
+				<key>preload</key>
+				<dict>
+					<key>inventory</key>
+					<integer>0</integer>
+					<key>strategy</key>
+					<string>initiative</string>
+				</dict>
 				<key>deDuplicate</key>
 				<true/>
 				<key>packageFilter</key>
