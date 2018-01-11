@@ -23,7 +23,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -58,6 +57,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.HSUIInputMethod;
+import com.ihs.inputmethod.base.utils.ApplicationUtils;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
@@ -180,13 +180,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
 
         private void setEnabledLanguage() {
             String packageName = getActivity().getPackageName();
-            ApplicationInfo applicationInfo = null;
-            try {
-                applicationInfo = getActivity().getPackageManager().getApplicationInfo(packageName, 0);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-
+            ApplicationInfo applicationInfo = ApplicationUtils.getApplicationInfo();
             if (applicationInfo == null) {
                 return;
             }

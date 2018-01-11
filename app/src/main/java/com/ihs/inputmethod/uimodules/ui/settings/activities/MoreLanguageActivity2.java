@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.settings.activities;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.language.HSImeSubtypeListItem;
+import com.ihs.inputmethod.base.utils.ApplicationUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.settings.AdditionalSubtypeUtil;
 import com.ihs.inputmethod.uimodules.R;
@@ -185,14 +185,8 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         SwipeLayout languageItem;
 
         String packageName = getPackageName();
-        ApplicationInfo applicationInfo = null;
-        try {
-            applicationInfo = getPackageManager().getApplicationInfo(packageName, 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (applicationInfo == null) { //TODO:cjx 处理异常
+        ApplicationInfo applicationInfo = ApplicationUtils.getApplicationInfo();
+        if (applicationInfo == null) {
             return;
         }
 
@@ -243,14 +237,8 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
         LanguageLoadingPreference preference = null;
 
         String packageName = getPackageName();
-        ApplicationInfo applicationInfo = null;
-        try {
-            applicationInfo = getPackageManager().getApplicationInfo(packageName, 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (applicationInfo == null) { //TODO:cjx 处理异常
+        ApplicationInfo applicationInfo = ApplicationUtils.getApplicationInfo();
+        if (applicationInfo == null) {
             return;
         }
 
