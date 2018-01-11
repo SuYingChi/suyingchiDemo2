@@ -178,11 +178,7 @@ public abstract class BaseDownload implements Runnable, Comparable<BaseDownload>
         // download not complete
         if (fileSize != 0 && downLoadFileSize < fileSize) {
             return false;
-        } else if (fileSize == 0) {// not start download
-            return false;
-        } else {
-            return true;
-        }
+        } else return fileSize != 0;
     }
 
     public boolean isOver(){

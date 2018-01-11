@@ -82,7 +82,7 @@ public class FontManager {
 			}
 		});
 
-		final FontSelectView fontSelectView= (FontSelectView) mFontView.findViewById(R.id.font_select_listview);
+		final FontSelectView fontSelectView= mFontView.findViewById(R.id.font_select_listview);
 		mAdapter = new FontSelectViewAdapter(HSApplication.getContext(), fontSelectView, null);
 		fontSelectView.setAdapter(mAdapter);
 

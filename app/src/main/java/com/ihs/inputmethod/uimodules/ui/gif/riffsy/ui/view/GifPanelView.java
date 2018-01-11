@@ -120,7 +120,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
             List<String> tabs = new ArrayList<>();
             tabs.addAll(mGifCategory.getShownCategories());
             tabViewAdapter = new TabViewAdapter(tabs, this);
-            final RecyclerView tabView = (RecyclerView) findViewById(R.id.image_category_tabhost);
+            final RecyclerView tabView = findViewById(R.id.image_category_tabhost);
             tabView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
             tabView.setAdapter(tabViewAdapter);
         }
@@ -137,23 +137,23 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
         final int viewHeight = height / rowNumber;
         final int viewWidth = 4 * viewHeight / 3;
 
-        container = (FrameLayout) findViewById(R.id.dropdown_container);
+        container = findViewById(R.id.dropdown_container);
         final View gifContainer = findViewById(R.id.gif_container);
         gifContainer.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
 
         mGifHSViewAdapter = new GifHorizontalScrollViewAdapter(this, viewWidth, viewHeight);
         mGifHSViewAdapter.setHasStableIds(true);
 
-        mGifHSView = (RecyclerView) findViewById(R.id.gif_horizontal_scroll_view);
+        mGifHSView = findViewById(R.id.gif_horizontal_scroll_view);
         mGifHSView.setLayoutManager(new StaggeredGridLayoutManager(rowNumber, StaggeredGridLayoutManager.HORIZONTAL));
         mGifHSView.setAdapter(mGifHSViewAdapter);
         mGifHSView.addItemDecoration(new GridSpacingItemDecoration(res.getDimensionPixelSize(R.dimen.config_gif_grid_spacing), 0));
         mGifHSView.addOnChildAttachStateChangeListener(new LoadScrollListener());
 
-        mGifLoadingView = (GifLoadingView) findViewById(R.id.gif_loading_view);
+        mGifLoadingView = findViewById(R.id.gif_loading_view);
         mGifPanelBg = findViewById(R.id.gif_panel_view_alpha);
 
-        mStripView = (GifStripView) findViewById(R.id.gif_strip_view);
+        mStripView = findViewById(R.id.gif_strip_view);
         mStripView.bindPanelView(this);
         gifSearchButton = findViewById(R.id.gif_bar_search_button);
         if (!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {

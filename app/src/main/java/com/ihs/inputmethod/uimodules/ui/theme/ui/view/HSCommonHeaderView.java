@@ -59,9 +59,9 @@ public class HSCommonHeaderView extends RelativeLayout {
         if (textHead != null) {
             return;
         }
-        textCancel = (Button) findViewById(R.id.custom_theme_title_cancel);
-        textHead = (TextView) findViewById(R.id.custom_theme_title_title);
-        textOK = (Button) findViewById(R.id.custom_theme_title_ok);
+        textCancel = findViewById(R.id.custom_theme_title_cancel);
+        textHead = findViewById(R.id.custom_theme_title_title);
+        textOK = findViewById(R.id.custom_theme_title_ok);
 //        textCancel.setAllCaps(false);
 //        textHead.setAllCaps(false);
 //        textOK.setAllCaps(false);

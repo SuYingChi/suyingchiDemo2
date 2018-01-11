@@ -1376,9 +1376,6 @@ public final class Utils {
     }
 
     public static boolean checkFileValid(File file) {
-        if (file != null && file.exists()) {
-            return true;
-        }
-        return false;
+        return file != null && file.exists();
     }
 }

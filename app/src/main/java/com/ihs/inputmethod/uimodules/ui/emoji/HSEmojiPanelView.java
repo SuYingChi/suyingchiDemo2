@@ -85,9 +85,9 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
             List<String> tabs = new ArrayList<>();
             tabs.addAll(emojiCategory.getTabs());
             tabAdapter = new HSEmojiTabAdapter(tabs, this);
-            ImageView imageView = (ImageView) findViewById(R.id.emoji_ad_container);
+            ImageView imageView = findViewById(R.id.emoji_ad_container);
 
-            emojiCategoryView = (RecyclerView) findViewById(R.id.image_category_tabhost);
+            emojiCategoryView = findViewById(R.id.image_category_tabhost);
             emojiCategoryView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
             emojiCategoryView.setAdapter(tabAdapter);
         }
@@ -102,7 +102,7 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
         final int emojiHeight = height / emojiRow;
         final int emojiWidth = (int) (width / (emojiCol + 0.5f));
 
-        emojiView = (RecyclerView) findViewById(R.id.emoji_keyboard_pager);
+        emojiView = findViewById(R.id.emoji_keyboard_pager);
         emojiAdapter = new HSEmojiViewAdapter(emojiHeight, emojiWidth, 0.6f, this);
         emojiAdapter.setLongPressListener(this);
 
@@ -166,7 +166,7 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
 
     @Override
     public void onEmojiLongPress(Emoji emoji, View emojiTextView, int parentViewHeight) {
-        ViewStub skinStub = (ViewStub) findViewById(R.id.emoji_skin_import);
+        ViewStub skinStub = findViewById(R.id.emoji_skin_import);
         if (skinStub != null) {
             skinStub.setVisibility(View.VISIBLE);
         }
@@ -181,7 +181,7 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
         final int emojiCol = res.getInteger(R.integer.config_emoji_col_count);
         final int emojiWidth = (int) (width / (emojiCol + 0.5f));
 
-        RecyclerView emojiSkinView = (RecyclerView) skinView.findViewById(R.id.emoji_skin_container);
+        RecyclerView emojiSkinView = skinView.findViewById(R.id.emoji_skin_container);
         skinView.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

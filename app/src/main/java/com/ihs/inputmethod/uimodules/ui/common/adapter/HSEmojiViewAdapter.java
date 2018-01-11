@@ -132,7 +132,7 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	public void onClick(View v) {
 		final Object tag=v.getTag();
 		if(tag instanceof Emoji && listener!=null){
-			View textView = (TextView) v.findViewById(R.id.emoji_tv);
+			View textView = v.findViewById(R.id.emoji_tv);
 			listener.onEmojiClick((Emoji) tag);
 //			String unicode = ((Emoji) tag).getUnicodeStr();
 //			Log.d("emoji",  ((Emoji) tag).getLabel() + " ---->unicode:"+unicode);
@@ -145,7 +145,7 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	public  boolean onLongClick(View v) {
 		final Object tag= v.getTag();
 		if(tag instanceof Emoji && longPressListener!=null){
-			View textView = (TextView) v.findViewById(R.id.emoji_tv);
+			View textView = v.findViewById(R.id.emoji_tv);
 			longPressListener.onEmojiLongPress((Emoji) tag,textView,this.childViewHeight);
 
 			Animation set=createClickAnimation(1.4f,80,80);
@@ -196,8 +196,8 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 		ImageView iv;
 		public ViewHolder(View itemView) {
 			super(itemView);
-			tv = (TextView) itemView.findViewById(R.id.emoji_tv);
-			iv = (ImageView) itemView.findViewById(R.id.emoji_iv);
+			tv = itemView.findViewById(R.id.emoji_tv);
+			iv = itemView.findViewById(R.id.emoji_iv);
 		}
 	}
 

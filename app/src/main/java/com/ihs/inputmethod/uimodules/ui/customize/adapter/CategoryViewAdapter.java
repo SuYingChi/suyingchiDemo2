@@ -59,7 +59,7 @@ public class CategoryViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.online_wallpaper_category_item, parent, false);
             holder = new ViewHolder();
-            holder.titleView = (TextView) convertView.findViewById(R.id.category_text_title);
+            holder.titleView = convertView.findViewById(R.id.category_text_title);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

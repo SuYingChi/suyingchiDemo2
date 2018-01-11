@@ -44,20 +44,20 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
         setContentView(R.layout.facelist_activity);
         screenHeight = DisplayUtils.getScreenHeightForContent() - DisplayUtils.getStatusBarHeight(getWindow());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.switch_facemoji_toolbar_title));
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        faceGrid = (GridView) findViewById(R.id.face_grid);
+        faceGrid = findViewById(R.id.face_grid);
         setGridViewLayoutProperties();
         adapter = new FaceGridAdapter(faceItemDimension, this);
         adapter.setOnSelectedFaceChangedListener(this);
         faceGrid.setAdapter(adapter);
 
-        editBtn = (TextView) findViewById(R.id.facelist_edit_btn);
+        editBtn = findViewById(R.id.facelist_edit_btn);
 
         View editButtonHolder = findViewById(R.id.facelist_edit_btn_holder);
         RelativeLayout.LayoutParams editHolderPara = (RelativeLayout.LayoutParams) editButtonHolder.getLayoutParams();
@@ -65,7 +65,7 @@ public class FaceListActivity extends HSAppCompatActivity implements View.OnClic
         editButtonHolder.setLayoutParams(editHolderPara);
         editButtonHolder.setOnClickListener(this);
 
-        deleteBtn = (ImageView) findViewById(R.id.delete_face);
+        deleteBtn = findViewById(R.id.delete_face);
         deleteBtn.setOnClickListener(this);
         LinearLayout.LayoutParams deleteBtn_param = (LinearLayout.LayoutParams) deleteBtn.getLayoutParams();
         deleteBtn_param.height = getNavigateBarHeight();

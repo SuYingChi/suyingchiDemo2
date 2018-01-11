@@ -502,9 +502,9 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
             public Holder(View itemView) {
                 super(itemView);
-                backgroundContent = (ImageView) itemView.findViewById(R.id.background_content);
-                backgroundNewMark = (ImageView) itemView.findViewById(R.id.background_new_mark);
-                backgroundGiftIcon = (ImageView) itemView.findViewById(R.id.background_gift_icon);
+                backgroundContent = itemView.findViewById(R.id.background_content);
+                backgroundNewMark = itemView.findViewById(R.id.background_new_mark);
+                backgroundGiftIcon = itemView.findViewById(R.id.background_gift_icon);
                 CompatUtils.setCardViewMaxElevation((CardView) itemView);
             }
         }

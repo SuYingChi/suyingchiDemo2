@@ -55,14 +55,14 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
         setContentView(R.layout.activity_theme_download);
         getWindow().setBackgroundDrawable(null);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         String downloadTitle = getResources().getString(R.string.store_nav_download);
         toolbar.setTitle(downloadTitle);
         setSupportActionBar(toolbar);
 
-        tabLayout = (TabLayout) findViewById(R.id.store_tab);
+        tabLayout = findViewById(R.id.store_tab);
 
-        viewPager = (ViewPager) findViewById(R.id.fragment_view_pager);
+        viewPager = findViewById(R.id.fragment_view_pager);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
@@ -88,7 +88,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
         if (tab != null) {
             tab.select();
         }
-        createThemeButton = (FloatingActionButton) findViewById(R.id.home_create_theme_layout);
+        createThemeButton = findViewById(R.id.home_create_theme_layout);
         createThemeButton.setOnClickListener(this);
         if (position == 0) {
             createThemeButton.setVisibility(View.VISIBLE);

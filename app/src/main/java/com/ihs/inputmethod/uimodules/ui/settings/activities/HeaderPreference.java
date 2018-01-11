@@ -28,9 +28,9 @@ public class HeaderPreference extends LinearLayout {
         subTitle = ta.getString(R.styleable.HeaderPreference_subtitleString);
         ta.recycle();
         inflate(getContext(), R.layout.header_preference, this);
-        pTitleView = (TextView) this.findViewById(R.id.prefs_header_title);
+        pTitleView = this.findViewById(R.id.prefs_header_title);
         pTitleView.setText(headerTitle);
-        subTitleView = (TextView) this.findViewById(R.id.prefs_sub_title);
+        subTitleView = this.findViewById(R.id.prefs_sub_title);
         subTitleView.setText(subTitle);
         this.setOnClickListener(new OnClickListener() {
             @Override

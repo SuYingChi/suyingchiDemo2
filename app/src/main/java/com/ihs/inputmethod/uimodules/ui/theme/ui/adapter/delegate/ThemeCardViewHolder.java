@@ -25,12 +25,12 @@ public final class ThemeCardViewHolder extends RecyclerView.ViewHolder {
 	public ThemeCardViewHolder(View itemView) {
 		super(itemView);
 		themeCardView = itemView.findViewById(R.id.theme_card_view);
-		themeRealImage = (ImageView) itemView.findViewById(R.id.theme_image_real_view);
-		themeName = (TextView) itemView.findViewById(R.id.theme_name);
-		themeDelete = (ImageView) itemView.findViewById(R.id.theme_delete_view);
+		themeRealImage = itemView.findViewById(R.id.theme_image_real_view);
+		themeName = itemView.findViewById(R.id.theme_name);
+		themeDelete = itemView.findViewById(R.id.theme_delete_view);
 		themeDelete.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.preview_keyboard_delete)));
-		moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
-		themeNewImage = (GifImageView) itemView.findViewById(R.id.theme_new_view);
-		themeAnimatedImage = (ImageView) itemView.findViewById(R.id.theme_animated_view);
+		moreMenuImage = itemView.findViewById(R.id.more_menu_image);
+		themeNewImage = itemView.findViewById(R.id.theme_new_view);
+		themeAnimatedImage = itemView.findViewById(R.id.theme_animated_view);
 	}
 }

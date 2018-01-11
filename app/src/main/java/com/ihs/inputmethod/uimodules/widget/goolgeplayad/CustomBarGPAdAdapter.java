@@ -99,9 +99,9 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
             final AcbNativeAdContainerView acbNativeAdContainerView = new AcbNativeAdContainerView(context);
             acbNativeAdContainerView.hideAdCorner();
             acbNativeAdContainerView.addContentView(containerView);
-            AcbNativeAdIconView adIconView = (AcbNativeAdIconView) containerView.findViewById(R.id.ad_icon);
-            acbNativeAdContainerView.setAdTitleView((TextView) containerView.findViewById(R.id.ad_title));
-            acbNativeAdContainerView.setAdChoiceView((ViewGroup) containerView.findViewById(R.id.ad_choice));
+            AcbNativeAdIconView adIconView = containerView.findViewById(R.id.ad_icon);
+            acbNativeAdContainerView.setAdTitleView(containerView.findViewById(R.id.ad_title));
+            acbNativeAdContainerView.setAdChoiceView(containerView.findViewById(R.id.ad_choice));
             acbNativeAdContainerView.setAdIconView(adIconView);
             acbNativeAdContainerView.setAdActionView(containerView.findViewById(R.id.ad_call_to_action));
             acbNativeAdContainerView.fillNativeAd(adList.get(position));
@@ -147,9 +147,9 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
 
         private CamViewHolder(View itemView) {
             super(itemView);
-            iconView = (ImageView) itemView.findViewById(R.id.ad_icon);
-            actionView = (ImageView) itemView.findViewById(R.id.ad_call_to_action);
-            textView = (TextView) itemView.findViewById(R.id.ad_title);
+            iconView = itemView.findViewById(R.id.ad_icon);
+            actionView = itemView.findViewById(R.id.ad_call_to_action);
+            textView = itemView.findViewById(R.id.ad_title);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

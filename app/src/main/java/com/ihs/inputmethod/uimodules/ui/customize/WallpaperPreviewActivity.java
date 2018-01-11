@@ -220,20 +220,20 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mReturnArrow = findViewById(R.id.wallpaper_view_return);
         mReturnArrow.setOnClickListener(this);
 //        mReturnArrow.setBackgroundResource(R.drawable.moment_round_material_compat_dark);
-        mSetWallpaperButton = (TextView) findViewById(R.id.set_wallpaper_button);
+        mSetWallpaperButton = findViewById(R.id.set_wallpaper_button);
         mSetWallpaperButton.setOnClickListener(this);
         if(BuildConfig.LOCKER_APP_GUIDE){
             mSetWallpaperButton.setText(R.string.locker_set_lock_screen);
         }
 
-        mSetKeyThemeButton = (TextView) findViewById(R.id.set_key_theme_button);
+        mSetKeyThemeButton = findViewById(R.id.set_key_theme_button);
         mSetKeyThemeButton.setOnClickListener(this);
 
-        setWallpaperDialog = (LinearLayout) findViewById(R.id.select_dialog_wallpaper);
+        setWallpaperDialog = findViewById(R.id.select_dialog_wallpaper);
         setWallpaperDialog.setOnClickListener(this);
         setWallpaperDialog.setVisibility(View.INVISIBLE);
 
-        mViewPager = (ViewPager) findViewById(R.id.preview_view_pager);
+        mViewPager = findViewById(R.id.preview_view_pager);
         mAdapter = new PreviewViewPagerAdapter();
         mViewPager.setAdapter(mAdapter);
         mViewPager.setFocusable(true);
@@ -287,11 +287,11 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     private void showSetWallpaperDialog() {
         showSetWallpaperSelectDialog();
-        setHomeScreen = (LinearLayout) findViewById(R.id.set_home_screen);
+        setHomeScreen = findViewById(R.id.set_home_screen);
         setHomeScreen.setOnClickListener(this);
-        setLockerScreen = (LinearLayout) findViewById(R.id.set_locker_screen);
+        setLockerScreen = findViewById(R.id.set_locker_screen);
         setLockerScreen.setOnClickListener(this);
-        setHomeAndLockerScreen = (LinearLayout) findViewById(R.id.set_home_and_locker_screen);
+        setHomeAndLockerScreen = findViewById(R.id.set_home_and_locker_screen);
         setHomeAndLockerScreen.setOnClickListener(this);
     }
 
@@ -706,7 +706,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             WallpaperInfo info = (WallpaperInfo) getWallpaperInfoByIndex((int) (page.getTag()));
 //            info.setTextLight(WallpaperUtils.textColorLightForWallPaper(bitmap));
 
-            ((ImageView) view).setImageMatrix(WallpaperUtils.centerCrop(page.width, page.height, (ImageView) view));
+            view.setImageMatrix(WallpaperUtils.centerCrop(page.width, page.height, view));
 
             mLoadMap.put((int) (page.getTag()), true);
             refreshButtonState();

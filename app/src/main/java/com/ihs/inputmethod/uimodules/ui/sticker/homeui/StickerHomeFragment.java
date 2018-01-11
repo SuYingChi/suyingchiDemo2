@@ -84,7 +84,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sticker, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.recycler_view);
         initView();
         HSGlobalNotificationCenter.addObserver(FacemojiManager.FACEMOJI_SAVED, observer);
         HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);

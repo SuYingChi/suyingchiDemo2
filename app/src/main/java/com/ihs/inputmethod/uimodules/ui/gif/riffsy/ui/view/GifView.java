@@ -96,13 +96,13 @@ public final class GifView extends RelativeLayout implements View.OnClickListene
     protected void onFinishInflate() {
         super.onFinishInflate();
         favorite = findViewById(R.id.favorite);
-        favorite_iv = (ImageView) findViewById(R.id.favorite_iv);
-        delete_iv = (ImageView) findViewById(R.id.delete_iv);
+        favorite_iv = findViewById(R.id.favorite_iv);
+        delete_iv = findViewById(R.id.delete_iv);
         favorite_alpha = findViewById(R.id.alpha_favorite);
         favorite.setVisibility(INVISIBLE);
         favorite_alpha.setVisibility(INVISIBLE);
         mAnimOne = findViewById(R.id.anim_one);
-        progressView = (SectorProgressView) findViewById(R.id.gif_item_progress);
+        progressView = findViewById(R.id.gif_item_progress);
 
         setOnClickListener(this);
         setOnLongClickListener(this);

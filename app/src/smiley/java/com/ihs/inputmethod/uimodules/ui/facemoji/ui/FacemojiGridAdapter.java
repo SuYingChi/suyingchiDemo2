@@ -129,10 +129,10 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             }
         }else {
             convertView = mInflater.inflate(R.layout.facemoji_view, null);
-            final AnimationLayout containerLayout = (AnimationLayout) convertView.findViewById(R.id.facemoji_cell_layout);
+            final AnimationLayout containerLayout = convertView.findViewById(R.id.facemoji_cell_layout);
             containerLayout.setLayoutParams(new GridView.LayoutParams(stickerWidth, stickerHeight));
 
-            final FacemojiAnimationView facemojiView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
+            final FacemojiAnimationView facemojiView = containerLayout.findViewById(R.id.sticker_player_view);
             facemojiView.setSticker(sticker);
             facemojiView.setTag(sticker);
             if (sticker.getWidth() == sticker.getHeight()) { //方形的sticker，内容保持高度
@@ -244,9 +244,9 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         param.width = (int) (size.x * 0.95);
         dialog.getWindow().setAttributes(param);
 
-        stickerPlayer = (FacemojiAnimationView) dialog.findViewById(R.id.share_sticker_preview);
+        stickerPlayer = dialog.findViewById(R.id.share_sticker_preview);
 
-        RecyclerView shareRecyclerView = (RecyclerView) dialog.findViewById(R.id.share_apps_recycler_view);
+        RecyclerView shareRecyclerView = dialog.findViewById(R.id.share_apps_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HSApplication.getContext(), 4);
         shareRecyclerView.addItemDecoration(new SpacesItemDecoration(HSApplication.getContext().getResources().getDimension(R.dimen.facemoji_share_alert_share_app_recycler_vertical_space), HSApplication.getContext().getResources().getDimension(R.dimen.facemoji_share_alert_share_app_recycler_horizontal_space)));
         shareRecyclerView.setLayoutManager(gridLayoutManager);
@@ -254,7 +254,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         shareAdapter = new ShareAdapter(getSharedAppsList());
         shareRecyclerView.setAdapter(shareAdapter);
 
-        LinearLayout closeBtn = (LinearLayout) dialog.findViewById(R.id.back_button_holder);
+        LinearLayout closeBtn = dialog.findViewById(R.id.back_button_holder);
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -262,7 +262,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
             }
         });
 
-        mProgressBar = (ProgressBar) dialog.findViewById(R.id.progressBar);
+        mProgressBar = dialog.findViewById(R.id.progressBar);
 
         dialog.setCancelable(true);
     }
@@ -376,8 +376,8 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
 
             public ShareViewHolder(View itemView) {
                 super(itemView);
-                shareAppIcon = (ImageView) itemView.findViewById(R.id.share_app_icon);
-                shareAppName = (TextView) itemView.findViewById(R.id.share_app_name);
+                shareAppIcon = itemView.findViewById(R.id.share_app_icon);
+                shareAppName = itemView.findViewById(R.id.share_app_name);
             }
         }
     }

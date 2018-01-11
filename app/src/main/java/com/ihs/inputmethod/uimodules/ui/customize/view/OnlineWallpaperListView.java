@@ -74,15 +74,15 @@ public class OnlineWallpaperListView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        this.recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        this.retryLayout = (LinearLayout) findViewById(R.id.retry_downloading_layout);
+        this.recyclerView = findViewById(R.id.recycler_view);
+        this.retryLayout = findViewById(R.id.retry_downloading_layout);
         retryLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startLoading();
             }
         });
-        this.progressBar = (ProgressBar) findViewById(R.id.wallpaper_loading_progress_bar);
+        this.progressBar = findViewById(R.id.wallpaper_loading_progress_bar);
 
         adapter = new OnlineWallpaperGalleryAdapter(getContext());
         recyclerView.setHasFixedSize(true);

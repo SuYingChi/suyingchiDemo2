@@ -114,8 +114,8 @@ public class StickerViewPagerAdapter extends PagerAdapter {
             StickerDownloadView stickerDownloadView = (StickerDownloadView) inflater.inflate(R.layout.common_sticker_panel_need_download_page, null);
             final StickerGroup stickerGroup = needDownloadStickerGroupList.get(position - 1);
             stickerDownloadView.setStickerGroup(stickerGroup);
-            final ImageView sticker_download_preview = (ImageView) stickerDownloadView.findViewById(R.id.sticker_download_preview_image);
-            final TextView stickerDownloadShowName = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_show_name);
+            final ImageView sticker_download_preview = stickerDownloadView.findViewById(R.id.sticker_download_preview_image);
+            final TextView stickerDownloadShowName = stickerDownloadView.findViewById(R.id.sticker_download_show_name);
             stickerDownloadShowName.setText(stickerGroup.getDownloadDisplayName());
             ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupDownloadPreviewImageUri(), new ImageViewAware(sticker_download_preview), displayImageOptions, new ImageLoadingListener() {
                 @Override
@@ -139,7 +139,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
 
                 }
             });
-            TextView downloadButton = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_button);
+            TextView downloadButton = stickerDownloadView.findViewById(R.id.sticker_download_button);
             StickerHomeModel  stickerHomeModel = new StickerHomeModel();
             stickerHomeModel.stickerGroup = stickerGroup;
             if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {

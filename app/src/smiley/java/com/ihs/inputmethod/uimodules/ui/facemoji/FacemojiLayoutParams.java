@@ -40,8 +40,8 @@ class FacemojiLayoutParams {
 
 
 
-		mEmojiPagerHeight = defaultKeyboardHeight - HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.facemoji_indicator_height);;
-		//
+		mEmojiPagerHeight = defaultKeyboardHeight - HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.facemoji_indicator_height);
+        //
 		mGridViewVerticalSpacing = 30;
 		mGridViewHorizontalSpacing = 30;
 
@@ -71,7 +71,7 @@ class FacemojiLayoutParams {
 			mGridViewHorizontalSpacing = 10;
 			mViewWidth= (int)((res.getDisplayMetrics().widthPixels*1.0 - mGridViewHorizontalSpacing*(mGridViewColunmNumber+1))/mGridViewColunmNumber);
 			mViewHeight=mViewWidth;
-			mGridViewVerticalSpacing = (int)((mEmojiPagerHeight - mGridViewRowNumber*mViewHeight)/(mGridViewRowNumber + 1));
+			mGridViewVerticalSpacing = (mEmojiPagerHeight - mGridViewRowNumber*mViewHeight)/(mGridViewRowNumber + 1);
 		}
 		Log.e("FacemojiLayoutParams",mViewWidth+":"+mViewHeight);
 //		StickerManager.getInstance().saveSize(mGridViewRowNumber*mGridViewColunmNumber);

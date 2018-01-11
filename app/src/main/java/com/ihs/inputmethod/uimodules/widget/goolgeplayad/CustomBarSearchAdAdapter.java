@@ -116,9 +116,9 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
         SearchAdViewHolder(View view) {
             super(view);
 
-            adIcon = (RoundedImageView) view.findViewById(R.id.ad_icon);
-            adTitle = (TextView) view.findViewById(R.id.ad_title);
-            adRating = (TextView) view.findViewById(R.id.ad_rating_score);
+            adIcon = view.findViewById(R.id.ad_icon);
+            adTitle = view.findViewById(R.id.ad_title);
+            adRating = view.findViewById(R.id.ad_rating_score);
         }
     }
 

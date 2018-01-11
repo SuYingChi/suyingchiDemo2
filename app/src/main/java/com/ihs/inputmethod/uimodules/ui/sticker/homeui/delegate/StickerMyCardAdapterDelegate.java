@@ -79,10 +79,10 @@ public final class StickerMyCardAdapterDelegate extends AdapterDelegate<List<Sti
             super(itemView);
 
             stickerCardView = itemView.findViewById(R.id.sticker_card_view);
-            stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
-            stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
-            stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
-            moreMenuImage = (ImageView) itemView.findViewById(R.id.more_menu_image);
+            stickerGroupName = itemView.findViewById(R.id.sticker_name);
+            stickerRealImage = itemView.findViewById(R.id.sticker_image_real_view);
+            stickerNewImage = itemView.findViewById(R.id.sticker_new_view);
+            moreMenuImage = itemView.findViewById(R.id.more_menu_image);
 
         }
     }

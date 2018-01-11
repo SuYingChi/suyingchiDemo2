@@ -96,8 +96,8 @@ public class NativeAdHelper {
             super(context);
             View.inflate(context, R.layout.panel_settings_ad_item, this);
             findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
-            flashAdContainer = (FlashFrameLayout) findViewById(R.id.ad_container);
-            TextView adTitleText = (TextView) findViewById(R.id.ad_title);
+            flashAdContainer = findViewById(R.id.ad_container);
+            TextView adTitleText = findViewById(R.id.ad_title);
             adTitleText.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());
         }
     }
@@ -110,7 +110,7 @@ public class NativeAdHelper {
         public AdLoadingView(Context context) {
             super(context);
             progressbarRoot = (RelativeLayout) View.inflate(context, R.layout.panel_settings_ad_loading_layout, this);
-            progressImageView = (ImageView) progressbarRoot.findViewById(R.id.progress_imgview);
+            progressImageView = progressbarRoot.findViewById(R.id.progress_imgview);
         }
 
         public void showLoading() {
@@ -119,7 +119,7 @@ public class NativeAdHelper {
             }
             isShowingProgressbar = true;
             progressImageView.setBackgroundDrawable(HSKeyboardThemeManager.getStyledDrawable(null, "settings_ad_bg.png"));
-            TextView tv_loading = (TextView) progressbarRoot.findViewById(R.id.tv_loading);
+            TextView tv_loading = progressbarRoot.findViewById(R.id.tv_loading);
             tv_loading.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());
             progressbarRoot.setVisibility(View.VISIBLE);
         }

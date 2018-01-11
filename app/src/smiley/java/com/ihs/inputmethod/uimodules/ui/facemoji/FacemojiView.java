@@ -59,12 +59,12 @@ public final class FacemojiView extends RelativeLayout {
     }
 
     public void startAnimation() {
-        final FacemojiAnimationView animation = (FacemojiAnimationView) findViewById(R.id.sticker_player_view);
+        final FacemojiAnimationView animation = findViewById(R.id.sticker_player_view);
         animation.start();
     }
 
     public void stopAnimation() {
-        final FacemojiAnimationView animation = (FacemojiAnimationView) findViewById(R.id.sticker_player_view);
+        final FacemojiAnimationView animation = findViewById(R.id.sticker_player_view);
         animation.stop();
     }
 }

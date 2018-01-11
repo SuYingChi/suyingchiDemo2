@@ -546,11 +546,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         HSLog.d("Local storage version code to update: " + versionCodeOfLocalStorage + ", latest version code: " + versionCode);
 
         // If we have record version code and not less than latest, means we already show the dot
-        if (versionCodeOfLocalStorage >= versionCode) {
-            return false;
-        }
-
-        return true;
+        return versionCodeOfLocalStorage < versionCode;
     }
 
     private Random random = new Random();

@@ -442,7 +442,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
 
             //set divider color
             View rootView = getView();
-            ListView list = (ListView) rootView.findViewById(android.R.id.list);
+            ListView list = rootView.findViewById(android.R.id.list);
             list.setDivider(new ColorDrawable(0xef000000));
             list.setDividerHeight(1);
         }

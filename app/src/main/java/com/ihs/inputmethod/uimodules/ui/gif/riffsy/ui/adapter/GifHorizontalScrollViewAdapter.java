@@ -124,7 +124,7 @@ public final class GifHorizontalScrollViewAdapter extends RecyclerView.Adapter<G
         String mediaId = (String)(sdv.getTag());
         if(file!=null&&mediaId!=null){
 	        if (mediaId.equals(file.getName().split("\\.")[0])) {
-		        final ImageView progressBar = (ImageView) view.findViewById(R.id.progress);
+		        final ImageView progressBar = view.findViewById(R.id.progress);
 		        progressBar.getDrawable().setLevel((int) (percent * 100));
 	        }
         }
@@ -133,12 +133,12 @@ public final class GifHorizontalScrollViewAdapter extends RecyclerView.Adapter<G
     @Override
     public void onDownloadSucceeded(final File file,final View view) {
         final GifView gv = (GifView)view;
-	    final HSGifImageView hsGifImageView = (HSGifImageView) gv.findViewById(R.id.view);
+	    final HSGifImageView hsGifImageView = gv.findViewById(R.id.view);
         final String mediaId = (String)(hsGifImageView.getTag());
         if(file!=null&&file.exists()&&mediaId!=null){
 	        if (mediaId.equals(file.getName().split("\\.")[0])) {
 		        // reset progress
-		        final ImageView progress = (ImageView) gv.findViewById(R.id.progress);
+		        final ImageView progress = gv.findViewById(R.id.progress);
 		        progress.getDrawable().setLevel(0);
 		        progress.setVisibility(View.GONE);
 		        gv.setGifEnabled(true);
@@ -150,7 +150,7 @@ public final class GifHorizontalScrollViewAdapter extends RecyclerView.Adapter<G
 
     @Override
     public void onDownloadFailed(final View view) {
-        final ImageView progress = (ImageView) view.findViewById(R.id.progress);
+        final ImageView progress = view.findViewById(R.id.progress);
         progress.getDrawable().setLevel(0);
         progress.setVisibility(View.GONE);
         GifView gv = (GifView)view;
@@ -179,7 +179,7 @@ public final class GifHorizontalScrollViewAdapter extends RecyclerView.Adapter<G
         public ViewHolder(View itemView) {
             super(itemView);
             // view
-            view = (HSGifImageView) itemView.findViewById(R.id.view);
+            view = itemView.findViewById(R.id.view);
             final ViewGroup.LayoutParams lp = view.getLayoutParams();
             lp.width  = mViewWidth;
             lp.height = mViewHeight;
@@ -187,11 +187,11 @@ public final class GifHorizontalScrollViewAdapter extends RecyclerView.Adapter<G
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             // progress
-            progress = (ImageView) itemView.findViewById(R.id.progress);
+            progress = itemView.findViewById(R.id.progress);
             progress.setImageDrawable(new CustomProgressDrawable(0));
 
             // tag
-            tag = (TextView) itemView.findViewById(R.id.tag);
+            tag = itemView.findViewById(R.id.tag);
 
 	        final View favorite = itemView.findViewById(R.id.favorite);
 	        final ViewGroup.LayoutParams lpp = favorite.getLayoutParams();

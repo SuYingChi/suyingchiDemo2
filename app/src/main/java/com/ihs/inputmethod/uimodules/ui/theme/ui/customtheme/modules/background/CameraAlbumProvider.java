@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -108,7 +109,7 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
         BaseItemHolder holder = new BaseItemHolder(inflater.inflate(R.layout.ct_item_camera_or_gallery, null));
         int margin = holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin);
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - margin * 2;
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / BaseThemeFragment.SPAN_COUNT - margin * 2;
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,width);
         holder.itemView.setLayoutParams(layoutParams);
         return holder;

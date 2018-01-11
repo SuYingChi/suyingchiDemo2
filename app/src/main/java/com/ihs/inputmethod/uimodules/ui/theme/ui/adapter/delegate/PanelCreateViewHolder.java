@@ -16,6 +16,6 @@ public final class PanelCreateViewHolder extends RecyclerView.ViewHolder {
 
 	public PanelCreateViewHolder(View itemView) {
 		super(itemView);
-		tv = (TextView) itemView.findViewById(R.id.tv);
+		tv = itemView.findViewById(R.id.tv);
 	}
 }

@@ -150,7 +150,7 @@ public final class HSEmojiSkinViewAdapter extends RecyclerView.Adapter<HSEmojiSk
 		Button tv;
 		public ViewHolder(View itemView) {
 			super(itemView);
-			tv = (Button) itemView.findViewById(R.id.emoji_skin_tv);
+			tv = itemView.findViewById(R.id.emoji_skin_tv);
 
 		}
 	}

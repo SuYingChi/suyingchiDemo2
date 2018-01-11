@@ -148,11 +148,7 @@ public class WallpaperUtils {
         } else if (width == size.x * 2 && height == size.y || Math.abs(detla - 2) <= 0.05) {
             if (outWallpaperType != null) outWallpaperType[0] = WALLPAPER_TYPE_SCROLLABLE_STANDARD;
             shouldScroll = true;
-        } else if (wallpaperRatio - 1.125 <= 0.05) {
-            shouldScroll = true;
-        } else {
-            shouldScroll = false;
-        }
+        } else shouldScroll = wallpaperRatio - 1.125 <= 0.05;
         return shouldScroll;
     }
 

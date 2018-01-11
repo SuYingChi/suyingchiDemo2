@@ -57,7 +57,7 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
         holder.layoutContainer.removeAllViews();
         Context context = holder.itemView.getContext();
         View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_6, null);
-        RoundedCornerLayout roundedCornerLayout = (RoundedCornerLayout) view.findViewById(R.id.adsContainer);
+        RoundedCornerLayout roundedCornerLayout = view.findViewById(R.id.adsContainer);
         RoundedCornerLayout loadingLayout = (RoundedCornerLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ct_item_loading, null);
         loadingLayout.setCircle(adsItem.isCircleStyle);
 
@@ -125,7 +125,7 @@ public class AdsProvider extends ItemViewProvider<AdsItem, AdsProvider.ViewHolde
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            layoutContainer = (FrameLayout) itemView.findViewById(R.id.layoutContainer);
+            layoutContainer = itemView.findViewById(R.id.layoutContainer);
         }
     }
 

@@ -216,7 +216,7 @@ public class SoftGameButton extends FrameLayout {
         lp.setMargins(0, location[1] - DisplayUtils.dip2px(112), 0, 0);
         lp.addRule(ALIGN_PARENT_RIGHT);
 
-        TextView gameTitle = (TextView) newGameTip.findViewById(R.id.new_game_title);
+        TextView gameTitle = newGameTip.findViewById(R.id.new_game_title);
         gameTitle.setText(softGameItemBean.getName());
 
         ImageLoader.getInstance().displayImage(softGameItemBean.getThumb(), (ImageView) newGameTip.findViewById(R.id.new_game_icon));

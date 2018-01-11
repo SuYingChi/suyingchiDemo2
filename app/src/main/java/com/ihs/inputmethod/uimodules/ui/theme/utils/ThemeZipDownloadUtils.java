@@ -70,7 +70,7 @@ public class ThemeZipDownloadUtils {
                     }
                 }, 2000, false);
 
-        ImageView thumbnailImageView = (ImageView) adLoadingView.findViewById(R.id.iv_icon);
+        ImageView thumbnailImageView = adLoadingView.findViewById(R.id.iv_icon);
         ImageSize imageSize = new ImageSize(DisplayUtils.dip2px(HSApplication.getContext(),100),DisplayUtils.dip2px(HSApplication.getContext(),100));
         ImageLoader.getInstance().displayImage(thumbnailUrl, new ImageViewAware(thumbnailImageView),  new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build(), imageSize, null, null);
         adLoadingView.showInDialog();

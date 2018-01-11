@@ -40,13 +40,13 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_design_alert);
 
-        TextView titleTextView = (TextView) findViewById(R.id.tv_title);
+        TextView titleTextView = findViewById(R.id.tv_title);
         titleTextView.setText(title);
 
-        TextView messageTextView = (TextView) findViewById(R.id.tv_message);
+        TextView messageTextView = findViewById(R.id.tv_message);
         messageTextView.setText(message);
 
-        ImageView imageView = (ImageView) findViewById(R.id.iv_image);
+        ImageView imageView = findViewById(R.id.iv_image);
         if (imageResId != 0) {
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(imageResId);
@@ -84,7 +84,7 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
 
         float radius = getContext().getResources().getDimension(R.dimen.design_base_corner_radius);
 
-        TextView positiveButton = (TextView) findViewById(R.id.btn_positive_single);
+        TextView positiveButton = findViewById(R.id.btn_positive_single);
         positiveButton.setText(positiveButtonText);
         positiveButton.setOnClickListener(this);
         positiveButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xff4db752, radius));
@@ -93,7 +93,7 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
     private void enablePrivacy(boolean enable) {
         if (enable) {
             findViewById(R.id.fl_privacy).setVisibility(View.VISIBLE);
-            TextView textView = (TextView) findViewById(R.id.tv_privacy);
+            TextView textView = findViewById(R.id.tv_privacy);
             textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
             textView.setOnClickListener(this);
         } else {
@@ -107,12 +107,12 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
 
         float radius = getContext().getResources().getDimension(R.dimen.design_base_corner_radius);
 
-        TextView positiveButton = (TextView) findViewById(R.id.btn_positive);
+        TextView positiveButton = findViewById(R.id.btn_positive);
         positiveButton.setText(positiveButtonText);
         positiveButton.setOnClickListener(this);
         positiveButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xff3d6efa, radius));
 
-        TextView negativeButton = (TextView) findViewById(R.id.btn_negative);
+        TextView negativeButton = findViewById(R.id.btn_negative);
         negativeButton.setText(negativeButtonText);
         negativeButton.setOnClickListener(this);
         negativeButton.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(Color.WHITE, radius));

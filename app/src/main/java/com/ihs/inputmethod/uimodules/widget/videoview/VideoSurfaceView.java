@@ -132,7 +132,7 @@ class VideoSurfaceView extends VideoView {
     }
 
     public interface OnVedioListener {
-        public void onPrepared();
+        void onPrepared();
     }
 
     @Override

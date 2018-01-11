@@ -166,7 +166,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             btnMap.put(clazz, btn);
         }
 
-        alphabet_left = (TextView) findViewById(R.id.emoji_keyboard_alphabet_left);
+        alphabet_left = findViewById(R.id.emoji_keyboard_alphabet_left);
         alphabet_left.setOnClickListener(this);
         alphabet_left.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getFuncKeyTextColor());
         alphabet_left.setTextSize(TypedValue.COMPLEX_UNIT_PX, HSKeyboardThemeManager.getCurrentTheme().getFuncKeyLabelSize());

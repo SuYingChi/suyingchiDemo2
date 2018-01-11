@@ -47,9 +47,9 @@ final class ViewItem {
     View createView(Context context) {
         View view = View.inflate(context, R.layout.panel_settings_item, null);
 
-        textView = (TextView) view.findViewById(R.id.tv_settings_item);
-        imageView = (ImageView) view.findViewById(R.id.iv_settings_item);
-        newTipView = (TextView) view.findViewById(R.id.new_tip_view);
+        textView = view.findViewById(R.id.tv_settings_item);
+        imageView = view.findViewById(R.id.iv_settings_item);
+        newTipView = view.findViewById(R.id.new_tip_view);
 
         textView.setText(name);
         textView.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());

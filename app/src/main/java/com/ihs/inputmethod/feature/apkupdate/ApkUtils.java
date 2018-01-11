@@ -377,7 +377,7 @@ public class ApkUtils {
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.apk_custom_share_alert, null);
         final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
-        TextView message = (TextView) view.findViewById(R.id.tv_share_message);
+        TextView message = view.findViewById(R.id.tv_share_message);
         message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_message), "Application", "Update", "ShareAlert", "Message", preferredLanguageString));
         TextView shareText =  view.findViewById(R.id.text_share);
         shareText.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_share_alert_button_text), "Application", "Update", "ShareAlert", "ButtonText", preferredLanguageString));
@@ -403,7 +403,7 @@ public class ApkUtils {
                 KCCommonUtils.dismissDialog(alertDialog);
             }
         });
-        ImageView closeIcon = (ImageView) view.findViewById(R.id.iv_close_image);
+        ImageView closeIcon = view.findViewById(R.id.iv_close_image);
         closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -426,9 +426,9 @@ public class ApkUtils {
         LayoutInflater inflater = (LayoutInflater) HSApplication.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.apk_custom_rate_alert, null, false);
         final AlertDialog alertDialog = HSAlertDialog.build().setView(view).setCancelable(false).create();
-        TextView message = (TextView) view.findViewById(R.id.tv_rate_message);
+        TextView message = view.findViewById(R.id.tv_rate_message);
         message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.custom_rate_alert_message), "Application", "Update", "RateAlert", "Message", preferredLanguageString));
-        Button positiveBtn = (Button) view.findViewById(R.id.btn_rate);
+        Button positiveBtn = view.findViewById(R.id.btn_rate);
         positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(
                 HSApplication.getContext().getResources().getColor(R.color.custom_rate_alert_button_bg),
                 HSApplication.getContext().getResources().getColor(R.color.guide_bg_disable_color),
@@ -457,7 +457,7 @@ public class ApkUtils {
                 KCCommonUtils.dismissDialog(alertDialog);
             }
         });
-        ImageView closeIcon = (ImageView) view.findViewById(R.id.iv_close_image);
+        ImageView closeIcon = view.findViewById(R.id.iv_close_image);
         closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -481,13 +481,13 @@ public class ApkUtils {
         String preferredLanguageString = Locale.getDefault().getLanguage();
         HSLog.d("preferredLanguageString: " + preferredLanguageString);
         // Set title
-        TextView titleView = (TextView) view.findViewById(R.id.txt_dialog_title);
+        TextView titleView = view.findViewById(R.id.txt_dialog_title);
         titleView.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.apk_update_alert_title), "Application", "Update", "UpdateAlert", "Title", preferredLanguageString));
         // Set message
-        TextView message = (TextView) view.findViewById(R.id.txt_dialog_message);
+        TextView message = view.findViewById(R.id.txt_dialog_message);
         message.setText(HSConfig.optString(HSApplication.getContext().getString(R.string.apk_update_alert_message), "Application", "Update", "UpdateAlert", "Message", preferredLanguageString));
 
-        Button positiveBtn = (Button) view.findViewById(R.id.update_button);
+        Button positiveBtn = view.findViewById(R.id.update_button);
         positiveBtn.setBackgroundDrawable(RippleDrawableUtils.getButtonRippleBackground(R.color.theme_button_text_color));
         positiveBtn.setOnClickListener(
                 new View.OnClickListener() {
@@ -503,7 +503,7 @@ public class ApkUtils {
                     }
                 });
 
-        Button negativeBtn = (Button) view.findViewById(R.id.cancel_button);
+        Button negativeBtn = view.findViewById(R.id.cancel_button);
         negativeBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

@@ -26,8 +26,8 @@ public final class CustomDialog extends Dialog implements OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.fragment_dialog_delete);
         setCanceledOnTouchOutside(false);
-        Button cancel = (Button) findViewById(R.id.dialog_cancel_button);
-        Button ok = (Button) findViewById(R.id.dialog_ok_button);
+        Button cancel = findViewById(R.id.dialog_cancel_button);
+        Button ok = findViewById(R.id.dialog_ok_button);
         cancel.setOnClickListener(this);
         ok.setOnClickListener(this);
     }

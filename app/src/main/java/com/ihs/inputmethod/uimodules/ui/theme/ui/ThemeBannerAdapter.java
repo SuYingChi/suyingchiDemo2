@@ -396,7 +396,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             } else {
                 view.shutDownOnScrollChangedListener();
             }
-            final ImageView imageView = (ImageView) view.findViewById(R.id.theme_banner_image);
+            final ImageView imageView = view.findViewById(R.id.theme_banner_image);
             if (keyboardTheme.getThemeBannerImgUrl() != null) {
                 imageView.setImageResource(R.drawable.image_placeholder);
                 ImageSize imageSize = new ImageSize(bannerWidth,bannerHeight);

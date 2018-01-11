@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
@@ -29,7 +30,7 @@ public class FontProvider extends BaseThemeItemProvider<KCFontElement, BaseTheme
     protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         BaseItemHolder holder = super.onCreateViewHolder(inflater, parent);
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / fragment.SPAN_COUNT  -  holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) *2;
+        int width = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / BaseThemeFragment.SPAN_COUNT -  holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) *2;
         int height = (int) (width *120.0f/160);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
         layoutParams.gravity = Gravity.CENTER;

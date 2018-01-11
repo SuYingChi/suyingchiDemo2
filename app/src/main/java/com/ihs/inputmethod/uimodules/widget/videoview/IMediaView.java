@@ -8,14 +8,14 @@ import android.graphics.drawable.Drawable;
 
 public interface IMediaView {
 
-    public void setHSBackground(Drawable drawable);
+    void setHSBackground(Drawable drawable);
 
-    public void setHSBackground(final String[] filePath);
+    void setHSBackground(final String[] filePath);
 
-    public void setHSBackground(int resId);
+    void setHSBackground(int resId);
 
-    public boolean isMedia();
+    boolean isMedia();
 
-    public void stopHSMedia();
+    void stopHSMedia();
 }
 

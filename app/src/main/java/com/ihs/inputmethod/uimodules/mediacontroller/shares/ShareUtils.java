@@ -123,11 +123,8 @@ public class ShareUtils {
     private static boolean isSupportedPackageName(final String packageName) {
         // default supported apps
         final List<String> supportedPackageNames = Arrays.asList(SUPPORTTED_PACKAGE_NAMES);
-        if (supportedPackageNames.contains(packageName)) {
-            return true;
-        }
+        return supportedPackageNames.contains(packageName);
 
-        return false;
     }
 
     public static String[] getAvailablePackages(ShareChannel channel) {
@@ -204,7 +201,7 @@ public class ShareUtils {
     public static boolean isIntentAvailable(Intent intent) {
         PackageManager packageManager = HSApplication.getContext().getPackageManager();
         List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        return resolveInfos == null ? false : resolveInfos.size() > 0;
+        return resolveInfos != null && resolveInfos.size() > 0;
     }
 
 

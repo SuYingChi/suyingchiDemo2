@@ -97,7 +97,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
     }
 
     public interface PagerCallback {
-        public int getCurrentPagerPosition();
+        int getCurrentPagerPosition();
     }
 
     @Override
@@ -107,7 +107,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         setContentView(R.layout.my_facemoji_activity);
         categories = FacemojiManager.getInstance().getCategories();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.my_facemoji_toolbar_title));
         setSupportActionBar(toolbar);
 
@@ -118,7 +118,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         screenHeight = DisplayUtils.getScreenHeightForContent() - DisplayUtils.getStatusBarHeight(getWindow());
         transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
-        mTabHost = (TabHost) findViewById(R.id.facemoji_category_tabhost);
+        mTabHost = findViewById(R.id.facemoji_category_tabhost);
         mTabHost.setup();
 
         for (int i = 0; i < FacemojiManager.getInstance().getFacemojiCategories().size(); i++) {
@@ -127,7 +127,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         mTabHost.setOnTabChangedListener(this);
         TabWidget tabWidget = mTabHost.getTabWidget();
         tabWidget.setStripEnabled(false);
-        mImagePager = (ViewPager) findViewById(R.id.facemoji_pager);
+        mImagePager = findViewById(R.id.facemoji_pager);
         mFacemojiPalettesAdapter = new FacemojiPalettesAdapter(this, categories,getGridViewHeight(), new PagerCallback() {
             @Override
             public int getCurrentPagerPosition() {
@@ -135,7 +135,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
             }
         });
 
-        LinearLayout sendFacemojiTipView = (LinearLayout) findViewById(R.id.tip_layout);
+        LinearLayout sendFacemojiTipView = findViewById(R.id.tip_layout);
 
         GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.RECTANGLE);
@@ -154,14 +154,14 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         tab_host_param.height = getTabBarHeight();
         mTabHost.setLayoutParams(tab_host_param);
 
-        face_icon = (ImageView) findViewById(R.id.face_menu_icon);
+        face_icon = findViewById(R.id.face_menu_icon);
         ViewGroup.LayoutParams face_param = face_icon.getLayoutParams();
         face_param.height = (int) (getNavigateBarHeight() * 0.6);
         face_param.width = face_param.height;
         face_icon.setLayoutParams(face_param);
         face_icon.setOnClickListener(this);
 
-        triangle = (ImageView) findViewById(R.id.triangle_button);
+        triangle = findViewById(R.id.triangle_button);
         triangle.setOnClickListener(this);
         triangle.setClickable(true);
         Bitmap bitmap = BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.facemoji_triangle);
@@ -260,7 +260,7 @@ public class MyFacemojiActivity extends HSAppCompatActivity implements TabHost.O
         TabHost.TabSpec tspec = host.newTabSpec(tabId);
         tspec.setContent(R.id.facemoji_dummy);
         View v = LayoutInflater.from(this).inflate(R.layout.facemoji_tab_icon_app, null);
-        ImageView iconView = (ImageView) v.findViewById(R.id.facemoji_tab_host_icon_app);
+        ImageView iconView = v.findViewById(R.id.facemoji_tab_host_icon_app);
         LinearLayout.LayoutParams iconParam = (LinearLayout.LayoutParams) iconView.getLayoutParams();
         iconParam.height = (int) getResources().getDimension(R.dimen.facemoji_category_bar_height);
         Drawable bg = getResources().getDrawable(R.drawable.facemoji_bar_black);

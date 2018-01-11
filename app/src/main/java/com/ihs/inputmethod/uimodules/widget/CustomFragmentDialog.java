@@ -22,8 +22,8 @@ public final class CustomFragmentDialog extends DialogFragment implements OnClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         View view=inflater.inflate(R.layout.fragment_dialog_delete,container,false);
-        Button cancel=(Button) view.findViewById(R.id.dialog_cancel_button);
-        Button ok=(Button)view.findViewById(R.id.dialog_ok_button);
+        Button cancel= view.findViewById(R.id.dialog_cancel_button);
+        Button ok= view.findViewById(R.id.dialog_ok_button);
         cancel.setOnClickListener(this);
         ok.setOnClickListener(this);
         getDialog().setCanceledOnTouchOutside(false);

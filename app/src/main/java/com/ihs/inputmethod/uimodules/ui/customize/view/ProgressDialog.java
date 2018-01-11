@@ -39,7 +39,7 @@ public class ProgressDialog extends Dialog {
         sCustomProgressDialog.setContentView(R.layout.progress_layout);
         sCustomProgressDialog.setCancelable(true);
         sCustomProgressDialog.setOnDismissListener(animationListener);
-        TextView textView = (TextView) sCustomProgressDialog.findViewById(R.id.dialog_loading_text_view);
+        TextView textView = sCustomProgressDialog.findViewById(R.id.dialog_loading_text_view);
         textView.setText(text);
         sCustomProgressDialog.getWindow().getAttributes().gravity = Gravity.CENTER;
         return sCustomProgressDialog;
@@ -52,8 +52,8 @@ public class ProgressDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mProgressFrameLayout = (ProgressFrameLayout) findViewById(R.id.progress_dialog);
-        mTextView = (TextView) findViewById(R.id.dialog_loading_text_view);
+        mProgressFrameLayout = findViewById(R.id.progress_dialog);
+        mTextView = findViewById(R.id.dialog_loading_text_view);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class ProgressDialog extends Dialog {
 
     private ProgressFrameLayout getProgressFrameLayout() {
         if (mProgressFrameLayout == null) {
-            mProgressFrameLayout = (ProgressFrameLayout) findViewById(R.id.progress_dialog);
+            mProgressFrameLayout = findViewById(R.id.progress_dialog);
         }
         return mProgressFrameLayout;
     }

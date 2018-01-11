@@ -77,11 +77,11 @@ public class LanguageLoadingPreference extends LinearLayout {
 
     private void init() {
         inflate(getContext(), R.layout.language_loading_preference, this);
-        pTitleView = (TextView) findViewById(R.id.prefs_title);
+        pTitleView = findViewById(R.id.prefs_title);
         pTitleView.setText(pTitle);
         
-        mDownloadButton = (TextView) findViewById(R.id.prefs_download_button);
-        mDownloadProgressBar = (ProgressBar) findViewById(R.id.prefs_download_progressbar);
+        mDownloadButton = findViewById(R.id.prefs_download_button);
+        mDownloadProgressBar = findViewById(R.id.prefs_download_progressbar);
         mDownloadButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {

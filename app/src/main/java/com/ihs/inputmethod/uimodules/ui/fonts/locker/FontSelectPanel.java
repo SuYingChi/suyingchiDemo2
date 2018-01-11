@@ -46,7 +46,7 @@ public class FontSelectPanel extends BasePanel {
         Context mThemeContext = new ContextThemeWrapper(mContext, HSKeyboardThemeManager.getCurrentTheme().mStyleId);
         LayoutInflater inflater = LayoutInflater.from(mThemeContext);
         view = inflater.inflate(R.layout.locker_font_select_layout, null);
-        mFontSelectView= (FontSelectView) view.findViewById(R.id.font_select_listview);
+        mFontSelectView= view.findViewById(R.id.font_select_listview);
         view.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
         mAdapter = new FontSelectViewAdapter(mContext, mFontSelectView, new FontSelectViewAdapter.OnFontClickListener() {
             @Override

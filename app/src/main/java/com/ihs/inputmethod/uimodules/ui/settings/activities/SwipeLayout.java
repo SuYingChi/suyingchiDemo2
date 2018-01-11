@@ -73,8 +73,8 @@ public class SwipeLayout extends LinearLayout {
         inflate(getContext(), R.layout.swipe_layout, this);
 
         mTick = findViewById(R.id.tick);
-        viewTitle = (TextView)findViewById(R.id.title);
-        layoutText= (TextView) findViewById(R.id.kbd_layout_name);
+        viewTitle = findViewById(R.id.title);
+        layoutText= findViewById(R.id.kbd_layout_name);
 
     }
 

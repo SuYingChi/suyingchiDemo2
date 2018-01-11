@@ -59,7 +59,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
         mThemeArray = Type.values();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         TextView titleView = new TextView(this);
         titleView.setText(R.string.acb_screen_flash_name);
@@ -86,12 +86,12 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(showToolBarBack);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        mPreviewView = (ThemePreviewWindow) findViewById(R.id.flash_view);
+        mPreviewView = findViewById(R.id.flash_view);
         mPreviewView.setPreviewType(ThemePreviewWindow.PreviewType.PREVIEW);
 
-        mCallView = (InCallActionView) findViewById(R.id.in_call_view);
+        mCallView = findViewById(R.id.in_call_view);
         mCallView.enableFullScreen(false);
-        mSetCallThemeButton = (TextView) findViewById(R.id.set_incoming_call_theme);
+        mSetCallThemeButton = findViewById(R.id.set_incoming_call_theme);
         initThemesView();
         requestPermissionsIfNeeded();
     }
@@ -192,8 +192,8 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     }
 
     private void downloadGif(final Type type) {
-        final ProgressBar horPro = (ProgressBar) findViewById(R.id.theme_progress_bar);
-        final LinearLayout proHolder = (LinearLayout) findViewById(R.id.theme_progress_txt_holder);
+        final ProgressBar horPro = findViewById(R.id.theme_progress_bar);
+        final LinearLayout proHolder = findViewById(R.id.theme_progress_txt_holder);
 
         horPro.setVisibility(View.VISIBLE);
         proHolder.setVisibility(View.VISIBLE);

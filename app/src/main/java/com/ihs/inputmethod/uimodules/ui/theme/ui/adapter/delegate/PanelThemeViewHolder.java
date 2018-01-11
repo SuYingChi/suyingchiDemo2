@@ -20,8 +20,8 @@ public final class PanelThemeViewHolder extends RecyclerView.ViewHolder {
 	public PanelThemeViewHolder(View itemView) {
 		super(itemView);
 		contentContainer=itemView.findViewById(R.id.theme_preview_container);
-		content=(ImageView) itemView.findViewById(R.id.theme_preview);
-		check=(ImageView) itemView.findViewById(R.id.theme_check);
-		delete=(ImageView) itemView.findViewById(R.id.theme_delete);
+		content= itemView.findViewById(R.id.theme_preview);
+		check= itemView.findViewById(R.id.theme_check);
+		delete= itemView.findViewById(R.id.theme_delete);
 	}
 }

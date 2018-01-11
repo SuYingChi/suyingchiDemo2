@@ -58,8 +58,8 @@ public class AdGooglePlayDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google_play_dialog_ad);
-        progressBarContainer = (FrameLayout) findViewById(R.id.google_play_ad_progress_bar_container);
-        frameLayoutAdContainer = (RoundedCornerLayout) findViewById(R.id.google_play_ad_container);
+        progressBarContainer = findViewById(R.id.google_play_ad_progress_bar_container);
+        frameLayoutAdContainer = findViewById(R.id.google_play_ad_container);
     }
 
     /**

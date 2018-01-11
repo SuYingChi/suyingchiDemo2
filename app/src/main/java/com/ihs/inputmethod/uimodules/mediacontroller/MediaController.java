@@ -144,7 +144,7 @@ public class MediaController {
         }
     }
 
-    public static interface FaceNameProvider {
+    public interface FaceNameProvider {
         String faceName();
     }
 

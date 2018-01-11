@@ -88,17 +88,17 @@ public final class GifStripView extends FrameLayout implements EmojiSearchView.O
 		emoji_strip=findViewById(R.id.emoji_strip);
 		
 		back_btn=findViewById(R.id.gif_toolbar_back_button);
-		text= (TextView) findViewById(R.id.gif_toolbar_text);
-		search_edit= (CustomSearchEditText) findViewById(R.id.gif_toolbar_edit);
+		text= findViewById(R.id.gif_toolbar_text);
+		search_edit= findViewById(R.id.gif_toolbar_edit);
 		
-		emojiText = (TextView) findViewById(R.id.gif_toolbar_emoji_text);
+		emojiText = findViewById(R.id.gif_toolbar_emoji_text);
 		emojiIv =  findViewById(R.id.gif_toolbar_emoji_iv);
 		emoji = findViewById(R.id.gif_toolbar_emoji);
 		final String emojiStr="\ud83d\udca9";
 		emojiText.setText(emojiStr);
 		emojiText.setVisibility(GONE);
 		
-		closeButton = (ImageView) findViewById(R.id.close);
+		closeButton = findViewById(R.id.close);
 		View main = findViewById(R.id.gif_toolbar_main);
 		if(!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()){
 			Resources res=getResources();

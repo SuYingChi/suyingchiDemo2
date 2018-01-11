@@ -154,7 +154,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
             super(itemView);
 
             fontCardView = itemView.findViewById(R.id.font_card_view);
-            fontCardContent = (TextView) itemView.findViewById(R.id.font_content);
+            fontCardContent = itemView.findViewById(R.id.font_content);
         }
     }
 
@@ -164,7 +164,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
         public MyFontViewHolder(View itemView) {
             super(itemView);
-            radioButton = (AppCompatRadioButton) itemView.findViewById(R.id.font_radio_button);
+            radioButton = itemView.findViewById(R.id.font_radio_button);
         }
     }
 
@@ -174,8 +174,8 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
         public FontHomeViewHolder(View itemView) {
             super(itemView);
-            downloadIcon = (ImageView) itemView.findViewById(R.id.download_icon);
-            moreFontHint = (TextView) itemView.findViewById(R.id.more_font_coming);
+            downloadIcon = itemView.findViewById(R.id.download_icon);
+            moreFontHint = itemView.findViewById(R.id.more_font_coming);
         }
     }
 

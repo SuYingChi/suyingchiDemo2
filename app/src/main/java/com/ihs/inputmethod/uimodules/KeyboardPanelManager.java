@@ -399,7 +399,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     }
 
     private void logGoogleAdEvent(String action) {
-        HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map) null, (Map) null);
+        HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, null, null);
     }
 
     public void showCustomBar() {
@@ -562,7 +562,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (stickerList.size() > 0) {
             StickerSuggestionAdapter stickerSuggestionAdapter;
             View stickerSuggestionView = View.inflate(HSApplication.getContext(), R.layout.view_sticker_suggestion, null);
-            RecyclerView recyclerView = (RecyclerView) stickerSuggestionView.findViewById(R.id.rv_sticker);
+            RecyclerView recyclerView = stickerSuggestionView.findViewById(R.id.rv_sticker);
             LinearLayoutManager linearLayoutManager
                     = new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView.setLayoutManager(linearLayoutManager);

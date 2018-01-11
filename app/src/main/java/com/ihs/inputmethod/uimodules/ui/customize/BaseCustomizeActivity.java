@@ -67,7 +67,7 @@ public class BaseCustomizeActivity extends HSAppCompatActivity implements Servic
     }
 
     void configToolbar(String title, @ColorInt int titleColor, @ColorInt int backgroundColor) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
+        Toolbar toolbar = findViewById(R.id.action_bar);
         if (toolbar == null) {
             return;
         }

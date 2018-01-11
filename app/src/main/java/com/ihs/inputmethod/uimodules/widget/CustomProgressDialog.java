@@ -27,7 +27,7 @@ public final class CustomProgressDialog extends Dialog {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.custom_progressdialog);
 		if (iv == null) {
-			iv = (ImageView) findViewById(R.id.custom_dialog_circle);
+			iv = findViewById(R.id.custom_dialog_circle);
 		}
 		if (animation == null) {
 			animation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -49,7 +49,7 @@ public final class CustomProgressDialog extends Dialog {
 	}
 	public void setMessage(CharSequence message) {
 		if (message != null && message.length() > 0) {
-			TextView txt = (TextView) findViewById(R.id.custom_dialog_text);
+			TextView txt = findViewById(R.id.custom_dialog_text);
 			txt.setText(message);
 			txt.invalidate();
 		}

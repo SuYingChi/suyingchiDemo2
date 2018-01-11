@@ -160,7 +160,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
             removeAllViews();
             LinearLayout panelView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.facemoji_palette_layout, null);
 
-            facemojiTabRecyclerView = (RecyclerView) panelView.findViewById(R.id.facemoji_category_tab_host);
+            facemojiTabRecyclerView = panelView.findViewById(R.id.facemoji_category_tab_host);
 
             facemojiCategoryList = FacemojiManager.getInstance().getCategories();
             List<String> facemojiCategoryNameList = new ArrayList<>();
@@ -171,23 +171,23 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
             facemojiTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             facemojiTabRecyclerView.setAdapter(facemoijTabAdapter);
 
-            currentFaceImage = (ImageView) panelView.findViewById(R.id.current_face_image);
+            currentFaceImage = panelView.findViewById(R.id.current_face_image);
             currentFaceImage.setImageURI(FacemojiManager.getCurrentFacePicUri());
 
             mStickerPalettesAdapter = new FacemojiPalettesAdapter(this, mStickerLayoutParams);
-            mViewPager = (FacemojiViewPager) (panelView.findViewById(R.id.facemoji_keyboard_pager));
+            mViewPager = panelView.findViewById(R.id.facemoji_keyboard_pager);
             mViewPager.setAdapter(mStickerPalettesAdapter);
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setOffscreenPageLimit(0);
             mViewPager.setPersistentDrawingCache(PERSISTENT_NO_CACHE);
             mStickerLayoutParams.setPagerProperties(mViewPager);
 
-            pageIndicatorView = (FacemojiIndicatorView) panelView.findViewById(R.id.page_indicator);
+            pageIndicatorView = panelView.findViewById(R.id.page_indicator);
 
             panelView.findViewById(R.id.switch_face).setOnClickListener(this);
 
             // Find share progress view
-            mShareProgressView = (KeyboardProgressView) panelView.findViewById(R.id.share_progress_view);
+            mShareProgressView = panelView.findViewById(R.id.share_progress_view);
             mShareProgressView.setOnClickListener(null); // Intercept touch event
 
             addView(panelView);
@@ -207,15 +207,15 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         LayoutParams param = new LayoutParams(panelWidth, panelHeight);
         createFacemojiView.setLayoutParams(param);
         createFacemojiView.setGravity(Gravity.CENTER);
-        Button facemojiEntrance = (Button) createFacemojiView.findViewById(R.id.facemoji_button_keyboard);
+        Button facemojiEntrance = createFacemojiView.findViewById(R.id.facemoji_button_keyboard);
 
-        ImageView image = (ImageView) createFacemojiView.findViewById(R.id.face_arrow);
+        ImageView image = createFacemojiView.findViewById(R.id.face_arrow);
         RelativeLayout.LayoutParams imageParam = (RelativeLayout.LayoutParams) image.getLayoutParams();
         imageParam.width = (int) (panelWidth * 0.5);
         imageParam.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
         image.setLayoutParams(imageParam);
 
-        LinearLayout rightArea = (LinearLayout) createFacemojiView.findViewById(R.id.right_area_layout);
+        LinearLayout rightArea = createFacemojiView.findViewById(R.id.right_area_layout);
         RelativeLayout.LayoutParams rightAreaLayoutParams = (RelativeLayout.LayoutParams) rightArea.getLayoutParams();
         rightAreaLayoutParams.width = (int) (panelWidth * 0.5);
         image.setLayoutParams(imageParam);

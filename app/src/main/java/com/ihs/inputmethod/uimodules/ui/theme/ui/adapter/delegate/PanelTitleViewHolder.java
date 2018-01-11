@@ -19,9 +19,9 @@ public final class PanelTitleViewHolder extends RecyclerView.ViewHolder {
 
 	public PanelTitleViewHolder(View itemView) {
 		super(itemView);
-		title= (TextView) itemView.findViewById(R.id.theme_title);
+		title= itemView.findViewById(R.id.theme_title);
 		doneButton=itemView.findViewById(R.id.done_button);
-		editButton= (ImageView) itemView.findViewById(R.id.edit_button);
+		editButton= itemView.findViewById(R.id.edit_button);
 		editLayout=itemView.findViewById(R.id.edit_layout);
 	}
 }

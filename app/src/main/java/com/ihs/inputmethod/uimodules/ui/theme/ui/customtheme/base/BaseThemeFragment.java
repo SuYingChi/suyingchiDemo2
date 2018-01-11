@@ -158,7 +158,7 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
     }
 
     private void initRecyclerView(View rootView) {
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        recyclerView = rootView.findViewById(R.id.recyclerView);
 
         HSLog.d("initRecyclerView");
         items = new Items();

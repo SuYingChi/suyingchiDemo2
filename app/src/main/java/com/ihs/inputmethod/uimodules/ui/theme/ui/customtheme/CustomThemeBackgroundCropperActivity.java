@@ -61,7 +61,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
         cropperImageMaskView = findViewById(R.id.custom_theme_background_cropper_content_mask_view);
         ((LinearLayout.LayoutParams) cropperImageMaskView.getLayoutParams()).height = keyboardHeight;
 
-        cropperContentFrameLayout = (FrameLayout) findViewById(R.id.custom_theme_background_cropper_content_layout);
+        cropperContentFrameLayout = findViewById(R.id.custom_theme_background_cropper_content_layout);
         ViewTreeObserver vto = cropperContentFrameLayout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -79,7 +79,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
             }
         });
 
-        cropperImageView = (HSMatrixImageView) findViewById(R.id.custom_theme_background_cropper_content_image_view);
+        cropperImageView = findViewById(R.id.custom_theme_background_cropper_content_image_view);
         cropperImageView.setImageBitmap(cropperImage);
 
         findViewById(R.id.custom_theme_background_cropper_title_cancel).setOnClickListener(new OnClickListener() {

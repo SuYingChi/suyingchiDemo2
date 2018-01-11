@@ -74,7 +74,7 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             convertView = mInflater.inflate(R.layout.facemoji_custom_view, null);
             final View containerLayout = convertView.findViewById(R.id.facemoji_layout);
             containerLayout.setLayoutParams(new GridView.LayoutParams(stickerWidth, stickerHeight));
-            final FacemojiAnimationView facemojiAnimationView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
+            final FacemojiAnimationView facemojiAnimationView = containerLayout.findViewById(R.id.sticker_player_view);
             final AnimationLayout facemojiLayout =  containerLayout.findViewById(R.id.facemoji_layout);
             facemojiAnimationView.setSticker(sticker);
             facemojiAnimationView.setTag(sticker);

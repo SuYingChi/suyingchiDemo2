@@ -232,8 +232,8 @@ public class StickerPageAdapter extends RecyclerView.Adapter<StickerPageAdapter.
         HSGifImageView  stickerGifView;
         public ViewHolder(View itemView) {
             super(itemView);
-            stickerImageView = (ImageView) itemView.findViewById(R.id.sticker_view);
-            stickerGifView = (HSGifImageView) itemView.findViewById(R.id.sticker_gif_view);
+            stickerImageView = itemView.findViewById(R.id.sticker_view);
+            stickerGifView = itemView.findViewById(R.id.sticker_gif_view);
             stickerGifView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
