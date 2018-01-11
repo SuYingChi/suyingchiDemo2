@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.StrictMode;
 import android.text.TextUtils;
 
 import com.acb.call.customize.AcbCallManager;
@@ -139,6 +140,17 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     @Override
     public void onCreate() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
+        }
+
         super.onCreate();
 
         /**
@@ -285,10 +297,10 @@ public class HSUIApplication extends HSInputMethodApplication {
     private void initLockerChargingNoAdConfig() {
         //如果第一次启动版本大于等于需要不显示广告的版本，则为新用户
         if (HSApplication.getFirstLaunchInfo().appVersionCode >= BuildConfig.LOCKER_CHARGING_NO_ADS_START_VERSION) {
-            LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.CLASSIC_LOCKER_TYPE,true);
+            LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.CLASSIC_LOCKER_TYPE, true);
             LockerChargingSpecialConfig.getInstance().setHideLockerAndCharging(true);
         } else {
-            LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.CLASSIC_LOCKER_TYPE,true);
+            LockerChargingSpecialConfig.getInstance().init(LockerChargingSpecialConfig.CLASSIC_LOCKER_TYPE, true);
         }
     }
 

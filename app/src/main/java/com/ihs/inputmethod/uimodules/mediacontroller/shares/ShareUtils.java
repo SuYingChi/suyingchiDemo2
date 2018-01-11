@@ -241,6 +241,7 @@ public class ShareUtils {
             HSApplication.getContext().startActivity(chooser);
             return;
         }
+        //todo 这列strictmode会出错，intent不要使用 file://
 
         // 可选的支持的应用包名，如果默认的包名对应的应用不能打开，则尝试可选的包名对应的应用打开
         String[] optionPackageName = getAvailablePackages(shareChannel);

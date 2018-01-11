@@ -102,16 +102,28 @@ public class StickerGroup {
 
     private KCMap getStickerConfigMap() {
         KCMap kcMap = null;
+
+        FileInputStream inputStream = null;
         try {
             if (isInternalStickerGroup) { //从assets里读取
                 AssetManager assetManager = HSApplication.getContext().getAssets();
                 kcMap = KCParser.parseMap(assetManager.open(ASSETS_STICKER_FILE_NAME + "/" + stickerGroupName + STICKER_CONFIG_FILE_SUFFIX));
             } else if (isStickerGroupDownloaded()) {
-                kcMap = KCParser.parseMap(new FileInputStream(getStickerFolderPath(stickerGroupName) + STICKER_CONFIG_FILE_SUFFIX));
+                inputStream = new FileInputStream(getStickerFolderPath(stickerGroupName) + STICKER_CONFIG_FILE_SUFFIX);
+                kcMap = KCParser.parseMap(inputStream);
             }
-            return kcMap;
+            if (kcMap != null) {
+                return kcMap;
+            }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                }
+            }
         }
         return null;
     }
