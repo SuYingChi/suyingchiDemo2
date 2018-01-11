@@ -12,8 +12,6 @@ public interface IMediaView {
 
     void setHSBackground(final String[] filePath);
 
-    void setHSBackground(int resId);
-
     boolean isMedia();
 
     void stopHSMedia();

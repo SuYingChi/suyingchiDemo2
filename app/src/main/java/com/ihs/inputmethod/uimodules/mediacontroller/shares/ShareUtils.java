@@ -34,10 +34,10 @@ public class ShareUtils {
     // image share method
     public static final int IMAGE_SHARE_MODE_EXPORT = 0;
     public static final int IMAGE_SHARE_MODE_INTENT = 1;
-    public static final int IMAGE_SHARE_MODE_LINK   = 2;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final int IMAGE_SHARE_MODE_LINK   = 2;
 
     public static final String IMAGE_SHARE_FORMAT_GIF = "gif";
-    public static final String IMAGE_SHARE_FORMAT_LINK = "link";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String IMAGE_SHARE_FORMAT_LINK = "link";
 
     public static final String[] SUPPORTTED_PACKAGE_NAMES = {ShareChannel.MESSAGE.getPackageName()};
 
@@ -100,25 +100,27 @@ public class ShareUtils {
         return null;
     }
 
-    public static Pair<Integer, String> getStickerShareMode(final String packageName) {
-        final List<?> smList = HSConfig.getList(HSPictureUtils.RMTCFG_KEY_L1_APPLICATION, HSPictureUtils.RMTCFG_KEY_L2_SEND_STRATEGY);
-        for (Object o : smList) {
-            final String supportPackageName = HSMapUtils.getString((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_PACKAGE_NAME);
-            if (supportPackageName.equals(packageName)) {
-                final Integer mode = HSMapUtils.getInteger((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_SEND_MODE);
-                final String format = HSMapUtils.getString((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_SOURCE_FORMAT);
-                return new Pair(mode, format);
-            }
-        }
-
-        // default supported apps
-        final HashSet<String> supportedPackageNames = new HashSet<>(Arrays.asList(SUPPORTTED_PACKAGE_NAMES));
-        if (supportedPackageNames.contains(packageName)) {
-            return new Pair(IMAGE_SHARE_MODE_INTENT, "");
-        }
-
-        return new Pair(IMAGE_SHARE_MODE_EXPORT, "");
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static Pair<Integer, String> getStickerShareMode(final String packageName) {
+//        final List<?> smList = HSConfig.getList(HSPictureUtils.RMTCFG_KEY_L1_APPLICATION, HSPictureUtils.RMTCFG_KEY_L2_SEND_STRATEGY);
+//        for (Object o : smList) {
+//            final String supportPackageName = HSMapUtils.getString((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_PACKAGE_NAME);
+//            if (supportPackageName.equals(packageName)) {
+//                final Integer mode = HSMapUtils.getInteger((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_SEND_MODE);
+//                final String format = HSMapUtils.getString((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_SOURCE_FORMAT);
+//                return new Pair(mode, format);
+//            }
+//        }
+//
+//        // default supported apps
+//        final HashSet<String> supportedPackageNames = new HashSet<>(Arrays.asList(SUPPORTTED_PACKAGE_NAMES));
+//        if (supportedPackageNames.contains(packageName)) {
+//            return new Pair(IMAGE_SHARE_MODE_INTENT, "");
+//        }
+//
+//        return new Pair(IMAGE_SHARE_MODE_EXPORT, "");
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static boolean isSupportedPackageName(final String packageName) {
         // default supported apps

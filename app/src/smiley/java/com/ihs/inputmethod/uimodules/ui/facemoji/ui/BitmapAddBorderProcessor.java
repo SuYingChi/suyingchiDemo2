@@ -47,7 +47,6 @@ public class BitmapAddBorderProcessor implements BitmapProcessor {
         canvas.drawBitmap(bitmap, (bg.getWidth() - bitmap.getWidth()) / 2, (bg.getHeight() - bitmap.getHeight()) / 2, null);
 
         bg.recycle();
-        bg = null;
 
         return result;
     }

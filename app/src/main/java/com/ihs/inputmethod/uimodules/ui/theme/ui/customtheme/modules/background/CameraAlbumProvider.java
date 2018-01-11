@@ -60,9 +60,11 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
         }
     }
 
-    protected void adjustLayoutForDevice88(@NonNull BaseItemHolder holder, Integer item) {
-        holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    protected void adjustLayoutForDevice88(@NonNull BaseItemHolder holder, Integer item) {
+//        holder.mCheckImageView.setImageDrawable(getChosedBackgroundDrawable());
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     protected void setItemBackground(@NonNull BaseItemHolder holder, @NonNull Integer item) {
         //background

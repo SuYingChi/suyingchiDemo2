@@ -254,10 +254,12 @@ public class KeyboardActivationGuideActivity extends HSActivity {
     public static class CustomViewDialog extends Dialog {
         private int gravity, xOffset, yOffset;
 
-        public CustomViewDialog(View contentView, int duration) {
-            super(HSApplication.getContext(), R.style.CustomToastDialog);
-            init(contentView, duration, Gravity.CENTER, 0, 0);
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public CustomViewDialog(View contentView, int duration) {
+//            super(HSApplication.getContext(), R.style.CustomToastDialog);
+//            init(contentView, duration, Gravity.CENTER, 0, 0);
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
         public CustomViewDialog(View contentView, int duration, int gravity, int xOffset, int yOffset) {

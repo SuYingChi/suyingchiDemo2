@@ -98,7 +98,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private static final int REQUEST_CODE_KEYBOARD_ACTIVATION_FROM_CUSTOM_THEME = 3;
     private static final int REQUEST_CODE_START_CUSTOM_THEME = 4;
 
-    private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int LOAD_FULLSCREEN_AD_TIME = 5000;
     private static int HANDLER_SHOW_ACTIVE_DIALOG = 101;
     private static int HANDLER_SHOW_UPDATE_DIALOG = 102;
     private static int HANDLER_DISMISS_LOADING_FULLSCREEN_AD_DIALOG = 103;
@@ -197,9 +197,11 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
     }
 
-    public void hideBottomBar() {
-        mBottomBar.setVisibility(View.GONE);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void hideBottomBar() {
+//        mBottomBar.setVisibility(View.GONE);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -535,19 +537,23 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         }
     }
 
-    private void showApkUpdateTip() {
-        apkUpdateTip.setVisibility(View.VISIBLE);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private void showApkUpdateTip() {
+//        apkUpdateTip.setVisibility(View.VISIBLE);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    private boolean shouldShowApkUpdateTip(final int versionCode) {
-        // Get update apk version code from local storage and remote
-        final int versionCodeOfLocalStorage = ApkUtils.getUpdateApkVersionCode();
-
-        HSLog.d("Local storage version code to update: " + versionCodeOfLocalStorage + ", latest version code: " + versionCode);
-
-        // If we have record version code and not less than latest, means we already show the dot
-        return versionCodeOfLocalStorage < versionCode;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private boolean shouldShowApkUpdateTip(final int versionCode) {
+//        // Get update apk version code from local storage and remote
+//        final int versionCodeOfLocalStorage = ApkUtils.getUpdateApkVersionCode();
+//
+//        HSLog.d("Local storage version code to update: " + versionCodeOfLocalStorage + ", latest version code: " + versionCode);
+//
+//        // If we have record version code and not less than latest, means we already show the dot
+//        return versionCodeOfLocalStorage < versionCode;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private Random random = new Random();
 

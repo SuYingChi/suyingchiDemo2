@@ -71,7 +71,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 
 public class CameraActivity extends HSAppCompatActivity {
-    private static final int SAMPLE_SIZE = 8;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int SAMPLE_SIZE = 8;
     private static final int SELECT_PIC = 5566;
     private static final int FACE_LIST_COUNT = 5;
     private static final String TEMP_FACE_FILE_NAME = "face.png";
@@ -84,7 +84,7 @@ public class CameraActivity extends HSAppCompatActivity {
     private final int[] faceMaskBlackResIdList = new int[]{R.drawable.facemask1_black,
             R.drawable.facemask2_black, R.drawable.facemask3_black, R.drawable.facemask4_black, R.drawable.facemask5_black};
     private int previewWidth;
-    private int previewHeight;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int previewHeight;
     private Bitmap srcBitmap;
     private Bitmap beautyBitmap;
     private boolean useBeautyNow = true;
@@ -124,7 +124,7 @@ public class CameraActivity extends HSAppCompatActivity {
      * @param face
      */
     private static void saveToSDCardTempFile(Bitmap face, File pngFile) {
-        FileOutputStream outputStream = null; // 文件输出流
+        FileOutputStream outputStream; // 文件输出流
         try {
             outputStream = new FileOutputStream(pngFile);
             face.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
@@ -520,7 +520,6 @@ public class CameraActivity extends HSAppCompatActivity {
 
         setPreviewContainerLayoutParam(previewContainerLayoutParams, parameters);
         previewWidth = previewContainerLayoutParams.width;
-        previewHeight = previewContainerLayoutParams.height;
 
         Camera.Size pictureSize = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
         parameters.setPictureSize(pictureSize.width, pictureSize.height);

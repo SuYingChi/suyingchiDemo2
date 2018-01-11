@@ -55,7 +55,9 @@ public class StickerDownloadView extends LinearLayout {
         this.stickerGroup = stickerGroup;
     }
 
-    public StickerGroup getStickerGroup() {
-        return stickerGroup;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public StickerGroup getStickerGroup() {
+//        return stickerGroup;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

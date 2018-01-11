@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.settings;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -139,87 +138,6 @@ final class ViewItemBuilder {
     }
 
 
-    static ViewItem getAutoCapitalizationItem() {
-        return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_capitalization),
-                getStateListDrawable(SETTINGS_KEY_CAP_OFF, SETTINGS_KEY_CAP_ON)
-                , new ViewItem.ViewItemListener() {
-            @Override
-            public void onItemClick(ViewItem item) {
-                HSInputMethodSettings.setAutoCapitalizationEnabled(!HSInputMethodSettings.getAutoCapitalizationEnabled());
-                updateAutoCapitalizationSettings(item);
-            }
-
-
-            @Override
-            void onItemViewInvalidate(ViewItem item) {
-                item.updateSelectedStatus(HSInputMethodSettings.getAutoCapitalizationEnabled());
-            }
-        }, HSInputMethodSettings.getAutoCapitalizationEnabled());
-    }
-
-    private static void updateAutoCapitalizationSettings(ViewItem item) {
-        item.setSelected(HSInputMethodSettings.getAutoCapitalizationEnabled());
-        if (item.isSelected) {
-            HSAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_ON);
-        } else {
-            HSAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_OFF);
-        }
-    }
-
-
-    static ViewItem getPredicationItem() {
-        return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_word_prediction),
-                getStateListDrawable(SETTINGS_KEY_PREDICT_OFF, SETTINGS_KEY_PREDICT_ON)
-                , new ViewItem.ViewItemListener() {
-            @Override
-            public void onItemClick(ViewItem item) {
-                HSInputMethodSettings.setWordPredictionEnabled(!HSInputMethodSettings.getWordPredictionEnabled());
-                updatePredicationSettings(item);
-            }
-
-
-            @Override
-            void onItemViewInvalidate(ViewItem item) {
-                item.updateSelectedStatus(HSInputMethodSettings.getWordPredictionEnabled());
-            }
-        }, HSInputMethodSettings.getWordPredictionEnabled());
-    }
-
-    private static void updatePredicationSettings(ViewItem item) {
-        item.setSelected(HSInputMethodSettings.getWordPredictionEnabled());
-    }
-
-
-    static ViewItem getSwipeItem() {
-        return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_swipe),
-                getStateListDrawable(SETTINGS_KEY_SWIPE_OFF, SETTINGS_KEY_SWIPE_ON)
-                , new ViewItem.ViewItemListener() {
-            @Override
-            public void onItemClick(ViewItem item) {
-                HSInputMethodSettings.setGestureTypingEnabled(!HSInputMethodSettings.getGestureTypingEnabled());
-                updateSwipeSettings(item);
-            }
-
-
-            @Override
-            void onItemViewInvalidate(ViewItem item) {
-                item.updateSelectedStatus(HSInputMethodSettings.getGestureTypingEnabled());
-            }
-        }, HSInputMethodSettings.getGestureTypingEnabled());
-    }
-
-    private static void updateSwipeSettings(ViewItem item) {
-        item.setSelected(HSInputMethodSettings.getGestureTypingEnabled());
-        if (item.isSelected) {
-            HSAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_OFF);
-        } else {
-            HSAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_ON);
-
-
-        }
-    }
-
-
     public static ViewItem getLanguageItem(ViewItem.ViewItemListener listener) {
         return new ViewItem(HSApplication.getContext().getString(R.string.setting_item_add_languages),
                 getStateListDrawable(SETTINGS_KEY_ADD_LANGUAGE, SETTINGS_KEY_ADD_LANGUAGE)
@@ -293,14 +211,16 @@ final class ViewItemBuilder {
         }
     }
 
-    private static int getDarkerColor(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv); // convert to hsv
-        // make darker
-        hsv[1] = hsv[1] + 0.1f; // more saturation
-        hsv[2] = hsv[2] - 0.1f; // less brightness
-        return Color.HSVToColor(hsv);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private static int getDarkerColor(int color) {
+//        float[] hsv = new float[3];
+//        Color.colorToHSV(color, hsv); // convert to hsv
+//        // make darker
+//        hsv[1] = hsv[1] + 0.1f; // more saturation
+//        hsv[2] = hsv[2] - 0.1f; // less brightness
+//        return Color.HSVToColor(hsv);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static void release() {
         if (adsItem != null) {

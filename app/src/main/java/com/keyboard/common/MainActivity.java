@@ -94,7 +94,7 @@ import static com.ihs.inputmethod.accessbility.KeyboardActivationActivity.PREF_T
 public class MainActivity extends HSAppCompatActivity {
 
 
-    public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
     private final static String INSTRUCTION_SCREEN_VIEWED = "Instruction_screen_viewed";
     private final static String APP_STEP_ONE_HINT_CLICKED = "app_step_one_hint_clicked";
     private final static String APP_STEP_ONE_HINT = "app_step_one_hint";

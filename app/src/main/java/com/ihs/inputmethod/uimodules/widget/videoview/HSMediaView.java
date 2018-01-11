@@ -74,10 +74,6 @@ public class HSMediaView extends FrameLayout implements IMediaView {
         mediaView.setHSBackground(filePath);
     }
 
-    @Override
-    public void setHSBackground(int resId) {
-        mediaView.setHSBackground(resId);
-    }
 
     @Override
     public boolean isMedia() {

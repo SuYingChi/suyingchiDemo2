@@ -113,15 +113,17 @@ public class NativeAdHelper {
             progressImageView = progressbarRoot.findViewById(R.id.progress_imgview);
         }
 
-        public void showLoading() {
-            if (isShowingProgressbar) {
-                return;
-            }
-            isShowingProgressbar = true;
-            progressImageView.setBackgroundDrawable(HSKeyboardThemeManager.getStyledDrawable(null, "settings_ad_bg.png"));
-            TextView tv_loading = progressbarRoot.findViewById(R.id.tv_loading);
-            tv_loading.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());
-            progressbarRoot.setVisibility(View.VISIBLE);
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public void showLoading() {
+//            if (isShowingProgressbar) {
+//                return;
+//            }
+//            isShowingProgressbar = true;
+//            progressImageView.setBackgroundDrawable(HSKeyboardThemeManager.getStyledDrawable(null, "settings_ad_bg.png"));
+//            TextView tv_loading = progressbarRoot.findViewById(R.id.tv_loading);
+//            tv_loading.setTextColor(HSKeyboardThemeManager.getCurrentTheme().getStyledTextColor());
+//            progressbarRoot.setVisibility(View.VISIBLE);
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
     }
 }

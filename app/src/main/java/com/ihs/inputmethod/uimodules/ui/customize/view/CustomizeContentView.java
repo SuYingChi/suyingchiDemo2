@@ -39,13 +39,12 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         mAdapter.setupWithTabSelected(position, tabPosition);
     }
 
-    @Override
     public void onServiceConnected(ICustomizeService service) {
         mAdapter.onServiceConnected(service);
     }
 
     private static class CustomizeContentAdapter implements ServiceListener {
-        private CustomizeContentView mView;
+        // --Commented out by Inspection (18/1/11 下午2:41):private CustomizeContentView mView;
         private Context mContext;
 
         private int[] CONTENT_VIEW_IDS = new int[]{
@@ -63,13 +62,14 @@ public class CustomizeContentView extends FrameLayout implements ServiceListener
         };
 
         CustomizeContentAdapter(CustomizeContentView view) {
-            mView = view;
             mContext = view.getContext();
         }
 
-        public int getCount() {
-            return CONTENT_VIEW_IDS.length;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public int getCount() {
+//            return CONTENT_VIEW_IDS.length;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         void setUpView(int position) {
             int layoutId = CONTENT_VIEW_IDS[position];

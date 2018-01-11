@@ -24,14 +24,13 @@ import java.util.List;
 public class CategoryViewAdapter extends BaseAdapter {
 
     final private List<CategoryItem> mData = new ArrayList<>();
-    private Context mContext;
+    // --Commented out by Inspection (18/1/11 下午2:41):private Context mContext;
     private LayoutInflater mInflater;
     private DisplayMetrics mMetrics;
 
     private boolean mIsTextAnimationEnabled = false;
 
     public CategoryViewAdapter(Context context, List<CategoryItem> data) {
-        mContext = context;
         mInflater = LayoutInflater.from(context);
         mMetrics = context.getResources().getDisplayMetrics();
         setCategoryItemData(data);

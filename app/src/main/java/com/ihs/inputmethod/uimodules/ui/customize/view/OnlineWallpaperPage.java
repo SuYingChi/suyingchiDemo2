@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.customize.view;
 
-import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
@@ -38,7 +37,7 @@ public class OnlineWallpaperPage extends RelativeLayout {
 
     private static final int EXTRA_TABS_COUNT = 0;
 
-    private static final int TAB_INDEX_HOT = 0;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int TAB_INDEX_HOT = 0;
     private static final int TAB_INDEX_3D = 1;
 
     public static final String PREF_KEY_3D_WALLPAPER_VIEW_SHOWN = "3d_wallpaper_view_shown";
@@ -49,8 +48,8 @@ public class OnlineWallpaperPage extends RelativeLayout {
     private GridView mGridView;
     private TextView mCategoriesTitle;
     private List<Integer> mScrollStates = new ArrayList<>();
-    private boolean mIsTabNoClickSelected;
-    private AnimatorSet mAnimatorSet;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mIsTabNoClickSelected;
+    // --Commented out by Inspection (18/1/11 下午2:41):private AnimatorSet mAnimatorSet;
     float sumPositionAndPositionOffset;
 
     public OnlineWallpaperPage(Context context, AttributeSet attrs) {
@@ -63,9 +62,11 @@ public class OnlineWallpaperPage extends RelativeLayout {
         setup(0);
     }
 
-    public void onDestroy() {
-
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void onDestroy() {
+//
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setup(int index) {
         mTabs = ViewUtils.findViewById(this, R.id.wallpaper_tabs);
@@ -108,7 +109,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
 
             @Override
             public void onPageSelected(final int positionAbsolute) {
-                mIsTabNoClickSelected = false;
                 resetCategoryGrids();
                 ((CategoryItem) mGridView.getAdapter().getItem(positionAbsolute)).setSelected(true);
                 ((CategoryViewAdapter) mGridView.getAdapter()).notifyDataSetChanged();
@@ -121,9 +121,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-                    mIsTabNoClickSelected = true;
-                }
                 mScrollStates.add(state);
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     for (Integer stateItem : mScrollStates) {
@@ -173,7 +170,6 @@ public class OnlineWallpaperPage extends RelativeLayout {
                     return;
                 }
 
-                mIsTabNoClickSelected = true;
 
                 ((CategoryViewAdapter) parent.getAdapter()).setTextAnimationEnabled(false);
                 ((CategoryItem) parent.getAdapter().getItem(mTabs.getSelectedTabPosition())).setSelected(false);
@@ -195,11 +191,13 @@ public class OnlineWallpaperPage extends RelativeLayout {
         return mCategoriesTitle.getVisibility() != GONE;
     }
 
-    public void hideCategoriesView() {
-        if (isShowingCategories()) {
-//            arrowClicked(mGridView, mCategoriesTitle, mArrowLeftPart, mArrowRightPart, "Navigation bar_Back");
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void hideCategoriesView() {
+//        if (isShowingCategories()) {
+////            arrowClicked(mGridView, mCategoriesTitle, mArrowLeftPart, mArrowRightPart, "Navigation bar_Back");
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     protected void onDetachedFromWindow() {
@@ -210,27 +208,30 @@ public class OnlineWallpaperPage extends RelativeLayout {
     private class WallpaperPagerAdapter extends PagerAdapter {
         private final List<Map<String, ?>> mCategoryConfigs;
 
-        private Context mContext;
+        // --Commented out by Inspection (18/1/11 下午2:41):private Context mContext;
 
-        // Views
-        private OnlineWallpaperListView mHotTabContent;
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        // Views
+//        private OnlineWallpaperListView mHotTabContent;
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
         private List<OnlineWallpaperListView> mCategoryTabContents = new ArrayList<>(22);
 
         @SuppressWarnings("unchecked")
         WallpaperPagerAdapter(Context context) {
-            mContext = context;
             mCategoryConfigs = (List<Map<String, ?>>) HSConfig.getList("Application", "Wallpapers");
         }
 
-        public void onDestroy() {
-
-            for (int i = 0; i < mCategoryTabContents.size(); i++) {
-                OnlineWallpaperListView list = mCategoryTabContents.get(i);
-                if (list != null && list.adapter != null) {
-                    list.adapter.onDestroy();
-                }
-            }
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public void onDestroy() {
+//
+//            for (int i = 0; i < mCategoryTabContents.size(); i++) {
+//                OnlineWallpaperListView list = mCategoryTabContents.get(i);
+//                if (list != null && list.adapter != null) {
+//                    list.adapter.onDestroy();
+//                }
+//            }
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         @Override
         public int getCount() {

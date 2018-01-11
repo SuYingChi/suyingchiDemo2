@@ -121,7 +121,9 @@ public class MessagesHandlerThread {
         if (SHOW_LOGS) Logger.v(TAG, "<< clearAllPendingMessages, mPlayerMessagesQueue " + mPlayerMessagesQueue);
     }
 
-    public void terminate(){
-        mTerminated.set(true);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void terminate(){
+//        mTerminated.set(true);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

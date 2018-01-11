@@ -17,7 +17,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
-import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 
 public final class FacePalettesView extends LinearLayout implements ViewPager.OnPageChangeListener, FacePageGridView.OnFaceClickListener, FacePageGridViewAdapter.OnFaceSwitchListener {
 
@@ -97,15 +96,13 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
         mFacePageIndicatorView.setPageId(FacemojiManager.getFacePageCount(), position, positionOffset);
     }
 
-    @Override
-    public void onFaceClick(FaceItem faceItem) {
 
-    }
-
-    public void prepare() {
-        mViewPager.getAdapter().notifyDataSetChanged();
-        mViewPager.setCurrentItem(0);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void prepare() {
+//        mViewPager.getAdapter().notifyDataSetChanged();
+//        mViewPager.setCurrentItem(0);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public void onFaceSwitch() {

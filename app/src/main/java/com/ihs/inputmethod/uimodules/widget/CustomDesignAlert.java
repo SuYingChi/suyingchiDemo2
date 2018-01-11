@@ -164,11 +164,13 @@ public class CustomDesignAlert extends AlertDialog implements View.OnClickListen
         this.positiveButtonClickListener = listener;
     }
 
-    public void setNegativeButton(CharSequence text, View.OnClickListener listener) {
-        HSLog.d(TAG, text.toString());
-        this.negativeButtonText = text;
-        this.negativeButtonClickListener = listener;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setNegativeButton(CharSequence text, View.OnClickListener listener) {
+//        HSLog.d(TAG, text.toString());
+//        this.negativeButtonText = text;
+//        this.negativeButtonClickListener = listener;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setImageResource(int resId) {
         this.imageResId = resId;

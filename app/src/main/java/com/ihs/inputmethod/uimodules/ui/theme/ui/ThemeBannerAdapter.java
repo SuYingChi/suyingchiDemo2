@@ -114,41 +114,45 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         viewPager.addOnPageChangeListener(this);
     }
 
-    //广告的adChoice位置需要调整，因广告不用暂时不调
-    public void startToFetchNativeAd() {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            if (adCardView == null) {
-                View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
-                nativeAdView = new KCNativeAdView(HSApplication.getContext());
-                nativeAdView.setAdLayoutView(view);
-                nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
-                    @Override
-                    public void onAdLoaded(KCNativeAdView nativeAdView) {
-                        nativeAdView.setTag("NativeAd");
-                        adCardView = ViewConvertor.toCardView(nativeAdView);
-                        adCardView.setCardBackgroundColor(0xfff6f6f6);
-                        scrollToPreAdPosition();
-                    }
-                });
-                nativeAdView.load(HSApplication.getContext().getString(R.string.ad_placement_cardad));
-            }
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    //广告的adChoice位置需要调整，因广告不用暂时不调
+//    public void startToFetchNativeAd() {
+//        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+//            if (adCardView == null) {
+//                View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
+//                nativeAdView = new KCNativeAdView(HSApplication.getContext());
+//                nativeAdView.setAdLayoutView(view);
+//                nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
+//                    @Override
+//                    public void onAdLoaded(KCNativeAdView nativeAdView) {
+//                        nativeAdView.setTag("NativeAd");
+//                        adCardView = ViewConvertor.toCardView(nativeAdView);
+//                        adCardView.setCardBackgroundColor(0xfff6f6f6);
+//                        scrollToPreAdPosition();
+//                    }
+//                });
+//                nativeAdView.load(HSApplication.getContext().getString(R.string.ad_placement_cardad));
+//            }
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    private void removeNativeAdView() {
-        if (adCardView != null) {
-            nativeAdView.release();
-            adCardView.removeAllViews();
-            adCardView = null;
-
-            int count = getRealCount();
-            int currentItem = viewPager.getCurrentItem();
-            keyboardThemeList.remove(null);
-            notifyDataSetChanged();
-            int newCurrent = currentItem + (currentItem % count - currentItem % (count - 1));
-            viewPager.setCurrentItem(newCurrent, false);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private void removeNativeAdView() {
+//        if (adCardView != null) {
+//            nativeAdView.release();
+//            adCardView.removeAllViews();
+//            adCardView = null;
+//
+//            int count = getRealCount();
+//            int currentItem = viewPager.getCurrentItem();
+//            keyboardThemeList.remove(null);
+//            notifyDataSetChanged();
+//            int newCurrent = currentItem + (currentItem % count - currentItem % (count - 1));
+//            viewPager.setCurrentItem(newCurrent, false);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private final INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
@@ -472,12 +476,14 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     public void onPageScrollStateChanged(int state) {
     }
 
-    /**
-     * @return the is Loop
-     */
-    public boolean isLoop() {
-        return isLoop;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * @return the is Loop
+//     */
+//    public boolean isLoop() {
+//        return isLoop;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * @param isLoop the is InfiniteLoop to set

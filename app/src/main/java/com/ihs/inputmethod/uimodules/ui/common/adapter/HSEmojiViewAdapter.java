@@ -159,9 +159,11 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	}
 
 
-	public OnEmojiLongPressListener getLongPressListener() {
-		return longPressListener;
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public OnEmojiLongPressListener getLongPressListener() {
+//		return longPressListener;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	public void setLongPressListener(OnEmojiLongPressListener longPressListener) {
 		this.longPressListener = longPressListener;

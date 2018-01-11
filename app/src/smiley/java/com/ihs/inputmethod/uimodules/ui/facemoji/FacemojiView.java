@@ -58,13 +58,17 @@ public final class FacemojiView extends RelativeLayout {
         startAnimation(anim);
     }
 
-    public void startAnimation() {
-        final FacemojiAnimationView animation = findViewById(R.id.sticker_player_view);
-        animation.start();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void startAnimation() {
+//        final FacemojiAnimationView animation = findViewById(R.id.sticker_player_view);
+//        animation.start();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void stopAnimation() {
-        final FacemojiAnimationView animation = findViewById(R.id.sticker_player_view);
-        animation.stop();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void stopAnimation() {
+//        final FacemojiAnimationView animation = findViewById(R.id.sticker_player_view);
+//        animation.stop();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

@@ -64,8 +64,10 @@ public class FontSelectView extends ListView {
       return mItemSelectedBackground;
     }
 
-    public void onDismiss() {
-        ((FontSelectViewAdapter) this.getAdapter()).cancelAnimation();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void onDismiss() {
+//        ((FontSelectViewAdapter) this.getAdapter()).cancelAnimation();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }
 

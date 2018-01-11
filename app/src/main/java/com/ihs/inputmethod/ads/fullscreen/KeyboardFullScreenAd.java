@@ -24,7 +24,7 @@ import java.util.List;
 public class KeyboardFullScreenAd {
     private String placementName;
 
-    public static final String SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS = "FullScreen_Ad_Loaded_On_KeyboardSession";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String SP_FULLSCREEN_AD_LOADED_ON_KEYBOARD_SESSIONS = "FullScreen_Ad_Loaded_On_KeyboardSession";
 
     public static final String PREF_KEY_PREFIX_AD_HIT_SESSION_INDEX = "AD_HIT_SESSION_INDEX_";
     public static final String PREF_KEY_PREFIX_AD_HIT_TIME = "AD_HIT_TIME_";

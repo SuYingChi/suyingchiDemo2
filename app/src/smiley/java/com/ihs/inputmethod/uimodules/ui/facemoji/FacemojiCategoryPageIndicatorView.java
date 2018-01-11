@@ -22,20 +22,24 @@ public class FacemojiCategoryPageIndicatorView extends View {
 		super(context, attrs, defStyle);
 	}
 
-	public void setColors(final int foregroundColor, final int backgroundColor) {
-		mPaint.setColor(foregroundColor);
-		setBackgroundColor(backgroundColor);
-		if(foregroundColor+backgroundColor==0){
-			mPaint.setColor(Color.parseColor("#BBFFFFFF"));
-			setBackgroundColor(Color.parseColor("#33FFFFFF"));
-		}
-	}
-	public void setCategoryPageId(final int size, final int id, final float offset) {
-		mCategoryPageSize = size;
-		mCurrentCategoryPageId = id;
-		mOffset = offset;
-		invalidate();
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void setColors(final int foregroundColor, final int backgroundColor) {
+//		mPaint.setColor(foregroundColor);
+//		setBackgroundColor(backgroundColor);
+//		if(foregroundColor+backgroundColor==0){
+//			mPaint.setColor(Color.parseColor("#BBFFFFFF"));
+//			setBackgroundColor(Color.parseColor("#33FFFFFF"));
+//		}
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void setCategoryPageId(final int size, final int id, final float offset) {
+//		mCategoryPageSize = size;
+//		mCurrentCategoryPageId = id;
+//		mOffset = offset;
+//		invalidate();
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	@Override
 	protected void onDraw(final Canvas canvas) {

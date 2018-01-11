@@ -96,54 +96,68 @@ public class WallpaperManagerProxy {
         return new ByteArrayInputStream(stream.toByteArray());
     }
 
-    public BitmapDrawable getSystemDrawable() {
-        BitmapDrawable bitmapDrawable = null;
-        try {
-            bitmapDrawable = (BitmapDrawable) mWm.getDrawable();
-        } catch (Exception e) {
-            // Multiple crashes are reported to occur due to internal exceptions:
-            // (1) IllegalStateException on Huawei Android 4.4.2 (API 19) devices
-            // (2) IOException on Meizu M2 and alps devices
-            e.printStackTrace();
-        }
-        return bitmapDrawable;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public BitmapDrawable getSystemDrawable() {
+//        BitmapDrawable bitmapDrawable = null;
+//        try {
+//            bitmapDrawable = (BitmapDrawable) mWm.getDrawable();
+//        } catch (Exception e) {
+//            // Multiple crashes are reported to occur due to internal exceptions:
+//            // (1) IllegalStateException on Huawei Android 4.4.2 (API 19) devices
+//            // (2) IOException on Meizu M2 and alps devices
+//            e.printStackTrace();
+//        }
+//        return bitmapDrawable;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void restore(IBinder windowToken) {
-        if (windowToken != null) {
-            mWm.setWallpaperOffsets(windowToken, 0, 0.5f);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void restore(IBinder windowToken) {
+//        if (windowToken != null) {
+//            mWm.setWallpaperOffsets(windowToken, 0, 0.5f);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * @return Whether a live wallpaper is currently applied. Note that this method differs from
-     * in that it returns {@code true} when the
-     * applied wallpaper is not provided by our {@link android.service.wallpaper.WallpaperService}.
-     */
-    public boolean isLiveWallpaper() {
-        return mWm.getWallpaperInfo() != null;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * @return Whether a live wallpaper is currently applied. Note that this method differs from
+//     * in that it returns {@code true} when the
+//     * applied wallpaper is not provided by our {@link android.service.wallpaper.WallpaperService}.
+//     */
+//    public boolean isLiveWallpaper() {
+//        return mWm.getWallpaperInfo() != null;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Delegate System api {@link WallpaperManager}
-     */
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Delegate System api {@link WallpaperManager}
+//     */
+//
+//    public WallpaperInfo getWallpaperInfo() {
+//        return mWm.getWallpaperInfo();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public WallpaperInfo getWallpaperInfo() {
-        return mWm.getWallpaperInfo();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void sendWallpaperCommand(IBinder windowToken, String action,
+//                                     int x, int y, int z, Bundle extras) {
+//        mWm.sendWallpaperCommand(windowToken, action, x, y, z, extras);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void sendWallpaperCommand(IBinder windowToken, String action,
-                                     int x, int y, int z, Bundle extras) {
-        mWm.sendWallpaperCommand(windowToken, action, x, y, z, extras);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setWallpaperOffsets(IBinder windowToken, float xOffset, float yOffset) {
+//        mWm.setWallpaperOffsets(windowToken, xOffset, yOffset);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void setWallpaperOffsets(IBinder windowToken, float xOffset, float yOffset) {
-        mWm.setWallpaperOffsets(windowToken, xOffset, yOffset);
-    }
-
-    public void setWallpaperOffsetSteps(float xStep, float yStep) {
-        mWm.setWallpaperOffsetSteps(xStep, yStep);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setWallpaperOffsetSteps(float xStep, float yStep) {
+//        mWm.setWallpaperOffsetSteps(xStep, yStep);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public int getDesiredMinimumWidth() {
         return mWm.getDesiredMinimumWidth();

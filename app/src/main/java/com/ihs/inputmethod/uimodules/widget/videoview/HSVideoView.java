@@ -131,18 +131,6 @@ class HSVideoView extends RelativeLayout implements IMediaView {
         }
     }
 
-    @Override
-    public void setHSBackground(int resId) {
-//        Drawable drawable = getResources().getDrawable(resId);
-//        this.filePath = new String[1];
-//        if (drawable == null) {
-//            this.filePath[0] = "android.resource://" + getContext().getPackageName() + "/" + resId;
-//            setHSBackgroundMedia(filePath[0]);
-//        } else {
-//            this.filePath[0] = "android.resource://" + getContext().getPackageName() + "/" + resId;
-//            setHSBackground(drawable);
-//        }
-    }
 
     @Override
     public boolean isMedia() {

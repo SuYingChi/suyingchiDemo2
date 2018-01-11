@@ -484,46 +484,48 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         KCCommonUtils.showDialog(loadingDialog);
     }
 
-    public void showGoogleAdBar() {
-        if (keyboardPanelSwitchContainer == null) {
-            return;
-        }
-
-        if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
-                || !HSConfig.optBoolean(true, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowAd")) {
-            return;
-        }
-
-        gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
-        gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-        gpAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
-        int padding = DisplayUtils.dip2px(8);
-        gpAdRecyclerView.setPadding(padding, 0, padding, 0);
-        gpAdAdapter = new CustomBarGPAdAdapter();
-        gpAdRecyclerView.setAdapter(gpAdAdapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
-        gpAdRecyclerView.setLayoutManager(layoutManager);
-        gpAdRecyclerView.setHasFixedSize(true);
-
-        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), () -> {
-            if (acbNativeAdLoader != null) {
-                acbNativeAdLoader.cancel();
-                acbNativeAdLoader = null;
-            }
-            if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
-                keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
-            }
-            HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
-        });
-        customizeBarLayout.setContent(gpAdRecyclerView);
-        reloadGpAd();
-        if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
-            if (keyboardPanelSwitchContainer != null) {
-                keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
-                keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
-            }
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void showGoogleAdBar() {
+//        if (keyboardPanelSwitchContainer == null) {
+//            return;
+//        }
+//
+//        if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
+//                || !HSConfig.optBoolean(true, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowAd")) {
+//            return;
+//        }
+//
+//        gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
+//        gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+//        gpAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
+//        int padding = DisplayUtils.dip2px(8);
+//        gpAdRecyclerView.setPadding(padding, 0, padding, 0);
+//        gpAdAdapter = new CustomBarGPAdAdapter();
+//        gpAdRecyclerView.setAdapter(gpAdAdapter);
+//        GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
+//        gpAdRecyclerView.setLayoutManager(layoutManager);
+//        gpAdRecyclerView.setHasFixedSize(true);
+//
+//        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), () -> {
+//            if (acbNativeAdLoader != null) {
+//                acbNativeAdLoader.cancel();
+//                acbNativeAdLoader = null;
+//            }
+//            if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
+//                keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
+//            }
+//            HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
+//        });
+//        customizeBarLayout.setContent(gpAdRecyclerView);
+//        reloadGpAd();
+//        if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
+//            if (keyboardPanelSwitchContainer != null) {
+//                keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
+//                keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
+//            }
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void logCustomizeBarShowed() {
         if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE) {
@@ -582,7 +584,9 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             HSFloatWindowManager.getInstance().removeFloatingWindow();
         }
     }
-    public KeyboardPanelSwitchContainer getKeyboardPanelSwitchContainer() {
-        return keyboardPanelSwitchContainer;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public KeyboardPanelSwitchContainer getKeyboardPanelSwitchContainer() {
+//        return keyboardPanelSwitchContainer;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

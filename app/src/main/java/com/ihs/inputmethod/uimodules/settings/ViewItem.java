@@ -33,7 +33,7 @@ final class ViewItem {
     public ImageView imageView;
     public TextView newTipView;
     public ViewGroup viewContainer;
-    boolean isClickedManual = false;
+    // --Commented out by Inspection (18/1/11 下午2:41):boolean isClickedManual = false;
     boolean isShowNewTip = false;
 
     ViewItem(String name, Drawable drawable, ViewItemListener onItemClickListener, boolean isSelected) {
@@ -71,14 +71,12 @@ final class ViewItem {
             @Override
             public void onClick(View v) {
                 if (onItemListener != null) {
-                    isClickedManual = true;
                     onItemListener.onItemClick(ViewItem.this);
                 }
             }
         });
 
         if (onItemListener != null) {
-            isClickedManual = false;
             onItemListener.onItemViewCreated(this);
         }
 

@@ -43,11 +43,11 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
     protected ProgressDialog mDialog;
     protected WallpaperInfo mCurrentWallpaper;
     private boolean mIsSettingWallpaper = false;
-    private boolean mIsSettingKeyTheme = false;
-    private static final String FROM_LOCAL_GALLERY = "Local";
-    private static final String FROM_LOCAL_ONLINE = "Online";
-    private static final String WALLPAPER_MODE_FIXED = "Fixed";
-    private static final String WALLPAPER_MODE_SCROLLABLE = "Scrollable";
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mIsSettingKeyTheme = false;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String FROM_LOCAL_GALLERY = "Local";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String FROM_LOCAL_ONLINE = "Online";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String WALLPAPER_MODE_FIXED = "Fixed";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String WALLPAPER_MODE_SCROLLABLE = "Scrollable";
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
@@ -90,31 +90,35 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
         }
     }
 
-    protected void startGuideAnimation(Activity activity, int resId, final int width) {
-        final DrawView drawView = ViewUtils.findViewById(activity, resId);
-        if (drawView == null) {
-            return;
-        }
-        drawView.post(new Runnable() {
-            @Override
-            public void run() {
-                EditWallpaperHintDrawer drawer = new EditWallpaperHintDrawer(drawView, width);
-                drawView.setDrawer(drawer);
-                drawer.start();
-                drawView.setVisibility(View.VISIBLE);
-            }
-        });
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    protected void startGuideAnimation(Activity activity, int resId, final int width) {
+//        final DrawView drawView = ViewUtils.findViewById(activity, resId);
+//        if (drawView == null) {
+//            return;
+//        }
+//        drawView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                EditWallpaperHintDrawer drawer = new EditWallpaperHintDrawer(drawView, width);
+//                drawView.setDrawer(drawer);
+//                drawer.start();
+//                drawView.setVisibility(View.VISIBLE);
+//            }
+//        });
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    protected abstract void refreshButtonState();
+    // --Commented out by Inspection (18/1/11 下午2:41):protected abstract void refreshButtonState();
 
     protected boolean isSettingWallpaper() {
         return mIsSettingWallpaper;
     }
 
-    protected void applyWallpaper(final boolean isScroll) {
-        applyWallpaper(isScroll, true);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    protected void applyWallpaper(final boolean isScroll) {
+//        applyWallpaper(isScroll, true);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     protected void applyWallpaper(final boolean isScroll, final boolean logEvent) {
         mIsSettingWallpaper = true;
@@ -202,18 +206,20 @@ public abstract class WallpaperBaseActivity extends HSAppCompatActivity implemen
         return false;
     }
 
-    private void saveWallPaperToFile(Bitmap wallpaper) {
-        // store thumb for Gallery only
-
-//        String thumbPath = mCurrentWallpaper.getPath() + WallpaperMgr.Files.LOCAL_WALLPAPER_THUMB_SUFFIX;
-//        File file = new File(thumbPath);
-//        if (file.exists()) {
-//            boolean deleted = file.delete();
-//            HSLog.d(TAG, "Delete file " + file + ": " + deleted);
-//        }
-//        Utils.saveBitmapToFile(wallpaper, file, 40);
-//        HSGlobalNotificationCenter.sendNotificationOnMainThread(WallpaperMgr.NOTIFICATION_WALLPAPER_GALLERY_SAVED);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private void saveWallPaperToFile(Bitmap wallpaper) {
+//        // store thumb for Gallery only
+//
+////        String thumbPath = mCurrentWallpaper.getPath() + WallpaperMgr.Files.LOCAL_WALLPAPER_THUMB_SUFFIX;
+////        File file = new File(thumbPath);
+////        if (file.exists()) {
+////            boolean deleted = file.delete();
+////            HSLog.d(TAG, "Delete file " + file + ": " + deleted);
+////        }
+////        Utils.saveBitmapToFile(wallpaper, file, 40);
+////        HSGlobalNotificationCenter.sendNotificationOnMainThread(WallpaperMgr.NOTIFICATION_WALLPAPER_GALLERY_SAVED);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     protected abstract Bitmap tryGetWallpaperToSet();
 

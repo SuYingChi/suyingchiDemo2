@@ -7,12 +7,4 @@ public interface ProgressListener {
 
     void startProgress();
     void stopProgress();
-
-    ProgressListener EMPTY_LISTENER = new ProgressListener() {
-        @Override
-        public void startProgress() {}
-
-        @Override
-        public void stopProgress() {}
-    };
 }

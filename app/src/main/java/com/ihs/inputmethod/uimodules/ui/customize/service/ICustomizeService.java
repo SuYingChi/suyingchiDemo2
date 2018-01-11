@@ -180,10 +180,12 @@ public interface ICustomizeService extends IInterface
             {
                 return mRemote;
             }
-            public java.lang.String getInterfaceDescriptor()
-            {
-                return DESCRIPTOR;
-            }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//            public java.lang.String getInterfaceDescriptor()
+//            {
+//                return DESCRIPTOR;
+//            }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
             @Override public java.lang.String getCurrentTheme() throws RemoteException
             {
                 Parcel _data = Parcel.obtain();

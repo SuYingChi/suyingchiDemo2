@@ -78,16 +78,18 @@ public class SwipeLayout extends LinearLayout {
 
     }
 
-    public void download() {
-        if(downloader == null){
-            downloader = new GoogleDictionaryDownloader(this.mLocale);
-        }
-        if (!HSImeSubtypeManager.dictionaryExists(mLocale)) {
-            HSLog.e("dic not exist "+mLocale);
-            downloader.downloadDictionary(HSImeSubtypeManager.getDictDownloadCallback());
-        }
-    }
-    
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void download() {
+//        if(downloader == null){
+//            downloader = new GoogleDictionaryDownloader(this.mLocale);
+//        }
+//        if (!HSImeSubtypeManager.dictionaryExists(mLocale)) {
+//            HSLog.e("dic not exist "+mLocale);
+//            downloader.downloadDictionary(HSImeSubtypeManager.getDictDownloadCallback());
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
+
     public void setTick(final boolean visible) {
         if (visible) {
             this.mTick.setVisibility(View.VISIBLE);

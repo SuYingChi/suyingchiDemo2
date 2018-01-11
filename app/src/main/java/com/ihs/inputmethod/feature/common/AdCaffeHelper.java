@@ -65,7 +65,7 @@ public class AdCaffeHelper {
     public String networkType;
     public String country;
     public List<String> keywords;
-    public int offset = -1;
+    // --Commented out by Inspection (18/1/11 下午2:41):public int offset = -1;
 
     private Trie trie;
 
@@ -240,9 +240,6 @@ public class AdCaffeHelper {
                             int nextOffset = dataJson.optInt("offset", -1);
                             if (nativeAds != null) {
                                 onNativeAdLoadListener.onNativeAdLoadSuccess(nativeAds, hasMore, nextOffset);
-                                if (hasMore) {
-                                    offset = nextOffset;
-                                }
                                 return;
                             } else {
                                 error = new HSError(AdCaffeError.NoAvaibleAd, AdCaffeError.Domain);
@@ -272,13 +269,15 @@ public class AdCaffeHelper {
         }
     }
 
-    private void fillJson(JSONObject jsonObject, String key, int value) {
-        try {
-            jsonObject.put(key, value);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private void fillJson(JSONObject jsonObject, String key, int value) {
+//        try {
+//            jsonObject.put(key, value);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private void fillJsonArray(JSONObject jsonObject, String key, List<String> stringList) {
         JSONArray jsonArray = new JSONArray();

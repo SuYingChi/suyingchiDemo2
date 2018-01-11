@@ -252,36 +252,38 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
         return stateListDrawable;
     }
 
-    private Drawable getSelectButtonBackgroundDrawable() {
-        StateListDrawable stateListDrawable = new StateListDrawable();
-        GradientDrawable defNormalDrawable = new GradientDrawable();
-        defNormalDrawable.setShape(GradientDrawable.RECTANGLE);
-        defNormalDrawable.setCornerRadius(DisplayUtils.dip2px(5));
-        GradientDrawable defPressedDrawable = new GradientDrawable();
-        defPressedDrawable.setShape(GradientDrawable.RECTANGLE);
-        defPressedDrawable.setCornerRadius(DisplayUtils.dip2px(5));
-        if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_dark_normal), PorterDuff.Mode.SRC_IN);
-                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_dark_press), PorterDuff.Mode.SRC_IN);
-            } else {
-                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_dark_normal));
-                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_dark_press));
-            }
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_light_normal), PorterDuff.Mode.SRC_IN);
-                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_light_press), PorterDuff.Mode.SRC_IN);
-            } else {
-                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_light_normal));
-                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_light_press));
-            }
-        }
-        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, defPressedDrawable);
-        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, defPressedDrawable);
-        stateListDrawable.addState(new int[]{}, defNormalDrawable);
-        return stateListDrawable;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private Drawable getSelectButtonBackgroundDrawable() {
+//        StateListDrawable stateListDrawable = new StateListDrawable();
+//        GradientDrawable defNormalDrawable = new GradientDrawable();
+//        defNormalDrawable.setShape(GradientDrawable.RECTANGLE);
+//        defNormalDrawable.setCornerRadius(DisplayUtils.dip2px(5));
+//        GradientDrawable defPressedDrawable = new GradientDrawable();
+//        defPressedDrawable.setShape(GradientDrawable.RECTANGLE);
+//        defPressedDrawable.setCornerRadius(DisplayUtils.dip2px(5));
+//        if (HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_dark_normal), PorterDuff.Mode.SRC_IN);
+//                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_dark_press), PorterDuff.Mode.SRC_IN);
+//            } else {
+//                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_dark_normal));
+//                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_dark_press));
+//            }
+//        } else {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                defNormalDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_light_normal), PorterDuff.Mode.SRC_IN);
+//                defPressedDrawable.setColorFilter(ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_light_press), PorterDuff.Mode.SRC_IN);
+//            } else {
+//                DrawableCompat.setTint(defNormalDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_light_normal));
+//                DrawableCompat.setTint(defPressedDrawable, ContextCompat.getColor(HSApplication.getContext(), R.color.selector_button_bg_light_press));
+//            }
+//        }
+//        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, defPressedDrawable);
+//        stateListDrawable.addState(new int[]{android.R.attr.state_selected}, defPressedDrawable);
+//        stateListDrawable.addState(new int[]{}, defNormalDrawable);
+//        return stateListDrawable;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     protected View onCreatePanelView() {

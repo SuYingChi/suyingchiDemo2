@@ -9,10 +9,9 @@ import android.view.View;
 
 public final class ThemeBackgroundViewHolder extends RecyclerView.ViewHolder {
 
-	RecyclerView recyclerView;
+	// --Commented out by Inspection (18/1/11 下午2:41):RecyclerView recyclerView;
 
 	public ThemeBackgroundViewHolder(View itemView) {
 		super(itemView);
-		recyclerView= (RecyclerView) itemView;
 	}
 }

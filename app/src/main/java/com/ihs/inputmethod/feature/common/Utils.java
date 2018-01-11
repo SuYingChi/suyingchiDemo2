@@ -118,9 +118,11 @@ public final class Utils {
 
     private static final int[] sLoc0 = new int[2];
 
-    // To turn on these properties, type
-    // adb shell setprop log.tag.PROPERTY_NAME [VERBOSE | SUPPRESS]
-    private static final String FORCE_ENABLE_ROTATION_PROPERTY = "launcher_force_rotate";
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    // To turn on these properties, type
+//    // adb shell setprop log.tag.PROPERTY_NAME [VERBOSE | SUPPRESS]
+//    private static final String FORCE_ENABLE_ROTATION_PROPERTY = "launcher_force_rotate";
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static long sLastClickTimeForDoubleClickCheck;
 
@@ -130,29 +132,35 @@ public final class Utils {
     private static Field sReflectFieldNeedsMenuSetFalse;
     private static Method sReflectMethodSetNeedsMenuKey;
 
-    private static long sInstallTime;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static long sInstallTime;
 
-    public static boolean equals(float a, float b) {
-        return Math.abs(a - b) < EPSILON;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean equals(float a, float b) {
+//        return Math.abs(a - b) < EPSILON;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static boolean isPropertyEnabled(String propertyName) {
-        return Log.isLoggable(propertyName, Log.VERBOSE);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isPropertyEnabled(String propertyName) {
+//        return Log.isLoggable(propertyName, Log.VERBOSE);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static int getDayDifference(long epoch1, long epoch2, int dateLineHour) {
-        Calendar wholeDayDate1 = getWholeDayCalendar(epoch1, dateLineHour);
-        Calendar wholeDayDate2 = getWholeDayCalendar(epoch2, dateLineHour);
-
-        // Get the represented date in milliseconds
-        long wholeDayMillis1 = wholeDayDate1.getTimeInMillis();
-        long wholeDayMillis2 = wholeDayDate2.getTimeInMillis();
-
-        // Calculate difference in milliseconds
-        long diff = Math.abs(wholeDayMillis1 - wholeDayMillis2);
-
-        return (int) (diff / (24 * 60 * 60 * 1000));
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static int getDayDifference(long epoch1, long epoch2, int dateLineHour) {
+//        Calendar wholeDayDate1 = getWholeDayCalendar(epoch1, dateLineHour);
+//        Calendar wholeDayDate2 = getWholeDayCalendar(epoch2, dateLineHour);
+//
+//        // Get the represented date in milliseconds
+//        long wholeDayMillis1 = wholeDayDate1.getTimeInMillis();
+//        long wholeDayMillis2 = wholeDayDate2.getTimeInMillis();
+//
+//        // Calculate difference in milliseconds
+//        long diff = Math.abs(wholeDayMillis1 - wholeDayMillis2);
+//
+//        return (int) (diff / (24 * 60 * 60 * 1000));
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static Calendar getWholeDayCalendar(long epoch, int dateLineHour) {
         Calendar calendar = Calendar.getInstance();
@@ -167,106 +175,122 @@ public final class Utils {
         return calendar;
     }
 
-    public static boolean inSleepTime() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-        return 6 > hourOfDay || hourOfDay >= 23;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean inSleepTime() {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+//        return 6 > hourOfDay || hourOfDay >= 23;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static boolean hasUpdate() {
-        int latestVersionCode = getLatestVersionCode();
-        return HSApplication.getCurrentLaunchInfo().appVersionCode < latestVersionCode;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean hasUpdate() {
+//        int latestVersionCode = getLatestVersionCode();
+//        return HSApplication.getCurrentLaunchInfo().appVersionCode < latestVersionCode;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static int getLatestVersionCode() {
         return HSConfig.optInteger(0, "Application", "Update", "LatestVersionCode");
     }
 
-    /**
-     * Whether this launcher is set as default home screen. Defaults to {@code true} if error occurs.
-     */
-    public static boolean isDefaultLauncher() {
-        PackageManager packageManager = HSApplication.getContext().getPackageManager();
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        ResolveInfo resolveInfo;
-        try {
-            resolveInfo = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        } catch (Exception e) {
-            return true;
-        }
-        //noinspection SimplifiableIfStatement
-        if (resolveInfo != null) {
-            return TextUtils.equals(HSApplication.getContext().getPackageName(), resolveInfo.activityInfo.packageName);
-        }
-        return true;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Whether this launcher is set as default home screen. Defaults to {@code true} if error occurs.
+//     */
+//    public static boolean isDefaultLauncher() {
+//        PackageManager packageManager = HSApplication.getContext().getPackageManager();
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        ResolveInfo resolveInfo;
+//        try {
+//            resolveInfo = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+//        } catch (Exception e) {
+//            return true;
+//        }
+//        //noinspection SimplifiableIfStatement
+//        if (resolveInfo != null) {
+//            return TextUtils.equals(HSApplication.getContext().getPackageName(), resolveInfo.activityInfo.packageName);
+//        }
+//        return true;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static boolean isSpecialApp(String[] keywords, String packageName) {
-        for (String keyword : keywords) {
-            if (packageName.toLowerCase().contains(keyword)) {
-                return true;
-            }
-        }
-        return false;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isSpecialApp(String[] keywords, String packageName) {
+//        for (String keyword : keywords) {
+//            if (packageName.toLowerCase().contains(keyword)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
-    public interface DefaultLauncherQueryCallback {
-        void onDefaultLauncherQueryResult(boolean isDefaultLauncher);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public interface DefaultLauncherQueryCallback {
+//        void onDefaultLauncherQueryResult(boolean isDefaultLauncher);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static List<String> getInstalledLaunchers() {
-        List<String> launcherNames = new ArrayList<>();
-        PackageManager packageManager = HSApplication.getContext().getPackageManager();
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, 0);
-        for (ResolveInfo info : list) {
-            if (!validateLauncher(info)) {
-                continue;
-            }
-            launcherNames.add(info.activityInfo.packageName);
-        }
-        return launcherNames;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static List<String> getInstalledLaunchers() {
+//        List<String> launcherNames = new ArrayList<>();
+//        PackageManager packageManager = HSApplication.getContext().getPackageManager();
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, 0);
+//        for (ResolveInfo info : list) {
+//            if (!validateLauncher(info)) {
+//                continue;
+//            }
+//            launcherNames.add(info.activityInfo.packageName);
+//        }
+//        return launcherNames;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static boolean validateLauncher(ResolveInfo resolveInfo) {
         // Exclude AOSP Settings app FallbackHome activity since 7.0
         return !"com.android.settings.FallbackHome".equals(resolveInfo.activityInfo.name);
     }
 
-    public static void setTabLayoutTypeface(final TabLayout tabLayout, final Typeface typeface) {
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                setTypefaceRecursive(tabLayout, typeface);
-            }
-        });
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void setTabLayoutTypeface(final TabLayout tabLayout, final Typeface typeface) {
+//        tabLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                setTypefaceRecursive(tabLayout, typeface);
+//            }
+//        });
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void setTabLayoutTextSize(final TabLayout tabLayout, final float textSize) {
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
-                int tabsCount = vg.getChildCount();
-                for (int j = 0; j < tabsCount; j++) {
-                    ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
-                    int tabChildrenCount = vgTab.getChildCount();
-                    for (int i = 0; i < tabChildrenCount; i++) {
-                        View tabViewChild = vgTab.getChildAt(i);
-                        if (tabViewChild instanceof TextView) {
-                            ((TextView) tabViewChild).setTextSize(textSize);
-                        }
-                    }
-                }
-            }
-        });
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void setTabLayoutTextSize(final TabLayout tabLayout, final float textSize) {
+//        tabLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+//                int tabsCount = vg.getChildCount();
+//                for (int j = 0; j < tabsCount; j++) {
+//                    ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+//                    int tabChildrenCount = vgTab.getChildCount();
+//                    for (int i = 0; i < tabChildrenCount; i++) {
+//                        View tabViewChild = vgTab.getChildAt(i);
+//                        if (tabViewChild instanceof TextView) {
+//                            ((TextView) tabViewChild).setTextSize(textSize);
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static void setTypefaceRecursive(View root, Typeface typeface) {
         if (!(root instanceof ViewGroup)) {
@@ -281,103 +305,121 @@ public final class Utils {
         }
     }
 
-    public static void showKeyboard(Context context) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void showKeyboard(Context context) {
+//        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        // Find the currently focused view, so we can grab the correct window token from it
-        View view = activity.getCurrentFocus();
-        // If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void hideKeyboard(Activity activity) {
+//        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+//        // Find the currently focused view, so we can grab the correct window token from it
+//        View view = activity.getCurrentFocus();
+//        // If no view currently has focus, create a new one, just so we can grab a window token from it
+//        if (view == null) {
+//            view = new View(activity);
+//        }
+//        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Wallpaper layer must be placed under a {@link FrameLayout}.
-     */
-    public static void configureWallpaperLayer(Context context, View layer) {
-        int top = Utils.getStatusBarHeight(context);
-        int bottom = CommonUtils.getNavigationBarHeight(context);
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layer.getLayoutParams();
-        params.setMargins(params.leftMargin, params.topMargin - top, params.rightMargin, params.bottomMargin - bottom);
-        layer.setLayoutParams(params);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Wallpaper layer must be placed under a {@link FrameLayout}.
+//     */
+//    public static void configureWallpaperLayer(Context context, View layer) {
+//        int top = Utils.getStatusBarHeight(context);
+//        int bottom = CommonUtils.getNavigationBarHeight(context);
+//        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) layer.getLayoutParams();
+//        params.setMargins(params.leftMargin, params.topMargin - top, params.rightMargin, params.bottomMargin - bottom);
+//        layer.setLayoutParams(params);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
-    public static String getScreenIndexDescription(int pageIndex) {
-        if (0 <= pageIndex && pageIndex <= 8) {
-            return String.format(Locale.getDefault(), "Screen_%d", pageIndex + 1);
-        } else if (pageIndex >= 9) {
-            return "Screen_10_Or_After";
-        }
-        return "Invalid_Screen";
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static String getScreenIndexDescription(int pageIndex) {
+//        if (0 <= pageIndex && pageIndex <= 8) {
+//            return String.format(Locale.getDefault(), "Screen_%d", pageIndex + 1);
+//        } else if (pageIndex >= 9) {
+//            return "Screen_10_Or_After";
+//        }
+//        return "Invalid_Screen";
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static String getNumberDescription(int number) {
-        HSLog.d("Flurry", "Number in folder: " + number);
-        if (0 <= number && number <= 8) {
-            return String.format(Locale.getDefault(), "Number_%d", number);
-        } else if (number >= 9) {
-            return "Number_9_Or_More";
-        }
-        return "Invalid_Number";
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static String getNumberDescription(int number) {
+//        HSLog.d("Flurry", "Number in folder: " + number);
+//        if (0 <= number && number <= 8) {
+//            return String.format(Locale.getDefault(), "Number_%d", number);
+//        } else if (number >= 9) {
+//            return "Number_9_Or_More";
+//        }
+//        return "Invalid_Number";
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static String getTimeOfDayDescription() {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        if (hour >= 24) {
-            return "23~24";
-        } else if (hour <= 0) {
-            return "0~1";
-        } else {
-            return String.valueOf(hour + "~" + (hour + 1));
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static String getTimeOfDayDescription() {
+//        Calendar calendar = Calendar.getInstance();
+//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//        if (hour >= 24) {
+//            return "23~24";
+//        } else if (hour <= 0) {
+//            return "0~1";
+//        } else {
+//            return String.valueOf(hour + "~" + (hour + 1));
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Sets up transparent navigation and status bars in LMP.
-     * This method is a no-op for other platform versions.
-     */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setupTransparentSystemBarsForLmp(Activity activityContext) {
-        if (CommonUtils.ATLEAST_LOLLIPOP) {
-            Window window = activityContext.getWindow();
-            window.getAttributes().systemUiVisibility |= (View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
-                    .SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Sets up transparent navigation and status bars in LMP.
+//     * This method is a no-op for other platform versions.
+//     */
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    public static void setupTransparentSystemBarsForLmp(Activity activityContext) {
+//        if (CommonUtils.ATLEAST_LOLLIPOP) {
+//            Window window = activityContext.getWindow();
+//            window.getAttributes().systemUiVisibility |= (View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
+//                    .SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//            window.setNavigationBarColor(Color.TRANSPARENT);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setupTransparentSystemBarsForLmpNoNavigation(Activity activityContext) {
-        if (CommonUtils.ATLEAST_LOLLIPOP) {
-            Window window = activityContext.getWindow();
-            window.getAttributes().systemUiVisibility |= (View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
-                    .SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    public static void setupTransparentSystemBarsForLmpNoNavigation(Activity activityContext) {
+//        if (CommonUtils.ATLEAST_LOLLIPOP) {
+//            Window window = activityContext.getWindow();
+//            window.getAttributes().systemUiVisibility |= (View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
+//                    .SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static
-    @NonNull
-    Bitmap decodeResourceWithFallback(Resources res, int id) {
-        Bitmap decoded = BitmapFactory.decodeResource(res, id);
-        if (decoded == null) {
-            decoded = createFallbackBitmap();
-        }
-        return decoded;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static
+//    @NonNull
+//    Bitmap decodeResourceWithFallback(Resources res, int id) {
+//        Bitmap decoded = BitmapFactory.decodeResource(res, id);
+//        if (decoded == null) {
+//            decoded = createFallbackBitmap();
+//        }
+//        return decoded;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static
     @NonNull
@@ -385,106 +427,112 @@ public final class Utils {
         return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
     }
 
-    /**
-     * Given a coordinate relative to the descendant, find the coordinate in a parent view's
-     * coordinates.
-     *
-     * @param descendant        The descendant to which the passed coordinate is relative.
-     * @param root              The root view to make the coordinates relative to.
-     * @param outCoord          The coordinate that we want mapped.
-     * @param includeRootScroll Whether or not to account for the scroll of the descendant:
-     *                          sometimes this is relevant as in a child's coordinates within the descendant.
-     * @return The factor by which this descendant is scaled relative to this DragLayer. Caution
-     * this scale factor is assumed to be equal in X and Y, and so if at any point this
-     * assumption fails, we will need to return a pair of scale factors.
-     */
-    public static float getDescendantCoordRelativeToParent(
-            View descendant, View root, int[] outCoord, boolean includeRootScroll) {
-        ArrayList<View> ancestorChain = new ArrayList<>();
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Given a coordinate relative to the descendant, find the coordinate in a parent view's
+//     * coordinates.
+//     *
+//     * @param descendant        The descendant to which the passed coordinate is relative.
+//     * @param root              The root view to make the coordinates relative to.
+//     * @param outCoord          The coordinate that we want mapped.
+//     * @param includeRootScroll Whether or not to account for the scroll of the descendant:
+//     *                          sometimes this is relevant as in a child's coordinates within the descendant.
+//     * @return The factor by which this descendant is scaled relative to this DragLayer. Caution
+//     * this scale factor is assumed to be equal in X and Y, and so if at any point this
+//     * assumption fails, we will need to return a pair of scale factors.
+//     */
+//    public static float getDescendantCoordRelativeToParent(
+//            View descendant, View root, int[] outCoord, boolean includeRootScroll) {
+//        ArrayList<View> ancestorChain = new ArrayList<>();
+//
+//        float[] pt = {outCoord[0], outCoord[1]};
+//
+//        View v = descendant;
+//        while (v != root && v != null) {
+//            ancestorChain.add(v);
+//            v = (View) v.getParent();
+//        }
+//        ancestorChain.add(root);
+//
+//        float scale = 1.0f;
+//        int count = ancestorChain.size();
+//        for (int i = 0; i < count; i++) {
+//            View v0 = ancestorChain.get(i);
+//            // For TextViews, scroll has a meaning which relates to the text position
+//            // which is very strange... ignore the scroll.
+//            if (v0 != descendant || includeRootScroll) {
+//                pt[0] -= v0.getScrollX();
+//                pt[1] -= v0.getScrollY();
+//            }
+//
+//            v0.getMatrix().mapPoints(pt);
+//            pt[0] += v0.getLeft();
+//            pt[1] += v0.getTop();
+//            scale *= v0.getScaleX();
+//        }
+//
+//        outCoord[0] = Math.round(pt[0]);
+//        outCoord[1] = Math.round(pt[1]);
+//        return scale;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        float[] pt = {outCoord[0], outCoord[1]};
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     */
+//    public static float mapCoordInSelfToDescendant(View descendant, View root, int[] coord) {
+//        ArrayList<View> ancestorChain = new ArrayList<>();
+//
+//        float[] pt = {coord[0], coord[1]};
+//
+//        View v = descendant;
+//        while (v != root) {
+//            if (v == null) {
+//                // FIXME: view should not be orphaned here
+//                break;
+//            }
+//            ancestorChain.add(v);
+//            v = (View) v.getParent();
+//        }
+//        ancestorChain.add(root);
+//
+//        float scale = 1.0f;
+//        Matrix inverse = new Matrix();
+//        int count = ancestorChain.size();
+//        for (int i = count - 1; i >= 0; i--) {
+//            View ancestor = ancestorChain.get(i);
+//            View next = i > 0 ? ancestorChain.get(i - 1) : null;
+//
+//            pt[0] += ancestor.getScrollX();
+//            pt[1] += ancestor.getScrollY();
+//
+//            if (next != null) {
+//                pt[0] -= next.getLeft();
+//                pt[1] -= next.getTop();
+//                next.getMatrix().invert(inverse);
+//                inverse.mapPoints(pt);
+//                scale *= next.getScaleX();
+//            }
+//        }
+//
+//        coord[0] = Math.round(pt[0]);
+//        coord[1] = Math.round(pt[1]);
+//        return scale;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        View v = descendant;
-        while (v != root && v != null) {
-            ancestorChain.add(v);
-            v = (View) v.getParent();
-        }
-        ancestorChain.add(root);
-
-        float scale = 1.0f;
-        int count = ancestorChain.size();
-        for (int i = 0; i < count; i++) {
-            View v0 = ancestorChain.get(i);
-            // For TextViews, scroll has a meaning which relates to the text position
-            // which is very strange... ignore the scroll.
-            if (v0 != descendant || includeRootScroll) {
-                pt[0] -= v0.getScrollX();
-                pt[1] -= v0.getScrollY();
-            }
-
-            v0.getMatrix().mapPoints(pt);
-            pt[0] += v0.getLeft();
-            pt[1] += v0.getTop();
-            scale *= v0.getScaleX();
-        }
-
-        outCoord[0] = Math.round(pt[0]);
-        outCoord[1] = Math.round(pt[1]);
-        return scale;
-    }
-
-    /**
-     */
-    public static float mapCoordInSelfToDescendant(View descendant, View root, int[] coord) {
-        ArrayList<View> ancestorChain = new ArrayList<>();
-
-        float[] pt = {coord[0], coord[1]};
-
-        View v = descendant;
-        while (v != root) {
-            if (v == null) {
-                // FIXME: view should not be orphaned here
-                break;
-            }
-            ancestorChain.add(v);
-            v = (View) v.getParent();
-        }
-        ancestorChain.add(root);
-
-        float scale = 1.0f;
-        Matrix inverse = new Matrix();
-        int count = ancestorChain.size();
-        for (int i = count - 1; i >= 0; i--) {
-            View ancestor = ancestorChain.get(i);
-            View next = i > 0 ? ancestorChain.get(i - 1) : null;
-
-            pt[0] += ancestor.getScrollX();
-            pt[1] += ancestor.getScrollY();
-
-            if (next != null) {
-                pt[0] -= next.getLeft();
-                pt[1] -= next.getTop();
-                next.getMatrix().invert(inverse);
-                inverse.mapPoints(pt);
-                scale *= next.getScaleX();
-            }
-        }
-
-        coord[0] = Math.round(pt[0]);
-        coord[1] = Math.round(pt[1]);
-        return scale;
-    }
-
-    /**
-     * Utility method to determine whether the given point, in local coordinates,
-     * is inside the view, where the area of the view is expanded by the slop factor.
-     * This method is called while processing touch-move events to determine if the event
-     * is still within the view.
-     */
-    public static boolean pointInView(View v, float localX, float localY, float slop) {
-        return localX >= -slop && localY >= -slop && localX < (v.getWidth() + slop) &&
-                localY < (v.getHeight() + slop);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Utility method to determine whether the given point, in local coordinates,
+//     * is inside the view, where the area of the view is expanded by the slop factor.
+//     * This method is called while processing touch-move events to determine if the event
+//     * is still within the view.
+//     */
+//    public static boolean pointInView(View v, float localX, float localY, float slop) {
+//        return localX >= -slop && localY >= -slop && localX < (v.getWidth() + slop) &&
+//                localY < (v.getHeight() + slop);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static void scaleRect(Rect r, float scale) {
         if (scale != 1.0f) {
@@ -510,382 +558,424 @@ public final class Utils {
         return delta;
     }
 
-    public static void scaleRectAboutCenter(Rect r, float scale) {
-        int cx = r.centerX();
-        int cy = r.centerY();
-        r.offset(-cx, -cy);
-        Utils.scaleRect(r, scale);
-        r.offset(cx, cy);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void scaleRectAboutCenter(Rect r, float scale) {
+//        int cx = r.centerX();
+//        int cy = r.centerY();
+//        r.offset(-cx, -cy);
+//        Utils.scaleRect(r, scale);
+//        r.offset(cx, cy);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static boolean isSystemApp(Context context, Intent intent) {
-        PackageManager pm = context.getPackageManager();
-        ComponentName cn = intent.getComponent();
-        String packageName = null;
-        if (cn == null) {
-            ResolveInfo info = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-            if ((info != null) && (info.activityInfo != null)) {
-                packageName = info.activityInfo.packageName;
-            }
-        } else {
-            packageName = cn.getPackageName();
-        }
-        if (packageName != null) {
-            try {
-                PackageInfo info = pm.getPackageInfo(packageName, 0);
-                return (info != null) && (info.applicationInfo != null) &&
-                        ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
-            } catch (NameNotFoundException e) {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isSystemApp(Context context, Intent intent) {
+//        PackageManager pm = context.getPackageManager();
+//        ComponentName cn = intent.getComponent();
+//        String packageName = null;
+//        if (cn == null) {
+//            ResolveInfo info = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+//            if ((info != null) && (info.activityInfo != null)) {
+//                packageName = info.activityInfo.packageName;
+//            }
+//        } else {
+//            packageName = cn.getPackageName();
+//        }
+//        if (packageName != null) {
+//            try {
+//                PackageInfo info = pm.getPackageInfo(packageName, 0);
+//                return (info != null) && (info.applicationInfo != null) &&
+//                        ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
+//            } catch (NameNotFoundException e) {
+//                return false;
+//            }
+//        } else {
+//            return false;
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static boolean isSystemApp(ApplicationInfo appInfo) {
-        return (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isSystemApp(ApplicationInfo appInfo) {
+//        return (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * @return Default to {@code false} on error.
-     */
-    public static boolean isSystemApp(Context context, String packageName) {
-        if (packageName == null || "".equals(packageName)) {
-            return false;
-        }
-        if (packageName.contains("com.google") || packageName.contains("com.android") || packageName.contains("android.process")) {
-            return true;
-        }
-        try {
-            ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
-            return null != applicationInfo && (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * @return Default to {@code false} on error.
+//     */
+//    public static boolean isSystemApp(Context context, String packageName) {
+//        if (packageName == null || "".equals(packageName)) {
+//            return false;
+//        }
+//        if (packageName.contains("com.google") || packageName.contains("com.android") || packageName.contains("android.process")) {
+//            return true;
+//        }
+//        try {
+//            ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
+//            return null != applicationInfo && (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+//        } catch (Exception e) {
+//            return false;
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static boolean isLaunchAbleApp(Context context, String packageName) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setPackage(packageName);
-        return null != context.getPackageManager().resolveActivity(intent, 0);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isLaunchAbleApp(Context context, String packageName) {
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//        intent.setPackage(packageName);
+//        return null != context.getPackageManager().resolveActivity(intent, 0);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * This picks a dominant color, looking for high-saturation, high-value, repeated hues.
-     *
-     * @param bitmap  The bitmap to scan
-     * @param samples The approximate max number of samples to use.
-     */
-    public static int findDominantColorByHue(Bitmap bitmap, int samples) {
-        final int height = bitmap.getHeight();
-        final int width = bitmap.getWidth();
-        int sampleStride = (int) Math.sqrt((height * width) / samples);
-        if (sampleStride < 1) {
-            sampleStride = 1;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * This picks a dominant color, looking for high-saturation, high-value, repeated hues.
+//     *
+//     * @param bitmap  The bitmap to scan
+//     * @param samples The approximate max number of samples to use.
+//     */
+//    public static int findDominantColorByHue(Bitmap bitmap, int samples) {
+//        final int height = bitmap.getHeight();
+//        final int width = bitmap.getWidth();
+//        int sampleStride = (int) Math.sqrt((height * width) / samples);
+//        if (sampleStride < 1) {
+//            sampleStride = 1;
+//        }
+//
+//        // This is an out-param, for getting the hsv values for an rgb
+//        float[] hsv = new float[3];
+//
+//        // First get the best hue, by creating a histogram over 360 hue buckets,
+//        // where each pixel contributes a score weighted by saturation, value, and alpha.
+//        float[] hueScoreHistogram = new float[360];
+//        float highScore = -1;
+//        int bestHue = -1;
+//
+//        for (int y = 0; y < height; y += sampleStride) {
+//            for (int x = 0; x < width; x += sampleStride) {
+//                int argb = bitmap.getPixel(x, y);
+//                int alpha = 0xFF & (argb >> 24);
+//                if (alpha < 0x80) {
+//                    // Drop mostly-transparent pixels.
+//                    continue;
+//                }
+//                // Remove the alpha channel.
+//                int rgb = argb | 0xFF000000;
+//                Color.colorToHSV(rgb, hsv);
+//                // Bucket colors by the 360 integer hues.
+//                int hue = (int) hsv[0];
+//                if (hue < 0 || hue >= hueScoreHistogram.length) {
+//                    // Defensively avoid array bounds violations.
+//                    continue;
+//                }
+//                float score = hsv[1] * hsv[2];
+//                hueScoreHistogram[hue] += score;
+//                if (hueScoreHistogram[hue] > highScore) {
+//                    highScore = hueScoreHistogram[hue];
+//                    bestHue = hue;
+//                }
+//            }
+//        }
+//
+//        SparseArray<Float> rgbScores = new SparseArray<>();
+//        int bestColor = 0xff000000;
+//        highScore = -1;
+//        // Go back over the RGB colors that match the winning hue,
+//        // creating a histogram of weighted s*v scores, for up to 100*100 [s,v] buckets.
+//        // The highest-scoring RGB color wins.
+//        for (int y = 0; y < height; y += sampleStride) {
+//            for (int x = 0; x < width; x += sampleStride) {
+//                int rgb = bitmap.getPixel(x, y) | 0xff000000;
+//                Color.colorToHSV(rgb, hsv);
+//                int hue = (int) hsv[0];
+//                if (hue == bestHue) {
+//                    float s = hsv[1];
+//                    float v = hsv[2];
+//                    int bucket = (int) (s * 100) + (int) (v * 10000);
+//                    // Score by cumulative saturation * value.
+//                    float score = s * v;
+//                    Float oldTotal = rgbScores.get(bucket);
+//                    float newTotal = oldTotal == null ? score : oldTotal + score;
+//                    rgbScores.put(bucket, newTotal);
+//                    if (newTotal > highScore) {
+//                        highScore = newTotal;
+//                        // All the colors in the winning bucket are very similar. Last in wins.
+//                        bestColor = rgb;
+//                    }
+//                }
+//            }
+//        }
+//        return bestColor;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        // This is an out-param, for getting the hsv values for an rgb
-        float[] hsv = new float[3];
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /*
+//     * Finds a system apk which had a broadcast receiver listening to a particular action.
+//     * @param action intent action used to find the apk
+//     * @return a pair of apk package name and the resources.
+//     */
+//    public static Pair<String, Resources> findSystemApk(String action, PackageManager pm) {
+//        final Intent intent = new Intent(action);
+//        for (ResolveInfo info : pm.queryBroadcastReceivers(intent, 0)) {
+//            if (info.activityInfo != null && (info.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+//                final String packageName = info.activityInfo.packageName;
+//                try {
+//                    final Resources res = pm.getResourcesForApplication(packageName);
+//                    return Pair.create(packageName, res);
+//                } catch (NameNotFoundException e) {
+//                    HSLog.w(TAG, "Failed to find resources for " + packageName);
+//                }
+//            }
+//        }
+//        return null;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        // First get the best hue, by creating a histogram over 360 hue buckets,
-        // where each pixel contributes a score weighted by saturation, value, and alpha.
-        float[] hueScoreHistogram = new float[360];
-        float highScore = -1;
-        int bestHue = -1;
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @TargetApi(Build.VERSION_CODES.KITKAT)
+//    public static boolean isViewAttachedToWindow(View v) {
+//        if (CommonUtils.ATLEAST_KITKAT) {
+//            return v.isAttachedToWindow();
+//        } else {
+//            // A proxy call which returns null, if the view is not attached to the window.
+//            return v.getKeyDispatcherState() != null;
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        for (int y = 0; y < height; y += sampleStride) {
-            for (int x = 0; x < width; x += sampleStride) {
-                int argb = bitmap.getPixel(x, y);
-                int alpha = 0xFF & (argb >> 24);
-                if (alpha < 0x80) {
-                    // Drop mostly-transparent pixels.
-                    continue;
-                }
-                // Remove the alpha channel.
-                int rgb = argb | 0xFF000000;
-                Color.colorToHSV(rgb, hsv);
-                // Bucket colors by the 360 integer hues.
-                int hue = (int) hsv[0];
-                if (hue < 0 || hue >= hueScoreHistogram.length) {
-                    // Defensively avoid array bounds violations.
-                    continue;
-                }
-                float score = hsv[1] * hsv[2];
-                hueScoreHistogram[hue] += score;
-                if (hueScoreHistogram[hue] > highScore) {
-                    highScore = hueScoreHistogram[hue];
-                    bestHue = hue;
-                }
-            }
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Returns a widget with category {@link AppWidgetProviderInfo#WIDGET_CATEGORY_SEARCHBOX}
+//     * provided by the same package which is set to be global search activity.
+//     * If widgetCategory is not supported, or no such widget is found, returns the first widget
+//     * provided by the package.
+//     */
+//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+//    public static AppWidgetProviderInfo getSearchWidgetProvider(Context context) {
+//        SearchManager searchManager = (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
+//        ComponentName searchComponent = searchManager.getGlobalSearchActivity();
+//        if (searchComponent == null)
+//            return null;
+//        String providerPkg = searchComponent.getPackageName();
+//
+//        AppWidgetProviderInfo defaultWidgetForSearchPackage = null;
+//
+//        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+//        for (AppWidgetProviderInfo info : appWidgetManager.getInstalledProviders()) {
+//            if (info.provider.getPackageName().equals(providerPkg)) {
+//                if (CommonUtils.ATLEAST_JB_MR1) {
+//                    if ((info.widgetCategory & AppWidgetProviderInfo.WIDGET_CATEGORY_SEARCHBOX) != 0) {
+//                        return info;
+//                    } else if (defaultWidgetForSearchPackage == null) {
+//                        defaultWidgetForSearchPackage = info;
+//                    }
+//                } else {
+//                    return info;
+//                }
+//            }
+//        }
+//        return defaultWidgetForSearchPackage;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        SparseArray<Float> rgbScores = new SparseArray<>();
-        int bestColor = 0xff000000;
-        highScore = -1;
-        // Go back over the RGB colors that match the winning hue,
-        // creating a histogram of weighted s*v scores, for up to 100*100 [s,v] buckets.
-        // The highest-scoring RGB color wins.
-        for (int y = 0; y < height; y += sampleStride) {
-            for (int x = 0; x < width; x += sampleStride) {
-                int rgb = bitmap.getPixel(x, y) | 0xff000000;
-                Color.colorToHSV(rgb, hsv);
-                int hue = (int) hsv[0];
-                if (hue == bestHue) {
-                    float s = hsv[1];
-                    float v = hsv[2];
-                    int bucket = (int) (s * 100) + (int) (v * 10000);
-                    // Score by cumulative saturation * value.
-                    float score = s * v;
-                    Float oldTotal = rgbScores.get(bucket);
-                    float newTotal = oldTotal == null ? score : oldTotal + score;
-                    rgbScores.put(bucket, newTotal);
-                    if (newTotal > highScore) {
-                        highScore = newTotal;
-                        // All the colors in the winning bucket are very similar. Last in wins.
-                        bestColor = rgb;
-                    }
-                }
-            }
-        }
-        return bestColor;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Compresses the bitmap to a byte array for serialization.
+//     */
+//    public static byte[] flattenBitmap(Bitmap bitmap) {
+//        // Try go guesstimate how much space the icon will take when serialized
+//        // to avoid unnecessary allocations/copies during the write.
+//        int size = bitmap.getWidth() * bitmap.getHeight() * 4;
+//        ByteArrayOutputStream out = new ByteArrayOutputStream(size);
+//        try {
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+//            out.flush();
+//            out.close();
+//            return out.toByteArray();
+//        } catch (IOException e) {
+//            HSLog.w(TAG, "Could not write bitmap");
+//            return null;
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /*
-     * Finds a system apk which had a broadcast receiver listening to a particular action.
-     * @param action intent action used to find the apk
-     * @return a pair of apk package name and the resources.
-     */
-    public static Pair<String, Resources> findSystemApk(String action, PackageManager pm) {
-        final Intent intent = new Intent(action);
-        for (ResolveInfo info : pm.queryBroadcastReceivers(intent, 0)) {
-            if (info.activityInfo != null && (info.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-                final String packageName = info.activityInfo.packageName;
-                try {
-                    final Resources res = pm.getResourcesForApplication(packageName);
-                    return Pair.create(packageName, res);
-                } catch (NameNotFoundException e) {
-                    HSLog.w(TAG, "Failed to find resources for " + packageName);
-                }
-            }
-        }
-        return null;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Find the first vacant cell, if there is one.
+//     *
+//     * @param vacant Holds the x and y coordinate of the vacant cell
+//     * @param spanX  Horizontal cell span.
+//     * @param spanY  Vertical cell span.
+//     * @return true if a vacant cell was found
+//     */
+//    public static boolean findVacantCell(int[] vacant, int spanX, int spanY, int xCount, int yCount, boolean[][] occupied) {
+//
+//        for (int y = 0; (y + spanY) <= yCount; y++) {
+//            for (int x = 0; (x + spanX) <= xCount; x++) {
+//                boolean available = !occupied[x][y];
+//                out:
+//                for (int i = x; i < x + spanX; i++) {
+//                    for (int j = y; j < y + spanY; j++) {
+//                        available = available && !occupied[i][j];
+//                        if (!available)
+//                            break out;
+//                    }
+//                }
+//
+//                if (available) {
+//                    vacant[0] = x;
+//                    vacant[1] = y;
+//                    return true;
+//                }
+//            }
+//        }
+//
+//        return false;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static boolean isViewAttachedToWindow(View v) {
-        if (CommonUtils.ATLEAST_KITKAT) {
-            return v.isAttachedToWindow();
-        } else {
-            // A proxy call which returns null, if the view is not attached to the window.
-            return v.getKeyDispatcherState() != null;
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Trims the string, removing all whitespace at the beginning and end of the string.
+//     * Non-breaking whitespaces are also removed.
+//     */
+//    public static String trim(CharSequence s) {
+//        if (s == null) {
+//            return null;
+//        }
+//
+//        // Just strip any sequence of whitespace or java space characters from the beginning and end
+//        Matcher m = sTrimPattern.matcher(s);
+//        return m.replaceAll("$1");
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Returns a widget with category {@link AppWidgetProviderInfo#WIDGET_CATEGORY_SEARCHBOX}
-     * provided by the same package which is set to be global search activity.
-     * If widgetCategory is not supported, or no such widget is found, returns the first widget
-     * provided by the package.
-     */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static AppWidgetProviderInfo getSearchWidgetProvider(Context context) {
-        SearchManager searchManager = (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
-        ComponentName searchComponent = searchManager.getGlobalSearchActivity();
-        if (searchComponent == null)
-            return null;
-        String providerPkg = searchComponent.getPackageName();
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Calculates the height of a given string at a specific text size.
+//     */
+//    public static float calculateTextHeight(float textSizePx) {
+//        Paint p = new Paint();
+//        p.setTextSize(textSizePx);
+//        Paint.FontMetrics fm = p.getFontMetrics();
+//        return -fm.top + fm.bottom;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        AppWidgetProviderInfo defaultWidgetForSearchPackage = null;
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Convenience println with multiple args.
+//     */
+//    public static void println(String key, Object... args) {
+//        StringBuilder b = new StringBuilder();
+//        b.append(key);
+//        b.append(": ");
+//        boolean isFirstArgument = true;
+//        for (Object arg : args) {
+//            if (isFirstArgument) {
+//                isFirstArgument = false;
+//            } else {
+//                b.append(", ");
+//            }
+//            b.append(arg);
+//        }
+//        System.out.println(b.toString());
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        for (AppWidgetProviderInfo info : appWidgetManager.getInstalledProviders()) {
-            if (info.provider.getPackageName().equals(providerPkg)) {
-                if (CommonUtils.ATLEAST_JB_MR1) {
-                    if ((info.widgetCategory & AppWidgetProviderInfo.WIDGET_CATEGORY_SEARCHBOX) != 0) {
-                        return info;
-                    } else if (defaultWidgetForSearchPackage == null) {
-                        defaultWidgetForSearchPackage = info;
-                    }
-                } else {
-                    return info;
-                }
-            }
-        }
-        return defaultWidgetForSearchPackage;
-    }
-
-    /**
-     * Compresses the bitmap to a byte array for serialization.
-     */
-    public static byte[] flattenBitmap(Bitmap bitmap) {
-        // Try go guesstimate how much space the icon will take when serialized
-        // to avoid unnecessary allocations/copies during the write.
-        int size = bitmap.getWidth() * bitmap.getHeight() * 4;
-        ByteArrayOutputStream out = new ByteArrayOutputStream(size);
-        try {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.flush();
-            out.close();
-            return out.toByteArray();
-        } catch (IOException e) {
-            HSLog.w(TAG, "Could not write bitmap");
-            return null;
-        }
-    }
-
-    /**
-     * Find the first vacant cell, if there is one.
-     *
-     * @param vacant Holds the x and y coordinate of the vacant cell
-     * @param spanX  Horizontal cell span.
-     * @param spanY  Vertical cell span.
-     * @return true if a vacant cell was found
-     */
-    public static boolean findVacantCell(int[] vacant, int spanX, int spanY, int xCount, int yCount, boolean[][] occupied) {
-
-        for (int y = 0; (y + spanY) <= yCount; y++) {
-            for (int x = 0; (x + spanX) <= xCount; x++) {
-                boolean available = !occupied[x][y];
-                out:
-                for (int i = x; i < x + spanX; i++) {
-                    for (int j = y; j < y + spanY; j++) {
-                        available = available && !occupied[i][j];
-                        if (!available)
-                            break out;
-                    }
-                }
-
-                if (available) {
-                    vacant[0] = x;
-                    vacant[1] = y;
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Trims the string, removing all whitespace at the beginning and end of the string.
-     * Non-breaking whitespaces are also removed.
-     */
-    public static String trim(CharSequence s) {
-        if (s == null) {
-            return null;
-        }
-
-        // Just strip any sequence of whitespace or java space characters from the beginning and end
-        Matcher m = sTrimPattern.matcher(s);
-        return m.replaceAll("$1");
-    }
-
-    /**
-     * Calculates the height of a given string at a specific text size.
-     */
-    public static float calculateTextHeight(float textSizePx) {
-        Paint p = new Paint();
-        p.setTextSize(textSizePx);
-        Paint.FontMetrics fm = p.getFontMetrics();
-        return -fm.top + fm.bottom;
-    }
-
-    /**
-     * Convenience println with multiple args.
-     */
-    public static void println(String key, Object... args) {
-        StringBuilder b = new StringBuilder();
-        b.append(key);
-        b.append(": ");
-        boolean isFirstArgument = true;
-        for (Object arg : args) {
-            if (isFirstArgument) {
-                isFirstArgument = false;
-            } else {
-                b.append(", ");
-            }
-            b.append(arg);
-        }
-        System.out.println(b.toString());
-    }
-
-    public static float dpiFromPx(int size) {
-        return (size / CommonUtils.getDensityRatio());
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static float dpiFromPx(int size) {
+//        return (size / CommonUtils.getDensityRatio());
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static int pxFromDp(float size, DisplayMetrics metrics) {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, metrics));
     }
 
-    public static int pxFromSp(float size, DisplayMetrics metrics) {
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, size, metrics));
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static int pxFromSp(float size, DisplayMetrics metrics) {
+//        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, size, metrics));
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static String createDbSelectionQuery(String columnName, Iterable<?> values) {
-        return String.format(Locale.ENGLISH, "%s IN (%s)", columnName, TextUtils.join(", ", values));
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static String createDbSelectionQuery(String columnName, Iterable<?> values) {
+//        return String.format(Locale.ENGLISH, "%s IN (%s)", columnName, TextUtils.join(", ", values));
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * @return 0 for failure.
-     */
-    public static int getVersionCode() {
-        Context context = HSApplication.getContext();
-        int versionCode = 0;
-        try {
-            versionCode = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return versionCode;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * @return 0 for failure.
+//     */
+//    public static int getVersionCode() {
+//        Context context = HSApplication.getContext();
+//        int versionCode = 0;
+//        try {
+//            versionCode = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return versionCode;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static String getVersionName() {
-        Context context = HSApplication.getContext();
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return info.versionName;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static String getVersionName() {
+//        Context context = HSApplication.getContext();
+//        try {
+//            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+//            return info.versionName;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static String md5(final String s) {
-        final String MD5 = "MD5";
-        try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance(MD5);
-            digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static String md5(final String s) {
+//        final String MD5 = "MD5";
+//        try {
+//            // Create MD5 Hash
+//            MessageDigest digest = java.security.MessageDigest.getInstance(MD5);
+//            digest.update(s.getBytes());
+//            byte messageDigest[] = digest.digest();
+//
+//            // Create Hex String
+//            StringBuilder hexString = new StringBuilder();
+//            for (byte aMessageDigest : messageDigest) {
+//                StringBuilder h = new StringBuilder(Integer.toHexString(0xFF & aMessageDigest));
+//                while (h.length() < 2)
+//                    h.insert(0, "0");
+//                hexString.append(h);
+//            }
+//            return hexString.toString();
+//
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-            // Create Hex String
-            StringBuilder hexString = new StringBuilder();
-            for (byte aMessageDigest : messageDigest) {
-                StringBuilder h = new StringBuilder(Integer.toHexString(0xFF & aMessageDigest));
-                while (h.length() < 2)
-                    h.insert(0, "0");
-                hexString.append(h);
-            }
-            return hexString.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    /**
-     * Height with status bar but not navigation bar
-     */
-    public static Point getScreenSize(Activity launcher) {
-        Display display = launcher.getWindowManager().getDefaultDisplay();
-        Point screenSize = new Point();
-        display.getSize(screenSize);
-        return screenSize;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Height with status bar but not navigation bar
+//     */
+//    public static Point getScreenSize(Activity launcher) {
+//        Display display = launcher.getWindowManager().getDefaultDisplay();
+//        Point screenSize = new Point();
+//        display.getSize(screenSize);
+//        return screenSize;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * @return Status bar (top bar) height. Note that this height remains fixed even when status bar is hidden.
@@ -903,67 +993,73 @@ public final class Utils {
     }
 
 
-    public static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static int dip2px(Context context, float dpValue) {
+//        final float scale = context.getResources().getDisplayMetrics().density;
+//        return (int) (dpValue * scale + 0.5f);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void showNavigationBarMenuButton(Activity activity) {
-        if (!CommonUtils.hasNavBar(activity))
-            return;
-        int menuFlag;
-        try {
-            if (sReflectFieldFlagNeedsMenuKey == null) {
-                sReflectFieldFlagNeedsMenuKey = WindowManager.LayoutParams.class.getField("FLAG_NEEDS_MENU_KEY");
-            }
-            menuFlag = sReflectFieldFlagNeedsMenuKey.getInt(null);
-            Window window = activity.getWindow();
-            window.addFlags(menuFlag);
-            return;
-        } catch (Exception ignored) {
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void showNavigationBarMenuButton(Activity activity) {
+//        if (!CommonUtils.hasNavBar(activity))
+//            return;
+//        int menuFlag;
+//        try {
+//            if (sReflectFieldFlagNeedsMenuKey == null) {
+//                sReflectFieldFlagNeedsMenuKey = WindowManager.LayoutParams.class.getField("FLAG_NEEDS_MENU_KEY");
+//            }
+//            menuFlag = sReflectFieldFlagNeedsMenuKey.getInt(null);
+//            Window window = activity.getWindow();
+//            window.addFlags(menuFlag);
+//            return;
+//        } catch (Exception ignored) {
+//        }
+//
+//        try {
+//            if (sReflectFieldNeedsMenuSetTrue == null) {
+//                sReflectFieldNeedsMenuSetTrue = WindowManager.LayoutParams.class.getField("NEEDS_MENU_SET_TRUE");
+//            }
+//            menuFlag = sReflectFieldNeedsMenuSetTrue.getInt(null);
+//            if (sReflectMethodSetNeedsMenuKey == null) {
+//                sReflectMethodSetNeedsMenuKey = Window.class.getDeclaredMethod("setNeedsMenuKey", int.class);
+//            }
+//            sReflectMethodSetNeedsMenuKey.setAccessible(true);
+//            sReflectMethodSetNeedsMenuKey.invoke(activity.getWindow(), menuFlag);
+//        } catch (Exception ignored) {
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        try {
-            if (sReflectFieldNeedsMenuSetTrue == null) {
-                sReflectFieldNeedsMenuSetTrue = WindowManager.LayoutParams.class.getField("NEEDS_MENU_SET_TRUE");
-            }
-            menuFlag = sReflectFieldNeedsMenuSetTrue.getInt(null);
-            if (sReflectMethodSetNeedsMenuKey == null) {
-                sReflectMethodSetNeedsMenuKey = Window.class.getDeclaredMethod("setNeedsMenuKey", int.class);
-            }
-            sReflectMethodSetNeedsMenuKey.setAccessible(true);
-            sReflectMethodSetNeedsMenuKey.invoke(activity.getWindow(), menuFlag);
-        } catch (Exception ignored) {
-        }
-    }
-
-    public static void hideNavigationBarMenuButton(Activity activity) {
-        if (!CommonUtils.hasNavBar(activity))
-            return;
-        int menuFlag;
-        try {
-            if (sReflectFieldFlagNeedsMenuKey == null) {
-                sReflectFieldFlagNeedsMenuKey = WindowManager.LayoutParams.class.getField("FLAG_NEEDS_MENU_KEY");
-            }
-            menuFlag = sReflectFieldFlagNeedsMenuKey.getInt(null);
-            Window window = activity.getWindow();
-            window.clearFlags(menuFlag);
-            return;
-        } catch (Exception ignored) {
-        }
-        try {
-            if (sReflectFieldNeedsMenuSetFalse == null) {
-                sReflectFieldNeedsMenuSetFalse = WindowManager.LayoutParams.class.getField("NEEDS_MENU_SET_FALSE");
-            }
-            menuFlag = sReflectFieldNeedsMenuSetFalse.getInt(null);
-            if (sReflectMethodSetNeedsMenuKey == null) {
-                sReflectMethodSetNeedsMenuKey = Window.class.getDeclaredMethod("setNeedsMenuKey", int.class);
-            }
-            sReflectMethodSetNeedsMenuKey.setAccessible(true);
-            sReflectMethodSetNeedsMenuKey.invoke(activity.getWindow(), menuFlag);
-        } catch (Exception ignored) {
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void hideNavigationBarMenuButton(Activity activity) {
+//        if (!CommonUtils.hasNavBar(activity))
+//            return;
+//        int menuFlag;
+//        try {
+//            if (sReflectFieldFlagNeedsMenuKey == null) {
+//                sReflectFieldFlagNeedsMenuKey = WindowManager.LayoutParams.class.getField("FLAG_NEEDS_MENU_KEY");
+//            }
+//            menuFlag = sReflectFieldFlagNeedsMenuKey.getInt(null);
+//            Window window = activity.getWindow();
+//            window.clearFlags(menuFlag);
+//            return;
+//        } catch (Exception ignored) {
+//        }
+//        try {
+//            if (sReflectFieldNeedsMenuSetFalse == null) {
+//                sReflectFieldNeedsMenuSetFalse = WindowManager.LayoutParams.class.getField("NEEDS_MENU_SET_FALSE");
+//            }
+//            menuFlag = sReflectFieldNeedsMenuSetFalse.getInt(null);
+//            if (sReflectMethodSetNeedsMenuKey == null) {
+//                sReflectMethodSetNeedsMenuKey = Window.class.getDeclaredMethod("setNeedsMenuKey", int.class);
+//            }
+//            sReflectMethodSetNeedsMenuKey.setAccessible(true);
+//            sReflectMethodSetNeedsMenuKey.invoke(activity.getWindow(), menuFlag);
+//        } catch (Exception ignored) {
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * Check if network of given type is currently available.
@@ -1025,90 +1121,100 @@ public final class Utils {
         return (type == -1 || networkInfo.getType() == type) && networkInfo.isConnected();
     }
 
-    /**
-     * If either memory cache or disk cache of {@link ImageLoader} exists for given image.
-     *
-     * @param url URL to load image
-     */
-    public static boolean imageCacheExists(@NonNull String url) {
-        ImageLoader loader = ImageLoader.getInstance();
-        if (loader.getMemoryCache().get(url) != null) {
-            return true;
-        }
-        File file = loader.getDiscCache().get(url);
-        if (file == null) {
-            return false;
-        }
-        return file.exists();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * If either memory cache or disk cache of {@link ImageLoader} exists for given image.
+//     *
+//     * @param url URL to load image
+//     */
+//    public static boolean imageCacheExists(@NonNull String url) {
+//        ImageLoader loader = ImageLoader.getInstance();
+//        if (loader.getMemoryCache().get(url) != null) {
+//            return true;
+//        }
+//        File file = loader.getDiscCache().get(url);
+//        if (file == null) {
+//            return false;
+//        }
+//        return file.exists();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static byte[] readFile(File file) {
-        ByteArrayOutputStream ous = null;
-        InputStream ios = null;
-        try {
-            byte[] buffer = new byte[STREAM_OP_BUFFER_SIZE];
-            ous = new ByteArrayOutputStream();
-            ios = new FileInputStream(file);
-            int read;
-            while ((read = ios.read(buffer)) != -1) {
-                ous.write(buffer, 0, read);
-            }
-        } catch (IOException e) {
-            return new byte[0];
-        } finally {
-            try {
-                if (ous != null) {
-                    ous.close();
-                }
-            } catch (IOException ignored) {
-            }
-            try {
-                if (ios != null) {
-                    ios.close();
-                }
-            } catch (IOException ignored) {
-            }
-        }
-        return ous.toByteArray();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static byte[] readFile(File file) {
+//        ByteArrayOutputStream ous = null;
+//        InputStream ios = null;
+//        try {
+//            byte[] buffer = new byte[STREAM_OP_BUFFER_SIZE];
+//            ous = new ByteArrayOutputStream();
+//            ios = new FileInputStream(file);
+//            int read;
+//            while ((read = ios.read(buffer)) != -1) {
+//                ous.write(buffer, 0, read);
+//            }
+//        } catch (IOException e) {
+//            return new byte[0];
+//        } finally {
+//            try {
+//                if (ous != null) {
+//                    ous.close();
+//                }
+//            } catch (IOException ignored) {
+//            }
+//            try {
+//                if (ios != null) {
+//                    ios.close();
+//                }
+//            } catch (IOException ignored) {
+//            }
+//        }
+//        return ous.toByteArray();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void writeToFile(File file, byte[] data) {
-        FileOutputStream fos = null;
-        try {
-            if (!file.exists()) {
-                if (file.createNewFile()) {
-                    HSLog.d(TAG, "Create file " + file.getAbsolutePath());
-                }
-            }
-            fos = new FileOutputStream(file);
-            fos.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (IOException ignored) {
-            }
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void writeToFile(File file, byte[] data) {
+//        FileOutputStream fos = null;
+//        try {
+//            if (!file.exists()) {
+//                if (file.createNewFile()) {
+//                    HSLog.d(TAG, "Create file " + file.getAbsolutePath());
+//                }
+//            }
+//            fos = new FileOutputStream(file);
+//            fos.write(data);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (fos != null) {
+//                    fos.close();
+//                }
+//            } catch (IOException ignored) {
+//            }
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void saveBitmapToFile(Bitmap bitmap, String fileOutPath, int quality) {
-        try {
-            saveBitmapToFileInternal(bitmap, new FileOutputStream(fileOutPath), quality);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void saveBitmapToFile(Bitmap bitmap, String fileOutPath, int quality) {
+//        try {
+//            saveBitmapToFileInternal(bitmap, new FileOutputStream(fileOutPath), quality);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void saveBitmapToFile(Bitmap bitmap, File fileOutPath, int quality) {
-        try {
-            saveBitmapToFileInternal(bitmap, new FileOutputStream(fileOutPath), quality);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void saveBitmapToFile(Bitmap bitmap, File fileOutPath, int quality) {
+//        try {
+//            saveBitmapToFileInternal(bitmap, new FileOutputStream(fileOutPath), quality);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static void saveBitmapToFileInternal(Bitmap bitmap, FileOutputStream fos, int quality) {
         try {
@@ -1120,9 +1226,11 @@ public final class Utils {
         }
     }
 
-    public static boolean saveInputStreamToFile(InputStream is, File fileOut) {
-        return saveInputStreamToFile(null, is, fileOut);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean saveInputStreamToFile(InputStream is, File fileOut) {
+//        return saveInputStreamToFile(null, is, fileOut);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static boolean saveInputStreamToFile(byte[] preData, InputStream is, File fileOut) {
         OutputStream output = null;
@@ -1154,32 +1262,36 @@ public final class Utils {
         return true;
     }
 
-    /**
-     * Retrieve, creating if needed, a new directory of given name in which we
-     * can place our own custom data files.
-     */
-    public static
-    @Nullable
-    File getDirectory(String dirPath) {
-        File file = HSApplication.getContext().getFilesDir();
-        String[] path = dirPath.split(File.separator);
-        for (String dir : path) {
-            file = new File(file, dir);
-            if (!file.exists() && !file.mkdir()) {
-                HSLog.w(TAG, "Error making directory");
-                return null;
-            }
-        }
-        return file;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Retrieve, creating if needed, a new directory of given name in which we
+//     * can place our own custom data files.
+//     */
+//    public static
+//    @Nullable
+//    File getDirectory(String dirPath) {
+//        File file = HSApplication.getContext().getFilesDir();
+//        String[] path = dirPath.split(File.separator);
+//        for (String dir : path) {
+//            file = new File(file, dir);
+//            if (!file.exists() && !file.mkdir()) {
+//                HSLog.w(TAG, "Error making directory");
+//                return null;
+//            }
+//        }
+//        return file;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Retrieve, creating if needed, a new sub-directory in cache directory.
-     * Internal cache directory is used if external cache directory is not available.
-     */
-    public static File getCacheDirectory(String subDirectory) {
-        return getCacheDirectory(subDirectory, false);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Retrieve, creating if needed, a new sub-directory in cache directory.
+//     * Internal cache directory is used if external cache directory is not available.
+//     */
+//    public static File getCacheDirectory(String subDirectory) {
+//        return getCacheDirectory(subDirectory, false);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * @param useInternal Only uses internal cache directory when {@code true}.
@@ -1211,48 +1323,56 @@ public final class Utils {
         return cacheDir;
     }
 
-    public static void deleteRecursive(File fileOrDirectory) {
-        if (fileOrDirectory.isDirectory()) {
-            for (File child : fileOrDirectory.listFiles()) {
-                deleteRecursive(child);
-            }
-        }
-        boolean success = fileOrDirectory.delete();
-        HSLog.v("Launcher.Files", "Delete " + (fileOrDirectory.isDirectory() ? "directory " : "file ")
-                + fileOrDirectory.getName() + ", success: " + success);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void deleteRecursive(File fileOrDirectory) {
+//        if (fileOrDirectory.isDirectory()) {
+//            for (File child : fileOrDirectory.listFiles()) {
+//                deleteRecursive(child);
+//            }
+//        }
+//        boolean success = fileOrDirectory.delete();
+//        HSLog.v("Launcher.Files", "Delete " + (fileOrDirectory.isDirectory() ? "directory " : "file ")
+//                + fileOrDirectory.getName() + ", success: " + success);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static int[] getUnitSizeInRecyclerView(View unit) {
-        int[] size = new int[2];
-        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) unit.getLayoutParams();
-        size[0] = unit.getWidth() + layoutParams.leftMargin + layoutParams.rightMargin;
-        size[1] = unit.getHeight() + layoutParams.topMargin + layoutParams.bottomMargin;
-        return size;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static int[] getUnitSizeInRecyclerView(View unit) {
+//        int[] size = new int[2];
+//        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) unit.getLayoutParams();
+//        size[0] = unit.getWidth() + layoutParams.leftMargin + layoutParams.rightMargin;
+//        size[1] = unit.getHeight() + layoutParams.topMargin + layoutParams.bottomMargin;
+//        return size;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static long getMemoryTotalSize() {
-        String str1 = "/proc/meminfo";// 系统内存信息文件
-        String str2;
-        String[] arrayOfString;
-        long initial_memory = 0;
-        try {
-            FileReader localFileReader = new FileReader(str1);
-            BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
-            str2 = localBufferedReader.readLine();
-            arrayOfString = str2.split("\\s+");
-            initial_memory = Long.valueOf(arrayOfString[1]) * 1024;
-            localBufferedReader.close();
-        } catch (IOException e) {
-        }
-        return initial_memory;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static long getMemoryTotalSize() {
+//        String str1 = "/proc/meminfo";// 系统内存信息文件
+//        String str2;
+//        String[] arrayOfString;
+//        long initial_memory = 0;
+//        try {
+//            FileReader localFileReader = new FileReader(str1);
+//            BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
+//            str2 = localBufferedReader.readLine();
+//            arrayOfString = str2.split("\\s+");
+//            initial_memory = Long.valueOf(arrayOfString[1]) * 1024;
+//            localBufferedReader.close();
+//        } catch (IOException e) {
+//        }
+//        return initial_memory;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static long getMemoryAvailableSize() {
-        ActivityManager am = (ActivityManager) HSApplication.getContext().getSystemService(Context.ACTIVITY_SERVICE);
-        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        am.getMemoryInfo(mi);
-        return mi.availMem + getSelfMemoryUsed();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static long getMemoryAvailableSize() {
+//        ActivityManager am = (ActivityManager) HSApplication.getContext().getSystemService(Context.ACTIVITY_SERVICE);
+//        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+//        am.getMemoryInfo(mi);
+//        return mi.availMem + getSelfMemoryUsed();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static long getSelfMemoryUsed() {
         long memSize = 0;
@@ -1269,98 +1389,116 @@ public final class Utils {
         return memSize;
     }
 
-    public static String getRemoteFileExtension(String url) {
-        String extension = "";
-        if (url != null) {
-            int i = url.lastIndexOf('.');
-            int p = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
-            if (i > p) {
-                extension = url.substring(i + 1);
-            }
-        }
-        return extension;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static String getRemoteFileExtension(String url) {
+//        String extension = "";
+//        if (url != null) {
+//            int i = url.lastIndexOf('.');
+//            int p = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
+//            if (i > p) {
+//                extension = url.substring(i + 1);
+//            }
+//        }
+//        return extension;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * @return {@code n} unique integers in range [start, end). Or {@code null} when end - start < n
-     * or end <= start. Note that this implementation is for "dense" params, where end - start is no
-     * larger than a reasonable size of array list allocation, and where n takes a substantial
-     * portion of the range.
-     */
-    public static int[] getUniqueRandomInts(int start, int end, int n) {
-        if (n > end - start || end <= start) {
-            return null;
-        }
-        List<Integer> numberList = new ArrayList<>();
-        for (int i = start; i < end; i++) {
-            numberList.add(i);
-        }
-        Collections.shuffle(numberList);
-        int[] result = new int[n];
-        for (int i = 0; i < n; i++) {
-            result[i] = numberList.get(i);
-        }
-        return result;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * @return {@code n} unique integers in range [start, end). Or {@code null} when end - start < n
+//     * or end <= start. Note that this implementation is for "dense" params, where end - start is no
+//     * larger than a reasonable size of array list allocation, and where n takes a substantial
+//     * portion of the range.
+//     */
+//    public static int[] getUniqueRandomInts(int start, int end, int n) {
+//        if (n > end - start || end <= start) {
+//            return null;
+//        }
+//        List<Integer> numberList = new ArrayList<>();
+//        for (int i = start; i < end; i++) {
+//            numberList.add(i);
+//        }
+//        Collections.shuffle(numberList);
+//        int[] result = new int[n];
+//        for (int i = 0; i < n; i++) {
+//            result[i] = numberList.get(i);
+//        }
+//        return result;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static float formatNumberOneDigit(double number) {
-        return (float) (Math.round(number * 10)) / 10;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static float formatNumberOneDigit(double number) {
+//        return (float) (Math.round(number * 10)) / 10;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static double formatNumberTwoDigit(double number) {
-        BigDecimal bg = new BigDecimal(number);
-        return bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static double formatNumberTwoDigit(double number) {
+//        BigDecimal bg = new BigDecimal(number);
+//        return bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    @MainThread
-    public static boolean checkDoubleClickGlobal() {
-        long time = SystemClock.elapsedRealtime();
-        long timeD = time - sLastClickTimeForDoubleClickCheck;
-        if (0 < timeD && timeD < DOUBLE_CLICK_TIMEOUT) {
-            return true;
-        }
-        sLastClickTimeForDoubleClickCheck = time;
-        return false;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @MainThread
+//    public static boolean checkDoubleClickGlobal() {
+//        long time = SystemClock.elapsedRealtime();
+//        long timeD = time - sLastClickTimeForDoubleClickCheck;
+//        if (0 < timeD && timeD < DOUBLE_CLICK_TIMEOUT) {
+//            return true;
+//        }
+//        sLastClickTimeForDoubleClickCheck = time;
+//        return false;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static boolean isKeyguardLocked(Context context, boolean defaultValue) {
-        KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        try {
-            Method declaredMethod = KeyguardManager.class.getDeclaredMethod("isKeyguardLocked");
-            declaredMethod.setAccessible(true);
-            defaultValue = (Boolean) declaredMethod.invoke(keyguardManager);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e2) {
-            e2.printStackTrace();
-        } catch (IllegalAccessException e3) {
-            e3.printStackTrace();
-        }
-        return defaultValue;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isKeyguardLocked(Context context, boolean defaultValue) {
+//        KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+//        try {
+//            Method declaredMethod = KeyguardManager.class.getDeclaredMethod("isKeyguardLocked");
+//            declaredMethod.setAccessible(true);
+//            defaultValue = (Boolean) declaredMethod.invoke(keyguardManager);
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e2) {
+//            e2.printStackTrace();
+//        } catch (IllegalAccessException e3) {
+//            e3.printStackTrace();
+//        }
+//        return defaultValue;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static String getAppLabel(String packageName) {
-        PackageManager packageManager = HSApplication.getContext().getPackageManager();
-        ApplicationInfo applicationInfo = null;
-        try {
-            applicationInfo = packageManager.getApplicationInfo(packageName, 0);
-        } catch (Exception ignored) {
-        }
-        return (String) ((null != applicationInfo) ? packageManager.getApplicationLabel(applicationInfo) : "");
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static String getAppLabel(String packageName) {
+//        PackageManager packageManager = HSApplication.getContext().getPackageManager();
+//        ApplicationInfo applicationInfo = null;
+//        try {
+//            applicationInfo = packageManager.getApplicationInfo(packageName, 0);
+//        } catch (Exception ignored) {
+//        }
+//        return (String) ((null != applicationInfo) ? packageManager.getApplicationLabel(applicationInfo) : "");
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void setAppBarScrollStatus(CollapsingToolbarLayout collapsingToolbarLayout, boolean enable) {
-        if (null == collapsingToolbarLayout) {
-            return;
-        }
-        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
-        params.setScrollFlags(enable ? (AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED) : 0);
-        collapsingToolbarLayout.setLayoutParams(params);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void setAppBarScrollStatus(CollapsingToolbarLayout collapsingToolbarLayout, boolean enable) {
+//        if (null == collapsingToolbarLayout) {
+//            return;
+//        }
+//        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+//        params.setScrollFlags(enable ? (AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED) : 0);
+//        collapsingToolbarLayout.setLayoutParams(params);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static boolean isNewUser() {
-        return HSApplication.getFirstLaunchInfo().appVersionCode == HSApplication.getCurrentLaunchInfo().appVersionCode;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isNewUser() {
+//        return HSApplication.getFirstLaunchInfo().appVersionCode == HSApplication.getCurrentLaunchInfo().appVersionCode;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static File getDiscCacheFile(String url) {
         if (ImageLoader.getInstance().getDiskCache() != null && !TextUtils.isEmpty(url)) {
@@ -1370,10 +1508,12 @@ public final class Utils {
         return null;
     }
 
-    public static boolean hasDiscCache(String url) {
-        File file = getDiscCacheFile(url);
-        return checkFileValid(file);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean hasDiscCache(String url) {
+//        File file = getDiscCacheFile(url);
+//        return checkFileValid(file);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static boolean checkFileValid(File file) {
         return file != null && file.exists();

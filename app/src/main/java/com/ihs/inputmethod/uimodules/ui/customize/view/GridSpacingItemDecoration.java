@@ -13,7 +13,7 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
     private int mSpanCount;
     private int mSpacing;
     private boolean mIncludeEdge;
-    private boolean mHasHeader;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mHasHeader;
 
     public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
         this(spanCount, spacing, includeEdge, false);
@@ -23,7 +23,6 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
         mSpanCount = spanCount;
         mSpacing = spacing;
         mIncludeEdge = includeEdge;
-        mHasHeader = hasHeader;
     }
 
 

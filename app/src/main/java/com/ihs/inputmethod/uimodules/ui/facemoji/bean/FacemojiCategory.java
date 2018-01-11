@@ -78,14 +78,18 @@ public class FacemojiCategory {
         return mCategoryId;
     }
 
-    public boolean isBuildIn() {
-        return isBuildIn;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean isBuildIn() {
+//        return isBuildIn;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public Drawable getCategoryIcon() {
-        String path = HSApplication.getContext().getFilesDir().getAbsolutePath() + "/Mojime/" + name + "/" + iconFileName;
-        return Drawable.createFromPath(path);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public Drawable getCategoryIcon() {
+//        String path = HSApplication.getContext().getFilesDir().getAbsolutePath() + "/Mojime/" + name + "/" + iconFileName;
+//        return Drawable.createFromPath(path);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public int getPageCount(FacemojiManager.ShowLocation showLocation, int orientation) {
         return (int) Math.ceil((stickerList.size() > 0 ? stickerList.size() : DEFAULT_SIZE) * 1.0 / FacemojiManager.getCurrentPageSize(showLocation, orientation, stickerList.get(0)));

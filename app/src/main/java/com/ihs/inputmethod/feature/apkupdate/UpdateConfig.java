@@ -19,7 +19,6 @@ public class UpdateConfig {
     private String mLocalFileName;
     private CharSequence mTitle;
     private String mDescription;
-    private String md5Key;
 
     // If true we check version code.
     private boolean mUpdateMode;
@@ -45,9 +44,11 @@ public class UpdateConfig {
         return config;
     }
 
-    public boolean isShowNotification() {
-        return mShowNotification;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean isShowNotification() {
+//        return mShowNotification;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public boolean isShowInDownloadUI() {
         return mShowInDownloadUI;
@@ -61,17 +62,21 @@ public class UpdateConfig {
         return mUpdateMode;
     }
 
-    public void setDownloadOnlyWifi(boolean downloadOnlyWifi) {
-        mDownloadOnlyWifi = downloadOnlyWifi;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setDownloadOnlyWifi(boolean downloadOnlyWifi) {
+//        mDownloadOnlyWifi = downloadOnlyWifi;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public String getDownLoadUrl() {
         return mDownLoadUrl;
     }
 
-    public void setDownLoadUrl(String mDownLoadUrl) {
-        this.mDownLoadUrl = mDownLoadUrl;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setDownLoadUrl(String mDownLoadUrl) {
+//        this.mDownLoadUrl = mDownLoadUrl;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public String getLocalFileName() {
         return mLocalFileName;
@@ -92,7 +97,7 @@ public class UpdateConfig {
 
 
     public String getMD5Key() {
-        return md5Key;
+        return "";
     }
 
     private static String getDescriptionConfig() {

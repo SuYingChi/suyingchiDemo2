@@ -26,7 +26,7 @@ import java.io.File;
 public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElement, BaseThemeItemProvider.BaseItemHolder, BackgroundFragment> {
     private Drawable choosingDrawable;
     private Drawable newMarkDrawable;
-    private boolean hasDefaultItemSelectStateSet = false;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean hasDefaultItemSelectStateSet = false;
 
     public BackgroundProvider(BackgroundFragment fragment) {
         super(fragment);

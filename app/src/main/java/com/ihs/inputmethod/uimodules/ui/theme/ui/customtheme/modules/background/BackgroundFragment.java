@@ -187,7 +187,7 @@ public class BackgroundFragment extends BaseThemeFragment implements LockerAppGu
     }
 
     public enum EntryMode {
-        Default,
+        // --Commented out by Inspection (18/1/11 下午2:41):Default,
         Camera,
         Gallery
     }

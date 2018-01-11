@@ -25,7 +25,7 @@ import java.util.List;
 //ListView adapter.
 public class HSFontSelectViewAdapter extends BaseAdapter {
     public static final String HS_NOTIFICATION_FONT_CHANGED = "hs.keyboard.FONT_CHANGED";
-    private final static String FONT_SELECTED_TICK = "keyboard_font_selected_tick.png";
+    // --Commented out by Inspection (18/1/11 下午2:41):private final static String FONT_SELECTED_TICK = "keyboard_font_selected_tick.png";
     private LayoutInflater mInflater;
     private List<HSSpecialCharacter> mFonts;
     private HSFontSelectView mParentView;

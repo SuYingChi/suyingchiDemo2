@@ -21,7 +21,9 @@ public class AsyncThreadPools {
         executorService.execute(runnable);
     }
 
-    public static void shutDown(){
-        executorService.shutdownNow();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void shutDown(){
+//        executorService.shutdownNow();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

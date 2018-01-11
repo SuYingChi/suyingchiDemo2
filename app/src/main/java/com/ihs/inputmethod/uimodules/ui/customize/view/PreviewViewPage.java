@@ -38,9 +38,11 @@ public class PreviewViewPage extends FrameLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setProgress(String progress) {
-
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setProgress(String progress) {
+//
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     protected void onFinishInflate() {

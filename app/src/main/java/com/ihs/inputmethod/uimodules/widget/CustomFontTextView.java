@@ -66,7 +66,9 @@ public final class CustomFontTextView extends android.support.v7.widget.AppCompa
        }
     }
     
-    public void changeFacyFont(String font){
-        changeFont(getContext(), font);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void changeFacyFont(String font){
+//        changeFont(getContext(), font);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

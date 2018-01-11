@@ -30,9 +30,11 @@ public class ProgressDialog extends Dialog {
         super(context, R.style.WallpaperLoadingDialogTheme);
     }
 
-    public ProgressDialog(Context context) {
-        super(context, R.style.WallpaperLoadingDialogTheme);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public ProgressDialog(Context context) {
+//        super(context, R.style.WallpaperLoadingDialogTheme);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static ProgressDialog createDialog(Context context, String text, DialogInterface.OnDismissListener animationListener) {
         sCustomProgressDialog = new ProgressDialog(context, R.style.WallpaperLoadingDialogTheme);
@@ -70,9 +72,11 @@ public class ProgressDialog extends Dialog {
         super.show();
     }
 
-    public void setMessage(CharSequence message) {
-        mTextView.setText(message);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setMessage(CharSequence message) {
+//        mTextView.setText(message);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * @param isInstant if true, the dialog will dismiss instantly

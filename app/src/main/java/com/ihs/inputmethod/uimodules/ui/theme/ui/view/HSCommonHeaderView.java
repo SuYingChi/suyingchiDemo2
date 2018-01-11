@@ -1,11 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
@@ -14,8 +10,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.framework.HSApplication;
-import com.ihs.inputmethod.api.utils.HSBitmapUtils;
 import com.ihs.inputmethod.uimodules.R;
 
 /**
@@ -32,8 +26,8 @@ public class HSCommonHeaderView extends RelativeLayout {
     private String titleCancel;
     private String titleOK;
     private String titleHead;
-    private boolean backButtonVisible;
-    private boolean nextButtonVisible;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean backButtonVisible;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean nextButtonVisible;
 
     public HSCommonHeaderView(Context context) {
         this(context, null);
@@ -80,8 +74,6 @@ public class HSCommonHeaderView extends RelativeLayout {
 
     public void setButtonVisibility(final boolean backButtonVisible, final boolean nextButtonVisible) {
         findViews();
-        this.backButtonVisible = backButtonVisible;
-        this.nextButtonVisible = nextButtonVisible;
         updateButtonVisibility();
     }
 
@@ -157,50 +149,54 @@ public class HSCommonHeaderView extends RelativeLayout {
         handler.removeCallbacksAndMessages(null);
     }
 
-    public Drawable getButtonOKRightDrawable() {
-        if (buttonOKRightDrawable == null) {
-            Bitmap nextBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.navigationbar_arrow_next);
-            int arrowNextWidth = (int) (nextBitmap.getWidth() * 0.6);
-            int arrowNextHeight = (int) (nextBitmap.getHeight() * 0.6) + 6;
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public Drawable getButtonOKRightDrawable() {
+//        if (buttonOKRightDrawable == null) {
+//            Bitmap nextBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.navigationbar_arrow_next);
+//            int arrowNextWidth = (int) (nextBitmap.getWidth() * 0.6);
+//            int arrowNextHeight = (int) (nextBitmap.getHeight() * 0.6) + 6;
+//
+//            Bitmap arrowNextBitmap = Bitmap.createScaledBitmap(nextBitmap, arrowNextWidth, arrowNextHeight, true);
+//            BitmapDrawable arrowNextDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), arrowNextBitmap);
+//
+//            Bitmap pressedArrowNextBitmap = HSBitmapUtils.makeDarkBitmap(arrowNextBitmap, arrowNextWidth, arrowNextHeight, 0.2f);
+//
+//
+//            BitmapDrawable pressedArrowNextBitmapDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), pressedArrowNextBitmap);
+//            StateListDrawable stateListDrawable = new StateListDrawable();
+//            stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedArrowNextBitmapDrawable);
+//            stateListDrawable.addState(new int[]{android.R.attr.state_focused}, pressedArrowNextBitmapDrawable);
+//            stateListDrawable.addState(new int[]{android.R.attr.state_selected}, pressedArrowNextBitmapDrawable);
+//            stateListDrawable.addState(new int[]{}, arrowNextDrawable);
+//            buttonOKRightDrawable = stateListDrawable;
+//        }
+//        return buttonOKRightDrawable;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-            Bitmap arrowNextBitmap = Bitmap.createScaledBitmap(nextBitmap, arrowNextWidth, arrowNextHeight, true);
-            BitmapDrawable arrowNextDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), arrowNextBitmap);
-
-            Bitmap pressedArrowNextBitmap = HSBitmapUtils.makeDarkBitmap(arrowNextBitmap, arrowNextWidth, arrowNextHeight, 0.2f);
-
-
-            BitmapDrawable pressedArrowNextBitmapDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), pressedArrowNextBitmap);
-            StateListDrawable stateListDrawable = new StateListDrawable();
-            stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedArrowNextBitmapDrawable);
-            stateListDrawable.addState(new int[]{android.R.attr.state_focused}, pressedArrowNextBitmapDrawable);
-            stateListDrawable.addState(new int[]{android.R.attr.state_selected}, pressedArrowNextBitmapDrawable);
-            stateListDrawable.addState(new int[]{}, arrowNextDrawable);
-            buttonOKRightDrawable = stateListDrawable;
-        }
-        return buttonOKRightDrawable;
-    }
-
-    public Drawable getButtonCancelLeftDrawable() {
-        if (buttonCancelLeftDrawable == null) {
-            Bitmap backBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.navigationbar_arrow_back);
-            int arrowBackWidth = (int) (backBitmap.getWidth() * 0.6);
-            int arrowBackHeight = (int) (backBitmap.getHeight() * 0.6) + 6;
-
-            Bitmap arrowBackBitmap = Bitmap.createScaledBitmap(backBitmap, arrowBackWidth, arrowBackHeight, true);
-            BitmapDrawable arrowBackDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), arrowBackBitmap);
-
-            Bitmap pressedArrowBackBitmap = HSBitmapUtils.makeDarkBitmap(arrowBackBitmap, arrowBackWidth, arrowBackHeight, 0.2f);
-
-            BitmapDrawable pressedArrowBackBitmapDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), pressedArrowBackBitmap);
-            StateListDrawable stateListDrawable = new StateListDrawable();
-            stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedArrowBackBitmapDrawable);
-            stateListDrawable.addState(new int[]{android.R.attr.state_focused}, pressedArrowBackBitmapDrawable);
-            stateListDrawable.addState(new int[]{android.R.attr.state_selected}, pressedArrowBackBitmapDrawable);
-            stateListDrawable.addState(new int[]{}, arrowBackDrawable);
-            buttonCancelLeftDrawable = stateListDrawable;
-        }
-        return buttonCancelLeftDrawable;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public Drawable getButtonCancelLeftDrawable() {
+//        if (buttonCancelLeftDrawable == null) {
+//            Bitmap backBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.navigationbar_arrow_back);
+//            int arrowBackWidth = (int) (backBitmap.getWidth() * 0.6);
+//            int arrowBackHeight = (int) (backBitmap.getHeight() * 0.6) + 6;
+//
+//            Bitmap arrowBackBitmap = Bitmap.createScaledBitmap(backBitmap, arrowBackWidth, arrowBackHeight, true);
+//            BitmapDrawable arrowBackDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), arrowBackBitmap);
+//
+//            Bitmap pressedArrowBackBitmap = HSBitmapUtils.makeDarkBitmap(arrowBackBitmap, arrowBackWidth, arrowBackHeight, 0.2f);
+//
+//            BitmapDrawable pressedArrowBackBitmapDrawable = new BitmapDrawable(HSApplication.getContext().getResources(), pressedArrowBackBitmap);
+//            StateListDrawable stateListDrawable = new StateListDrawable();
+//            stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressedArrowBackBitmapDrawable);
+//            stateListDrawable.addState(new int[]{android.R.attr.state_focused}, pressedArrowBackBitmapDrawable);
+//            stateListDrawable.addState(new int[]{android.R.attr.state_selected}, pressedArrowBackBitmapDrawable);
+//            stateListDrawable.addState(new int[]{}, arrowBackDrawable);
+//            buttonCancelLeftDrawable = stateListDrawable;
+//        }
+//        return buttonCancelLeftDrawable;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public interface OnNavigationClickListener {
         void onLeftClick(View view);

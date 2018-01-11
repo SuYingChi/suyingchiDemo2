@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.customize.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +16,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.feature.common.CompatUtils;
-import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -26,7 +23,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperPreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LoadingProgressBar;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +42,8 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     private static final int WALLPAPER_FOOTER_VIEW_LOAD_MORE = 2;
     private static final int WALLPAPER_FOOTER_VIEW_NO_MORE = 3;
 
-    private static final int CATEGORY_TAB_COUNT_WITH_ADS = 3;
-    private static final int MAX_CONCURRENT_AD_REQUEST_COUNT = 3;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int CATEGORY_TAB_COUNT_WITH_ADS = 3;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int MAX_CONCURRENT_AD_REQUEST_COUNT = 3;
 
     private Context mContext;
     private int mMaxVisiblePosition;
@@ -56,12 +52,14 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     private GridLayoutManager mLayoutManager;
     private FooterViewHolder mFooterViewHolder;
 
-    private int mScreenWidth;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mScreenWidth;
 
-    private DisplayImageOptions defaulltOptions = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.drawable.wallpaper_loading).showImageOnFail(R.drawable.wallpaper_load_failed)
-            .showImageForEmptyUri(R.drawable.ic_sticker_loading_image)
-            .cacheOnDisk(true).build();
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private DisplayImageOptions defaulltOptions = new DisplayImageOptions.Builder()
+//            .showImageOnLoading(R.drawable.wallpaper_loading).showImageOnFail(R.drawable.wallpaper_load_failed)
+//            .showImageForEmptyUri(R.drawable.ic_sticker_loading_image)
+//            .cacheOnDisk(true).build();
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
         @Override
@@ -92,7 +90,6 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     public OnlineWallpaperGalleryAdapter(Context context) {
         super();
         mContext = context;
-        mScreenWidth = CommonUtils.getPhoneWidth(context);
 
 //        ((CustomizeActivity) mContext).addActivityResultHandler(this);
 
@@ -216,9 +213,11 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-    private boolean isDeviceAlwaysReturnCancel() {
-        return CompatUtils.IS_HUAWEI_DEVICE && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private boolean isDeviceAlwaysReturnCancel() {
+//        return CompatUtils.IS_HUAWEI_DEVICE && Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void onDestroy() {
 

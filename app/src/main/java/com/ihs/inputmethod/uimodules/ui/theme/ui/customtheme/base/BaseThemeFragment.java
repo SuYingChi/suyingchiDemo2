@@ -81,12 +81,14 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         }
     }
 
-    protected void showKeyboard() {
-        if (getCustomThemeActivity() != null) {
-            getCustomThemeActivity().showKeyboard();
-        }
-
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    protected void showKeyboard() {
+//        if (getCustomThemeActivity() != null) {
+//            getCustomThemeActivity().showKeyboard();
+//        }
+//
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setHeaderNextEnable(boolean enable) {
         if (getCustomThemeActivity() != null) {
@@ -147,15 +149,19 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         chosedItems.put(item.getTypeName(), item);
     }
 
-    public Collection<Object> getChosenItems() {
-        return chosedItems.values();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public Collection<Object> getChosenItems() {
+//        return chosedItems.values();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     protected abstract ThemePageItem initiateThemePageItem();
 
-    public int getItemCount() {
-        return items == null ? 0 : items.size();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getItemCount() {
+//        return items == null ? 0 : items.size();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private void initRecyclerView(View rootView) {
         recyclerView = rootView.findViewById(R.id.recyclerView);
@@ -204,14 +210,16 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         }, 1);
     }
 
-    private void loadItem() {
-        if (index < data.size()) {
-            items.add(data.get(index));
-            adapter.notifyItemInserted(index + 1);
-            index = index + 1;
-            loadItem();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private void loadItem() {
+//        if (index < data.size()) {
+//            items.add(data.get(index));
+//            adapter.notifyItemInserted(index + 1);
+//            index = index + 1;
+//            loadItem();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public void onDestroy() {
@@ -246,12 +254,14 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         notifyAdapterOnMainThread();
     }
 
-    /**
-     * 自定义主题的预览图(背景和字体)下载完收到通知，子类自己重写，
-     */
-    protected void notifyCustomThemePreviewDownloadFinished(KCBaseElement item) {
-        notifyAdapterOnMainThread();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * 自定义主题的预览图(背景和字体)下载完收到通知，子类自己重写，
+//     */
+//    protected void notifyCustomThemePreviewDownloadFinished(KCBaseElement item) {
+//        notifyAdapterOnMainThread();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void notifyAdapterOnMainThread() {
         handler.post(new Runnable() {

@@ -24,12 +24,12 @@ import java.util.ArrayList;
  */
 public class WallpaperProvider extends ContentProvider {
 
-    private static final String TAG = WallpaperProvider.class.getSimpleName();
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String TAG = WallpaperProvider.class.getSimpleName();
 
     public final static String METHOD_APPLY_WALLPAPER = "applyWallpaper";
-    public final static String METHOD_CLEAN_CURRENT_WALLPAPER = "cleanCurrentWallpaper";
-    public final static String BUNDLE_KEY_WALLPAPER = "wallpaper_info";
-    public final static String BUNDLE_KEY_LEGACY_LOCAL_WALLPAPERS = "legacy_local_wallpapers";
+    // --Commented out by Inspection (18/1/11 下午2:41):public final static String METHOD_CLEAN_CURRENT_WALLPAPER = "cleanCurrentWallpaper";
+    // --Commented out by Inspection (18/1/11 下午2:41):public final static String BUNDLE_KEY_WALLPAPER = "wallpaper_info";
+    // --Commented out by Inspection (18/1/11 下午2:41):public final static String BUNDLE_KEY_LEGACY_LOCAL_WALLPAPERS = "legacy_local_wallpapers";
 
     public final static String TABLE_WALLPAPER = "wallpaper";
     public final static String COLUMN_TYPE = "type";
@@ -46,7 +46,7 @@ public class WallpaperProvider extends ContentProvider {
     public final static String COLUMN_IS_APPLIED = "isApplied";
 
     public static final String AUTHORITY = "com.honeycomb.launcher.wallpaper";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_WALLPAPER);
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TABLE_WALLPAPER);
 
     public static final int WALLPAPER_QUERY = 1;
     // Defines a helper object that matches content URIs to table-specific parameters

@@ -42,12 +42,14 @@ public final class RequestDao {
 		}
 	}
 
-	public static RequestDao getInstance(){
-		if(instance==null){
-			init();
-		}
-		return instance;
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public static RequestDao getInstance(){
+//		if(instance==null){
+//			init();
+//		}
+//		return instance;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	private final static String INSERT= "insert into " +NAME
 					+ " ("

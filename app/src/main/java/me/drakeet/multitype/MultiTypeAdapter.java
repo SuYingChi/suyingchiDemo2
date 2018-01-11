@@ -42,10 +42,12 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<ViewHolder>
     }
 
 
-    public MultiTypeAdapter(@NonNull List<?> items, TypePool pool) {
-        this.delegate = pool;
-        this.items = items;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public MultiTypeAdapter(@NonNull List<?> items, TypePool pool) {
+//        this.delegate = pool;
+//        this.items = items;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
     @NonNull
@@ -95,22 +97,26 @@ public class MultiTypeAdapter extends RecyclerView.Adapter<ViewHolder>
     }
 
 
-    public void applyGlobalMultiTypePool() {
-        for (int i = 0; i < GlobalMultiTypePool.getContents().size(); i++) {
-            final Class<?> clazz = GlobalMultiTypePool.getContents().get(i);
-            final ItemViewProvider provider = GlobalMultiTypePool.getProviders().get(i);
-            if (!this.getContents().contains(clazz)) {
-                this.register(clazz, provider);
-            }
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void applyGlobalMultiTypePool() {
+//        for (int i = 0; i < GlobalMultiTypePool.getContents().size(); i++) {
+//            final Class<?> clazz = GlobalMultiTypePool.getContents().get(i);
+//            final ItemViewProvider provider = GlobalMultiTypePool.getProviders().get(i);
+//            if (!this.getContents().contains(clazz)) {
+//                this.register(clazz, provider);
+//            }
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
-    public void registerAll(@NonNull final MultiTypePool pool) {
-        for (int i = 0; i < pool.getContents().size(); i++) {
-            delegate.register(pool.getContents().get(i), pool.getProviders().get(i));
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void registerAll(@NonNull final MultiTypePool pool) {
+//        for (int i = 0; i < pool.getContents().size(); i++) {
+//            delegate.register(pool.getContents().get(i), pool.getProviders().get(i));
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
     @Override

@@ -127,9 +127,11 @@ class VideoSurfaceView extends VideoView {
         });
     }
 
-    public String getFilePath() {
-        return filePath;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public String getFilePath() {
+//        return filePath;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public interface OnVedioListener {
         void onPrepared();

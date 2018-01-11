@@ -8,6 +8,6 @@ import java.util.List;
  */
 
 public class WallPaperConstant {
-    public static List<WallpaperInfo> wallpaperInfoList = new ArrayList<>();
+    // --Commented out by Inspection (18/1/11 下午2:41):public static List<WallpaperInfo> wallpaperInfoList = new ArrayList<>();
 
 }

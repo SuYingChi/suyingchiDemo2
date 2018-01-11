@@ -36,10 +36,12 @@ public class AdGooglePlayDialog extends Dialog {
         init();
     }
 
-    public AdGooglePlayDialog(@NonNull Context context, @StyleRes int themeResId) {
-        super(context, themeResId);
-        init();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public AdGooglePlayDialog(@NonNull Context context, @StyleRes int themeResId) {
+//        super(context, themeResId);
+//        init();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private void init() {
         setCanceledOnTouchOutside(false);

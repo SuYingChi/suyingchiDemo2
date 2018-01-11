@@ -18,9 +18,9 @@ import java.util.List;
 
 class FacemojiPalettesAdapter extends PagerAdapter {
     private static String TAG = "FacemojiPalettesAdapter";
-    private static final int PAGER_TOP_PADDING_PX = 0;
-    private static final int PAGER_BOTTOM_PADDING_PX = 0;
-    private static final int GRID_VERTICAL_GAP_PX = 20;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int PAGER_TOP_PADDING_PX = 0;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int PAGER_BOTTOM_PADDING_PX = 0;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int GRID_VERTICAL_GAP_PX = 20;
     private static final int GRID_COLUMN_NUMBER = 2;
     private static final int GRID_ROW_NUMBER = 3;
 
@@ -62,9 +62,11 @@ class FacemojiPalettesAdapter extends PagerAdapter {
         mActivePosition = position;
     }
 
-    public void clear() {
-        mActivePageViews.clear();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void clear() {
+//        mActivePageViews.clear();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public Object instantiateItem(final ViewGroup container, final int position) {

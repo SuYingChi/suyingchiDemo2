@@ -23,7 +23,7 @@ public class CategoryInfo implements Parcelable {
     public String iconUrl;
     public String categoryName;
     public String bannerUrl;
-    public int bannerPlaceholderBgColor;
+    // --Commented out by Inspection (18/1/11 下午2:41):public int bannerPlaceholderBgColor;
     public List<WallpaperInfo> wallpapers = new ArrayList<>();
 
     private CategoryInfo() {
@@ -57,11 +57,6 @@ public class CategoryInfo implements Parcelable {
             info.iconUrl = (String) config.get("Icon");
             info.categoryName = LauncherConfig.getMultilingualString(config, "CategoryName");
             info.bannerUrl = (String) config.get("Banner");
-            String colorString = (String) config.get("BannerPlaceholderBg");
-            if (colorString == null) {
-                colorString = "#777777";
-            }
-            info.bannerPlaceholderBgColor = Color.parseColor(colorString);
         } catch (Exception e) {
             HSLog.w("Wallpaper.Config", "Error loading wallpaper config, please check config format");
             CrashlyticsCore.getInstance().logException(e);

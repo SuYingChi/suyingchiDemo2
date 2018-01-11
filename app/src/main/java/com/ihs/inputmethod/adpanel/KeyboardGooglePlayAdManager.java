@@ -46,10 +46,12 @@ public class KeyboardGooglePlayAdManager implements KCNativeAdView.OnAdLoadedLis
         //HSPreferenceHelper.getDefault().putLong(PREF_AD_SHOW_TIME, System.currentTimeMillis());
     }
 
-    private boolean isShowedFixedTimeBefore() { // 是否在一定时间之前展示过广告
-        Long lastTime = HSPreferenceHelper.getDefault().getLong(PREF_AD_SHOW_TIME, 0L);
-        return System.currentTimeMillis() <= lastTime + (long) (24 * 3600 * 1000);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private boolean isShowedFixedTimeBefore() { // 是否在一定时间之前展示过广告
+//        Long lastTime = HSPreferenceHelper.getDefault().getLong(PREF_AD_SHOW_TIME, 0L);
+//        return System.currentTimeMillis() <= lastTime + (long) (24 * 3600 * 1000);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private int getNativeAdViewWidth() {
         return (int) (DisplayUtils.getScreenWidthPixels() * 0.9);

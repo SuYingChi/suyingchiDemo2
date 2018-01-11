@@ -32,24 +32,22 @@ import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
-import java.util.ArrayList;
-
 import static com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity.CALL_ASSISTANT_HAS_SWITCHED_ON;
 
 public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
-    public static final String TAG = InCallThemePreviewActivity.class.getSimpleName();
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String TAG = InCallThemePreviewActivity.class.getSimpleName();
 
     private static final int OVERLAY_REQUEST_CODE = 999;
-    private ArrayList<Type> mThemeArray;
+    // --Commented out by Inspection (18/1/11 下午2:41):private ArrayList<Type> mThemeArray;
 
     private ThemePreviewWindow mPreviewView;
     private InCallActionView mCallView;
     private Toolbar mToolbar;
     private TextView mSetCallThemeButton;
     private GifDownloadManager mGifDownloader = new GifDownloadManager();
-    private int mThemeCurrentSelectedId = Type.NONE;
-    private int mThemePreviousSelectedId = Type.NONE;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mThemeCurrentSelectedId = Type.NONE;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mThemePreviousSelectedId = Type.NONE;
     private boolean mIsDestroyed;
 
     @Override
@@ -57,7 +55,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.phone_activity_theme_preview);
 
-        mThemeArray = Type.values();
 
         mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -136,7 +133,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     private void initThemesView() {
         final Type themeType = (Type) getIntent().getSerializableExtra("CallThemeType");
 
-        mThemeCurrentSelectedId = themeType.getValue();
 
         initThemeAnimation(themeType);
 

@@ -54,16 +54,20 @@ public class HSFontSelectView extends ListView {
         return fontItemDividerColor;
     }
 
-    public int getItemTextColor() {
-        return fontItemTextColor;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getItemTextColor() {
+//        return fontItemTextColor;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public Drawable getItemSelectedBackground() {
         return mItemSelectedBackground;
     }
 
-    public void onDismiss() {
-        ((HSFontSelectViewAdapter) this.getAdapter()).cancelAnimation();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void onDismiss() {
+//        ((HSFontSelectViewAdapter) this.getAdapter()).cancelAnimation();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }
 

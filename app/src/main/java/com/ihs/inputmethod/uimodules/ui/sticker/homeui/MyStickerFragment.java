@@ -28,7 +28,7 @@ public class MyStickerFragment extends Fragment {
     private RecyclerView recyclerView;
     private CommonStickerAdapter stickerCardAdapter;
     private List<StickerHomeModel> stickerModelList = new ArrayList<>();
-    public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker_my);
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String tabTitle = HSApplication.getContext().getString(R.string.tab_sticker_my);
 
     @Nullable
     @Override

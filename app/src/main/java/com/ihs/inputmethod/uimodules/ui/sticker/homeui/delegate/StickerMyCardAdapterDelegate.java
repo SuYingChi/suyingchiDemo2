@@ -22,8 +22,6 @@ import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
 
-import pl.droidsonroids.gif.GifImageView;
-
 
 public final class StickerMyCardAdapterDelegate extends AdapterDelegate<List<StickerHomeModel>> {
     private int imageWidth;
@@ -67,22 +65,19 @@ public final class StickerMyCardAdapterDelegate extends AdapterDelegate<List<Sti
     }
 
     public class MyStickerCardViewHolder extends RecyclerView.ViewHolder {
-        View stickerCardView;
-        ImageView moreMenuImage;
+        // --Commented out by Inspection (18/1/11 下午2:41):View stickerCardView;
+        // --Commented out by Inspection (18/1/11 下午2:41):ImageView moreMenuImage;
 
         TextView stickerGroupName;
-        GifImageView stickerNewImage;
+        // --Commented out by Inspection (18/1/11 下午2:41):GifImageView stickerNewImage;
         ImageView stickerRealImage;
 
 
         public MyStickerCardViewHolder(View itemView) {
             super(itemView);
 
-            stickerCardView = itemView.findViewById(R.id.sticker_card_view);
             stickerGroupName = itemView.findViewById(R.id.sticker_name);
             stickerRealImage = itemView.findViewById(R.id.sticker_image_real_view);
-            stickerNewImage = itemView.findViewById(R.id.sticker_new_view);
-            moreMenuImage = itemView.findViewById(R.id.more_menu_image);
 
         }
     }

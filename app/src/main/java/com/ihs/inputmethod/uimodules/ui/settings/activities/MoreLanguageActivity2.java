@@ -229,8 +229,8 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
         String locale;
         InputMethodSubtype subtype;
-        TextView tv = null;
-        LanguageLoadingPreference preference = null;
+        TextView tv;
+        LanguageLoadingPreference preference;
         final List<HSImeSubtypeListItem> unEnabledSubs = HSImeSubtypeManager.getSortedInputMethodSubtypeList(false);
         final int count = unEnabledSubs.size();
         final boolean isApiBelow19= Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;

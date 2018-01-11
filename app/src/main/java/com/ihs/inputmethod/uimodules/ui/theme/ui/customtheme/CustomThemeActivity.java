@@ -307,16 +307,18 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         new ShowKeyboardTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private Drawable getPromptPurchaseViewBackground(KCBaseElement item) {
-        if (item instanceof KCButtonStyleElement) {
-            return KCElementResourseHelper.getButtonStyleBackgroundDrawable(customThemeData.getBackgroundMainColor());
-        } else if (item instanceof KCSoundElement) {
-            return KCElementResourseHelper.getSoundBackgroundDrawable(((KCSoundElement) item).getBackgroundColor());
-        } else if (item instanceof KCFontElement) {
-            return KCElementResourseHelper.getFontBackgroundDrawable();
-        }
-        return null;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private Drawable getPromptPurchaseViewBackground(KCBaseElement item) {
+//        if (item instanceof KCButtonStyleElement) {
+//            return KCElementResourseHelper.getButtonStyleBackgroundDrawable(customThemeData.getBackgroundMainColor());
+//        } else if (item instanceof KCSoundElement) {
+//            return KCElementResourseHelper.getSoundBackgroundDrawable(((KCSoundElement) item).getBackgroundColor());
+//        } else if (item instanceof KCFontElement) {
+//            return KCElementResourseHelper.getFontBackgroundDrawable();
+//        }
+//        return null;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private boolean isLastPage() {
         return currentPageIndex == fragmentClasses.size() - 1;

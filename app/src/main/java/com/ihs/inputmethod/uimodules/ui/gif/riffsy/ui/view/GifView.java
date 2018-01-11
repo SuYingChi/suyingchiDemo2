@@ -149,40 +149,42 @@ public final class GifView extends RelativeLayout implements View.OnClickListene
         }
     }
 
-    public void shareHdGif(final DownloadStatusListener downloadStatusListener) {
-        final File downloadedFile = new File(DirectoryUtils.getHDGifDownloadFolder(), gifItem.id);
-        MediaController.getDownloadManger().startDownloadInThreadPool(ExecutorUtils.getFixedExecutor("Gif"));
-        MediaDownload download = new MediaDownload(gifItem.getHdGifUri(), downloadedFile.getAbsolutePath(), new DownloadStatusListener() {
-            @Override
-            public void onDownloadProgress(File file, final float percent) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressView.setVisibility(View.VISIBLE);
-                        progressView.setPercent((int) (percent * 100));
-                        progressView.postInvalidate();
-                    }
-                });
-            }
-
-            @Override
-            public void onDownloadSucceeded(final File file) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressView.setVisibility(INVISIBLE);
-                        downloadStatusListener.onDownloadSucceeded(file);
-                    }
-                });
-            }
-
-            @Override
-            public void onDownloadFailed(File file) {
-
-            }
-        });
-        MediaController.getDownloadManger().put(download);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void shareHdGif(final DownloadStatusListener downloadStatusListener) {
+//        final File downloadedFile = new File(DirectoryUtils.getHDGifDownloadFolder(), gifItem.id);
+//        MediaController.getDownloadManger().startDownloadInThreadPool(ExecutorUtils.getFixedExecutor("Gif"));
+//        MediaDownload download = new MediaDownload(gifItem.getHdGifUri(), downloadedFile.getAbsolutePath(), new DownloadStatusListener() {
+//            @Override
+//            public void onDownloadProgress(File file, final float percent) {
+//                handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        progressView.setVisibility(View.VISIBLE);
+//                        progressView.setPercent((int) (percent * 100));
+//                        progressView.postInvalidate();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onDownloadSucceeded(final File file) {
+//                handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        progressView.setVisibility(INVISIBLE);
+//                        downloadStatusListener.onDownloadSucceeded(file);
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onDownloadFailed(File file) {
+//
+//            }
+//        });
+//        MediaController.getDownloadManger().put(download);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public boolean onLongClick(View v) {

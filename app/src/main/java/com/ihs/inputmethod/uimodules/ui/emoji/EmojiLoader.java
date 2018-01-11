@@ -163,7 +163,7 @@ final class EmojiLoader {
 
 
 	private KCMap getEmojiSkinConfigMap() {
-		KCMap kcMap = null;
+		KCMap kcMap;
 		try {
 			   //KEY: emoji unicode string
 			   // VALUE: Emoji string as the value.
@@ -180,7 +180,7 @@ final class EmojiLoader {
 		if (kcMap != null) {
 			emojiSkinMapping = new HashMap<>();
 			Set<String> allKey = kcMap.keySet();
-			KCList emojiArray = null;
+			KCList emojiArray;
 			for (String key: allKey ) {
 				emojiArray =  kcMap.getList(key);
 				ArrayList<Emoji> skinItems = new ArrayList<>();

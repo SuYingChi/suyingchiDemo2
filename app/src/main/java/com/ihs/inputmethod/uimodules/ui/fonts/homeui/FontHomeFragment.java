@@ -41,7 +41,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
     private RecyclerView recyclerView;
     private FontCardAdapter fontCardAdapter;
     private List<FontModel> fontModelList = new ArrayList<>();
-    public static final String tabTitle = HSApplication.getContext().getString(R.string.custom_theme_font);
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String tabTitle = HSApplication.getContext().getString(R.string.custom_theme_font);
 
     private INotificationObserver observer = new INotificationObserver() {
         @Override

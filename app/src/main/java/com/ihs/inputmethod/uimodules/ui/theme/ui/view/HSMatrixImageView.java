@@ -13,7 +13,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 public class HSMatrixImageView extends android.support.v7.widget.AppCompatImageView {
-    public final static String TAG = HSMatrixImageView.class.getSimpleName();
+    // --Commented out by Inspection (18/1/11 下午2:41):public final static String TAG = HSMatrixImageView.class.getSimpleName();
 
     private GestureDetector mGestureDetector;
     /**

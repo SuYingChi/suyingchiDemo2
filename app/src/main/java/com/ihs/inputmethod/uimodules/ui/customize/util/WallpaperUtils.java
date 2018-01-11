@@ -26,7 +26,7 @@ public class WallpaperUtils {
     public static final int WALLPAPER_TYPE_SCROLLABLE_STANDARD = 1;
     public static final int WALLPAPER_TYPE_STATIC_STANDARD = 2;
 
-    private static final int COLOR_SAMPLE_COUNT = 6;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int COLOR_SAMPLE_COUNT = 6;
 
     public static Matrix centerCrop(int dWidth, int dHeight, ImageView imageView) {
 
@@ -54,20 +54,22 @@ public class WallpaperUtils {
         return newMatrix;
     }
 
-    public static Matrix centerInside(int dWidth, int dHeight, int top, int bottom) {
-        RectF bitmapRect = new RectF();
-        int vWidth = CommonUtils.getPhoneWidth(HSApplication.getContext());
-        int vHeight = HSApplication.getContext().getResources().getDisplayMetrics().heightPixels;
-
-        bitmapRect.set(0, 0, dWidth, dHeight);
-        RectF imgRect = new RectF(0, top, vWidth, bottom);
-        HSLog.i("centerInside  dWidth " + dWidth + " dHeight " + dHeight + " vWidth " + vWidth + " vHeight "
-                + vHeight + " top " + top + " bottom " + bottom);
-
-        Matrix matrix = new Matrix();
-        matrix.setRectToRect(bitmapRect, imgRect, Matrix.ScaleToFit.CENTER);
-        return matrix;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static Matrix centerInside(int dWidth, int dHeight, int top, int bottom) {
+//        RectF bitmapRect = new RectF();
+//        int vWidth = CommonUtils.getPhoneWidth(HSApplication.getContext());
+//        int vHeight = HSApplication.getContext().getResources().getDisplayMetrics().heightPixels;
+//
+//        bitmapRect.set(0, 0, dWidth, dHeight);
+//        RectF imgRect = new RectF(0, top, vWidth, bottom);
+//        HSLog.i("centerInside  dWidth " + dWidth + " dHeight " + dHeight + " vWidth " + vWidth + " vHeight "
+//                + vHeight + " top " + top + " bottom " + bottom);
+//
+//        Matrix matrix = new Matrix();
+//        matrix.setRectToRect(bitmapRect, imgRect, Matrix.ScaleToFit.CENTER);
+//        return matrix;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static Bitmap centerInside(Bitmap src) {
         Rect bitmapRect = new Rect();
@@ -192,26 +194,28 @@ public class WallpaperUtils {
 
     public static final float WALLPAPER_SCREENS_SPAN = 2f;
 
-    public static void suggestWallpaperDimension(Resources res,
-                                                 WindowManager windowManager,
-                                                 final WallpaperManagerProxy wallpaperManager, boolean fallBackToDefaults) {
-        final Point defaultWallpaperSize = WallpaperUtils.getDefaultWallpaperSize(res, windowManager);
-
-        int savedWidth;
-        int savedHeight;
-
-        if (!fallBackToDefaults) {
-            return;
-        } else {
-            savedWidth = defaultWallpaperSize.x;
-            savedHeight = defaultWallpaperSize.y;
-        }
-
-        if (savedWidth != wallpaperManager.getDesiredMinimumWidth() ||
-                savedHeight != wallpaperManager.getDesiredMinimumHeight()) {
-            wallpaperManager.suggestDesiredDimensions(savedWidth, savedHeight);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void suggestWallpaperDimension(Resources res,
+//                                                 WindowManager windowManager,
+//                                                 final WallpaperManagerProxy wallpaperManager, boolean fallBackToDefaults) {
+//        final Point defaultWallpaperSize = WallpaperUtils.getDefaultWallpaperSize(res, windowManager);
+//
+//        int savedWidth;
+//        int savedHeight;
+//
+//        if (!fallBackToDefaults) {
+//            return;
+//        } else {
+//            savedWidth = defaultWallpaperSize.x;
+//            savedHeight = defaultWallpaperSize.y;
+//        }
+//
+//        if (savedWidth != wallpaperManager.getDesiredMinimumWidth() ||
+//                savedHeight != wallpaperManager.getDesiredMinimumHeight()) {
+//            wallpaperManager.suggestDesiredDimensions(savedWidth, savedHeight);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * As a ratio of screen height, the total distance we want the parallax effect to span

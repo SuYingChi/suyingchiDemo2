@@ -59,9 +59,11 @@ public class HandlerThreadExtension extends HandlerThread {
 
     }
 
-    public void postAtFrontOfQueue(Runnable r){
-        mHandler.postAtFrontOfQueue(r);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void postAtFrontOfQueue(Runnable r){
+//        mHandler.postAtFrontOfQueue(r);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void startThread(){
         if(SHOW_LOGS) Log.v(TAG, ">> startThread");
@@ -88,8 +90,10 @@ public class HandlerThreadExtension extends HandlerThread {
         });
     }
 
-    public void remove(Runnable runnable){
-        mHandler.removeCallbacks(runnable);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void remove(Runnable runnable){
+//        mHandler.removeCallbacks(runnable);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }
 

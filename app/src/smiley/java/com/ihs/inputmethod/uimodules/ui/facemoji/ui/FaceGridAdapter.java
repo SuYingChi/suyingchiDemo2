@@ -73,7 +73,7 @@ public class FaceGridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        StickerViewHolder holder = null;
+        StickerViewHolder holder;
 
         final FaceItem face = (FaceItem) getItem(position);
 

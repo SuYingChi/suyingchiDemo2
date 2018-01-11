@@ -230,13 +230,15 @@ public class ApkUtils {
         return HSConfig.optBoolean(false, "Application", "Update", "NormalAlert", "ShowAlert");
     }
 
-    public static void startUpdate(final Context context) {
-        File file = ApkUtils.getDefaultLocalFile(context);
-        if (ApkUtils.isLocalApkReady(file.getPath(), context)) {
-            startInstall(context, Uri.fromFile(file));
-            return;
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void startUpdate(final Context context) {
+//        File file = ApkUtils.getDefaultLocalFile(context);
+//        if (ApkUtils.isLocalApkReady(file.getPath(), context)) {
+//            startInstall(context, Uri.fromFile(file));
+//            return;
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static boolean isNewVersionAvailable() {
         String localPackage = HSApplication.getContext().getPackageName();
@@ -270,9 +272,11 @@ public class ApkUtils {
         return HSPreferenceHelper.getDefault().getInt(PREF_KEY_UPDATE_APK_VERSION_CODE, 0);
     }
 
-    public static void saveUpdateApkVersionCode() {
-        HSPreferenceHelper.getDefault().putInt(PREF_KEY_UPDATE_APK_VERSION_CODE, getLatestVersionCode());
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void saveUpdateApkVersionCode() {
+//        HSPreferenceHelper.getDefault().putInt(PREF_KEY_UPDATE_APK_VERSION_CODE, getLatestVersionCode());
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static long getUpdateAlertLastShownTime() {
         return HSPreferenceHelper.getDefault().getLong(PREF_KEY_UPDATE_ALERT_LAST_SHOWN_TIME, 0);

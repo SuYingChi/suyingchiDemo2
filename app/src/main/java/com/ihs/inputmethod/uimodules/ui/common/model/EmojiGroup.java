@@ -40,17 +40,21 @@ public final class EmojiGroup {
 		emojiList.add(emoji);
 	}
 
-	public void addEmojiToFirst(final Emoji emoji){
-		emojiList.add(0,emoji);
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void addEmojiToFirst(final Emoji emoji){
+//		emojiList.add(0,emoji);
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	public void removeLastEmoji(){
 		emojiList.remove(emojiList.size()-1);
 	}
 
-	public void removeEmoji(final Emoji emoji){
-		emojiList.remove(emoji);
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void removeEmoji(final Emoji emoji){
+//		emojiList.remove(emoji);
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	public int size(){
 		return emojiList.size();

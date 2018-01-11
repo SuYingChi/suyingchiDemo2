@@ -19,7 +19,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.InCallThemePreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ import static com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.wi
 public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeGalleryAdapter.ViewHolder>
         implements View.OnClickListener, ServiceListener {
 
-    private static final int ITEM_TYPE_BANNER = 0;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int ITEM_TYPE_BANNER = 0;
     private static final int ITEM_TYPE_THEME_VIEW = 1;
 
     private Context mContext;
@@ -46,10 +45,12 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         populateData();
     }
 
-    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .showImageOnFail(R.drawable.locker_theme_thumbnail_failed)
-            .showImageOnLoading(R.drawable.locker_theme_thumbnail_loading)
-            .cacheOnDisk(true).build();
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+//            .showImageOnFail(R.drawable.locker_theme_thumbnail_failed)
+//            .showImageOnLoading(R.drawable.locker_theme_thumbnail_loading)
+//            .cacheOnDisk(true).build();
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void populateData() {
         mThemes.clear();
@@ -129,11 +130,10 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
     }
 
     public static class GridSpanSizer extends GridLayoutManager.SpanSizeLookup {
-        LockerThemeGalleryAdapter mAdapter;
+        // --Commented out by Inspection (18/1/11 下午2:41):LockerThemeGalleryAdapter mAdapter;
 
         public GridSpanSizer(LockerThemeGalleryAdapter adapter) {
             super();
-            mAdapter = adapter;
             setSpanIndexCacheEnabled(true);
         }
 

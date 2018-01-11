@@ -42,9 +42,11 @@ public class FontModel implements ICondition {
         return hsSpecialCharacter.name;
     }
 
-    public boolean getNeedDownload() {
-        return needDownload;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean getNeedDownload() {
+//        return needDownload;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setNeedDownload(boolean download) {
         needDownload = download;

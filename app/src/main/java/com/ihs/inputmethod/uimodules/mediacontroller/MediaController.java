@@ -19,19 +19,21 @@ public class MediaController {
     private static MediaController mediaController;
 
     private static Configuration configuration;
-    private static ConvertManager convertManager;
-    private static FileManager fileManager;
-    private static DownloadManager downloadManager;
-    private static ShareManager shareManager;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static ConvertManager convertManager;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static FileManager fileManager;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static DownloadManager downloadManager;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static ShareManager shareManager;
 
-    public static MediaController getInstance(){
-        if(mediaController == null){
-            synchronized (MediaController.class){
-                mediaController = new MediaController();
-            }
-        }
-        return mediaController;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static MediaController getInstance(){
+//        if(mediaController == null){
+//            synchronized (MediaController.class){
+//                mediaController = new MediaController();
+//            }
+//        }
+//        return mediaController;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static void setFaceNameProvider(@NonNull FaceNameProvider aFaceNameProvider) {
         faceNameProvider = aFaceNameProvider;
@@ -52,10 +54,12 @@ public class MediaController {
         return configuration;
     }
 
-    public static ConvertManager getConvertManager(){
-
-        return ConvertManager.getInstance();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static ConvertManager getConvertManager(){
+//
+//        return ConvertManager.getInstance();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
     public static DownloadManager getDownloadManger(){
 
         return DownloadManager.getInstance();
@@ -95,29 +99,39 @@ public class MediaController {
             mp4SharePath = HSDirectoryManager.getInstance().getSDPackagePath(HSDirectoryManager.Environments.SHARE_MP4);
         }
 
-        public Configuration(Configuration config){
-            gifDownloadPath = config.gifDownloadPath;
-            originGifDownloadPath = config.originGifDownloadPath;
-            gifSharePath = config.gifSharePath;
-            mp4DownloadPath = config.mp4DownloadPath;
-            mp4SharePath = config.mp4SharePath;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public Configuration(Configuration config){
+//            gifDownloadPath = config.gifDownloadPath;
+//            originGifDownloadPath = config.originGifDownloadPath;
+//            gifSharePath = config.gifSharePath;
+//            mp4DownloadPath = config.mp4DownloadPath;
+//            mp4SharePath = config.mp4SharePath;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        public void setGifDownloadPath(String gifDownloadPath) {
-            this.gifDownloadPath = gifDownloadPath;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public void setGifDownloadPath(String gifDownloadPath) {
+//            this.gifDownloadPath = gifDownloadPath;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        public void setGifSharePath(String gifSharePath) {
-            this.gifSharePath = gifSharePath;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public void setGifSharePath(String gifSharePath) {
+//            this.gifSharePath = gifSharePath;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        public void setMp4DownloadPath(String mp4DownloadPath) {
-            this.mp4DownloadPath = mp4DownloadPath;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public void setMp4DownloadPath(String mp4DownloadPath) {
+//            this.mp4DownloadPath = mp4DownloadPath;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        public void setMp4SharePath(String mp4SharePath) {
-            this.mp4SharePath = mp4SharePath;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public void setMp4SharePath(String mp4SharePath) {
+//            this.mp4SharePath = mp4SharePath;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         public String getGifDownloadPath() {
             return gifDownloadPath;
@@ -127,9 +141,11 @@ public class MediaController {
             return originGifDownloadPath;
         }
 
-        public void setOriginGifDownloadPath(String originGifDownloadPath) {
-            this.originGifDownloadPath = originGifDownloadPath;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public void setOriginGifDownloadPath(String originGifDownloadPath) {
+//            this.originGifDownloadPath = originGifDownloadPath;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         public String getGifSharePath() {
             return gifSharePath;

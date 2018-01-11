@@ -117,14 +117,16 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
 
     }
 
-    /**
-     * 获得该位置
-     *
-     * @return
-     */
-    public int getmPosition() {
-        return mPosition;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * 获得该位置
+//     *
+//     * @return
+//     */
+//    public int getmPosition() {
+//        return mPosition;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * 关联Viewpager并初始化指示点
@@ -148,7 +150,7 @@ public class DotsRadioGroup extends RadioGroup implements ViewPager.OnPageChange
         params.setMargins(10, 0, 10, 0);
         params.gravity = Gravity.CENTER;
 
-        RadioButton radioButton = null;
+        RadioButton radioButton;
         for (int i = 0; i < pageCount; i++) {
             radioButton = new RadioButton(HSApplication.getContext());
             //TODO: 为什么 stateListDrawable.mutate() 不起作用？
