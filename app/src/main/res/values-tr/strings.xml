@@ -77,7 +77,6 @@
     <string name="setting_item_fonts">Yazı tipleri</string>
 
     <string name="setting_item_sounds">Sesler</string>
-    <string name="setting_item_swipe">Kaydır</string>
     <string name="setting_item_add_languages">Dil Ekle</string>
     <string name="setting_item_more_settings">Daha Fazla Ayar</string>
 
@@ -155,7 +154,6 @@
     <string name="apk_update_alert_title">Son Sürümü İndir</string>
     <string name="apk_update_alert_negative_btn">DAHA SONRA</string>
     <string name="apk_update_alert_positive_btn">GÜNCELLE</string>
-    <string name="apk_update_downloading">Güncelleme indiriliyor</string>
 
 
     <string name="sd_card_unavailable_tip">SD kartı kullanılamıyor!</string>

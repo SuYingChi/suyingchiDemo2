@@ -35,7 +35,6 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/progress_container"

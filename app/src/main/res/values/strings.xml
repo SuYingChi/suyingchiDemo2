@@ -79,7 +79,6 @@
     <string name="setting_item_fonts">Fonts</string>
 
     <string name="setting_item_sounds">Sounds</string>
-    <string name="setting_item_swipe">Swipe</string>
     <string name="setting_item_add_languages">Add Language</string>
     <string name="setting_item_more_settings">More Settings</string>
 
@@ -157,7 +156,6 @@
     <string name="apk_update_alert_title">Download Latest Version</string>
     <string name="apk_update_alert_negative_btn">LATER</string>
     <string name="apk_update_alert_positive_btn">UPDATE</string>
-    <string name="apk_update_downloading">Update downloading</string>
 
 
     <string name="sd_card_unavailable_tip">SD card is not available!</string>

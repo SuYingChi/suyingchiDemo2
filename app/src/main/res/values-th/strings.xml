@@ -77,7 +77,6 @@
     <string name="setting_item_fonts">ฟอนต์</string>
 
     <string name="setting_item_sounds">เสียง</string>
-    <string name="setting_item_swipe">ปัด</string>
     <string name="setting_item_add_languages">เพิ่มภาษา</string>
     <string name="setting_item_more_settings">การตั้งค่าเพิ่มเติม</string>
 
@@ -155,7 +154,6 @@
     <string name="apk_update_alert_title">ดาวน์โหลดเวอร์ชันล่าสุด</string>
     <string name="apk_update_alert_negative_btn">ภายหลัง</string>
     <string name="apk_update_alert_positive_btn">อัปเดต</string>
-    <string name="apk_update_downloading">กำลังดาวน์โหลดอัปเดต</string>
 
 
     <string name="sd_card_unavailable_tip">SD การ์ดใช้งานไม่ได้!</string>

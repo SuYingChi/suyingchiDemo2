@@ -76,8 +76,7 @@
         <string name="setting_item_fonts">Шрифты</string>
         
         <string name="setting_item_sounds">Звуки</string>
-        <string name="setting_item_swipe">Смахнуть</string>
-        <string name="setting_item_add_languages">Добавить язык</string>
+    <string name="setting_item_add_languages">Добавить язык</string>
         <string name="setting_item_more_settings">Дополнительные параметры</string>
         
         <!--settings panel-->
@@ -155,10 +154,9 @@
         <string name="apk_update_alert_title">Скачать последнюю версию</string>
         <string name="apk_update_alert_negative_btn">Позже</string>
         <string name="apk_update_alert_positive_btn">Обновить</string>
-        <string name="apk_update_downloading">Загрузка обновления</string>
 
 
-        <string name="sd_card_unavailable_tip">SD-карта недоступна!</string>
+    <string name="sd_card_unavailable_tip">SD-карта недоступна!</string>
         
         <string name="theme_create_custom_theme_failed">Включите интеллектуальную зарядку для предотвращения перезаряда. Содержит рекламу.</string>
 

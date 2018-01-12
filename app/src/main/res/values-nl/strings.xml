@@ -74,8 +74,7 @@ Bevat gesponsorde inhoud.</string>
         <string name="setting_item_fonts">Lettertypen</string>
         
         <string name="setting_item_sounds">Snelkoppeling</string>
-        <string name="setting_item_swipe">Vegen</string>
-        <string name="setting_item_add_languages">Taal toevoegen</string>
+    <string name="setting_item_add_languages">Taal toevoegen</string>
         <string name="setting_item_more_settings">Meer instellingen</string>
         
         <!--settings panel-->
@@ -153,10 +152,9 @@ Bevat gesponsorde inhoud.</string>
         <string name="apk_update_alert_title">De nieuwste versie downloaden</string>
         <string name="apk_update_alert_negative_btn">Later</string>
         <string name="apk_update_alert_positive_btn">Bijwerken</string>
-        <string name="apk_update_downloading">Update wordt gedownload</string>
 
 
-        <string name="sd_card_unavailable_tip">SD-kaart is niet beschikbaar!</string>
+    <string name="sd_card_unavailable_tip">SD-kaart is niet beschikbaar!</string>
         
         <string name="theme_create_custom_theme_failed">Schakel Slim opladen in om overlading doeltreffend te voorkomen. Bevat betaalde inhoud.</string>
 

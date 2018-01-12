@@ -76,8 +76,7 @@ Enthält Werbung.</string>
         <string name="setting_item_fonts">Schriftart</string>
         
         <string name="setting_item_sounds">Klänge</string>
-        <string name="setting_item_swipe">Wischen</string>
-        <string name="setting_item_add_languages">Sprache hinzufügen</string>
+    <string name="setting_item_add_languages">Sprache hinzufügen</string>
         <string name="setting_item_more_settings">Weitere Einstellungen</string>
         
         <!--settings panel-->
@@ -155,10 +154,9 @@ Enthält Werbung.</string>
         <string name="apk_update_alert_title">Neuste Version herunterladen</string>
         <string name="apk_update_alert_negative_btn">Später</string>
         <string name="apk_update_alert_positive_btn">Aktualisieren</string>
-        <string name="apk_update_downloading">Update wird heruntergeladen</string>
 
 
-        <string name="sd_card_unavailable_tip">SD-Karte nicht verfügbar!</string>
+    <string name="sd_card_unavailable_tip">SD-Karte nicht verfügbar!</string>
         
         <string name="theme_create_custom_theme_failed">Design konnte nicht erstellt werden. Bitte sicherstellen, dass genügend Speicherplatz auf Ihrem Gerät vorhanden ist und erneut versuchen.</string>
 

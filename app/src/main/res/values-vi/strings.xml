@@ -77,7 +77,6 @@
     <string name="setting_item_fonts">Phông chữ</string>
 
     <string name="setting_item_sounds">Âm thanh</string>
-    <string name="setting_item_swipe">Trượt</string>
     <string name="setting_item_add_languages">Thêm Ngôn ngữ</string>
     <string name="setting_item_more_settings">Cài đặt Khác</string>
 
@@ -155,7 +154,6 @@
     <string name="apk_update_alert_title">Tải Phiên Bản Mới Nhất</string>
     <string name="apk_update_alert_negative_btn">ĐỂ SAU</string>
     <string name="apk_update_alert_positive_btn">CẬP NHẬT</string>
-    <string name="apk_update_downloading">Đang tải xuống cập nhật</string>
 
 
     <string name="sd_card_unavailable_tip">Thẻ SD không khả dụng!</string>

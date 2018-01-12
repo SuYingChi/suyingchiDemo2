@@ -75,8 +75,7 @@
         <string name="setting_item_fonts">Police</string>
         
         <string name="setting_item_sounds">Son de clic</string>
-        <string name="setting_item_swipe">Action du balayage</string>
-        <string name="setting_item_add_languages">Ajouter des langues</string>
+    <string name="setting_item_add_languages">Ajouter des langues</string>
         <string name="setting_item_more_settings">Plus de paramètres</string>
         
         <!--settings panel-->
@@ -154,10 +153,9 @@
         <string name="apk_update_alert_title">Télécharger la dernière version</string>
         <string name="apk_update_alert_negative_btn">Plus tard</string>
         <string name="apk_update_alert_positive_btn">Mettre à jour</string>
-        <string name="apk_update_downloading">Mise à jour en cours de téléchargement</string>
 
 
-        <string name="sd_card_unavailable_tip">La carte SD n\'est pas disponible !</string>
+    <string name="sd_card_unavailable_tip">La carte SD n\'est pas disponible !</string>
         
         <string name="theme_create_custom_theme_failed">Échec de création du thème. Veuillez vérifier que l\'appareil dispose de suffisamment d\'espace libre et réessayez.</string>
 

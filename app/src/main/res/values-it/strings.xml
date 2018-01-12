@@ -75,8 +75,7 @@ Include contenuti sponsorizzati.</string>
         <string name="setting_item_fonts">Carattere</string>
         
         <string name="setting_item_sounds">Suono del Clic</string>
-        <string name="setting_item_swipe">Scorri l\'elemento</string>
-        <string name="setting_item_add_languages">Aggiungi lingua</string>
+    <string name="setting_item_add_languages">Aggiungi lingua</string>
         <string name="setting_item_more_settings">Più impostazioni</string>
         
         <!--settings panel-->
@@ -154,10 +153,9 @@ Include contenuti sponsorizzati.</string>
         <string name="apk_update_alert_title">Scarica la versione più recente</string>
         <string name="apk_update_alert_negative_btn">Più tardi</string>
         <string name="apk_update_alert_positive_btn">Aggiorna</string>
-        <string name="apk_update_downloading">Download aggiornamento in corso</string>
 
 
-        <string name="sd_card_unavailable_tip">La scheda SD non è disponibile!</string>
+    <string name="sd_card_unavailable_tip">La scheda SD non è disponibile!</string>
         
         <string name="theme_create_custom_theme_failed">Creazione di tema non riuscita. Assicurati di avere abbastanza spazio sul disco del dispositivo e riprova.</string>
 

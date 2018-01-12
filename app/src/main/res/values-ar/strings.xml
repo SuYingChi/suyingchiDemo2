@@ -75,8 +75,7 @@
         <string name="setting_item_fonts">الخطوط</string>
         
         <string name="setting_item_sounds">اختر تأثير الضغطة</string>
-        <string name="setting_item_swipe">سحب</string>
-        <string name="setting_item_add_languages">إضافة لغة</string>
+    <string name="setting_item_add_languages">إضافة لغة</string>
         <string name="setting_item_more_settings">المزيد من الإعدادات</string>
         
         <!--settings panel-->
@@ -154,10 +153,9 @@
         <string name="apk_update_alert_title">تنزيل آخر إصدار</string>
         <string name="apk_update_alert_negative_btn">لاحقًا</string>
         <string name="apk_update_alert_positive_btn">تحديث</string>
-        <string name="apk_update_downloading">جارٍ تنزيل التحديث</string>
 
 
-        <string name="sd_card_unavailable_tip">بطاقة SD غير متاحة!</string>
+    <string name="sd_card_unavailable_tip">بطاقة SD غير متاحة!</string>
         
         <string name="theme_create_custom_theme_failed">قم بتفعيل الشحن الذكي لتجنب فرط الشحن بفعالية. يحتوي على إعلانات.</string>
 

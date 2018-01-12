@@ -77,7 +77,6 @@
     <string name="setting_item_fonts">फोंट्स</string>
 
     <string name="setting_item_sounds">ध्‍वनियां</string>
-    <string name="setting_item_swipe">स्‍वाइप करें</string>
     <string name="setting_item_add_languages">भाषा जोड़ें</string>
     <string name="setting_item_more_settings">अधिक सेटिंग्‍स</string>
 
@@ -155,7 +154,6 @@
     <string name="apk_update_alert_title">नवीनतम संस्‍करण डाउनलोड करें</string>
     <string name="apk_update_alert_negative_btn">बाद में</string>
     <string name="apk_update_alert_positive_btn">अपडेट करें</string>
-    <string name="apk_update_downloading">डाउनलोडिंग अपडेट करें</string>
 
 
     <string name="sd_card_unavailable_tip">एसडी कार्ड उपलब्‍ध नहीं है!</string>

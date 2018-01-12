@@ -76,8 +76,7 @@ Incluye contenido patrocinado.</string>
         <string name="setting_item_fonts">fuente</string>
         
         <string name="setting_item_sounds">Sonido de teclas</string>
-        <string name="setting_item_swipe">Deslizar</string>
-        <string name="setting_item_add_languages">Añadir idioma</string>
+    <string name="setting_item_add_languages">Añadir idioma</string>
         <string name="setting_item_more_settings">Más ajustes</string>
         
         <!--settings panel-->
@@ -155,10 +154,9 @@ Incluye contenido patrocinado.</string>
         <string name="apk_update_alert_title">Descarga la última versión</string>
         <string name="apk_update_alert_negative_btn">Más tarde</string>
         <string name="apk_update_alert_positive_btn">Actualizar</string>
-        <string name="apk_update_downloading">Descargando actualización</string>
 
 
-        <string name="sd_card_unavailable_tip">¡Tarjeta SD no disponible!</string>
+    <string name="sd_card_unavailable_tip">¡Tarjeta SD no disponible!</string>
         
         <string name="theme_create_custom_theme_failed">Error al crear el tema. Comprueba que hay espacio en disco suficiente en tu dispositivo y vuelve a intentarlo.</string>
 
