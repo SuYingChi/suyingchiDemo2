@@ -136,15 +136,6 @@ android {
             signingConfig signingConfigs.grinReleaseConfig
         }
 
-        ecstasy {
-            applicationId = "ecstasy.applicationId"
-            versionCode 8
-            versionName "1.2.1"
-            manifestPlaceholders = [APPLY_SCHEME: "ecstasyKeyboard"]
-            buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
-            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
-            buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
-        }
     }
 
     packagingOptions {
