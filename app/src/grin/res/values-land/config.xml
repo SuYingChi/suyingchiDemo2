@@ -20,6 +20,4 @@
 <!-- Configuration values for Small Phone Landscape. -->
 <resources>
 
-    <dimen name="config_space_key_offesty_pop">4dp</dimen>
-
 </resources>

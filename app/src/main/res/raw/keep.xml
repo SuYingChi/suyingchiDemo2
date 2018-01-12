@@ -2,4 +2,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:keep="@array/emoji-*,@drawable/*facemoji*,@drawable/tabbar_*,@drawable/ic_launcher*,@drawable/ic_settings*,
     @drawable/ic_notification,@drawable/menu_*,@drawable/key_space_logo,@array/themes_buildin_names,@drawable/nav_*,@array/text_*,
-@mipmap/*,@drawable/theme_*,@layout/*facemoji*,@layout/item_sticker_more_coming" />
+@mipmap/*,@drawable/theme_*,@layout/*facemoji*,@layout/item_sticker_more_coming,@string/keyboard_theme*" />
