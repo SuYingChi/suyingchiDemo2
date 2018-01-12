@@ -17,9 +17,9 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.ui.AnimationLayout;
 import java.util.List;
 
 class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
-    // --Commented out by Inspection (18/1/11 下午2:41):private static String TAG = "FacemojiPalettesAdapter";
+    private static String TAG = "FacemojiPalettesAdapter";
     private SparseArray<FacemojiPageGridView> mActivePageViews = new SparseArray<>();
-    // --Commented out by Inspection (18/1/11 下午2:41):private FacemojiLayoutParams mImageLayoutParams;
+    private FacemojiLayoutParams mImageLayoutParams;
     private int orientation;
 
     private int mActivePosition = 0;
@@ -28,6 +28,7 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
     public FacemojiPalettesAdapter(FacemojiPalettesView facemojiPalettesView,
                                    FacemojiLayoutParams imageLayoutParams) {
         mFacemojiPalettesView = facemojiPalettesView;
+        mImageLayoutParams = imageLayoutParams;
         orientation = facemojiPalettesView.getResources().getConfiguration().orientation;
     }
 
@@ -49,11 +50,9 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
         mActivePosition = position;
     }
 
-// --Commented out by Inspection START (18/1/11 下午2:41):
-//    public void clear() {
-//        mActivePageViews.clear();
-//    }
-// --Commented out by Inspection STOP (18/1/11 下午2:41)
+    public void clear() {
+        mActivePageViews.clear();
+    }
 
     @Override
     public Object instantiateItem(final ViewGroup container, final int position) {
@@ -109,11 +108,9 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
     }
 
 
-// --Commented out by Inspection START (18/1/11 下午2:41):
-//    private boolean isCurrentPage(final int position) {
-//        return position == mFacemojiPalettesView.getCurrentPagerPosition();
-//    }
-// --Commented out by Inspection STOP (18/1/11 下午2:41)
+    private boolean isCurrentPage(final int position) {
+        return position == mFacemojiPalettesView.getCurrentPagerPosition();
+    }
 
     public void pauseAnimation() {
         stopAnimation(mActivePosition);
@@ -179,18 +176,16 @@ class FacemojiPalettesAdapter extends PagerAdapter implements Recoverable {
         }
     }
 
-// --Commented out by Inspection START (18/1/11 下午2:41):
-//    public void notifyDownloaded(int position) {
-//        FacemojiPageGridView gridView = mActivePageViews.get(position);
-//        if (gridView != null) {
-//            FacemojiPageGridAdapter adapter = (FacemojiPageGridAdapter) gridView.getOriginalAdapter();
-//            if (adapter != null){
-//                adapter.setData(FacemojiManager.getInstance().getDataFromPagePosition(position, FacemojiManager.ShowLocation.Keyboard,orientation));
-//                adapter.notifyDataSetChanged();
-//            }
-//        }
-//    }
-// --Commented out by Inspection STOP (18/1/11 下午2:41)
+    public void notifyDownloaded(int position) {
+        FacemojiPageGridView gridView = mActivePageViews.get(position);
+        if (gridView != null) {
+            FacemojiPageGridAdapter adapter = (FacemojiPageGridAdapter) gridView.getOriginalAdapter();
+            if (adapter != null){
+                adapter.setData(FacemojiManager.getInstance().getDataFromPagePosition(position, FacemojiManager.ShowLocation.Keyboard,orientation));
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
 
     @Override
     public void save() {
