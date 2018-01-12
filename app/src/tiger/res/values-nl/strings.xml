@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="feedback_email">feedback.mobipioneer@hotmail.com</string>
     <string name="fb_app_id">725261934240541</string>
 
     <string name="accessibility_service_description">Zet de schakelaar rechtsboven \'AAN\'. ↗️⊙.⊙↗️
@@ -10,5 +9,4 @@ Opmerking: mogelijk ontvang je een systeemwaarschuwing over de machtiging. Emoji
 
     <string name="theme_share_text_content">Mijn aangepaste toetsenbord gemaakt met #%1$s https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
     <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free: https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
-    <string name="settings_button_tell_a_friend_content">Hé, je moet echt de app %1$s keyboard proberen! Je kunt je toetsenbord aanpassen met je eigen plaatjes! En de ⒻⓄⓃⓉⓈ en emoticons zijn geweldig. Download #%2$s gratis: https://play.google.com/store/apps/details?id=com.mobipioneer.emojikeyboard</string>
 </resources>

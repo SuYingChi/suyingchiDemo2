@@ -6,44 +6,18 @@
     <string name="ad_placement_cardad">Smileykey_A(NativeAds)CardAd</string>
     <string name="ad_placement_keyboardemojiad">Smileykey_A(NativeAds)KeyboardEmojiAd</string>
     <string name="ad_placement_keyboardsettingsad">Smileykey_A(NativeAds)KeyboardSettingsAd</string>
-    <string name="ad_placement_themead">Smileykey_A(NativeAds)ThemeAd</string>
-    <string name="ad_placement_themedetailad">Smileykey_A(NativeAds)ThemeDetailAd</string>
     <string name="ad_placement_themetryad">Smileykey_A(NativeAds)ThemeTryAd</string>
-    <string name="ad_placement_uninstall">Smileykey_A(NativeAds)Uninstall</string>
     <string name="ad_placement_customize_theme">Smileykey_A(NativeAds)CustomizeThemeAd</string>
 
-    <string name="ad_placement_boostdone">Smileykey_A(NativeAds)BoostDone</string>
-    <string name="ad_placement_applock">Smileykey_A(NativeAds)AppLock</string>
-    <string name="ad_placement_optimization">Smileykey_A(NativeAds)Optimization</string>
     <string name="ad_placement_charging">Smileykey_A(NativeAds)Charging</string>
-    <string name="ad_placement_exit_alert_dialog">Smileykey_A(NativeAds)QuitAlert</string>
     <string name="ad_placement_google_play_ad">Smileykey_A(NativeAds)GooglePlayIcon</string>
     <string name="ad_placement_gift_ad">Smileykey_A(NativeAds)KeyboardGiftAd</string>
 
-    <string name="placement_full_screen_trial_keyboard">Smileykey_A(InterstitialAds)TrialKeyboardFullScreenAd</string>
     <string name="placement_full_screen_open_keyboard">Smileykey_A(InterstitialAds)OpenKeyboardFullScreenAd</string>
-
-    <string name="ga_fullscreen_theme_apply_load_ad">NativeAd_Smileykey_A(NativeAds)ThemeApplyFullScreenAd_Load</string>
-    <string name="ga_fullscreen_theme_apply_show_ad">NativeAd_Smileykey_A(NativeAds)ThemeApplyFullScreenAd_Show</string>
-    <string name="ga_fullscreen_theme_apply_click_ad">NativeAd_Smileykey_A(NativeAds)ThemeApplyFullScreenAd_Click</string>
-    <string name="ga_fullscreen_theme_apply_display_ad">NativeAd_Smileykey_A(NativeAds)ThemeApplyFullScreenAd_DisplayTime</string>
-
-    <string name="ga_fullscreen_theme_save_load_ad">NativeAd_Smileykey_A(NativeAds)ThemeApplyFullScreenAd_Load</string>
-    <string name="ga_fullscreen_theme_save_show_ad">NativeAd_Smileykey_A(NativeAds)ThemeApplyFullScreenAd_Show</string>
-    <string name="ga_fullscreen_theme_save_click_ad">NativeAd_Smileykey_A(NativeAds)ThemeApplyFullScreenAd_Click</string>
-    <string name="ga_fullscreen_theme_save_display_ad">NativeAd_Smileykey_A(NativeAds)ThemeApplyFullScreenAd_DisplayTime</string>
 
     <string name="ad_placement_applying">Smileykey_A(NativeAds)ApplyingItem</string>
 
-    <string name="placement_full_screen_at_app_open">Smileykey_A(InterstitialAds)AppOpenedFullScreenAd</string>
-    <string name="placement_full_screen_at_phone_unlock">Smileykey_A(InterstitialAds)PhoneUnlockFullScreenAd</string>
-    <string name="placement_full_screen_at_app_quit">Smileykey_A(InterstitialAds)AppQuitFullScreenAd</string>
-    <string name="placement_full_screen_at_phone_wake">Smileykey_A(InterstitialAds)PhoneWakeFullScreenAd</string>
-    <string name="placement_full_screen_at_app_uninstall">Smileykey_A(InterstitialAds)AppUninstallFullScreenAd</string>
-
     <string name="theme_ad_placement_theme_ad">Smileykey_A(NativeAds)ThemeAd</string>
-    <string name="ad_placement_lucky">Smileykey_A(NativeAds)KeyboardLuckyAd</string>
-    <string name="ad_placement_locker">Smileykey_A(NativeAds)Fuse</string>
     <string name="ad_placement_google_play_dialog_ad">Smileykey_A(NativeAds)GooglePlayNative</string>
     <string name="ad_placement_keyboard_banner">Smileykey_A(NativeAds)KeyboardBanner</string>
 
