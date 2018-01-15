@@ -62,7 +62,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
         contentContainerWidth = (int) (selectedWidth * width2 / width1);
         contentContainerHeight = (int) (selectedHeight * height2 / height1);
 
-        requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE);
+        requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).override(contentContainerWidth,contentContainerHeight);
     }
 
     @Override
@@ -110,14 +110,13 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 
             @Override
             public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                viewHolder.content.setImageBitmap(resource);
                 viewHolder.check.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(themeName) ? View.VISIBLE : View.GONE);
                 if (themePanelModel.isCustomTheme && themePanelModel.isCustomThemeInEditMode) {
                     viewHolder.delete.setVisibility(HSKeyboardThemeManager.getCurrentThemeName().equals(themeName) ? View.GONE : View.VISIBLE);
                 }
                 return false;
             }
-        }).load(url).submit(contentContainerWidth, contentContainerHeight);
+        }).load(url).into(viewHolder.content);
 
         viewHolder.contentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
