@@ -121,21 +121,17 @@ public class HSUIApplication extends HSInputMethodApplication {
             intent = new Intent();
         }
 
-        // need to pass the intent to the main activity
-        if (!TextUtils.isEmpty(intent.getScheme())) {
-            intent.setClass(this, MainActivity.class);
-        } else if (isAccessibilityEnabled) {
-            if (!HSAccessibilityService.isAvailable()) {
-                intent.setClass(this, MainActivity.class);
-            } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
+        if (MainActivity.shouldShowThemeHome()) {
+            if (isAccessibilityEnabled && HSAccessibilityService.isAvailable() && !HSInputMethodListManager.isMyInputMethodSelected()) {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
+                splashActivity.startActivity(intent);
             } else {
-                intent.setClass(this, MainActivity.class);
+                MainActivity.startThemeHomeActivity(splashActivity);
             }
         } else {
             intent.setClass(this, MainActivity.class);
+            splashActivity.startActivity(intent);
         }
-        splashActivity.startActivity(intent);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -142,10 +143,6 @@ public class MainActivity extends HSAppCompatActivity {
 
     private boolean isInStepOne;
     private boolean clickStepOne;
-    /**
-     * 需要激活的主题包的PackageName，当点击主题片包的Apply时会传入
-     */
-    private String needActiveThemePkName = null;
 
     private CurrentUIStyle style;
 
@@ -506,18 +503,6 @@ public class MainActivity extends HSAppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         HSLog.d("MainActivity onNewIntent.");
-        Uri data = intent.getData();
-        if (data != null) {
-            String pkName = data.getQueryParameter("pkName");
-            if (!TextUtils.isEmpty(pkName)) {
-                HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
-                needActiveThemePkName = pkName;
-
-                if (shouldShowThemeHome() || (HSInputMethodListManager.isMyInputMethodSelected())) {
-                    startThemeHomeActivity();
-                }
-            }
-        }
         try {
             if (getIntent().getBooleanExtra("isInStepOne", false)) {
                 isInStepOne = true;
@@ -779,7 +764,6 @@ public class MainActivity extends HSAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         HSLog.d("MainActivity onDestroy.");
-        needActiveThemePkName = null;
         HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
         try {
             if (settingsContentObserver != null) {
@@ -860,12 +844,27 @@ public class MainActivity extends HSAppCompatActivity {
     }
 
     private void startThemeHomeActivity() {
+        startThemeHomeActivity(MainActivity.this);
+        finish();
+    }
+
+    public static void startThemeHomeActivity(Activity activity) {
         if (!hasInitKeyboardBeforeOnCreate) {
             HSUIInputMethodService.initResourcesBeforeOnCreate();
             hasInitKeyboardBeforeOnCreate = true;
         }
+        Uri data = activity.getIntent().getData();
+        String needActiveThemePkName = null;
+        if (data != null) {
+            String pkName = data.getQueryParameter("pkName");
+            if (!TextUtils.isEmpty(pkName)) {
+                HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
+                needActiveThemePkName = pkName;
+            }
+        }
 
-        Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
+
+        Intent startThemeHomeIntent = new Intent(HSApplication.getContext(), ThemeHomeActivity.class);
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
@@ -879,22 +878,20 @@ public class MainActivity extends HSAppCompatActivity {
                 }
             }
 
-            needActiveThemePkName = null;
         }
 
         int jumpCode = -1;
         try {
-            jumpCode = getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1);
+            jumpCode = activity.getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1);
         } catch (Exception e) {
-            Crashlytics.log(getIntent().toString() + HSDeviceUtils.getDeviceModel() + " CJX");
+            Crashlytics.log(activity.getIntent().toString() + HSDeviceUtils.getDeviceModel() + " CJX");
         }
         if (jumpCode != -1) {
             startThemeHomeIntent.putExtra(SplashActivity.JUMP_TAG, jumpCode);
         }
 
-        startActivity(startThemeHomeIntent);
-        overridePendingTransition(0, 0);
-        finish();
+        activity.overridePendingTransition(0, 0);
+        activity.startActivity(startThemeHomeIntent);
     }
 
     private void playManualButtonShowAnimation() {
@@ -981,7 +978,7 @@ public class MainActivity extends HSAppCompatActivity {
         mPrefs.edit().putBoolean(pref_name, true).apply();
     }
 
-    private boolean shouldShowThemeHome() {
+    public static boolean shouldShowThemeHome() {
         return HSPreferenceHelper.getDefault().getBoolean(PREF_THEME_HOME_SHOWED, false);
     }
 
