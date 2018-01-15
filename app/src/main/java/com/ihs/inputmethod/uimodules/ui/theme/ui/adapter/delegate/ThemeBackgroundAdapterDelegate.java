@@ -1,12 +1,10 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +15,8 @@ import android.widget.ImageView;
 
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
@@ -114,6 +108,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
     static class ThemeBackgroundAdapter extends RecyclerView.Adapter<ThemeBackgroundAdapter.Holder> {
         private Activity activity;
         private int portraitScreenWidth;
+        private final RequestOptions requestOptions;
         private List<Object> backgrounds = new ArrayList<>();
         private Map<String, KCNativeAdView> backgroundNativeAdViews = new HashMap<>();
         private final INotificationObserver notificationObserver = new INotificationObserver() {
@@ -146,6 +141,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             this.activity = activity;
             int widthPixels = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels;
             int heightPixels = HSApplication.getContext().getResources().getDisplayMetrics().heightPixels;
+            requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE);
             portraitScreenWidth = widthPixels < heightPixels ? widthPixels : heightPixels;
             HSGlobalNotificationCenter.addObserver(KCCustomThemeManager.NOTIFICATION_KEY_CUSTOM_THEME_ELEMENT_CHANGED, notificationObserver);
             HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
@@ -284,21 +280,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             holder.backgroundContent.setImageURI(Uri.fromFile(new File(customThemeItemBase.getGifPreview())));
                         } else if (hasLocalPreview) {
                             holder.backgroundContent.setImageBitmap(null);
-                            Glide.with(HSApplication.getContext()).asBitmap().apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)).listener(new RequestListener<Bitmap>() {
-                                @Override
-                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                                    holder.backgroundContent.setImageDrawable(null);
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                    holder.backgroundContent.setImageBitmap(resource);
-                                    return false;
-                                }
-                            }).load(customThemeItemBase.getPreviewFileUrl()).into(holder.backgroundContent);
+                            Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(customThemeItemBase.getPreviewFileUrl()).into(holder.backgroundContent);
                         }
-
                         if (customThemeItemBase.isNew() || HSConfigUtils.toBoolean(customThemeItemBase.getConfigData().get("needNewVersionToUnlock"), false)) {
                             Drawable newMarkDrawable = KCElementResourseHelper.getBackgroundNewMarkDrawable();
                             if (newMarkDrawable != null) {

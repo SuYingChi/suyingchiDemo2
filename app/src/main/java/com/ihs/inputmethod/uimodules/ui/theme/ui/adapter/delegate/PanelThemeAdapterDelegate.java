@@ -46,6 +46,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
     private int selectedWidth;
     private int contentContainerHeight;
     private int contentContainerWidth;
+    private final RequestOptions requestOptions;
 
     public PanelThemeAdapterDelegate(int spanCount) {
         float width1 = 280, width2 = 260, height1 = 150, height2 = 130;
@@ -60,6 +61,8 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
 
         contentContainerWidth = (int) (selectedWidth * width2 / width1);
         contentContainerHeight = (int) (selectedHeight * height2 / height1);
+
+        requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE);
     }
 
     @Override
@@ -99,7 +102,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
         viewHolder.delete.setVisibility(View.GONE);
         String url = themePanelModel.keyboardTheme.getThemeType() == HSKeyboardTheme.ThemeType.BUILD_IN ? "file:///android_asset/" + themePanelModel.keyboardTheme.getThemePreviewPanelImageUrl() : themePanelModel.keyboardTheme.getThemePreviewPanelImageUrl();
 
-        Glide.with(HSApplication.getContext()).asBitmap().apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)).listener(new RequestListener<Bitmap>() {
+        Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).listener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 return false;
