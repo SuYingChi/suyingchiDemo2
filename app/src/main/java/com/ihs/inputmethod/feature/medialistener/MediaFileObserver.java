@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.provider.MediaStore;
 
@@ -38,26 +39,8 @@ public abstract class MediaFileObserver extends ContentObserver {
 
     @Override
     public void onChange(boolean selfChange, Uri uri) {
-        Cursor cursor = null;
-        try {
-            cursor = context.getContentResolver().query(uri, new String[]{
-                    MediaStore.Images.Media.DISPLAY_NAME,
-                    MediaStore.Images.Media.DATA
-            }, null, null, null);
-            if (cursor != null && cursor.moveToLast()) {
-                int displayNameColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
-                int dataColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-                String fileName = cursor.getString(displayNameColumnIndex);
-                String path = cursor.getString(dataColumnIndex);
-                logPic(path, fileName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
+        MyTask myTask = new MyTask();
+        myTask.execute(uri);
         super.onChange(selfChange, uri);
     }
 
@@ -74,4 +57,31 @@ public abstract class MediaFileObserver extends ContentObserver {
         }
     }
 
+    private class MyTask extends AsyncTask<Uri, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Uri... uris) {
+            Cursor cursor = null;
+            try {
+                cursor = context.getContentResolver().query(uris[0], new String[]{
+                        MediaStore.Images.Media.DISPLAY_NAME,
+                        MediaStore.Images.Media.DATA
+                }, null, null, null);
+                if (cursor != null && cursor.moveToLast()) {
+                    int displayNameColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
+                    int dataColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                    String fileName = cursor.getString(displayNameColumnIndex);
+                    String path = cursor.getString(dataColumnIndex);
+                    logPic(path, fileName);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+            return null;
+        }
+    }
 }
