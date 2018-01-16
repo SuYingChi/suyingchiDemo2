@@ -18,7 +18,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -138,7 +138,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                                             HSToastUtils.toastCenterLong(String.format(failedString, themeShowName));
                                         }
 
-                                        HSAnalytics.logEvent("keyboard_theme_chosed", "themeType", HSKeyboardThemeManager.isCustomTheme(themeName) ? "mytheme" : themeName);
+                                        KCAnalytics.logEvent("keyboard_theme_chosed", "themeType", HSKeyboardThemeManager.isCustomTheme(themeName) ? "mytheme" : themeName);
                                         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                                             ThemeAnalyticsReporter.getInstance().recordThemeUsage(themeName);
                                         }
@@ -168,7 +168,7 @@ public final class PanelThemeAdapterDelegate extends AdapterDelegate<List<ThemeP
                 @Override
                 public void onClick(View v) {
                     KCCustomThemeManager.getInstance().removeCustomTheme(themeName);
-                    HSAnalytics.logEvent("keyboard_customtheme_deleted");
+                    KCAnalytics.logEvent("keyboard_customtheme_deleted");
                 }
             });
         }

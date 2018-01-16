@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -104,7 +104,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
 
             @Override
             public void onCardClick(StickerHomeModel stickerHomeModel, Drawable drawable) {
-                HSAnalytics.logEvent(stickerHomeModel.stickerGroup.getStickerGroupName(), "sticker_download_clicked");
+                KCAnalytics.logEvent(stickerHomeModel.stickerGroup.getStickerGroupName(), "sticker_download_clicked");
                 onDownloadClick(stickerHomeModel, drawable);
             }
 
@@ -127,7 +127,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
                                     @Override
                                     public void onDismiss(boolean success, boolean manually) {
                                         if (success) {
-                                            HSAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                                            KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
                                             StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
                                             int position = stickerModelList.indexOf(stickerHomeModel);

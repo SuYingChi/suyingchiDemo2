@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -45,7 +45,7 @@ public class SplashActivity extends HSDeepLinkActivity {
         } else {
             openFrom = "fromKeyboard";
         }
-        HSAnalytics.logEvent("app_opened_new", "from", openFrom);
+        KCAnalytics.logEvent("app_opened_new", "from", openFrom);
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {
@@ -75,7 +75,7 @@ public class SplashActivity extends HSDeepLinkActivity {
                 valueMap.put("compareResult", "greater ERROR");
             }
 
-            HSAnalytics.logEvent(APP_FIRST_TIME_START, valueMap);
+            KCAnalytics.logEvent(APP_FIRST_TIME_START, valueMap);
             spHelper.putBoolean(APP_FIRST_TIME_START, false);
         }
     }

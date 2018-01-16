@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
@@ -51,6 +50,7 @@ import com.ihs.panelcontainer.KeyboardPanelSwitchContainer;
 import com.ihs.panelcontainer.KeyboardPanelSwitcher;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.kc.utils.KCFeatureControlUtils;
 import com.keyboard.common.SplashActivity;
 import com.keyboard.core.session.KCKeyboardSession;
@@ -226,7 +226,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     keyboardPanelSwitchContainer.showChildPanel(HSNewSettingsPanel.class, null);
                     functionBar.hideMenuButton(functionBar.getSoftGameButton());
                     functionBar.hideMenuButton(functionBar.getWebSeachButton());
-                    HSAnalytics.logEvent("keyboard_function_button_click");
+                    KCAnalytics.logEvent("keyboard_function_button_click");
                     break;
 
                 case SettingsButton.SettingButtonType.SETTING:
@@ -259,7 +259,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             intent.putExtra("From", "Keyboard");
             intent.putExtra(SplashActivity.JUMP_TAG, SplashActivity.JUMP_TO_THEME_HOME);
             HSApplication.getContext().startActivity(intent);
-            HSAnalytics.logEvent("keyboard_cloth_button_click");
+            KCAnalytics.logEvent("keyboard_cloth_button_click");
         }
 
         if (view.getId() == R.id.func_facemoji_button){
@@ -361,7 +361,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
 
         acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
-        logGoogleAdEvent("Load");
 
         acbNativeAdLoader.load(4, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
@@ -373,8 +372,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     acbNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
                         @Override
                         public void onAdClick(AcbAd acbAd) {
-                            HSAnalytics.logEvent("keyboard_toolBar_click", "where", "GooglePlay_Search");
-                            logGoogleAdEvent("Click");
+                            KCAnalytics.logEvent("keyboard_toolBar_click", "where", "GooglePlay_Search");
                         }
                     });
                     if (gpNativeAdList == null || gpAdAdapter == null) {
@@ -396,10 +394,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             }
         });
 
-    }
-
-    private void logGoogleAdEvent(String action) {
-        HSAnalytics.logGoogleAnalyticsEvent("APP", "APP", "NativeAd_" + HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad) + "_" + action, "", null, (Map) null, (Map) null);
     }
 
     public void showCustomBar() {
@@ -427,7 +421,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         showCustomBar();
         for (AdCaffeNativeAd nativeAd : nativeAds) {
             nativeAd.handleImpression();
-            HSAnalytics.logEvent("searchads_impression", "appName", currentAppPackageName);
+            KCAnalytics.logEvent("searchads_impression", "appName", currentAppPackageName);
         }
 
 
@@ -437,7 +431,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                 @Override
                 public void onClick(AdCaffeNativeAd adCaffeNativeAd) {
                     showLoadingAlert();
-                    HSAnalytics.logEvent("searchads_click", "appName", currentAppPackageName);
+                    KCAnalytics.logEvent("searchads_click", "appName", currentAppPackageName);
                 }
 
                 @Override
@@ -513,7 +507,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
             if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
                 keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
             }
-            HSAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
+            KCAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
         });
         customizeBarLayout.setContent(gpAdRecyclerView);
         reloadGpAd();
@@ -527,8 +521,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
 
     public void logCustomizeBarShowed() {
         if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() == VISIBLE) {
-            HSAnalytics.logEvent("keyboard_toolBar_show", "where", "GooglePlay_Search");
-            logGoogleAdEvent("Show");
+            KCAnalytics.logEvent("keyboard_toolBar_show", "where", "GooglePlay_Search");
         }
     }
 

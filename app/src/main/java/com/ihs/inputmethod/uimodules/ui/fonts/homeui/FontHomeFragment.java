@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.crashlytics.android.Crashlytics;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -168,7 +168,7 @@ public class FontHomeFragment extends Fragment implements FontCardAdapter.OnFont
                         null, (success, manually) -> {
                             if (success) {
                                 HSFontDownloadManager.getInstance().updateFontModel(fontModel);
-                                HSAnalytics.logEvent("font_download_succeed", "FontName", fontName);
+                                KCAnalytics.logEvent("font_download_succeed", "FontName", fontName);
                             }
                         });
             }

@@ -11,7 +11,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -93,7 +93,7 @@ public class HSNewSettingsPanel extends BasePanel {
 
                 item.hideNewMark();
                 ((BaseFunctionBar) panelActionListener.getBarView()).hideNewMark();
-                HSAnalytics.logEvent("keyboard_setting_themes_clicked");
+                KCAnalytics.logEvent("keyboard_setting_themes_clicked");
             }
         });
         items.add(themeItem);
@@ -110,7 +110,7 @@ public class HSNewSettingsPanel extends BasePanel {
             @Override
             public void onItemClick(ViewItem item) {
                 getPanelActionListener().showChildPanel(HSFontSelectPanel.class, null);
-                HSAnalytics.logEvent("keyboard_setting_fonts_clicked");
+                KCAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -122,7 +122,7 @@ public class HSNewSettingsPanel extends BasePanel {
             selectorItem = ViewItemBuilder.getSelectorItem(new ViewItem.ViewItemListener() {
                 @Override
                 public void onItemClick(ViewItem item) {
-                    HSAnalytics.logEvent("keyboard_selector_clicked");
+                    KCAnalytics.logEvent("keyboard_selector_clicked");
                     getPanelActionListener().showChildPanel(HSSelectorPanel.class, new Bundle());
                 }
             });
@@ -142,7 +142,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         HSUIInputMethod.launchMoreLanguageActivity();
                     }
                 }, 100);
-                HSAnalytics.logEvent("keyboard_setting_addlanguage_clicked");
+                KCAnalytics.logEvent("keyboard_setting_addlanguage_clicked");
             }
         }));
         items.add(ViewItemBuilder.getMoreSettingsItem(new ViewItem.ViewItemListener() {
@@ -156,7 +156,7 @@ public class HSNewSettingsPanel extends BasePanel {
                         HSUIInputMethod.launchSettingsActivity();
                     }
                 }, 100);
-                HSAnalytics.logEvent("keyboard_setting_more_clicked");
+                KCAnalytics.logEvent("keyboard_setting_more_clicked");
             }
         }));
 

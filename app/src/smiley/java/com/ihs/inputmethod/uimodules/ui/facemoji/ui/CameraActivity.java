@@ -40,7 +40,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -741,7 +741,7 @@ public class CameraActivity extends HSAppCompatActivity {
     }
 
     public void takePicture(View v) {
-        HSAnalytics.logEvent("app_facemoji_camera_button_clicked", "hairStyle", getHairStyle());
+        KCAnalytics.logEvent("app_facemoji_camera_button_clicked", "hairStyle", getHairStyle());
         try {
             if (camera != null) {
                 camera.takePicture(null, null, new MyPictureCallback());
@@ -867,7 +867,7 @@ public class CameraActivity extends HSAppCompatActivity {
         // Finish Camera activity
         HSGlobalNotificationCenter.sendNotificationOnMainThread(FacemojiManager.FACEMOJI_SAVED);
 
-        HSAnalytics.logEvent("app_facemoji_created");
+        KCAnalytics.logEvent("app_facemoji_created");
         isSynthesisingImage = false;
     }
 

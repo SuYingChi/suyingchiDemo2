@@ -25,7 +25,7 @@ import com.acb.call.views.ThemePreviewWindow;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -144,7 +144,7 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         mSetCallThemeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSAnalytics.logEvent("app_callflash_applied", "themeName", themeType.getName());
+                KCAnalytics.logEvent("app_callflash_applied", "themeName", themeType.getName());
                 enableCallFlash();
                 HSPreferenceHelper.getDefault().putInt(CPConst.PREFS_SCREEN_FLASH_THEME_ID, themeType.getValue());
                 ToastUtils.showToast(R.string.interstitial_ad_title_after_try_keyboard);

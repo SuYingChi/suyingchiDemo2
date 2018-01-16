@@ -16,7 +16,7 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.feature.common.PreferenceHelper;
 import com.ihs.feature.common.ViewUtils;
@@ -88,7 +88,7 @@ public class OnlineWallpaperPage extends RelativeLayout {
             public void onClick(View v) {
                 int position = (int) v.getTag();
                 String title = (String) mTabs.getTabAt(position).getText();
-                HSAnalytics.logEvent("app_tab_top_wallpaper_clicked", "tabName", title.toLowerCase());
+                KCAnalytics.logEvent("app_tab_top_wallpaper_clicked", "tabName", title.toLowerCase());
             }
         });
 

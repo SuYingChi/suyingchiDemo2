@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
@@ -29,7 +29,7 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
 
 
     protected void onAlbumItemClicked(final BaseItemHolder holder, final Integer item) {
-        HSAnalytics.logEvent("app_customize_background_album_clicked");
+        KCAnalytics.logEvent("app_customize_background_album_clicked");
         fragment.pickFromGallery(new BackgroundFragment.OnSelectCallback() {
             @Override
             public void onSelectItem(int type) {
@@ -39,7 +39,7 @@ public class CameraAlbumProvider extends BaseThemeItemProvider<Integer, BaseThem
     }
 
     protected void onCameraItemClicked(final BaseItemHolder holder, final Integer item) {
-        HSAnalytics.logEvent("app_customize_background_camera_clicked");
+        KCAnalytics.logEvent("app_customize_background_camera_clicked");
         fragment.pickFromCamera(new BackgroundFragment.OnSelectCallback() {
             @Override
             public void onSelectItem(int type) {

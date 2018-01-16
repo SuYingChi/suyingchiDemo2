@@ -46,7 +46,7 @@ import android.widget.Toast;
 import com.acb.call.CPSettings;
 import com.acb.call.customize.AcbCallManager;
 import com.artw.lockscreen.LockerSettings;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -64,6 +64,7 @@ import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionSetting;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.common.DebugActivity;
 
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
@@ -330,10 +331,10 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
                                 AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
                             }
-                            HSAnalytics.logEvent("phoneboost_enabled");
+                            KCAnalytics.logEvent("phoneboost_enabled");
                         } else {
                             AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(getString(R.string.ad_placement_result_page));
-                            HSAnalytics.logEvent("phoneboost_disabled");
+                            KCAnalytics.logEvent("phoneboost_disabled");
                         }
                         return true;
                     }
@@ -403,7 +404,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                         isSettingChargingClicked = true;
                         ChargingConfigManager.getManager().setUserChangeChargingToggle();
                         String switchOn = isSwitchOn ? "true" : "false";
-                        HSAnalytics.logEvent(GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, "switchOn", switchOn);
+                        KCAnalytics.logEvent(GA_PARAM_ACTION_APP_SETTING_CHARGING_FIRSTTIME_CLICKED, "switchOn", switchOn);
                     }
 
                     if (isSwitchOn) {
@@ -536,10 +537,10 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                 return true;
             } else if (preference == findPreference("keyboard_settings")) {
                 HSUIInputMethod.launchSettingsActivity();
-                HSAnalytics.logEvent("sidebar_settings_clicked");
+                KCAnalytics.logEvent("sidebar_settings_clicked");
                 return true;
             } else if (preference == findPreference("removeAd")) {
-                HSAnalytics.logEvent("sidebar_removeAds_clicked");
+                KCAnalytics.logEvent("sidebar_removeAds_clicked");
                 RemoveAdsManager.getInstance().purchaseRemoveAds();
                 return true;
             } else if (preference == findPreference("privacy_policy")) {

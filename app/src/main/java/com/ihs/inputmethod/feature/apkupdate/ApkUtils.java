@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.commons.config.HSConfig;
@@ -123,7 +123,7 @@ public class ApkUtils {
 
         try {
             PackageInfo packageInfo = HSApplication.getContext().getPackageManager().getPackageInfo(HSApplication.getContext().getPackageName(), 0);
-            HSAnalytics.logEvent("update_alert_showed", "versionCode", packageInfo.versionCode + "");
+            KCAnalytics.logEvent("update_alert_showed", "versionCode", packageInfo.versionCode + "");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -137,7 +137,7 @@ public class ApkUtils {
                 .setPositiveButton(HSApplication.getContext().getString(R.string.apk_update_alert_positive_btn), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        HSAnalytics.logEvent("update_alert_update_clicked");
+                        KCAnalytics.logEvent("update_alert_update_clicked");
                         doUpdate();
                     }
                 }, HSApplication.getContext().getResources().getColor(R.color.colorPrimaryDark))
@@ -389,13 +389,13 @@ public class ApkUtils {
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSAnalytics.logEvent("Alert_shareToUnlock_clicked","from",from);
+                KCAnalytics.logEvent("Alert_shareToUnlock_clicked","from",from);
                 if (!CommonUtils.isNetworkAvailable(-1)) {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                HSAnalytics.logEvent("customizeTheme_shareToUnlock_clicked");
+                KCAnalytics.logEvent("customizeTheme_shareToUnlock_clicked");
                 if (shareButtonClickListener != null) {
                     shareButtonClickListener.onClick(v);
                 }
@@ -411,8 +411,8 @@ public class ApkUtils {
             }
         });
         KCCommonUtils.showDialog(alertDialog);
-        HSAnalytics.logEvent("customizeTheme_shareToUnlock_show");
-        HSAnalytics.logEvent("Alert_shareToUnlock_show","from",from);
+        KCAnalytics.logEvent("customizeTheme_shareToUnlock_show");
+        KCAnalytics.logEvent("Alert_shareToUnlock_show","from",from);
     }
 
     @SuppressLint("InflateParams")
@@ -437,13 +437,13 @@ public class ApkUtils {
         positiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSAnalytics.logEvent("Alert_rateToUnlock_clicked","from",from);
+                KCAnalytics.logEvent("Alert_rateToUnlock_clicked","from",from);
                 if (!CommonUtils.isNetworkAvailable(-1)) {
                     Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                HSAnalytics.logEvent("customizeTheme_rateToUnlock_clicked");
+                KCAnalytics.logEvent("customizeTheme_rateToUnlock_clicked");
                 if (HSMarketUtils.isMarketInstalled("Google")) {
                     HSMarketUtils.browseAPP("Google", HSApplication.getContext().getPackageName());
                     setRateButtonClicked();
@@ -465,8 +465,8 @@ public class ApkUtils {
             }
         });
         KCCommonUtils.showDialog(alertDialog);
-        HSAnalytics.logEvent("customizeTheme_rateToUnlock_show");
-        HSAnalytics.logEvent("Alert_rateToUnlock_show","from",from);
+        KCAnalytics.logEvent("customizeTheme_rateToUnlock_show");
+        KCAnalytics.logEvent("Alert_rateToUnlock_show","from",from);
         return true;
     }
 
@@ -493,7 +493,7 @@ public class ApkUtils {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        HSAnalytics.logEvent("Alert_needNewVersionToUnlock_clicked","from",from);
+                        KCAnalytics.logEvent("Alert_needNewVersionToUnlock_clicked","from",from);
                         if (!CommonUtils.isNetworkAvailable(-1)) {
                             Toast.makeText(HSApplication.getContext(), HSApplication.getContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
                             return;
@@ -514,6 +514,6 @@ public class ApkUtils {
 
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         KCCommonUtils.showDialog(dialog);
-        HSAnalytics.logEvent("Alert_needNewVersionToUnlock_show","from",from);
+        KCAnalytics.logEvent("Alert_needNewVersionToUnlock_show","from",from);
     }
 }

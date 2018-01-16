@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.utils.HSLog;
@@ -193,7 +193,7 @@ public class HSFloatWindowManager {
                     HSFloatWindowManager.getInstance().removeGameTipView();
                 }
             }, 6000);
-            HSAnalytics.logEvent("keyboard_game_bubble_show");
+            KCAnalytics.logEvent("keyboard_game_bubble_show");
         } catch (Exception e) {
             e.printStackTrace();
         }

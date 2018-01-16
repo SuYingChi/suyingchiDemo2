@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -179,7 +179,7 @@ public class KeyboardFullScreenAd {
                 acbInterstitialAd.show();
                 HSLog.e("showed full ad");
                 canShowSessionAd = false;
-                HSAnalytics.logEvent("app_springAd_show", "from", from);
+                KCAnalytics.logEvent("app_springAd_show", "from", from);
             } else {
                 if (listener != null) {
                     listener.onAdClose();

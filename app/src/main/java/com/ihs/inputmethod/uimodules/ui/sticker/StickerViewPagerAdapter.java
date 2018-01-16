@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -152,7 +152,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                 if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
                     LockedCardActionUtils.handleLockAction(v.getContext(),LockedCardActionUtils.LOCKED_CARD_FROM_KEYBOARD_STICKER, stickerHomeModel, null);
                 } else {
-                    HSAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
+                    KCAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
                     final String stickerGroupName = stickerGroup.getStickerGroupName();
                     final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
                     DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
@@ -161,7 +161,7 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                                 HSPreferenceHelper.getDefault().putBoolean(KeyboardPanelManager.SHOW_EMOJI_PANEL, true);
                                 if (success) {
                                     lastDownloadPosition = position;
-                                    HSAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
+                                    KCAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
                             }, false);

@@ -49,7 +49,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.crashlytics.android.Crashlytics;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
@@ -986,7 +986,7 @@ public class MainActivity extends HSAppCompatActivity {
     }
 
     private void logEventWithSource(String eventName) {
-        HSAnalytics.logEvent(eventName, "source", getSourceString());
+        KCAnalytics.logEvent(eventName, "source", getSourceString());
     }
 
     private String getSourceString() {

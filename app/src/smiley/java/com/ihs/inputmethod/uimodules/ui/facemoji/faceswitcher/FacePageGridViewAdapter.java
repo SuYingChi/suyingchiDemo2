@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.uimodules.R;
@@ -119,7 +119,7 @@ public class FacePageGridViewAdapter extends BaseAdapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HSAnalytics.logEvent("keyboard_facemoji_create_clicked");
+                    KCAnalytics.logEvent("keyboard_facemoji_create_clicked");
                     HSInputMethod.hideWindow();
                     Intent i = new Intent(HSApplication.getContext(), SplashActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

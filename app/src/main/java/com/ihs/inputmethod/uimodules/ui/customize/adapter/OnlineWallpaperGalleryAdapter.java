@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.CompatUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
@@ -196,9 +196,9 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
         }
         WallpaperInfo clickedWallpaper = allWallpapers.get(positionInAllWallpapers);
         if (clickedWallpaper.getCategory() == null) {
-            HSAnalytics.logEvent("app_wallpaper_clicked", "name", clickedWallpaper.getName());
+            KCAnalytics.logEvent("app_wallpaper_clicked", "name", clickedWallpaper.getName());
         } else {
-            HSAnalytics.logEvent("app_wallpaper_clicked", "name", clickedWallpaper.getName(), "tabName", clickedWallpaper.getCategory().categoryName);
+            KCAnalytics.logEvent("app_wallpaper_clicked", "name", clickedWallpaper.getName(), "tabName", clickedWallpaper.getCategory().categoryName);
         }
         Intent intent = new Intent(mContext, WallpaperPreviewActivity.class);
 //        intent.putExtra(WallpaperPreviewActivity.INTENT_KEY_SCENARIO, mScenario.ordinal());

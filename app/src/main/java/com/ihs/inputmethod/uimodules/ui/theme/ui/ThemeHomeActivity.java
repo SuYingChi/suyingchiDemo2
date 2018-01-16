@@ -31,7 +31,7 @@ import com.acb.call.CPSettings;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.inner.HomeKeyTracker;
@@ -413,7 +413,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     protected void onStop() {
         super.onStop();
         if (homeKeyTracker.isHomeKeyPressed()) {
-            HSAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
+            KCAnalytics.logEvent("app_quit_way", "app_quit_way", "home");
         }
         homeKeyTracker.stopTracker();
 
@@ -577,7 +577,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             multiFunctionDialog.setImageResource(R.drawable.enable_tripple_alert_top_image);
             multiFunctionDialog.setCancelable(true);
             multiFunctionDialog.setPositiveButton(getString(R.string.enable), view -> {
-                HSAnalytics.logEvent("alert_multi_function_click", "size", "half_screen", "occasion", "open_app");
+                KCAnalytics.logEvent("alert_multi_function_click", "size", "half_screen", "occasion", "open_app");
                 ChargingManagerUtil.enableCharging(false);
                 enableLocker();
                 CPSettings.setCallAssistantModuleEnabled(true);
@@ -585,7 +585,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             });
             multiFunctionDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
             KCCommonUtils.showDialog(multiFunctionDialog);
-            HSAnalytics.logEvent("alert_multi_function_show", "size", "half_screen", "occasion", "open_app");
+            KCAnalytics.logEvent("alert_multi_function_show", "size", "half_screen", "occasion", "open_app");
             HSPreferenceHelper.getDefault().putBoolean(SP_TREBLE_FUNCTION_ALERT_SHOWED, true);
         } else {
             int priority = random.nextInt(3); // 0:Charging 1:Locker 2:Call Assistant
@@ -641,11 +641,11 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             dialog.setCancelable(true);
             dialog.setPositiveButton(getString(R.string.enable), view -> {
                 ChargingManagerUtil.enableCharging(false);
-                HSAnalytics.logEvent("alert_charging_click", "size", "half_screen", "occasion", "open_app");
+                KCAnalytics.logEvent("alert_charging_click", "size", "half_screen", "occasion", "open_app");
             });
             KCCommonUtils.showDialog(dialog);
             dialog.setOnDismissListener(dialog1 -> AlertShowingUtils.stopShowingAlert());
-            HSAnalytics.logEvent("alert_charging_show", "size", "half_screen", "occasion", "open_app");
+            KCAnalytics.logEvent("alert_charging_show", "size", "half_screen", "occasion", "open_app");
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
             return true;
         } else {
@@ -683,12 +683,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 lockerDialog.setCancelable(true);
 
                 lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
-                    HSAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
+                    KCAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
                     enableLocker();
                 });
                 KCCommonUtils.showDialog(lockerDialog);
                 lockerDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
-                HSAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");
+                KCAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");
                 ScreenLockerConfigUtils.increaseEnableAlertShowCount();
             }
             return true;
@@ -722,13 +722,13 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             callAssistantDialog.setCancelable(true);
             callAssistantDialog.setEnablePrivacy(true, v -> startBrowsePrivacy());
             callAssistantDialog.setPositiveButton(getString(R.string.enable), view -> {
-                HSAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen", "occasion", "open_app");
+                KCAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen", "occasion", "open_app");
                 CPSettings.setCallAssistantModuleEnabled(true);
                 CPSettings.setScreenFlashModuleEnabled(true, true);
             });
             KCCommonUtils.showDialog(callAssistantDialog);
             callAssistantDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
-            HSAnalytics.logEvent("alert_call_assistant_show", "size", "half_screen", "occasion", "open_app");
+            KCAnalytics.logEvent("alert_call_assistant_show", "size", "half_screen", "occasion", "open_app");
             CallAssistantConfigUtils.increaseAlertShowCount();
             return true;
         } else {

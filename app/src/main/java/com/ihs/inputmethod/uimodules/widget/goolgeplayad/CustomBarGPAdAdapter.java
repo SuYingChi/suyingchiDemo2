@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -154,7 +154,7 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HSAnalytics.logEvent("GooglePlayIcon_camera_clicked"); // log camera click event
+                    KCAnalytics.logEvent("GooglePlayIcon_camera_clicked"); // log camera click event
                     HSMarketUtils.browseAPP("Google", cameraPackageName);
                 }
             });

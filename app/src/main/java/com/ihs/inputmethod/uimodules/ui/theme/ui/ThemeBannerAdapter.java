@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -410,7 +410,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                     Intent intent = new Intent(activity, ThemeDetailActivity.class);
                     intent.putExtra(ThemeDetailActivity.INTENT_KEY_THEME_NAME, keyboardTheme.mThemeName);
                     activity.startActivity(intent);
-                    HSAnalytics.logEvent("store_banner_clicked", "themeName", keyboardTheme.mThemeName);
+                    KCAnalytics.logEvent("store_banner_clicked", "themeName", keyboardTheme.mThemeName);
                     HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);
                     if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                         ThemeAnalyticsReporter.getInstance().recordBannerThemeClick(keyboardTheme.mThemeName);

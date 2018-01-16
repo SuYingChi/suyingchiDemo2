@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -121,7 +121,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
         backgroundTitle.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HSAnalytics.logEvent("shortcut_customize_background_more_clicked");
+                KCAnalytics.logEvent("shortcut_customize_background_more_clicked");
                 Bundle bundle = new Bundle();
                 String customEntry = "store_more";
                 bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
@@ -233,7 +233,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
     @Override
     public void onCardClick(HSKeyboardTheme keyboardTheme) {
-        HSAnalytics.logEvent("store_themes_preview_clicked", "themeName", keyboardTheme.mThemeName);
+        KCAnalytics.logEvent("store_themes_preview_clicked", "themeName", keyboardTheme.mThemeName);
         if (isThemeAnalyticsEnabled) {
             ThemeAnalyticsReporter.getInstance().recordThemeClick(keyboardTheme.mThemeName);
         }
@@ -245,7 +245,7 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
     @Override
     public void onMenuDownloadClick(HSKeyboardTheme keyboardTheme) {
-        HSAnalytics.logEvent("store_themes_download_clicked", "themeName", keyboardTheme.mThemeName);
+        KCAnalytics.logEvent("store_themes_download_clicked", "themeName", keyboardTheme.mThemeName);
         if (isThemeAnalyticsEnabled) {
             ThemeAnalyticsReporter.getInstance().recordThemeDownload(keyboardTheme.mThemeName);
         }

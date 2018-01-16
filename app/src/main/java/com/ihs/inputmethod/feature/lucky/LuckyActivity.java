@@ -14,7 +14,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
@@ -139,7 +139,7 @@ public class LuckyActivity extends HSAppCompatActivity
         mMusicHandler = new MusicPlayerHandler();
         initView(mute);
 
-        HSAnalytics.logEvent("lucky_open");
+        KCAnalytics.logEvent("lucky_open");
     }
 
 
@@ -528,7 +528,7 @@ public class LuckyActivity extends HSAppCompatActivity
         private boolean mAdClickedUponStop;
 
         void onAdClick() {
-            HSAnalytics.logEvent("Lucky_Award_Ad_Button_Clicked");
+            KCAnalytics.logEvent("Lucky_Award_Ad_Button_Clicked");
 
             mAdClickedUponStop = true; // Set the flag
         }
@@ -544,7 +544,7 @@ public class LuckyActivity extends HSAppCompatActivity
 
         void onStop() {
             if (!mAdClickedUponStop) {
-                HSAnalytics.logEvent("Lucky_Times_TimeLength", "Duration",
+                KCAnalytics.logEvent("Lucky_Times_TimeLength", "Duration",
                         getDurationDescription(SystemClock.elapsedRealtime() - mStartTime));
             }
         }
@@ -599,7 +599,7 @@ public class LuckyActivity extends HSAppCompatActivity
                         break;
                 }
             }
-            HSAnalytics.logEvent("Lucky_Main_Go_Clicked", "Type", type);
+            KCAnalytics.logEvent("Lucky_Main_Go_Clicked", "Type", type);
         }
 
         void logMuteButtonClickEvent(boolean mute) {
@@ -607,7 +607,7 @@ public class LuckyActivity extends HSAppCompatActivity
 
         void logAwardViewCloseEvent(ViewState from, String closeMethod) {
             String eventName = "Lucky_Award_" + from.getName() + "_Closed";
-            HSAnalytics.logEvent(eventName, "Method", closeMethod);
+            KCAnalytics.logEvent(eventName, "Method", closeMethod);
         }
     }
 }

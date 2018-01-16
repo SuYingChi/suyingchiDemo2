@@ -16,7 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -81,7 +81,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
                         case 0: //unPlugged
                             break;
                         case 1: // plug In
-                            HSAnalytics.logEvent("headphone_pluggedin");
+                            KCAnalytics.logEvent("headphone_pluggedin");
                             break;
                         default:
                     }
@@ -568,7 +568,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
                 String text = sb.toString();
                 HSLog.i("Key enter pressed in google play.");
                 HSLog.i("CodeInput:" + text);
-                HSAnalytics.logEvent("keyboard_googleplay_search_content", "codeInput", text);
+                KCAnalytics.logEvent("keyboard_googleplay_search_content", "codeInput", text);
             }
         } catch (Exception e) {
             HSLog.i("Failed to log key enter in google play.");
@@ -588,7 +588,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
                 if (!success) {
                     getKeyboardPanelMananger().hideCustomBar();
                 } else {
-                    HSAnalytics.logEvent("searchads_request", "appName", currentAppPackageName);
+                    KCAnalytics.logEvent("searchads_request", "appName", currentAppPackageName);
                 }
             });
         }
@@ -613,7 +613,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
                 }
             }
             getKeyboardPanelMananger().showSuggestedStickers(stickerTag, StickerPrefsUtil.getInstance().sortStickerListByUsedTimes(stickerList));
-            HSAnalytics.logEvent("keyboard_sticker_prediction_show", "sticker tag", stickerTag);
+            KCAnalytics.logEvent("keyboard_sticker_prediction_show", "sticker tag", stickerTag);
         }
     }
 
@@ -625,7 +625,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     @Override
     public void onNativeAdLoadSuccess(List<AdCaffeNativeAd> nativeAds, boolean hasMore, int nextOffset) {
         if (!nativeAds.isEmpty()) {
-            HSAnalytics.logEvent("searchads_ad_match", "appName", currentAppPackageName);
+            KCAnalytics.logEvent("searchads_ad_match", "appName", currentAppPackageName);
         }
         getKeyboardPanelMananger().showSearchAdBar(nativeAds, currentAppPackageName);
     }

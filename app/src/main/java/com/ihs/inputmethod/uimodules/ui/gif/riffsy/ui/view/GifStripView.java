@@ -20,7 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSBundle;
@@ -187,7 +187,7 @@ public final class GifStripView extends FrameLayout implements EmojiSearchView.O
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction()==MotionEvent.ACTION_DOWN){
-					HSAnalytics.logEvent("keyboard_gif_search_clicked");
+					KCAnalytics.logEvent("keyboard_gif_search_clicked");
 					updateStripViewState(StripState.SEARCH);
 					return true;
 				}
@@ -305,7 +305,7 @@ public final class GifStripView extends FrameLayout implements EmojiSearchView.O
 		emojiText.setText(esItem.getId());
 		panelView.onEmojiSearchItemClicked(esItem);
 		updateStripViewState(StripState.Emoji);
-		HSAnalytics.logEvent("keyboard_gif_emoji_search", esItem.getId());
+		KCAnalytics.logEvent("keyboard_gif_emoji_search", esItem.getId());
 	}
 
 	public void bindPanelView(GifPanelView panelView) {

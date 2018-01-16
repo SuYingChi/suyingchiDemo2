@@ -12,7 +12,7 @@ import android.util.Pair;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -116,7 +116,7 @@ public class HSTextPanelView extends LinearLayout implements BaseTabViewAdapter.
 	public void onEmojiClick(final Emoji key) {
 		emojiCategory.pendingRecentEmoji(key);
 		HSInputMethod.inputText(key.getLabel());
-		HSAnalytics.logEvent("kaomoji_input", "keyLabel", key.getLabel());
+		KCAnalytics.logEvent("kaomoji_input", "keyLabel", key.getLabel());
 	}
 
 

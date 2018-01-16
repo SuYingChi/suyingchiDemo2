@@ -19,7 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -167,7 +167,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
             public void onClick(View v) {
                 showStripView();
                 mStripView.showStripViewToSearch();
-                HSAnalytics.logEvent("keyboard_gif_search_click");
+                KCAnalytics.logEvent("keyboard_gif_search_click");
             }
         });
 
@@ -221,7 +221,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
             e.printStackTrace();
             onFail();
         }
-        HSAnalytics.logEvent("keyboard_gif_tab_switched", mGifCategory.getCurrentLogCategoryId());
+        KCAnalytics.logEvent("keyboard_gif_tab_switched", mGifCategory.getCurrentLogCategoryId());
     }
 
     private BaseRequest getRequest(String tabId) {
@@ -306,7 +306,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
         if (tag.startsWith("#")) {
             tag = tag.substring(1);
         }
-        HSAnalytics.logEvent("keyboard_gif_tag_clicked", tag);
+        KCAnalytics.logEvent("keyboard_gif_tag_clicked", tag);
         mGifCategory.setCurrentExtendedCategoryId(tag);
 
         clear();
@@ -594,7 +594,7 @@ public final class GifPanelView extends LinearLayout implements TabViewAdapter.O
     }
 
     private void onGifClicked(GifView view) {
-        HSAnalytics.logEvent("keyboard_gif_clicked", "currentLogCategoryId", mGifCategory.getCurrentLogCategoryId());
+        KCAnalytics.logEvent("keyboard_gif_clicked", "currentLogCategoryId", mGifCategory.getCurrentLogCategoryId());
         mp4PackageName = HSInputMethod.getCurrentHostAppPackageName();
         shareUrl = view.getGifItem().getUrl();
         notifyImageClicked(view, mp4PackageName, mp4DownloadCallback);

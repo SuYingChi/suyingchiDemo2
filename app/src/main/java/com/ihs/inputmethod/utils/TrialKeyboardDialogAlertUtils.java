@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.acb.call.CPSettings;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.commons.config.HSConfig;
@@ -74,12 +74,12 @@ public class TrialKeyboardDialogAlertUtils {
                 @Override
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
-                    HSAnalytics.logEvent("alert_charging_click", "size", "half_screen", "occasion", "after_try");
+                    KCAnalytics.logEvent("alert_charging_click", "size", "half_screen", "occasion", "after_try");
                 }
             });
 
             KCCommonUtils.showDialog(dialog);
-            HSAnalytics.logEvent("alert_charging_show", "size", "half_screen", "occasion", "after_try");
+            KCAnalytics.logEvent("alert_charging_show", "size", "half_screen", "occasion", "after_try");
             increaseAlertShowCount();
             setLastShowFunctionTag(TAG_CHARGING);
             return true;
@@ -104,13 +104,13 @@ public class TrialKeyboardDialogAlertUtils {
             dialog.setPositiveButton(HSApplication.getContext().getString(R.string.enable), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HSAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen", "occasion", "after_try");
+                    KCAnalytics.logEvent("alert_call_assistant_click", "size", "half_screen", "occasion", "after_try");
                     CPSettings.setCallAssistantModuleEnabled(true);
                     CPSettings.setScreenFlashModuleEnabled(true,true);
                 }
             });
             KCCommonUtils.showDialog(dialog);
-            HSAnalytics.logEvent("alert_call_assistant_show", "size", "half_screen", "occasion", "after_try");
+            KCAnalytics.logEvent("alert_call_assistant_show", "size", "half_screen", "occasion", "after_try");
             increaseAlertShowCount();
             setLastShowFunctionTag(TAG_CALL_ASSISTANT);
             return true;
