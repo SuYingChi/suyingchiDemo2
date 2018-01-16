@@ -2,7 +2,7 @@ libCommons:
   RemoteConfig:
     UpdateInterval: 10
     PlistFile: "Local.mp"
-    PlistUrl: "xxhttp://cdn.appcloudbox.net/keyboardarts/apps/grinkeyboard/configs/config-grinkeyboard-1.1.3.mp"
+    PlistUrl: "xxhttp://cdn.appcloudbox.net/keyboardarts/apps/grinkeyboard/configs/config-grinkeyboard-1.1.4.mp"
   Analytics:
       FlurryKey: "VFHX539WKM27R8ZZ5398"
       FacebookID: "2017803811838675"
@@ -35,7 +35,7 @@ libFramework:
     SendTokenToServer: yes
   Alerts:
     LocalFile: "Alerts.mp"
-    RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/grinkeyboard/alerts/grinkeyboard-1.0.0-alerts.mp"
+    RemoteUrl: "http://cdn.appcloudbox.net/keyboardarts/apps/grinkeyboard/alerts/grinkeyboard-1.1.4-alerts.mp"
       
 libKeyboard:
   DictionaryUrl: "http://cdn.emoji.mobi/googlekeyboard/4.0/"

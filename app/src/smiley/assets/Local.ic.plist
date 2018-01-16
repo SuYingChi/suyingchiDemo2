@@ -4949,8 +4949,17 @@
 			</dict>
 			<key>ScreenFlash</key>
 			<dict>
+				<key>SMSAssistant</key>
+				<dict>
+					<key>ShowSMSFunction</key>
+					<true/>
+					<key>Enable</key>
+					<false/>
+				</dict>
 				<key>CallAssistant</key>
 				<dict>
+					<key>Enable</key>
+					<false/>
 					<key>AutoRefresh</key>
 					<dict>
 						<key>enable</key>
@@ -4969,12 +4978,8 @@
 					<key>ShowWhenOutgoingCall</key>
 					<true/>
 				</dict>
-				<key>DefaultSwitch</key>
-				<false/>
 				<key>DefaultTheme</key>
 				<string>1</string>
-				<key>Enable</key>
-				<true/>
 				<key>Themes</key>
 				<array>
 					<dict>
@@ -4987,7 +4992,7 @@
 						<key>Icon</key>
 						<string></string>
 						<key>Id</key>
-						<integer>6</integer>
+						<integer>5</integer>
 						<key>IdName</key>
 						<string>SantaClaus</string>
 						<key>Name</key>

@@ -456,8 +456,6 @@
 					<string>Oops</string>
 				</dict>
 			</dict>
-			<key>EnableMessageFunction</key>
-			<false/>
 			<key>FeaturePrompt</key>
 			<dict>
 				<key>ChargerLockerAlert</key>
@@ -4927,8 +4925,17 @@
 			</dict>
 			<key>ScreenFlash</key>
 			<dict>
+				<key>SMSAssistant</key>
+				<dict>
+					<key>ShowSMSFunction</key>
+					<true/>
+					<key>Enable</key>
+					<false/>
+				</dict>
 				<key>CallAssistant</key>
 				<dict>
+					<key>Enable</key>
+					<false/>
 					<key>AutoRefresh</key>
 					<dict>
 						<key>enable</key>
@@ -4947,14 +4954,30 @@
 					<key>ShowWhenOutgoingCall</key>
 					<true/>
 				</dict>
-				<key>DefaultSwitch</key>
-				<true/>
 				<key>DefaultTheme</key>
 				<string>1</string>
-				<key>Enable</key>
-				<true/>
 				<key>Themes</key>
 				<array>
+					<dict>
+						<key>Description</key>
+						<string></string>
+						<key>Gif</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/SantaClaus.gif</string>
+						<key>Hot</key>
+						<false/>
+						<key>Icon</key>
+						<string></string>
+						<key>Id</key>
+						<integer>5</integer>
+						<key>IdName</key>
+						<string>SantaClaus</string>
+						<key>Name</key>
+						<string>SantaClaus</string>
+						<key>PreviewImage</key>
+						<string>http://cdn.appcloudbox.net/keyboardarts/download/incoming_call_themes/SantaClaus.jpg</string>
+						<key>ResType</key>
+						<string>url</string>
+					</dict>
 					<dict>
 						<key>Description</key>
 						<string></string>
