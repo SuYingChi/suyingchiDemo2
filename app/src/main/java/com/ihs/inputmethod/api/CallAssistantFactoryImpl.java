@@ -23,7 +23,7 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
 
             @Override
             public boolean enable() {
-                return true;
+                return HSConfig.optBoolean(false, "Application", "ScreenFlash", "SMSAssistant", "ShowSMSFunction");
             }
 
             @Override
@@ -40,12 +40,12 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
 
     @Override
     public boolean isCallAssistantOpenDefault() {
-        return HSConfig.optBoolean(false, "Application", "ScreenFlash", "DefaultSwitch");
+        return HSConfig.optBoolean(false, "Application", "ScreenFlash", "CallAssistant", "Enable");
     }
 
     @Override
     public boolean isSMSAssistantOpenDefault() {
-        return true;
+        return HSConfig.optBoolean(false, "Application", "ScreenFlash", "SMSAssistant", "Enable");
     }
 
     @Override
@@ -67,6 +67,6 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
 
     @Override
     public boolean isFeatureRestrict() {
-        return  !HSPreferenceHelper.getDefault().getBoolean(SettingsActivity.CALL_ASSISTANT_HAS_SWITCHED_ON, false);
+        return !HSPreferenceHelper.getDefault().getBoolean(SettingsActivity.CALL_ASSISTANT_HAS_SWITCHED_ON, false);
     }
 }
