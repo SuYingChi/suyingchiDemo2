@@ -5373,6 +5373,18 @@
 					<array>
 						<dict>
 							<key>name</key>
+							<string>Coolbuddy</string>
+							<key>showName</key>
+							<string>Cool Buddy</string>
+						</dict>
+						<dict>
+							<key>name</key>
+							<string>Blackman</string>
+							<key>showName</key>
+							<string>African Emoji</string>
+						</dict>
+						<dict>
+							<key>name</key>
 							<string>Christmas</string>
 							<key>showName</key>
 							<string>Christmas Emoji</string>
