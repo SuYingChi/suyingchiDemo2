@@ -21,7 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.commons.utils.HSLog;
@@ -157,12 +157,12 @@ public class KeyboardActivationGuideActivity extends HSActivity {
                 .setPositiveButton(getString(R.string.dialog_confirm_select_keyboard_apply_rain), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        HSAnalytics.logEvent("activate_alert_clicked");
+                        KCAnalytics.logEvent("activate_alert_clicked");
                         enableOrSelectKeyboard();
                     }
                 }).create();
         KCCommonUtils.showDialog(alertDialog);
-        HSAnalytics.logEvent("activate_alert_show");
+        KCAnalytics.logEvent("activate_alert_show");
 
         alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override

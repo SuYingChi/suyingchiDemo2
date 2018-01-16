@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -116,7 +116,7 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
     public void onClick(View view) {
         if (view.getId() == R.id.lucky_game_theme_action) {
 //            ThemeDownloadManager.getInstance().downloadTheme(themeItem);
-            HSAnalytics.logEvent("Lucky_Award_Theme_Install_Clicked");
+            KCAnalytics.logEvent("Lucky_Award_Theme_Install_Clicked");
 
             String from = "lucky";
             ThemeZipDownloadUtils.startDownloadThemeZip(getContext(), from, themeItem.mThemeName, themeItem.getSmallPreivewImgUrl(), new AdLoadingView.OnAdBufferingListener() {

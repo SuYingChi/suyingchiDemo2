@@ -10,7 +10,7 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
@@ -124,9 +124,9 @@ final class ViewItemBuilder {
     private static void updateSoundsSettings(ViewItem item) {
         item.setSelected(!HSInputMethodSettings.getKeySoundEnabled());
         if (!item.isSelected) {
-            HSAnalytics.logEvent("keyboard_setting_sounds_clicked", "item_sound", SETTING_ON);
+            KCAnalytics.logEvent("keyboard_setting_sounds_clicked", "item_sound", SETTING_ON);
         } else {
-            HSAnalytics.logEvent("keyboard_setting_sounds_clicked", "item_sound", SETTING_OFF);
+            KCAnalytics.logEvent("keyboard_setting_sounds_clicked", "item_sound", SETTING_OFF);
         }
     }
 
@@ -151,9 +151,9 @@ final class ViewItemBuilder {
     private static void updateAutoCorrectionSettings(ViewItem item) {
         item.setSelected(!HSInputMethodSettings.getAutoCorrectionEnabled());
         if (!item.isSelected) {
-            HSAnalytics.logEvent("keyboard_setting_auto_correction_clicked", "auto_correction", SETTING_ON);
+            KCAnalytics.logEvent("keyboard_setting_auto_correction_clicked", "auto_correction", SETTING_ON);
         } else {
-            HSAnalytics.logEvent("keyboard_setting_auto_correction_clicked", "auto_correction", SETTING_OFF);
+            KCAnalytics.logEvent("keyboard_setting_auto_correction_clicked", "auto_correction", SETTING_OFF);
         }
     }
 
@@ -179,9 +179,9 @@ final class ViewItemBuilder {
     private static void updateAutoCapitalizationSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getAutoCapitalizationEnabled());
         if (item.isSelected) {
-            HSAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_ON);
+            KCAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_ON);
         } else {
-            HSAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_OFF);
+            KCAnalytics.logEvent("keyboard_setting_auto_capitalization_clicked", "auto_capitalization", SETTING_OFF);
         }
     }
 
@@ -230,9 +230,9 @@ final class ViewItemBuilder {
     private static void updateSwipeSettings(ViewItem item) {
         item.setSelected(HSInputMethodSettings.getGestureTypingEnabled());
         if (item.isSelected) {
-            HSAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_OFF);
+            KCAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_OFF);
         } else {
-            HSAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_ON);
+            KCAnalytics.logEvent("keyboard_setting_swipe_clicked", "swipeInput", SETTING_ON);
 
 
         }

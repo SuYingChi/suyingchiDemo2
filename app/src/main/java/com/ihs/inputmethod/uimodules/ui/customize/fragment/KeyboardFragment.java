@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
@@ -109,7 +109,7 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
                 } else {
                     createThemeLayout.setVisibility(View.GONE);
                 }
-                HSAnalytics.logEvent("app_tab_top_keyboard_clicked", "tabName", String.valueOf(tab.getText()).toLowerCase());
+                KCAnalytics.logEvent("app_tab_top_keyboard_clicked", "tabName", String.valueOf(tab.getText()).toLowerCase());
             }
         });
 
@@ -118,7 +118,7 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 int position = (int) v.getTag();
                 String title = (String) tabFragmentPagerAdapter.getPageTitle(position);
-                HSAnalytics.logEvent("app_tab_top_keyboard_clicked", "tabName", title.toLowerCase());
+                KCAnalytics.logEvent("app_tab_top_keyboard_clicked", "tabName", title.toLowerCase());
             }
         });
 
@@ -164,7 +164,7 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_START_CUSTOM_THEME);
 
-                HSAnalytics.logEvent("customize_entry_clicked", "store");
+                KCAnalytics.logEvent("customize_entry_clicked", "store");
                 break;
             case R.id.download_button_container:
                 switchToDownload();

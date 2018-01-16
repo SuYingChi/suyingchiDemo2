@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -208,7 +208,7 @@ public class MyThemeFragment extends Fragment implements CommonThemeCardAdapter.
 
     @Override
     public void onMenuShareClick(HSKeyboardTheme keyboardTheme) {
-        HSAnalytics.logEvent("mythemes_share_clicked", "themeName", keyboardTheme.mThemeName);
+        KCAnalytics.logEvent("mythemes_share_clicked", "themeName", keyboardTheme.mThemeName);
     }
 
     @Override

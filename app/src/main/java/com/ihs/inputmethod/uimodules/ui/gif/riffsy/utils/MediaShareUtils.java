@@ -16,7 +16,7 @@ import android.view.inputmethod.InputConnection;
 import android.widget.Toast;
 
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -90,7 +90,7 @@ public final class MediaShareUtils {
         try {
             MediaShareUtils.shareImageByIntent(Uri.fromFile(externalImageFile), mimeType, packageName);
         } catch (Exception e) {
-            HSAnalytics.logEvent("Sticker_toast_send_failed", "packageName", packageName);
+            KCAnalytics.logEvent("Sticker_toast_send_failed", "packageName", packageName);
             StickerPrefsUtil.getInstance().recordUnsupportApp(packageName);
             if (!TextUtils.isEmpty(remoteUrl)) {
                 HSInputMethod.inputText(remoteUrl);

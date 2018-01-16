@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -265,7 +265,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
     }
 
     private void onClickFacemojiCreateButton() {
-        HSAnalytics.logEvent("keyboard_facemoji_create_clicked");
+        KCAnalytics.logEvent("keyboard_facemoji_create_clicked");
         HSInputMethod.hideWindow();
         startCameraActivity();
     }
@@ -314,7 +314,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         if (sticker.getName() == null){
             return;
         }
-        HSAnalytics.logEvent("keyboard_facemoji_sent","categoryAndName",sticker.getCategoryName()+"-"+sticker.getName());
+        KCAnalytics.logEvent("keyboard_facemoji_sent","categoryAndName",sticker.getCategoryName()+"-"+sticker.getName());
         MediaController.getShareManager().shareFacemojiFromKeyboard(sticker, Constants.MEDIA_FORMAT_GIF,
                 ShareChannel.CURRENT,
                 mProgressListener);

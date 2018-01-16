@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.app.utils.HSInstallationUtils;
@@ -329,7 +329,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             ((TextView) v).setText(R.string.theme_card_menu_downloading);
             v.setEnabled(false);
             if (!downloadTheme()) return;
-            HSAnalytics.logEvent("themedetails_download_clicked", "themeName", themeName);
+            KCAnalytics.logEvent("themedetails_download_clicked", "themeName", themeName);
             if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                 ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(themeName);
             }
@@ -338,9 +338,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_share).equalsIgnoreCase(text)) {
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
-            HSAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
+            KCAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
-            HSAnalytics.logEvent("keyboard_setaslockscreen_button_clicked", "occasion", "app_theme_detail");
+            KCAnalytics.logEvent("keyboard_setaslockscreen_button_clicked", "occasion", "app_theme_detail");
             LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, getString(R.string.locker_enable_title_no_desc), themeName, new LockerEnableDialog.OnLockerBgLoadingListener() {
                 @Override
                 public void onFinish() {
@@ -510,7 +510,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     @Override
     public void onCardClick(HSKeyboardTheme keyboardTheme) {
-        HSAnalytics.logEvent("themedetails_themes_preview_clicked", "keyboardTheme", keyboardTheme.mThemeName);
+        KCAnalytics.logEvent("themedetails_themes_preview_clicked", "keyboardTheme", keyboardTheme.mThemeName);
     }
 
     @Override
@@ -525,7 +525,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     @Override
     public void onMenuDownloadClick(HSKeyboardTheme keyboardTheme) {
-        HSAnalytics.logEvent("themedetails_themes_download_clicked", "keyboardTheme", keyboardTheme.mThemeName);
+        KCAnalytics.logEvent("themedetails_themes_download_clicked", "keyboardTheme", keyboardTheme.mThemeName);
         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
             ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(keyboardTheme.mThemeName);
         }

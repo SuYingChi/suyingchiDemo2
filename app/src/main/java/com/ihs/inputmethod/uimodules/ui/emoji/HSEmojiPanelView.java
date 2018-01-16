@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
@@ -142,7 +142,7 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
         emojiCategory.pendingRecentEmoji(key);
         HSInputMethod.inputText(key.getLabel());
 
-        HSAnalytics.logEvent("emoji_input", "Value", key.getLabel());
+        KCAnalytics.logEvent("emoji_input", "Value", key.getLabel());
     }
 
     @Override
@@ -161,7 +161,7 @@ public class HSEmojiPanelView extends FrameLayout implements BaseTabViewAdapter.
         emojiCategory.pendingRecentEmoji(key);
         HSInputMethod.inputText(key.getLabel());
 
-        HSAnalytics.logEvent("emoji_input", "Value", key.getLabel());
+        KCAnalytics.logEvent("emoji_input", "Value", key.getLabel());
     }
 
     @Override

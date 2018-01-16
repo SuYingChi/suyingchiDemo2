@@ -29,7 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSInstallationUtils;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -202,7 +202,7 @@ public class FacemojiGridAdapter extends BaseAdapter implements View.OnClickList
         Map<String,String> params = new HashMap<>();
         params.put("facemoji",sticker.getCategoryName()+"-"+sticker.getName());
         params.put("share_app",channel.getAppName());
-        HSAnalytics.logEvent("app_facemoji_shared",params);
+        KCAnalytics.logEvent("app_facemoji_shared",params);
         MediaController.getShareManager().shareFacemojiByIntent(
                 sticker,
                 ShareUtils.refreshCurrentShareMode(channel.getPackageName()).second,

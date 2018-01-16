@@ -16,7 +16,7 @@ import com.artw.lockscreen.ScreenLockerManager;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.alerts.HSAlertMgr;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
@@ -389,7 +389,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                 installType = data.getMediaSource();
             }
 
-            HSAnalytics.logEvent("install_type", "install_type", installType);
+            KCAnalytics.logEvent("install_type", "install_type", installType);
 
             HSPreferenceHelper.getDefault().putBoolean(SP_INSTALL_TYPE_ALREADY_RECORD, true);
         }

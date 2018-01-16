@@ -9,7 +9,6 @@
         android:id="@+id/ad_container"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/setting_panel_item_margin_top"
-        app:flash_angle="cw_0"
         app:flash_repeat_count="0"
         app:flash_duration="1000"
         app:flash_auto_start="false"

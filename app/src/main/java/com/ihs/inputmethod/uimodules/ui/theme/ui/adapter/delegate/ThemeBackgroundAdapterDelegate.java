@@ -17,7 +17,7 @@ import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.config.HSConfig;
@@ -244,7 +244,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_CAMERA, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                         startCustomThemeActivity(bundle);
-                        HSAnalytics.logEvent("shortcut_customize_background_clicked", "camera");
+                        KCAnalytics.logEvent("shortcut_customize_background_clicked", "camera");
 
                     }
                 });
@@ -261,7 +261,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                         bundle.putBoolean(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_USE_GALLERY, true);
                         bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                         startCustomThemeActivity(bundle);
-                        HSAnalytics.logEvent("shortcut_customize_background_clicked", "album");
+                        KCAnalytics.logEvent("shortcut_customize_background_clicked", "album");
                     }
                 });
             } else {
@@ -390,7 +390,7 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                             bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
                             bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
                             startCustomThemeActivity(bundle);
-                            HSAnalytics.logEvent("shortcut_customize_background_clicked", background.getName());
+                            KCAnalytics.logEvent("shortcut_customize_background_clicked", background.getName());
                         }
                     });
                 } else if (backgrounds.get(position) instanceof NativeAdInfo) {

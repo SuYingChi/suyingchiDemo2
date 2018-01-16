@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -104,7 +104,7 @@ public final class PanelMoreAdapterDelegate extends AdapterDelegate<List<ThemePa
 					return;
 				}
 				startThemeHomeActivity();
-				HSAnalytics.logEvent("keyboard_customtheme_more_clicked");
+				KCAnalytics.logEvent("keyboard_customtheme_more_clicked");
 			}
 		});
 	}

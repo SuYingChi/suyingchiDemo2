@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.connection.HSHttpConnection;
@@ -112,7 +112,7 @@ public class SoftGameButton extends FrameLayout {
             @Override
             public void onClick(View view) {
                 //跳转到详情页
-                HSAnalytics.logEvent("keyboard_game_clicked");
+                KCAnalytics.logEvent("keyboard_game_clicked");
                 SoftGameDisplayHelper.DisplaySoftGames(getContext().getString(R.string.ad_placement_themetryad));
                 hideNewMark();
                 addGameShortcut();

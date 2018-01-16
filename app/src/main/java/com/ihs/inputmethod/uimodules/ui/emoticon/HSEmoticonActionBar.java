@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -258,7 +258,7 @@ public final class HSEmoticonActionBar extends LinearLayout implements View.OnCl
             Class panel = panels.get(tag);
             if (containerListener != null && panel != null) {
                 containerListener.showPanel(panel);
-                HSAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
+                KCAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
             }
         } else {
             if (v.getId() == alphabet_left.getId() && keyboardActionListener != null) {

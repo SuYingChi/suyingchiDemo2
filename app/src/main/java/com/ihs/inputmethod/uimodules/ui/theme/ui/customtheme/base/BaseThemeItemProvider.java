@@ -29,7 +29,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -100,17 +100,17 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
         addCustomData((KCBaseElement) item);
 
         if (((KCBaseElement) item).getTypeName().equals("background")) {
-            HSAnalytics.logEvent("app_customize_background_background_clicked", "item", ((KCBaseElement) item).getName());
+            KCAnalytics.logEvent("app_customize_background_background_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("button_style")) {
-            HSAnalytics.logEvent("app_customize_button_style_clicked", "item", ((KCBaseElement) item).getName());
+            KCAnalytics.logEvent("app_customize_button_style_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("button_shape")) {
-            HSAnalytics.logEvent("app_customize_button_shape_clicked", "item", ((KCBaseElement) item).getName());
+            KCAnalytics.logEvent("app_customize_button_shape_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("font_color")) {
-            HSAnalytics.logEvent("app_customize_font_color_clicked", "item", ((KCBaseElement) item).getName());
+            KCAnalytics.logEvent("app_customize_font_color_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("font")) {
-            HSAnalytics.logEvent("app_customize_font_font_clicked", "item", ((KCBaseElement) item).getName());
+            KCAnalytics.logEvent("app_customize_font_font_clicked", "item", ((KCBaseElement) item).getName());
         } else if (((KCBaseElement) item).getTypeName().equals("click_sound")) {
-            HSAnalytics.logEvent("app_customize_sound_clicked", "item", ((KCBaseElement) item).getName());
+            KCAnalytics.logEvent("app_customize_sound_clicked", "item", ((KCBaseElement) item).getName());
         }
 
         final KCBaseElement baseElement = (KCBaseElement) item;

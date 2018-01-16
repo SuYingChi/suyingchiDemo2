@@ -3,7 +3,7 @@ package com.ihs.inputmethod.uimodules.ui.theme.analytics;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -174,7 +174,7 @@ public final class ThemeAnalyticsReporter {
 		banner=banner.trim();
 		if(!reportedTheme.contains(banner)){
 			reportedTheme.add(banner);
-			HSAnalytics.logEvent("theme_banner_first_viewed", banner + "_true");
+			KCAnalytics.logEvent("theme_banner_first_viewed", banner + "_true");
 			HSLog.d(banner+"_true");
 		}
 	}
@@ -224,7 +224,7 @@ public final class ThemeAnalyticsReporter {
 	}
 
 	private void recordBannerThemeClickFalse(String banner) {
-		HSAnalytics.logEvent("theme_banner_first_viewed", banner + "_false");
+		KCAnalytics.logEvent("theme_banner_first_viewed", banner + "_false");
 		HSLog.d(banner+"_false");
 	}
 

@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
@@ -19,6 +18,7 @@ import com.ihs.inputmethod.theme.KeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
+import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -33,13 +33,12 @@ import java.util.zip.ZipException;
 public class ThemeZipDownloadUtils {
 
     /**
-     *
-     * @param themeName 主题名
-     * @param thumbnailUrl 预览图地址
-     * @param from 调用来源，用于统计事件
+     * @param themeName             主题名
+     * @param thumbnailUrl          预览图地址
+     * @param from                  调用来源，用于统计事件
      * @param onAdBufferingListener
      */
-    public static void startDownloadThemeZip(Context context,String from, final String themeName, final String thumbnailUrl, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
+    public static void startDownloadThemeZip(Context context, String from, final String themeName, final String thumbnailUrl, final AdLoadingView.OnAdBufferingListener onAdBufferingListener) {
 
         File themeDirectory = new File(KeyboardThemeManager.getThemeDirectoryPath(themeName));
         File downloadFile = new File(themeDirectory, System.currentTimeMillis() + ".zip");
@@ -49,7 +48,7 @@ public class ThemeZipDownloadUtils {
 
         final AdLoadingView adLoadingView = new AdLoadingView(context);
         final Resources resources = context.getResources();
-        adLoadingView.configParams(null,null,
+        adLoadingView.configParams(null, null,
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
                 resources.getString(R.string.ad_placement_applying),
@@ -71,11 +70,11 @@ public class ThemeZipDownloadUtils {
                 }, 2000, false);
 
         ImageView thumbnailImageView = (ImageView) adLoadingView.findViewById(R.id.iv_icon);
-        ImageSize imageSize = new ImageSize(DisplayUtils.dip2px(HSApplication.getContext(),100),DisplayUtils.dip2px(HSApplication.getContext(),100));
-        ImageLoader.getInstance().displayImage(thumbnailUrl, new ImageViewAware(thumbnailImageView),  new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build(), imageSize, null, null);
+        ImageSize imageSize = new ImageSize(DisplayUtils.dip2px(HSApplication.getContext(), 100), DisplayUtils.dip2px(HSApplication.getContext(), 100));
+        ImageLoader.getInstance().displayImage(thumbnailUrl, new ImageViewAware(thumbnailImageView), new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build(), imageSize, null, null);
         adLoadingView.showInDialog();
 
-        HSHttpConnection connection = new HSHttpConnection(HSConfig.getString("Application","Server","ThemeZipDownloadBaseURL") + themeName + ".zip");
+        HSHttpConnection connection = new HSHttpConnection(HSConfig.getString("Application", "Server", "ThemeZipDownloadBaseURL") + themeName + ".zip");
         connection.setDownloadFile(downloadFile);
         connection.setConnectionFinishedListener(new HSHttpConnection.OnConnectionFinishedListener() {
             @Override
@@ -84,7 +83,7 @@ public class ThemeZipDownloadUtils {
 
             @Override
             public void onConnectionFailed(HSHttpConnection hsHttpConnection, HSError hsError) {
-                logDownloadFailedEvent(themeName,from);
+                logDownloadFailedEvent(themeName, from);
                 adLoadingView.setConnectionStateText(resources.getString(R.string.foreground_download_failed));
             }
         });
@@ -95,10 +94,10 @@ public class ThemeZipDownloadUtils {
                 if (received >= totalSize) {
                     File desFile = new File(KeyboardThemeManager.getThemeRootDirectoryPath());
                     try {
-                        HSZipUtils.unzip(downloadFile,desFile);
+                        HSZipUtils.unzip(downloadFile, desFile);
                     } catch (ZipException e) {
                         e.printStackTrace();
-                        logDownloadFailedEvent(themeName,from);
+                        logDownloadFailedEvent(themeName, from);
                         adLoadingView.setConnectionStateText(resources.getString(R.string.foreground_download_failed));
                         adLoadingView.updateProgressPercent(0);
                         adLoadingView.setConnectionProgressVisibility(View.INVISIBLE);
@@ -114,14 +113,14 @@ public class ThemeZipDownloadUtils {
     }
 
     public static void logDownloadClickEvent(String themeName, String from) {
-        HSAnalytics.logEvent("theme_downloadInApp_clicked",getDownloadParamMap(themeName, from));
+        KCAnalytics.logEvent("theme_downloadInApp_clicked",getDownloadParamMap(themeName, from));
     }
     public static void logDownloadSuccessEvent(String themeName, String from) {
-        HSAnalytics.logEvent("theme_downloadInApp_success",getDownloadParamMap(themeName, from));
+        KCAnalytics.logEvent("theme_downloadInApp_success",getDownloadParamMap(themeName, from));
     }
 
     private static void logDownloadFailedEvent(String themeName, String from) {
-        HSAnalytics.logEvent("theme_downloadInApp_failed",getDownloadParamMap(themeName, from));
+        KCAnalytics.logEvent("theme_downloadInApp_failed",getDownloadParamMap(themeName, from));
     }
 
     @NonNull

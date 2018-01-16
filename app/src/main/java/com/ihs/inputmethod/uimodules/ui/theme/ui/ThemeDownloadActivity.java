@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
@@ -136,7 +136,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
         if (isFromUsageAccessActivity) {
             isFromUsageAccessActivity = false;
             if (PermissionUtils.isUsageAccessGranted()) {
-                HSAnalytics.logEvent("permission_usage_access");
+                KCAnalytics.logEvent("permission_usage_access");
             }
         }
 
@@ -213,7 +213,7 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_START_CUSTOM_THEME);
 
-                HSAnalytics.logEvent("customize_entry_clicked", "mythemes");
+                KCAnalytics.logEvent("customize_entry_clicked", "mythemes");
                 break;
             default:
         }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
@@ -49,7 +49,7 @@ public class StickerSuggestionAdapter extends RecyclerView.Adapter<StickerSugges
                 HSFloatWindowManager.getInstance().removeFloatingWindow();
                 StickerUtils.sendStickerToPackage(sticker, HSUIInputMethodService.getInstance().getCurrentInputEditorInfo().packageName);
                 if (!TextUtils.isEmpty(stickerTag)) {
-                    HSAnalytics.logEvent("keyboard_sticker_prediction_sent", "sticker tag", stickerTag, "sticker group", sticker.getStickerGroupName());
+                    KCAnalytics.logEvent("keyboard_sticker_prediction_sent", "sticker tag", stickerTag, "sticker group", sticker.getStickerGroupName());
                 }
             }
         });

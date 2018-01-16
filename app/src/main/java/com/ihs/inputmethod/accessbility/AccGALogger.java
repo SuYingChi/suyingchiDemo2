@@ -1,7 +1,7 @@
 package com.ihs.inputmethod.accessbility;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.kc.utils.KCAnalytics;
 
 /**
  * Created by Arthur on 17/1/11.
@@ -25,7 +25,7 @@ public class AccGALogger {
 
     public static void logOneTimeGA(String key) {
         if (!HSPreferenceHelper.getDefault().getBoolean(key, false)) {
-            HSAnalytics.logEvent(key);
+            KCAnalytics.logEvent(key);
             HSPreferenceHelper.getDefault().putBoolean(key, true);
         }
     }

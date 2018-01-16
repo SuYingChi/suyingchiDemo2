@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.ihs.app.analytics.HSAnalytics;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -224,8 +224,8 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             HSLog.e("wrong sticker!");
             return;
         }
-        HSAnalytics.logEvent("sticker_input", "stickerName", sticker.getStickerName());
-        HSAnalytics.logEvent("sticker_input_tab", "stickerGroupName", sticker.getStickerGroupName());
+        KCAnalytics.logEvent("sticker_input", "stickerName", sticker.getStickerName());
+        KCAnalytics.logEvent("sticker_input_tab", "stickerGroupName", sticker.getStickerGroupName());
         stickerPanelManager.pendingRecentSticker(sticker);
         String currentPackageName = HSInputMethod.getCurrentHostAppPackageName();
         StickerUtils.sendStickerToPackage(sticker, currentPackageName);
