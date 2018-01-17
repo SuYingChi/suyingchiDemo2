@@ -46,6 +46,12 @@ android {
             storeFile file('KeyboardArts')
             storePassword "zdhszyzs"
         }
+        bassReleaseConfig {
+            keyAlias "keyboardarts"
+            keyPassword "zdhszyzs"
+            storeFile file('KeyboardArts')
+            storePassword "zdhszyzs"
+        }
     }
     buildTypes {
         //设置Deubug和Release下的编译模式，即proguard文件路径
@@ -142,6 +148,16 @@ android {
             versionCode 8
             versionName "1.2.1"
             manifestPlaceholders = [APPLY_SCHEME: "ecstasyKeyboard"]
+            buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
+            buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
+        }
+
+        bass {
+            applicationId = "com.keyboard.adultkeyboard"
+            versionCode 1
+            versionName "1.0.0"
+            manifestPlaceholders = [APPLY_SCHEME: "adultkeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
