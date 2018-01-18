@@ -114,7 +114,8 @@ android {
             versionCode 57
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
-            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true" //MainActivity开启时显示video，只有color特殊
+            buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true"
+            //MainActivity开启时显示video，只有color特殊
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
             signingConfig signingConfigs.colorReleaseConfig
         }
@@ -161,6 +162,13 @@ android {
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "false"
             buildConfigField "boolean", "LOCKER_APP_GUIDE", "false"
+        }
+    }
+
+    sourceSets {
+        bass {
+            java.srcDirs = ['src/adult/java', 'src/bass/java']
+            res.srcDirs = ['src/adult/res', 'src/bass/res']
         }
     }
 
@@ -270,11 +278,11 @@ dependencies {
     compile "com.ihandy.device:device-accessibility-task$LIB_DEVICE_VERSION"
     compile 'com.annimon:stream:1.1.7'
     compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
-    compile (name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
+    compile(name: 'ihs/libPermissionAcquire/libpermissionrequest', ext: 'aar')
 
     //callassistant
-    compile (name: 'libColorPhone/libColorPhone', ext: 'aar')
-    compile (name: 'libColorPhone/libNotificationService', ext: 'aar')
+    compile(name: 'libColorPhone/libColorPhone', ext: 'aar')
+    compile(name: 'libColorPhone/libNotificationService', ext: 'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //----
 

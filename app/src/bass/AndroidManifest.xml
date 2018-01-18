@@ -79,6 +79,15 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
 
+        <activity
+            android:name="com.ihs.inputmethod.home.HomeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+
         <!-- required by libAppFramework -->
         <meta-data
             android:name="com.google.android.gms.version"

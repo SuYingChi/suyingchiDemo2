@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_nav_keyboard">Keyboard Theme</string>
+    <string name="home_nav_stickers">Stickers</string>
+    <string name="home_nav_wallpaper">Wallpaper</string>
+    <string name="home_nav_call_flash">Call Flash</string>
+    <string name="home_nav_font">Font</string>
+    <string name="home_nav_my_download">My download</string>
+    <string name="home_nav_settings">Settings</string>
+</resources>

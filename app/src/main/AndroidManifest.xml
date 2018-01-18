@@ -62,14 +62,6 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".ui.home.HomeActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-
-        <activity
             android:name=".ui.customize.WallpaperPreviewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

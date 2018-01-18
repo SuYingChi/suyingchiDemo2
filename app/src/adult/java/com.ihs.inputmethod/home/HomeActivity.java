@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.home;
+package com.ihs.inputmethod.home;
 
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
