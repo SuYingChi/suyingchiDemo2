@@ -8,4 +8,13 @@
     <string name="home_nav_my_download">My download</string>
     <string name="home_nav_settings">Settings</string>
 
+    <string name="home_hot_themes">Hot Themes</string>
+    <string name="home_recommend_stickers">Recommend Stickers</string>
+
+    <string name="home_menu_keyboard_themes">Keyboard\nThemes</string>
+    <string name="home_menu_adult_stickers">Adult\nStickers</string>
+    <string name="home_menu_sexy_wallpaper">Sexy\nWallpaper</string>
+    <string name="home_menu_call_flash">Call\nFlash</string>
+
+
 </resources>

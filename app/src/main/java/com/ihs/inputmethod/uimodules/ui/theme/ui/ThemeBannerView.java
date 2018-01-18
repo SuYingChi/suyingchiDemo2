@@ -48,11 +48,11 @@ public class ThemeBannerView extends CardView {
 		super(context, attrs, defStyleAttr);
 	}
 
-	void setUpOnScrollChangedListener(){
+	public void setUpOnScrollChangedListener(){
 		getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
 	}
 
-	void shutDownOnScrollChangedListener(){
+	public void shutDownOnScrollChangedListener(){
 		getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
 	}
 
