@@ -104,7 +104,6 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
 
             @Override
             public void onCardClick(StickerHomeModel stickerHomeModel, Drawable drawable) {
-                KCAnalytics.logEvent(stickerHomeModel.stickerGroup.getStickerGroupName(), "sticker_download_clicked");
                 onDownloadClick(stickerHomeModel, drawable);
             }
 

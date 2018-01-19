@@ -164,7 +164,6 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_START_CUSTOM_THEME);
 
-                KCAnalytics.logEvent("customize_entry_clicked", "store");
                 break;
             case R.id.download_button_container:
                 switchToDownload();

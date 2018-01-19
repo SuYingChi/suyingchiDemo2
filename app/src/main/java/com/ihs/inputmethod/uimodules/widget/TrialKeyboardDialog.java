@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ihs.app.alerts.HSAlertMgr;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
@@ -71,8 +70,6 @@ public final class TrialKeyboardDialog extends Dialog {
                     getContext().getString(R.string.interstitial_ad_subtitle_after_try_keyboard));
             if (!adShown) {
                 showChargingEnableAlert();
-            }else{
-                KCAnalytics.logEvent("app_springAd_show","from","customTheme");
             }
         }
     }
