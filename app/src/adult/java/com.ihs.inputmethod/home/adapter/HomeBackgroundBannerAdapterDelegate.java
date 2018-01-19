@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.home.HomeModel.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -33,13 +35,20 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
         HomeBackgroundBannerViewHolder viewHolder = new HomeBackgroundBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_hot_background_banner, parent, false));
 
-        int bannerWidth = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
+        ViewPager viewPager = viewHolder.viewPager;
+        viewPager.setPageMargin(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.theme_store_viewpager_page_margin));
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewPager.getLayoutParams();
+
+        int bannerWidth = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - layoutParams.leftMargin - layoutParams.rightMargin;
         int bannerHeight = (int) (bannerWidth * (135 / 338f));
 
         HomeBackgroundBannerAdapter homeBannerAdapter = new HomeBackgroundBannerAdapter(activity, bannerWidth, bannerHeight);
         homeBannerAdapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
-        ViewPager viewPager = viewHolder.viewPager;
-        viewPager.getLayoutParams().height = bannerHeight;
+
+        layoutParams.height = bannerHeight;
+        layoutParams.width = bannerWidth;
+        layoutParams.bottomMargin = HSDisplayUtils.dip2px(parent.getContext(),20);
+
         homeBannerAdapter.setViewPager(viewPager);
         homeBannerAdapter.initData();
         viewPager.setAdapter(homeBannerAdapter);

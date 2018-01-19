@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.home.HomeModel.HomeModel;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
-import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 
 import java.util.List;
 
@@ -37,21 +38,28 @@ public final class HomeThemeBannerAdapterDelegate extends AdapterDelegate<List<H
     @NonNull
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        ViewPager viewPager = new ViewPager(parent.getContext());
-        RecyclerView.ViewHolder viewHolder = new RecyclerView.ViewHolder(viewPager) {
-        };
+        HomeThemeBannerViewHolder viewHolder = new HomeThemeBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_theme_banners, parent, false));
 
-        int bannerWidth = parent.getMeasuredWidth();
+        int marginLeft = parent.getContext().getResources().getDimensionPixelOffset(R.dimen.home_activity_horizontal_margin);
+        int marginRight = HSDisplayUtils.dip2px(32);
+
+        int width = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - marginLeft;
+        int bannerWidth = width - marginRight;
         int bannerHeight = (int) (bannerWidth * (150 / 317f));
+        int height = bannerHeight;
+
+        ViewPager viewPager = viewHolder.viewPager;
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,height);
+        layoutParams.leftMargin = marginLeft;
+        viewPager.setLayoutParams(layoutParams);
+        viewPager.setPageMargin(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.theme_store_viewpager_page_margin));
 
         HomeThemeBannerAdapter adapter = new HomeThemeBannerAdapter(activity, bannerWidth, bannerHeight);
         adapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
-        viewPager.setLayoutParams(new RelativeLayout.LayoutParams(bannerWidth, (int) (bannerHeight + HSApplication.getContext().getResources().getDisplayMetrics().density * 10)));
         adapter.setViewPager(viewPager);
         adapter.initData();
-        viewPager.setAdapter(adapter);
         adapter.startAutoScroll();
-        viewHolder.itemView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtils.dip2px(parent.getContext(), 150)));
+        viewPager.setAdapter(adapter);
         return viewHolder;
     }
 

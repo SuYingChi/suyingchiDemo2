@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.home.HomeModel.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -14,6 +15,7 @@ import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import java.util.List;
 
 public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
+    private int margin = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
 
     @Override
     protected boolean isForViewType(@NonNull List<HomeModel> items, int position) {
@@ -23,21 +25,34 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
     @NonNull
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        HomeMenuViewHolder homeMenuViewHolder = new HomeMenuViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_menu, parent, false));
-        int width = (parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - DisplayUtils.dip2px(parent.getContext(), 8)) / 2;
+        HomeMenuViewHolder holder = new HomeMenuViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_menu, parent, false));
+
+        int width = (HSApplication.getContext().getResources().getDisplayMetrics().widthPixels - margin * 3) / 2;
         int height = (int) (111.0 / 165 * width);
-        homeMenuViewHolder.itemView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
-        return homeMenuViewHolder;
+        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(width, height));
+        return holder;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull List<HomeModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
-        HomeModel model = items.get(position);
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+        if (position % 2 == 1) {
+            layoutParams.leftMargin = margin;
+            layoutParams.rightMargin = margin / 2;
+        } else {
+            layoutParams.leftMargin = margin / 2;
+            layoutParams.rightMargin = margin;
+        }
+
         HomeMenuViewHolder viewHolder = (HomeMenuViewHolder) holder;
+        RelativeLayout.LayoutParams menuTitleLayoutParams = (RelativeLayout.LayoutParams) viewHolder.menuTitle.getLayoutParams();
+        menuTitleLayoutParams.leftMargin = (int) (layoutParams.width * 0.066);
+        menuTitleLayoutParams.topMargin = (int) (layoutParams.height * 0.066);
+
+        HomeModel model = items.get(position);
         viewHolder.menuTitle.setText(model.menuTextResId);
         viewHolder.menuBg.setImageResource(model.menuBgResId);
         viewHolder.menuIcon.setImageResource(model.menuIconResId);
-
     }
 
     @Override

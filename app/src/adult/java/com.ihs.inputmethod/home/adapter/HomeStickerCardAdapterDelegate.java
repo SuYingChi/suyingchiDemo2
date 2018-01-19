@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.home.HomeModel.HomeModel;
@@ -16,6 +15,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -28,9 +28,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 
 public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
-    public final static int TAG_DOWNLOAD = 1;
-    public final static int TAG_CARD = 2;
-
+    private int margin = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
     private int imageWidth;
     private int imageHeight;
 
@@ -54,7 +52,13 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return new StickerCardHomeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sticker_card, parent, false));
+        StickerCardHomeViewHolder stickerCardHomeViewHolder = new StickerCardHomeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_sticker_card, parent, false));
+        int width = (parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - margin * 3) / 2;
+        int height = (int) (107f / 165 * width);
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width, height);
+        layoutParams.topMargin = DisplayUtils.dip2px(HSApplication.getContext(), 8);
+        stickerCardHomeViewHolder.itemView.setLayoutParams(layoutParams);
+        return stickerCardHomeViewHolder;
     }
 
     @Override
@@ -62,7 +66,6 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
         final HomeModel homeModel = items.get(position);
         final StickerGroup stickerGroup = (StickerGroup) homeModel.item;
         StickerCardHomeViewHolder stickerCardViewHolder = (StickerCardHomeViewHolder) holder;
-        stickerCardViewHolder.stickerGroupName.setText(stickerGroup.getDownloadDisplayName());
         final String realImageUrl = stickerGroup.getStickerGroupDownloadPreviewImageUri();
         if (realImageUrl != null) {
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
@@ -72,7 +75,15 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
         }
 
-        stickerCardViewHolder.downloadBtn.setVisibility(View.GONE);
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+        if (position % 2 == 0) {
+            layoutParams.leftMargin = margin;
+            layoutParams.rightMargin = margin / 2;
+        } else {
+            layoutParams.leftMargin = margin / 2;
+            layoutParams.rightMargin = margin;
+        }
+
         stickerCardViewHolder.stickerRealImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,9 +118,6 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
 
     public class StickerCardHomeViewHolder extends RecyclerView.ViewHolder {
         View stickerCardView;
-        ImageView downloadBtn;
-
-        TextView stickerGroupName;
         GifImageView stickerNewImage;
         ImageView stickerAnimatedView;
         ImageView stickerRealImage;
@@ -117,13 +125,10 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
 
         public StickerCardHomeViewHolder(View itemView) {
             super(itemView);
-
             stickerCardView = itemView.findViewById(R.id.sticker_card_view);
-            stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
             stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
             stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
             stickerAnimatedView = (ImageView) itemView.findViewById(R.id.sticker_animated_view);
-            downloadBtn = (ImageView) itemView.findViewById(R.id.download_icon);
         }
     }
 }
