@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.home;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -13,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
-import com.ihs.inputmethod.home.HomeModel.HomeModel;
+import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;

@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.home.HomeModel;
+package com.ihs.inputmethod.home.model;
 
 import android.view.View;
 

@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.inputmethod.home.HomeModel.HomeModel;
+import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
-import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 
 import java.util.List;
 
