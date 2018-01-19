@@ -24,10 +24,10 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeBannerView;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
+import com.ihs.inputmethod.view.HomeBackgroundBannerView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.kc.utils.KCAnalytics;
@@ -46,10 +46,7 @@ import java.util.List;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
-/**
- * Created by jixiang on 16/8/22.
- */
-public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
+public class HomeBannerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
     private final static int AUTO_SCROLL_DELAY_DEFAULT = 6000;
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
@@ -334,7 +331,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         }
     }
 
-    public ThemeBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
+    public HomeBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
         this.activity = activity;
         this.bannerWidth = bannerWidth;
         this.bannerHeight = bannerHeight;
@@ -389,7 +386,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         }
 
         int newPosition = position % getRealCount();
-        ThemeBannerView view = (ThemeBannerView) View.inflate(container.getContext(), R.layout.item_theme_banner, null);
+        HomeBackgroundBannerView view = (HomeBackgroundBannerView) View.inflate(container.getContext(), R.layout.item_home_background_banner, null);
 
         if (keyboardThemeList.size() > 0) {
             final HSKeyboardTheme keyboardTheme = keyboardThemeList.get(newPosition);

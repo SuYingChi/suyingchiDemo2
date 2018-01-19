@@ -19,7 +19,8 @@ public final class HomeModel<T> {
 
     public boolean isMenu;
     public int menuTextResId;
-    public int menuImageResId;
+    public int menuBgResId;
+    public int menuIconResId;
 
     public boolean isBanner;
     public boolean isCustomizedTitle;
@@ -40,8 +41,9 @@ public final class HomeModel<T> {
         isThemeList = false;
         isCustomizedTitle = false;
         isMenu = false;
-        menuTextResId = -1;
-        menuImageResId = -1;
+        menuTextResId = 0;
+        menuBgResId = 0;
+        menuIconResId = 0;
         isSticker = false;
         customizedTitle = null;
         customizedTitleClickListener = null;

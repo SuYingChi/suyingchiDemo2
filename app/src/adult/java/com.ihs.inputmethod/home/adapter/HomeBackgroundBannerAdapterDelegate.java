@@ -11,16 +11,15 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.home.HomeModel.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeBannerAdapter;
 
 import java.util.List;
 
-public final class HomeBannerAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
+public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
 
     private Activity activity;
     private boolean isThemeAnalyticsEnabled;
 
-    public HomeBannerAdapterDelegate(Activity activity, boolean isThemeAnalyticsEnabled) {
+    public HomeBackgroundBannerAdapterDelegate(Activity activity, boolean isThemeAnalyticsEnabled) {
         this.activity = activity;
         this.isThemeAnalyticsEnabled = isThemeAnalyticsEnabled;
     }
@@ -33,19 +32,19 @@ public final class HomeBannerAdapterDelegate extends AdapterDelegate<List<HomeMo
     @NonNull
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        HomeBannerViewHolder viewHolder = new HomeBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_hot_background_banner, parent, false));
+        HomeBackgroundBannerViewHolder viewHolder = new HomeBackgroundBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_hot_background_banner, parent, false));
 
         int bannerWidth = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels;
-        int bannerHeight = (int) (bannerWidth * (10 / 19f));
+        int bannerHeight = (int) (bannerWidth * (135 / 338f));
 
-        ThemeBannerAdapter themeBannerAdapter = new ThemeBannerAdapter(activity, bannerWidth, bannerHeight);
-        themeBannerAdapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
+        HomeBannerAdapter homeBannerAdapter = new HomeBannerAdapter(activity, bannerWidth, bannerHeight);
+        homeBannerAdapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
         ViewPager viewPager = viewHolder.viewPager;
         viewPager.getLayoutParams().height = (int) (bannerHeight + HSApplication.getContext().getResources().getDisplayMetrics().density * 10);
-        themeBannerAdapter.setViewPager(viewPager);
-        themeBannerAdapter.initData();
-        viewPager.setAdapter(themeBannerAdapter);
-        themeBannerAdapter.startAutoScroll();
+        homeBannerAdapter.setViewPager(viewPager);
+        homeBannerAdapter.initData();
+        viewPager.setAdapter(homeBannerAdapter);
+        homeBannerAdapter.startAutoScroll();
 
         return viewHolder;
     }
@@ -59,15 +58,15 @@ public final class HomeBannerAdapterDelegate extends AdapterDelegate<List<HomeMo
     @Override
     protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        HomeBannerViewHolder viewHolder = (HomeBannerViewHolder) holder;
-        ((ThemeBannerAdapter) viewHolder.viewPager.getAdapter()).stopAutoScroll();
+        HomeBackgroundBannerViewHolder viewHolder = (HomeBackgroundBannerViewHolder) holder;
+        ((HomeBannerAdapter) viewHolder.viewPager.getAdapter()).stopAutoScroll();
     }
 
     @Override
     protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        HomeBannerViewHolder viewHolder = (HomeBannerViewHolder) holder;
-        ((ThemeBannerAdapter) viewHolder.viewPager.getAdapter()).startAutoScroll();
+        HomeBackgroundBannerViewHolder viewHolder = (HomeBackgroundBannerViewHolder) holder;
+        ((HomeBannerAdapter) viewHolder.viewPager.getAdapter()).startAutoScroll();
     }
 
     @Override

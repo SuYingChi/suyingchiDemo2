@@ -2,11 +2,14 @@ package com.ihs.inputmethod.home;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.home.HomeModel.HomeModel;
@@ -44,6 +47,14 @@ public class HomeActivity extends HSAppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+        toggle.setDrawerIndicatorEnabled(false);
+        toggle.setHomeAsUpIndicator(VectorDrawableCompat.create(getResources(), R.drawable.ic_hamburg, null));
         toggle.syncState();
 
         initView();
@@ -76,25 +87,28 @@ public class HomeActivity extends HSAppCompatActivity {
         homeModel = new HomeModel();
         homeModel.isMenu = true;
         homeModel.menuTextResId = R.string.home_menu_keyboard_themes;
-        homeModel.menuImageResId = R.drawable.home_menu_keyboard_theme;
+        homeModel.menuBgResId = R.drawable.home_menu_keyboard_theme_bg;
+        homeModel.menuIconResId = R.drawable.home_menu_keyboard_theme_icon;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();
         homeModel.isMenu = true;
         homeModel.menuTextResId = R.string.home_menu_adult_stickers;
-        homeModel.menuImageResId = R.drawable.home_menu_sticker;
+        homeModel.menuBgResId = R.drawable.home_menu_adult_stikers_bg;
+        homeModel.menuIconResId = R.drawable.home_menu_adult_stickers_icon;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();
         homeModel.isMenu = true;
         homeModel.menuTextResId = R.string.home_menu_sexy_wallpaper;
-        homeModel.menuImageResId = R.drawable.home_menu_wallpaper;
+        homeModel.menuBgResId = R.drawable.home_menu_wallpaper_bg;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();
         homeModel.isMenu = true;
         homeModel.menuTextResId = R.string.home_menu_call_flash;
-        homeModel.menuImageResId = R.drawable.home_menu_call_flash;
+        homeModel.menuBgResId = R.drawable.home_menu_call_flash_bg;
+        homeModel.menuIconResId = R.drawable.home_menu_call_flash_icon;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();

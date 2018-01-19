@@ -15,11 +15,13 @@ import com.ihs.inputmethod.uimodules.R;
 public final class HomeMenuViewHolder extends RecyclerView.ViewHolder {
 
     TextView menuTitle;
-    ImageView menuImage;
+    ImageView menuBg;
+    ImageView menuIcon;
 
     public HomeMenuViewHolder(View itemView) {
         super(itemView);
         menuTitle = itemView.findViewById(R.id.menu_title);
-        menuImage = itemView.findViewById(R.id.menu_image);
+        menuBg = itemView.findViewById(R.id.menu_bg);
+        menuIcon = itemView.findViewById(R.id.menu_icon);
     }
 }

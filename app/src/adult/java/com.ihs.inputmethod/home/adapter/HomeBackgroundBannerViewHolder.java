@@ -8,10 +8,10 @@ import android.view.View;
  * Created by wenbinduan on 2016/12/22.
  */
 
-public final class HomeBannerViewHolder extends RecyclerView.ViewHolder {
+public final class HomeBackgroundBannerViewHolder extends RecyclerView.ViewHolder {
 
 	ViewPager viewPager;
-	public HomeBannerViewHolder(View itemView) {
+	public HomeBackgroundBannerViewHolder(View itemView) {
 		super(itemView);
 		viewPager= (ViewPager) itemView;
 	}
