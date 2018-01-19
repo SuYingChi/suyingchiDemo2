@@ -46,7 +46,7 @@ import java.util.List;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
-public class HomeBannerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
+public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
     private final static int AUTO_SCROLL_DELAY_DEFAULT = 6000;
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
@@ -331,7 +331,7 @@ public class HomeBannerAdapter extends PagerAdapter implements ViewPager.OnPageC
         }
     }
 
-    public HomeBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
+    public HomeBackgroundBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
         this.activity = activity;
         this.bannerWidth = bannerWidth;
         this.bannerHeight = bannerHeight;

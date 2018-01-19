@@ -80,7 +80,7 @@ public class HomeActivity extends HSAppCompatActivity {
 
         //banner data
         HomeModel homeModel = new HomeModel();
-        homeModel.isBanner = true;
+        homeModel.isBackgroundBanner = true;
         homeModelList.add(homeModel);
 
         // menuText
@@ -119,7 +119,7 @@ public class HomeActivity extends HSAppCompatActivity {
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();
-        homeModel.isThemeList = true;
+        homeModel.isThemeBanner = true;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();

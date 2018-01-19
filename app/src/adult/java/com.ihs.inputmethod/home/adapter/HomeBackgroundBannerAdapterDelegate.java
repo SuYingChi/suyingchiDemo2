@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.home.HomeModel.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -26,7 +25,7 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
 
     @Override
     protected boolean isForViewType(@NonNull List<HomeModel> items, int position) {
-        return items.get(position).isBanner;
+        return items.get(position).isBackgroundBanner;
     }
 
     @NonNull
@@ -34,13 +33,13 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
         HomeBackgroundBannerViewHolder viewHolder = new HomeBackgroundBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_hot_background_banner, parent, false));
 
-        int bannerWidth = HSApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+        int bannerWidth = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
         int bannerHeight = (int) (bannerWidth * (135 / 338f));
 
-        HomeBannerAdapter homeBannerAdapter = new HomeBannerAdapter(activity, bannerWidth, bannerHeight);
+        HomeBackgroundBannerAdapter homeBannerAdapter = new HomeBackgroundBannerAdapter(activity, bannerWidth, bannerHeight);
         homeBannerAdapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
         ViewPager viewPager = viewHolder.viewPager;
-        viewPager.getLayoutParams().height = (int) (bannerHeight + HSApplication.getContext().getResources().getDisplayMetrics().density * 10);
+        viewPager.getLayoutParams().height = bannerHeight;
         homeBannerAdapter.setViewPager(viewPager);
         homeBannerAdapter.initData();
         viewPager.setAdapter(homeBannerAdapter);
@@ -59,14 +58,14 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
     protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         HomeBackgroundBannerViewHolder viewHolder = (HomeBackgroundBannerViewHolder) holder;
-        ((HomeBannerAdapter) viewHolder.viewPager.getAdapter()).stopAutoScroll();
+        ((HomeBackgroundBannerAdapter) viewHolder.viewPager.getAdapter()).stopAutoScroll();
     }
 
     @Override
     protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         HomeBackgroundBannerViewHolder viewHolder = (HomeBackgroundBannerViewHolder) holder;
-        ((HomeBannerAdapter) viewHolder.viewPager.getAdapter()).startAutoScroll();
+        ((HomeBackgroundBannerAdapter) viewHolder.viewPager.getAdapter()).startAutoScroll();
     }
 
     @Override

@@ -54,7 +54,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         delegatesManager.addDelegate(new HomeBackgroundBannerAdapterDelegate(activity, themeAnalyticsEnabled))
                 .addDelegate(new HomeMenuAdapterDelegate())
                 .addDelegate(new HomeTitleAdapterDelegate())
-                .addDelegate(new HomeThemeListAdapterDelegate())
+                .addDelegate(new HomeThemeBannerAdapterDelegate(activity, themeAnalyticsEnabled))
                 .addDelegate(new HomeStickerCardAdapterDelegate());
     }
 
