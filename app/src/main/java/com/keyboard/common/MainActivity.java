@@ -49,12 +49,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.crashlytics.android.Crashlytics;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.utils.HSDeviceUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
@@ -863,8 +861,9 @@ public class MainActivity extends HSAppCompatActivity {
             }
         }
 
+        Intent startThemeHomeIntent = activity.getIntent();
+        startThemeHomeIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
 
-        Intent startThemeHomeIntent = new Intent(HSApplication.getContext(), ThemeHomeActivity.class);
         if (!TextUtils.isEmpty(needActiveThemePkName)) {
             final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
 
@@ -878,16 +877,6 @@ public class MainActivity extends HSAppCompatActivity {
                 }
             }
 
-        }
-
-        int jumpCode = -1;
-        try {
-            jumpCode = activity.getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1);
-        } catch (Exception e) {
-            Crashlytics.log(activity.getIntent().toString() + HSDeviceUtils.getDeviceModel() + " CJX");
-        }
-        if (jumpCode != -1) {
-            startThemeHomeIntent.putExtra(SplashActivity.JUMP_TAG, jumpCode);
         }
 
         activity.overridePendingTransition(0, 0);
