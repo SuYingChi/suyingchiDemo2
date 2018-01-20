@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
 import com.ihs.inputmethod.home.model.HomeMenu;
@@ -42,6 +43,8 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
  */
 
 public class HomeActivity extends HSAppCompatActivity implements HomeStickerCardAdapterDelegate.OnStickerClickListener, View.OnClickListener {
+    public final static String NOTIFICATION_HOME_DESTROY = "HomeActivity.destroy";
+
     private List<HomeModel> homeModelList;
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
@@ -80,7 +83,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         findViewById(R.id.create_theme).setOnClickListener(this);
 
         recyclerView = findViewById(R.id.recycler_view);
-        homeAdapter = new HomeAdapter(this, null, this, ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled());
+        homeAdapter = new HomeAdapter(this,  this, ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -168,6 +171,12 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         return homeModelList;
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        HSGlobalNotificationCenter.sendNotification(NOTIFICATION_HOME_DESTROY);
+    }
 
     @Override
     public void onClick(View v) {

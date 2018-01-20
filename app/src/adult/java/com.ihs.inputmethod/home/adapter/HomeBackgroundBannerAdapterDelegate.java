@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.home.adapter;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +15,7 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import java.util.List;
 
 public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
-
-    private Activity activity;
-    private boolean isThemeAnalyticsEnabled;
-
-    public HomeBackgroundBannerAdapterDelegate(Activity activity, boolean isThemeAnalyticsEnabled) {
-        this.activity = activity;
-        this.isThemeAnalyticsEnabled = isThemeAnalyticsEnabled;
+    public HomeBackgroundBannerAdapterDelegate() {
     }
 
     @Override
@@ -39,14 +32,13 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
         viewPager.setPageMargin(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.theme_store_viewpager_page_margin));
 
         RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewHolder.itemView.getLayoutParams();
-        int bannerWidth = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - layoutParams.leftMargin - layoutParams.rightMargin;
-        int bannerHeight = (int) (bannerWidth * (135 / 338f));
-        layoutParams.height = bannerHeight;
-        layoutParams.width = bannerWidth;
+        int width = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - layoutParams.leftMargin - layoutParams.rightMargin;
+        int height = (int) (width * (135 / 338f));
+        layoutParams.height = height;
+        layoutParams.width = width;
         layoutParams.bottomMargin = HSDisplayUtils.dip2px(parent.getContext(), 20);
 
-        HomeBackgroundBannerAdapter homeBannerAdapter = new HomeBackgroundBannerAdapter(activity, bannerWidth, bannerHeight);
-        homeBannerAdapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
+        HomeBackgroundBannerAdapter homeBannerAdapter = new HomeBackgroundBannerAdapter();
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -68,8 +60,6 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
         homeBannerAdapter.setViewPager(viewPager);
         homeBannerAdapter.initData();
         viewPager.setAdapter(homeBannerAdapter);
-        homeBannerAdapter.startAutoScroll();
-
         return viewHolder;
     }
 

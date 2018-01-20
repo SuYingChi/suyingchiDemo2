@@ -1,78 +1,49 @@
 package com.ihs.inputmethod.home.adapter;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
-import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
-import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.home.HomeActivity;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
-import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.view.HomeBackgroundBannerView;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.KCNativeAdView;
-import com.kc.utils.KCAnalytics;
+import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.keyboard.core.themes.custom.elements.KCBackgroundElement;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-
-import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
 public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
     private final static int AUTO_SCROLL_DELAY_DEFAULT = 6000;
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
     private static int AUTO_SCROLL_DELAY;
-    private final int bannerWidth;
-    private final int bannerHeight;
 
     private ViewPager viewPager;
-    private Activity activity;
-    private List<HSKeyboardTheme> keyboardThemeList;
+    private List<KCBackgroundElement> backgroundList = new ArrayList<>();
     private boolean isStartLoop = false;
     private boolean isLoop = true;
     private boolean isInfinite = true;
     private boolean hasInit = false;
     private long lastScrollTime = 0;
     private final static int loopMultiple = 500;
-
-    private CardView adCardView;
-    private KCNativeAdView nativeAdView;
-
-    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .displayer(new RoundedBitmapDisplayer(HSDisplayUtils.dip2px(2)))
-            .cacheInMemory(true).cacheOnDisk(true)
-            .imageScaleType(ImageScaleType.EXACTLY)
-            .build();
-    private boolean themeAnalyticsEnabled = false;
 
     private Handler handler = new Handler() {
         @Override
@@ -91,9 +62,6 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
                             position = getInitItem();
                         }
                         int delayTime = AUTO_SCROLL_DELAY > 0 ? AUTO_SCROLL_DELAY : AUTO_SCROLL_DELAY_DEFAULT;
-                        if (adCardView != null && keyboardThemeList.get(position % getRealCount()) == null) {
-                            delayTime = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "BannerNativeAdAutoScrollDelay");
-                        }
                         viewPager.setCurrentItem(position);
                         if (isLoop) {
                             handler.sendEmptyMessageDelayed(MSG_WHAT_LOOP, delayTime);
@@ -114,215 +82,30 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
         viewPager.addOnPageChangeListener(this);
     }
 
-    //广告的adChoice位置需要调整，因广告不用暂时不调
-    public void startToFetchNativeAd() {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            if (adCardView == null) {
-                View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
-                nativeAdView = new KCNativeAdView(HSApplication.getContext());
-                nativeAdView.setAdLayoutView(view);
-                nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
-                    @Override
-                    public void onAdLoaded(KCNativeAdView nativeAdView) {
-                        nativeAdView.setTag("NativeAd");
-                        adCardView = ViewConvertor.toCardView(nativeAdView);
-                        adCardView.setCardBackgroundColor(0xfff6f6f6);
-                        scrollToPreAdPosition();
-                    }
-                });
-                nativeAdView.load(HSApplication.getContext().getString(R.string.ad_placement_cardad));
-            }
-        }
-    }
-
-    private void removeNativeAdView() {
-        if (adCardView != null) {
-            nativeAdView.release();
-            adCardView.removeAllViews();
-            adCardView = null;
-
-            int count = getRealCount();
-            int currentItem = viewPager.getCurrentItem();
-            keyboardThemeList.remove(null);
-            notifyDataSetChanged();
-            int newCurrent = currentItem + (currentItem % count - currentItem % (count - 1));
-            viewPager.setCurrentItem(newCurrent, false);
-        }
-    }
-
     private final INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
         public void onReceive(String s, HSBundle hsBundle) {
             if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
                 updateData();
                 notifyDataSetChanged();
-            } else if (ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY.equals(s)) {
-                recycle();
             } else if (ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP.equals(s)) {
                 stopAutoScroll();
-            } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
-                // removeNativeAdView();
             }
-
         }
     };
 
     public void updateData() {
-        LinkedList<HSKeyboardTheme> keyboardThemeArrayList = new LinkedList<>();
-        // 获取所有的非自定义主题
-        List<HSKeyboardTheme> allKeyboardThemesExceptCustomTheme = new ArrayList<>();
-        allKeyboardThemesExceptCustomTheme.addAll(HSKeyboardThemeManager.getAllKeyboardThemeList());
-        allKeyboardThemesExceptCustomTheme.removeAll(KCCustomThemeManager.getInstance().getAllCustomThemes());
-
-        // 获取banner主题
-        List<String> bannerThemeNames = (List<String>) HSConfig.getList("Application", "KeyboardTheme", "ThemeContents", "BannerList");
-        for (String bannerThemeName : bannerThemeNames) {
-            for (HSKeyboardTheme keyboardTheme : allKeyboardThemesExceptCustomTheme) {
-                if (keyboardTheme.mThemeName.equals(bannerThemeName)) {
-                    keyboardThemeArrayList.add(keyboardTheme);
-                }
-            }
-        }
-
-        LinkedList<HSKeyboardTheme> unDownloadBannerThemes = new LinkedList<>();
-
-        Iterator<HSKeyboardTheme> iterator = keyboardThemeArrayList.iterator();
-        while(iterator.hasNext()) {
-            HSKeyboardTheme theme = iterator.next();
-            if(!HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
-                unDownloadBannerThemes.add(theme);
-            }
-        }
-
-        int count = keyboardThemeList.size();
-        if(unDownloadBannerThemes.size() > 0) {
-            for(HSKeyboardTheme keyboardTheme : unDownloadBannerThemes) {
-                if(!keyboardThemeList.contains(keyboardTheme)) {
-                    keyboardThemeList.add(keyboardTheme);
-                    break;
-                }
-            }
-
-            Iterator<HSKeyboardTheme> iterator1 = keyboardThemeList.iterator();
-            while(iterator1.hasNext() && keyboardThemeList.size() > count) {
-                HSKeyboardTheme theme = iterator1.next();
-                if(HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
-                    iterator1.remove();
-                }
-            }
-        }
-
-        setData(keyboardThemeList.subList(0, count));
+        setData(KCCustomThemeManager.getInstance().getBackgroundHomeElements().subList(0,3));
     }
 
     public void initData() {
-        LinkedList<HSKeyboardTheme> keyboardThemeArrayList = new LinkedList<>();
-        // 获取所有的非自定义主题
-        List<HSKeyboardTheme> allKeyboardThemesExceptCustomTheme = new ArrayList<>();
-        allKeyboardThemesExceptCustomTheme.addAll(HSKeyboardThemeManager.getAllKeyboardThemeList());
-        allKeyboardThemesExceptCustomTheme.removeAll(KCCustomThemeManager.getInstance().getAllCustomThemes());
-
-        // 获取banner主题
-        List<String> bannerThemeNames = (List<String>) HSConfig.getList("Application", "KeyboardTheme", "ThemeContents", "BannerList");
-        for (String bannerThemeName : bannerThemeNames) {
-            for (HSKeyboardTheme keyboardTheme : allKeyboardThemesExceptCustomTheme) {
-                if (keyboardTheme.mThemeName.equals(bannerThemeName)) {
-                    keyboardThemeArrayList.add(keyboardTheme);
-                }
-            }
-        }
-
-        List<HSKeyboardTheme> result = new ArrayList<>();
-
-        LinkedList<HSKeyboardTheme> unDownloadBannerThemes = new LinkedList<>();
-        LinkedList<HSKeyboardTheme> downloadBannerThemes = new LinkedList<>();
-
-        Iterator<HSKeyboardTheme> iterator = keyboardThemeArrayList.iterator();
-        while(iterator.hasNext()) {
-            HSKeyboardTheme theme = iterator.next();
-            if(!HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
-                unDownloadBannerThemes.add(theme);
-            }
-            else {
-                downloadBannerThemes.add(theme);
-            }
-        }
-
-        if(unDownloadBannerThemes.size() == 5) {
-            result.addAll(unDownloadBannerThemes);
-        }
-        else if(unDownloadBannerThemes.size() < 5) {
-            result.addAll(unDownloadBannerThemes);
-            result.addAll(downloadBannerThemes.subList(0, 5 - result.size()));
-        }
-        else {
-            List<String> indexShowCount = new ArrayList<>();
-            int count = unDownloadBannerThemes.size();
-            for (int i = 0; i < count; i++) {
-                int showCount = HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0);
-                indexShowCount.add((showCount > 5 ? 5 : showCount) + "_" + i);
-            }
-
-            for (int i = 0; i < indexShowCount.size(); i++) {
-                if (!indexShowCount.get(i).startsWith("5") && !indexShowCount.get(i).startsWith("0") && result.size() < 5) {
-                    result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
-                }
-                if (result.size() == 5) {
-                    break;
-                }
-            }
-
-            if (result.size() < 5) {
-                for (int i = 0; i < indexShowCount.size(); i++) {
-                    if (indexShowCount.get(i).startsWith("0") && result.size() < 5) {
-                        result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
-                    }
-                    if (result.size() == 5) {
-                        break;
-                    }
-                }
-            }
-
-            if (result.size() < 5) {
-                for (int i = 0; i < indexShowCount.size(); i++) {
-                    if (indexShowCount.get(i).startsWith("5") && result.size() < 5) {
-                        result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
-                    }
-                    if (result.size() == 5) {
-                        break;
-                    }
-                }
-            }
-        }
-        boolean allUnDownloadBannerThemeHasShowed = true;
-
-        for(int i = 0; i < unDownloadBannerThemes.size(); i++) {
-            if(HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0) < 5) {
-                allUnDownloadBannerThemeHasShowed = false;
-                break;
-            }
-        }
-
-        if(allUnDownloadBannerThemeHasShowed) {
-            for (int i = 0; i < unDownloadBannerThemes.size(); i++) {
-                HSKeyboardTheme theme = unDownloadBannerThemes.get(i);
-                HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
-            }
-        }
-
-
-        for(int i = 0; i < downloadBannerThemes.size(); i++) {
-            HSKeyboardTheme theme = downloadBannerThemes.get(i);
-            HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
-        }
-
-        setData(result);
+        setData(KCCustomThemeManager.getInstance().getBackgroundHomeElements().subList(0,3));
     }
 
-    public void setData(List<HSKeyboardTheme> keyboardThemeList) {
-        this.keyboardThemeList = keyboardThemeList;
-        if (keyboardThemeList != null) {
-            if (keyboardThemeList.size() == 0) {
+    public void setData(List<KCBackgroundElement> backgroundElementList) {
+        this.backgroundList = backgroundElementList;
+        if (backgroundList != null) {
+            if (backgroundList.size() == 0) {
                 viewPager.setVisibility(View.GONE);
                 setLoop(false);
             } else {
@@ -331,15 +114,10 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
         }
     }
 
-    public HomeBackgroundBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
-        this.activity = activity;
-        this.bannerWidth = bannerWidth;
-        this.bannerHeight = bannerHeight;
+    public HomeBackgroundBannerAdapter() {
         AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HomeActivity.NOTIFICATION_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
     }
 
     private int getInitItem() {
@@ -362,10 +140,10 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
     }
 
     public int getRealCount() {
-        if (keyboardThemeList == null || keyboardThemeList.size() == 0) {
+        if (backgroundList == null || backgroundList.size() == 0) {
             return 0;
         }
-        return keyboardThemeList.size();
+        return backgroundList.size();
     }
 
 
@@ -376,45 +154,47 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        // 如果当前是广告位,并且广告存在
-        if (adCardView != null && keyboardThemeList.get(position % getRealCount()) == null) {
-            if (adCardView.getParent() == container) {
-                container.removeView(adCardView);
-            }
-            container.addView(adCardView);
-            return adCardView;
-        }
-
         int newPosition = position % getRealCount();
         HomeBackgroundBannerView view = (HomeBackgroundBannerView) View.inflate(container.getContext(), R.layout.item_home_background_banner, null);
 
-        if (keyboardThemeList.size() > 0) {
-            final HSKeyboardTheme keyboardTheme = keyboardThemeList.get(newPosition);
-            if (themeAnalyticsEnabled && !ThemeAnalyticsReporter.getInstance().isThemeReported(keyboardTheme.mThemeName)) {
-                view.setUpOnScrollChangedListener();
-                view.setTag(keyboardTheme.mThemeName);
-            } else {
-                view.shutDownOnScrollChangedListener();
-            }
-            final ImageView imageView = (ImageView) view.findViewById(R.id.theme_banner_image);
-            if (keyboardTheme.getThemeBannerImgUrl() != null) {
-                imageView.setImageResource(R.drawable.image_placeholder);
-                ImageSize imageSize = new ImageSize(bannerWidth,bannerHeight);
-                ImageLoader.getInstance().displayImage(keyboardTheme.getThemeBannerImgUrl(), new ImageViewAware(imageView), displayImageOptions,imageSize,null,null);
+        if (backgroundList.size() > 0) {
+            final KCBackgroundElement kcBackgroundElement = backgroundList.get(newPosition);
+            final ImageView imageView = view.findViewById(R.id.theme_banner_image);
 
+            imageView.setImageResource(R.drawable.image_placeholder);
+            if (kcBackgroundElement.hasLocalContent()) {
+                Glide.with(HSApplication.getContext()).load(kcBackgroundElement.getKeyboardImageContentPath()).into(imageView);
+            }else {
+                KCCustomThemeManager.getInstance().downloadElementResource(kcBackgroundElement, new DownloadStatusListener() {
+                    @Override
+                    public void onDownloadProgress(File file, float percent) {
+
+                    }
+
+                    @Override
+                    public void onDownloadSucceeded(File file) {
+                        Glide.with(HSApplication.getContext()).load(kcBackgroundElement.getKeyboardImageContentPath()).into(imageView);
+                    }
+
+                    @Override
+                    public void onDownloadFailed(File file) {
+
+                    }
+                }, false /* isPreview */);
             }
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(activity, ThemeDetailActivity.class);
-                    intent.putExtra(ThemeDetailActivity.INTENT_KEY_THEME_NAME, keyboardTheme.mThemeName);
-                    activity.startActivity(intent);
-                    KCAnalytics.logEvent("store_banner_clicked", "themeName", keyboardTheme.mThemeName);
-                    HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);
-                    if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
-                        ThemeAnalyticsReporter.getInstance().recordBannerThemeClick(keyboardTheme.mThemeName);
-                    }
+                    Bundle bundle = new Bundle();
+                    String customEntry = "store_bg";
+                    String backgroundItemName = kcBackgroundElement.getName();
+                    bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
+                    bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
+                    Intent intent = new Intent(HSApplication.getContext(), CustomThemeActivity.class);
+                    intent.putExtras(bundle);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    HSApplication.getContext().startActivity(intent);
                 }
             });
         }
@@ -424,9 +204,7 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        if (object != adCardView) {
-            container.removeView((View) object);
-        }
+        container.removeView((View) object);
     }
 
 
@@ -457,26 +235,10 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
 
     @Override
     public void onPageSelected(int position) {
-        // 记录当前item显示次数
-        int newPosition = position % getRealCount();
-        if (keyboardThemeList.get(newPosition) == null) { //当前位置为广告位
-            return;
-        }
-        String themeName = keyboardThemeList.get(newPosition).mThemeName;
-        int currentShowCount = HSPreferenceHelper.getDefault().getInt(themeName + "_show_count", 0);
-        ++currentShowCount;
-        HSPreferenceHelper.getDefault().putInt(themeName + "_show_count", currentShowCount);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-    }
-
-    /**
-     * @return the is Loop
-     */
-    public boolean isLoop() {
-        return isLoop;
     }
 
     /**
@@ -487,40 +249,11 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
     }
 
     public void recycle() {
-        if (adCardView != null) {
-            ((KCNativeAdView) adCardView.getChildAt(0)).release();
-        }
-
         stopAutoScroll();
         handler.removeCallbacksAndMessages(null);
 
         viewPager.removeAllViews();
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
-    }
-
-    public void scrollToPreAdPosition() {
-        if (adCardView != null) {
-            if (viewPager != null) {
-                int count = getRealCount();
-                int currentItem = viewPager.getCurrentItem();
-                keyboardThemeList.add(currentItem % getRealCount() + 1, null);
-                notifyDataSetChanged();
-                int newCurrent = currentItem + (currentItem % count - currentItem % (count + 1));
-                viewPager.setCurrentItem(newCurrent, false);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-
-                    }
-                }, 800);
-
-            }
-        }
-    }
-
-    public void setThemeAnalyticsEnabled(boolean isThemeAnalyticsEnabled) {
-        this.themeAnalyticsEnabled = isThemeAnalyticsEnabled;
     }
 }

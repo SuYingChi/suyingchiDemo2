@@ -22,10 +22,10 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.home.HomeActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.inputmethod.view.HomeThemeBannerView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -159,10 +159,8 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
             if (HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED.equals(s)) {
                 updateData();
                 notifyDataSetChanged();
-            } else if (ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY.equals(s)) {
+            } else if (HomeActivity.NOTIFICATION_HOME_DESTROY.equals(s)) {
                 recycle();
-            } else if (ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP.equals(s)) {
-                stopAutoScroll();
             } else if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 // removeNativeAdView();
             }
@@ -339,9 +337,7 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
         this.bannerWidth = bannerWidth;
         this.bannerHeight = bannerHeight;
         AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
-        HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
+        HSGlobalNotificationCenter.addObserver(HomeActivity.NOTIFICATION_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
     }
 

@@ -25,33 +25,15 @@ import java.util.List;
  */
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-
-    public interface ThemeCardItemClickListener {
-        void onCardClick(HSKeyboardTheme keyboardTheme);
-
-        void onMenuShareClick(HSKeyboardTheme keyboardTheme);
-
-        void onMenuDownloadClick(HSKeyboardTheme keyboardTheme);
-
-        void onMenuDeleteClick(HSKeyboardTheme keyboardTheme);
-
-        void onMenuAppliedClick(HSKeyboardTheme keyboardTheme);
-
-        void onKeyboardActivationStart();
-    }
-
-
     private Activity activity;
-    private ThemeCardItemClickListener themeCardItemClickListener;
     protected AdapterDelegatesManager<List<HomeModel>> delegatesManager;
     private List<HomeModel> items;
     private HSKeyboardTheme keyboardThemeOnKeyboardActivation;
 
-    public HomeAdapter(Activity activity, ThemeCardItemClickListener themeCardItemClickListener, HomeStickerCardAdapterDelegate.OnStickerClickListener onStickerClickListener, boolean themeAnalyticsEnabled) {
+    public HomeAdapter(Activity activity, HomeStickerCardAdapterDelegate.OnStickerClickListener onStickerClickListener, boolean themeAnalyticsEnabled) {
         this.activity = activity;
-        this.themeCardItemClickListener = themeCardItemClickListener;
         delegatesManager = new AdapterDelegatesManager<>();
-        delegatesManager.addDelegate(new HomeBackgroundBannerAdapterDelegate(activity, themeAnalyticsEnabled))
+        delegatesManager.addDelegate(new HomeBackgroundBannerAdapterDelegate())
                 .addDelegate(new HomeMenuAdapterDelegate())
                 .addDelegate(new HomeTitleAdapterDelegate())
                 .addDelegate(new HomeThemeBannerAdapterDelegate(activity, themeAnalyticsEnabled))
