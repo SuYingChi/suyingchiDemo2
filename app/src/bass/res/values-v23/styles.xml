@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- 修改状态栏颜色为黑色 -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+</resources>
