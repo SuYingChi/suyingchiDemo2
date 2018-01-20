@@ -34,7 +34,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         this.activity = activity;
         delegatesManager = new AdapterDelegatesManager<>();
         delegatesManager.addDelegate(new HomeBackgroundBannerAdapterDelegate())
-                .addDelegate(new HomeMenuAdapterDelegate())
+                .addDelegate(new HomeMenuAdapterDelegate(activity))
                 .addDelegate(new HomeTitleAdapterDelegate())
                 .addDelegate(new HomeThemeBannerAdapterDelegate(activity, themeAnalyticsEnabled))
                 .addDelegate(new HomeStickerCardAdapterDelegate(onStickerClickListener));

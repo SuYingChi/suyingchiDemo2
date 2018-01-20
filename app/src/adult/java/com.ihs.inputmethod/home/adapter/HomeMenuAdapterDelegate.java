@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.home.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,13 +13,19 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
+import com.ihs.inputmethod.themes.ThemeListActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 
 import java.util.List;
 
 public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
+    private Activity activity;
     private int margin = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
+
+    public HomeMenuAdapterDelegate(Activity activity) {
+        this.activity = activity;
+    }
 
     @Override
     protected boolean isForViewType(@NonNull List<HomeModel> items, int position) {
@@ -68,7 +76,7 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
             public void onClick(View v) {
                 switch (homeMenu) {
                     case KeyboardThemes:
-                        Toast.makeText(HSApplication.getContext(), "进入主题列表", Toast.LENGTH_SHORT).show();
+                        activity.startActivity(new Intent(activity, ThemeListActivity.class));
                         break;
                     case AdultStickers:
                         Toast.makeText(HSApplication.getContext(), "进入Stickers列表", Toast.LENGTH_SHORT).show();

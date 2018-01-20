@@ -21,6 +21,7 @@ import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
 import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
+import com.ihs.inputmethod.themes.ThemeListActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
@@ -135,7 +136,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "进入主题列表", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(HomeActivity.this, ThemeListActivity.class));
             }
         };
         homeModel.rightButtonText = getString(R.string.theme_more);
