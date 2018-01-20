@@ -16,7 +16,7 @@ public enum HomeMenu {
     private int menuBgResId;
     private int menuIconResId;
 
-    private HomeMenu(int textResId, int menuBgResId, int menuIconResId) {
+    HomeMenu(int textResId, int menuBgResId, int menuIconResId) {
         this.textResId = textResId;
         this.menuBgResId = menuBgResId;
         this.menuIconResId = menuIconResId;

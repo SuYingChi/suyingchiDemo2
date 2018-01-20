@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.home;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.kc.utils.KCAnalytics;
@@ -39,7 +41,7 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
  * Created by jixiang on 18/1/17.
  */
 
-public class HomeActivity extends HSAppCompatActivity implements HomeStickerCardAdapterDelegate.OnStickerClickListener {
+public class HomeActivity extends HSAppCompatActivity implements HomeStickerCardAdapterDelegate.OnStickerClickListener, View.OnClickListener {
     private List<HomeModel> homeModelList;
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
@@ -75,6 +77,8 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
     }
 
     private void initView() {
+        findViewById(R.id.create_theme).setOnClickListener(this);
+
         recyclerView = findViewById(R.id.recycler_view);
         homeAdapter = new HomeAdapter(this, null, this, ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
@@ -128,7 +132,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this,"进入主题列表",Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "进入主题列表", Toast.LENGTH_SHORT).show();
             }
         };
         homeModel.rightButtonText = getString(R.string.theme_more);
@@ -146,7 +150,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this,"进入Stickers列表",Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "进入Stickers列表", Toast.LENGTH_SHORT).show();
             }
         };
         homeModelList.add(homeModel);
@@ -162,6 +166,16 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         }
 
         return homeModelList;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.create_theme:
+                startActivity(new Intent(this, CustomThemeActivity.class));
+                break;
+        }
     }
 
     @Override
@@ -193,6 +207,5 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
 
                 });
     }
-
 
 }
