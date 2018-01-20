@@ -31,6 +31,8 @@
         android:shadowRadius="7"
         android:textColor="#ffffff"
         android:textSize="18.3sp"
-        app:typeface="@string/typeface_brandon_text_black" />
+        app:typeface="@string/typeface_brandon_text_black"
+        app:layout_marginLeftPercent="6.6%"
+        app:layout_marginTopPercent="27%" />
 
 </android.support.percent.PercentFrameLayout>
