@@ -7,15 +7,26 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp"
-        android:theme="@style/AppBaseTheme.AppBarOverlay">
+        android:theme="@style/AppBaseTheme.AppBarOverlay"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppBaseTheme.PopupOverlay" />
+            app:popupTheme="@style/AppBaseTheme.PopupOverlay">
+
+
+            <com.ihs.feature.common.TypefacedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/english_ime_name"
+                android:textColor="#2c2c2c"
+                android:textSize="22sp"
+                app:typeface="@string/typeface_brandon_text_black" />
+
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_home" />

@@ -22,7 +22,7 @@
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true" />
 
-    <TextView
+    <com.ihs.feature.common.TypefacedTextView
         android:id="@+id/menu_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,6 +32,7 @@
         android:shadowRadius="7"
         android:textColor="#ffffff"
         android:textSize="18.3sp"
+        app:typeface="@string/typeface_brandon_text_black"
         app:layout_marginLeftPercent="6.6%"
         app:layout_marginTopPercent="27%" />
 

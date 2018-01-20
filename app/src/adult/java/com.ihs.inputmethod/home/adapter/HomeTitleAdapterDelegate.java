@@ -21,7 +21,7 @@ public final class HomeTitleAdapterDelegate extends AdapterDelegate<List<HomeMod
     @NonNull
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return new HomeTitleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_theme_title, parent, false));
+        return new HomeTitleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_title, parent, false));
     }
 
     @Override

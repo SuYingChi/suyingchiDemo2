@@ -12,8 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
-import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.home.adapter.HomeAdapter;
+import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -37,6 +37,7 @@ public class HomeActivity extends HSAppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
