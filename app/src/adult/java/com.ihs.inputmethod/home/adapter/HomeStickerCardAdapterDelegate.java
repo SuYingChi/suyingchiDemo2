@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.home.adapter;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -33,8 +34,11 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
     private int imageHeight;
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
+    private OnStickerClickListener onStickerClickListener;
 
-    public HomeStickerCardAdapterDelegate() {
+    public HomeStickerCardAdapterDelegate(OnStickerClickListener onStickerClickListener) {
+        this.onStickerClickListener = onStickerClickListener;
+
         Resources resources = HSApplication.getContext().getResources();
         imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
         imageHeight = (int) (imageWidth / 1.6f);
@@ -87,9 +91,9 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
         stickerCardViewHolder.stickerRealImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (onStickerItemClickListener != null) {
-//                    onStickerItemClickListener.onCardClick(homeModel, stickerCardViewHolder.stickerRealImage.getDrawable());
-//                }
+                if (onStickerClickListener != null) {
+                    onStickerClickListener.onStickerClick(homeModel, stickerCardViewHolder.stickerRealImage.getDrawable());
+                }
             }
         });
 
@@ -130,5 +134,9 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
             stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
             stickerAnimatedView = (ImageView) itemView.findViewById(R.id.sticker_animated_view);
         }
+    }
+
+    public interface OnStickerClickListener {
+        void onStickerClick(HomeModel homeModel, Drawable thumbnailDrawable);
     }
 }

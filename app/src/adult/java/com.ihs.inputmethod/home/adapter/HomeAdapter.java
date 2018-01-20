@@ -47,7 +47,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     private List<HomeModel> items;
     private HSKeyboardTheme keyboardThemeOnKeyboardActivation;
 
-    public HomeAdapter(Activity activity, ThemeCardItemClickListener themeCardItemClickListener, boolean themeAnalyticsEnabled) {
+    public HomeAdapter(Activity activity, ThemeCardItemClickListener themeCardItemClickListener, HomeStickerCardAdapterDelegate.OnStickerClickListener onStickerClickListener, boolean themeAnalyticsEnabled) {
         this.activity = activity;
         this.themeCardItemClickListener = themeCardItemClickListener;
         delegatesManager = new AdapterDelegatesManager<>();
@@ -55,7 +55,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 .addDelegate(new HomeMenuAdapterDelegate())
                 .addDelegate(new HomeTitleAdapterDelegate())
                 .addDelegate(new HomeThemeBannerAdapterDelegate(activity, themeAnalyticsEnabled))
-                .addDelegate(new HomeStickerCardAdapterDelegate());
+                .addDelegate(new HomeStickerCardAdapterDelegate(onStickerClickListener));
     }
 
     public void setItems(List<HomeModel> items) {

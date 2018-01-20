@@ -3,10 +3,13 @@ package com.ihs.inputmethod.home.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -44,14 +47,34 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
         }
 
         HomeMenuViewHolder viewHolder = (HomeMenuViewHolder) holder;
-        RelativeLayout.LayoutParams menuTitleLayoutParams = (RelativeLayout.LayoutParams) viewHolder.menuTitle.getLayoutParams();
+        FrameLayout.LayoutParams menuTitleLayoutParams = (FrameLayout.LayoutParams) viewHolder.menuTitle.getLayoutParams();
         menuTitleLayoutParams.leftMargin = (int) (layoutParams.width * 0.066);
         menuTitleLayoutParams.topMargin = (int) (layoutParams.height * 0.066);
 
         HomeModel model = items.get(position);
-        viewHolder.menuTitle.setText(model.menuTextResId);
-        viewHolder.menuBg.setImageResource(model.menuBgResId);
-        viewHolder.menuIcon.setImageResource(model.menuIconResId);
+        HomeMenu homeMenu = (HomeMenu) model.item;
+        viewHolder.menuTitle.setText(homeMenu.getTextResId());
+        viewHolder.menuBg.setImageResource(homeMenu.getMenuBgResId());
+        viewHolder.menuIcon.setImageResource(homeMenu.getMenuIconResId());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (homeMenu) {
+                    case KeyboardThemes:
+                        Toast.makeText(HSApplication.getContext(), "进入主题列表", Toast.LENGTH_SHORT).show();
+                        break;
+                    case AdultStickers:
+                        Toast.makeText(HSApplication.getContext(), "进入Stickers列表", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SexyWallpaper:
+                        Toast.makeText(HSApplication.getContext(), "进入Wallpaper列表", Toast.LENGTH_SHORT).show();
+                        break;
+                    case CallFlash:
+                        Toast.makeText(HSApplication.getContext(), "进入CallFlash列表", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
     }
 
     @Override

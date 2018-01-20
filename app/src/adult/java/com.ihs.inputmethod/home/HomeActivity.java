@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.home;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -10,24 +12,37 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.home.adapter.HomeAdapter;
+import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
+import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
+import com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
+import com.ihs.inputmethod.utils.DownloadUtils;
+import com.ihs.keyboardutils.adbuffer.AdLoadingView;
+import com.kc.utils.KCAnalytics;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWNLOAD_ZIP_SUFFIX;
 
 /**
  * Created by jixiang on 18/1/17.
  */
 
-public class HomeActivity extends HSAppCompatActivity {
+public class HomeActivity extends HSAppCompatActivity implements HomeStickerCardAdapterDelegate.OnStickerClickListener {
+    private List<HomeModel> homeModelList;
     private RecyclerView recyclerView;
+    private HomeAdapter homeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +76,7 @@ public class HomeActivity extends HSAppCompatActivity {
 
     private void initView() {
         recyclerView = findViewById(R.id.recycler_view);
-        HomeAdapter homeAdapter = new HomeAdapter(this, null, ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled());
+        homeAdapter = new HomeAdapter(this, null, this, ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -69,7 +84,10 @@ public class HomeActivity extends HSAppCompatActivity {
                 return homeAdapter.getSpanSize(position);
             }
         });
-        homeAdapter.setItems(getHomeData());
+
+        homeModelList = getHomeData();
+        homeAdapter.setItems(homeModelList);
+
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(homeAdapter);
     }
@@ -85,35 +103,34 @@ public class HomeActivity extends HSAppCompatActivity {
         // menuText
         homeModel = new HomeModel();
         homeModel.isMenu = true;
-        homeModel.menuTextResId = R.string.home_menu_keyboard_themes;
-        homeModel.menuBgResId = R.drawable.home_menu_keyboard_theme_bg;
-        homeModel.menuIconResId = R.drawable.home_menu_keyboard_theme_icon;
+        homeModel.item = HomeMenu.KeyboardThemes;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();
         homeModel.isMenu = true;
-        homeModel.menuTextResId = R.string.home_menu_adult_stickers;
-        homeModel.menuBgResId = R.drawable.home_menu_adult_stikers_bg;
-        homeModel.menuIconResId = R.drawable.home_menu_adult_stickers_icon;
+        homeModel.item = HomeMenu.AdultStickers;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();
         homeModel.isMenu = true;
-        homeModel.menuTextResId = R.string.home_menu_sexy_wallpaper;
-        homeModel.menuBgResId = R.drawable.home_menu_wallpaper_bg;
+        homeModel.item = HomeMenu.SexyWallpaper;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();
         homeModel.isMenu = true;
-        homeModel.menuTextResId = R.string.home_menu_call_flash;
-        homeModel.menuBgResId = R.drawable.home_menu_call_flash_bg;
-        homeModel.menuIconResId = R.drawable.home_menu_call_flash_icon;
+        homeModel.item = HomeMenu.CallFlash;
         homeModelList.add(homeModel);
 
         homeModel = new HomeModel();
         homeModel.isTitle = true;
         homeModel.title = getString(R.string.home_hot_themes);
         homeModel.titleClickable = true;
+        homeModel.titleClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this,"进入主题列表",Toast.LENGTH_SHORT).show();
+            }
+        };
         homeModel.rightButtonText = getString(R.string.theme_more);
         homeModelList.add(homeModel);
 
@@ -126,6 +143,12 @@ public class HomeActivity extends HSAppCompatActivity {
         homeModel.title = getString(R.string.home_recommend_stickers);
         homeModel.titleClickable = true;
         homeModel.rightButtonText = getString(R.string.theme_more);
+        homeModel.titleClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this,"进入Stickers列表",Toast.LENGTH_SHORT).show();
+            }
+        };
         homeModelList.add(homeModel);
 
         List<StickerGroup> stickerGroupList = StickerDataManager.getInstance().getStickerGroupList();
@@ -140,4 +163,36 @@ public class HomeActivity extends HSAppCompatActivity {
 
         return homeModelList;
     }
+
+    @Override
+    public void onStickerClick(HomeModel homeModel, Drawable thumbnailDrawable) {
+        final StickerGroup stickerGroup = (StickerGroup) homeModel.item;
+        final String stickerGroupName = stickerGroup.getStickerGroupName();
+        final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
+
+        // 移除点击过的new角标
+        StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
+        homeAdapter.notifyItemChanged(homeModelList.indexOf(homeModel));
+
+        DownloadUtils.getInstance().startForegroundDownloading(HomeActivity.this, stickerGroupName,
+                stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
+                new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
+                    @Override
+                    public void onDismiss(boolean success, boolean manually) {
+                        if (success) {
+                            KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
+                            StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
+
+                            int position = homeModelList.indexOf(homeModel);
+                            if (position > 0 && position < homeModelList.size()) {
+                                homeModelList.remove(position);
+                                homeAdapter.notifyItemRemoved(position);
+                            }
+                        }
+                    }
+
+                });
+    }
+
+
 }

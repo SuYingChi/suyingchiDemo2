@@ -18,10 +18,6 @@ public final class HomeModel<T> {
     public View.OnClickListener titleClickListener;
 
     public boolean isMenu;
-    public int menuTextResId;
-    public int menuBgResId;
-    public int menuIconResId;
-
     public boolean isBackgroundBanner;
     public boolean isThemeBanner;
     public boolean isCustomizedTitle;
@@ -41,9 +37,6 @@ public final class HomeModel<T> {
         isThemeBanner = false;
         isCustomizedTitle = false;
         isMenu = false;
-        menuTextResId = 0;
-        menuBgResId = 0;
-        menuIconResId = 0;
         isSticker = false;
         customizedTitle = null;
         customizedTitleClickListener = null;
