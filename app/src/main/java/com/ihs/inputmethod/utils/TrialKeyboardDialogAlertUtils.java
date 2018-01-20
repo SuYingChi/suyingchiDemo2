@@ -74,12 +74,10 @@ public class TrialKeyboardDialogAlertUtils {
                 @Override
                 public void onClick(View view) {
                     ChargingManagerUtil.enableCharging(false);
-                    KCAnalytics.logEvent("alert_charging_click", "size", "half_screen", "occasion", "after_try");
                 }
             });
 
             KCCommonUtils.showDialog(dialog);
-            KCAnalytics.logEvent("alert_charging_show", "size", "half_screen", "occasion", "after_try");
             increaseAlertShowCount();
             setLastShowFunctionTag(TAG_CHARGING);
             return true;

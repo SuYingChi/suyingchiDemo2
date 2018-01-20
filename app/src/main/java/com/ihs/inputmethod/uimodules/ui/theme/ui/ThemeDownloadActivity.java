@@ -212,8 +212,6 @@ public class ThemeDownloadActivity extends HSAppCompatActivity implements View.O
                 final Intent intent = new Intent(this, CustomThemeActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_START_CUSTOM_THEME);
-
-                KCAnalytics.logEvent("customize_entry_clicked", "mythemes");
                 break;
             default:
         }

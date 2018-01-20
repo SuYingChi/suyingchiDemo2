@@ -641,11 +641,9 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
             dialog.setCancelable(true);
             dialog.setPositiveButton(getString(R.string.enable), view -> {
                 ChargingManagerUtil.enableCharging(false);
-                KCAnalytics.logEvent("alert_charging_click", "size", "half_screen", "occasion", "open_app");
             });
             KCCommonUtils.showDialog(dialog);
             dialog.setOnDismissListener(dialog1 -> AlertShowingUtils.stopShowingAlert());
-            KCAnalytics.logEvent("alert_charging_show", "size", "half_screen", "occasion", "open_app");
             ChargingConfigManager.getManager().increaseEnableAlertShowCount();
             return true;
         } else {
@@ -683,12 +681,10 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                 lockerDialog.setCancelable(true);
 
                 lockerDialog.setPositiveButton(getString(R.string.enable), view -> {
-                    KCAnalytics.logEvent("alert_locker_click", "size", "half_screen", "occasion", "open_app");
                     enableLocker();
                 });
                 KCCommonUtils.showDialog(lockerDialog);
                 lockerDialog.setOnDismissListener(dialog -> AlertShowingUtils.stopShowingAlert());
-                KCAnalytics.logEvent("alert_locker_show", "size", "half_screen", "occasion", "open_app");
                 ScreenLockerConfigUtils.increaseEnableAlertShowCount();
             }
             return true;

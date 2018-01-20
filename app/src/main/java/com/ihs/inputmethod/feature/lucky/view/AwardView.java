@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -187,7 +186,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         mViewState = state;
         switch (state) {
             case AWARD_BOMB:
-                KCAnalytics.logEvent("Lucky_Award_Bomb_Shown");
                 getBombView().setVisibility(INVISIBLE);
                 addView(getBombView());
                 showBomb();
@@ -206,17 +204,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                 if (shouldShowAd) {
                     List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_themetryad), 1);
                     mAd = ads.isEmpty() ? null : ads.get(0);
-
-                    String showed;
-                    HashMap<String,String> map = new HashMap<>();
-                    if (mAd != null) {
-                        showed = "true";
-                    } else {
-                        showed = "no";
-                    }
-                    map.put("show",showed);
-                    KCAnalytics.logEvent("Lucky_Ad_should_show",map);
-                    HSLog.d("luckyAdShow= " + showed);
                 } else {
                     mAd = null;
                     if (isSmall) {
@@ -227,7 +214,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                 }
 
                 if (mAd != null) {
-                    KCAnalytics.logEvent("Lucky_Award_Ad_Shown");
                     ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_AD);
                     ViewGroup boxContainer = getBoxView();
                     PrizeView prizeView = getPrizeView();
@@ -251,7 +237,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                     if (false) {
                         GameConfig config = ((LuckyActivity) getContext()).getGameConfig();
                         if (config == null || sRand.nextFloat() <= config.getSmallBoxChancesProbability()) {
-                            KCAnalytics.logEvent("Lucky_Award_Chances_Shown");
                             ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_CHANCES);
                             getBoxView().setVisibility(GONE);
 
@@ -272,7 +257,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                         mShouldRefresh = false;
                     } else {
                         if (getThemeView().fetchTheme()) {
-                            KCAnalytics.logEvent("Lucky_Award_Theme_Shown");
                             ((LuckyActivity) getContext()).setBoxViewState(LuckyActivity.ViewState.AWARD_THEME);
                             if (getThemeView().getParent() == null) {
                                 getThemeView().setTag(VIEW_TAG);
@@ -292,7 +276,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                 }
                 break;
             case NETWORK_ERROR:
-                KCAnalytics.logEvent("Lucky_Award_Nonet_Shown");
                 getBoxView().setVisibility(GONE);
                 if (getNetworkErrorView().getParent() == null) {
                     getNetworkErrorView().setTag(VIEW_TAG);
@@ -372,7 +355,6 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
     }
 
     private void showEmpty() {
-        KCAnalytics.logEvent("Lucky_Award_Nothing_Shown");
         if (getEmptyView().getParent() == null) {
             getEmptyView().setTag(VIEW_TAG);
             getBoxView().addView(getEmptyView(), 0);

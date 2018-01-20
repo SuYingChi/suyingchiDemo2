@@ -441,9 +441,6 @@ public class LuckyActivity extends HSAppCompatActivity
 
 
     public void hideAwardView(@Nullable String logCloseMethod) {
-        if (logCloseMethod != null) {
-            mEventLogger.logAwardViewCloseEvent(mViewState, logCloseMethod);
-        }
         receiveChancesAward();
         mAwardView.hide();
         mState.resume();
@@ -528,7 +525,6 @@ public class LuckyActivity extends HSAppCompatActivity
         private boolean mAdClickedUponStop;
 
         void onAdClick() {
-            KCAnalytics.logEvent("Lucky_Award_Ad_Button_Clicked");
 
             mAdClickedUponStop = true; // Set the flag
         }
@@ -543,39 +539,6 @@ public class LuckyActivity extends HSAppCompatActivity
 
 
         void onStop() {
-            if (!mAdClickedUponStop) {
-                KCAnalytics.logEvent("Lucky_Times_TimeLength", "Duration",
-                        getDurationDescription(SystemClock.elapsedRealtime() - mStartTime));
-            }
-        }
-
-        private String getDurationDescription(long durationMillis) {
-            int durationSeconds = (int) (durationMillis / 1000);
-            if (durationSeconds < 5) {
-                return "0~5s";
-            } else if (durationSeconds < 10) {
-                return "5~10s";
-            } else if (durationSeconds < 20) {
-                return "10~20s";
-            } else if (durationSeconds < 30) {
-                return "20~30s";
-            } else if (durationSeconds < 40) {
-                return "30~40s";
-            } else if (durationSeconds < 60) {
-                return "40~60s";
-            } else if (durationSeconds < 90) {
-                return "60~90s";
-            } else if (durationSeconds < 120) {
-                return "90s~2min";
-            } else if (durationSeconds < 180) {
-                return "2~3min";
-            } else if (durationSeconds < 300) {
-                return "3~5min";
-            } else if (durationSeconds < 600) {
-                return "5~10min";
-            } else {
-                return "10min+";
-            }
         }
 
         void logCatchAction(@Nullable TargetInfo caughtTarget) {
@@ -599,15 +562,9 @@ public class LuckyActivity extends HSAppCompatActivity
                         break;
                 }
             }
-            KCAnalytics.logEvent("Lucky_Main_Go_Clicked", "Type", type);
         }
 
         void logMuteButtonClickEvent(boolean mute) {
-        }
-
-        void logAwardViewCloseEvent(ViewState from, String closeMethod) {
-            String eventName = "Lucky_Award_" + from.getName() + "_Closed";
-            KCAnalytics.logEvent(eventName, "Method", closeMethod);
         }
     }
 }
