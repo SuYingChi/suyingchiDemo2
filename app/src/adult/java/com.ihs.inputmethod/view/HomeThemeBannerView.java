@@ -3,10 +3,10 @@ package com.ihs.inputmethod.view;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
@@ -16,7 +16,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
  * Created by wenbinduan on 2016/12/5.
  */
 
-public class HomeThemeBannerView extends CardView {
+public class HomeThemeBannerView extends FrameLayout {
 
 	private Rect screenRect = new Rect();
 	private int paddingLeft=-1;

@@ -121,7 +121,6 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
     }
 
     public class StickerCardHomeViewHolder extends RecyclerView.ViewHolder {
-        View stickerCardView;
         GifImageView stickerNewImage;
         ImageView stickerAnimatedView;
         ImageView stickerRealImage;
@@ -129,7 +128,6 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
 
         public StickerCardHomeViewHolder(View itemView) {
             super(itemView);
-            stickerCardView = itemView.findViewById(R.id.sticker_card_view);
             stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
             stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
             stickerAnimatedView = (ImageView) itemView.findViewById(R.id.sticker_animated_view);

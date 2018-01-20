@@ -37,6 +37,9 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
 
     @Override
     protected void onBindViewHolder(@NonNull List<HomeModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
+        HomeModel model = items.get(position);
+        HomeMenu homeMenu = (HomeMenu) model.item;
+
         RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
         if (position % 2 == 1) {
             layoutParams.leftMargin = margin;
@@ -51,8 +54,12 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
         menuTitleLayoutParams.leftMargin = (int) (layoutParams.width * 0.066);
         menuTitleLayoutParams.topMargin = (int) (layoutParams.height * 0.066);
 
-        HomeModel model = items.get(position);
-        HomeMenu homeMenu = (HomeMenu) model.item;
+        if (homeMenu == HomeMenu.CallFlash) {
+            viewHolder.menuTitle.setTextSize(19.9f);
+        }else {
+            viewHolder.menuTitle.setTextSize(18.3f);
+        }
+
         viewHolder.menuTitle.setText(homeMenu.getTextResId());
         viewHolder.menuBg.setImageResource(homeMenu.getMenuBgResId());
         viewHolder.menuIcon.setImageResource(homeMenu.getMenuIconResId());

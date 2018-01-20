@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -33,11 +34,8 @@ import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.kc.utils.KCAnalytics;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,8 +52,6 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
     private static int AUTO_SCROLL_DELAY;
-    private final int bannerWidth;
-    private final int bannerHeight;
 
     private ViewPager viewPager;
     private Activity activity;
@@ -332,10 +328,8 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
         }
     }
 
-    public HomeThemeBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
+    public HomeThemeBannerAdapter(Activity activity) {
         this.activity = activity;
-        this.bannerWidth = bannerWidth;
-        this.bannerHeight = bannerHeight;
         AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
         HSGlobalNotificationCenter.addObserver(HomeActivity.NOTIFICATION_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
@@ -395,12 +389,10 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
             } else {
                 view.shutDownOnScrollChangedListener();
             }
-            final ImageView imageView = (ImageView) view.findViewById(R.id.theme_banner_image);
-            if (keyboardTheme.getThemeBannerImgUrl() != null) {
-                imageView.setImageResource(R.drawable.image_placeholder);
-                ImageSize imageSize = new ImageSize(bannerWidth,bannerHeight);
-                ImageLoader.getInstance().displayImage(keyboardTheme.getThemeBannerImgUrl(), new ImageViewAware(imageView), displayImageOptions,imageSize,null,null);
 
+            if (keyboardTheme.getThemeBannerImgUrl() != null) {
+                ImageView imageView = view.findViewById(R.id.theme_banner_image);
+                Glide.with(HSApplication.getContext()).load(keyboardTheme.getThemeBannerImgUrl()).into(imageView);
             }
 
             view.setOnClickListener(new View.OnClickListener() {

@@ -30,7 +30,7 @@
         android:shadowDy="4"
         android:shadowRadius="7"
         android:textColor="#ffffff"
-        android:textSize="18.3sp"
+        android:textSize="18sp"
         app:typeface="@string/typeface_brandon_text_black"
         app:layout_marginLeftPercent="6.6%"
         app:layout_marginTopPercent="27%" />

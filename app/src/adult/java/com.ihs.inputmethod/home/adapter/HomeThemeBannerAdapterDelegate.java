@@ -40,21 +40,23 @@ public final class HomeThemeBannerAdapterDelegate extends AdapterDelegate<List<H
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
         HomeThemeBannerViewHolder viewHolder = new HomeThemeBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_theme_banners, parent, false));
 
-        int marginLeft = parent.getContext().getResources().getDimensionPixelOffset(R.dimen.home_activity_horizontal_margin);
-        int marginRight = HSDisplayUtils.dip2px(32);
+        int pageMargin = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
+        int marginRight = HSDisplayUtils.dip2px(32); //右边露出部分
+        int paddingLeft = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
+        int paddingRight = pageMargin + marginRight;
 
-        int width = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - marginLeft;
-        int bannerWidth = width - marginRight;
+        int width = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
+        int bannerWidth = width - marginRight - pageMargin;
         int bannerHeight = (int) (bannerWidth * (150 / 317f));
         int height = bannerHeight;
 
         ViewPager viewPager = viewHolder.viewPager;
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,height);
-        layoutParams.leftMargin = marginLeft;
+        viewPager.setPadding(paddingLeft,0,paddingRight,0);
         viewPager.setLayoutParams(layoutParams);
-        viewPager.setPageMargin(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.theme_store_viewpager_page_margin));
+        viewPager.setPageMargin(pageMargin);
 
-        HomeThemeBannerAdapter adapter = new HomeThemeBannerAdapter(activity, bannerWidth, bannerHeight);
+        HomeThemeBannerAdapter adapter = new HomeThemeBannerAdapter(activity);
         adapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
         adapter.setViewPager(viewPager);
         adapter.initData();

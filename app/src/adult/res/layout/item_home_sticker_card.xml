@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/sticker_card_view"
+    android:id="@+id/sticker_image_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/common_card_bg"
     android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="@dimen/common_round_corner"
-    app:cardElevation="2dp"
-    app:cardMaxElevation="2dp"
-    app:cardPreventCornerOverlap="false"
-    app:contentPaddingBottom="0dp">
+    android:padding="1dp">
 
-    <FrameLayout
-        android:id="@+id/sticker_image_container"
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/sticker_image_real_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:riv_corner_radius="@dimen/corner_radius" />
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/sticker_image_real_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:visibility="visible"
-            app:riv_corner_radius_top_left="@dimen/common_round_corner"
-            app:riv_corner_radius_top_right="@dimen/common_round_corner" />
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/sticker_new_view"
+        android:layout_width="41dp"
+        android:layout_height="28dp"
+        android:layout_gravity="right|top"
+        android:scaleType="fitCenter"
+        android:visibility="invisible" />
 
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/sticker_new_view"
-            android:layout_width="41dp"
-            android:layout_height="28dp"
-            android:layout_gravity="right|top"
-            android:scaleType="fitCenter"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:id="@+id/sticker_animated_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
-            android:src="@drawable/app_theme_animated"
-            android:visibility="gone" />
-    </FrameLayout>
-</android.support.v7.widget.CardView>
+    <ImageView
+        android:id="@+id/sticker_animated_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:src="@drawable/app_theme_animated"
+        android:visibility="gone" />
+</FrameLayout>
