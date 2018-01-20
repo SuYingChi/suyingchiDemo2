@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Key-->
+    <string name="typeface_asap_bold" translatable="false">Asap-Bold.ttf</string>
+    <string name="typeface_asap_bold_italic" translatable="false">Asap-BoldItalic.ttf</string>
+    <string name="typeface_asap_italic" translatable="false">Asap-Italic.ttf</string>
+    <string name="typeface_asap_medium" translatable="false">Asap-Medium.ttf</string>
+    <string name="typeface_asap_medium_italic" translatable="false">Asap-MediumItalic.ttf</string>
+    <string name="typeface_asap_regular" translatable="false">Asap-Regular.ttf</string>
+    <string name="typeface_asap_semi_bold" translatable="false">Asap-SemiBold.ttf</string>
+    <string name="typeface_asap_semi_bold_italic" translatable="false">Asap-SemiBoldItalic.ttf</string>
+    <string name="typeface_brandon_text_black" translatable="false">BrandonText_Black.ttf</string>
+
+
+</resources>

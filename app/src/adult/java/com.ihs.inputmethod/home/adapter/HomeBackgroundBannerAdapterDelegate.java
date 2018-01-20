@@ -37,17 +37,33 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
 
         ViewPager viewPager = viewHolder.viewPager;
         viewPager.setPageMargin(HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.theme_store_viewpager_page_margin));
-        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewPager.getLayoutParams();
 
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewHolder.itemView.getLayoutParams();
         int bannerWidth = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - layoutParams.leftMargin - layoutParams.rightMargin;
         int bannerHeight = (int) (bannerWidth * (135 / 338f));
+        layoutParams.height = bannerHeight;
+        layoutParams.width = bannerWidth;
+        layoutParams.bottomMargin = HSDisplayUtils.dip2px(parent.getContext(), 20);
 
         HomeBackgroundBannerAdapter homeBannerAdapter = new HomeBackgroundBannerAdapter(activity, bannerWidth, bannerHeight);
         homeBannerAdapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
 
-        layoutParams.height = bannerHeight;
-        layoutParams.width = bannerWidth;
-        layoutParams.bottomMargin = HSDisplayUtils.dip2px(parent.getContext(),20);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                viewHolder.indicatorView.updateIndicator(position % homeBannerAdapter.getRealCount(), homeBannerAdapter.getRealCount());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         homeBannerAdapter.setViewPager(viewPager);
         homeBannerAdapter.initData();
