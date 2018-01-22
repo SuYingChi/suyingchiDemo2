@@ -286,16 +286,12 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         getContentResolver().registerContentObserver(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                true,
+                false,
                 screenShotContentObserver
         );
     }
 
-    MediaFileObserver screenShotContentObserver = new MediaFileObserver(new Handler(), this) {
-        @Override
-        protected void onMediaFileCreate(String path, String fileName) {
-
-        }
+    MediaFileObserver screenShotContentObserver = new MediaFileObserver(new Handler()) {
     };
 
     private void initLockerChargingNoAdConfig() {
