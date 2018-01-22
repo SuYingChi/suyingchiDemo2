@@ -42,8 +42,6 @@
     <string name="placement_full_screen_at_app_uninstall">Master_A(InterstitialAds)AppUninstallFullScreenAd</string>
     
     <string name="theme_ad_placement_theme_ad">Master_A(NativeAds)ThemeAd</string>
-    <string name="ad_placement_locker">Master_A(NativeAds)Fuse</string>
-    <string name="ad_placement_google_play_dialog_ad">Master_A(NativeAds)GooglePlayNative</string>
     <string name="ad_placement_keyboard_banner">Master_A(NativeAds)KeyboardBanner</string>
     
     <string name="ad_placement_result_page">Master_A(NativeAds)BoostDone</string>
