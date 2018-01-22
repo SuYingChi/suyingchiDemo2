@@ -54,6 +54,7 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -121,12 +122,12 @@ public class HSUIApplication extends HSInputMethodApplication {
             intent = new Intent();
         }
 
-        if (MainActivity.shouldShowThemeHome()) {
+        if (MainActivity.shouldSkipMainActivity()) {
             if (isAccessibilityEnabled && HSAccessibilityService.isAvailable() && !HSInputMethodListManager.isMyInputMethodSelected()) {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
                 splashActivity.startActivity(intent);
             } else {
-                MainActivity.startThemeHomeActivity(splashActivity);
+                ThemeHomeActivity.startThemeHomeActivity(splashActivity);
             }
         } else {
             intent.setClass(this, MainActivity.class);

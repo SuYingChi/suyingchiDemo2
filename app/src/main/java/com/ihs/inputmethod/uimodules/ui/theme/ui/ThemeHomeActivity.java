@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -41,7 +42,9 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
+import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
+import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
@@ -137,6 +140,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
     private boolean fullscreenShowed = false;
 
     private int splashJumpCode = -1;
+    public static boolean hasInitKeyboardBeforeOnCreate = false;
 
 
     private Handler handler = new Handler() {
@@ -746,5 +750,43 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         checkAndShowApkUpdateAlert(true);
         handler.post(this::restoreNavigationView);
 
+    }
+
+    public static void startThemeHomeActivity(Activity activity) {
+        if (!hasInitKeyboardBeforeOnCreate) {
+            HSUIInputMethodService.initResourcesBeforeOnCreate();
+            hasInitKeyboardBeforeOnCreate = true;
+        }
+        Uri data = activity.getIntent().getData();
+        String needActiveThemePkName = null;
+        if (data != null) {
+            String pkName = data.getQueryParameter("pkName");
+            if (!TextUtils.isEmpty(pkName)) {
+                HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
+                needActiveThemePkName = pkName;
+            }
+        }
+
+        Intent startThemeHomeIntent = activity.getIntent();
+        startThemeHomeIntent.setClass(HSApplication.getContext(), ThemeHomeActivity.class);
+
+        if (!TextUtils.isEmpty(needActiveThemePkName)) {
+            final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
+
+            if (setThemeSucceed) {
+                startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
+            } else {
+                HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
+                if (keyboardTheme != null) {
+                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                    HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                }
+            }
+
+        }
+
+        activity.overridePendingTransition(0, 0);
+        activity.startActivity(startThemeHomeIntent);
+        activity.finish();
     }
 }
