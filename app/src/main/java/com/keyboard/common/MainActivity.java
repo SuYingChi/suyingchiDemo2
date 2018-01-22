@@ -237,7 +237,7 @@ public class MainActivity extends HSAppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startThemeHomeActivity();
+                                startThemeHomeActivity(MainActivity.this);
                             }
                         }, 200);
                     } else {
@@ -309,7 +309,7 @@ public class MainActivity extends HSAppCompatActivity {
                         return;
                     }
                     if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
-                        startThemeHomeActivity();
+                        startThemeHomeActivity(MainActivity.this);
                     }
                 }
             }, 1200);
@@ -324,7 +324,7 @@ public class MainActivity extends HSAppCompatActivity {
                 @Override
                 public boolean onError(MediaPlayer mp, int what, int extra) {
                     HSLog.e("MainActivity mp4 play error: what = " + what + " extra = " + extra);
-                    startThemeHomeActivity();
+                    startThemeHomeActivity(MainActivity.this);
                     return true;
                 }
             });
@@ -350,7 +350,7 @@ public class MainActivity extends HSAppCompatActivity {
                         return;
                     }
                     if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
-                        startThemeHomeActivity();
+                        startThemeHomeActivity(MainActivity.this);
                     }
                 }
             });
@@ -841,11 +841,6 @@ public class MainActivity extends HSAppCompatActivity {
         }
     }
 
-    private void startThemeHomeActivity() {
-        startThemeHomeActivity(MainActivity.this);
-        finish();
-    }
-
     public static void startThemeHomeActivity(Activity activity) {
         if (!hasInitKeyboardBeforeOnCreate) {
             HSUIInputMethodService.initResourcesBeforeOnCreate();
@@ -881,6 +876,7 @@ public class MainActivity extends HSAppCompatActivity {
 
         activity.overridePendingTransition(0, 0);
         activity.startActivity(startThemeHomeIntent);
+        activity.finish();
     }
 
     private void playManualButtonShowAnimation() {
@@ -956,7 +952,7 @@ public class MainActivity extends HSAppCompatActivity {
         img_enter_two.setAlpha(0f);
         img_choose_two.setVisibility(View.VISIBLE);
         img_choose_two.setAlpha(1f);
-        startThemeHomeActivity();
+        startThemeHomeActivity(MainActivity.this);
     }
 
     private boolean isEventRecorded(String pref_name) {
