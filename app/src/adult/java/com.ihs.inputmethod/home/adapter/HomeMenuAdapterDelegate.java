@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
+import com.ihs.inputmethod.stickers.StickerListActivity;
 import com.ihs.inputmethod.themes.ThemeListActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
@@ -79,7 +80,7 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
                         activity.startActivity(new Intent(activity, ThemeListActivity.class));
                         break;
                     case AdultStickers:
-                        Toast.makeText(HSApplication.getContext(), "进入Stickers列表", Toast.LENGTH_SHORT).show();
+                        activity. startActivity(new Intent(activity, StickerListActivity.class));
                         break;
                     case SexyWallpaper:
                         Toast.makeText(HSApplication.getContext(), "进入Wallpaper列表", Toast.LENGTH_SHORT).show();

@@ -13,7 +13,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -21,6 +20,7 @@ import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
 import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
+import com.ihs.inputmethod.stickers.StickerListActivity;
 import com.ihs.inputmethod.themes.ThemeListActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -136,7 +136,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, ThemeListActivity.class));
+                goThemeList();
             }
         };
         homeModel.rightButtonText = getString(R.string.theme_more);
@@ -154,7 +154,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "进入Stickers列表", Toast.LENGTH_SHORT).show();
+                goStickerList();
             }
         };
         homeModelList.add(homeModel);
@@ -170,6 +170,14 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         }
 
         return homeModelList;
+    }
+
+    private void goThemeList() {
+        startActivity(new Intent(HomeActivity.this, ThemeListActivity.class));
+    }
+
+    private void goStickerList() {
+        startActivity(new Intent(HomeActivity.this, StickerListActivity.class));
     }
 
 
