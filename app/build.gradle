@@ -171,28 +171,13 @@ final LIB_DEVICE_VERSION = '.gm:4.4.3.gm'
 dependencies {
     // App Framework
     compile "com.ihandy.appframework:libAppframework.gm:4.5.4.gm"
-    //Ads
-    compile 'net.appcloudbox.ads:libAcbAds.gm:1.2.4.gm'
+
+    //Golden eye
+    smileyImplementation "net.appcloudbox.goldeneye:2:2018.01.22.002"
+    colorImplementation "net.appcloudbox.goldeneye:72:2018.01.23.001"
 
     // Autopilot
     compile "net.appcloudbox.autopilot:libAutoPilot.gm:5.0.5.gm"
-
-//    // Native Ad Adapters
-    compile 'net.appcloudbox.adadapter:libAdFBNativeAdapter.gm:5.1.3.gm'
-    compile 'net.appcloudbox.adadapter:libAdMopubNativeAdapter.gm:5.0.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdmobNativeAdapter.gm:5.1.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdxNativeAdapter.gm:5.1.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdFlurryNativeAdapter.gm:5.1.1.gm'
-
-    // Interstitial Ad Adapters
-    compile 'net.appcloudbox.adadapter:libAdAdmobInterstitialAdapter.gm:5.1.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdxInterstitialAdapter.gm:5.1.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdFBInterstitialAdapter.gm:5.0.1.gm'
-
-    // Express Ad Adapters
-    compile 'net.appcloudbox.adadapter:libAdMopubBannerAdapter.gm:5.0.1.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdxBannerAdapter.gm:5.1.0.gm'
-    compile 'net.appcloudbox.adadapter:libAdAdmobBannerAdapter.gm:5.1.0.gm'
 
     // Google Play Services
     compile "com.google.android.gms:play-services-ads:11.8.0"
