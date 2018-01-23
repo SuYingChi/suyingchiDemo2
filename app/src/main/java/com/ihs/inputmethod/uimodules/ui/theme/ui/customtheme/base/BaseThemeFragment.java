@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,7 +20,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.common.Category;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.common.CategoryItemViewProvider;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
@@ -31,9 +29,7 @@ import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import me.drakeet.multitype.Items;
@@ -260,136 +256,6 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
                 }
             }
         });
-    }
-
-    @NonNull
-    protected List<AdsItem> getAdsItems(boolean isCircleStyle) {
-        return getAdsItems(1, 1, isCircleStyle);
-    }
-
-    @NonNull
-    protected List<AdsItem> getAdsItems(float widthRatio, float heightRatio, boolean isCircleStyle) {
-        return new List<AdsItem>() {
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<AdsItem> iterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @NonNull
-            @Override
-            public <T> T[] toArray(@NonNull T[] a) {
-                return null;
-            }
-
-            @Override
-            public boolean add(AdsItem adsItem) {
-                return false;
-            }
-
-            @Override
-            public boolean remove(Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends AdsItem> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(int index, @NonNull Collection<? extends AdsItem> c) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public AdsItem get(int index) {
-                return null;
-            }
-
-            @Override
-            public AdsItem set(int index, AdsItem element) {
-                return null;
-            }
-
-            @Override
-            public void add(int index, AdsItem element) {
-
-            }
-
-            @Override
-            public AdsItem remove(int index) {
-                return null;
-            }
-
-            @Override
-            public int indexOf(Object o) {
-                return 0;
-            }
-
-            @Override
-            public int lastIndexOf(Object o) {
-                return 0;
-            }
-
-            @Override
-            public ListIterator<AdsItem> listIterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<AdsItem> listIterator(int index) {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public List<AdsItem> subList(int fromIndex, int toIndex) {
-                return null;
-            }
-        };
     }
 
 

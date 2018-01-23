@@ -92,16 +92,14 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 
 		final CardView cardView = (CardView) holder.itemView;
 
-		if (items.get(position).isThemeAd()) {
-			if (!this.shouldShowChargingEnableCard) {
-				this.shouldShowChargingEnableCard = ChargingConfigManager.getManager().shouldShowEnableChargingCard(true);
-				if (this.shouldShowChargingEnableCard) {
-					ChargingConfigManager.getManager().increaseEnableCardShowCount();
-				}
+		if (!this.shouldShowChargingEnableCard) {
+			this.shouldShowChargingEnableCard = ChargingConfigManager.getManager().shouldShowEnableChargingCard(true);
+			if (this.shouldShowChargingEnableCard) {
+				ChargingConfigManager.getManager().increaseEnableCardShowCount();
 			}
 		}
 
-		if (items.get(position).isThemeAd() && this.shouldShowChargingEnableCard) {// Show charging enable view
+		if (this.shouldShowChargingEnableCard) {// Show charging enable view
 			View chargingEnableView = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.charging_enable_card, null);
 			chargingEnableView.setTag("chargingenableview");
 			cardView.addView(chargingEnableView);

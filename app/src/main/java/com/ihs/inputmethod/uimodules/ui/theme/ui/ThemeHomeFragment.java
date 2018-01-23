@@ -289,13 +289,8 @@ public class ThemeHomeFragment extends Fragment implements CommonThemeCardAdapte
 
     @Override
     public void onThemeAdClick(int position) {
-        ThemeHomeModel item = themeHomeModelList.get(position);
-
-        // Which ad's placement is ThemeAd
-        if (item.isThemeAd()) {
-            themeHomeModelList.remove(position);
-            adapter.notifyItemRemoved(position);
-        }
+        themeHomeModelList.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 
     @Override

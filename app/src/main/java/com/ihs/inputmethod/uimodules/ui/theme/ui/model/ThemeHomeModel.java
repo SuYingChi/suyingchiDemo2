@@ -1,12 +1,9 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.model;
 
-import android.text.TextUtils;
 import android.view.View;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
-import com.ihs.inputmethod.uimodules.R;
 
 /**
  * Created by wenbinduan on 2016/12/22.
@@ -58,22 +55,8 @@ public final class ThemeHomeModel implements ICondition {
 		span=1;
 	}
 
-	/**
-	 * Check if is theme ad by ad placement
-	 *
-	 * All ad types:
-	 * ThemeAd
-	 * PreviewAd
-	 * LastThemeAd
-	 *
-	 * @return true for ThemeAd
-     */
 	public boolean isThemeAd() {
-		if (isAd && !TextUtils.isEmpty(adPlacement) && adPlacement.equals(HSApplication.getContext().getString(R.string.theme_ad_placement_theme_ad))) {
-			return true;
-		}
-
-		return false;
+		return isAd;
 	}
 
 	@Override
