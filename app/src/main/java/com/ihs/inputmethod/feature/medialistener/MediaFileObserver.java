@@ -39,17 +39,22 @@ public abstract class MediaFileObserver extends ContentObserver {
         super.onChange(selfChange, uri);
     }
 
-    private static synchronized void logPic(String path, String fileName) throws Exception {
+    private static void logPic(String path) {
+        File file = new File(path);
         //这里判断下是否文件是新创建的
-        if (new File(path).lastModified() >= System.currentTimeMillis() - 10000) {
-            HSAnalytics.logEvent("picture_capture", "path", new File(path).getParentFile().getName());
+        if (file.lastModified() >= System.currentTimeMillis() - 10000) {
+            File parentFile = file.getParentFile();
+            if (parentFile != null) {
+                HSAnalytics.logEvent("picture_capture", "path", parentFile.getName());
+            }
         }
     }
 
-    private static class MyTask extends AsyncTask<Uri, Void, Void> {
+    private static class MyTask extends AsyncTask<Uri, Void, String> {
 
         @Override
-        protected Void doInBackground(Uri... uris) {
+        protected String doInBackground(Uri... uris) {
+            String path = "";
             Cursor cursor = null;
             try {
                 cursor = HSApplication.getContext().getContentResolver().query(uris[0], new String[]{
@@ -60,8 +65,7 @@ public abstract class MediaFileObserver extends ContentObserver {
                     int displayNameColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
                     int dataColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
                     String fileName = cursor.getString(displayNameColumnIndex);
-                    String path = cursor.getString(dataColumnIndex);
-                    logPic(path, fileName);
+                    path = cursor.getString(dataColumnIndex);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -70,8 +74,12 @@ public abstract class MediaFileObserver extends ContentObserver {
                     cursor.close();
                 }
             }
-            return null;
+            return path;
         }
 
+        @Override
+        protected void onPostExecute(String path) {
+            logPic(path);
+        }
     }
 }
