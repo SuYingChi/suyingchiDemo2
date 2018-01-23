@@ -156,6 +156,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             };
             Glide.with(HSApplication.getContext()).asBitmap().apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)).load(baseElement.getPreviewFileUrl()).into((ImageView) adLoadingView.findViewById(R.id.iv_icon));
             adLoadingView.showInDialog();
+            KCAnalytics.logEvent("app_alert_applyingItem_show");
         } else {
             selectItem(holder, baseElement);
             fragment.refreshKeyboardView();

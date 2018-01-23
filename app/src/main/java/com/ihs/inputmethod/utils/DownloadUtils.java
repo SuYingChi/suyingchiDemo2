@@ -14,6 +14,7 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
+import com.kc.utils.KCAnalytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,6 +112,7 @@ public class DownloadUtils {
                     }
                 }, 2000, false);
         adLoadingView.showInDialog();
+        KCAnalytics.logEvent("app_alert_applyingItem_show");
 
         initConnection(resources, adLoadingView, connection);
         adLoadingView.setTag(connection);
