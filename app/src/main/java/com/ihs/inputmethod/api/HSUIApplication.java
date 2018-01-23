@@ -109,6 +109,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         public void onReceive(Context context, Intent intent) {
             if (HSNotificationConstant.HS_APPSFLYER_RESULT.equals(intent.getAction())) {
                 recordInstallType();
+            } else if (Intent.ACTION_INPUT_METHOD_CHANGED.equals(intent.getAction())) {
+                AppSuggestionManager.getInstance().setCurrentTopAppName("");
             }
         }
     };
@@ -206,6 +208,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSGlobalNotificationCenter.addObserver(RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
 
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
+        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED));
 
         HSKeyboardThemeManager.init();
 
