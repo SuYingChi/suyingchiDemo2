@@ -19,7 +19,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.InCallThemePreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ICustomizeService;
 import com.ihs.inputmethod.uimodules.ui.customize.service.ServiceListener;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 
@@ -45,11 +44,6 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         mInflater = LayoutInflater.from(mContext);
         populateData();
     }
-
-    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .showImageOnFail(R.drawable.locker_theme_thumbnail_failed)
-            .showImageOnLoading(R.drawable.locker_theme_thumbnail_loading)
-            .cacheOnDisk(true).build();
 
     public void populateData() {
         mThemes.clear();

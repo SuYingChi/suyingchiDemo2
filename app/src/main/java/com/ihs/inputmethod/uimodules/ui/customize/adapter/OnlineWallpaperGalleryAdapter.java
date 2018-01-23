@@ -26,7 +26,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperPreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LoadingProgressBar;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,11 +56,6 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     private FooterViewHolder mFooterViewHolder;
 
     private int mScreenWidth;
-
-    private DisplayImageOptions defaulltOptions = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.drawable.wallpaper_loading).showImageOnFail(R.drawable.wallpaper_load_failed)
-            .showImageForEmptyUri(R.drawable.ic_sticker_loading_image)
-            .cacheOnDisk(true).build();
 
     private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
         @Override

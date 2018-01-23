@@ -38,6 +38,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardThemePreview;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.theme.HSThemeBitmapUtils;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
@@ -57,12 +58,8 @@ import com.keyboard.common.SplashActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.elements.KCBackgroundElement;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
-import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,7 +198,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ImageLoader.getInstance().clearMemoryCache();
         AudioAndHapticFeedbackManager.getInstance().releaseSoundResource();
         HSGlobalNotificationCenter.removeObserver(this);
     }
@@ -260,9 +256,15 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                     mp4HSBackgroundView.setHSBackground(new String[]{backgroundElement.getKeyboardImageContentPath()});
                 }
             } else {
-                Bitmap bitmap = ImageLoader.getInstance().loadImageSync(BaseImageDownloader.Scheme.FILE.wrap(customThemeData.getCustomizedBackgroundImagePath()));
-                if (bitmap != null) {
-                    mp4HSBackgroundView.setHSBackground(new BitmapDrawable(bitmap));
+                try {
+                    Resources res = HSApplication.getContext().getResources();
+                    Bitmap bitmap = HSThemeBitmapUtils.decodeImage(customThemeData.getCustomizedBackgroundImagePath(), HSResourceUtils.getDefaultKeyboardWidth(res),
+                            HSResourceUtils.getDefaultKeyboardHeight(res));
+                    if (bitmap != null) {
+                        mp4HSBackgroundView.setHSBackground(new BitmapDrawable(bitmap));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -572,12 +574,11 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             try {
                 // 拷贝customThemeCommon到本地
                 if (KCCustomThemeManager.getInstance().saveDefaultBackgroundToLocalReady() && KCCustomThemeManager.getInstance().saveCustomThemeCommonToLocalReady()) {
-                    Resources res = HSApplication.getContext().getResources();
-                    Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
-                            HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
-                    Drawable backgroundDrawable = new BitmapDrawable(res, bmp);
                     keyboardView.loadKeyboard();
-                    return backgroundDrawable;
+                    Resources res = HSApplication.getContext().getResources();
+                    Bitmap bitmap = HSThemeBitmapUtils.decodeImage(defaultBackgroundElement.getKeyboardImageContentPath(), HSResourceUtils.getDefaultKeyboardWidth(res),
+                            HSResourceUtils.getDefaultKeyboardHeight(res));
+                    return new BitmapDrawable(res, bitmap);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -599,7 +600,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             ObjectAnimator animator = ObjectAnimator.ofFloat(keyboardFrameLayout, "translationY", height, 0);
             animator.setDuration(500);
             animator.start();
-            refreshKeyboardView();
             if (currentFragment != null) {
                 currentFragment.refreshHeaderNextButtonState();
             }

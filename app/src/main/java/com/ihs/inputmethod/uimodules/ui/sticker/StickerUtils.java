@@ -20,7 +20,7 @@ import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.ihs.inputmethod.uimodules.utils.BitmapUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -206,7 +206,11 @@ public class StickerUtils {
 
         int backgroundWidth = (int) (height * STICKER_BACKGROUND_ASPECT_RATIO); // 背景宽度
         Bitmap backgroundBitmap = createBitmapAndGcIfNecessary(backgroundWidth, height); //创建背景图
-        Bitmap stickerShareBitmapTemp = ImageLoader.getInstance().loadImageSync(sticker.getStickerUri());
+        Bitmap stickerShareBitmapTemp = null;
+        try {
+            stickerShareBitmapTemp = BitmapUtils.decodeImage(sticker.getFilePath(),sticker.getStickerUri().startsWith("asset") ? BitmapUtils.ASSET_URI : BitmapUtils.FILE_URI);
+        } catch (IOException e) {
+        }
         if (stickerShareBitmapTemp == null) {
             copyStickerFileToSDCard(sticker, outputFilePath);
             return;

@@ -11,14 +11,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kc.utils.KCAnalytics;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.utils.HSMarketUtils;
-import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
@@ -47,11 +46,8 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
     private String cameraName;
     private boolean cameraInserted = false;
 
-
-    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .displayer(new RoundedBitmapDisplayer(HSDisplayUtils.dip2px(2)))
-            .cacheInMemory(false).cacheOnDisk(true)
-            .build();
+    private RequestOptions requestOptions = new RequestOptions().skipMemoryCache(true)
+            .bitmapTransform(new RoundedCorners(10));
 
      public void addAd(AcbNativeAd ad) {
         this.adList.add(ad);
@@ -87,8 +83,6 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        Context context = HSApplication.getContext();
-
         if (getItemViewType(position) == TYPE_AD) {
             FrameLayout itemView = (FrameLayout) holder.itemView;
             itemView.removeAllViews();
@@ -108,7 +102,7 @@ public class CustomBarGPAdAdapter extends RecyclerView.Adapter {
             ((FrameLayout)holder.itemView).addView(acbNativeAdContainerView);
         } else if (getItemViewType(position) == TYPE_CAM) {
             CamViewHolder camViewHolder  = (CamViewHolder) holder;
-            ImageLoader.getInstance().displayImage(cameraIcon, camViewHolder.iconView, displayImageOptions);
+            Glide.with(context).asBitmap().apply(requestOptions).load(cameraIcon).into(camViewHolder.iconView);
             camViewHolder.textView.setText(cameraName);
         }
     }

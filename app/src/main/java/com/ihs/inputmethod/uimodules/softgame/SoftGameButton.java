@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.kc.utils.KCAnalytics;
+import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.connection.HSHttpConnection;
@@ -42,7 +42,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.kc.utils.KCAnalytics;
 
 import org.json.JSONObject;
 
@@ -129,7 +129,7 @@ public class SoftGameButton extends FrameLayout {
             ShortcutInfo pinShortcutInfo = new ShortcutInfo.Builder(context, "game")
                     .setIcon(Icon.createWithResource(context, R.drawable.ic_h5game))
                     .setShortLabel("Game")
-                    .setIntent(new Intent(context, SoftGameDisplayActivity.class).setAction(Intent.ACTION_MAIN).putExtra("fromShortcut",true))
+                    .setIntent(new Intent(context, SoftGameDisplayActivity.class).setAction(Intent.ACTION_MAIN).putExtra("fromShortcut", true))
                     .build();
             shortcutManager.requestPinShortcut(pinShortcutInfo, null);
         }
@@ -149,7 +149,7 @@ public class SoftGameButton extends FrameLayout {
         } else {
             Intent shortcutIntent = new Intent(context,
                     SoftGameDisplayActivity.class);
-            shortcutIntent.setAction(Intent.ACTION_MAIN).putExtra("fromShortcut",true);
+            shortcutIntent.setAction(Intent.ACTION_MAIN).putExtra("fromShortcut", true);
 
             Intent addIntent = new Intent();
             addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
@@ -219,7 +219,7 @@ public class SoftGameButton extends FrameLayout {
         TextView gameTitle = (TextView) newGameTip.findViewById(R.id.new_game_title);
         gameTitle.setText(softGameItemBean.getName());
 
-        ImageLoader.getInstance().displayImage(softGameItemBean.getThumb(), (ImageView) newGameTip.findViewById(R.id.new_game_icon));
+        Glide.with(HSApplication.getContext()).asBitmap().load(softGameItemBean.getThumb()).into((ImageView) newGameTip.findViewById(R.id.new_game_icon));
 
         newGameTip.findViewById(R.id.iv_close).setOnClickListener(new OnClickListener() {
             @Override
@@ -231,7 +231,7 @@ public class SoftGameButton extends FrameLayout {
         newGameTip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameStarterActivity.startGame(softGameItemBean.getLink(),"keyboard_game_bubble_clicked");
+                GameStarterActivity.startGame(softGameItemBean.getLink(), "keyboard_game_bubble_clicked");
             }
         });
 

@@ -71,7 +71,6 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -1025,23 +1024,6 @@ public final class Utils {
         return (type == -1 || networkInfo.getType() == type) && networkInfo.isConnected();
     }
 
-    /**
-     * If either memory cache or disk cache of {@link ImageLoader} exists for given image.
-     *
-     * @param url URL to load image
-     */
-    public static boolean imageCacheExists(@NonNull String url) {
-        ImageLoader loader = ImageLoader.getInstance();
-        if (loader.getMemoryCache().get(url) != null) {
-            return true;
-        }
-        File file = loader.getDiscCache().get(url);
-        if (file == null) {
-            return false;
-        }
-        return file.exists();
-    }
-
     public static byte[] readFile(File file) {
         ByteArrayOutputStream ous = null;
         InputStream ios = null;
@@ -1360,19 +1342,6 @@ public final class Utils {
 
     public static boolean isNewUser() {
         return HSApplication.getFirstLaunchInfo().appVersionCode == HSApplication.getCurrentLaunchInfo().appVersionCode;
-    }
-
-    public static File getDiscCacheFile(String url) {
-        if (ImageLoader.getInstance().getDiskCache() != null && !TextUtils.isEmpty(url)) {
-            File file = ImageLoader.getInstance().getDiskCache().get(url);
-            return file;
-        }
-        return null;
-    }
-
-    public static boolean hasDiscCache(String url) {
-        File file = getDiscCacheFile(url);
-        return checkFileValid(file);
     }
 
     public static boolean checkFileValid(File file) {

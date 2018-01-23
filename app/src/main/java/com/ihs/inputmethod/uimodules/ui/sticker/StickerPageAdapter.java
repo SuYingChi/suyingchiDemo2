@@ -2,6 +2,7 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,15 +12,16 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.view.HSGifImageView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 import java.util.List;
@@ -28,7 +30,7 @@ import java.util.List;
  * Created by yanxia on 2017/6/6.
  */
 
-public class StickerPageAdapter extends RecyclerView.Adapter<StickerPageAdapter.ViewHolder> implements View.OnClickListener , StickerDownloadManager.LoadingAssetStickerCallback{
+public class StickerPageAdapter extends RecyclerView.Adapter<StickerPageAdapter.ViewHolder> implements StickerDownloadManager.LoadingAssetStickerCallback{
 
     public interface OnStickerClickListener {
         void onStickerClick(Sticker sticker);
@@ -38,12 +40,7 @@ public class StickerPageAdapter extends RecyclerView.Adapter<StickerPageAdapter.
     private final int childViewWidth;
     private final StickerPageAdapter.OnStickerClickListener onStickerClickListener;
     private List<StickerPanelItem> stickerPanelItems;
-    DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .cacheInMemory(true)
-            .showImageOnLoading(R.drawable.ic_sticker_loading_image)
-            .showImageOnFail(null)
-            .imageScaleType(ImageScaleType.EXACTLY)
-            .cacheOnDisk(true).build();
+    private RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_sticker_loading_image);
 
     public StickerPageAdapter(int childViewHeight, int childViewWidth, OnStickerClickListener onStickerClickListener) {
         this.childViewHeight = childViewHeight;
@@ -76,32 +73,32 @@ public class StickerPageAdapter extends RecyclerView.Adapter<StickerPageAdapter.
             String stickerImageUri = stickerItem.getStickerUri();
 
             if (!stickerItem.getStickerFileSuffix().endsWith(Sticker.STICKER_IMAGE_GIF_SUFFIX)) {
-                ImageLoader.getInstance().displayImage(stickerImageUri, new ImageViewAware(stickerImageView), displayImageOptions, new ImageLoadingListener() {
+                int padding = HSDisplayUtils.dip2px(10);
+                stickerImageView.setPadding(padding, padding, padding, padding);
+                Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(stickerImageUri).listener(new RequestListener<Bitmap>() {
                     @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                        int padding = HSDisplayUtils.dip2px(10);
-                        view.setPadding(padding, padding, padding, padding);
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
                     }
 
                     @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                         int padding = HSDisplayUtils.dip2px(5);
-                        view.setPadding(padding, padding, padding, padding);
+                        stickerImageView.setPadding(padding, padding, padding, padding);
+                        return false;
                     }
-
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                    }
-                });
+                }).into(stickerImageView);
                 stickerGifView.setVisibility(View.GONE);
                 stickerImageView.setVisibility(View.VISIBLE);
 
-                stickerImageView.setTag(stickerPanelItem.getSticker());
-                stickerImageView.setOnClickListener(this);
+                stickerImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onStickerClickListener != null) {
+                            onStickerClickListener.onStickerClick(stickerPanelItem.getSticker());
+                        }
+                    }
+                });
                 stickerImageView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
@@ -140,7 +137,14 @@ public class StickerPageAdapter extends RecyclerView.Adapter<StickerPageAdapter.
                 }
 
                 stickerGifView.setTag(stickerPanelItem.getSticker());
-                stickerGifView.setOnClickListener(this);
+                stickerGifView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onStickerClickListener != null) {
+                            onStickerClickListener.onStickerClick(stickerPanelItem.getSticker());
+                        }
+                    }
+                });
                 stickerGifView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
@@ -203,14 +207,6 @@ public class StickerPageAdapter extends RecyclerView.Adapter<StickerPageAdapter.
     public void setData(List<StickerPanelItem> stickerPanelItems) {
         this.stickerPanelItems = stickerPanelItems;
         notifyDataSetChanged();
-    }
-
-    @Override
-    public void onClick(View v) {
-        final Object tag = v.getTag();
-        if (tag != null && tag instanceof Sticker && onStickerClickListener != null) {
-            onStickerClickListener.onStickerClick((Sticker) tag);
-        }
     }
 
     @Override

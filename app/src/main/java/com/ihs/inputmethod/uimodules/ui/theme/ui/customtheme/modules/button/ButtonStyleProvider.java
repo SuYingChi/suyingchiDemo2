@@ -1,9 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.button;
 
-import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -12,12 +10,9 @@ import android.widget.LinearLayout;
 
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
-import com.keyboard.core.themes.custom.KCCustomThemeHelper;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 /**
  * Created by chenyuanming on 31/10/2016.
@@ -35,14 +30,10 @@ public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElem
     }
 
     public static Drawable getButtonStyleBackgroundDrawable(int backgroundMainColor) {
-        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.DRAWABLE.wrap("" + R.drawable.keyboard_custom_theme_button_style_bg));
-        if (bitmap != null) {
-            BitmapDrawable drawable = new BitmapDrawable(bitmap);
-            drawable.setColorFilter(backgroundMainColor, PorterDuff.Mode.SRC_IN);
-            return drawable;
-        } else {
-            return null;
-        }
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setShape(GradientDrawable.OVAL);
+        gradientDrawable.setColor(backgroundMainColor);
+        return gradientDrawable;
     }
 
     @Override
@@ -94,7 +85,6 @@ public class ButtonStyleProvider extends BaseThemeItemProvider<KCButtonStyleElem
             mainColor = fragment.getCustomThemeData().getBackgroundMainColor();
         }
         if (backgroundDrawable == null) {
-//            backgroundDrawable = KCElementResourseHelper.getButtonStyleBackgroundDrawable(mainColor);
             backgroundDrawable = getButtonStyleBackgroundDrawable(mainColor);
         }
         return getButtonStyleBackgroundDrawable(mainColor);

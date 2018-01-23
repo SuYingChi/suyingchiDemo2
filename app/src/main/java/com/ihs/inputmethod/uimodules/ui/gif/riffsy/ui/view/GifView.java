@@ -21,7 +21,6 @@ import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.net.download.DownloadTask;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.view.SectorProgressView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 

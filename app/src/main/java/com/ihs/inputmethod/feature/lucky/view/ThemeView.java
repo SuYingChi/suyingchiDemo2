@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -21,7 +22,6 @@ import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeZipDownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 
@@ -71,9 +71,7 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
             @Override
             public void onAnimationEnd(Animator animator) {
                 File themeIcon = new File(LuckyPreloadManager.getDirectory(themeItem.mThemeName), ThemeView.ICON);
-                ImageLoader.getInstance().displayImage(
-                        Uri.fromFile(themeIcon).toString(),
-                        mDragIcon);
+                Glide.with(HSApplication.getContext()).load(Uri.fromFile(themeIcon).toString()).into(mDragIcon);
             }
         });
 
@@ -98,9 +96,7 @@ public class ThemeView extends FlyAwardBaseView implements View.OnClickListener 
         }
 
         File theme = new File(LuckyPreloadManager.getDirectory(themeItem.mThemeName), ThemeView.BANNER);
-        ImageLoader.getInstance().displayImage(
-                Uri.fromFile(theme).toString(),
-                mBanner);
+        Glide.with(HSApplication.getContext()).load(Uri.fromFile(theme).toString()).into(mBanner);
         mTitle.setText(themeItem.getThemeShowName());
 //        mBody.setText(LauncherConfig.getMultilingualString(themeItem., "ShortDescription"));
         return true;

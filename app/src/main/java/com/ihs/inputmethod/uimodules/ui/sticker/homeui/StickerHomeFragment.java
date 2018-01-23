@@ -2,7 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.sticker.homeui;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,7 +33,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +120,7 @@ public class StickerHomeFragment extends Fragment implements LockerAppGuideManag
 
                         DownloadUtils.getInstance().startForegroundDownloading(getActivity(), stickerGroupName,
                                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
-                                new BitmapDrawable(ImageLoader.getInstance().loadImageSync(stickerGroup.getStickerGroupDownloadPreviewImageUri())), new AdLoadingView.OnAdBufferingListener() {
+                                drawable, new AdLoadingView.OnAdBufferingListener() {
                                     @Override
                                     public void onDismiss(boolean success, boolean manually) {
                                         if (success) {

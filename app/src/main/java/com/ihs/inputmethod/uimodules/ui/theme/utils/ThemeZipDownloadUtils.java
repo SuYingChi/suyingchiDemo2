@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
@@ -19,11 +22,6 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.kc.utils.KCAnalytics;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.io.File;
 import java.util.HashMap;
@@ -70,8 +68,8 @@ public class ThemeZipDownloadUtils {
                 }, 2000, false);
 
         ImageView thumbnailImageView = (ImageView) adLoadingView.findViewById(R.id.iv_icon);
-        ImageSize imageSize = new ImageSize(DisplayUtils.dip2px(HSApplication.getContext(), 100), DisplayUtils.dip2px(HSApplication.getContext(), 100));
-        ImageLoader.getInstance().displayImage(thumbnailUrl, new ImageViewAware(thumbnailImageView), new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build(), imageSize, null, null);
+
+        Glide.with(context).asBitmap().apply(new RequestOptions().override(DisplayUtils.dip2px(HSApplication.getContext(),100),DisplayUtils.dip2px(HSApplication.getContext(),100))).load(thumbnailUrl).into(thumbnailImageView);
         adLoadingView.showInDialog();
 
         HSHttpConnection connection = new HSHttpConnection(HSConfig.getString("Application", "Server", "ThemeZipDownloadBaseURL") + themeName + ".zip");

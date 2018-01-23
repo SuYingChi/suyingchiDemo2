@@ -2,21 +2,21 @@ package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.BaseTabViewAdapter;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -25,13 +25,7 @@ import java.util.List;
  */
 
 public class StickerTabAdapter extends BaseTabViewAdapter {
-
-    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .cacheInMemory(true)
-            .showImageOnLoading(R.drawable.ic_sticker_loading_image)
-            .showImageOnFail(null)
-            .imageScaleType(ImageScaleType.EXACTLY)
-            .cacheOnDisk(true).build();
+    private RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_sticker_loading_image).override( HSDisplayUtils.dip2px(30), HSDisplayUtils.dip2px(30));
 
     public StickerTabAdapter(List<String> stickerTabNameList, OnTabChangeListener onTabChangeListener) {
         super(stickerTabNameList, onTabChangeListener);
@@ -55,35 +49,26 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
             }
             RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
             lp.width = HSDisplayUtils.dip2px(35);
-            int imageWidth = HSDisplayUtils.dip2px(30);
-            ImageLoader.getInstance().displayImage(stickerPreviewImageUriStr, new ImageViewAware(stickerTabImageView), displayImageOptions, new ImageSize(imageWidth, imageWidth), new ImageLoadingListener() {
+            int padding = HSDisplayUtils.dip2px(8);
+            stickerTabImageView.setPadding(padding, padding, padding, padding);
+            Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(stickerPreviewImageUriStr).listener(new RequestListener<Bitmap>() {
                 @Override
-                public void onLoadingStarted(String imageUri, View view) {
-                    int padding = HSDisplayUtils.dip2px(8);
-                    view.setPadding(padding, padding, padding, padding);
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                    return false;
                 }
 
                 @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                }
-
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                     int padding = HSDisplayUtils.dip2px(6);
-                    view.setPadding(padding, padding, padding, padding);
+                    stickerTabImageView.setPadding(padding, padding, padding, padding);
                     if (tabName.equals(currentTab)) {
-                        view.setAlpha(1.0f);
+                        stickerTabImageView.setAlpha(1.0f);
                     } else {
-                        view.setAlpha(0.5f);
+                        stickerTabImageView.setAlpha(0.5f);
                     }
+                    return false;
                 }
-
-                @Override
-                public void onLoadingCancelled(String imageUri, View view) {
-
-                }
-            }, null);
+            }).into(stickerTabImageView);
             holder.itemView.setLayoutParams(lp);
         }
     }

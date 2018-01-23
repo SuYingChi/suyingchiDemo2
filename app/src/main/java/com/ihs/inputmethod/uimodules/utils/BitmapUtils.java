@@ -8,17 +8,22 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.media.ExifInterface;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 
+import java.io.BufferedInputStream;
+import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by hdd on 16/3/25.
@@ -26,6 +31,9 @@ import java.io.IOException;
 public class BitmapUtils {
 
     public static final float TABLET_WIDTH_SCALE_FACTOR = 0.75f;
+    public static final int FILE_URI = 0;
+    public static final int ASSET_URI = 1;
+    private static final int BUFFER_SIZE = 32 * 1024; // 32 Kb
 
     /**
      * 缩放图片（屏幕大小）
@@ -209,33 +217,32 @@ public class BitmapUtils {
         return addBorder(dstBmp, color);
     }
 
-    public static File ifNeedCompressPhoto(String filePath, int width, int height){
+    public static File ifNeedCompressPhoto(String filePath, int width, int height) {
         File file = new File(filePath);
         String fileType = HSFileUtils.FileTypeDetector.getInstance().getFileType(file);
-        if((fileType.equals("jpeg") || fileType.equals("png")) && file.length() > 5 * 1024 * 1024){
+        if ((fileType.equals("jpeg") || fileType.equals("png")) && file.length() > 5 * 1024 * 1024) {
             Bitmap bitmap = compressBitmap(filePath, width, height);
             File mFile = HSFileUtils.createTempFile(fileType);
             FileOutputStream fos = null;
             try {
                 fos = new FileOutputStream(mFile);
-                if(fileType.equals("jpeg")) {
+                if (fileType.equals("jpeg")) {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                }
-                else{
+                } else {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 mFile.deleteOnExit();
             } finally {
-                if(fos != null) {
+                if (fos != null) {
                     try {
                         fos.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                if(mFile.exists()) {
+                if (mFile.exists()) {
                     return mFile;
                 }
             }
@@ -244,4 +251,66 @@ public class BitmapUtils {
         return file;
     }
 
+
+    public static Bitmap decodeImage(String path, int uriType) throws IOException {
+        return decodeImage(path, uriType, HSDisplayUtils.getScreenWidthForContent(), HSDisplayUtils.getScreenHeightForContent());
+    }
+
+    public static Bitmap decodeImage(String path, int uriType, int width, int height) throws IOException {
+        InputStream inputStream = getStream(uriType, path);
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(inputStream, null, options);
+
+        final int heightRatio = Math.round((float) options.outHeight / (float) height);
+        final int widthRatio = Math.round((float) options.outWidth / (float) width);
+
+        int inSampleSize = heightRatio > widthRatio ? heightRatio : widthRatio;
+        if (inSampleSize < 1) {
+            inSampleSize = 1;
+        }
+
+        options.inSampleSize = inSampleSize;
+        options.inJustDecodeBounds = false;
+
+        inputStream = resetInputStream(inputStream, uriType, path);
+        Bitmap sourceBmp = null;
+        try {
+            sourceBmp = BitmapFactory.decodeStream(inputStream, null, options);
+        } catch (OutOfMemoryError error) {
+        }
+        closeSilently(inputStream);
+        return sourceBmp;
+    }
+
+    private static InputStream resetInputStream(InputStream inputStream, int uriType, String path) throws IOException {
+        if (inputStream.markSupported()) {
+            try {
+                inputStream.reset();
+                return inputStream;
+            } catch (IOException ignored) {
+            }
+        }
+        closeSilently(inputStream);
+        return getStream(uriType, path);
+    }
+
+    private static InputStream getStream(int uriType, String filePath) throws IOException {
+        switch (uriType) {
+            case ASSET_URI:
+                return HSApplication.getContext().getAssets().open(filePath);
+            default:
+                return new BufferedInputStream(new FileInputStream(filePath), BUFFER_SIZE);
+        }
+    }
+
+    private static void closeSilently(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception ignored) {
+            }
+        }
+    }
 }

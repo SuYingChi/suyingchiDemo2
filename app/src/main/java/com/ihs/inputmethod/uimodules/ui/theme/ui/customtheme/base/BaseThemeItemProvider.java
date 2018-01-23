@@ -1,17 +1,14 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,7 +45,6 @@ import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 import com.keyboard.core.themes.custom.elements.KCButtonShapeElement;
 import com.keyboard.core.themes.custom.elements.KCButtonStyleElement;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.io.File;
 
@@ -63,18 +59,11 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     public BaseItemHolder lastCheckedHolder;
     public Object lastCheckedItem;
     protected F fragment;
-    private DisplayImageOptions options;
     private boolean hasDefaultItemSelectStateSet = false;
 
     public BaseThemeItemProvider(F fragment) {
         this.fragment = fragment;
         handler = new Handler(Looper.getMainLooper());
-
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        int screenDensity = HSApplication.getContext().getResources().getDisplayMetrics().densityDpi;
-        opts.inDensity = Build.VERSION.SDK_INT >= 16 ? DisplayMetrics.DENSITY_XXHIGH : DisplayMetrics.DENSITY_XHIGH;
-        opts.inTargetDensity = screenDensity;
-        options = new DisplayImageOptions.Builder().decodingOptions(opts).cacheInMemory(true).build();
     }
 
     @NonNull

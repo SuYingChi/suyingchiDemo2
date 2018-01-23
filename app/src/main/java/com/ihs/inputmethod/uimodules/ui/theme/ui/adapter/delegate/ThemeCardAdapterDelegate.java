@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
@@ -17,11 +19,6 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.List;
 
@@ -39,17 +36,16 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
 
     private boolean themeAnalyticsEnabled;
     private View.OnClickListener cardViewOnClickListener;
-    private int imageWidth;
-    private int imageHeight;
 
-    private DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).imageScaleType(ImageScaleType.EXACTLY).build();
+    private RequestOptions requestOptions;
 
     public ThemeCardAdapterDelegate(boolean themeAnalyticsEnabled, View.OnClickListener cardViewOnClickListener) {
         this.themeAnalyticsEnabled = themeAnalyticsEnabled;
         this.cardViewOnClickListener = cardViewOnClickListener;
         Resources resources = HSApplication.getContext().getResources();
-        imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
-        imageHeight = (int) (imageWidth / 1.6f);
+        int imageWidth = (int) (resources.getDisplayMetrics().widthPixels / 2 - resources.getDimension(R.dimen.theme_card_recycler_view_card_margin) * 2);
+        int imageHeight = (int) (imageWidth / 1.6f);
+        requestOptions = new RequestOptions().override(imageWidth, imageHeight);
     }
 
     @Override
@@ -111,8 +107,7 @@ public final class ThemeCardAdapterDelegate extends AdapterDelegate<List<ThemeHo
             case DOWNLOADED:
                 final String smallPreviewImgUrl = keyboardTheme.getSmallPreivewImgUrl();
                 if (smallPreviewImgUrl != null) {
-                    ImageSize imageSize = new ImageSize(imageWidth, imageHeight);
-                    ImageLoader.getInstance().displayImage(smallPreviewImgUrl, new ImageViewAware(themeCardViewHolder.themeRealImage), options, imageSize, null, null);
+                    Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(smallPreviewImgUrl).into(themeCardViewHolder.themeRealImage);
                 }
                 themeCardViewHolder.themeName.setText(keyboardTheme.getThemeShowName());
                 break;

@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.widget.videoview;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -9,13 +10,14 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.download.ImageDownloader;
+import com.ihs.inputmethod.api.theme.HSThemeBitmapUtils;
+import com.ihs.inputmethod.api.utils.HSResourceUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by ihandysoft on 16/12/6.
@@ -173,16 +175,14 @@ class HSVideoView extends RelativeLayout implements IMediaView {
     }
 
     public Drawable loadDrawableFromAbsolutePath(String path){
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).build();
-
-        String uri;
-        if (HSKeyboardThemeManager.getCurrentTheme().getThemeType() == HSKeyboardTheme.ThemeType.BUILD_IN){
-            uri = ImageDownloader.Scheme.ASSETS.wrap(path);
-        }else {
-            uri = ImageDownloader.Scheme.FILE.wrap(path);
+        try {
+            Resources res = HSApplication.getContext().getResources();
+            Bitmap bitmap = HSThemeBitmapUtils.decodeImage(path, HSKeyboardThemeManager.getCurrentTheme().getThemeType() == HSKeyboardTheme.ThemeType.BUILD_IN ? HSThemeBitmapUtils.ASSET_URI : HSThemeBitmapUtils.FILE_URI, HSResourceUtils.getDefaultKeyboardWidth(res),
+                    HSResourceUtils.getDefaultKeyboardHeight(res),null);
+            return new BitmapDrawable(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        Bitmap itemBitmap = ImageLoader.getInstance().loadImageSync(uri, options);
-        return new BitmapDrawable(itemBitmap);
+        return null;
     }
 }

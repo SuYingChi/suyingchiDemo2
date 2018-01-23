@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
-import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kc.utils.KCAnalytics;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -18,12 +23,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +41,6 @@ public class StickerViewPagerAdapter extends PagerAdapter {
     private int lastDownloadPosition = -1;
     private List<StickerGroup> needDownloadStickerGroupList = new ArrayList<>();
     private LayoutInflater inflater;
-    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .cacheInMemory(true)
-            .showImageOnFail(null)
-            .imageScaleType(ImageScaleType.EXACTLY)
-            .cacheOnDisk(true).build();
-
     public StickerViewPagerAdapter(View firstView) {
         inflater = LayoutInflater.from(HSApplication.getContext());
         this.firstView = firstView;
@@ -117,28 +111,20 @@ public class StickerViewPagerAdapter extends PagerAdapter {
             final ImageView sticker_download_preview = (ImageView) stickerDownloadView.findViewById(R.id.sticker_download_preview_image);
             final TextView stickerDownloadShowName = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_show_name);
             stickerDownloadShowName.setText(stickerGroup.getDownloadDisplayName());
-            ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupDownloadPreviewImageUri(), new ImageViewAware(sticker_download_preview), displayImageOptions, new ImageLoadingListener() {
+            int padding = HSDisplayUtils.dip2px(40);
+            sticker_download_preview.setPadding(padding, padding, padding, padding);
+            Glide.with(HSApplication.getContext()).load(stickerGroup.getStickerGroupDownloadPreviewImageUri()).listener(new RequestListener<Drawable>() {
                 @Override
-                public void onLoadingStarted(String imageUri, View view) {
-                    int padding = HSDisplayUtils.dip2px(40);
-                    view.setPadding(padding, padding, padding, padding);
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    return false;
                 }
 
                 @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    sticker_download_preview.setPadding(0, 0, 0, 0);
+                    return false;
                 }
-
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    view.setPadding(0, 0, 0, 0);
-                }
-
-                @Override
-                public void onLoadingCancelled(String imageUri, View view) {
-
-                }
-            });
+            }).into(sticker_download_preview);
             TextView downloadButton = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_button);
             StickerHomeModel  stickerHomeModel = new StickerHomeModel();
             stickerHomeModel.stickerGroup = stickerGroup;

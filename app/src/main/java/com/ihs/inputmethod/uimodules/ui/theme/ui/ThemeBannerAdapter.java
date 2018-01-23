@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.ihs.app.analytics.HSAnalytics;
 import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
@@ -22,19 +26,12 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
-import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,8 +48,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
     private static int AUTO_SCROLL_DELAY;
-    private final int bannerWidth;
-    private final int bannerHeight;
 
     private ViewPager viewPager;
     private Activity activity;
@@ -67,11 +62,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     private CardView adCardView;
     private KCNativeAdView nativeAdView;
 
-    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
-            .displayer(new RoundedBitmapDisplayer(HSDisplayUtils.dip2px(2)))
-            .cacheInMemory(true).cacheOnDisk(true)
-            .imageScaleType(ImageScaleType.EXACTLY)
-            .build();
+    private RequestOptions requestOptions;
     private boolean themeAnalyticsEnabled = false;
 
     private Handler handler = new Handler() {
@@ -333,13 +324,13 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
     public ThemeBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
         this.activity = activity;
-        this.bannerWidth = bannerWidth;
-        this.bannerHeight = bannerHeight;
         AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+
+        requestOptions = new RequestOptions().bitmapTransform(new RoundedCorners(activity.getResources().getDimensionPixelSize(R.dimen.corner_radius))).override(bannerWidth,bannerHeight);
     }
 
     private int getInitItem() {
@@ -399,9 +390,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             final ImageView imageView = (ImageView) view.findViewById(R.id.theme_banner_image);
             if (keyboardTheme.getThemeBannerImgUrl() != null) {
                 imageView.setImageResource(R.drawable.image_placeholder);
-                ImageSize imageSize = new ImageSize(bannerWidth,bannerHeight);
-                ImageLoader.getInstance().displayImage(keyboardTheme.getThemeBannerImgUrl(), new ImageViewAware(imageView), displayImageOptions,imageSize,null,null);
-
+                Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(keyboardTheme.getThemeBannerImgUrl()).into(imageView);
             }
 
             view.setOnClickListener(new View.OnClickListener() {

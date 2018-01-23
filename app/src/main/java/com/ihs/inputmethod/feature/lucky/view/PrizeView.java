@@ -13,11 +13,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdContainerView;
@@ -88,11 +89,7 @@ public class PrizeView extends FlyAwardBaseView {
                 AcbNativeAd nativeAd = (AcbNativeAd) ad;
                 String path = nativeAd.getResourceFilePath(AcbNativeAd.LOAD_RESOURCE_TYPE_ICON);
                 File file = new File(path);
-                if (file.exists()) {
-                    ImageLoader.getInstance().displayImage(Uri.fromFile(file).toString(), mDragIcon);
-                } else {
-                    ImageLoader.getInstance().displayImage(nativeAd.getIconUrl(), mDragIcon);
-                }
+                Glide.with(HSApplication.getContext()).load(file.exists() ? Uri.fromFile(file).toString() : nativeAd.getIconUrl()).into(mDragIcon);
             }
         });
 

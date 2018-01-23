@@ -1,7 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +24,12 @@ import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.kc.utils.KCAnalytics;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.app.utils.HSInstallationUtils;
@@ -56,10 +62,6 @@ import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -120,48 +122,29 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 keyboardThemeScreenShotImageView.setImageURI(Uri.fromFile(new File(HSKeyboardThemeManager.getKeyboardThemeScreenshotFile(keyboardTheme))));
             } else {
                 screenshotContainer.getLayoutParams().height = (int) (getResources().getDisplayMetrics().widthPixels * 850 * 1.0f / 1080);
-                String themeNameTitle = keyboardTheme.getThemeShowName();
                 getSupportActionBar().setTitle(getString(R.string.default_themes, getString(R.string.app_name)));
 
-                if (keyboardTheme.getLargePreivewImgUrl() != null) {
+                String largePreviewImgUrl = keyboardTheme.getLargePreivewImgUrl();
+                if (largePreviewImgUrl != null) {
                     keyboardThemeScreenShotImageView.setImageDrawable(null);
-                    ImageLoader.getInstance().displayImage(keyboardTheme.getLargePreivewImgUrl(), keyboardThemeScreenShotImageView, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build()
-                            , new ImageLoadingListener() {
-                                @Override
-                                public void onLoadingStarted(String imageUri, View view) {
-                                    screenshotLoading.setVisibility(View.VISIBLE);
-                                }
-
-                                @Override
-                                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                    if (isCurrentImageUri(imageUri)) {
-                                        screenshotLoading.setVisibility(View.GONE);
-                                    }
-                                }
-
-                                @Override
-                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                    if (isCurrentImageUri(imageUri)) {
-                                        screenshotLoading.setVisibility(View.GONE);
-                                    }
-                                }
-
-                                @Override
-                                public void onLoadingCancelled(String imageUri, View view) {
-                                    if (isCurrentImageUri(imageUri)) {
-                                        screenshotLoading.setVisibility(View.GONE);
-                                    }
-                                }
-
-                                public boolean isCurrentImageUri(String imageUri) {
-                                    if (keyboardTheme != null && keyboardTheme.getLargePreivewImgUrl() != null && keyboardTheme.getLargePreivewImgUrl().equals(imageUri)) {
-                                        return true;
-                                    }
-                                    return false;
-                                }
+                    screenshotLoading.setVisibility(View.VISIBLE);
+                    Glide.with(HSApplication.getContext()).load(largePreviewImgUrl).listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            if (isCurrentImageUri(largePreviewImgUrl)) {
+                                screenshotLoading.setVisibility(View.GONE);
                             }
-                    );
+                            return false;
+                        }
 
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            if (isCurrentImageUri(largePreviewImgUrl)) {
+                                screenshotLoading.setVisibility(View.GONE);
+                            }
+                            return false;
+                        }
+                    }).into(keyboardThemeScreenShotImageView);
                 }
             }
 
@@ -181,6 +164,13 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         themeCardAdapter.notifyDataSetChanged();
 
         rootView.smoothScrollTo(0, 0);
+    }
+
+    public boolean isCurrentImageUri(String imageUri) {
+        if (keyboardTheme != null && keyboardTheme.getLargePreivewImgUrl() != null && keyboardTheme.getLargePreivewImgUrl().equals(imageUri)) {
+            return true;
+        }
+        return false;
     }
 
     @NonNull
