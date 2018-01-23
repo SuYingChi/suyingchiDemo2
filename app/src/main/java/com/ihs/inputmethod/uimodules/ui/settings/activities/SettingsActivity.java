@@ -46,6 +46,7 @@ import android.widget.Toast;
 import com.acb.call.CPSettings;
 import com.acb.call.customize.AcbCallManager;
 import com.artw.lockscreen.LockerSettings;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingAnalytics;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
@@ -65,6 +66,8 @@ import com.ihs.keyboardutils.appsuggestion.AppSuggestionSetting;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
 import com.keyboard.common.DebugActivity;
+
+import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 
 import java.util.List;
 
@@ -324,7 +327,15 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         boolean isSwitchOn = (boolean) newValue;
-                        KCAnalytics.logEvent(isSwitchOn?"phoneboost_enabled":"phoneboost_disabled");
+                        if (isSwitchOn) {
+                            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
+                                AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
+                            }
+                            KCAnalytics.logEvent("phoneboost_enabled");
+                        } else {
+                            AcbNativeAdManager.sharedInstance().deactivePlacementInProcess(getString(R.string.ad_placement_result_page));
+                            KCAnalytics.logEvent("phoneboost_disabled");
+                        }
                         return true;
                     }
                 });

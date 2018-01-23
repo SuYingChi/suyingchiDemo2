@@ -18,7 +18,7 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
         return new MessageCenterUtils.Config() {
             @Override
             public String getAdPlacement() {
-                return HSApplication.getContext().getResources().getString(R.string.ad_placement_themetryad);
+                return HSApplication.getContext().getResources().getString(R.string.ad_placement_call_assist);
             }
 
             @Override
@@ -56,7 +56,7 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
     private static class CPCallIdleConfig extends CallIdleAlert.PlistConfig {
         @Override
         public String getAdPlaceName() {
-            return HSApplication.getContext().getResources().getString(R.string.ad_placement_themetryad);
+            return HSApplication.getContext().getResources().getString(R.string.ad_placement_call_assist);
         }
 
         @Override
