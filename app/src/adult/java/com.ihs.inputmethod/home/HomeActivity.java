@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.view.GravityCompat;
@@ -12,10 +13,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.inputmethod.fonts.stickers.FontListActivity;
 import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
 import com.ihs.inputmethod.home.model.HomeMenu;
@@ -43,7 +46,7 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
  * Created by jixiang on 18/1/17.
  */
 
-public class HomeActivity extends HSAppCompatActivity implements HomeStickerCardAdapterDelegate.OnStickerClickListener, View.OnClickListener {
+public class HomeActivity extends HSAppCompatActivity implements HomeStickerCardAdapterDelegate.OnStickerClickListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     public final static String NOTIFICATION_HOME_DESTROY = "HomeActivity.destroy";
 
     private List<HomeModel> homeModelList;
@@ -62,6 +65,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(this);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -84,7 +88,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         findViewById(R.id.create_theme).setOnClickListener(this);
 
         recyclerView = findViewById(R.id.recycler_view);
-        homeAdapter = new HomeAdapter(this,  this, ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled());
+        homeAdapter = new HomeAdapter(this, this, ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -197,6 +201,16 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
     }
 
     @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_call_font:
+                startActivity(new Intent(this, FontListActivity.class));
+                break;
+        }
+        return false;
+    }
+
+    @Override
     public void onStickerClick(HomeModel homeModel, Drawable thumbnailDrawable) {
         final StickerGroup stickerGroup = (StickerGroup) homeModel.item;
         final String stickerGroupName = stickerGroup.getStickerGroupName();
@@ -225,5 +239,6 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
 
                 });
     }
+
 
 }
