@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -38,7 +37,6 @@ import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerSuggestionAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.widget.bannerad.KeyboardBannerAdLayout;
-import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarGPAdAdapter;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomBarSearchAdAdapter;
 import com.ihs.inputmethod.uimodules.widget.goolgeplayad.CustomizeBarLayout;
 import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
@@ -55,12 +53,6 @@ import com.kc.utils.KCFeatureControlUtils;
 import com.keyboard.common.SplashActivity;
 import com.keyboard.core.session.KCKeyboardSession;
 
-import net.appcloudbox.ads.base.AcbAd;
-import net.appcloudbox.ads.base.AcbNativeAd;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
-import net.appcloudbox.common.utils.AcbError;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -81,12 +73,8 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
     private BaseFunctionBar functionBar;
     private AlertDialog loadingDialog;
     private HSMediaView hsBackgroundVideoView;
-    private List<AcbNativeAd> gpNativeAdList = new ArrayList<>();
-    private CustomBarGPAdAdapter gpAdAdapter;
     private CustomBarSearchAdAdapter searchAdAdapter;
     private RecyclerView searchAdRecyclerView;
-    private AcbNativeAdLoader acbNativeAdLoader;
-    private RecyclerView gpAdRecyclerView;
     private List<Integer> bannerAdSessionList;
     private List<Map<String, Object>> cameraAdInfoList;
     private Random random = new Random();
@@ -322,80 +310,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         }
     }
 
-    public void removeCustomizeBar() {
-        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
-            keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
-        }
-        gpAdRecyclerView = null;
-        if (gpNativeAdList != null) {
-            for (AcbNativeAd acbNativeAd : gpNativeAdList) {
-                acbNativeAd.release();
-            }
-            gpNativeAdList.clear();
-
-            if (gpAdAdapter != null) {
-                gpAdAdapter.clearAdList();
-            }
-        }
-    }
-
-    private void reloadGpAd() {
-        if (gpNativeAdList == null || gpAdAdapter == null) {
-            return;
-        }
-
-        if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
-            keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
-        }
-
-        for (AcbNativeAd acbNativeAd : gpNativeAdList) {
-            acbNativeAd.release();
-        }
-
-        gpNativeAdList.clear();
-        gpAdAdapter.clearAdList();
-
-        if (acbNativeAdLoader != null) {
-            acbNativeAdLoader.cancel();
-            acbNativeAdLoader = null;
-        }
-
-        acbNativeAdLoader = new AcbNativeAdLoader(HSApplication.getContext(), HSApplication.getContext().getResources().getString(R.string.ad_placement_google_play_ad));
-
-        acbNativeAdLoader.load(4, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
-            @Override
-            public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {
-                if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null && keyboardPanelSwitchContainer.getCustomizeBar().getVisibility() != VISIBLE) {
-                    keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(View.VISIBLE);
-                }
-                for (AcbNativeAd acbNativeAd : list) {
-                    acbNativeAd.setNativeClickListener(new AcbNativeAd.AcbNativeClickListener() {
-                        @Override
-                        public void onAdClick(AcbAd acbAd) {
-                            KCAnalytics.logEvent("keyboard_toolBar_click", "where", "GooglePlay_Search");
-                        }
-                    });
-                    if (gpNativeAdList == null || gpAdAdapter == null) {
-                        return;
-                    }
-                    gpAdAdapter.addAd(acbNativeAd);
-                    gpNativeAdList.add(acbNativeAd);
-                }
-            }
-
-            @Override
-            public void onAdFinished(AcbNativeAdLoader acbNativeAdLoader, AcbError hsError) {
-                if (HSConfig.optBoolean(false, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowCameraAd")) {
-                    cameraAdInfoList = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "CameraAd");
-
-                    Map<String, Object> item = cameraAdInfoList.get(random.nextInt(cameraAdInfoList.size()));
-                    gpAdAdapter.addCameraInfo(item);
-                }
-            }
-        });
-
-    }
-
     public void showCustomBar() {
         if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
             keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(VISIBLE);
@@ -476,47 +390,6 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
                     setCancelable(true).create();
         }
         KCCommonUtils.showDialog(loadingDialog);
-    }
-
-    public void showGoogleAdBar() {
-        if (keyboardPanelSwitchContainer == null) {
-            return;
-        }
-
-        if (gpAdRecyclerView != null || RemoveAdsManager.getInstance().isRemoveAdsPurchased()
-                || !HSConfig.optBoolean(true, "Application", "NativeAds", "KeyboardToolBar", "GooglePlay", "ShowAd")) {
-            return;
-        }
-
-        gpAdRecyclerView = new RecyclerView(HSApplication.getContext());
-        gpAdRecyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-        gpAdRecyclerView.setBackgroundColor(Color.parseColor("#f6f6f6"));
-        int padding = DisplayUtils.dip2px(8);
-        gpAdRecyclerView.setPadding(padding, 0, padding, 0);
-        gpAdAdapter = new CustomBarGPAdAdapter();
-        gpAdRecyclerView.setAdapter(gpAdAdapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(HSApplication.getContext(), 5);
-        gpAdRecyclerView.setLayoutManager(layoutManager);
-        gpAdRecyclerView.setHasFixedSize(true);
-
-        CustomizeBarLayout customizeBarLayout = new CustomizeBarLayout(HSApplication.getContext(), () -> {
-            if (acbNativeAdLoader != null) {
-                acbNativeAdLoader.cancel();
-                acbNativeAdLoader = null;
-            }
-            if (keyboardPanelSwitchContainer != null && keyboardPanelSwitchContainer.getCustomizeBar() != null) {
-                keyboardPanelSwitchContainer.getCustomizeBar().setVisibility(GONE);
-            }
-            KCAnalytics.logEvent("keyboard_toolBar_close", "where", "GooglePlay_Search");
-        });
-        customizeBarLayout.setContent(gpAdRecyclerView);
-        reloadGpAd();
-        if (HSDisplayUtils.getRotation(HSApplication.getContext()) == ROTATION_0) {
-            if (keyboardPanelSwitchContainer != null) {
-                keyboardPanelSwitchContainer.getCustomizeBar().removeAllViews();
-                keyboardPanelSwitchContainer.setCustomizeBar(customizeBarLayout);
-            }
-        }
     }
 
     public void logCustomizeBarShowed() {
