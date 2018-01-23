@@ -3,8 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.modules.button;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsItem;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.ads.AdsProvider;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.ThemePageItem.CategoryItem;
@@ -44,7 +42,6 @@ public class ButtonFragment extends BaseThemeFragment {
         }
         return new ThemePageItem(Arrays.<CategoryItem<?>>asList(
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_shape), KCButtonShapeElement.class, new ButtonShapeProvider(this), KCCustomThemeManager.getInstance().getButtonShapeElements()),
-                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_style), AdsItem.class, new AdsProvider(), getAdsItems(true)),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_style), KCButtonStyleElement.class, new ButtonStyleProvider(this), buttonStyles)
         ));
     }

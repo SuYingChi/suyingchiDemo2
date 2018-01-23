@@ -21,7 +21,7 @@ import com.ihs.keyboardutils.view.FlashFrameLayout;
 public class NativeAdHelper {
     KCNativeAdView nativeAdView;
     private static FlashFrameLayout flashAdContainer;
-    private static String adPoolName = HSApplication.getContext().getResources().getString(R.string.ad_placement_keyboardsettingsad);
+    private static String adPoolName = "xianbuyong";//暂时不用，等后期可能修改
     private boolean isAdFlashAnimationPlayed = false;
     private ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
 
