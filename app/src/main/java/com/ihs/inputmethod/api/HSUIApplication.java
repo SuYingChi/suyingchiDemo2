@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.acb.call.customize.AcbCallManager;
@@ -16,7 +18,6 @@ import com.artw.lockscreen.ScreenLockerManager;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.crashlytics.android.Crashlytics;
 import com.ihs.app.alerts.HSAlertMgr;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
@@ -46,6 +47,7 @@ import com.ihs.inputmethod.api.managers.HSDirectoryManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
+import com.ihs.inputmethod.feature.medialistener.MediaFileObserver;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -60,6 +62,7 @@ import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.notification.KCNotificationManager;
 import com.ihs.keyboardutils.notification.NotificationBean;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.common.ActivityLifecycleMonitor;
 import com.keyboard.common.MainActivity;
 import com.launcher.FloatWindowCompat;
@@ -289,7 +292,16 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
         AppSuggestionManager.getInstance().init(true);
+
+        getContentResolver().registerContentObserver(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                false,
+                screenShotContentObserver
+        );
     }
+
+    MediaFileObserver screenShotContentObserver = new MediaFileObserver(new Handler()) {
+    };
 
     private void initLockerChargingNoAdConfig() {
         //如果第一次启动版本大于等于需要不显示广告的版本，则为新用户
