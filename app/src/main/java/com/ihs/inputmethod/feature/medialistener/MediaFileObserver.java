@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
-import com.ihs.commons.utils.HSLog;
 
 import java.io.File;
 
@@ -41,8 +40,8 @@ public abstract class MediaFileObserver extends ContentObserver {
     }
 
     private static synchronized void logPic(String path, String fileName) throws Exception {
+        //这里判断下是否文件是新创建的
         if (new File(path).lastModified() >= System.currentTimeMillis() - 10000) {
-            HSLog.e("take pic", path);
             HSAnalytics.logEvent("picture_capture", "path", new File(path).getParentFile().getName());
         }
     }
