@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
 import com.acb.adcaffe.nativead.AdCaffeNativeAd;
+import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -23,6 +24,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.adpanel.KeyboardGooglePlayAdManager;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.analytics.KeyboardAnalyticsReporter;
 import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
@@ -43,7 +45,6 @@ import com.ihs.inputmethod.websearch.WebContentSearchManager;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.kc.utils.KCAnalytics;
 import com.kc.utils.KCFeatureControlUtils;
 import com.keyboard.common.SplashActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -92,6 +93,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     private String currentAppPackageName = "";
     private KeyboardFullScreenAd openFullScreenAd;
     private KeyboardFullScreenAd closeFullScreenAd;
+    private KeyboardGooglePlayAdManager keyboardGooglePlayAdManager;
     private String currentWord = "";
     private AdCaffeHelper adCaffeHelper;
     private INotificationObserver keyboardNotificationObserver = (eventName, notification) -> {
@@ -135,6 +137,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
         openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
         closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Close");
+        keyboardGooglePlayAdManager = new KeyboardGooglePlayAdManager(HSApplication.getContext().getString(R.string.ad_placement_google_play_dialog_ad));
         adCaffeHelper = new AdCaffeHelper(this, this);
     }
 
@@ -463,6 +466,17 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
             getKeyboardPanelMananger().resetKeyboardBarState();
         }
 
+        if (editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
+                && !currentAppPackageName.equals(this.getPackageName())
+                && !currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 进入Google Play
+            keyboardGooglePlayAdManager.loadAndShowAdIfConditionSatisfied();
+//            getKeyboardPanelMananger().showGoogleAdBar();
+        } else if (currentAppPackageName.equals(GOOGLE_PLAY_PACKAGE_NAME)
+                && !editorInfo.packageName.equals(this.getPackageName())
+                && !editorInfo.packageName.equals(GOOGLE_PLAY_PACKAGE_NAME)) { // 离开Google Play
+            keyboardGooglePlayAdManager.cancel();
+        }
+
         adCaffeHelper.requestKeywordListIfConditionSatisfied(editorInfo.packageName);
         // 这里单独记了packageName，而没有通过getCurrentInputEditorInfo()方法
         // 因为这个方法在键盘出来后，一直返回的是键盘曾经出现过的那个App，而这里的editorInfo则对应实际进入的App
@@ -496,6 +510,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
     @Override
     public void onKeyboardWindowHide() {
+        getKeyboardPanelMananger().removeCustomizeBar();
+
         // Start clearing image loader cache
         handler.postDelayed(clearImageLoaderCacheRunnable, HSApplication.isDebugging ? 5 * 1000 : 5 * 60 * 1000);
         HSFloatWindowManager.getInstance().removeFloatingWindow();
