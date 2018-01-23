@@ -291,7 +291,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, 30000);
 
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
-        AppSuggestionManager.getInstance().init(true);
+        AppSuggestionManager.getInstance().init(true, getString(R.string.ad_placement_call_assist));
 
         getContentResolver().registerContentObserver(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
