@@ -54,6 +54,7 @@ import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
@@ -121,21 +122,17 @@ public class HSUIApplication extends HSInputMethodApplication {
             intent = new Intent();
         }
 
-        // need to pass the intent to the main activity
-        if (!TextUtils.isEmpty(intent.getScheme())) {
-            intent.setClass(this, MainActivity.class);
-        } else if (isAccessibilityEnabled) {
-            if (!HSAccessibilityService.isAvailable()) {
-                intent.setClass(this, MainActivity.class);
-            } else if (!HSInputMethodListManager.isMyInputMethodSelected()) {
+        if (MainActivity.shouldSkipMainActivity()) {
+            if (isAccessibilityEnabled && HSAccessibilityService.isAvailable() && !HSInputMethodListManager.isMyInputMethodSelected()) {
                 intent.setClass(this, KeyboardWakeUpActivity.class);
+                splashActivity.startActivity(intent);
             } else {
-                intent.setClass(this, MainActivity.class);
+                ThemeHomeActivity.startThemeHomeActivity(splashActivity);
             }
         } else {
             intent.setClass(this, MainActivity.class);
+            splashActivity.startActivity(intent);
         }
-        splashActivity.startActivity(intent);
     }
 
     @Override

@@ -31,7 +31,6 @@ import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.util.Log;
@@ -47,13 +46,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
-import com.crashlytics.android.Crashlytics;
 import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.utils.HSDeviceUtils;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
@@ -61,13 +57,9 @@ import com.ihs.inputmethod.accessbility.AccGALogger;
 import com.ihs.inputmethod.accessbility.AccessibilityEventListener;
 import com.ihs.inputmethod.accessbility.CustomViewDialog;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
-import com.ihs.inputmethod.api.HSUIInputMethodService;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
-import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
-import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.ui.view.CustomProgressDrawable;
@@ -90,11 +82,12 @@ import static com.ihs.inputmethod.accessbility.AccGALogger.app_auto_setkey_click
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_manual_setkey_clicked;
 import static com.ihs.inputmethod.accessbility.AccGALogger.app_setting_up_page_viewed;
 import static com.ihs.inputmethod.accessbility.AccGALogger.logOneTimeGA;
-import static com.ihs.inputmethod.accessbility.KeyboardActivationActivity.PREF_THEME_HOME_SHOWED;
+import static com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity.startThemeHomeActivity;
 
 
 public class MainActivity extends HSAppCompatActivity {
 
+    public final static String PREF_SHOULD_SKIP_MAINACTIVITY = "pref_theme_home_showed";
 
     public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
     private final static String INSTRUCTION_SCREEN_VIEWED = "Instruction_screen_viewed";
@@ -142,10 +135,6 @@ public class MainActivity extends HSAppCompatActivity {
 
     private boolean isInStepOne;
     private boolean clickStepOne;
-    /**
-     * 需要激活的主题包的PackageName，当点击主题片包的Apply时会传入
-     */
-    private String needActiveThemePkName = null;
 
     private CurrentUIStyle style;
 
@@ -156,7 +145,6 @@ public class MainActivity extends HSAppCompatActivity {
     private LinearLayout progressLayout;
     private boolean hasPlayed = false;
 
-    private static boolean hasInitKeyboardBeforeOnCreate = false;
 
     private static final int AD_LOAD_MAX_WAIT_TIME = HSConfig.optInteger(3000, "Application", "CurrentTheme", "LaunchDelayTime");
     private static final int NAVIGATION_MAIN_PAGE = 1;
@@ -178,7 +166,7 @@ public class MainActivity extends HSAppCompatActivity {
 
                         if (progress == 98) {
                             HSInputMethodService.initResourcesBeforeOnCreate();
-                            hasInitKeyboardBeforeOnCreate = true;
+                            ThemeHomeActivity.hasInitKeyboardBeforeOnCreate = true;
                         }
 
                         if (progress == 100) {
@@ -242,7 +230,7 @@ public class MainActivity extends HSAppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startThemeHomeActivity();
+                                startThemeHomeActivity(MainActivity.this);
                             }
                         }, 200);
                     } else {
@@ -304,7 +292,7 @@ public class MainActivity extends HSAppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+                    if (!shouldSkipMainActivity() && !isSettingButtonAnimationPlayed) {
                         HSFloatWindowManager.getInstance().getAccessibilityCoverView();
                         progressLayout.setVisibility(View.VISIBLE);
                         progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
@@ -313,8 +301,8 @@ public class MainActivity extends HSAppCompatActivity {
                         HSLog.w("setting button already showed.");
                         return;
                     }
-                    if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
-                        startThemeHomeActivity();
+                    if (shouldSkipMainActivity() || HSInputMethodListManager.isMyInputMethodSelected()) {
+                        startThemeHomeActivity(MainActivity.this);
                     }
                 }
             }, 1200);
@@ -329,7 +317,7 @@ public class MainActivity extends HSAppCompatActivity {
                 @Override
                 public boolean onError(MediaPlayer mp, int what, int extra) {
                     HSLog.e("MainActivity mp4 play error: what = " + what + " extra = " + extra);
-                    startThemeHomeActivity();
+                    startThemeHomeActivity(MainActivity.this);
                     return true;
                 }
             });
@@ -345,7 +333,7 @@ public class MainActivity extends HSAppCompatActivity {
                         }
                     }
 
-                    if (!shouldShowThemeHome() && !isSettingButtonAnimationPlayed) {
+                    if (!shouldSkipMainActivity() && !isSettingButtonAnimationPlayed) {
                         progressLayout.setVisibility(View.VISIBLE);
                         progressHandler.sendEmptyMessage(NAVIGATION_MAIN_PAGE);
                         hasPlayed = true;
@@ -354,8 +342,8 @@ public class MainActivity extends HSAppCompatActivity {
                         HSLog.w("setting button already showed.");
                         return;
                     }
-                    if (shouldShowThemeHome() || HSInputMethodListManager.isMyInputMethodSelected()) {
-                        startThemeHomeActivity();
+                    if (shouldSkipMainActivity() || HSInputMethodListManager.isMyInputMethodSelected()) {
+                        startThemeHomeActivity(MainActivity.this);
                     }
                 }
             });
@@ -369,7 +357,7 @@ public class MainActivity extends HSAppCompatActivity {
                         launchImageView.setVisibility(GONE);
                         launchVideoView.setVisibility(View.VISIBLE);
                         launchVideoView.start();
-                        if (!shouldShowThemeHome()) {
+                        if (!shouldSkipMainActivity()) {
                             HSFloatWindowManager.getInstance().getAccessibilityCoverView();
                             if (!isSettingButtonAnimationPlayed) {
                                 if (!hasPlayed) {
@@ -506,18 +494,6 @@ public class MainActivity extends HSAppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         HSLog.d("MainActivity onNewIntent.");
-        Uri data = intent.getData();
-        if (data != null) {
-            String pkName = data.getQueryParameter("pkName");
-            if (!TextUtils.isEmpty(pkName)) {
-                HSLog.d("jx,收到激活主题的请求，包名:" + pkName);
-                needActiveThemePkName = pkName;
-
-                if (shouldShowThemeHome() || (HSInputMethodListManager.isMyInputMethodSelected())) {
-                    startThemeHomeActivity();
-                }
-            }
-        }
         try {
             if (getIntent().getBooleanExtra("isInStepOne", false)) {
                 isInStepOne = true;
@@ -779,8 +755,7 @@ public class MainActivity extends HSAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         HSLog.d("MainActivity onDestroy.");
-        needActiveThemePkName = null;
-        HSPreferenceHelper.getDefault().putBoolean(PREF_THEME_HOME_SHOWED, true);
+        HSPreferenceHelper.getDefault().putBoolean(PREF_SHOULD_SKIP_MAINACTIVITY, true);
         try {
             if (settingsContentObserver != null) {
                 getApplicationContext().getContentResolver().unregisterContentObserver(settingsContentObserver);
@@ -859,43 +834,6 @@ public class MainActivity extends HSAppCompatActivity {
         }
     }
 
-    private void startThemeHomeActivity() {
-        if (!hasInitKeyboardBeforeOnCreate) {
-            HSUIInputMethodService.initResourcesBeforeOnCreate();
-            hasInitKeyboardBeforeOnCreate = true;
-        }
-
-        Intent startThemeHomeIntent = new Intent(MainActivity.this, ThemeHomeActivity.class);
-        if (!TextUtils.isEmpty(needActiveThemePkName)) {
-            final boolean setThemeSucceed = HSKeyboardThemeManager.setDownloadedTheme(needActiveThemePkName);
-
-            if (setThemeSucceed) {
-                startThemeHomeIntent.putExtra(ThemeHomeActivity.EXTRA_SHOW_TRIAL_KEYBOARD, true);
-            } else {
-                HSKeyboardTheme keyboardTheme = HSKeyboardThemeManager.getDownloadedThemeByPackageName(needActiveThemePkName);
-                if (keyboardTheme != null) {
-                    String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
-                    HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
-                }
-            }
-
-            needActiveThemePkName = null;
-        }
-
-        int jumpCode = -1;
-        try {
-            jumpCode = getIntent().getIntExtra(SplashActivity.JUMP_TAG, -1);
-        } catch (Exception e) {
-            Crashlytics.log(getIntent().toString() + HSDeviceUtils.getDeviceModel() + " CJX");
-        }
-        if (jumpCode != -1) {
-            startThemeHomeIntent.putExtra(SplashActivity.JUMP_TAG, jumpCode);
-        }
-
-        startActivity(startThemeHomeIntent);
-        overridePendingTransition(0, 0);
-        finish();
-    }
 
     private void playManualButtonShowAnimation() {
         AnimatorSet set = new AnimatorSet();
@@ -970,7 +908,7 @@ public class MainActivity extends HSAppCompatActivity {
         img_enter_two.setAlpha(0f);
         img_choose_two.setVisibility(View.VISIBLE);
         img_choose_two.setAlpha(1f);
-        startThemeHomeActivity();
+        startThemeHomeActivity(MainActivity.this);
     }
 
     private boolean isEventRecorded(String pref_name) {
@@ -981,8 +919,8 @@ public class MainActivity extends HSAppCompatActivity {
         mPrefs.edit().putBoolean(pref_name, true).apply();
     }
 
-    private boolean shouldShowThemeHome() {
-        return HSPreferenceHelper.getDefault().getBoolean(PREF_THEME_HOME_SHOWED, false);
+    public static boolean shouldSkipMainActivity() {
+        return HSPreferenceHelper.getDefault().getBoolean(PREF_SHOULD_SKIP_MAINACTIVITY, false);
     }
 
     private void logEventWithSource(String eventName) {

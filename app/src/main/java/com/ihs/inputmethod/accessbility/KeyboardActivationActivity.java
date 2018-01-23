@@ -31,7 +31,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSActivity;
 import com.ihs.chargingscreen.utils.DisplayUtils;
 import com.ihs.commons.config.HSConfig;
-import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
@@ -39,6 +38,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.keyboard.common.MainActivity;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.view.View.GONE;
@@ -59,8 +59,6 @@ public class KeyboardActivationActivity extends HSActivity {
     public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
     private static final int GUIDE_DELAY = 300;
     private boolean shouldShowEnableDialog = false;
-
-    public final static String PREF_THEME_HOME_SHOWED = "pref_theme_home_showed";
 
     private AccessibilityEventListener accessibilityEventListener;
     private Handler handler = new Handler();
@@ -139,7 +137,7 @@ public class KeyboardActivationActivity extends HSActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boolean oneTapPageViewed = AccGALogger.isOneTapPageViewed();
-        if (oneTapPageViewed || Build.VERSION.SDK_INT < 17 || HSPreferenceHelper.getDefault().contains(PREF_THEME_HOME_SHOWED)) {
+        if (oneTapPageViewed || Build.VERSION.SDK_INT < 17 || MainActivity.shouldSkipMainActivity()) {
             skipPage = true;
             Intent actIntent = new Intent();
             actIntent.putExtras(getIntent());
