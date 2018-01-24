@@ -72,6 +72,7 @@ import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import net.appcloudbox.ads.interstitialads.AcbInterstitialAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 import net.appcloudbox.autopilot.AutopilotConfig;
+import net.appcloudbox.goldeneye.AcbAdsManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -221,6 +222,9 @@ public class HSUIApplication extends HSInputMethodApplication {
         MediaController.setHandler(UIController.getInstance().getUIHandler());
 
         CustomUIRateAlertUtils.initialize();
+
+        //golden eye
+        AcbAdsManager.initialize(this);
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
