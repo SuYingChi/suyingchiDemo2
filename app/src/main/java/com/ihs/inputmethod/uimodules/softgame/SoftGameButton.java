@@ -113,7 +113,7 @@ public class SoftGameButton extends FrameLayout {
             public void onClick(View view) {
                 //跳转到详情页
                 KCAnalytics.logEvent("keyboard_game_clicked");
-                SoftGameDisplayHelper.DisplaySoftGames(getContext().getString(R.string.ad_placement_themetryad));
+                SoftGameDisplayHelper.DisplaySoftGames();
                 hideNewMark();
                 addGameShortcut();
             }
