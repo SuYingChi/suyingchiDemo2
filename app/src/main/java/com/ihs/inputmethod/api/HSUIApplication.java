@@ -35,6 +35,7 @@ import com.ihs.device.permanent.HSPermanentUtils;
 import com.ihs.device.permanent.PermanentService;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
 import com.ihs.feature.notification.NotificationManager;
+import com.ihs.feature.softgame.SoftGameManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
@@ -239,7 +240,8 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerNotificationEvent();
 
-        ScreenLockerManager.init();
+        ScreenLockerManager.init(getResources().getString(R.string.ad_placement_boostdone), getResources().getString(R.string.ad_placement_charging));
+        SoftGameManager.getInstance().init(getString(R.string.ad_placement_themetryad),getString(R.string.placement_full_screen_open_keyboard));
         FloatWindowCompat.initLockScreen(this);
 
         initIAP();
@@ -284,7 +286,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, 30000);
 
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
-        AppSuggestionManager.getInstance().init(true);
+        AppSuggestionManager.getInstance().init(true,getString(R.string.ad_placement_themetryad));
     }
 
     private void initLockerChargingNoAdConfig() {
