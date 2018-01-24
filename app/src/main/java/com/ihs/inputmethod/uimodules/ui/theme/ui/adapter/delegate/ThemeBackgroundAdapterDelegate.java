@@ -17,10 +17,8 @@ import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -36,8 +34,8 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.model.ThemeHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.CompatUtils;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.HSConfigUtils;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -46,7 +44,6 @@ import com.keyboard.core.themes.custom.elements.KCBaseElement;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -170,43 +167,6 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
         void updateBackgroundList() {
             destroyCurrentData();
             backgrounds.addAll(KCCustomThemeManager.getInstance().getBackgroundHomeElements());
-
-            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-                // 插入广告信息
-                List<Map<String, Object>> nativeAdInfoList = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "HomeBackgroundAd");
-                List<NativeAdInfo> nativeAdInfos = new ArrayList<>();
-                for (Map<String, Object> item : nativeAdInfoList) {
-                    NativeAdInfo nativeAdInfo1 = new NativeAdInfo();
-                    nativeAdInfo1.nativeAd = (String) item.get("NativeAd");
-                    nativeAdInfo1.position = HSConfigUtils.toInt(item.get("Position"),2);
-                    nativeAdInfos.add(nativeAdInfo1);
-                }
-                Collections.sort(nativeAdInfos);
-                for (final NativeAdInfo adInfo : nativeAdInfos) {
-                    if (adInfo.hasAd) {
-                        backgrounds.add(adInfo.position, adInfo);
-                    }
-
-                    //完成初始化nativeAdView
-                    View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_4, null);
-                    KCNativeAdView nativeAdView = new KCNativeAdView(HSApplication.getContext());
-                    nativeAdView.setAdLayoutView(view);
-                    nativeAdView.setNativeAdType(KCNativeAdView.NativeAdType.ICON);
-                    nativeAdView.setTag("nativeadview");
-                    nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
-                        @Override
-                        public void onAdLoaded(KCNativeAdView nativeAdView) {
-                            nativeAdView.findViewById(R.id.ad_call_to_action).setVisibility(View.VISIBLE);
-                            adInfo.hasAd = true;
-                            backgrounds.add(adInfo.position, adInfo);
-                            notifyItemInserted(adInfo.position);
-                        }
-                    });
-                    nativeAdView.load(adInfo.nativeAd);
-                    adInfo.nativeAdView = nativeAdView;
-                    backgroundNativeAdViews.put(adInfo.nativeAd + adInfo.position, nativeAdView);
-                }
-            }
             notifyDataSetChanged();
         }
 
