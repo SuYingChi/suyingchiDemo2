@@ -216,7 +216,11 @@ public class WakeKeyboardService extends Service {
                     }).build();
         }
 
-        alertDialog.show();
+        try {
+            alertDialog.show();
+        }catch (Exception e) {
+
+        }
         recordKeyboardShow();
     }
 
