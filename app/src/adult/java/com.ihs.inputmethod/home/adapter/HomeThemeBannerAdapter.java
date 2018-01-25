@@ -28,7 +28,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
-import com.ihs.inputmethod.view.HomeThemeBannerView;
+import com.ihs.inputmethod.widget.HomeThemeBannerView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.kc.utils.KCAnalytics;

@@ -21,7 +21,7 @@ import com.ihs.inputmethod.home.HomeActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
-import com.ihs.inputmethod.view.HomeBackgroundBannerView;
+import com.ihs.inputmethod.widget.HomeBackgroundBannerView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.elements.KCBackgroundElement;

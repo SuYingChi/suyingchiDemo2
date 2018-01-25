@@ -34,7 +34,7 @@
             android:text="@string/home_hot_keyboard_background"
             app:typeface="@string/typeface_asap_regular" />
 
-        <com.ihs.inputmethod.view.HomeHotBackgroundIndicatorView
+        <com.ihs.inputmethod.widget.HomeHotBackgroundIndicatorView
             android:id="@+id/indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

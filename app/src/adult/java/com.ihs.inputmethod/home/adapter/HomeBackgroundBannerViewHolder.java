@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.view.HomeHotBackgroundIndicatorView;
+import com.ihs.inputmethod.widget.HomeHotBackgroundIndicatorView;
 
 /**
  * Created by wenbinduan on 2016/12/22.

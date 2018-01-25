@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.view;
+package com.ihs.inputmethod.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
