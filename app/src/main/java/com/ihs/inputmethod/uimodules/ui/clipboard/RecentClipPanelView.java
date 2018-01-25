@@ -8,17 +8,17 @@ import android.widget.FrameLayout;
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class ClipboardPanelView extends FrameLayout {
+public class RecentClipPanelView extends FrameLayout {
 
-    public ClipboardPanelView( Context context) {
+    public RecentClipPanelView(Context context) {
         this(context,null);
     }
 
-    public ClipboardPanelView( Context context, AttributeSet attrs) {
+    public RecentClipPanelView(Context context, AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public ClipboardPanelView( Context context,  AttributeSet attrs, int defStyleAttr) {
+    public RecentClipPanelView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
     }

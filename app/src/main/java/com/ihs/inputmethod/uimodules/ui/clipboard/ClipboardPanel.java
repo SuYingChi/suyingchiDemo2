@@ -11,6 +11,9 @@ import com.ihs.panelcontainer.BasePanel;
 public class ClipboardPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
-        return null;
+        ClipboardMainView clipboardMainView = new ClipboardMainView();
+        clipboardMainView.setKeyboardPanelActionListener(this.getPanelActionListener());
+        return clipboardMainView;
+
     }
 }
