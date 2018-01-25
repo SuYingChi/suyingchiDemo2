@@ -2,7 +2,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -26,26 +25,6 @@
         android:textSize="14sp"
         app:typeface="@string/proxima_nova_semibold"/>
 
-    <GridView
-        android:id="@+id/categories_grid_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tab_layout_container"
-        android:alpha="0"
-        android:columnWidth="80dp"
-        android:horizontalSpacing="10dp"
-        android:listSelector="@android:color/transparent"
-        android:numColumns="3"
-        android:paddingBottom="24dp"
-        android:paddingEnd="24dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingStart="24dp"
-        android:paddingTop="24dp"
-        android:scrollbars="none"
-        android:verticalSpacing="8dp"
-        android:visibility="gone"/>
-
     <LinearLayout
         android:id="@+id/tab_layout_container"
         android:layout_width="match_parent"
@@ -60,23 +39,17 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperTabLayout
-                android:id="@+id/wallpaper_tabs"
+            <com.ihs.inputmethod.widget.SlidingTabLayout
+                android:id="@+id/sexy_wallpaper_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:fadingEdgeLength="6dp"
-                android:layoutDirection="ltr"
-                android:paddingLeft="12dp"
-                android:requiresFadingEdge="horizontal"
-                app:tabGravity="fill"
-                app:tabMaxWidth="0dp"
-                app:tabMinWidth="6dp"
-                app:tabMode="scrollable"
-                app:tabPaddingEnd="@dimen/tab_padding_start"
-                app:tabPaddingStart="@dimen/tab_padding_start"
-                style="@style/MyCustomTabLayout"
-                tools:ignore="PrivateResource,UnusedAttribute"/>
+                android:background="#666666"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                app:tl_underline_color="#1A000000"
+                app:tl_underline_height="1dp"/>
+
 
             <com.ihs.feature.common.TypefacedTextView
                 android:id="@+id/categories_title"
