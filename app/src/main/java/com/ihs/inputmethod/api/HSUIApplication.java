@@ -68,8 +68,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.L;
 import com.squareup.leakcanary.LeakCanary;
 
+import net.appcloudbox.ads.base.config.AdConfig;
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
-import net.appcloudbox.ads.interstitialads.AcbInterstitialAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 import net.appcloudbox.autopilot.AutopilotConfig;
 import net.appcloudbox.goldeneye.AcbAdsManager;
@@ -225,18 +225,16 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         //golden eye
         AcbAdsManager.initialize(this);
+        // 临时解决 AcbExpressAdManager 未初始化引起的 crash
+        if (!AdConfig.exists("expressAds") || AdConfig.getMap(new String[]{"expressAds"}).isEmpty()) {
+            AcbExpressAdManager.getInstance().init(this);
+        }
 
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
         }
 
-        AcbInterstitialAdManager.getInstance().init(this);
-        AcbNativeAdManager.sharedInstance().init(this);
-        AcbExpressAdManager.getInstance().init(this);
-
         initLockerChargingNoAdConfig();
-
-        HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging), getResources().getString(R.string.ad_placement_cable_report));
 
         setChargingFunctionStatus();
 
@@ -244,9 +242,12 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerNotificationEvent();
 
+        HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging), getResources().getString(R.string.ad_placement_cable_report));
         ScreenLockerManager.init(getResources().getString(R.string.ad_placement_boostdone), getResources().getString(R.string.ad_placement_charging));
-        SoftGameManager.getInstance().init(getString(R.string.ad_placement_themetryad),getString(R.string.placement_full_screen_open_keyboard));
+        SoftGameManager.getInstance().init(getString(R.string.ad_placement_themetryad), getString(R.string.placement_full_screen_open_keyboard));
+        AppSuggestionManager.getInstance().init(true, getString(R.string.ad_placement_themetryad));
         FloatWindowCompat.initLockScreen(this);
+        LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
 
         initIAP();
 
@@ -256,12 +257,10 @@ public class HSUIApplication extends HSInputMethodApplication {
         ActivityLifecycleMonitor.startMonitor(this);
         activeAdPlacements();
 
-
         String callAdPlacement = "";
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             callAdPlacement = getResources().getString(R.string.ad_placement_themetryad);
         }
-
         AcbCallManager.init(callAdPlacement, new CallAssistantFactoryImpl());
         AcbCallManager.setAdPlacement(callAdPlacement);
 
@@ -289,8 +288,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             }
         }, 30000);
 
-        LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
-        AppSuggestionManager.getInstance().init(true,getString(R.string.ad_placement_themetryad));
+
     }
 
     private void initLockerChargingNoAdConfig() {
@@ -311,7 +309,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbAdsManager.activePlacementInProcess(getString(R.string.placement_full_screen_open_keyboard));
         // Native广告
         AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_themetryad));
-        AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_result_page));
+        AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_boostdone));
         AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_applying));
         AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_keyboard_banner));
         AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_lumen));
