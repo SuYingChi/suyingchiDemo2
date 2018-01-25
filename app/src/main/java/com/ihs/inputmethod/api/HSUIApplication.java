@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -21,7 +20,6 @@ import com.ihs.app.alerts.HSAlertMgr;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSNotificationConstant;
 import com.ihs.app.framework.HSSessionMgr;
-import com.ihs.app.utils.HSVersionControlUtils;
 import com.ihs.chargingscreen.HSChargingScreenManager;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
 import com.ihs.chargingscreen.utils.LockerChargingSpecialConfig;
@@ -41,6 +39,7 @@ import com.ihs.feature.notification.NotificationManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
+import com.ihs.inputmethod.api.framework.HSInputMethodExecutors;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.managers.HSDirectoryManager;
@@ -55,7 +54,6 @@ import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
-import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeActivity;
 import com.ihs.inputmethod.utils.CustomUIRateAlertUtils;
 import com.ihs.keyboardutils.appsuggestion.AppSuggestionManager;
@@ -86,6 +84,8 @@ import static com.ihs.inputmethod.charging.ChargingConfigManager.PREF_KEY_USER_S
 public class HSUIApplication extends HSInputMethodApplication {
 
     private static final String SP_INSTALL_TYPE_ALREADY_RECORD = "SP_INSTALL_TYPE_ALREADY_RECORD";
+
+    private Handler handler = new Handler();
 
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -150,9 +150,7 @@ public class HSUIApplication extends HSInputMethodApplication {
                     .penaltyLog()
                     .build());
         }
-
         super.onCreate();
-
         /**
          * !!注意，application下不要初始化东西，需要初始化的请放在 onMainProcessApplicationCreate
          */
@@ -197,6 +195,9 @@ public class HSUIApplication extends HSInputMethodApplication {
             LeakCanary.install(this);
         }
 
+//        Debug.startMethodTracing(Environment.getExternalStorageDirectory() + File.separator + "dm.trace", 200 * 1000 * 1000);
+
+
         if (HSConfig.optBoolean(false, "Application", "RemindChangeKeyboard", "Enable")) {
             startService(new Intent(getApplicationContext(), WakeKeyboardService.class));
         }
@@ -207,44 +208,45 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerReceiver(broadcastReceiver, new IntentFilter(HSNotificationConstant.HS_APPSFLYER_RESULT));
 
-        HSKeyboardThemeManager.init();
-
         //init facemoji
-        HSDirectoryManager.getInstance().init(HSApplication.getContext());
-        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
-                if (BuildConfig.ENABLE_FACEMOJI) {
-                    FacemojiManager.getInstance().init();
-                }
+                HSDirectoryManager.getInstance().init(HSApplication.getContext());
+                HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging), getResources().getString(R.string.ad_placement_cable_report));
+                FloatWindowCompat.initLockScreen(HSUIApplication.this);
+                AppSuggestionManager.getInstance().init(true, getString(R.string.ad_placement_call_assist));
+                setChargingFunctionStatus();
+                initLockerChargingNoAdConfig();
+                registerNotificationEvent();
+                ScreenLockerManager.init();
+                LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
+
+                HSInputMethodExecutors.excuteDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (BuildConfig.ENABLE_FACEMOJI) {
+                            FacemojiManager.getInstance().init();
+                        }
+                        StickerDataManager.getInstance();
+                        StickerSuggestionManager.getInstance();
+                    }
+                }, 8000);
             }
         });
 
-        StickerDataManager.getInstance();
+
         MediaController.setHandler(UIController.getInstance().getUIHandler());
 
         CustomUIRateAlertUtils.initialize();
 
-        if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
-            ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
-        }
 
         AcbInterstitialAdManager.getInstance().init(this);
         AcbNativeAdManager.sharedInstance().init(this);
         AcbExpressAdManager.getInstance().init(this);
 
-        initLockerChargingNoAdConfig();
-
-        HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging), getResources().getString(R.string.ad_placement_cable_report));
-
-        setChargingFunctionStatus();
-
         HSInputMethodService.setKeyboardSwitcher(new KeyboardPanelManager());
 
-        registerNotificationEvent();
-
-        ScreenLockerManager.init();
-        FloatWindowCompat.initLockScreen(this);
 
         initIAP();
 
@@ -266,7 +268,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbCallManager.init(callAdPlacement, new CallAssistantFactoryImpl());
         AcbCallManager.setAdPlacement(callAdPlacement);
 
-        StickerSuggestionManager.getInstance();
 
         UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
             @Override
@@ -289,9 +290,6 @@ public class HSUIApplication extends HSInputMethodApplication {
                 });
             }
         }, 30000);
-
-        LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
-        AppSuggestionManager.getInstance().init(true, getString(R.string.ad_placement_call_assist));
 
         getContentResolver().registerContentObserver(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
