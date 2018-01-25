@@ -283,8 +283,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
-
-        requestOptions = new RequestOptions().bitmapTransform(new RoundedCorners(activity.getResources().getDimensionPixelSize(R.dimen.corner_radius))).override(bannerWidth,bannerHeight);
+        requestOptions = new RequestOptions().centerCrop().transform(new RoundedCorners(activity.getResources().getDimensionPixelSize(R.dimen.corner_radius))).override(bannerWidth,bannerHeight);
     }
 
     private int getInitItem() {
