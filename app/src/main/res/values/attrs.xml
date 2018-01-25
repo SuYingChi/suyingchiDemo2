@@ -96,7 +96,7 @@
         <attr name="shouldPrepare" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="ViewpagerIndicator">
+    <declare-styleable name="ViewPagerIndicator">
         <attr name="ci_width" format="dimension"/>
         <attr name="ci_height" format="dimension"/>
         <attr name="ci_margin" format="dimension"/>

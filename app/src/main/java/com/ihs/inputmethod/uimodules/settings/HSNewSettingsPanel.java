@@ -25,7 +25,7 @@ import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSSelectorPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
-import com.ihs.inputmethod.uimodules.widget.ViewpagerIndicator;
+import com.ihs.inputmethod.uimodules.widget.ViewPagerIndicator;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
@@ -64,7 +64,7 @@ public class HSNewSettingsPanel extends BasePanel {
             settingsViewPager = (SettingsViewPager) view.findViewById(R.id.settingsViewPager);
             settingsViewPager.setItems(prepareItems());
 
-            ViewpagerIndicator dotsRadioGroup = view.findViewById(R.id.dots_indicator);
+            ViewPagerIndicator dotsRadioGroup = view.findViewById(R.id.dots_indicator);
             dotsRadioGroup.setViewPager(settingsViewPager);
 
             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && NativeAdHelper.isAdPoolExist()) {

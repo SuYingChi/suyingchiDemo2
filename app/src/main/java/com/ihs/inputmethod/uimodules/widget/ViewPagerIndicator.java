@@ -21,17 +21,17 @@ import com.ihs.inputmethod.uimodules.R;
 import static android.support.v4.view.ViewPager.OnPageChangeListener;
 import static com.ihs.chargingscreen.utils.DisplayUtils.dip2px;
 
-public class ViewpagerIndicator extends LinearLayout {
+public class ViewPagerIndicator extends LinearLayout {
 
     private final static int DEFAULT_INDICATOR_WIDTH = 5;
     private ViewPager mViewpager;
     private int mIndicatorMargin = -1;
     private int mIndicatorWidth = -1;
     private int mIndicatorHeight = -1;
-    private int mAnimatorResId = R.animator.scale_with_alpha;
+    private int mAnimatorResId = R.animator.ci_default_alpha_scale_animator;
     private int mAnimatorReverseResId = 0;
-    private int mIndicatorBackgroundResId = R.drawable.white_radius;
-    private int mIndicatorUnselectedBackgroundResId = R.drawable.white_radius;
+    private int mIndicatorBackgroundResId = R.drawable.ci_default_drawable_checked;
+    private int mIndicatorUnselectedBackgroundResId = R.drawable.ci_default_drawable_checked;
     private Animator mAnimatorOut;
     private Animator mAnimatorIn;
     private Animator mImmediateAnimatorOut;
@@ -39,23 +39,23 @@ public class ViewpagerIndicator extends LinearLayout {
 
     private int mLastPosition = -1;
 
-    public ViewpagerIndicator(Context context) {
+    public ViewPagerIndicator(Context context) {
         super(context);
         init(context, null);
     }
 
-    public ViewpagerIndicator(Context context, AttributeSet attrs) {
+    public ViewPagerIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public ViewpagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ViewpagerIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
@@ -70,29 +70,29 @@ public class ViewpagerIndicator extends LinearLayout {
             return;
         }
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ViewpagerIndicator);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator);
         mIndicatorWidth =
-                typedArray.getDimensionPixelSize(R.styleable.ViewpagerIndicator_ci_width, -1);
+                typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_width, -1);
         mIndicatorHeight =
-                typedArray.getDimensionPixelSize(R.styleable.ViewpagerIndicator_ci_height, -1);
+                typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_height, -1);
         mIndicatorMargin =
-                typedArray.getDimensionPixelSize(R.styleable.ViewpagerIndicator_ci_margin, -1);
+                typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_margin, -1);
 
-        mAnimatorResId = typedArray.getResourceId(R.styleable.ViewpagerIndicator_ci_animator,
-                R.animator.scale_with_alpha);
+        mAnimatorResId = typedArray.getResourceId(R.styleable.ViewPagerIndicator_ci_animator,
+                R.animator.ci_default_alpha_scale_animator);
         mAnimatorReverseResId =
-                typedArray.getResourceId(R.styleable.ViewpagerIndicator_ci_animator_reverse, 0);
+                typedArray.getResourceId(R.styleable.ViewPagerIndicator_ci_animator_reverse, 0);
         mIndicatorBackgroundResId =
-                typedArray.getResourceId(R.styleable.ViewpagerIndicator_ci_drawable_checked,
-                        R.drawable.white_radius);
+                typedArray.getResourceId(R.styleable.ViewPagerIndicator_ci_drawable_checked,
+                        R.drawable.ci_default_drawable_checked);
         mIndicatorUnselectedBackgroundResId =
-                typedArray.getResourceId(R.styleable.ViewpagerIndicator_ci_drawable_normal,
+                typedArray.getResourceId(R.styleable.ViewPagerIndicator_ci_drawable_normal,
                         mIndicatorBackgroundResId);
 
-        int orientation = typedArray.getInt(R.styleable.ViewpagerIndicator_ci_orientation, -1);
+        int orientation = typedArray.getInt(R.styleable.ViewPagerIndicator_ci_orientation, -1);
         setOrientation(orientation == VERTICAL ? VERTICAL : HORIZONTAL);
 
-        int gravity = typedArray.getInt(R.styleable.ViewpagerIndicator_ci_gravity, -1);
+        int gravity = typedArray.getInt(R.styleable.ViewPagerIndicator_ci_gravity, -1);
         setGravity(gravity >= 0 ? gravity : Gravity.CENTER);
 
         typedArray.recycle();
@@ -103,7 +103,7 @@ public class ViewpagerIndicator extends LinearLayout {
      */
     public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin) {
         configureIndicator(indicatorWidth, indicatorHeight, indicatorMargin,
-                R.animator.scale_with_alpha, 0, R.drawable.white_radius, R.drawable.white_radius);
+                R.animator.ci_default_alpha_scale_animator, 0, R.drawable.ci_default_drawable_checked, R.drawable.ci_default_drawable_checked);
     }
 
     public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin,
@@ -130,7 +130,7 @@ public class ViewpagerIndicator extends LinearLayout {
         mIndicatorMargin =
                 (mIndicatorMargin < 0) ? dip2px(DEFAULT_INDICATOR_WIDTH) : mIndicatorMargin;
 
-        mAnimatorResId = (mAnimatorResId == 0) ? R.animator.scale_with_alpha : mAnimatorResId;
+        mAnimatorResId = (mAnimatorResId == 0) ? R.animator.ci_default_alpha_scale_animator : mAnimatorResId;
 
         mAnimatorOut = createAnimatorOut(context);
         mImmediateAnimatorOut = createAnimatorOut(context);
@@ -140,7 +140,7 @@ public class ViewpagerIndicator extends LinearLayout {
         mImmediateAnimatorIn = createAnimatorIn(context);
         mImmediateAnimatorIn.setDuration(0);
 
-        mIndicatorBackgroundResId = (mIndicatorBackgroundResId == 0) ? R.drawable.white_radius
+        mIndicatorBackgroundResId = (mIndicatorBackgroundResId == 0) ? R.drawable.ci_default_drawable_checked
                 : mIndicatorBackgroundResId;
         mIndicatorUnselectedBackgroundResId =
                 (mIndicatorUnselectedBackgroundResId == 0) ? mIndicatorBackgroundResId

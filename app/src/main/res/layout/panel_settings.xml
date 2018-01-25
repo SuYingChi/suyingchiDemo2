@@ -14,7 +14,7 @@
         android:layout_marginBottom="10dp"
         app:layout_marginTopPercent="5%" />
 
-    <com.ihs.inputmethod.uimodules.widget.ViewpagerIndicator
+    <com.ihs.inputmethod.uimodules.widget.ViewPagerIndicator
         android:id="@+id/dots_indicator"
         android:layout_width="wrap_content"
         android:layout_height="10dp"
