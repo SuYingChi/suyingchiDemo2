@@ -5,14 +5,12 @@ import android.view.View;
 import com.ihs.panelcontainer.BasePanel;
 
 /**
- * Created by Arthur on 17/11/23.
+ * Created by Arthur on 17/11/24.
  */
 
 public class ClipboardPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
-        ClipboardMainView clipboardMainView = new ClipboardMainView();
-        clipboardMainView.setKeyboardPanelActionListener(this.getPanelActionListener());
-        return clipboardMainView;
+        return null;
     }
 }

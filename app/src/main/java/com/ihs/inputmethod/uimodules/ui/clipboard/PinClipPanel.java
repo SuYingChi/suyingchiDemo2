@@ -1,7 +1,12 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 
+import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanelView;
 import com.ihs.panelcontainer.BasePanel;
 
 /**
@@ -11,6 +16,8 @@ import com.ihs.panelcontainer.BasePanel;
 public class PinClipPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
-        return null;
+        FrameLayout frameLayout = (FrameLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_pins_layout, null, false);
+        setPanelView(frameLayout);
+        return frameLayout;
     }
 }

@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ihs.panelcontainer.BasePanel;
@@ -11,6 +12,7 @@ import com.ihs.panelcontainer.BasePanel;
 public class RecentClipPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
+
         return null;
     }
 }
