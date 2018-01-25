@@ -10,11 +10,4 @@
 
 </android.support.v7.widget.RecyclerView>
 
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@color/black_primary"
-        />
-
 </FrameLayout>
