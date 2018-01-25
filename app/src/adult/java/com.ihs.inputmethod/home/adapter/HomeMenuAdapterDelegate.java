@@ -8,12 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.callflash.CallFlashListActivity;
 import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
+import com.ihs.inputmethod.sexywallpaper.SexyWallpaperActivity;
 import com.ihs.inputmethod.stickers.StickerListActivity;
 import com.ihs.inputmethod.themes.ThemeListActivity;
 import com.ihs.inputmethod.uimodules.R;
@@ -84,7 +84,7 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
                         activity.startActivity(new Intent(activity, StickerListActivity.class));
                         break;
                     case SexyWallpaper:
-                        Toast.makeText(HSApplication.getContext(), "进入Wallpaper列表", Toast.LENGTH_SHORT).show();
+                        activity.startActivity(new Intent(activity, SexyWallpaperActivity.class));
                         break;
                     case CallFlash:
                         activity.startActivity(new Intent(activity, CallFlashListActivity.class));

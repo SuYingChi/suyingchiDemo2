@@ -24,6 +24,7 @@ import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
 import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
+import com.ihs.inputmethod.sexywallpaper.SexyWallpaperActivity;
 import com.ihs.inputmethod.stickers.StickerListActivity;
 import com.ihs.inputmethod.themes.ThemeListActivity;
 import com.ihs.inputmethod.uimodules.R;
@@ -193,6 +194,10 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         startActivity(new Intent(HomeActivity.this, FontListActivity.class));
     }
 
+    private void goWallpaperListPage() {
+        startActivity(new Intent(HomeActivity.this, SexyWallpaperActivity.class));
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -216,6 +221,8 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
                 goFontListPage();
             case R.id.nav_call_flash:
                 goCallFlashListPage();
+            case R.id.nav_wallpaper:
+                goWallpaperListPage();
                 break;
         }
         return false;
