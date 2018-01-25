@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.inputmethod.callflash.CallFlashListActivity;
 import com.ihs.inputmethod.fonts.FontListActivity;
 import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
@@ -140,7 +141,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goThemeList();
+                goThemeListPage();
             }
         };
         homeModel.rightButtonText = getString(R.string.theme_more);
@@ -158,7 +159,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goStickerList();
+                goStickerListPage();
             }
         };
         homeModelList.add(homeModel);
@@ -176,12 +177,20 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         return homeModelList;
     }
 
-    private void goThemeList() {
+    private void goThemeListPage() {
         startActivity(new Intent(HomeActivity.this, ThemeListActivity.class));
     }
 
-    private void goStickerList() {
+    private void goStickerListPage() {
         startActivity(new Intent(HomeActivity.this, StickerListActivity.class));
+    }
+
+    private void goCallFlashListPage() {
+        startActivity(new Intent(HomeActivity.this, CallFlashListActivity.class));
+    }
+
+    private void goFontListPage() {
+        startActivity(new Intent(HomeActivity.this, FontListActivity.class));
     }
 
 
@@ -204,7 +213,9 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_call_font:
-                startActivity(new Intent(this, FontListActivity.class));
+                goFontListPage();
+            case R.id.nav_call_flash:
+                goCallFlashListPage();
                 break;
         }
         return false;

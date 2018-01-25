@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
+import com.ihs.inputmethod.callflash.CallFlashListActivity;
 import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.stickers.StickerListActivity;
@@ -65,7 +66,7 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
 
         if (homeMenu == HomeMenu.CallFlash) {
             viewHolder.menuTitle.setTextSize(19.9f);
-        }else {
+        } else {
             viewHolder.menuTitle.setTextSize(18.3f);
         }
 
@@ -80,13 +81,13 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
                         activity.startActivity(new Intent(activity, ThemeListActivity.class));
                         break;
                     case AdultStickers:
-                        activity. startActivity(new Intent(activity, StickerListActivity.class));
+                        activity.startActivity(new Intent(activity, StickerListActivity.class));
                         break;
                     case SexyWallpaper:
                         Toast.makeText(HSApplication.getContext(), "进入Wallpaper列表", Toast.LENGTH_SHORT).show();
                         break;
                     case CallFlash:
-                        Toast.makeText(HSApplication.getContext(), "进入CallFlash列表", Toast.LENGTH_SHORT).show();
+                        activity.startActivity(new Intent(activity, CallFlashListActivity.class));
                         break;
                 }
             }
