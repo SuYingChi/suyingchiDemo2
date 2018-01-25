@@ -11,7 +11,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -26,10 +25,11 @@ import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSSelectorPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
-import com.ihs.inputmethod.uimodules.widget.DotsRadioGroup;
+import com.ihs.inputmethod.uimodules.widget.ViewPagerIndicator;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
+import com.kc.utils.KCAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,6 @@ public class HSNewSettingsPanel extends BasePanel {
     private ViewItem selectorItem;
     private List<ViewItem> items;
     private SettingsViewPager settingsViewPager;
-    private DotsRadioGroup dotsRadioGroup;
 
     public HSNewSettingsPanel() {
         mContext = HSApplication.getContext();
@@ -65,8 +64,8 @@ public class HSNewSettingsPanel extends BasePanel {
             settingsViewPager = (SettingsViewPager) view.findViewById(R.id.settingsViewPager);
             settingsViewPager.setItems(prepareItems());
 
-            dotsRadioGroup = view.findViewById(R.id.settingsViewPager_indicator);
-            dotsRadioGroup.setDotView(settingsViewPager, settingsViewPager.getPageCount());
+            ViewPagerIndicator dotsRadioGroup = view.findViewById(R.id.dots_indicator);
+            dotsRadioGroup.setViewPager(settingsViewPager);
 
             if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && NativeAdHelper.isAdPoolExist()) {
                 nativeAdHelper = new NativeAdHelper();
@@ -191,7 +190,7 @@ public class HSNewSettingsPanel extends BasePanel {
                     }
                 }
             }
-            if(NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
+            if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
                 settingsViewPager.removeAds();
             }
         }
