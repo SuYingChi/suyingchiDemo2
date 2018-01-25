@@ -1,9 +1,14 @@
 package com.ihs.inputmethod.fonts.stickers;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.ihs.commons.config.HSConfig;
+import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.common.ListActivity;
 import com.ihs.inputmethod.fonts.stickers.adapter.FontAdapter;
@@ -17,24 +22,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager.FONT_NAME_SAVE_TO_JSON_SUCCESS;
+
 /**
  * Created by jixiang on 18/1/20.
  */
 
 public class FontListActivity extends ListActivity implements FontAdapter.OnFontCardClickListener {
-    private FontAdapter stickerAdapter;
+    private List<FontModel> fontModelList;
+    private FontAdapter fontAdapter;
+    private INotificationObserver observer = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (FONT_NAME_SAVE_TO_JSON_SUCCESS.equals(s)) {
+                if (fontAdapter != null) {
+                    HSSpecialCharacter hsSpecialCharacter = (HSSpecialCharacter) hsBundle.getObject("HSSpecialCharacter");
+                    if (hsSpecialCharacter != null) {
+                        FontModel fontModel = new FontModel(hsSpecialCharacter);
+                        int position = fontModelList.indexOf(fontModel);
+                        if (position < 0) {
+                            Crashlytics.log("font model index = -1, font model: " + fontModel);
+                            return;
+                        }
+                        fontModelList.remove(position);
+                        fontAdapter.notifyItemRemoved(position);
+                        fontAdapter.notifyItemRangeChanged(position, fontModelList.size());
+                    }
+                }
+            }
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        HSGlobalNotificationCenter.addObserver(FONT_NAME_SAVE_TO_JSON_SUCCESS, observer);
+    }
 
     @Override
     protected void initView() {
-        stickerAdapter = new FontAdapter(this, this);
-        stickerAdapter.setDataList(getData());
+        initFontList();
+        fontAdapter = new FontAdapter(this, this);
+        fontAdapter.setDataList(fontModelList);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(stickerAdapter);
+        recyclerView.setAdapter(fontAdapter);
     }
 
-    private List<FontModel> getData() {
+    private void initFontList() {
         List<FontModel> fontModelList = new ArrayList<>();
         List<Map<String, Object>> fontList = (List<Map<String, Object>>) HSConfig.getList("Application", "FontList");
         for (Map<String, Object> map : fontList) {
@@ -53,7 +89,7 @@ public class FontListActivity extends ListActivity implements FontAdapter.OnFont
                 fontModelList.add(fontModel);
             }
         }
-        return fontModelList;
+        this.fontModelList = fontModelList;
     }
 
     @Override
@@ -65,5 +101,11 @@ public class FontListActivity extends ListActivity implements FontAdapter.OnFont
                         KCAnalytics.logEvent("font_download_succeed", "FontName", fontModel.getFontName());
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        HSGlobalNotificationCenter.removeObserver(observer);
     }
 }
