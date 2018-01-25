@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.fonts.stickers;
+package com.ihs.inputmethod.fonts;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.common.ListActivity;
-import com.ihs.inputmethod.fonts.stickers.adapter.FontAdapter;
+import com.ihs.inputmethod.fonts.adapter.FontAdapter;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
 import com.ihs.inputmethod.utils.DownloadUtils;

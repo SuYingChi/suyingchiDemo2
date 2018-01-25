@@ -99,7 +99,7 @@
 
 
         <activity
-            android:name="com.ihs.inputmethod.fonts.stickers.FontListActivity"
+            android:name="com.ihs.inputmethod.fonts.FontListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 

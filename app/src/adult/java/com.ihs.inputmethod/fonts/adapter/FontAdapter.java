@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.fonts.stickers.adapter;
+package com.ihs.inputmethod.fonts.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.AppCompatRadioButton;

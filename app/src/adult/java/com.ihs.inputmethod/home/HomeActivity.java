@@ -18,7 +18,7 @@ import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
-import com.ihs.inputmethod.fonts.stickers.FontListActivity;
+import com.ihs.inputmethod.fonts.FontListActivity;
 import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
 import com.ihs.inputmethod.home.model.HomeMenu;
