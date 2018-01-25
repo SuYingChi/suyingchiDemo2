@@ -308,15 +308,13 @@ public class HSUIApplication extends HSInputMethodApplication {
             return;
         }
         // 全屏插页广告
-        AcbInterstitialAdManager.getInstance().activePlacementInProcess(getString(R.string.placement_full_screen_open_keyboard));
-
+        AcbAdsManager.activePlacementInProcess(getString(R.string.placement_full_screen_open_keyboard));
         // Native广告
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_themetryad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_applying));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboard_banner));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_lumen));
-
+        AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_themetryad));
+        AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_result_page));
+        AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_applying));
+        AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_keyboard_banner));
+        AcbAdsManager.activePlacementInProcess(getString(R.string.ad_placement_lumen));
     }
 
     private void registerNotificationEvent() {
