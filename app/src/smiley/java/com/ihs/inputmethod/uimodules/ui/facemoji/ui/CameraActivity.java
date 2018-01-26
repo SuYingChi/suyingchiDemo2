@@ -985,7 +985,7 @@ public class CameraActivity extends HSAppCompatActivity {
     };
 
     private void checkSynthesisImageSuccess() {
-        if (synthesisImageOver) {
+        if (synthesisImageOver && !isFinishing()) {
             handler.removeMessages(MSG_SYNTHESIS_IMAGE_SUCCESS);
             handler.sendEmptyMessage(MSG_SYNTHESIS_IMAGE_SUCCESS);
         }
