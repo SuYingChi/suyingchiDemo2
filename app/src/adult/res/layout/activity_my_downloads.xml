@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/AppBaseTheme.PopupOverlay" />
+
+    <com.ihs.inputmethod.widget.SlidingTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/customize_tab_layout_height"
+        android:layout_below="@id/toolbar"
+        android:layout_gravity="center_horizontal"
+        app:tl_indicator_color="@color/colorAccent"
+        app:tl_indicator_height="4dp"
+        app:tl_indicator_margin_bottom="20dp"
+        app:tl_indicator_width="20dp"
+        app:tl_textSelectColor="@color/colorAccent"
+        app:tl_textUnselectColor="#111111"
+        app:tl_textsize="14sp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout" />
+
+</RelativeLayout>

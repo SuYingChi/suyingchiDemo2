@@ -24,6 +24,7 @@ import com.ihs.inputmethod.home.adapter.HomeAdapter;
 import com.ihs.inputmethod.home.adapter.HomeStickerCardAdapterDelegate;
 import com.ihs.inputmethod.home.model.HomeMenu;
 import com.ihs.inputmethod.home.model.HomeModel;
+import com.ihs.inputmethod.mydownload.MyDownloadsActivity;
 import com.ihs.inputmethod.sexywallpaper.SexyWallpaperActivity;
 import com.ihs.inputmethod.stickers.StickerListActivity;
 import com.ihs.inputmethod.themes.ThemeListActivity;
@@ -198,7 +199,6 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         startActivity(new Intent(HomeActivity.this, SexyWallpaperActivity.class));
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -223,6 +223,8 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
                 goCallFlashListPage();
             case R.id.nav_wallpaper:
                 goWallpaperListPage();
+            case R.id.nav_call_my_download:
+                MyDownloadsActivity.startThisActivity(this);
                 break;
         }
         return false;
