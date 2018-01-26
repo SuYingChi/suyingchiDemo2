@@ -27,9 +27,6 @@ public class PinsClipboardPresenter{
 
     }
 
-    private RecentClipPanelView getRecentClipPanelView() {
-        return null;
-    }
 
     private List<String> getPinsClipData() {
 

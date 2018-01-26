@@ -21,10 +21,6 @@ public class RecentClipboardPresenter{
        recentClipboardAdapter = new RecentClipboardAdapter(recentClipData,pinClipPanelView);
    }
 
-    private PinClipPanelView getPinsPanelView() {
-        return null;
-    }
-
     private List<String> getRecentClipData() {
         return null;
     }
