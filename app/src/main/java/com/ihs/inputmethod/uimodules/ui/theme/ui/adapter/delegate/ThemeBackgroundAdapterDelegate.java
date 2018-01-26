@@ -193,7 +193,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
             if (position == 0) {
                 holder.backgroundContent.setVisibility(View.VISIBLE);
-                holder.backgroundContent.setImageResource(R.drawable.camera_icon);
+                holder.backgroundContent.setImageResource(R.drawable.image_placeholder);
+                Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(R.drawable.camera_icon).into(holder.backgroundContent);
                 holder.backgroundNewMark.setVisibility(GONE);
                 holder.backgroundGiftIcon.setVisibility(GONE);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +211,8 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
                 });
             } else if (position == 1) {
                 holder.backgroundContent.setVisibility(View.VISIBLE);
-                holder.backgroundContent.setImageResource(R.drawable.gallery_icon);
+                holder.backgroundContent.setImageResource(R.drawable.image_placeholder);
+                Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(R.drawable.gallery_icon).into(holder.backgroundContent);
                 holder.backgroundNewMark.setVisibility(GONE);
                 holder.backgroundGiftIcon.setVisibility(GONE);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {

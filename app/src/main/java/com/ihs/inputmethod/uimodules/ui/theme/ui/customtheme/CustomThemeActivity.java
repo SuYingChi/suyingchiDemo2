@@ -598,6 +598,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             }
             mp4HSBackgroundView.setHSBackground(backgroundDrawable);
             rootView.addView(keyboardFrameLayout);
+            refreshKeyboardView();
             ObjectAnimator animator = ObjectAnimator.ofFloat(keyboardFrameLayout, "translationY", height, 0);
             animator.setDuration(500);
             animator.start();
