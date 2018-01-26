@@ -10,12 +10,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.util.List;
 
@@ -35,20 +35,22 @@ public class StickerBigCreateFacemojiAdapterDelegate extends AdapterDelegate<Lis
         int halfWidth = width / 2;
         int height = (int) (width / 2 * 0.8);
 
-        //整个图片占据空间屏幕宽的一半，让其左右边距是屏幕宽一半的10%，控件大小为屏幕宽的一半的80%
+        //整个图片占据空间屏幕宽的一半的70，让其左右边距是屏幕宽一半的10%，控件大小为屏幕宽的一半的80%
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.faceImage.getLayoutParams();
         layoutParams.leftMargin = (int) (halfWidth * 0.1);
-//        layoutParams.rightMargin = (int) (halfWidth * 0.1);
-        layoutParams.width = (int) (halfWidth * 0.8);
+        layoutParams.rightMargin = (int) (halfWidth * 0.1);
+        layoutParams.width = (int) (halfWidth * 0.7);
         layoutParams.height = layoutParams.width;
 
         layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.tipText.getLayoutParams();
-        layoutParams.topMargin = (int) (height * 0.15);
+        layoutParams.topMargin = (int) (height * 0.1);
 
         layoutParams = (RelativeLayout.LayoutParams) stickerBigCreateFacemojiViewHolder.createBtn.getLayoutParams();
         layoutParams.bottomMargin = (int) (height * 0.15);
 
-        stickerBigCreateFacemojiViewHolder.createBtn.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xffffe011,HSApplication.getContext().getResources().getDimension(R.dimen.corner_radius)));
+        stickerBigCreateFacemojiViewHolder.createBtn.setBackgroundDrawable(RippleDrawableUtils.getCompatRippleDrawable(0xffffe011, HSApplication.getContext().getResources().getDimension(R.dimen.corner_radius)));
+
+        stickerBigCreateFacemojiViewHolder.itemView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,height));
 
         return stickerBigCreateFacemojiViewHolder;
     }
