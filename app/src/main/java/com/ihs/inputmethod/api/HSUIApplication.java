@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.acb.call.customize.AcbCallManager;
@@ -36,8 +34,8 @@ import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.device.permanent.HSPermanentUtils;
 import com.ihs.device.permanent.PermanentService;
 import com.ihs.devicemonitor.accessibility.HSAccessibilityService;
-import com.ihs.feature.notification.NotificationCondition;
 import com.ihs.feature.notification.NotificationManager;
+import com.ihs.feature.softgame.SoftGameManager;
 import com.ihs.iap.HSIAPManager;
 import com.ihs.inputmethod.accessbility.KeyboardWakeUpActivity;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
@@ -48,7 +46,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
-import com.ihs.inputmethod.feature.medialistener.MediaFileObserver;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -76,6 +73,7 @@ import net.appcloudbox.ads.base.config.AdConfig;
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 import net.appcloudbox.autopilot.AutopilotConfig;
+import net.appcloudbox.goldeneye.AcbAdsManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -295,7 +293,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, 30000);
 
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
-        AppSuggestionManager.getInstance().init(true);
     }
 
     private void initLockerChargingNoAdConfig() {
