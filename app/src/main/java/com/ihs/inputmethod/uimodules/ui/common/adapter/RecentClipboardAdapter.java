@@ -22,9 +22,9 @@ public class RecentClipboardAdapter extends RecyclerView.Adapter<RecentClipboard
 
     public static final String clipSpName = "Clip_Content";
     private List<String> recentClipContent = new ArrayList<String>();
-    private SaveToPinsManager saveToPins;
+    private SaveRecentItemToPins saveToPins;
     //注意处理完list再传进来
-    public RecentClipboardAdapter(List<String> list,SaveToPinsManager saveToPins){
+    public RecentClipboardAdapter(List<String> list,SaveRecentItemToPins saveToPins){
         recentClipContent = list;
         this.saveToPins = saveToPins;
     }
@@ -78,7 +78,7 @@ public class RecentClipboardAdapter extends RecyclerView.Adapter<RecentClipboard
         }
     }
 
-    public interface SaveToPinsManager{
+    public interface SaveRecentItemToPins {
        void saveToPins(String itemPinsContent);
     }
 }

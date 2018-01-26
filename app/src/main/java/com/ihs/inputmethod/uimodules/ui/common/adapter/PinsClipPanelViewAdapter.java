@@ -21,10 +21,10 @@ import java.util.List;
 public class PinsClipPanelViewAdapter extends RecyclerView.Adapter<PinsClipPanelViewAdapter.ViewHolder> {
 
 
-    private final DeleteRecenet deleteRecenet;
+    private final DeleteFromPinsToRecenet deleteRecenet;
     private List<String> pinsDatalist = new ArrayList<String>();
 
-    PinsClipPanelViewAdapter(List<String> list,DeleteRecenet deleteRecenet){
+    public PinsClipPanelViewAdapter(List<String> list,DeleteFromPinsToRecenet deleteRecenet){
         this.deleteRecenet = deleteRecenet;
         this.pinsDatalist = list;
 
@@ -80,7 +80,7 @@ public class PinsClipPanelViewAdapter extends RecyclerView.Adapter<PinsClipPanel
         }
     }
 
-    public interface  DeleteRecenet {
+    public interface DeleteFromPinsToRecenet {
         void deletePinsItem(String pinsContentItem);
     }
 }

@@ -97,7 +97,7 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
     protected void onFinishInflate() {
         super.onFinishInflate();
         List<ActionbarTab> actionbarTabs = new ArrayList<>();
-        actionbarTabs.add(new ActionbarTab(PANEL_RECENT, HSEmojiPanel.class, R.drawable.ic_emoji_panel_tab));
+        actionbarTabs.add(new ActionbarTab(PANEL_RECENT, RecentClipPanel.class, R.drawable.ic_emoji_panel_tab));
         actionbarTabs.add(new ActionbarTab(PANEL_PIN, PinClipPanel.class, R.drawable.ic_text_panel_tab));
 
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);

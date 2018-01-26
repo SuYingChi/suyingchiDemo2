@@ -10,22 +10,34 @@ import java.util.List;
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class PinsController implements RecentClipboardAdapter.SaveToPinsManager{
+public class PinsClipboardPresenter{
 
 
 
     private  PinClipPanelView pinClipPanelView;
     private PinsClipPanelViewAdapter pinsClipPanelViewAdapter;
     private List<String> pinsData= new ArrayList<String>();
+    RecentClipPanelView recentClipPanelView;
 
-    PinsController(PinClipPanelView pinClipPanelView,PinsClipPanelViewAdapter pinsClipPanelViewAdapter){
+    PinsClipboardPresenter(PinClipPanelView pinClipPanelView){
         this.pinClipPanelView = pinClipPanelView;
-        this.pinsClipPanelViewAdapter = pinsClipPanelViewAdapter;
+        pinsData = getPinsClipData();
+        recentClipPanelView = ClipPageManager.getInstance().getRecentClipPanelView();
+        pinsClipPanelViewAdapter= new PinsClipPanelViewAdapter(pinsData,recentClipPanelView);
 
     }
 
-    @Override
-    public void saveToPins(String itemPinsContent) {
+    private RecentClipPanelView getRecentClipPanelView() {
+        return null;
+    }
+
+    private List<String> getPinsClipData() {
+
+        return null;
+    }
+
+
+    public void addDataAndFresh(String itemPinsContent) {
         pinsClipPanelViewAdapter.addDataAndFresh(itemPinsContent);
     }
 }

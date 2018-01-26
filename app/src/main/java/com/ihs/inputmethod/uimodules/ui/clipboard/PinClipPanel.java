@@ -16,8 +16,9 @@ import com.ihs.panelcontainer.BasePanel;
 public class PinClipPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
-        FrameLayout frameLayout = (FrameLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_pins_layout, null, false);
-        setPanelView(frameLayout);
-        return frameLayout;
+        PinClipPanelView pinClipPanelView = (PinClipPanelView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_pins_layout, null, false);
+        ClipPageManager.getInstance().setPinClipPanelView(pinClipPanelView);
+        setPanelView(pinClipPanelView);
+        return pinClipPanelView;
     }
 }
