@@ -20,6 +20,7 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
@@ -65,7 +66,7 @@ public final class TrialKeyboardDialog extends Dialog {
 
     private void showInterstitialAds() {
         if (showAdOnDismiss && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            boolean adShown = KCInterstitialAd.show(getContext().getString(R.string.placement_full_screen_open_keyboard),
+            boolean adShown = KCInterstitialAd.show(AdPlacements.INTERSTITIAL_SPRING,
                     getContext().getString(R.string.interstitial_ad_title_after_try_keyboard),
                     getContext().getString(R.string.interstitial_ad_subtitle_after_try_keyboard));
             if (!adShown) {
@@ -80,7 +81,7 @@ public final class TrialKeyboardDialog extends Dialog {
 
     @NonNull
     private KCNativeAdView addNativeAdView() {
-        String placementName = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
+        String placementName = AdPlacements.NATIVE_THEME_TRY;
 
         final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
 
@@ -115,7 +116,7 @@ public final class TrialKeyboardDialog extends Dialog {
 
         setLayoutListenerToRootView();
         if (showAdOnDismiss && KeyboardFullScreenAd.canShowSessionAd &&!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            KCInterstitialAd.load(getContext().getString(R.string.placement_full_screen_open_keyboard));
+            KCInterstitialAd.load(AdPlacements.INTERSTITIAL_SPRING);
         }
     }
 

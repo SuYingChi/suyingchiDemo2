@@ -26,13 +26,13 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
@@ -40,6 +40,7 @@ import com.ihs.inputmethod.utils.HSConfigUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.view.HSGifImageView;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
@@ -122,7 +123,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             adLoadingView.configParams(backgroundDrawable, null,
                     HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip),
                     HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard),
-                    HSApplication.getContext().getResources().getString(R.string.ad_placement_applying),
+                    AdPlacements.NATIVE_APPLYING_ITEM,
                     new AdLoadingView.OnAdBufferingListener() {
 
                         @Override

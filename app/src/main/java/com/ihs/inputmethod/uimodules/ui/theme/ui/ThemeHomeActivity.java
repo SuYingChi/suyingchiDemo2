@@ -32,7 +32,6 @@ import com.acb.call.CPSettings;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.HSSessionMgr;
 import com.ihs.app.framework.inner.HomeKeyTracker;
@@ -72,6 +71,7 @@ import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.ihs.keyboardutils.utils.AlertShowingUtils;
 import com.ihs.keyboardutils.utils.CommonUtils;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.common.SplashActivity;
 
@@ -249,7 +249,7 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
         if (HSConfig.optBoolean(false, "Application", "AccessUsageAlert", "enable") && !PermissionUtils.isUsageAccessGranted() && shouldShowUsageAccessAlert()) {
 
             HSPreferenceHelper.getDefault().putInt(SP_LAST_USAGE_ALERT_SESSION_ID, HSSessionMgr.getCurrentSessionId());
-            new KCAlert.Builder(this)
+            KCAlert.Builder kcAlert = new KCAlert.Builder(this)
                     .setTitle(getString(R.string.dialog_app_usage_title))
                     .setMessage(getString(R.string.dialog_app_usage_tips))
                     .setTopImageResource(R.drawable.enable_keyboard_alert_top_bg)
@@ -259,8 +259,12 @@ public class ThemeHomeActivity extends BaseCustomizeActivity implements Navigati
                         }
                         enableUsageAccessPermission();
                     })
-                    .setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), null)
-                    .show();
+                    .setNegativeButton(getString(R.string.dialog_disagree).toUpperCase(), null);
+            try {
+                kcAlert.show();
+            } catch (Exception e) {
+
+            }
         }
 
         registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED));

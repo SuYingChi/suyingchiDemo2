@@ -18,6 +18,7 @@ import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.charging.ChargingConfigManager;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
@@ -92,16 +93,14 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 
 		final CardView cardView = (CardView) holder.itemView;
 
-		if (items.get(position).isThemeAd()) {
-			if (!this.shouldShowChargingEnableCard) {
-				this.shouldShowChargingEnableCard = ChargingConfigManager.getManager().shouldShowEnableChargingCard(true);
-				if (this.shouldShowChargingEnableCard) {
-					ChargingConfigManager.getManager().increaseEnableCardShowCount();
-				}
+		if (!this.shouldShowChargingEnableCard) {
+			this.shouldShowChargingEnableCard = ChargingConfigManager.getManager().shouldShowEnableChargingCard(true);
+			if (this.shouldShowChargingEnableCard) {
+				ChargingConfigManager.getManager().increaseEnableCardShowCount();
 			}
 		}
 
-		if (items.get(position).isThemeAd() && this.shouldShowChargingEnableCard) {// Show charging enable view
+		if (this.shouldShowChargingEnableCard) {// Show charging enable view
 			View chargingEnableView = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.charging_enable_card, null);
 			chargingEnableView.setTag("chargingenableview");
 			cardView.addView(chargingEnableView);
@@ -113,7 +112,7 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 				}
 			});
 		} else {// Show ad
-			String nativeAd = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
+			String nativeAd = AdPlacements.NATIVE_THEME_TRY;
 			if (nativeAdViewCached.get(nativeAd) == null) {
 				View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_theme_card, null);
 				LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.theme_ad_loading, null);

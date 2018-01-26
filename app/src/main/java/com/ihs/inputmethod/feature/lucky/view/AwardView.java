@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.lucky.GameConfig;
 import com.ihs.inputmethod.feature.lucky.LuckyActivity;
@@ -202,7 +203,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
                     shouldShowAd = mCurrentLargeAdCount < mLargeBoxAdCount;
                 }
                 if (shouldShowAd) {
-                    List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), HSApplication.getContext().getString(R.string.ad_placement_themetryad), 1);
+                    List<AcbNativeAd> ads = AcbNativeAdLoader.fetch(HSApplication.getContext(), AdPlacements.NATIVE_THEME_TRY, 1);
                     mAd = ads.isEmpty() ? null : ads.get(0);
                 } else {
                     mAd = null;

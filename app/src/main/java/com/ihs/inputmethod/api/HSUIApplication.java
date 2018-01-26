@@ -45,6 +45,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.managers.HSDirectoryManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.feature.medialistener.MediaFileObserver;
@@ -71,8 +72,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.L;
 import com.squareup.leakcanary.LeakCanary;
 
+import net.appcloudbox.ads.base.config.AdConfig;
 import net.appcloudbox.ads.expressads.AcbExpressAdManager;
-import net.appcloudbox.ads.interstitialads.AcbInterstitialAdManager;
 import net.appcloudbox.ads.nativeads.AcbNativeAdManager;
 import net.appcloudbox.autopilot.AutopilotConfig;
 
@@ -228,17 +229,18 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         CustomUIRateAlertUtils.initialize();
 
+        //golden eye
+        AcbAdsManager.initialize(this);
+        // 临时解决 AcbExpressAdManager 未初始化引起的 crash
+        if (!AdConfig.exists("expressAds") || AdConfig.getMap(new String[]{"expressAds"}).isEmpty()) {
+            AcbExpressAdManager.getInstance().init(this);
+        }
+
         if (HSVersionControlUtils.isFirstLaunchSinceInstallation()) {
             ThemeAnalyticsReporter.getInstance().enableThemeAnalytics(HSKeyboardThemeManager.getCurrentTheme().mThemeName);
         }
 
-        AcbInterstitialAdManager.getInstance().init(this);
-        AcbNativeAdManager.sharedInstance().init(this);
-        AcbExpressAdManager.getInstance().init(this);
-
         initLockerChargingNoAdConfig();
-
-        HSChargingScreenManager.init(true, getResources().getString(R.string.ad_placement_charging), getResources().getString(R.string.ad_placement_cable_report));
 
         setChargingFunctionStatus();
 
@@ -246,26 +248,25 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerNotificationEvent();
 
-        ScreenLockerManager.init();
+        HSChargingScreenManager.init(true, AdPlacements.EXPRESS_CABLE, AdPlacements.NATIVE_CABLE_REPORT);
+        ScreenLockerManager.init(AdPlacements.NATIVE_BOOST_DONE, AdPlacements.EXPRESS_CABLE);
+        SoftGameManager.getInstance().init(AdPlacements.NATIVE_THEME_TRY, AdPlacements.INTERSTITIAL_SPRING);
+        AppSuggestionManager.getInstance().init(true, AdPlacements.NATIVE_THEME_TRY);
         FloatWindowCompat.initLockScreen(this);
+        LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
 
         initIAP();
 
         if (Build.VERSION.SDK_INT >= 16) {
             NotificationManager.getInstance();
-            if (NotificationCondition.isNotificationEnabled() && !RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-                AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_result_page));
-            }
         }
         ActivityLifecycleMonitor.startMonitor(this);
         activeAdPlacements();
 
-
         String callAdPlacement = "";
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            callAdPlacement = getResources().getString(R.string.ad_placement_call_assist);
+            callAdPlacement = AdPlacements.NATIVE_THEME_TRY;
         }
-
         AcbCallManager.init(callAdPlacement, new CallAssistantFactoryImpl());
         AcbCallManager.setAdPlacement(callAdPlacement);
 
@@ -294,17 +295,8 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, 30000);
 
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
-        AppSuggestionManager.getInstance().init(true, getString(R.string.ad_placement_call_assist));
-
-        getContentResolver().registerContentObserver(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                false,
-                screenShotContentObserver
-        );
+        AppSuggestionManager.getInstance().init(true);
     }
-
-    MediaFileObserver screenShotContentObserver = new MediaFileObserver(new Handler()) {
-    };
 
     private void initLockerChargingNoAdConfig() {
         //如果第一次启动版本大于等于需要不显示广告的版本，则为新用户
@@ -321,23 +313,13 @@ public class HSUIApplication extends HSInputMethodApplication {
             return;
         }
         // 全屏插页广告
-        AcbInterstitialAdManager.getInstance().activePlacementInProcess(getString(R.string.placement_full_screen_open_keyboard));
-        AcbInterstitialAdManager.getInstance().activePlacementInProcess(getString(R.string.placement_full_screen_game));
-
+        AcbAdsManager.activePlacementInProcess(AdPlacements.INTERSTITIAL_SPRING);
         // Native广告
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_cardad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboardemojiad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboardsettingsad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_themetryad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_customize_theme));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.theme_ad_placement_theme_ad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_google_play_ad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_gift_ad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_google_play_dialog_ad));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_applying));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboard_banner));
-        AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_call_assist));
-
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_THEME_TRY);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_BOOST_DONE);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_APPLYING_ITEM);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_KEYBOARD_BANNER);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_LUMEN);
     }
 
     private void registerNotificationEvent() {

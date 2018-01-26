@@ -26,7 +26,6 @@ import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSSelectorPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
 import com.ihs.inputmethod.uimodules.widget.ViewPagerIndicator;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.panelcontainer.BasePanel;
 import com.ihs.panelcontainer.panel.KeyboardPanel;
 import com.kc.utils.KCAnalytics;
@@ -41,7 +40,6 @@ import static com.ihs.panelcontainer.KeyboardPanelSwitchContainer.MODE_BACK_PARE
 public class HSNewSettingsPanel extends BasePanel {
     public final static String BUNDLE_KEY_SHOW_TIP = "bundle_key_show_tip";
     private View settingPanelView;
-    private NativeAdHelper nativeAdHelper;
     int animDuration = 300;
     private Context mContext;
     private ViewItem themeItem;
@@ -66,11 +64,6 @@ public class HSNewSettingsPanel extends BasePanel {
 
             ViewPagerIndicator dotsRadioGroup = view.findViewById(R.id.dots_indicator);
             dotsRadioGroup.setViewPager(settingsViewPager);
-
-            if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && NativeAdHelper.isAdPoolExist()) {
-                nativeAdHelper = new NativeAdHelper();
-                nativeAdHelper.createAd();
-            }
 
             view.setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
             settingPanelView = view;
@@ -159,10 +152,6 @@ public class HSNewSettingsPanel extends BasePanel {
             }
         }));
 
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased() && NativeAdHelper.isAdPoolExist()) {
-            items.add(ViewItemBuilder.getAdsItem());
-        }
-
         return items;
     }
 
@@ -199,10 +188,6 @@ public class HSNewSettingsPanel extends BasePanel {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (nativeAdHelper != null) {
-            nativeAdHelper.releaseAd();
-            nativeAdHelper = null;
-        }
         items = null;
         themeItem = null;
         selectorItem = null;
@@ -263,10 +248,6 @@ public class HSNewSettingsPanel extends BasePanel {
 
     @Override
     protected boolean onShowPanelView(int appearMode) {
-        if (nativeAdHelper != null) {
-            nativeAdHelper.setAdFlashAnimationPlayed(false);
-            nativeAdHelper.nativeAdView.refresh();
-        }
         return true;
     }
 

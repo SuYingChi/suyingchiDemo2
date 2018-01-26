@@ -128,7 +128,7 @@ public class ApkUtils {
             e.printStackTrace();
         }
 
-        new KCAlert.Builder(HSApplication.getContext())
+        KCAlert.Builder kcAlert = new KCAlert.Builder(HSApplication.getContext())
                 .setTitle(UpdateConfig.getDefault().getTitle())
                 .setMessage(UpdateConfig.getDefault().getDescription())
                 .setTopImageResource(R.drawable.nav_header_bg)
@@ -147,8 +147,12 @@ public class ApkUtils {
                     public void onDismiss(DialogInterface dialog) {
                         AlertShowingUtils.stopShowingAlert();
                     }
-                })
-                .show();
+                });
+        try {
+            kcAlert.show();
+        }catch (Exception e) {
+
+        }
         saveUpdateAlertLastShownTime();
     }
 

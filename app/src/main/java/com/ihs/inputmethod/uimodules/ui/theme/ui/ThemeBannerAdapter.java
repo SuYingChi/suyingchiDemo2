@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,8 +13,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.ihs.app.analytics.HSAnalytics;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -28,9 +24,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
-import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
-import com.ihs.keyboardutils.iap.RemoveAdsManager;
-import com.ihs.keyboardutils.nativeads.KCNativeAdView;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.ArrayList;
@@ -59,8 +53,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     private long lastScrollTime = 0;
     private final static int loopMultiple = 500;
 
-    private CardView adCardView;
-    private KCNativeAdView nativeAdView;
 
     private RequestOptions requestOptions;
     private boolean themeAnalyticsEnabled = false;
@@ -82,9 +74,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
                             position = getInitItem();
                         }
                         int delayTime = AUTO_SCROLL_DELAY > 0 ? AUTO_SCROLL_DELAY : AUTO_SCROLL_DELAY_DEFAULT;
-                        if (adCardView != null && keyboardThemeList.get(position % getRealCount()) == null) {
-                            delayTime = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "BannerNativeAdAutoScrollDelay");
-                        }
                         viewPager.setCurrentItem(position);
                         if (isLoop) {
                             handler.sendEmptyMessageDelayed(MSG_WHAT_LOOP, delayTime);
@@ -105,41 +94,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         viewPager.addOnPageChangeListener(this);
     }
 
-    //广告的adChoice位置需要调整，因广告不用暂时不调
-    public void startToFetchNativeAd() {
-        if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            if (adCardView == null) {
-                View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_1, null);
-                nativeAdView = new KCNativeAdView(HSApplication.getContext());
-                nativeAdView.setAdLayoutView(view);
-                nativeAdView.setOnAdLoadedListener(new KCNativeAdView.OnAdLoadedListener() {
-                    @Override
-                    public void onAdLoaded(KCNativeAdView nativeAdView) {
-                        nativeAdView.setTag("NativeAd");
-                        adCardView = ViewConvertor.toCardView(nativeAdView);
-                        adCardView.setCardBackgroundColor(0xfff6f6f6);
-                        scrollToPreAdPosition();
-                    }
-                });
-                nativeAdView.load(HSApplication.getContext().getString(R.string.ad_placement_cardad));
-            }
-        }
-    }
-
-    private void removeNativeAdView() {
-        if (adCardView != null) {
-            nativeAdView.release();
-            adCardView.removeAllViews();
-            adCardView = null;
-
-            int count = getRealCount();
-            int currentItem = viewPager.getCurrentItem();
-            keyboardThemeList.remove(null);
-            notifyDataSetChanged();
-            int newCurrent = currentItem + (currentItem % count - currentItem % (count - 1));
-            viewPager.setCurrentItem(newCurrent, false);
-        }
-    }
 
     private final INotificationObserver notificationObserver = new INotificationObserver() {
         @Override
@@ -329,8 +283,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
-
-        requestOptions = new RequestOptions().bitmapTransform(new RoundedCorners(activity.getResources().getDimensionPixelSize(R.dimen.corner_radius))).override(bannerWidth,bannerHeight);
+        requestOptions = new RequestOptions().centerCrop().transform(new RoundedCorners(activity.getResources().getDimensionPixelSize(R.dimen.corner_radius))).override(bannerWidth,bannerHeight);
     }
 
     private int getInitItem() {
@@ -367,15 +320,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        // 如果当前是广告位,并且广告存在
-        if (adCardView != null && keyboardThemeList.get(position % getRealCount()) == null) {
-            if (adCardView.getParent() == container) {
-                container.removeView(adCardView);
-            }
-            container.addView(adCardView);
-            return adCardView;
-        }
-
         int newPosition = position % getRealCount();
         ThemeBannerView view = (ThemeBannerView) View.inflate(container.getContext(), R.layout.item_theme_banner, null);
 
@@ -413,9 +357,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        if (object != adCardView) {
-            container.removeView((View) object);
-        }
+        container.removeView((View) object);
     }
 
 
@@ -476,37 +418,12 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
     }
 
     public void recycle() {
-        if (adCardView != null) {
-            ((KCNativeAdView) adCardView.getChildAt(0)).release();
-        }
-
         stopAutoScroll();
         handler.removeCallbacksAndMessages(null);
 
         viewPager.removeAllViews();
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
-    }
-
-    public void scrollToPreAdPosition() {
-        if (adCardView != null) {
-            if (viewPager != null) {
-                int count = getRealCount();
-                int currentItem = viewPager.getCurrentItem();
-                keyboardThemeList.add(currentItem % getRealCount() + 1, null);
-                notifyDataSetChanged();
-                int newCurrent = currentItem + (currentItem % count - currentItem % (count + 1));
-                viewPager.setCurrentItem(newCurrent, false);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-
-                    }
-                }, 800);
-
-            }
-        }
     }
 
     public void setThemeAnalyticsEnabled(boolean isThemeAnalyticsEnabled) {

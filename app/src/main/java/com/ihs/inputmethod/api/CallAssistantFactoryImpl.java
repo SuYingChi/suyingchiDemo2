@@ -3,9 +3,9 @@ package com.ihs.inputmethod.api;
 import com.acb.call.customize.AcbCallFactoryImpl;
 import com.acb.call.views.CallIdleAlert;
 import com.acb.utils.MessageCenterUtils;
-import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity;
 
@@ -18,7 +18,7 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
         return new MessageCenterUtils.Config() {
             @Override
             public String getAdPlacement() {
-                return HSApplication.getContext().getResources().getString(R.string.ad_placement_call_assist);
+                return AdPlacements.NATIVE_THEME_TRY;
             }
 
             @Override
@@ -56,7 +56,7 @@ public class CallAssistantFactoryImpl extends AcbCallFactoryImpl {
     private static class CPCallIdleConfig extends CallIdleAlert.PlistConfig {
         @Override
         public String getAdPlaceName() {
-            return HSApplication.getContext().getResources().getString(R.string.ad_placement_call_assist);
+            return AdPlacements.NATIVE_THEME_TRY;
         }
 
         @Override

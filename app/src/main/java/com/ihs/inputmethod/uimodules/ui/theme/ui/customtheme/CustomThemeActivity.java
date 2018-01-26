@@ -27,7 +27,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -42,6 +41,7 @@ import com.ihs.inputmethod.api.theme.HSThemeBitmapUtils;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
@@ -54,6 +54,7 @@ import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.common.SplashActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -300,7 +301,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
             if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD && KeyboardFullScreenAd.canShowSessionAd) {
                 if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                    KCInterstitialAd.load(AdPlacements.INTERSTITIAL_SPRING);
                 }
             }
 
@@ -493,7 +494,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
-        return KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard),
+        return KCInterstitialAd.show(AdPlacements.INTERSTITIAL_SPRING,
                 getString(R.string.interstitial_ad_title_after_save_theme),
                 getString(R.string.interstitial_ad_subtitle_after_save_theme),
                 new KCInterstitialAd.OnAdCloseListener() {
