@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
+import com.ihs.inputmethod.constants.AdConstants;
 import com.ihs.inputmethod.uimodules.R;
 
 import net.appcloudbox.ads.base.AcbNativeAd;
@@ -60,7 +61,7 @@ public class KeyboardBannerAdLayout extends FrameLayout {
         closeBtn.setVisibility(GONE);
 
 
-        AcbNativeAdLoader adLoader = new AcbNativeAdLoader(getContext(), getContext().getResources().getString(R.string.ad_placement_keyboard_banner));
+        AcbNativeAdLoader adLoader = new AcbNativeAdLoader(getContext(), AdConstants.NATIVE_KEYBOARD_BANNER);
         adLoader.load(1, new AcbNativeAdLoader.AcbNativeAdLoadListener() {
             @Override
             public void onAdReceived(AcbNativeAdLoader acbNativeAdLoader, List<AcbNativeAd> list) {

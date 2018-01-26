@@ -29,11 +29,11 @@ import com.ihs.inputmethod.api.framework.HSEmojiSuggestionManager;
 import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
+import com.ihs.inputmethod.constants.AdConstants;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.feature.common.AdCaffeHelper;
 import com.ihs.inputmethod.suggestions.CustomSearchEditText;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
-import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.base.LanguageDao;
 import com.ihs.inputmethod.uimodules.ui.sticker.Sticker;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -133,8 +133,8 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
         HSGlobalNotificationCenter.addObserver(HSInputMethod.HS_NOTIFICATION_SHOW_INPUTMETHOD, keyboardNotificationObserver);
 
         KeyboardAnalyticsReporter.getInstance().recordKeyboardOnCreateEnd();
-        openFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Open");
-        closeFullScreenAd = new KeyboardFullScreenAd(getResources().getString(R.string.placement_full_screen_open_keyboard), "Close");
+        openFullScreenAd = new KeyboardFullScreenAd(AdConstants.INTERSTITIAL_SPRING, "Open");
+        closeFullScreenAd = new KeyboardFullScreenAd(AdConstants.INTERSTITIAL_SPRING, "Close");
         adCaffeHelper = new AdCaffeHelper(this, this);
     }
 
@@ -212,14 +212,14 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
 
         if (isInRightAppForBackAd(isAggressive)) {
             if (currentTimeMillis - lastBackAdShowTimeMillis >= minIntervalByHour * 3600 * 1000 && backAdShowCountOfDay < maxCountPerDay) {
-                boolean adShown = KCInterstitialAd.show(getString(R.string.placement_full_screen_open_keyboard), null, null, true);
+                boolean adShown = KCInterstitialAd.show(AdConstants.INTERSTITIAL_SPRING, null, null, true);
                 if (adShown) {
                     backAdShowCountOfDay++;
                     prefs.putLong("BackAdShowCountOfDay", backAdShowCountOfDay);
                     prefs.putLong("LastBackAdShowTime", currentTimeMillis);
                     return true;
                 } else {
-                    KCInterstitialAd.load(getString(R.string.placement_full_screen_open_keyboard));
+                    KCInterstitialAd.load(AdConstants.INTERSTITIAL_SPRING);
                     return false;
                 }
             } else {

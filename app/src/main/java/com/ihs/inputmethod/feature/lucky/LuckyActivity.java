@@ -14,11 +14,11 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.constants.AdConstants;
 import com.ihs.inputmethod.feature.common.ActivityUtils;
 import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
 import com.ihs.inputmethod.feature.common.Utils;
@@ -28,6 +28,7 @@ import com.ihs.inputmethod.feature.lucky.view.GameScene;
 import com.ihs.inputmethod.feature.lucky.view.GoButton;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.base.AcbAd;
 import net.appcloudbox.ads.base.AcbNativeAd;
@@ -421,7 +422,7 @@ public class LuckyActivity extends HSAppCompatActivity
 
     public void requestAds() {
         //request ad
-        AcbNativeAdLoader.preload(HSApplication.getContext(), 1, HSApplication.getContext().getString(R.string.ad_placement_themetryad));
+        AcbNativeAdLoader.preload(HSApplication.getContext(), 1, AdConstants.NATIVE_THEME_TRY);
     }
 
     public int getChanceCount() {
