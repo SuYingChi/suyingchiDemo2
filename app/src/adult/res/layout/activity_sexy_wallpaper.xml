@@ -1,69 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/AppBaseTheme.PopupOverlay" />
+
+    <com.ihs.inputmethod.widget.SlidingTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/customize_toolbar_height"
+        android:layout_below="@id/toolbar"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        app:tl_indicator_color="@color/colorAccent"
+        app:tl_indicator_height="4dp"
+        app:tl_indicator_width="20dp"
+        app:tl_textSelectColor="@color/colorAccent"
+        app:tl_textUnselectColor="#111111"
+        app:tl_textsize="14sp" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tab_layout_container">
+        android:layout_below="@+id/tab_layout">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/wallpaper_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </FrameLayout>
 
-    <com.ihs.feature.common.TypefacedTextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="14sp"
-        app:typeface="@string/proxima_nova_semibold"/>
-
-    <LinearLayout
-        android:id="@+id/tab_layout_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/customize_toolbar_height"
-        android:background="@color/colorPrimary"
-        android:baselineAligned="false"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <com.ihs.inputmethod.widget.SlidingTabLayout
-                android:id="@+id/sexy_wallpaper_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:background="#666666"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                app:tl_underline_color="#1A000000"
-                app:tl_underline_height="1dp"/>
-
-
-            <com.ihs.feature.common.TypefacedTextView
-                android:id="@+id/categories_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/overview_panel_wallpaper_theme_horizontal_padding"
-                android:layout_marginStart="@dimen/overview_panel_wallpaper_theme_horizontal_padding"
-                android:text="@string/online_wallpaper_tab_title_categories"
-                android:textColor="#333333"
-                android:textSize="14sp"
-                android:translationY="@dimen/online_category_title_view_translationY"
-                android:visibility="gone"
-                app:typeface="@string/proxima_nova_semibold"/>
-        </FrameLayout>
-    </LinearLayout>
 </RelativeLayout>
