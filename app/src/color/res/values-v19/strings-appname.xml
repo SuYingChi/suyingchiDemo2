@@ -2,7 +2,7 @@
 <!--
 /*
 **
-** Copyright 2012, The Android Open Source Project
+** Copyright 2013, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -18,10 +18,12 @@
 */
 -->
 
-<objectAnimator
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:propertyName="alpha"
-    android:valueType="floatType"
-    android:duration="500"
-    android:valueFrom="0.2"
-    android:valueTo="1.0" />
+<resources>
+
+    <!--
+         Application name for opensource Android keyboard. AOSP(Android Open Source Project) should not be translated.
+         This resource should be copied from msgid="8250992613616792321"
+    -->
+    <string name="english_service_label">RainbowKey</string>
+
+</resources>
