@@ -12,7 +12,7 @@ import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.constants.AdConstants;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 
@@ -96,7 +96,7 @@ public class DownloadUtils {
         adLoadingView.configParams(null, thumbnailDrawable != null ? thumbnailDrawable : resources.getDrawable(R.drawable.ic_sticker_loading_image),
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
-                AdConstants.NATIVE_APPLYING_ITEM,
+                AdPlacements.NATIVE_APPLYING_ITEM,
                 (downloadSuccess, manually) -> {
                     if (downloadSuccess) {
                     } else {

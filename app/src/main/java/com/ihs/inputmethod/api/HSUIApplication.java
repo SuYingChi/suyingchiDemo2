@@ -43,7 +43,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodService;
 import com.ihs.inputmethod.api.managers.HSDirectoryManager;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.constants.AdConstants;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
 import com.ihs.inputmethod.uimodules.BuildConfig;
@@ -243,10 +243,10 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         registerNotificationEvent();
 
-        HSChargingScreenManager.init(true, AdConstants.EXPRESS_CABLE, AdConstants.NATIVE_CABLE_REPORT);
-        ScreenLockerManager.init(AdConstants.NATIVE_BOOST_DONE, AdConstants.EXPRESS_CABLE);
-        SoftGameManager.getInstance().init(AdConstants.NATIVE_THEME_TRY, AdConstants.INTERSTITIAL_SPRING);
-        AppSuggestionManager.getInstance().init(true, AdConstants.NATIVE_THEME_TRY);
+        HSChargingScreenManager.init(true, AdPlacements.EXPRESS_CABLE, AdPlacements.NATIVE_CABLE_REPORT);
+        ScreenLockerManager.init(AdPlacements.NATIVE_BOOST_DONE, AdPlacements.EXPRESS_CABLE);
+        SoftGameManager.getInstance().init(AdPlacements.NATIVE_THEME_TRY, AdPlacements.INTERSTITIAL_SPRING);
+        AppSuggestionManager.getInstance().init(true, AdPlacements.NATIVE_THEME_TRY);
         FloatWindowCompat.initLockScreen(this);
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
 
@@ -260,7 +260,7 @@ public class HSUIApplication extends HSInputMethodApplication {
 
         String callAdPlacement = "";
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-            callAdPlacement = AdConstants.NATIVE_THEME_TRY;
+            callAdPlacement = AdPlacements.NATIVE_THEME_TRY;
         }
         AcbCallManager.init(callAdPlacement, new CallAssistantFactoryImpl());
         AcbCallManager.setAdPlacement(callAdPlacement);
@@ -307,13 +307,13 @@ public class HSUIApplication extends HSInputMethodApplication {
             return;
         }
         // 全屏插页广告
-        AcbAdsManager.activePlacementInProcess(AdConstants.INTERSTITIAL_SPRING);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.INTERSTITIAL_SPRING);
         // Native广告
-        AcbAdsManager.activePlacementInProcess(AdConstants.NATIVE_THEME_TRY);
-        AcbAdsManager.activePlacementInProcess(AdConstants.NATIVE_BOOST_DONE);
-        AcbAdsManager.activePlacementInProcess(AdConstants.NATIVE_APPLYING_ITEM);
-        AcbAdsManager.activePlacementInProcess(AdConstants.NATIVE_KEYBOARD_BANNER);
-        AcbAdsManager.activePlacementInProcess(AdConstants.NATIVE_LUMEN);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_THEME_TRY);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_BOOST_DONE);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_APPLYING_ITEM);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_KEYBOARD_BANNER);
+        AcbAdsManager.activePlacementInProcess(AdPlacements.NATIVE_LUMEN);
     }
 
     private void registerNotificationEvent() {

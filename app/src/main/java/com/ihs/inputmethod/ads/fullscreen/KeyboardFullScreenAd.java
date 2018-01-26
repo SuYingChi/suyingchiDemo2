@@ -7,7 +7,7 @@ import android.text.format.DateUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.constants.AdConstants;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.utils.KCAnalytics;
@@ -121,7 +121,7 @@ public class KeyboardFullScreenAd {
 
     }
 
-    private static final String ONE_SESSION_ADPLACEMENT = AdConstants.INTERSTITIAL_SPRING;
+    private static final String ONE_SESSION_ADPLACEMENT = AdPlacements.INTERSTITIAL_SPRING;
 
     /**
      * 这个ad 一个session只出现一次

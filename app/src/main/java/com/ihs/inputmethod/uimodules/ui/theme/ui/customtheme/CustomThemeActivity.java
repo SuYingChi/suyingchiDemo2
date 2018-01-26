@@ -41,7 +41,7 @@ import com.ihs.inputmethod.api.theme.HSThemeBitmapUtils;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.constants.AdConstants;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.framework.AudioAndHapticFeedbackManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
@@ -301,7 +301,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
             if (pageIndex == FRAGMENT_INDEX_LOAD_INTERSTITIAL_AD && KeyboardFullScreenAd.canShowSessionAd) {
                 if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
-                    KCInterstitialAd.load(AdConstants.INTERSTITIAL_SPRING);
+                    KCInterstitialAd.load(AdPlacements.INTERSTITIAL_SPRING);
                 }
             }
 
@@ -494,7 +494,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         if (RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             return false;
         }
-        return KCInterstitialAd.show(AdConstants.INTERSTITIAL_SPRING,
+        return KCInterstitialAd.show(AdPlacements.INTERSTITIAL_SPRING,
                 getString(R.string.interstitial_ad_title_after_save_theme),
                 getString(R.string.interstitial_ad_subtitle_after_save_theme),
                 new KCInterstitialAd.OnAdCloseListener() {

@@ -4,7 +4,7 @@ package com.ihs.inputmethod.constants;
  * Created by jixiang on 18/1/26.
  */
 
-public class AdConstants {
+public class AdPlacements {
     // Native
     public static final String NATIVE_THEME_TRY = "ThemeTryAd";
     public static final String NATIVE_BOOST_DONE = "BoostDone";

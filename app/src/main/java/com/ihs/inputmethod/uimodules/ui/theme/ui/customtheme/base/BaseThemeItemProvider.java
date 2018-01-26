@@ -32,7 +32,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSDrawableUtils;
-import com.ihs.inputmethod.constants.AdConstants;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.feature.apkupdate.ApkUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
@@ -123,7 +123,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             adLoadingView.configParams(backgroundDrawable, null,
                     HSApplication.getContext().getResources().getString(R.string.theme_card_downloading_tip),
                     HSApplication.getContext().getResources().getString(R.string.interstitial_ad_title_after_try_keyboard),
-                    AdConstants.NATIVE_APPLYING_ITEM,
+                    AdPlacements.NATIVE_APPLYING_ITEM,
                     new AdLoadingView.OnAdBufferingListener() {
 
                         @Override

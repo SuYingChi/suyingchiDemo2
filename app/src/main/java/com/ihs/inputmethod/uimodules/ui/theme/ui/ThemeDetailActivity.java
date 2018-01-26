@@ -41,7 +41,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.constants.AdConstants;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
@@ -242,7 +242,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 nativeAdView.setAdLayoutView(view);
                 nativeAdView.setLoadingView(loadingView);
                 nativeAdView.setPrimaryViewSize(width, (int) (width / 1.9f));
-                nativeAdView.load(AdConstants.NATIVE_THEME_TRY);
+                nativeAdView.load(AdPlacements.NATIVE_THEME_TRY);
                 CardView cardView = ViewConvertor.toCardView(nativeAdView);
                 linearLayout.addView(cardView);
                 linearLayout.setVisibility(View.GONE);

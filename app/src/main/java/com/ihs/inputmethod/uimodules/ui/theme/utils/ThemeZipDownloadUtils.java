@@ -16,7 +16,7 @@ import com.ihs.commons.utils.HSError;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSFileUtils;
 import com.ihs.inputmethod.api.utils.HSZipUtils;
-import com.ihs.inputmethod.constants.AdConstants;
+import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.theme.KeyboardThemeManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
@@ -49,7 +49,7 @@ public class ThemeZipDownloadUtils {
         adLoadingView.configParams(null, null,
                 resources.getString(R.string.sticker_downloading_label),
                 resources.getString(R.string.sticker_downloading_successful),
-                AdConstants.NATIVE_APPLYING_ITEM,
+                AdPlacements.NATIVE_APPLYING_ITEM,
                 (downloadSuccess, manually) -> {
                     if (downloadSuccess) {
                         //设置下载成功移到此处，如果用户在AdLoadingView最后的缓冲时间内点击close按钮则应该不设置为下载成功
