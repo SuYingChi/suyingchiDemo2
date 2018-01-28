@@ -10,15 +10,16 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.PinsClipPanelViewAdapter;
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class RecentClipPanelView extends FrameLayout implements PinsClipPanelViewAdapter.DeleteFromPinsToRecenet {
+public class RecentClipPanelView extends FrameLayout  {
 
-    RecentClipboardPresenter recentClipboardPresenter;
+    ClipboardPresenter clipboardPresenter;
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        //sendToPinsPresenter(this);
-        recentClipboardPresenter = new RecentClipboardPresenter(this);
+        clipboardPresenter = ClipboardPresenter.getInstance();
+        clipboardPresenter.setRecentClipPanelView(this);
+        ClipboardMonitor.getInstance().registerClipboardMonitor(clipboardPresenter);
     }
 
     public RecentClipPanelView(Context context) {
@@ -33,8 +34,5 @@ public class RecentClipPanelView extends FrameLayout implements PinsClipPanelVie
         super(context, attrs, defStyleAttr);
 
     }
-    @Override
-    public void deletePinsItem(String pinsContentItem) {
-        recentClipboardPresenter.deleteAndFresh(pinsContentItem);
-    }
+
 }

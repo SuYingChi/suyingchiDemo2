@@ -15,7 +15,6 @@ public class RecentClipPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
         RecentClipPanelView recentClipPanelView= (RecentClipPanelView)LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_recent_layout, null);
-        ClipPageManager.getInstance().setRecentClipPanelView(recentClipPanelView);
         setPanelView(recentClipPanelView);
         return recentClipPanelView;
     }

@@ -10,14 +10,15 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.RecentClipboardAdapter;
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class PinClipPanelView extends FrameLayout implements RecentClipboardAdapter.SaveRecentItemToPins {
+public class PinClipPanelView extends FrameLayout  {
 
-    private PinsClipboardPresenter pinsClipPresenter;
+    private ClipboardPresenter clipPresenter;
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        pinsClipPresenter= new PinsClipboardPresenter(this);
+        clipPresenter= ClipboardPresenter.getInstance();
+        clipPresenter.setPinClipPanelView(this);
 
     }
 
@@ -33,8 +34,4 @@ public class PinClipPanelView extends FrameLayout implements RecentClipboardAdap
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public void saveToPins(String itemPinsContent) {
-        pinsClipPresenter.addDataAndFresh(itemPinsContent);
-    }
 }

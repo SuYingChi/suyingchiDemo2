@@ -17,7 +17,6 @@ public class PinClipPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
         PinClipPanelView pinClipPanelView = (PinClipPanelView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_pins_layout, null, false);
-        ClipPageManager.getInstance().setPinClipPanelView(pinClipPanelView);
         setPanelView(pinClipPanelView);
         return pinClipPanelView;
     }
