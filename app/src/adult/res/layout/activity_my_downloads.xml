@@ -32,4 +32,20 @@
         android:layout_height="match_parent"
         android:layout_below="@id/tab_layout" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/home_create_theme_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:clickable="true"
+        android:src="@drawable/home_create_keyboard"
+        app:backgroundTint="@color/colorAccent"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/viewpager"
+        app:layout_anchorGravity="bottom|right"
+        app:rippleColor="@color/colorAccent" />
 </RelativeLayout>

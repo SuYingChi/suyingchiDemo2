@@ -57,35 +57,35 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_my_downloads);
         getWindow().setBackgroundDrawable(null);
+        setContentView(R.layout.activity_my_downloads);
 
         toolbar = findViewById(R.id.toolbar);
         String downloadTitle = getResources().getString(R.string.store_nav_download);
         toolbar.setTitle(downloadTitle);
         setSupportActionBar(toolbar);
 
-        viewPager = findViewById(R.id.viewpager);
-        slidingTabLayout = findViewById(R.id.tab_layout);
-        slidingTabLayout.setViewPager(viewPager);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         fragments = new ArrayList<>();
         fragments.add(MyThemeFragment.class);
         fragments.add(MyStickerFragment.class);
         fragments.add(MyFontFragment.class);
-
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getFragmentManager(), fragments);
         String[] tabTitles = new String[3];
         tabTitles[0] = getApplicationContext().getString(R.string.tab_theme_my);
         tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker_my);
         tabTitles[2] = getApplicationContext().getString(R.string.tab_font_my);
         tabFragmentPagerAdapter.setTabTitles(tabTitles);
+
+        viewPager = findViewById(R.id.viewpager);
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(tabFragmentPagerAdapter);
+
+        slidingTabLayout = findViewById(R.id.tab_layout);
+        slidingTabLayout.setViewPager(viewPager);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         int position = getIntent().getIntExtra(EXTRA_INITIAL_TAB_INDEX, 0);
         createThemeButton = (FloatingActionButton) findViewById(R.id.home_create_theme_layout);

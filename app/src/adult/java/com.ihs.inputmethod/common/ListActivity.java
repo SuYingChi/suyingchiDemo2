@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
+import com.ihs.inputmethod.mydownload.MyDownloadsActivity;
 import com.ihs.inputmethod.uimodules.R;
 
 /**
@@ -33,7 +33,7 @@ public abstract class ListActivity extends HSAppCompatActivity {
         findViewById(R.id.download_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ListActivity.this, "download click", Toast.LENGTH_SHORT).show();
+                MyDownloadsActivity.startThisActivity(ListActivity.this);
             }
         });
 
