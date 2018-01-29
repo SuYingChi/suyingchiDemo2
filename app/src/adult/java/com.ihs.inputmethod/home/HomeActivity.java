@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.inputmethod.SettingActivity;
 import com.ihs.inputmethod.callflash.CallFlashListActivity;
 import com.ihs.inputmethod.fonts.FontListActivity;
 import com.ihs.inputmethod.home.adapter.HomeAdapter;
@@ -225,6 +226,8 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
                 goWallpaperListPage();
             case R.id.nav_call_my_download:
                 MyDownloadsActivity.startThisActivity(this);
+            case R.id.nav_settings:
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
         }
         return false;

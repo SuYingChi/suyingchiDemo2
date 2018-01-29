@@ -26,7 +26,7 @@
             android:icon="@drawable/ic_nav_my_download"
             android:title="@string/home_nav_my_download" />
         <item
-            android:id="@+id/nav_call_settings"
+            android:id="@+id/nav_settings"
             android:icon="@drawable/ic_nav_settings"
             android:title="@string/home_nav_settings" />
     </group>

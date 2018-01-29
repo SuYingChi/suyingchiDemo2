@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/AppBaseTheme.PopupOverlay" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        style="@style/CustomSettingCategoryStyle"
+        android:text="@string/general" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/setting_language"
+        style="@style/CustomSettingItemStyle"
+        android:drawableLeft="@drawable/ic_language"
+        android:text="@string/theme_nav_languages" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/setting_keyboard_settings"
+        style="@style/CustomSettingItemStyle"
+        android:drawableLeft="@drawable/ic_keyboard_setting"
+        android:text="@string/keyboard_settings" />
+
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:layout_marginTop="20dp"
+        style="@style/CustomSettingCategoryStyle"
+        android:text="@string/theme_store_more" />
+
+    <com.ihs.feature.common.TypefacedTextView
+        android:id="@+id/setting_privacy_policy"
+        style="@style/CustomSettingItemStyle"
+        android:drawableLeft="@drawable/ic_keyboard_setting"
+        android:text="@string/text_privacy_policy" />
+</LinearLayout>
