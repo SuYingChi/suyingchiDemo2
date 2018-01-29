@@ -10,7 +10,6 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -27,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -53,6 +51,7 @@ import com.ihs.inputmethod.uimodules.widget.videoview.HSMediaView;
 import com.ihs.keyboardutils.ads.KCInterstitialAd;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.kc.commons.utils.KCCommonUtils;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.common.SplashActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -149,7 +148,6 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_theme);
         customThemeData = KCCustomThemeManager.getInstance().newCustomThemeData();
