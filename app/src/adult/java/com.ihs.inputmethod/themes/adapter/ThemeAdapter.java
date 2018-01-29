@@ -8,11 +8,19 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.artw.lockscreen.LockerEnableDialog;
+import com.artw.lockscreen.LockerSettings;
 import com.bumptech.glide.Glide;
+import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
+import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
+import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
+import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.common.adapter.CommonAdapter;
+import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
+import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -21,6 +29,23 @@ import pl.droidsonroids.gif.GifImageView;
  */
 
 public class ThemeAdapter<T> extends CommonAdapter<HSKeyboardTheme> {
+    private HSKeyboardTheme keyboardThemeOnKeyboardActivation;
+
+    public interface ThemeCardItemClickListener {
+        void onCardClick(HSKeyboardTheme keyboardTheme);
+
+        void onMenuShareClick(HSKeyboardTheme keyboardTheme);
+
+        void onMenuDownloadClick(HSKeyboardTheme keyboardTheme);
+
+        void onMenuDeleteClick(HSKeyboardTheme keyboardTheme);
+
+        void onMenuAppliedClick(HSKeyboardTheme keyboardTheme);
+
+        void onKeyboardActivationStart();
+    }
+
+
     public ThemeAdapter(Activity activity) {
         super(activity);
     }
@@ -61,5 +86,35 @@ public class ThemeAdapter<T> extends CommonAdapter<HSKeyboardTheme> {
             themeNewImage = itemView.findViewById(R.id.theme_new_view);
             themeAnimatedImage = itemView.findViewById(R.id.theme_animated_view);
         }
+    }
+
+    public void finishKeyboardActivation(boolean success) {
+        if (success && keyboardThemeOnKeyboardActivation != null) {
+            HSKeyboardTheme keyboardTheme = keyboardThemeOnKeyboardActivation;
+            keyboardThemeOnKeyboardActivation = null;
+            if (!HSKeyboardThemeManager.setKeyboardTheme(keyboardTheme.mThemeName)) {
+                String failedString = HSApplication.getContext().getResources().getString(R.string.theme_apply_failed);
+                HSToastUtils.toastCenterLong(String.format(failedString, keyboardTheme.getThemeShowName()));
+                return;
+            }else {
+                if (LockerSettings.isLockerEnableShowSatisfied()) {
+                    LockerEnableDialog.showLockerEnableDialog(activity,
+                            ThemeLockerBgUtil.getInstance().getThemeBgUrl(HSKeyboardThemeManager.getCurrentThemeName()),
+                            activity.getString(R.string.locker_enable_title_has_text),
+                            this::showTryKeyboardDialog);
+                } else {
+                    showTryKeyboardDialog();
+                }
+            }
+        }
+    }
+
+    private void showTryKeyboardDialog() {
+        TrialKeyboardDialog trialKeyboardDialog = new TrialKeyboardDialog.Builder(activity).create();
+        trialKeyboardDialog.show(true);
+    }
+
+    private void setThemeNotNew(HSKeyboardTheme keyboardTheme) {
+        HSThemeNewTipController.getInstance().setThemeNotNew(keyboardTheme.mThemeName);
     }
 }
