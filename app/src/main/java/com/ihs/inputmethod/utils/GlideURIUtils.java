@@ -4,7 +4,7 @@ package com.ihs.inputmethod.utils;
  * Created by yanxia on 2017/6/6.
  */
 
-public class ImageLoaderURIUtils {
+public class GlideURIUtils {
     /**
      * 例子： http的话 任何人都会用就不封装里面了
      * <br>String imageUri = "http://site.com/image.png"; // 网络图片
@@ -14,7 +14,7 @@ public class ImageLoaderURIUtils {
      * <br>String imageUri = "drawable://" + R.drawable.image; //  drawable文件
      */
     public enum Type {
-        File("file://"), Assets("assets://"), Drawable("drawable://"), Content("content://");
+        File("file://"), Assets("file:///android_asset/"), Drawable("drawable://"), Content("content://");
         private String str;
 
         private Type(String str) {

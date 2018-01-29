@@ -7,8 +7,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.provider.MediaStore;
 
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
+import com.kc.utils.KCAnalytics;
 
 import java.io.File;
 
@@ -45,7 +45,7 @@ public abstract class MediaFileObserver extends ContentObserver {
         if (file.lastModified() >= System.currentTimeMillis() - 10000) {
             File parentFile = file.getParentFile();
             if (parentFile != null) {
-                HSAnalytics.logEvent("picture_capture", "path", parentFile.getName());
+                KCAnalytics.logEvent("picture_capture", "path", parentFile.getName());
             }
         }
     }

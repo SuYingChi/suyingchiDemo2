@@ -226,8 +226,8 @@ dependencies {
         transitive = true
     }
     compile 'com.airbnb.android:lottie:2.0.0'
-    compile 'com.github.bumptech.glide:glide:4.0.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
 
     // LeakCanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'

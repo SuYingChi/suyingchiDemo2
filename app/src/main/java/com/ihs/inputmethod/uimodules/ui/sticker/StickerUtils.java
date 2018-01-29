@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -21,6 +20,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
 import com.ihs.inputmethod.uimodules.utils.BitmapUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -162,7 +162,7 @@ public class StickerUtils {
     }
 
     private static void copyStickerFileToSDCard(Sticker sticker, String destinationPath) {
-        if (sticker.getStickerUri().startsWith("assets:")) {
+        if (sticker.isAssetUri()) {
             AssetManager assetManager = HSApplication.getContext().getAssets();
             String stickerAssetPath = getStickerAssetsPath(sticker);
             try {
@@ -171,7 +171,7 @@ public class StickerUtils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (sticker.getStickerUri().startsWith("file:")) {
+        } else if (sticker.isFileUri()) {
             String stickerDownloadedPath = getStickerFilePath(sticker);
             HSFileUtils.copyFile(new File(stickerDownloadedPath), new File(destinationPath));
         }
@@ -186,7 +186,7 @@ public class StickerUtils {
         BitmapFactory.Options option = new BitmapFactory.Options();
         option.inJustDecodeBounds = true;
         // 获取PNG图片的宽高信息
-        if (sticker.getStickerUri().startsWith("assets:")) {
+        if (sticker.isAssetUri()) {
             String stickerAssetPath = getStickerAssetsPath(sticker);
             InputStream inputStream = null;
             try {
@@ -197,7 +197,7 @@ public class StickerUtils {
                 copyStickerFileToSDCard(sticker, outputFilePath);
                 return;
             }
-        } else if (sticker.getStickerUri().startsWith("file:")) {
+        } else if (sticker.isFileUri()) {
             String stickerDownloadedPath = getStickerFilePath(sticker);
             BitmapFactory.decodeFile(stickerDownloadedPath, option);
         }
@@ -208,7 +208,7 @@ public class StickerUtils {
         Bitmap backgroundBitmap = createBitmapAndGcIfNecessary(backgroundWidth, height); //创建背景图
         Bitmap stickerShareBitmapTemp = null;
         try {
-            stickerShareBitmapTemp = BitmapUtils.decodeImage(sticker.getFilePath(),sticker.getStickerUri().startsWith("asset") ? BitmapUtils.ASSET_URI : BitmapUtils.FILE_URI);
+            stickerShareBitmapTemp = BitmapUtils.decodeImage(sticker.getStickerUri(),sticker.isAssetUri() ? BitmapUtils.ASSET_URI : BitmapUtils.FILE_URI);
         } catch (IOException e) {
         }
         if (stickerShareBitmapTemp == null) {

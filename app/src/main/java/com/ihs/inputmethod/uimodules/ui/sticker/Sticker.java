@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
 import com.ihs.commons.config.HSConfig;
+import com.ihs.inputmethod.utils.GlideURIUtils;
 
 /**
  * Created by yanxia on 2017/6/8.
@@ -47,6 +48,14 @@ public class Sticker {
 
     public String getStickerUri() {
         return stickerUri;
+    }
+
+    public boolean isAssetUri() {
+        return stickerUri.startsWith(GlideURIUtils.Type.Assets.getStr());
+    }
+
+    public boolean isFileUri() {
+        return stickerUri.startsWith(GlideURIUtils.Type.File.getStr());
     }
 
     public String getStickerName() {
