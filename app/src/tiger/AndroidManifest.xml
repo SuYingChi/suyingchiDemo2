@@ -2,73 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly">
 
-    <permission
-        android:name="${applicationId}.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY"/>
-    <uses-permission android:name="android.permission.READ_USER_DICTIONARY"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
-    <!-- New permission add at 2017/4/13 start (This file copied by master except this section)-->
-
-    <!-- AppFramework -->
-    <permission
-        android:name="${applicationId}.permission.FRAMEWORK_SECURITY"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="${applicationId}.permission.FRAMEWORK_SECURITY" />
-
-    <!-- Locker -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> 
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> 
-    <!-- For Bluetooth, Wi-Fi and cell network --> 
-    <uses-permission android:name="android.permission.BLUETOOTH" /> 
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> 
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/><!--通过WiFi或移动基站的方式获取用户错略的经纬度信息，定位精度大概误差在30~1500米-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/><!--通过GPS芯片接收卫星的定位信息，定位精度达10米以内-->
-
-    <!-- Action trigger -->
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"/>
-    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/> 
-
-    <!-- require by IAP jar -->
-    <uses-permission android:name="com.android.vending.BILLING" />
-
-    <!-- Custom theme -->
-    <uses-permission android:name="android.permission.CAMERA" /> 
-
-    <!-- Development -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> 
-    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" /> 
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" /> 
-
-    <!-- required permission by libIrrelevantAds -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-
-    <!-- New permission add at 2017/4/13 end-->
-
     <application
         android:name="com.mobipioneer.emojikeyboard.app.InputMethodApplication"
         android:allowBackup="true"
@@ -78,134 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-
-        <!-- required by libAppFramework -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <receiver
-            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="com.ihs.app.push.impl.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.gcm.intent.RETRY" />
-
-                <category android:name="com.mobipioneer.lockerkeyboard" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name="com.ihs.app.alerts.impl.AlertActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
-
-        <!--
-         Optionally, register AnalyticsReceiver and AnalyticsService to support background
-         dispatching on non-Google Play devices
-        -->
-        <receiver
-            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <!--
-         Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
-         installation campaign reporting
-        -->
-        <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
-
-        <!-- The service and activity below are required for triggering voice recognition. -->
-        <service android:name="com.ihs.inputmethod.voice.ServiceHelper" />
-
-        <activity
-            android:name="com.ihs.inputmethod.voice.ActivityHelper"
-            android:configChanges="keyboard|keyboardHidden|navigation|orientation"
-            android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true"
-            android:hardwareAccelerated="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
-
-        <activity
-            android:name="com.tapjoy.TJContentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="com.tapjoy.TJAdUnitActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.tapjoy.mraid.view.ActionHandler"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.tapjoy.mraid.view.Browser"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/fb_app_id" />
-
-
-        <activity
-            android:name="com.ihs.inputmethod.uimodules.ui.settings.activities.MoreLanguageActivity2"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/SettingActivityStyle">
-            <intent-filter>
-                <action android:name="${applicationId}.LAUNCH_LANGUAGE_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="feab1e2f778877ab60518c2d916f8f331b230358" />
-
-
-        <provider
-            android:name="com.ihs.app.framework.inner.SessionProvider"
-            android:authorities="${applicationId}.framework_session"
-            android:enabled="true"
-            android:exported="false" />
-        <receiver
-            android:name="com.ihs.app.framework.inner.PendingSessionEndReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="hs.app.session.PENDING_SESSION_END" />
-            </intent-filter>
-        </receiver>
-
+        
         <activity
             android:name="com.keyboard.common.SplashActivity"
             android:screenOrientation="portrait"
