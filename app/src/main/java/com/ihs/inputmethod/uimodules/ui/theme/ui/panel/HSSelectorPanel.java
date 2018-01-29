@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -207,7 +208,8 @@ public class HSSelectorPanel extends BasePanel implements View.OnClickListener, 
     }
 
     private boolean hasSelection() {
-        return !TextUtils.isEmpty(HSInputMethodService.getInstance().getCurrentInputConnection().getSelectedText(0));
+        InputConnection currentInputConnection = HSInputMethodService.getInstance().getCurrentInputConnection();
+        return currentInputConnection != null && !TextUtils.isEmpty(currentInputConnection.getSelectedText(0));
     }
 
     private void updateButtonStates() {
