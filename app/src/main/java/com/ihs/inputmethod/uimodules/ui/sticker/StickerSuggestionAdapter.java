@@ -42,7 +42,7 @@ public class StickerSuggestionAdapter extends RecyclerView.Adapter<StickerSugges
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ImageView itemView = (ImageView) holder.itemView;
         final Sticker sticker = stickerList.get(position);
-        Glide.with(HSApplication.getContext()).load(sticker.getFilePath()).into(itemView);
+        Glide.with(HSApplication.getContext()).load(sticker.getStickerUri()).into(itemView);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -5,7 +5,7 @@ import android.content.res.AssetManager;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
-import com.ihs.inputmethod.utils.ImageLoaderURIUtils;
+import com.ihs.inputmethod.utils.GlideURIUtils;
 import com.kc.commons.configfile.KCList;
 import com.kc.commons.configfile.KCMap;
 import com.kc.commons.configfile.KCParser;
@@ -52,7 +52,7 @@ public class StickerGroup {
         if (isInternalStickerGroup) {
             stickerPreviewImageUri = new StringBuilder(ASSETS_STICKER_FILE_NAME)
                     .append("/").append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_TAB_IMAGE_SUFFIX);
-            this.stickerGroupPreviewImageUri = ImageLoaderURIUtils.transformURI(stickerPreviewImageUri.toString(), ImageLoaderURIUtils.Type.Assets);
+            this.stickerGroupPreviewImageUri = GlideURIUtils.transformURI(stickerPreviewImageUri.toString(), GlideURIUtils.Type.Assets);
         } else {
             stickerPreviewImageUri = new StringBuilder(getStickerDownloadBaseUrl())
                     .append(stickerGroupName).append("/").append(stickerGroupName).append(STICKER_TAB_IMAGE_SUFFIX);
@@ -84,12 +84,12 @@ public class StickerGroup {
                 if (isInternalStickerGroup) {
                     stickerImageFilePath = new StringBuilder(ASSETS_STICKER_FILE_NAME)
                             .append("/").append(stickerGroupName).append("/").append(imageName);
-                    stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.Assets);
-                    filePath = "file:///android_asset/" + stickerImageFilePath;
+                    stickerImageUri = GlideURIUtils.transformURI(stickerImageFilePath.toString(), GlideURIUtils.Type.Assets);
+                    filePath = stickerImageUri;
                 } else if (isStickerGroupDownloaded()) {
                     stickerImageFilePath = new StringBuilder(getStickerFolderPath(stickerGroupName))
                             .append("/").append(imageName);
-                    stickerImageUri = ImageLoaderURIUtils.transformURI(stickerImageFilePath.toString(), ImageLoaderURIUtils.Type.File);
+                    stickerImageUri = GlideURIUtils.transformURI(stickerImageFilePath.toString(), GlideURIUtils.Type.File);
                     filePath = stickerImageUri;
                 }
 

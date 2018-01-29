@@ -6,6 +6,7 @@ import android.util.Pair;
 
 import com.ihs.inputmethod.api.utils.HSJsonUtils;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.utils.GlideURIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -275,7 +276,11 @@ public class StickerPanelManager {
         }
         recentTemp.clear();
         for (final Object key : keys) {
-            final Sticker sticker = new Sticker(key.toString());
+            String imageLoaderUri = key.toString();
+            if (imageLoaderUri.startsWith("assets:")){
+                imageLoaderUri = imageLoaderUri.replace("assets://", GlideURIUtils.Type.Assets.getStr());
+            }
+            final Sticker sticker = new Sticker(imageLoaderUri);
             recentStickerPanelItems.addStickerPanelItem(new StickerPanelItem(sticker));
             recentTemp.add(sticker);
         }
