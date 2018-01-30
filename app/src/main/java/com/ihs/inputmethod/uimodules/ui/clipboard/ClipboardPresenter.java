@@ -17,7 +17,7 @@ public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItem
 
     static ClipboardPresenter clipboardPresenter;
     private final SharedPreferences sp;
-    RecentClipboardAdapter recentClipboardAdapter;
+    private RecentClipboardAdapter recentClipboardAdapter;
     List<String> recentClipData = new ArrayList<String>();
     PinClipPanelView pinClipPanelView;
     private PinsClipPanelViewAdapter pinsClipPanelViewAdapter;
@@ -38,8 +38,6 @@ public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItem
        sp = HSApplication.getContext().getSharedPreferences("recentClip", Context.MODE_PRIVATE);
        SharedPreferences.Editor recentClipSpEditor = sp.edit();
        loadArray();
-       recentClipboardAdapter = new RecentClipboardAdapter(recentClipData,this);
-        pinsClipPanelViewAdapter= new PinsClipPanelViewAdapter(pinsData,this);
         pinsData = getPinsClipData();
    }
 
@@ -124,5 +122,19 @@ public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItem
 
     public PinsClipPanelViewAdapter getPinsClipPanelViewAdapter() {
         return pinsClipPanelViewAdapter;
+    }
+
+    public void setRecentClipboardAdapter(RecentClipboardAdapter recentClipboardAdapter) {
+        this.recentClipboardAdapter = recentClipboardAdapter;
+    }
+
+    public void setPinsClipPanelViewAdapter(PinsClipPanelViewAdapter pinsClipPanelViewAdapter) {
+        this.pinsClipPanelViewAdapter = pinsClipPanelViewAdapter;
+    }
+    public  PinClipPanelView getPinClipPanelView(){
+       return pinClipPanelView ;
+    }
+    public RecentClipPanelView getRecentClipPanelView(){
+        return recentClipPanelView;
     }
 }

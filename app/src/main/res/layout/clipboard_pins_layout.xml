@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ihs.inputmethod.uimodules.ui.clipboard.PinClipPanelView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clipboard_Pins_content"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@color/black_primary">
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/clipboard_Pins_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-</android.support.v7.widget.RecyclerView>
-
 </com.ihs.inputmethod.uimodules.ui.clipboard.PinClipPanelView>

@@ -10,6 +10,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.NonNull;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,9 +27,7 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.emoji.HSEmojiPanel;
 import com.ihs.inputmethod.uimodules.ui.emoticon.bean.ActionbarTab;
-import com.ihs.inputmethod.uimodules.ui.textart.HSTextPanel;
 import com.ihs.panelcontainer.BasePanel;
 
 import java.util.ArrayList;
@@ -47,9 +46,11 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
     public final static String PANEL_RECENT = "Recent";
     public final static String PANEL_PIN = "Pins";
 
-    private BasePanel.OnPanelActionListener containerListener;
-    private BasePanel.OnPanelActionListener keyboardActionListener;
-    private Map<Class, View> btnMap = new HashMap<>();
+    //private BasePanel.OnPanelActionListener containerListener;
+
+    //private Map<Class, View> btnMap = new HashMap<>();
+    private Map<RecyclerView,View> btnMap = new HashMap<>();
+    private Map<String, RecyclerView> clipboardViews = new HashMap<>();
     private Map<String, Class> panels = new HashMap<>();
     boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
     private INotificationObserver notificationObserver = new INotificationObserver() {
@@ -62,6 +63,7 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
             }
         }
     };
+    private ClipboardTabChangeListener clipboardTabChangeListener;
 
     public ClipBoardActionBar(Context context) {
         this(context, null);
@@ -80,7 +82,7 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
 
     public void release() {
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
-        containerListener = null;
+       // containerListener = null;
     }
 
 //    public static void saveLastPanelName(String panelName) {
@@ -97,7 +99,7 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
     protected void onFinishInflate() {
         super.onFinishInflate();
         List<ActionbarTab> actionbarTabs = new ArrayList<>();
-        actionbarTabs.add(new ActionbarTab(PANEL_RECENT, RecentClipPanel.class, R.drawable.ic_emoji_panel_tab));
+       /* actionbarTabs.add(new ActionbarTab(PANEL_RECENT, RecentClipPanel.class, R.drawable.ic_emoji_panel_tab));
         actionbarTabs.add(new ActionbarTab(PANEL_PIN, PinClipPanel.class, R.drawable.ic_text_panel_tab));
 
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
@@ -117,6 +119,26 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
             addView(wrapView, params);
             panels.put(panelName, clazz);
             btnMap.put(clazz, wrapView);
+        }*/
+        actionbarTabs.add(new ActionbarTab(PANEL_RECENT, ClipboardPresenter.getInstance().getRecentClipPanelView(), R.drawable.ic_emoji_panel_tab));
+        actionbarTabs.add(new ActionbarTab(PANEL_PIN, ClipboardPresenter.getInstance().getPinClipPanelView(), R.drawable.ic_text_panel_tab));
+        final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
+        final int actionBarAmount = actionbarTabs.size();
+        for (int i = 0; i < actionBarAmount; i++) {
+            final String viewName = actionbarTabs.get(i).viewName;
+            final RecyclerView recyclerView = actionbarTabs.get(i).view;
+            final LayoutParams params = new LayoutParams(0, height, 1.0f);
+
+            RelativeLayout wrapView = (RelativeLayout) inflate(getContext(), R.layout.clipboard_bar_button,null);
+            setBtnImage(wrapView.findViewById(R.id.iv_icon),actionbarTabs.get(i).iconResId);
+            ((TextView)wrapView.findViewById(R.id.tv_title)).setText(viewName);
+            wrapView.setTag(viewName);
+            wrapView.setOnClickListener(this);
+            wrapView.setBackgroundDrawable(getBackgroundDrawable());
+
+            addView(wrapView, params);
+            clipboardViews.put(viewName, recyclerView);
+            btnMap.put(recyclerView, wrapView);
         }
     }
 
@@ -167,10 +189,16 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
         return background;
     }
 
-    void setContainerListener(BasePanel.OnPanelActionListener onStateChangedListener) {
+   /* void setPanelActionListener(BasePanel.OnPanelActionListener onStateChangedListener) {
         this.containerListener = onStateChangedListener;
+    }*/
+    void setClipboardTabChangeListener(ClipboardTabChangeListener clipboardTabChangeListener){
+        this.clipboardTabChangeListener = clipboardTabChangeListener;
     }
+    interface  ClipboardTabChangeListener{
 
+        void showView(View view);
+    }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -184,9 +212,11 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
     public void onClick(View v) {
         final Object tag = v.getTag();
         if (tag != null && tag instanceof String) {
-            Class panel = panels.get(tag);
-            if (containerListener != null && panel != null) {
-                containerListener.showPanel(panel);
+             Class panel = panels.get(tag);
+            RecyclerView view = clipboardViews.get(tag);
+            if (/*containerListener != null && panel != null*/view!=null) {
+                //containerListener.showPanel(panel);
+                clipboardTabChangeListener.showView(view);
                 HSAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
             }
         } else {
@@ -214,9 +244,6 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
         return panels.get(panel);
     }
 
-    public void setKeyboardPanelActionListener(BasePanel.OnPanelActionListener panelActionListener) {
-        this.keyboardActionListener = panelActionListener;
-    }
 
 
 }

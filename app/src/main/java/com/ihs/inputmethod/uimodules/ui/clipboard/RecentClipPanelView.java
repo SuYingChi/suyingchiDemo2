@@ -1,16 +1,15 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
-
-import com.ihs.inputmethod.uimodules.ui.common.adapter.PinsClipPanelViewAdapter;
 
 /**
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class RecentClipPanelView extends FrameLayout  {
+public class RecentClipPanelView extends RecyclerView {
 
     ClipboardPresenter clipboardPresenter;
 

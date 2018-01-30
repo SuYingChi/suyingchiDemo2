@@ -21,7 +21,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.BaseFunctionBar;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPanel;
+import com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardMainPanel;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.panel.HSThemeSelectPanel;
@@ -147,7 +147,7 @@ public class HSNewSettingsPanel extends BasePanel {
         items.add(ViewItemBuilder.getFontsItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
-                getPanelActionListener().showChildPanel(ClipboardPanel.class, null);
+                getPanelActionListener().showChildPanel(ClipboardMainPanel.class, null);
                 HSAnalytics.logEvent("keyboard_setting_fonts_clicked");
             }
         }));

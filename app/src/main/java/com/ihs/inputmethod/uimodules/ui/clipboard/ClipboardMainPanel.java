@@ -8,12 +8,10 @@ import com.ihs.panelcontainer.BasePanel;
  * Created by Arthur on 17/11/24.
  */
 
-public class ClipboardPanel extends BasePanel {
+public class ClipboardMainPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
         ClipboardMainView clipboardMainView = new ClipboardMainView();
-        clipboardMainView.setKeyboardPanelActionListener(this.getPanelActionListener());
         return clipboardMainView;
-
     }
 }
