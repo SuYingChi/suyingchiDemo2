@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
@@ -185,8 +184,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         rootView.smoothScrollTo(0, 0);
     }
 
-    @NonNull
-    private List<ThemeHomeModel> getKeyboardThemesExceptMe() {
+    private List getKeyboardThemesExceptMe() {
         List<HSKeyboardTheme> keyboardThemeList = new ArrayList<>();
         keyboardThemeList.addAll(HSKeyboardThemeManager.getAllKeyboardThemeList());
         keyboardThemeList.removeAll(KCCustomThemeManager.getInstance().getAllCustomThemes());
@@ -194,13 +192,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         if (keyboardTheme != null) {
             keyboardThemeList.remove(keyboardTheme);
         }
-        List<ThemeHomeModel> models = new ArrayList<>();
-        for (HSKeyboardTheme keyboardTheme : keyboardThemeList) {
-            ThemeHomeModel model = new ThemeHomeModel();
-            model.keyboardTheme = keyboardTheme;
-            models.add(model);
-        }
-        return models;
+        return keyboardThemeList;
     }
 
     @Override

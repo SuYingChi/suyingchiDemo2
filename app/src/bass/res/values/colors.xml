@@ -67,4 +67,6 @@
     <color name="light_button_pressed">@color/colorAccent</color>
     <color name="light_button_disabled">#4d6a26f7</color>
 
+    <color name="theme_button_text_color">@color/colorAccent</color>
+    <color name="theme_button_text_color_light">#a025ff</color>
 </resources>

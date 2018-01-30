@@ -18,8 +18,8 @@ import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.common.adapter.CommonAdapter;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
+import com.ihs.inputmethod.themes.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 
 import pl.droidsonroids.gif.GifImageView;
