@@ -72,7 +72,7 @@ public final class ClipboardMainView extends KeyboardPanelSwitchContainer implem
     }
 
     @Override
-    public void noData() {
+    public void noData(String spName) {
         //占位符 防止在顶上
     }
 }

@@ -16,7 +16,10 @@ import java.util.List;
 public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecentItemToPins, ClipboardPinsViewAdapter.DeleteFromPinsToRecenet {
 
     static ClipboardPresenter clipboardPresenter;
-    private final SharedPreferences sp;
+    private final SharedPreferences recentSp;
+    private final SharedPreferences pinsSp;
+    private final String recentClip= "recentClip";
+    private final String pinsClip = "pinsClip";
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
     List<String> recentClipData = new ArrayList<String>();
     ClipboardPanelPinsView clipboardPanelPinsView;
@@ -34,9 +37,10 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
     }
 
    private  ClipboardPresenter(){
-       sp = HSApplication.getContext().getSharedPreferences("recentClip", Context.MODE_PRIVATE);
-       SharedPreferences.Editor recentClipSpEditor = sp.edit();
-       loadArray();
+       recentSp = HSApplication.getContext().getSharedPreferences("recentClip", Context.MODE_PRIVATE);
+       pinsSp = HSApplication.getContext().getSharedPreferences("pinsClip", Context.MODE_PRIVATE);
+       loadArray(recentClipData,recentSp,recentClip);
+       loadArray(pinsData,pinsSp,pinsClip);
         pinsData = getPinsClipData();
        clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(recentClipData,this);
        clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(pinsData,this);
@@ -98,7 +102,7 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
         return editor.commit();
     }
 
-    public  void loadArray() {
+    public  void loadArray(List<String> recentClipData,SharedPreferences sp,String spName) {
 
         recentClipData.clear();
         int size = sp.getInt("clipSize", 0);
@@ -107,7 +111,7 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
             recentClipData.add(sp.getString("clipValue" + i, null));
         }
         if(recentClipData.isEmpty()){
-            clipDataResult.noData();
+            clipDataResult.noData(spName);
         }
     }
 
@@ -120,7 +124,7 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
     }
 
     interface ClipDataResult{
-        void noData();
+        void noData(String spName);
     }
     public void setClipDataResult(ClipDataResult clipDataResult){
         this.clipDataResult = clipDataResult;
