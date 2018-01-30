@@ -105,7 +105,7 @@ android {
         color {
             applicationId = "com.keyboard.colorkeyboard"
             versionName "2.4.3"
-            versionCode 59
+            versionCode 58
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true" //MainActivity开启时显示video，只有color特殊
