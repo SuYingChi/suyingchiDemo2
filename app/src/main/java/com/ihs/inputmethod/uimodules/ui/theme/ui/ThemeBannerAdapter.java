@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.app.framework.HSApplication;
@@ -279,13 +278,12 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
     public ThemeBannerAdapter(Activity activity, int bannerWidth, int bannerHeight) {
         this.activity = activity;
-        requestOptions = new RequestOptions().transforms(new CenterCrop(),new RoundedCorners(activity.getResources().getDimensionPixelSize(R.dimen.corner_radius))).override(bannerWidth,bannerHeight);
         AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
-
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_STOP, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
         HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
+        requestOptions = new RequestOptions().centerCrop().transform(new RoundedCorners(activity.getResources().getDimensionPixelSize(R.dimen.corner_radius))).override(bannerWidth,bannerHeight);
     }
 
     private int getInitItem() {
