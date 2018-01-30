@@ -28,12 +28,12 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.framework.Constants;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.emoticon.bean.ActionbarTab;
-import com.ihs.panelcontainer.BasePanel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
@@ -51,7 +51,7 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
     //private Map<Class, View> btnMap = new HashMap<>();
     private Map<RecyclerView,View> btnMap = new HashMap<>();
     private Map<String, RecyclerView> clipboardViews = new HashMap<>();
-    private Map<String, Class> panels = new HashMap<>();
+   // private Map<String, Class> panels = new HashMap<>();
     boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
     private INotificationObserver notificationObserver = new INotificationObserver() {
 
@@ -120,8 +120,8 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
             panels.put(panelName, clazz);
             btnMap.put(clazz, wrapView);
         }*/
-        actionbarTabs.add(new ActionbarTab(PANEL_RECENT, ClipboardPresenter.getInstance().getRecentClipPanelView(), R.drawable.ic_emoji_panel_tab));
-        actionbarTabs.add(new ActionbarTab(PANEL_PIN, ClipboardPresenter.getInstance().getPinClipPanelView(), R.drawable.ic_text_panel_tab));
+        actionbarTabs.add(new ActionbarTab(PANEL_RECENT, ClipboardPresenter.getInstance().getClipboardPanelRecentView(), R.drawable.ic_emoji_panel_tab));
+        actionbarTabs.add(new ActionbarTab(PANEL_PIN, ClipboardPresenter.getInstance().getClipboardPanelPinsView(), R.drawable.ic_text_panel_tab));
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
         final int actionBarAmount = actionbarTabs.size();
         for (int i = 0; i < actionBarAmount; i++) {
@@ -197,7 +197,7 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
     }
     interface  ClipboardTabChangeListener{
 
-        void showView(View view);
+        void showView(RecyclerView selectedView,RecyclerView noSelectedview);
     }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -211,12 +211,19 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
     @Override
     public void onClick(View v) {
         final Object tag = v.getTag();
+        RecyclerView noSelectedView = null;
         if (tag != null && tag instanceof String) {
-             Class panel = panels.get(tag);
+             //Class panel = panels.get(tag);
+            if(tag.equals(PANEL_RECENT)){
+                noSelectedView = clipboardViews.get(PANEL_PIN);
+            }else if (tag.equals(PANEL_PIN)){
+                noSelectedView= clipboardViews.get(PANEL_RECENT);
+            }
             RecyclerView view = clipboardViews.get(tag);
+
             if (/*containerListener != null && panel != null*/view!=null) {
                 //containerListener.showPanel(panel);
-                clipboardTabChangeListener.showView(view);
+                clipboardTabChangeListener.showView(view,noSelectedView);
                 HSAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
             }
         } else {
@@ -226,7 +233,7 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
         }
     }
 
-    void selectPanelBtn(Class clazz) {
+  /*  void selectPanelBtn(Class clazz) {
         for (Class claz : panels.values()) {
             View view = btnMap.get(claz);
             if (view != null) {
@@ -238,12 +245,26 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
         if (view != null) {
             view.setSelected(true);
         }
-    }
+    }*/
+  void selectPanelBtn(RecyclerView recyclerView) {
+      for (RecyclerView recyclerViewValue : clipboardViews.values()) {
+          View view = btnMap.get(recyclerViewValue);
+          if (view != null) {
+              view.setSelected(false);
+          }
+      }
 
-    Class<?> getPanelClass(final String panel) {
+      View view = btnMap.get(recyclerView);
+      if (view != null) {
+          view.setSelected(true);
+      }
+
+   /* Class<?> getPanelClass(final String panel) {
         return panels.get(panel);
+    }*/
+
+  }
+    RecyclerView getPanelView(final String viewName) {
+        return clipboardViews.get(viewName);
     }
-
-
-
 }

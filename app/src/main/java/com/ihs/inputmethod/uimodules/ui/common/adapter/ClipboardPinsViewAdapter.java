@@ -18,13 +18,13 @@ import java.util.List;
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class PinsClipPanelViewAdapter extends RecyclerView.Adapter<PinsClipPanelViewAdapter.ViewHolder> {
+public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPinsViewAdapter.ViewHolder> {
 
 
     private final DeleteFromPinsToRecenet deleteRecenet;
     private List<String> pinsDatalist = new ArrayList<String>();
 
-    public PinsClipPanelViewAdapter(List<String> list,DeleteFromPinsToRecenet deleteRecenet){
+    public ClipboardPinsViewAdapter(List<String> list, DeleteFromPinsToRecenet deleteRecenet){
         this.deleteRecenet = deleteRecenet;
         this.pinsDatalist = list;
 

@@ -14,8 +14,8 @@ import com.ihs.panelcontainer.BasePanel;
 public class RecentClipPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
-        RecentClipPanelView recentClipPanelView= (RecentClipPanelView)LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_recent_layout, null);
-        setPanelView(recentClipPanelView);
-        return recentClipPanelView;
+        ClipboardPanelRecentView clipboardPanelRecentView = (ClipboardPanelRecentView)LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_recent_layout, null);
+        setPanelView(clipboardPanelRecentView);
+        return clipboardPanelRecentView;
     }
 }

@@ -18,13 +18,13 @@ import java.util.List;
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class RecentClipboardAdapter extends RecyclerView.Adapter<RecentClipboardAdapter.ViewHolder> {
+public class ClipboardRecentViewAdapter extends RecyclerView.Adapter<ClipboardRecentViewAdapter.ViewHolder> {
 
     public static final String clipSpName = "Clip_Content";
     private List<String> recentClipContent = new ArrayList<String>();
     private SaveRecentItemToPins saveToPins;
     //注意处理完list再传进来
-    public RecentClipboardAdapter(List<String> list,SaveRecentItemToPins saveToPins){
+    public ClipboardRecentViewAdapter(List<String> list, SaveRecentItemToPins saveToPins){
         recentClipContent = list;
         this.saveToPins = saveToPins;
     }
@@ -77,7 +77,6 @@ public class RecentClipboardAdapter extends RecyclerView.Adapter<RecentClipboard
             saveToPins = (ImageView) view.findViewById(R.id.save_to_pins);
         }
     }
-
     public interface SaveRecentItemToPins {
        void saveToPins(String itemPinsContent);
     }

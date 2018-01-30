@@ -3,8 +3,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.inputmethod.uimodules.ui.common.adapter.PinsClipPanelViewAdapter;
-import com.ihs.inputmethod.uimodules.ui.common.adapter.RecentClipboardAdapter;
+import com.ihs.inputmethod.uimodules.ui.common.adapter.ClipboardPinsViewAdapter;
+import com.ihs.inputmethod.uimodules.ui.common.adapter.ClipboardRecentViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +13,17 @@ import java.util.List;
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItemToPins, PinsClipPanelViewAdapter.DeleteFromPinsToRecenet {
+public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecentItemToPins, ClipboardPinsViewAdapter.DeleteFromPinsToRecenet {
 
     static ClipboardPresenter clipboardPresenter;
     private final SharedPreferences sp;
-    private RecentClipboardAdapter recentClipboardAdapter;
+    private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
     List<String> recentClipData = new ArrayList<String>();
-    PinClipPanelView pinClipPanelView;
-    private PinsClipPanelViewAdapter pinsClipPanelViewAdapter;
+    ClipboardPanelPinsView clipboardPanelPinsView;
+    private ClipboardPinsViewAdapter clipboardPinsViewAdapter;
     private List<String> pinsData= new ArrayList<String>();
-    RecentClipPanelView recentClipPanelView;
-
-
+    ClipboardPanelRecentView clipboardPanelRecentView;
+    ClipDataResult clipDataResult;
     public static ClipboardPresenter getInstance(){
         synchronized (ClipboardPresenter.class){
          if(clipboardPresenter == null){
@@ -39,6 +38,8 @@ public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItem
        SharedPreferences.Editor recentClipSpEditor = sp.edit();
        loadArray();
         pinsData = getPinsClipData();
+       clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(recentClipData,this);
+       clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(pinsData,this);
    }
 
     private List<String> getPinsClipData() {
@@ -48,7 +49,7 @@ public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItem
 
 
     public void deleteAndFresh(String pinsContentItem) {
-         recentClipboardAdapter.deleteAndFresh(pinsContentItem);
+         clipboardRecentViewAdapter.deleteAndFresh(pinsContentItem);
     }
 
     public   void recentDataOperate(String data) {
@@ -64,15 +65,17 @@ public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItem
         }
     }
     public void addDataAndFresh(String itemPinsContent) {
-        pinsClipPanelViewAdapter.addDataAndFresh(itemPinsContent);
+        clipboardPinsViewAdapter.addDataAndFresh(itemPinsContent);
     }
 
-    public void setPinClipPanelView(PinClipPanelView pinClipPanelView) {
-        this.pinClipPanelView = pinClipPanelView;
+    public void setClipboardPanelPinsView(ClipboardPanelPinsView clipboardPanelPinsView) {
+        this.clipboardPanelPinsView = clipboardPanelPinsView;
+        this.clipboardPanelPinsView.setAdapter(clipboardPinsViewAdapter);
     }
 
-    public void setRecentClipPanelView(RecentClipPanelView recentClipPanelView) {
-        this.recentClipPanelView = recentClipPanelView;
+    public void setClipboardPanelRecentView(ClipboardPanelRecentView clipboardPanelRecentView) {
+        this.clipboardPanelRecentView = clipboardPanelRecentView;
+        this.clipboardPanelRecentView.setAdapter(clipboardRecentViewAdapter);
     }
 
     @Override
@@ -84,21 +87,6 @@ public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItem
         deleteAndFresh(pinsContentItem);
     }
 
-    public void setRecentClipData(List<String> recentClipData) {
-        this.recentClipData = recentClipData;
-    }
-
-    public void setPinsData(List<String> pinsData) {
-        this.pinsData = pinsData;
-    }
-
-    public List<String> getPinsData() {
-        return pinsData;
-    }
-
-    public List<String> getRecentClipData() {
-        return recentClipData;
-    }
 
     public  boolean saveArrayToSp(SharedPreferences.Editor editor) {
         editor.putInt("clipSize", recentClipData.size());
@@ -118,23 +106,23 @@ public class ClipboardPresenter implements RecentClipboardAdapter.SaveRecentItem
         for(int i=0;i<size;i++) {
             recentClipData.add(sp.getString("clipValue" + i, null));
         }
+        if(recentClipData.isEmpty()){
+            clipDataResult.noData();
+        }
     }
 
-    public PinsClipPanelViewAdapter getPinsClipPanelViewAdapter() {
-        return pinsClipPanelViewAdapter;
+
+    public ClipboardPanelPinsView getClipboardPanelPinsView(){
+       return clipboardPanelPinsView;
+    }
+    public ClipboardPanelRecentView getClipboardPanelRecentView(){
+        return clipboardPanelRecentView;
     }
 
-    public void setRecentClipboardAdapter(RecentClipboardAdapter recentClipboardAdapter) {
-        this.recentClipboardAdapter = recentClipboardAdapter;
+    interface ClipDataResult{
+        void noData();
     }
-
-    public void setPinsClipPanelViewAdapter(PinsClipPanelViewAdapter pinsClipPanelViewAdapter) {
-        this.pinsClipPanelViewAdapter = pinsClipPanelViewAdapter;
-    }
-    public  PinClipPanelView getPinClipPanelView(){
-       return pinClipPanelView ;
-    }
-    public RecentClipPanelView getRecentClipPanelView(){
-        return recentClipPanelView;
+    public void setClipDataResult(ClipDataResult clipDataResult){
+        this.clipDataResult = clipDataResult;
     }
 }

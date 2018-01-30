@@ -143,7 +143,7 @@ public class HSNewSettingsPanel extends BasePanel {
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             items.add(ViewItemBuilder.getAdsItem());
         }
-
+//点击clipboard 按钮 展示clipboardMainView
         items.add(ViewItemBuilder.getFontsItem(new ViewItem.ViewItemListener() {
             @Override
             public void onItemClick(ViewItem item) {
