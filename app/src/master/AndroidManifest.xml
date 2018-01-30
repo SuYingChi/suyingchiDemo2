@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly">
-    
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -197,7 +197,6 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
 
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
         <service
             android:name="com.mobipioneer.lockerkeyboard.app.MyInputMethodService"
             android:label="@string/english_service_label"
@@ -210,69 +209,6 @@
                 android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
-
-        <!-- The service and activity below are required for triggering voice recognition. -->
-        <service android:name="com.ihs.inputmethod.voice.ServiceHelper" />
-
-        <activity
-            android:name="com.ihs.inputmethod.voice.ActivityHelper"
-            android:configChanges="keyboard|keyboardHidden|navigation|orientation"
-            android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true"
-            android:hardwareAccelerated="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
-
-        <activity
-            android:name="com.tapjoy.TJContentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="com.tapjoy.TJAdUnitActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.tapjoy.mraid.view.ActionHandler"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.tapjoy.mraid.view.Browser"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/fb_app_id" />
-
-        <activity
-            android:name="com.ihs.inputmethod.uimodules.ui.settings.activities.MoreLanguageActivity2"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/SettingActivityStyle">
-            <intent-filter>
-                <action android:name="${applicationId}.LAUNCH_LANGUAGE_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="feab1e2f778877ab60518c2d916f8f331b230358" />
-
-
-        <provider
-            android:name="com.ihs.app.framework.inner.SessionProvider"
-            android:authorities="${applicationId}.framework_session"
-            android:enabled="true"
-            android:exported="false" />
-        <receiver
-            android:name="com.ihs.app.framework.inner.PendingSessionEndReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="hs.app.session.PENDING_SESSION_END" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name="com.mobipioneer.lockerkeyboard.SplashActivity"
@@ -312,18 +248,5 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.mobipioneer.lockerkeyboard.app.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
-            tools:replace="android:theme">
-            <intent-filter>
-                <action android:name="${applicationId}.keyboard.main" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
-
 </manifest>
