@@ -252,7 +252,7 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSChargingScreenManager.init(true, AdPlacements.EXPRESS_CABLE, AdPlacements.NATIVE_CABLE_REPORT);
         ScreenLockerManager.init(AdPlacements.NATIVE_BOOST_DONE, AdPlacements.EXPRESS_CABLE);
         SoftGameManager.getInstance().init(AdPlacements.NATIVE_THEME_TRY, AdPlacements.INTERSTITIAL_SPRING);
-        AppSuggestionManager.getInstance().init(true, AdPlacements.NATIVE_THEME_TRY);
+        AppSuggestionManager.getInstance().init(true, HSConfig.optString(AdPlacements.NATIVE_LUMEN,"Application","AppSuggestion","AdPlacement"));
         FloatWindowCompat.initLockScreen(this);
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
 
