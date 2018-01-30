@@ -8,7 +8,7 @@
             <item android:state_enabled="true">
                 <shape android:shape="rectangle">
                     <corners android:radius="@dimen/theme_detail_bg_radius_corner" />
-                    <gradient android:startColor="@color/theme_button_text_color" android:endColor="#4378ff"/>
+                    <gradient android:startColor="@color/theme_button_text_color_light" android:endColor="#4378ff"/>
                 </shape>
             </item>
 
