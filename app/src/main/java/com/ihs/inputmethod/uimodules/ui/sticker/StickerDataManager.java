@@ -153,12 +153,12 @@ public class StickerDataManager {
     }
 
     public void saveCurrentNewStickerSet(Context context, Set<String> currentNewStickerSet) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_NEW_STICKER_SET, currentNewStickerSet).commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putStringSet(PREFERENCE_KEY_NEW_STICKER_SET, currentNewStickerSet).apply();
 
     }
 
     public Set<String> getCurrentNewStickerSet(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_NEW_STICKER_SET, new HashSet());
+        return PreferenceManager.getDefaultSharedPreferences(context).getStringSet(PREFERENCE_KEY_NEW_STICKER_SET, new HashSet<>());
     }
 
     public void saveShowNewMask(boolean show) {
