@@ -9,5 +9,14 @@
 
     <fraction name="design_dialog_width">60%</fraction>
     <dimen name="main_logo_title_textsize">36sp</dimen>
+    <dimen name="config_key_preview_offset_electric">-25dp</dimen>
+
+    <dimen name="config_key_popup_hint_letter_padding_right">8dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top">0dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_right_grey">8dp</dimen>
+    <dimen name="config_key_popup_hint_letter_padding_top_grey">0dp</dimen>
+
+    <dimen name="button_guide_textsize">20sp</dimen>
+
 
 </resources>
