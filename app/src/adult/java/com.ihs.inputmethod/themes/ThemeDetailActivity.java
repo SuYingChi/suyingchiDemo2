@@ -35,6 +35,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
+import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
 import com.ihs.inputmethod.theme.download.ApkUtils;
 import com.ihs.inputmethod.theme.download.ThemeDownloadManager;
@@ -192,7 +193,17 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         if (keyboardTheme != null) {
             keyboardThemeList.remove(keyboardTheme);
         }
-        return keyboardThemeList;
+
+        List<HomeModel> homeModelList = new ArrayList<>();
+        HomeModel<HSKeyboardTheme> homeModel;
+        for (HSKeyboardTheme hsKeyboardTheme : keyboardThemeList) {
+            homeModel = new HomeModel<>();
+            homeModel.item = hsKeyboardTheme;
+            homeModel.isTheme = true;
+            homeModelList.add(homeModel);
+        }
+
+        return homeModelList;
     }
 
     @Override

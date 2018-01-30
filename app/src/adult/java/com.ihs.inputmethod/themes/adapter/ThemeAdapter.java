@@ -1,34 +1,33 @@
 package com.ihs.inputmethod.themes.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
-import com.bumptech.glide.Glide;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
 import com.ihs.inputmethod.common.adapter.CommonAdapter;
+import com.ihs.inputmethod.home.adapter.HomeTitleAdapterDelegate;
+import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
-import com.ihs.inputmethod.themes.ThemeDetailActivity;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegatesManager;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 
-import pl.droidsonroids.gif.GifImageView;
+import java.util.List;
 
 /**
  * Created by jixiang on 18/1/18.
  */
 
-public class ThemeAdapter<T> extends CommonAdapter<HSKeyboardTheme> {
+public class ThemeAdapter<T> extends CommonAdapter<HomeModel> {
+    private Activity activity;
+    protected AdapterDelegatesManager<List<HomeModel>> delegatesManager;
     private HSKeyboardTheme keyboardThemeOnKeyboardActivation;
 
     public interface ThemeCardItemClickListener {
@@ -48,45 +47,60 @@ public class ThemeAdapter<T> extends CommonAdapter<HSKeyboardTheme> {
 
     public ThemeAdapter(Activity activity) {
         super(activity);
+        delegatesManager = new AdapterDelegatesManager<>();
+        delegatesManager.addDelegate(new ThemeCardAdapterDelegate());
+        delegatesManager.addDelegate(new HomeTitleAdapterDelegate());
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ThemeViewHolder(View.inflate(parent.getContext(), R.layout.item_theme, null));
+        return delegatesManager.onCreateViewHolder(parent, viewType);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ThemeViewHolder themeViewHolder = (ThemeViewHolder) holder;
-        HSKeyboardTheme hsKeyboardTheme = dataList.get(position);
-        Glide.with(activity).load(hsKeyboardTheme.getSmallPreivewImgUrl()).into(themeViewHolder.themeImage);
-        themeViewHolder.themeImageContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity, ThemeDetailActivity.class);
-                intent.putExtra(ThemeDetailActivity.INTENT_KEY_THEME_NAME, hsKeyboardTheme.mThemeName);
-                activity.startActivity(intent);
-            }
-        });
+        delegatesManager.onBindViewHolder(dataList, position, holder);
     }
 
-    private static class ThemeViewHolder extends RecyclerView.ViewHolder {
-        FrameLayout themeImageContainer;
-        ImageView themeImage;
-        ImageView themeDelete;
-        GifImageView themeNewImage;
-        ImageView themeAnimatedImage;
-
-        public ThemeViewHolder(View itemView) {
-            super(itemView);
-            themeImageContainer = itemView.findViewById(R.id.theme_image_container);
-            themeImage = itemView.findViewById(R.id.theme_image_view);
-            themeDelete = itemView.findViewById(R.id.theme_delete_view);
-//            themeDelete.setBackgroundDrawable(HSDrawableUtils.getDimmedForegroundDrawable(BitmapFactory.decodeResource(HSApplication.getContext().getResources(), R.drawable.preview_keyboard_delete)));
-            themeNewImage = itemView.findViewById(R.id.theme_new_view);
-            themeAnimatedImage = itemView.findViewById(R.id.theme_animated_view);
-        }
+    @Override
+    public int getItemViewType(int position) {
+        return delegatesManager.getItemViewType(dataList, position);
     }
+
+    @Override
+    public int getItemCount() {
+        return dataList == null ? 0 : dataList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        delegatesManager.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        delegatesManager.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        delegatesManager.onViewRecycled(holder);
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+        return delegatesManager.onFailedToRecycleView(holder);
+    }
+
+    public int getSpanSize(int position) {
+        return delegatesManager.getSpanSize(dataList, position);
+    }
+
 
     public void finishKeyboardActivation(boolean success) {
         if (success && keyboardThemeOnKeyboardActivation != null) {
