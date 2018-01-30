@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.acb.call.customize.AcbCallManager;
@@ -46,6 +48,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.constants.AdPlacements;
 import com.ihs.inputmethod.delete.HSInputMethodApplication;
 import com.ihs.inputmethod.emoji.StickerSuggestionManager;
+import com.ihs.inputmethod.feature.medialistener.MediaFileObserver;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -293,7 +296,14 @@ public class HSUIApplication extends HSInputMethodApplication {
         }, 30000);
 
         LockerAppGuideManager.getInstance().init(BuildConfig.LOCKER_APP_GUIDE);
+        getContentResolver().registerContentObserver(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                false,
+                screenShotContentObserver
+        );
     }
+    MediaFileObserver screenShotContentObserver = new MediaFileObserver(new Handler()) {
+    };
 
     private void initLockerChargingNoAdConfig() {
         //如果第一次启动版本大于等于需要不显示广告的版本，则为新用户
