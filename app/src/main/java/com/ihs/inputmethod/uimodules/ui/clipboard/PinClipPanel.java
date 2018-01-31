@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -14,7 +15,7 @@ import com.ihs.panelcontainer.BasePanel;
 public class PinClipPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
-        ClipboardPanelPinsView clipboardPanelPinsView = (ClipboardPanelPinsView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_pins_layout, null, false);
+        RecyclerView clipboardPanelPinsView = (RecyclerView) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_pins_layout, null, false);
         setPanelView(clipboardPanelPinsView);
         return clipboardPanelPinsView;
     }

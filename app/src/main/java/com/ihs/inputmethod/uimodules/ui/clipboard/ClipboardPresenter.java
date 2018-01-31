@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.widget.RecyclerView;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.ClipboardPinsViewAdapter;
@@ -22,10 +23,10 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
     private final String pinsClip = "pinsClip";
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
     List<String> recentClipData = new ArrayList<String>();
-    ClipboardPanelPinsView clipboardPanelPinsView;
+    RecyclerView clipboardPanelPinsView;
     private ClipboardPinsViewAdapter clipboardPinsViewAdapter;
     private List<String> pinsData= new ArrayList<String>();
-    ClipboardPanelRecentView clipboardPanelRecentView;
+    RecyclerView clipboardPanelRecentView;
     ClipDataResult clipDataResult;
     public static ClipboardPresenter getInstance(){
         synchronized (ClipboardPresenter.class){
@@ -45,7 +46,9 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
        clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(recentClipData,this);
        clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(pinsData,this);
    }
+    void init(){
 
+   }
     private List<String> getPinsClipData() {
 
         return null;
@@ -72,14 +75,13 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
         clipboardPinsViewAdapter.addDataAndFresh(itemPinsContent);
     }
 
-    public void setClipboardPanelPinsView(ClipboardPanelPinsView clipboardPanelPinsView) {
+    public void setClipboardPanelPinsView(RecyclerView clipboardPanelPinsView) {
         this.clipboardPanelPinsView = clipboardPanelPinsView;
-        this.clipboardPanelPinsView.setAdapter(clipboardPinsViewAdapter);
+
     }
 
-    public void setClipboardPanelRecentView(ClipboardPanelRecentView clipboardPanelRecentView) {
+    public void setClipboardPanelRecentView(RecyclerView clipboardPanelRecentView) {
         this.clipboardPanelRecentView = clipboardPanelRecentView;
-        this.clipboardPanelRecentView.setAdapter(clipboardRecentViewAdapter);
     }
 
     @Override
@@ -116,10 +118,10 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
     }
 
 
-    public ClipboardPanelPinsView getClipboardPanelPinsView(){
+    public RecyclerView getClipboardPanelPinsView(){
        return clipboardPanelPinsView;
     }
-    public ClipboardPanelRecentView getClipboardPanelRecentView(){
+    public RecyclerView getClipboardPanelRecentView(){
         return clipboardPanelRecentView;
     }
 
@@ -128,5 +130,11 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
     }
     public void setClipDataResult(ClipDataResult clipDataResult){
         this.clipDataResult = clipDataResult;
+    }
+    public ClipboardRecentViewAdapter getClipboardRecentViewAdapter(){
+        return clipboardRecentViewAdapter;
+    }
+    public ClipboardPinsViewAdapter getClipboardPinsViewAdapter(){
+        return clipboardPinsViewAdapter;
     }
 }

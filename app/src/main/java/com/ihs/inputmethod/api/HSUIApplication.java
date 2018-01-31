@@ -47,6 +47,8 @@ import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.KeyboardPanelManager;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.mediacontroller.MediaController;
+import com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardMonitor;
+import com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
 import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -262,6 +264,7 @@ public class HSUIApplication extends HSInputMethodApplication {
             }
         }, 30000);
         LockerAppGuideManager.getInstance().init(HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name), BuildConfig.LOCKER_APP_GUIDE);
+        ClipboardMonitor.getInstance().registerClipboardMonitor(ClipboardPresenter.getInstance());
     }
 
     private void activeAdPlacements() {
@@ -285,7 +288,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_lucky));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_keyboard_banner));
         AcbNativeAdManager.sharedInstance().activePlacementInProcess(getString(R.string.ad_placement_call_assist));
-
     }
 
     private void registerNotificationEvent() {

@@ -1,7 +1,9 @@
 package com.ihs.inputmethod.uimodules.ui.emoticon;
 
+import android.view.LayoutInflater;
 import android.view.View;
 
+import com.ihs.app.framework.HSApplication;
 import com.ihs.panelcontainer.BasePanel;
 
 /**

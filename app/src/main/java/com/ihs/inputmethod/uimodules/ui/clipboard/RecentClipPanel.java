@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -14,7 +15,7 @@ import com.ihs.panelcontainer.BasePanel;
 public class RecentClipPanel extends BasePanel {
     @Override
     protected View onCreatePanelView() {
-        ClipboardPanelRecentView clipboardPanelRecentView = (ClipboardPanelRecentView)LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_recent_layout, null);
+        RecyclerView clipboardPanelRecentView = (RecyclerView)LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.clipboard_recent_layout, null);
         setPanelView(clipboardPanelRecentView);
         return clipboardPanelRecentView;
     }
