@@ -6,8 +6,17 @@
 	<dict>
 		<key>Application</key>
 		<dict>
+			<key>AccessUsageAlert</key>
+			<dict>
+				<key>AskInterval</key>
+				<integer>3</integer>
+				<key>enable</key>
+				<false/>
+			</dict>
 			<key>AppSuggestion</key>
 			<dict>
+				<key>AdPlacement</key>
+				<string>ThemeTryAd</string>
 				<key>ApkDefault</key>
 				<array>
 					<string>com.whatsapp</string>
@@ -31,6 +40,8 @@
 				<key>state</key>
 				<integer>0</integer>
 			</dict>
+			<key>AutoSetKeyEnable</key>
+			<false/>
 			<key>BoostNotification</key>
 			<dict>
 				<key>Enabled</key>
@@ -38,15 +49,6 @@
 				<key>HoursFromFirstUse</key>
 				<integer>5</integer>
 			</dict>
-			<key>AccessUsageAlert</key>
-			<dict>
-				<key>AskInterval</key>
-				<integer>3</integer>
-				<key>enable</key>
-				<false/>
-			</dict>
-			<key>AutoSetKeyEnable</key>
-			<false/>
 			<key>BoostPlus</key>
 			<dict>
 				<key>AccCleanTimeoutSeconds</key>
@@ -591,21 +593,21 @@
 				<dict>
 					<key>KeyboardClose</key>
 					<dict>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
 						<key>SessionIndexOfDay</key>
 						<array/>
 						<key>Show</key>
 						<false/>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
 					</dict>
 					<key>KeyboardOpen</key>
 					<dict>
+						<key>HoursFromFirstUse</key>
+						<integer>0</integer>
 						<key>SessionIndexOfDay</key>
 						<array/>
 						<key>Show</key>
 						<false/>
-						<key>HoursFromFirstUse</key>
-						<integer>0</integer>
 					</dict>
 				</dict>
 			</dict>
@@ -4288,7 +4290,7 @@
 						<key>body</key>
 						<dict>
 							<key>en</key>
-							<string>Tap the number of stars you&apos;d give us.</string>
+							<string>Tap the number of stars you'd give us.</string>
 						</dict>
 						<key>title</key>
 						<dict>
@@ -4387,7 +4389,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación? </string>
 							<key>fr</key>
-							<string>Vous aimez l&apos;application?</string>
+							<string>Vous aimez l'application?</string>
 							<key>hi</key>
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
@@ -4492,11 +4494,11 @@
 								<key>es</key>
 								<string>¡Nos alegra oírlo! ¡Danos 5 estrellas!</string>
 								<key>fr</key>
-								<string>Nous sommes heureux de l&apos;apprendre ! Donnez-lui 5 étoiles.</string>
+								<string>Nous sommes heureux de l'apprendre ! Donnez-lui 5 étoiles.</string>
 								<key>hi</key>
 								<string>यह जानकर खुशी हुई! इसे 5-स्टार का मूल्यांकन दें हमारे पास</string>
 								<key>it</key>
-								<string>Ci fa piacere saperlo! Valuta l&apos;app con 5 stelle.</string>
+								<string>Ci fa piacere saperlo! Valuta l'app con 5 stelle.</string>
 								<key>ja</key>
 								<string>それが聞けて何よりです。5つ星をぜひお願いします！</string>
 								<key>ko</key>
@@ -4561,7 +4563,7 @@
 								<key>es</key>
 								<string>Somos un equipo pequeño y nos esforzamos mucho para ofrecerte la mejor aplicación gratis. ¡Tu valoración de 5 estrellas es mejor que todo el dinero del mundo!</string>
 								<key>fr</key>
-								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l&apos;argent du monde !</string>
+								<string>Nous sommes une petite équipe qui travaille très dur pour vous apporter gratuitement la meilleure application. Vos 5 étoiles valent tout l'argent du monde !</string>
 								<key>hi</key>
 								<string>एक छोटी टीम है जो आपको निशुल्क में बेहतर एप्स‍ देने के लिए कड़ी मेहनत करती है। आपका 5-स्टार विश्व की पूरी दौलत से भी अच्छा है!</string>
 								<key>it</key>
@@ -4591,7 +4593,7 @@
 							<key>es</key>
 							<string>¿Te gusta nuestra aplicación?</string>
 							<key>fr</key>
-							<string>Vous aimez l&apos;application ?</string>
+							<string>Vous aimez l'application ?</string>
 							<key>hi</key>
 							<string>क्या  आप हमारी ऐप पसंद करते हो?</string>
 							<key>it</key>
@@ -4747,7 +4749,7 @@
 								<key>es</key>
 								<string>¿Qué te parecería valorar el trabajo del equipo?</string>
 								<key>fr</key>
-								<string>Que diriez-vous d&apos;un avis pour des équipes qui travaillent dur ?</string>
+								<string>Que diriez-vous d'un avis pour des équipes qui travaillent dur ?</string>
 								<key>hi</key>
 								<string>तो कड़ी मेहनत वाली टीमों के लिए एक मूल्यांकन के बारे में क्या?</string>
 								<key>it</key>
@@ -4800,7 +4802,7 @@
 							<key>es</key>
 							<string>Tengo algunos comentarios</string>
 							<key>fr</key>
-							<string>J&apos;ai des commentaires</string>
+							<string>J'ai des commentaires</string>
 							<key>hi</key>
 							<string>मेरे पास कुछ प्रतिक्रिया है</string>
 							<key>it</key>
@@ -4827,15 +4829,15 @@
 							<key>de</key>
 							<string>Ich würde sie mit 5 Sternen bewerten</string>
 							<key>en</key>
-							<string>I&apos;d like to give it a 5-star rating.</string>
+							<string>I'd like to give it a 5-star rating.</string>
 							<key>es</key>
 							<string>Me gustaría darle una valoración de 5 estrellas.</string>
 							<key>fr</key>
-							<string>J&apos;aimerais lui donner 5 étoiles.</string>
+							<string>J'aimerais lui donner 5 étoiles.</string>
 							<key>hi</key>
 							<string>मैं इसे 5-स्टार मूल्‍यांकन देना चाहता/चाहती हूं।</string>
 							<key>it</key>
-							<string>Voglio valutare l&apos;app con 5 stelle.</string>
+							<string>Voglio valutare l'app con 5 stelle.</string>
 							<key>ja</key>
 							<string>私は5つ星の評価を与えたいと思います。</string>
 							<key>ko</key>
@@ -4878,17 +4880,8 @@
 			</dict>
 			<key>ScreenFlash</key>
 			<dict>
-				<key>SMSAssistant</key>
-				<dict>
-					<key>ShowSMSFunction</key>
-					<false/>
-					<key>Enable</key>
-					<false/>
-				</dict>
 				<key>CallAssistant</key>
 				<dict>
-					<key>Enable</key>
-					<false/>
 					<key>AutoRefresh</key>
 					<dict>
 						<key>enable</key>
@@ -4896,6 +4889,8 @@
 						<key>interval</key>
 						<integer>10</integer>
 					</dict>
+					<key>Enable</key>
+					<false/>
 					<key>OpenWhenScreenFlashTurnOn</key>
 					<true/>
 					<key>ShowAds</key>
@@ -4909,6 +4904,13 @@
 				</dict>
 				<key>DefaultTheme</key>
 				<string>1</string>
+				<key>SMSAssistant</key>
+				<dict>
+					<key>Enable</key>
+					<false/>
+					<key>ShowSMSFunction</key>
+					<false/>
+				</dict>
 				<key>Themes</key>
 				<array>
 					<dict>
@@ -5264,6 +5266,8 @@
 			</dict>
 			<key>SearchAd</key>
 			<dict>
+				<key>Enabled</key>
+				<true/>
 				<key>PackageNameList</key>
 				<array>
 					<string>com.google.android.googlequicksearchbox</string>
@@ -5281,8 +5285,6 @@
 				</array>
 				<key>updateTimeInMin</key>
 				<integer>15</integer>
-				<key>Enabled</key>
-				<true/>
 			</dict>
 			<key>SearchEngine</key>
 			<dict>
@@ -6172,6 +6174,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>MinimumUpdateInterval</key>
+	<integer>0</integer>
 	<key>UserLevel</key>
 	<dict>
 		<key>1-1</key>
@@ -6275,19 +6279,15 @@
 							<true/>
 						</dict>
 					</dict>
+					<key>RateToUnlock</key>
+					<dict>
+						<key>Enabled</key>
+						<true/>
+					</dict>
 					<key>ScreenFlash</key>
 					<dict>
-						<key>SMSAssistant</key>
-						<dict>
-							<key>ShowSMSFunction</key>
-							<true/>
-							<key>Enable</key>
-							<true/>
-						</dict>
 						<key>CallAssistant</key>
 						<dict>
-							<key>Enable</key>
-							<true/>
 							<key>AutoRefresh</key>
 							<dict>
 								<key>enable</key>
@@ -6295,6 +6295,8 @@
 								<key>interval</key>
 								<integer>10</integer>
 							</dict>
+							<key>Enable</key>
+							<true/>
 							<key>OpenWhenScreenFlashTurnOn</key>
 							<true/>
 							<key>ShowAds</key>
@@ -6308,6 +6310,13 @@
 						</dict>
 						<key>DefaultTheme</key>
 						<string>1</string>
+						<key>SMSAssistant</key>
+						<dict>
+							<key>Enable</key>
+							<true/>
+							<key>ShowSMSFunction</key>
+							<true/>
+						</dict>
 						<key>Themes</key>
 						<array>
 							<dict>
@@ -6660,11 +6669,6 @@
 								<string>url</string>
 							</dict>
 						</array>
-					</dict>
-					<key>RateToUnlock</key>
-					<dict>
-						<key>Enabled</key>
-						<true/>
 					</dict>
 				</dict>
 			</dict>
@@ -6768,19 +6772,15 @@
 							<true/>
 						</dict>
 					</dict>
+					<key>RateToUnlock</key>
+					<dict>
+						<key>Enabled</key>
+						<true/>
+					</dict>
 					<key>ScreenFlash</key>
 					<dict>
-						<key>SMSAssistant</key>
-						<dict>
-							<key>ShowSMSFunction</key>
-							<true/>
-							<key>Enable</key>
-							<true/>
-						</dict>
 						<key>CallAssistant</key>
 						<dict>
-							<key>Enable</key>
-							<true/>
 							<key>AutoRefresh</key>
 							<dict>
 								<key>enable</key>
@@ -6788,6 +6788,8 @@
 								<key>interval</key>
 								<integer>10</integer>
 							</dict>
+							<key>Enable</key>
+							<true/>
 							<key>OpenWhenScreenFlashTurnOn</key>
 							<true/>
 							<key>ShowAds</key>
@@ -6801,6 +6803,13 @@
 						</dict>
 						<key>DefaultTheme</key>
 						<string>1</string>
+						<key>SMSAssistant</key>
+						<dict>
+							<key>Enable</key>
+							<true/>
+							<key>ShowSMSFunction</key>
+							<true/>
+						</dict>
 						<key>Themes</key>
 						<array>
 							<dict>
@@ -7154,18 +7163,11 @@
 							</dict>
 						</array>
 					</dict>
-					<key>RateToUnlock</key>
-					<dict>
-						<key>Enabled</key>
-						<true/>
-					</dict>
 				</dict>
 			</dict>
 		</dict>
 		<key>default</key>
 		<dict/>
 	</dict>
-	<key>MinimumUpdateInterval</key>
-	<integer>0</integer>
 </dict>
 </plist>

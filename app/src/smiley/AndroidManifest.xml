@@ -296,6 +296,13 @@
                 android:resource="@xml/method" />
         </service>
 
+        <service
+            android:name="com.ihs.devicemonitor.accessibility.HSAccessibilityService"
+            android:label="@string/english_service_label"
+
+            tools:remove="process,permission"
+            tools:replace="android:label"></service>
+
     </application>
 
 </manifest>
