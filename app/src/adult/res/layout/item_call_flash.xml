@@ -8,7 +8,7 @@
     android:background="@drawable/common_card_bg">
 
     <com.ihs.inputmethod.uimodules.ui.customize.view.HorizontalBannerImageView
-        android:id="@+id/theme_thumbnail"
+        android:id="@+id/call_flash_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_aspectRatio="60%"
@@ -18,5 +18,16 @@
         launcher:round_left_top_corner_radius="@dimen/card_round_corner_radius"
         launcher:round_right_bottom_corner_radius="@dimen/card_round_corner_radius"
         launcher:round_right_top_corner_radius="@dimen/card_round_corner_radius" />
+
+    <com.acb.call.views.ThemePreviewWindow
+        android:id="@+id/flash_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.acb.call.views.InCallActionView
+        android:id="@+id/in_call_view"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </android.support.percent.PercentFrameLayout>
