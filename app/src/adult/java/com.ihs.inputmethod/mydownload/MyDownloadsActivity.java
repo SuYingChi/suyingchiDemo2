@@ -16,11 +16,11 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
+import com.ihs.inputmethod.mydownload.fragment.MyFontFragment;
 import com.ihs.inputmethod.mydownload.fragment.MyStickerFragment;
 import com.ihs.inputmethod.mydownload.fragment.MyThemeFragment;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
-import com.ihs.inputmethod.uimodules.ui.fonts.homeui.MyFontFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.widget.SlidingTabLayout;
@@ -88,7 +88,7 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         int position = getIntent().getIntExtra(EXTRA_INITIAL_TAB_INDEX, 0);
-        createThemeButton = (FloatingActionButton) findViewById(R.id.home_create_theme_layout);
+        createThemeButton = findViewById(R.id.home_create_theme_layout);
         createThemeButton.setOnClickListener(this);
         if (position == 0) {
             createThemeButton.setVisibility(View.VISIBLE);

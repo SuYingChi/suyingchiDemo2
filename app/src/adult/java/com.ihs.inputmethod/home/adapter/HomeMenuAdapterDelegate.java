@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.home.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -78,16 +77,16 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
             public void onClick(View v) {
                 switch (homeMenu) {
                     case KeyboardThemes:
-                        activity.startActivity(new Intent(activity, ThemeListActivity.class));
+                        ThemeListActivity.startThisActivity(activity);
                         break;
                     case AdultStickers:
-                        activity.startActivity(new Intent(activity, StickerListActivity.class));
+                        StickerListActivity.startThisActivity(activity);
                         break;
                     case SexyWallpaper:
-                        activity.startActivity(new Intent(activity, SexyWallpaperActivity.class));
+                        SexyWallpaperActivity.startThisActivity(activity);
                         break;
                     case CallFlash:
-                        activity.startActivity(new Intent(activity, CallFlashListActivity.class));
+                        CallFlashListActivity.startThisActivity(activity);
                         break;
                 }
             }

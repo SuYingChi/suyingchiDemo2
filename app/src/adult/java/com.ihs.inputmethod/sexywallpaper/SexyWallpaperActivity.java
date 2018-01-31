@@ -1,6 +1,8 @@
 package com.ihs.inputmethod.sexywallpaper;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -32,6 +34,10 @@ public class SexyWallpaperActivity extends HSAppCompatActivity {
 
     private WallpaperPagerAdapter mAdapter;
     private SlidingTabLayout slidingTabLayout;
+
+    public static void startThisActivity(Activity activity) {
+        activity.startActivity(new Intent(activity, SexyWallpaperActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

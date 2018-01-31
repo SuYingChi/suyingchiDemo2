@@ -144,7 +144,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goThemeListPage();
+                ThemeListActivity.startThisActivity(HomeActivity.this);
             }
         };
         homeModel.rightButtonText = getString(R.string.theme_more);
@@ -162,7 +162,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         homeModel.titleClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goStickerListPage();
+                StickerListActivity.startThisActivity(HomeActivity.this);
             }
         };
         homeModelList.add(homeModel);
@@ -178,26 +178,6 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         }
 
         return homeModelList;
-    }
-
-    private void goThemeListPage() {
-        startActivity(new Intent(HomeActivity.this, ThemeListActivity.class));
-    }
-
-    private void goStickerListPage() {
-        startActivity(new Intent(HomeActivity.this, StickerListActivity.class));
-    }
-
-    private void goCallFlashListPage() {
-        startActivity(new Intent(HomeActivity.this, CallFlashListActivity.class));
-    }
-
-    private void goFontListPage() {
-        startActivity(new Intent(HomeActivity.this, FontListActivity.class));
-    }
-
-    private void goWallpaperListPage() {
-        startActivity(new Intent(HomeActivity.this, SexyWallpaperActivity.class));
     }
 
     @Override
@@ -218,16 +198,26 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.nav_keyboard:
+                ThemeListActivity.startThisActivity(this);
+                break;
+            case R.id.nav_stickers:
+                StickerListActivity.startThisActivity(this);
+                break;
             case R.id.nav_call_font:
-                goFontListPage();
+                FontListActivity.startThisActivity(this);
+                break;
             case R.id.nav_call_flash:
-                goCallFlashListPage();
+                CallFlashListActivity.startThisActivity(this);
+                break;
             case R.id.nav_wallpaper:
-                goWallpaperListPage();
+                SexyWallpaperActivity.startThisActivity(this);
+                break;
             case R.id.nav_call_my_download:
                 MyDownloadsActivity.startThisActivity(this);
+                break;
             case R.id.nav_settings:
-                startActivity(new Intent(this, SettingActivity.class));
+                SettingActivity.startThisActivity(this);
                 break;
         }
         return false;

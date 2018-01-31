@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.stickers;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.ihs.inputmethod.common.ListActivity;
@@ -17,6 +19,10 @@ import java.util.List;
 
 public class StickerListActivity extends ListActivity {
     private StickerAdapter stickerAdapter;
+
+    public static void startThisActivity(Activity activity) {
+        activity.startActivity(new Intent(activity, StickerListActivity.class));
+    }
 
     @Override
     protected void initView() {

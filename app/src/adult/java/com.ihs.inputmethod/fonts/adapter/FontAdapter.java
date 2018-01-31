@@ -65,7 +65,7 @@ public class FontAdapter extends CommonAdapter<FontModel> {
         }
 
         if (onFontCardClickListener != null) {
-            onFontCardClickListener.onFontCardClick(dataList.get(position));
+            onFontCardClickListener.onFontCardClick(dataList.get(position), position);
         }
     }
 
@@ -138,7 +138,7 @@ public class FontAdapter extends CommonAdapter<FontModel> {
     }
 
     public interface OnFontCardClickListener {
-        void onFontCardClick(final FontModel position);
+        void onFontCardClick(final FontModel fontModel, int position);
     }
 
     public class FontCardViewHolder extends RecyclerView.ViewHolder {
@@ -149,17 +149,16 @@ public class FontAdapter extends CommonAdapter<FontModel> {
             super(itemView);
 
             fontCardView = itemView.findViewById(R.id.font_card_view);
-            fontCardContent = (TextView) itemView.findViewById(R.id.font_content);
+            fontCardContent = itemView.findViewById(R.id.font_content);
         }
     }
 
     public class MyFontViewHolder extends FontAdapter.FontCardViewHolder {
-
         AppCompatRadioButton radioButton;
 
         public MyFontViewHolder(View itemView) {
             super(itemView);
-            radioButton = (AppCompatRadioButton) itemView.findViewById(R.id.font_radio_button);
+            radioButton = itemView.findViewById(R.id.font_radio_button);
         }
     }
 
@@ -169,8 +168,8 @@ public class FontAdapter extends CommonAdapter<FontModel> {
 
         public FontHomeViewHolder(View itemView) {
             super(itemView);
-            downloadIcon = (ImageView) itemView.findViewById(R.id.download_icon);
-            moreFontHint = (TextView) itemView.findViewById(R.id.more_font_coming);
+            downloadIcon = itemView.findViewById(R.id.download_icon);
+            moreFontHint = itemView.findViewById(R.id.more_font_coming);
         }
     }
 

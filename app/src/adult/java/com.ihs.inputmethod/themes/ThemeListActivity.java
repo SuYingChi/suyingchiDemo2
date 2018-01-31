@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.themes;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
@@ -17,6 +19,10 @@ import java.util.List;
 
 public class ThemeListActivity extends ListActivity {
     private ThemeAdapter themeAdapter;
+
+    public static void startThisActivity(Activity activity) {
+        activity.startActivity(new Intent(activity, ThemeListActivity.class));
+    }
 
     @Override
     protected void initView() {

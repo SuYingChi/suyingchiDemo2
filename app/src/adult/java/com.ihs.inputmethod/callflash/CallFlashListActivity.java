@@ -1,5 +1,6 @@
 package com.ihs.inputmethod.callflash;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,10 @@ import java.util.List;
 
 public class CallFlashListActivity extends ListActivity implements ServiceConnection {
     private CallFlashAdapter callFlashAdapter;
+
+    public static void startThisActivity(Activity activity) {
+        activity.startActivity(new Intent(activity, CallFlashListActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

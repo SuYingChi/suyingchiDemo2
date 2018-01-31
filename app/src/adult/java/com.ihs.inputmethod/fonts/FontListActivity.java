@@ -1,5 +1,7 @@
 package com.ihs.inputmethod.fonts;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -53,6 +55,10 @@ public class FontListActivity extends ListActivity implements FontAdapter.OnFont
         }
     };
 
+    public static void startThisActivity(Activity activity) {
+        activity.startActivity(new Intent(activity, FontListActivity.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +99,7 @@ public class FontListActivity extends ListActivity implements FontAdapter.OnFont
     }
 
     @Override
-    public void onFontCardClick(FontModel fontModel) {
+    public void onFontCardClick(FontModel fontModel, int position) {
         DownloadUtils.getInstance().startForegroundDownloading(this, fontModel.getFontName(), fontModel.getFontDownloadFilePath(fontModel.getFontName()), fontModel.getFontDownloadBaseURL(),
                 null, (success, manually) -> {
                     if (success) {
