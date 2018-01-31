@@ -16,7 +16,6 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
-import com.ihs.inputmethod.uimodules.utils.DisplayUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -29,7 +28,6 @@ import pl.droidsonroids.gif.GifImageView;
 
 
 public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
-    private int margin = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
     private int imageWidth;
     private int imageHeight;
 
@@ -57,11 +55,11 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
         StickerCardHomeViewHolder stickerCardHomeViewHolder = new StickerCardHomeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_sticker_card, parent, false));
-        int width = (parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - margin * 3) / 2;
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) stickerCardHomeViewHolder.itemView.getLayoutParams();
+        int width = (HSApplication.getContext().getResources().getDisplayMetrics().widthPixels - layoutParams.leftMargin * 2 - layoutParams.rightMargin * 2 - parent.getPaddingLeft() - parent.getPaddingRight()) / 2;
         int height = (int) (107f / 165 * width);
-        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width, height);
-        layoutParams.topMargin = DisplayUtils.dip2px(HSApplication.getContext(), 8);
-        stickerCardHomeViewHolder.itemView.setLayoutParams(layoutParams);
+        layoutParams.width = width;
+        layoutParams.height = height;
         return stickerCardHomeViewHolder;
     }
 
@@ -77,15 +75,6 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
             ImageLoader.getInstance().displayImage(realImageUrl, new ImageViewAware(stickerCardViewHolder.stickerRealImage), options, imageSize, null, null);
         } else {
             stickerCardViewHolder.stickerRealImage.setImageDrawable(null);
-        }
-
-        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-        if (position % 2 == 0) {
-            layoutParams.leftMargin = margin;
-            layoutParams.rightMargin = margin / 2;
-        } else {
-            layoutParams.leftMargin = margin / 2;
-            layoutParams.rightMargin = margin;
         }
 
         stickerCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

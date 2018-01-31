@@ -4,6 +4,7 @@
     android:id="@+id/sticker_image_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/common_recycler_item_margin"
     android:background="@drawable/common_card_bg"
     android:foreground="?attr/selectableItemBackground"
     android:padding="1dp">

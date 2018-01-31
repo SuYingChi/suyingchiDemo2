@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.callflash.CallFlashListActivity;
@@ -22,8 +21,6 @@ import java.util.List;
 
 public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
     private Activity activity;
-    private int margin = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
-
     public HomeMenuAdapterDelegate(Activity activity) {
         this.activity = activity;
     }
@@ -37,10 +34,11 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
         HomeMenuViewHolder holder = new HomeMenuViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_menu, parent, false));
-
-        int width = (HSApplication.getContext().getResources().getDisplayMetrics().widthPixels - margin * 3) / 2;
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+        int width = (HSApplication.getContext().getResources().getDisplayMetrics().widthPixels - layoutParams.leftMargin * 2 - layoutParams.rightMargin * 2 - parent.getPaddingLeft() - parent.getPaddingRight()) / 2;
         int height = (int) (111.0 / 165 * width);
-        holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(width, height));
+        layoutParams.width = width;
+        layoutParams.height = height;
         return holder;
     }
 
@@ -49,19 +47,7 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
         HomeModel model = items.get(position);
         HomeMenu homeMenu = (HomeMenu) model.item;
 
-        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-        if (position % 2 == 1) {
-            layoutParams.leftMargin = margin;
-            layoutParams.rightMargin = margin / 2;
-        } else {
-            layoutParams.leftMargin = margin / 2;
-            layoutParams.rightMargin = margin;
-        }
-
         HomeMenuViewHolder viewHolder = (HomeMenuViewHolder) holder;
-        FrameLayout.LayoutParams menuTitleLayoutParams = (FrameLayout.LayoutParams) viewHolder.menuTitle.getLayoutParams();
-        menuTitleLayoutParams.leftMargin = (int) (layoutParams.width * 0.066);
-        menuTitleLayoutParams.topMargin = (int) (layoutParams.height * 0.066);
 
         if (homeMenu == HomeMenu.CallFlash) {
             viewHolder.menuTitle.setTextSize(19.9f);

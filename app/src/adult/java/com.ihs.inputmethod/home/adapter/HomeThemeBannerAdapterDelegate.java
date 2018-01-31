@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.uimodules.R;
@@ -39,19 +38,20 @@ public final class HomeThemeBannerAdapterDelegate extends AdapterDelegate<List<H
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
         HomeThemeBannerViewHolder viewHolder = new HomeThemeBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_theme_banners, parent, false));
+        RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) viewHolder.itemView.getLayoutParams();
 
-        int pageMargin = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
+        int pageMargin = parent.getPaddingLeft() + layoutParams.leftMargin;
         int marginRight = HSDisplayUtils.dip2px(32); //右边露出部分
-        int paddingLeft = HSApplication.getContext().getResources().getDimensionPixelSize(R.dimen.home_activity_horizontal_margin);
+        int paddingLeft = pageMargin - parent.getPaddingLeft();
         int paddingRight = pageMargin + marginRight;
 
-        int width = parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
+        int width = parent.getMeasuredWidth() - pageMargin ;
         int bannerWidth = width - marginRight - pageMargin;
         int bannerHeight = (int) (bannerWidth * (150 / 317f));
         int height = bannerHeight;
 
         ViewPager viewPager = viewHolder.viewPager;
-        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,height);
+        layoutParams = new RecyclerView.LayoutParams(width,height);
         viewPager.setPadding(paddingLeft,0,paddingRight,0);
         viewPager.setLayoutParams(layoutParams);
         viewPager.setPageMargin(pageMargin);
