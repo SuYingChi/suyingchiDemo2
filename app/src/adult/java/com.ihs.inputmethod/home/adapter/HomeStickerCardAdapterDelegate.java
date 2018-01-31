@@ -88,7 +88,7 @@ public final class HomeStickerCardAdapterDelegate extends AdapterDelegate<List<H
             layoutParams.rightMargin = margin;
         }
 
-        stickerCardViewHolder.stickerRealImage.setOnClickListener(new View.OnClickListener() {
+        stickerCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onStickerClickListener != null) {

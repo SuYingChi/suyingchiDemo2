@@ -72,7 +72,7 @@ public final class HomeMenuAdapterDelegate extends AdapterDelegate<List<HomeMode
         viewHolder.menuTitle.setText(homeMenu.getTextResId());
         viewHolder.menuBg.setImageResource(homeMenu.getMenuBgResId());
         viewHolder.menuIcon.setImageResource(homeMenu.getMenuIconResId());
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.menuBgContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (homeMenu) {
