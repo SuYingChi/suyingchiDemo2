@@ -19,4 +19,7 @@
 
     <string name="activity_sexy_wallpaper_title">Sexy Wallpaper</string>
 
+    <string name="my_download_tab_theme">THEME</string>
+    <string name="my_download_tab_sticker">STICKER</string>
+    <string name="my_download_tab_font">FONT</string>
 </resources>

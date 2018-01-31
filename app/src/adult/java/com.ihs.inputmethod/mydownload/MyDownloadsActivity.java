@@ -16,11 +16,11 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.api.HSFloatWindowManager;
 import com.ihs.inputmethod.api.framework.HSInputMethodListManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
+import com.ihs.inputmethod.mydownload.fragment.MyStickerFragment;
 import com.ihs.inputmethod.mydownload.fragment.MyThemeFragment;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.MyFontFragment;
-import com.ihs.inputmethod.uimodules.ui.sticker.homeui.MyStickerFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
 import com.ihs.inputmethod.widget.SlidingTabLayout;
@@ -71,9 +71,9 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
         fragments.add(MyFontFragment.class);
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getFragmentManager(), fragments);
         String[] tabTitles = new String[3];
-        tabTitles[0] = getApplicationContext().getString(R.string.tab_theme_my);
-        tabTitles[1] = getApplicationContext().getString(R.string.tab_sticker_my);
-        tabTitles[2] = getApplicationContext().getString(R.string.tab_font_my);
+        tabTitles[0] = getApplicationContext().getString(R.string.my_download_tab_theme);
+        tabTitles[1] = getApplicationContext().getString(R.string.my_download_tab_sticker);
+        tabTitles[2] = getApplicationContext().getString(R.string.my_download_tab_font);
         tabFragmentPagerAdapter.setTabTitles(tabTitles);
 
         viewPager = findViewById(R.id.viewpager);

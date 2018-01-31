@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ihs.inputmethod.common.adapter.CommonAdapter;
+import com.ihs.inputmethod.stickers.model.StickerModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
 
@@ -17,7 +18,7 @@ import pl.droidsonroids.gif.GifImageView;
  * Created by jixiang on 18/1/23.
  */
 
-public class StickerAdapter extends CommonAdapter<StickerGroup> {
+public class StickerAdapter extends CommonAdapter<StickerModel> {
     public StickerAdapter(Activity activity) {
         super(activity);
     }
@@ -35,7 +36,7 @@ public class StickerAdapter extends CommonAdapter<StickerGroup> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         StickerAdapter.StickerViewHolder stickerViewHolder = (StickerAdapter.StickerViewHolder) holder;
-        StickerGroup stickerGroup = dataList.get(position);
+        StickerGroup stickerGroup = dataList.get(position).stickerGroup;
         stickerViewHolder.stickerRealImage.setImageBitmap(null);
         Glide.with(activity).load(stickerGroup.getStickerGroupDownloadPreviewImageUri()).into(stickerViewHolder.stickerRealImage);
     }
