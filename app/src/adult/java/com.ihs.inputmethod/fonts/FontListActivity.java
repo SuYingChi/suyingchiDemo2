@@ -72,6 +72,12 @@ public class FontListActivity extends ListActivity implements FontAdapter.OnFont
         fontAdapter.setDataList(fontModelList);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return fontAdapter.getSpanSize(position);
+            }
+        });
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(fontAdapter);
     }

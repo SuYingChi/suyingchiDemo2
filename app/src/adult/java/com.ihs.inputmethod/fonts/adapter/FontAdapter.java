@@ -27,6 +27,14 @@ public class FontAdapter extends CommonAdapter<FontModel> {
     private int currentSelectPosition = -1;
     private String from = FROM_HOME;
 
+    public int getSpanSize(int position) {
+        if (getItemViewType(position) == ITEM_TYPE.ITEM_TYPE_MORE.ordinal()) {
+            return 2;
+        }else {
+            return 1;
+        }
+    }
+
     public enum ITEM_TYPE {
         ITEM_TYPE_HOME,
         ITEM_TYPE_MY,
@@ -37,7 +45,6 @@ public class FontAdapter extends CommonAdapter<FontModel> {
         super(activity);
         this.onFontCardClickListener = onFontCardClickListener;
     }
-
 
     @Override
     public FontAdapter.FontCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -131,10 +138,10 @@ public class FontAdapter extends CommonAdapter<FontModel> {
     @Override
     public int getItemViewType(int position) {
         if (isFromFontHomeType() && position == getItemCount() - 1) {
-            return FontAdapter.ITEM_TYPE.ITEM_TYPE_MORE.ordinal();
+            return ITEM_TYPE.ITEM_TYPE_MORE.ordinal();
         }
 
-        return isFromFontHomeType() ? FontAdapter.ITEM_TYPE.ITEM_TYPE_HOME.ordinal() : FontAdapter.ITEM_TYPE.ITEM_TYPE_MY.ordinal();
+        return isFromFontHomeType() ? ITEM_TYPE.ITEM_TYPE_HOME.ordinal() : ITEM_TYPE.ITEM_TYPE_MY.ordinal();
     }
 
     public interface OnFontCardClickListener {

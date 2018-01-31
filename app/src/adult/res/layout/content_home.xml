@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
+        android:paddingBottom="50dp"
         android:clipToPadding="false"
         android:clipChildren="false"
         android:background="@color/white" />
