@@ -68,7 +68,7 @@ public class KeyboardBannerAdLayout extends FrameLayout {
                     nativeAd = list.get(0);
 
                     RelativeLayout containerView;
-                    boolean inFaceBook = nativeAd.getVendor().name().toLowerCase().contains("facebook");
+                    boolean inFaceBook = false;//nativeAd.getVendor().name().toLowerCase().contains("facebook");
                     if (inFaceBook) {
                         containerView = (RelativeLayout) inflate(getContext(), R.layout.keyboard_banner_facebook_layout, null);
                     } else {

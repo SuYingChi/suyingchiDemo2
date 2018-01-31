@@ -85,12 +85,10 @@ public class CustomizeConfig implements HSLibraryconfig.ILibraryListener {
     }
 
 
-    @Override
     public void onRemoteConfigDidFinishInitialization() {
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CUSTOMIZE_CONFIG_FETCH_FINISHED);
     }
 
-    @Override
     public void onRemoteConfigDataChanged() {
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_CUSTOMIZE_CONFIG_CHANGED);
     }

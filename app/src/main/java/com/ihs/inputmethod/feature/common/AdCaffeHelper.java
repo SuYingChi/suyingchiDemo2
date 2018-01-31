@@ -316,11 +316,11 @@ public class AdCaffeHelper {
             this.setNativeAd(nativeAd, "PackageName", offerDataJson.getString("package_name"));
         } catch (JSONException ignored) {
         }
-        try {
-            // TODO test has default implete?
-            this.setNativeAd(nativeAd, "Category", AdCaffeNativeAd.Category.from(offerDataJson.getString("category")));
-        } catch (JSONException ignored) {
-        }
+//        try {
+//            // TODO test has default implete?
+//            this.setNativeAd(nativeAd, "Category", AdCaffeNativeAd.Category.from(offerDataJson.getString("category")));
+//        } catch (JSONException ignored) {
+//        }
         try {
             this.setNativeAd(nativeAd, "Body", offerDataJson.getString("description"));
         } catch (JSONException ignored) {
@@ -407,7 +407,7 @@ public class AdCaffeHelper {
             } catch (JSONException ignored) {
             }
         }
-        return nativeAd;
+        return null;
     }
 
     private long versionToLong(String version) {

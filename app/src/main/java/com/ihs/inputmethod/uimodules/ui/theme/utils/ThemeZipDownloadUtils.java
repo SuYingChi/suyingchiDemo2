@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.connection.HSHttpConnection;
@@ -86,7 +85,7 @@ public class ThemeZipDownloadUtils {
             }
         });
         int initialProgress = 1;
-        connection.setHeaderReceivedListener(hsHttpConnection -> new Handler().post(() -> adLoadingView.updateProgressPercent(initialProgress)));
+//        connection.setHeaderReceivedListener(hsHttpConnection -> new Handler().post(() -> adLoadingView.updateProgressPercent(initialProgress)));
         connection.setDataReceivedListener((hsHttpConnection, bytes, received, totalSize) -> {
             if (totalSize > 0) {
                 if (received >= totalSize) {

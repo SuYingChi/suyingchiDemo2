@@ -74,7 +74,7 @@ public class DownloadUtils {
             }
         });
         int initialProgress = 1;
-        connection.setHeaderReceivedListener(hsHttpConnection -> new Handler().post(() -> adLoadingView.updateProgressPercent(initialProgress)));
+//        connection.setHeaderReceivedListener(hsHttpConnection -> new Handler().post(() -> adLoadingView.updateProgressPercent(initialProgress)));
         connection.setDataReceivedListener((hsHttpConnection, bytes, received, totalSize) -> {
             if (totalSize > 0) {
                 final float percent = (float) received * 100 / totalSize;

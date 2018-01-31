@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
@@ -140,16 +139,16 @@ public class HSUIApplication extends HSInputMethodApplication {
 
     @Override
     public void onCreate() {
-        if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
-        }
+//        if (BuildConfig.DEBUG) {
+//            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//                    .detectAll()
+//                    .penaltyLog()
+//                    .build());
+//            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+//                    .detectAll()
+//                    .penaltyLog()
+//                    .build());
+//        }\
         super.onCreate();
         /**
          * !!注意，application下不要初始化东西，需要初始化的请放在 onMainProcessApplicationCreate
@@ -376,7 +375,6 @@ public class HSUIApplication extends HSInputMethodApplication {
         HSDiverseSession.start();
     }
 
-    @Override
     protected String getConfigFileName() {
         return BuildConfig.DEBUG ? "config-d.ya" : "config-r.ya";
     }
