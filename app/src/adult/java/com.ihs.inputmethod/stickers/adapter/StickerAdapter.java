@@ -19,8 +19,11 @@ import pl.droidsonroids.gif.GifImageView;
  */
 
 public class StickerAdapter extends CommonAdapter<StickerModel> {
-    public StickerAdapter(Activity activity) {
+    OnStickerClickListener onStickerClickListener;
+
+    public StickerAdapter(Activity activity, OnStickerClickListener onStickerClickListener) {
         super(activity);
+        this.onStickerClickListener = onStickerClickListener;
     }
 
     @Override
@@ -36,9 +39,20 @@ public class StickerAdapter extends CommonAdapter<StickerModel> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         StickerAdapter.StickerViewHolder stickerViewHolder = (StickerAdapter.StickerViewHolder) holder;
-        StickerGroup stickerGroup = dataList.get(position).stickerGroup;
+        StickerModel stickerModel = dataList.get(position);
+        StickerGroup stickerGroup = stickerModel.stickerGroup;
         stickerViewHolder.stickerRealImage.setImageBitmap(null);
         Glide.with(activity).load(stickerGroup.getStickerGroupDownloadPreviewImageUri()).into(stickerViewHolder.stickerRealImage);
+        if (!stickerModel.isDownloaded) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onStickerClickListener != null) {
+                        onStickerClickListener.onStickerClick(position);
+                    }
+                }
+            });
+        }
     }
 
     private static class StickerViewHolder extends RecyclerView.ViewHolder {
@@ -53,5 +67,9 @@ public class StickerAdapter extends CommonAdapter<StickerModel> {
             stickerNewImage = itemView.findViewById(R.id.sticker_new_view);
             stickerAnimatedView = itemView.findViewById(R.id.sticker_animated_view);
         }
+    }
+
+    public interface OnStickerClickListener {
+        void onStickerClick(int position);
     }
 }

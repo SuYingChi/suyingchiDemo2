@@ -38,7 +38,7 @@ public class MyStickerFragment extends Fragment {
     }
 
     private void initView() {
-        stickerAdapter = new StickerAdapter(getActivity());
+        stickerAdapter = new StickerAdapter(getActivity(), null);
         stickerAdapter.setDataList(getData());
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);

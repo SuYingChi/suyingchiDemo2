@@ -18,6 +18,8 @@ import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
+import com.ihs.commons.notificationcenter.INotificationObserver;
+import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.SettingActivity;
 import com.ihs.inputmethod.callflash.CallFlashListActivity;
 import com.ihs.inputmethod.fonts.FontListActivity;
@@ -57,6 +59,19 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
 
+    private INotificationObserver observer = new INotificationObserver() {
+        @Override
+        public void onReceive(String s, HSBundle hsBundle) {
+            if (StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION.equals(s)) {
+                if (homeAdapter != null) {
+                    homeModelList = getHomeData();
+                    homeAdapter.setItems(homeModelList);
+                    homeAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +101,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
         toggle.syncState();
 
         initView();
+        HSGlobalNotificationCenter.addObserver(StickerDataManager.STICKER_DATA_LOAD_FINISH_NOTIFICATION, observer);
     }
 
     private void initView() {
@@ -184,6 +200,7 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
     protected void onDestroy() {
         super.onDestroy();
         HSGlobalNotificationCenter.sendNotification(NOTIFICATION_HOME_DESTROY);
+        HSGlobalNotificationCenter.removeObserver(observer);
     }
 
     @Override
@@ -224,14 +241,14 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
     }
 
     @Override
-    public void onStickerClick(HomeModel homeModel, Drawable thumbnailDrawable) {
+    public void onStickerClick(int position, HomeModel homeModel, Drawable thumbnailDrawable) {
         final StickerGroup stickerGroup = (StickerGroup) homeModel.item;
         final String stickerGroupName = stickerGroup.getStickerGroupName();
         final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
 
         // 移除点击过的new角标
         StickerDataManager.getInstance().removeNewTipOfStickerGroup(stickerGroup);
-        homeAdapter.notifyItemChanged(homeModelList.indexOf(homeModel));
+        homeAdapter.notifyItemChanged(position);
 
         DownloadUtils.getInstance().startForegroundDownloading(HomeActivity.this, stickerGroupName,
                 stickerGroupDownloadedFilePath, stickerGroup.getStickerGroupDownloadUri(),
@@ -242,7 +259,6 @@ public class HomeActivity extends HSAppCompatActivity implements HomeStickerCard
                             KCAnalytics.logEvent("sticker_download_succeed", "StickerGroupName", stickerGroupName);
                             StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
 
-                            int position = homeModelList.indexOf(homeModel);
                             if (position > 0 && position < homeModelList.size()) {
                                 homeModelList.remove(position);
                                 homeAdapter.notifyItemRemoved(position);
