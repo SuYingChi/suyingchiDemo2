@@ -5,7 +5,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_activity_bg"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
@@ -14,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/theme_activity_horizontal_margin"
-        android:paddingRight="@dimen/theme_activity_horizontal_margin">
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/keyboard_theme_screenshot_container"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="250dp"
+            android:layout_marginLeft="@dimen/theme_activity_horizontal_margin"
+            android:layout_marginRight="@dimen/theme_activity_horizontal_margin">
 
             <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
                 android:id="@+id/keyboard_theme_screenshot"
@@ -92,9 +92,14 @@
             android:id="@+id/theme_detail_recommend_title"
             style="@style/UiModuleThemeTitleLayoutView">
 
-            <TextView
-                style="@style/UiModuleThemeTitleTextView"
-                android:text="@string/theme_detail_recommend_title" />
+            <com.ihs.feature.common.TypefacedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="-12.7sp"
+                android:text="@string/theme_detail_recommend_title"
+                android:textColor="#111111"
+                android:textSize="18sp"
+                app:typeface="@string/typeface_asap_medium" />
 
         </LinearLayout>
 

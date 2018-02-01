@@ -48,7 +48,6 @@ public class SexyWallpaperActivity extends HSAppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.activity_sexy_wallpaper_title);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 

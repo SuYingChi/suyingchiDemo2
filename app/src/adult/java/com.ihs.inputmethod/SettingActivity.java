@@ -14,7 +14,6 @@ import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
-import com.ihs.inputmethod.sexywallpaper.SexyWallpaperActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.MoreLanguageActivity2;
 
@@ -34,7 +33,6 @@ public final class SettingActivity extends HSAppCompatActivity implements View.O
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.settings);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

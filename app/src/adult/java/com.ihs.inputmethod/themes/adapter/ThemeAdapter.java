@@ -26,24 +26,8 @@ import java.util.List;
  */
 
 public class ThemeAdapter<T> extends BaseListAdapter<HomeModel> {
-    private Activity activity;
     protected AdapterDelegatesManager<List<HomeModel>> delegatesManager;
     private HSKeyboardTheme keyboardThemeOnKeyboardActivation;
-
-    public interface ThemeCardItemClickListener {
-        void onCardClick(HSKeyboardTheme keyboardTheme);
-
-        void onMenuShareClick(HSKeyboardTheme keyboardTheme);
-
-        void onMenuDownloadClick(HSKeyboardTheme keyboardTheme);
-
-        void onMenuDeleteClick(HSKeyboardTheme keyboardTheme);
-
-        void onMenuAppliedClick(HSKeyboardTheme keyboardTheme);
-
-        void onKeyboardActivationStart();
-    }
-
 
     public ThemeAdapter(Activity activity) {
         super(activity);

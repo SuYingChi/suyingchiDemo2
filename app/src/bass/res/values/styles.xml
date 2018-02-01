@@ -3,4 +3,9 @@
 
     <style name="AppBaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
+    </style>
 </resources>

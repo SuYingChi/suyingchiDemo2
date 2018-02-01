@@ -218,7 +218,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setElevation(0);
 
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
         LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);
