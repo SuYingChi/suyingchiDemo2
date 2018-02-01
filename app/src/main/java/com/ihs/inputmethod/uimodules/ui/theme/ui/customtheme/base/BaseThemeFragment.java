@@ -208,7 +208,6 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
 
     @Override
     public void onDestroy() {
-        HSGlobalNotificationCenter.removeObserver(NOTIFICATION_REMOVEADS_PURCHASED, this);
         HSGlobalNotificationCenter.removeObserver(this);
         super.onDestroy();
     }
