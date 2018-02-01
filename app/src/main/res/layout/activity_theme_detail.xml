@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
@@ -14,38 +13,67 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/theme_activity_horizontal_margin"
-        android:paddingRight="@dimen/theme_activity_horizontal_margin">
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/keyboard_theme_screenshot_container"
             android:layout_width="match_parent"
             android:layout_height="250dp">
 
-            <com.ihs.inputmethod.uimodules.ui.theme.ui.view.RoundedImageView
+            <!--<com.facebook.drawee.view.SimpleDraweeView-->
+            <!--android:id="@+id/keyboard_theme_screenshot"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:actualImageScaleType="focusCrop"-->
+            <!--app:placeholderImage="@drawable/image_placeholder"-->
+            <!--app:roundAsCircle="false" />-->
+            <ImageView
                 android:id="@+id/keyboard_theme_screenshot"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:riv_corner_radius="@dimen/common_round_corner" />
+                android:layout_height="match_parent" />
 
             <com.ihs.inputmethod.uimodules.widget.MdProgressBar
                 android:id="@+id/screenshot_loading"
+                android:visibility="gone"
+                android:layout_gravity="center"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_gravity="center"
-                android:layout_margin="25dp"
                 android:textSize="24sp"
-                android:visibility="gone" />
+                android:layout_margin="25dp"
+                />
 
         </FrameLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/theme_name"-->
+        <!--android:layout_marginLeft="@dimen/theme_activity_horizontal_margin"-->
+        <!--android:paddingLeft="@dimen/theme_store_widget_gap"-->
+        <!--android:layout_marginTop="@dimen/theme_activity_vertical_margin"-->
+        <!--android:text="Strawberry Themes"-->
+        <!--android:textSize="16sp"-->
+        <!--style="@style/UiModuleThemeTitleTextView"-->
+        <!--android:visibility="gone"-->
+        <!--/>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/theme_desc"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/theme_activity_horizontal_margin"-->
+        <!--android:paddingLeft="@dimen/theme_store_widget_gap"-->
+        <!--android:layout_marginTop="3dp"-->
+        <!--android:text="Themes Description"-->
+        <!--android:textColor="#6a6a6a"-->
+        <!--android:textSize="14sp" -->
+        <!--android:visibility="gone"/>-->
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/theme_activity_horizontal_margin"
             android:paddingRight="@dimen/theme_activity_horizontal_margin">
@@ -57,13 +85,13 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/theme_detail_left_btn_bg"
-                android:fontFamily="@string/font_fontFamily_medium"
-                android:gravity="center"
                 android:stateListAnimator="@null"
+                android:textSize="15sp"
+                android:background="@drawable/theme_detail_left_btn_bg"
+                android:gravity="center"
+                android:fontFamily="@string/font_fontFamily_medium"
                 android:text="@string/theme_card_set_locker_bg"
-                android:textColor="@color/theme_button_text_color"
-                android:textSize="15sp" />
+                android:textColor="@color/theme_button_text_color" />
 
             <Button
                 android:id="@+id/theme_detail_right_btn"
@@ -71,26 +99,25 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/theme_detail_right_btn_bg"
                 android:fontFamily="@string/font_fontFamily_medium"
-                android:gravity="center"
                 android:stateListAnimator="@null"
+                android:textSize="15sp"
+                android:background="@drawable/theme_detail_right_btn_bg"
+                android:gravity="center"
                 android:text="@string/theme_card_menu_apply"
-                android:textColor="@color/white_standard"
-                android:textSize="15sp" />
+                android:textColor="@color/white_standard" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/ad_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:orientation="vertical" />
-
+            android:layout_marginRight="8dp"/>
         <LinearLayout
             android:id="@+id/theme_detail_recommend_title"
-            style="@style/UiModuleThemeTitleLayoutView">
+            style="@style/UiModuleThemeTitleLayoutView"
+            >
 
             <TextView
                 style="@style/UiModuleThemeTitleTextView"
