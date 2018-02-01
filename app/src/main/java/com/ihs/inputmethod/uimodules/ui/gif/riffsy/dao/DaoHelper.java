@@ -130,7 +130,9 @@ public final class DaoHelper {
 		return new ArrayList<>();
 	}
 
-	public HashSet<String> getAllTags(){
-		return GifTagDaoHelper.getInstance().getAllTags();
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public HashSet<String> getAllTags(){
+//		return GifTagDaoHelper.getInstance().getAllTags();
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

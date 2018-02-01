@@ -1,23 +1,16 @@
 package com.ihs.inputmethod.feature.common;
 
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
 import android.support.annotation.NonNull;
 
-import com.ihs.commons.utils.HSLog;
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -74,34 +67,42 @@ public class ConcurrentUtils {
         sExecutor.execute(r);
     }
 
+// --Commented out by Inspection START (18/1/11 下午2:41):
     public static void postOnSingleThreadExecutor(Runnable r) {
         sSingleThreadExecutor.execute(r);
     }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void postOnMainThread(Runnable r) {
-        sMainHandler.post(r);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void postOnMainThread(Runnable r) {
+//        sMainHandler.post(r);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    @SuppressWarnings("unchecked")
-    public static void execute(AsyncTask task) {
-        task.executeOnExecutor(sExecutor, (Object[]) null);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @SuppressWarnings("unchecked")
+//    public static void execute(AsyncTask task) {
+//        task.executeOnExecutor(sExecutor, (Object[]) null);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    @SuppressWarnings("TryWithIdenticalCatches")
-    public static Object callWithTimeout(Callable<Object> callable, long timeout, TimeUnit unit) throws TimeoutException {
-        Future<Object> future = sExecutor.submit(callable);
-        Object returnValue = null;
-        try {
-            returnValue = future.get(timeout, unit);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            HSLog.i(TAG, "Invocation timed out, interrupt");
-            future.cancel(true);
-            throw e;
-        }
-        return returnValue;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @SuppressWarnings("TryWithIdenticalCatches")
+//    public static Object callWithTimeout(Callable<Object> callable, long timeout, TimeUnit unit) throws TimeoutException {
+//        Future<Object> future = sExecutor.submit(callable);
+//        Object returnValue = null;
+//        try {
+//            returnValue = future.get(timeout, unit);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (TimeoutException e) {
+//            HSLog.i(TAG, "Invocation timed out, interrupt");
+//            future.cancel(true);
+//            throw e;
+//        }
+//        return returnValue;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
 
-public final class CustomTagEditText extends EditText implements TextWatcher,View.OnFocusChangeListener{
+public final class CustomTagEditText extends android.support.v7.widget.AppCompatEditText implements TextWatcher,View.OnFocusChangeListener{
     public static final char  DIVIDER=',';
 	private static final int TAGS_COUNT_LIMIT = 50;
     private static final int SPANCOLOR=Color.parseColor("#19ff1e");
@@ -261,21 +261,25 @@ public final class CustomTagEditText extends EditText implements TextWatcher,Vie
         setText(span);
         setSelection(lastDviderPosition);
     }
-    public void setDivider(char divider){
-        this.divider=divider;
-    }
-    public String[] getTags(){
-        String tags="";
-        if(getText()!=null){
-            tags=getText().toString();
-        }
-
-        if(tags.length()>0) {
-			return handleTagsBeforeUpload(tags);
-			//return tags.split("[,]");
-		}
-        return null;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setDivider(char divider){
+//        this.divider=divider;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public String[] getTags(){
+//        String tags="";
+//        if(getText()!=null){
+//            tags=getText().toString();
+//        }
+//
+//        if(tags.length()>0) {
+//			return handleTagsBeforeUpload(tags);
+//			//return tags.split("[,]");
+//		}
+//        return null;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     protected void onSelectionChanged(int selStart, int selEnd) {

@@ -22,7 +22,6 @@ import com.ihs.inputmethod.uimodules.mediacontroller.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -34,10 +33,10 @@ public class ShareUtils {
     // image share method
     public static final int IMAGE_SHARE_MODE_EXPORT = 0;
     public static final int IMAGE_SHARE_MODE_INTENT = 1;
-    public static final int IMAGE_SHARE_MODE_LINK   = 2;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final int IMAGE_SHARE_MODE_LINK   = 2;
 
     public static final String IMAGE_SHARE_FORMAT_GIF = "gif";
-    public static final String IMAGE_SHARE_FORMAT_LINK = "link";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String IMAGE_SHARE_FORMAT_LINK = "link";
 
     public static final String[] SUPPORTTED_PACKAGE_NAMES = {ShareChannel.MESSAGE.getPackageName()};
 
@@ -100,34 +99,33 @@ public class ShareUtils {
         return null;
     }
 
-    public static Pair<Integer, String> getStickerShareMode(final String packageName) {
-        final List<?> smList = HSConfig.getList(HSPictureUtils.RMTCFG_KEY_L1_APPLICATION, HSPictureUtils.RMTCFG_KEY_L2_SEND_STRATEGY);
-        for (Object o : smList) {
-            final String supportPackageName = HSMapUtils.getString((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_PACKAGE_NAME);
-            if (supportPackageName.equals(packageName)) {
-                final Integer mode = HSMapUtils.getInteger((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_SEND_MODE);
-                final String format = HSMapUtils.getString((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_SOURCE_FORMAT);
-                return new Pair(mode, format);
-            }
-        }
-
-        // default supported apps
-        final HashSet<String> supportedPackageNames = new HashSet<>(Arrays.asList(SUPPORTTED_PACKAGE_NAMES));
-        if (supportedPackageNames.contains(packageName)) {
-            return new Pair(IMAGE_SHARE_MODE_INTENT, "");
-        }
-
-        return new Pair(IMAGE_SHARE_MODE_EXPORT, "");
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static Pair<Integer, String> getStickerShareMode(final String packageName) {
+//        final List<?> smList = HSConfig.getList(HSPictureUtils.RMTCFG_KEY_L1_APPLICATION, HSPictureUtils.RMTCFG_KEY_L2_SEND_STRATEGY);
+//        for (Object o : smList) {
+//            final String supportPackageName = HSMapUtils.getString((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_PACKAGE_NAME);
+//            if (supportPackageName.equals(packageName)) {
+//                final Integer mode = HSMapUtils.getInteger((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_SEND_MODE);
+//                final String format = HSMapUtils.getString((Map<String, ?>) o, HSPictureUtils.RMTCFG_KEY_L4_SOURCE_FORMAT);
+//                return new Pair(mode, format);
+//            }
+//        }
+//
+//        // default supported apps
+//        final HashSet<String> supportedPackageNames = new HashSet<>(Arrays.asList(SUPPORTTED_PACKAGE_NAMES));
+//        if (supportedPackageNames.contains(packageName)) {
+//            return new Pair(IMAGE_SHARE_MODE_INTENT, "");
+//        }
+//
+//        return new Pair(IMAGE_SHARE_MODE_EXPORT, "");
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static boolean isSupportedPackageName(final String packageName) {
         // default supported apps
         final List<String> supportedPackageNames = Arrays.asList(SUPPORTTED_PACKAGE_NAMES);
-        if (supportedPackageNames.contains(packageName)) {
-            return true;
-        }
+        return supportedPackageNames.contains(packageName);
 
-        return false;
     }
 
     public static String[] getAvailablePackages(ShareChannel channel) {
@@ -204,7 +202,7 @@ public class ShareUtils {
     public static boolean isIntentAvailable(Intent intent) {
         PackageManager packageManager = HSApplication.getContext().getPackageManager();
         List<ResolveInfo> resolveInfos = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        return resolveInfos == null ? false : resolveInfos.size() > 0;
+        return resolveInfos != null && resolveInfos.size() > 0;
     }
 
 
@@ -267,5 +265,9 @@ public class ShareUtils {
             }
         }
         Toast.makeText(HSApplication.getContext(), "sorry,can not find appropriate share tools", Toast.LENGTH_SHORT).show();
+    }
+
+    public static Pair<Integer, String> getStickerShareMode(String packageName) {
+        return null;
     }
 }

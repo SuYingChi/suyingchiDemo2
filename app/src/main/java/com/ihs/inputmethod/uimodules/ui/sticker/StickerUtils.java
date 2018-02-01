@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
@@ -21,13 +20,12 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.DirectoryUtils;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.utils.MediaShareUtils;
 import com.ihs.inputmethod.uimodules.utils.BitmapUtils;
+import com.kc.utils.KCAnalytics;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +45,7 @@ public class StickerUtils {
     private static Map<String, String> map = new HashMap<>();
     private static final float STICKER_BACKGROUND_ASPECT_RATIO = 1.7f;
     private static final float STICKER_ZOOM_RATIO = 0.7f;
-    private static final String ERROR_COLOR = "error_color";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String ERROR_COLOR = "error_color";
 
     public static String getStickerRootFolderPath() {
         return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_STICKER_FILE_PATH;
@@ -97,21 +95,23 @@ public class StickerUtils {
 
     private static Map<String, List<String>> cachedDirectoryContents = new HashMap<>();
 
-    private static boolean isFileInAssets(String directory, String file) {
-        List<String> contents = new ArrayList<>();
-        if (cachedDirectoryContents.containsKey(directory)) {
-            contents = cachedDirectoryContents.get(directory);
-        } else {
-            try {
-                contents = Arrays.asList(HSApplication.getContext().getAssets().list(directory));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            cachedDirectoryContents.put(directory, contents);
-        }
-
-        return contents.contains(file);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private static boolean isFileInAssets(String directory, String file) {
+//        List<String> contents = new ArrayList<>();
+//        if (cachedDirectoryContents.containsKey(directory)) {
+//            contents = cachedDirectoryContents.get(directory);
+//        } else {
+//            try {
+//                contents = Arrays.asList(HSApplication.getContext().getAssets().list(directory));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            cachedDirectoryContents.put(directory, contents);
+//        }
+//
+//        return contents.contains(file);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static Map<String, StickerGroup> cachedStickerGroupContents = new HashMap<>();
 
@@ -130,10 +130,12 @@ public class StickerUtils {
         return stickerGroupTemp;
     }
 
-    public static boolean isEditTextSupportSticker(String packageName) {
-        return DirectoryUtils.isSDCardEnabled() && StickerPrefsUtil.getInstance().isAppSupportSticker(packageName);
-
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isEditTextSupportSticker(String packageName) {
+//        return DirectoryUtils.isSDCardEnabled() && StickerPrefsUtil.getInstance().isAppSupportSticker(packageName);
+//
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static void sendStickerToPackage(final Sticker sticker, final String packageName) {
         if (!DirectoryUtils.isSDCardEnabled() || !StickerPrefsUtil.getInstance().isAppSupportSticker(packageName)) {
@@ -188,7 +190,7 @@ public class StickerUtils {
         // 获取PNG图片的宽高信息
         if (sticker.getStickerUri().startsWith("assets:")) {
             String stickerAssetPath = getStickerAssetsPath(sticker);
-            InputStream inputStream = null;
+            InputStream inputStream;
             try {
                 inputStream = HSApplication.getContext().getAssets().open(stickerAssetPath);
                 BitmapFactory.decodeStream(inputStream, null, option);

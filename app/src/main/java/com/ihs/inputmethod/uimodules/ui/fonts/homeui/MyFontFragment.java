@@ -33,7 +33,7 @@ public class MyFontFragment extends Fragment implements FontCardAdapter.OnFontCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myfont, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.recycler_view);
         initView();
         return view;
     }

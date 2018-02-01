@@ -1,7 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.theme.ui;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,12 +23,6 @@ import android.widget.TextView;
 import com.artw.lockscreen.LockerEnableDialog;
 import com.artw.lockscreen.LockerSettings;
 import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
-import com.kc.utils.KCAnalytics;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
@@ -62,6 +56,10 @@ import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 import com.kc.commons.utils.KCCommonUtils;
 import com.keyboard.common.KeyboardActivationGuideActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -122,29 +120,45 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
                 keyboardThemeScreenShotImageView.setImageURI(Uri.fromFile(new File(HSKeyboardThemeManager.getKeyboardThemeScreenshotFile(keyboardTheme))));
             } else {
                 screenshotContainer.getLayoutParams().height = (int) (getResources().getDisplayMetrics().widthPixels * 850 * 1.0f / 1080);
+                String themeNameTitle = keyboardTheme.getThemeShowName();
                 getSupportActionBar().setTitle(getString(R.string.default_themes, getString(R.string.app_name)));
 
-                String largePreviewImgUrl = keyboardTheme.getLargePreivewImgUrl();
-                if (largePreviewImgUrl != null) {
+                if (keyboardTheme.getLargePreivewImgUrl() != null) {
                     keyboardThemeScreenShotImageView.setImageDrawable(null);
-                    screenshotLoading.setVisibility(View.VISIBLE);
-                    Glide.with(HSApplication.getContext()).load(largePreviewImgUrl).listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            if (isCurrentImageUri(largePreviewImgUrl)) {
-                                screenshotLoading.setVisibility(View.GONE);
-                            }
-                            return false;
-                        }
+                    ImageLoader.getInstance().displayImage(keyboardTheme.getLargePreivewImgUrl(), keyboardThemeScreenShotImageView, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build()
+                            , new ImageLoadingListener() {
+                                @Override
+                                public void onLoadingStarted(String imageUri, View view) {
+                                    screenshotLoading.setVisibility(View.VISIBLE);
+                                }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            if (isCurrentImageUri(largePreviewImgUrl)) {
-                                screenshotLoading.setVisibility(View.GONE);
+                                @Override
+                                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                    if (isCurrentImageUri(imageUri)) {
+                                        screenshotLoading.setVisibility(View.GONE);
+                                    }
+                                }
+
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    if (isCurrentImageUri(imageUri)) {
+                                        screenshotLoading.setVisibility(View.GONE);
+                                    }
+                                }
+
+                                @Override
+                                public void onLoadingCancelled(String imageUri, View view) {
+                                    if (isCurrentImageUri(imageUri)) {
+                                        screenshotLoading.setVisibility(View.GONE);
+                                    }
+                                }
+
+                                public boolean isCurrentImageUri(String imageUri) {
+                                    return keyboardTheme != null && keyboardTheme.getLargePreivewImgUrl() != null && keyboardTheme.getLargePreivewImgUrl().equals(imageUri);
+                                }
                             }
-                            return false;
-                        }
-                    }).into(keyboardThemeScreenShotImageView);
+                    );
+
                 }
             }
 
@@ -164,13 +178,6 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         themeCardAdapter.notifyDataSetChanged();
 
         rootView.smoothScrollTo(0, 0);
-    }
-
-    public boolean isCurrentImageUri(String imageUri) {
-        if (keyboardTheme != null && keyboardTheme.getLargePreivewImgUrl() != null && keyboardTheme.getLargePreivewImgUrl().equals(imageUri)) {
-            return true;
-        }
-        return false;
     }
 
     @NonNull
@@ -209,16 +216,16 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     }
 
     private void initView() {
-        rootView = (NestedScrollView) findViewById(R.id.root_view);
+        rootView = findViewById(R.id.root_view);
         screenshotContainer = findViewById(R.id.keyboard_theme_screenshot_container);
-        keyboardThemeScreenShotImageView = (ImageView) findViewById(R.id.keyboard_theme_screenshot);
-        screenshotLoading = (MdProgressBar) findViewById(R.id.screenshot_loading);
-        leftBtn = (TextView) findViewById(R.id.theme_detail_left_btn);
-        rightBtn = (TextView) findViewById(R.id.theme_detail_right_btn);
+        keyboardThemeScreenShotImageView = findViewById(R.id.keyboard_theme_screenshot);
+        screenshotLoading = findViewById(R.id.screenshot_loading);
+        leftBtn = findViewById(R.id.theme_detail_left_btn);
+        rightBtn = findViewById(R.id.theme_detail_right_btn);
         leftBtn.setOnClickListener(this);
         rightBtn.setOnClickListener(this);
 
-        recommendRecyclerView = (RecyclerView) findViewById(R.id.theme_detail_recommend_recycler_view);
+        recommendRecyclerView = findViewById(R.id.theme_detail_recommend_recycler_view);
         recommendRecyclerView.setNestedScrollingEnabled(false);
         recommendRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         themeCardAdapter = new CommonThemeCardAdapter(this, this, false);
@@ -231,7 +238,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             // 添加广告
             if (nativeAdView == null) {
-                final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
+                final LinearLayout linearLayout = findViewById(R.id.ad_container);
                 int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
                 View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
                 LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);
@@ -319,7 +326,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
             ((TextView) v).setText(R.string.theme_card_menu_downloading);
             v.setEnabled(false);
             if (!downloadTheme()) return;
-            KCAnalytics.logEvent("themedetails_download_clicked", "themeName", themeName);
+            HSAnalytics.logEvent("themedetails_download_clicked", "themeName", themeName);
             if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
                 ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(themeName);
             }
@@ -328,9 +335,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
         } else if (HSApplication.getContext().getString(R.string.theme_card_menu_share).equalsIgnoreCase(text)) {
             ThemeMenuUtils.shareTheme(this, keyboardTheme);
-            KCAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
+            HSAnalytics.logEvent("themedetails_share_clicked", "themeName", themeName);
         } else if (HSApplication.getContext().getString(R.string.theme_card_set_locker_bg).equalsIgnoreCase(text)) {
-            KCAnalytics.logEvent("keyboard_setaslockscreen_button_clicked", "occasion", "app_theme_detail");
+            HSAnalytics.logEvent("keyboard_setaslockscreen_button_clicked", "occasion", "app_theme_detail");
             LockerEnableDialog.showLockerEnableDialog(this, themeLockerBgUrl, getString(R.string.locker_enable_title_no_desc), themeName, new LockerEnableDialog.OnLockerBgLoadingListener() {
                 @Override
                 public void onFinish() {
@@ -500,7 +507,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     @Override
     public void onCardClick(HSKeyboardTheme keyboardTheme) {
-        KCAnalytics.logEvent("themedetails_themes_preview_clicked", "keyboardTheme", keyboardTheme.mThemeName);
+        HSAnalytics.logEvent("themedetails_themes_preview_clicked", "keyboardTheme", keyboardTheme.mThemeName);
     }
 
     @Override
@@ -515,7 +522,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
 
     @Override
     public void onMenuDownloadClick(HSKeyboardTheme keyboardTheme) {
-        KCAnalytics.logEvent("themedetails_themes_download_clicked", "keyboardTheme", keyboardTheme.mThemeName);
+        HSAnalytics.logEvent("themedetails_themes_download_clicked", "keyboardTheme", keyboardTheme.mThemeName);
         if (ThemeAnalyticsReporter.getInstance().isThemeAnalyticsEnabled()) {
             ThemeAnalyticsReporter.getInstance().recordThemeDownloadInDetailActivity(keyboardTheme.mThemeName);
         }

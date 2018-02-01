@@ -112,9 +112,11 @@ public class HSUIApplication extends HSInputMethodApplication {
         }
     };
 
-    protected Class<? extends Activity> getSplashActivityClass() {
-        return null;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    protected Class<? extends Activity> getSplashActivityClass() {
+//        return null;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     final public void startActivityAfterSplash(Activity splashActivity) {
         boolean isAccessibilityEnabled = HSConfig.optBoolean(false, "Application", "AutoSetKeyEnable");

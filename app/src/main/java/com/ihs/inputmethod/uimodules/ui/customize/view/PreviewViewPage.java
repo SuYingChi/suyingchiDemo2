@@ -38,16 +38,18 @@ public class PreviewViewPage extends FrameLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setProgress(String progress) {
-
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setProgress(String progress) {
+//
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        this.largeWallpaperImageView = (ImageView) findViewById(R.id.large_wallpaper_image_view);
-        this.loadingView = (FrameLayout) findViewById(R.id.wallpaper_preview_loading_view);
-        this.retryLayout = (LinearLayout) findViewById(R.id.retry_downloading_layout);
+        this.largeWallpaperImageView = findViewById(R.id.large_wallpaper_image_view);
+        this.loadingView = findViewById(R.id.wallpaper_preview_loading_view);
+        this.retryLayout = findViewById(R.id.retry_downloading_layout);
 
         retryLayout.findViewById(R.id.retry_downloading_button).setOnClickListener(new View.OnClickListener() {
             @Override

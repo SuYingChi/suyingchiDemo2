@@ -145,21 +145,6 @@ class HSTextureView extends RelativeLayout implements IMediaView {
     }
 
     @Override
-    public void setHSBackground(int resId) {
-        Drawable drawable = getResources().getDrawable(resId);
-        if (drawable == null) {
-            this.mp4FilePath = "android.resource://" + getContext().getPackageName() + "/" + resId;
-            this.imgFilePath = null;
-            setBackgroundMedia(mp4FilePath);
-
-        } else {
-            this.imgFilePath = "android.resource://" + getContext().getPackageName() + "/" + resId;
-            this.mp4FilePath = null;
-            setHSBackground(Uri.parse(imgFilePath));
-        }
-    }
-
-    @Override
     public boolean isMedia() {
         return mp4FilePath != null;
     }

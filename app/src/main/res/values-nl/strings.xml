@@ -5,7 +5,6 @@
         <string name="enabled">Ingeschakeld</string>
         <string name="disabled">Verwijderen</string>
         <string name="language">ITEM IS NIET BESCHIKBAAR</string>
-        <string name="languages">Talen</string>
         <string name="next">Volgende</string>
         <string name="back">Terug</string>
         <string name="cancel">Annuleren</string>
@@ -18,7 +17,6 @@
         <string name="filter">Filteren</string>
         <string name="use">Gebruiken</string>
         <string name="customize_keyboard_title">Keyboard</string>
-        <string name="alert_find_keyboard_and_switch_on">%1$s inschakelen</string>
         <string name="online_wallpaper_set_btn">SET WALLPAPER</string>
         <string name="online_wallpaper_loading">Loading HD wallpaper, please wait.</string>
 
@@ -34,8 +32,7 @@
         <string name="dialog_title_select_keyboard_apply_rain">Activeren %1$s</string>
         <string name="dialog_msg_select_keyboard_apply_rain">Om dit thema te kunnen gebruiken, moet je %1$s keyboard activeren.</string>
         <string name="dialog_confirm_select_keyboard_apply_rain">ACTIVEREN</string>
-        
-        <string name="dialog_title_enable_keyboard_home_rain">Activeren %1$s</string>
+
         <string name="dialog_msg_enable_keyboard_home_rain">Met %1$s krijg je persoonlijke toetsenbordthema\'s en schattige emoji\'s.</string>
         
         <!--language-->
@@ -77,23 +74,18 @@ Bevat gesponsorde inhoud.</string>
         <string name="setting_item_fonts">Lettertypen</string>
         
         <string name="setting_item_sounds">Snelkoppeling</string>
-        <string name="setting_item_swipe">Vegen</string>
-        <string name="setting_item_add_languages">Taal toevoegen</string>
+    <string name="setting_item_add_languages">Taal toevoegen</string>
         <string name="setting_item_more_settings">Meer instellingen</string>
         
         <!--settings panel-->
-        <string name="settings_button_tell_a_friend">Deel het met vrienden</string>
-        <string name="settings_button_tell_a_friend_tip">Je berichten nu delen</string>
-        
-        
+
+
         <!-- gif panel -->
         <string name="result_no">Geen GIF-bestanden of stickers gevonden</string>
         <string name="result_no_recent">Geen recente.</string>
-        <string name="result_no_suggestion">Geen voorgestelde GIF-bestanden of stickers.</string>
         <string name="result_no_favorites">Geen favorieten</string>
         <string name="result_no_data_on_fail">Controleer je netwerk en probeer het opnieuw.</string>
-        <string name="result_no_data_on_complete">Geen GIF-bestanden of stickers gevonden</string>
-        
+
         <!--gif strip-->
         <string name="emoji_search_title">Zoek-emoticon selecteren</string>
         <string name="emoji_search_hint">GIF-bestanden zoeken op tekst of emoticon</string>
@@ -118,9 +110,7 @@ Bevat gesponsorde inhoud.</string>
         <string name="dialog_app_usage_title">Apps met gebruikstoegang toestaan</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_my_themes">Mijn thema\'s</string>
         <string name="theme_nav_languages">Talen</string>
-        <string name="theme_nav_settings">Instellingen</string>
         <string name="theme_nav_update">Bijwerken</string>
         <string name="theme_nav_no_ads">Advertenties verwijderen</string>
         
@@ -135,16 +125,8 @@ Bevat gesponsorde inhoud.</string>
         <string name="theme_card_menu_delete">Verwijderen</string>
         
         <!--custom theme-->
-        <string name="custom_theme_background">Terug</string>
         <string name="custom_theme_font">Lettertypen</string>
-        <string name="custom_theme_sound">Tikeffect kiezen</string>
-        <string name="custom_theme_effect">Tikeffect</string>
-        
-        <string name="custom_theme_backgrounds">Terug</string>
-        <string name="custom_theme_fonts">Lettertypen</string>
-        <string name="custom_theme_sounds">Tikeffect kiezen</string>
-        <string name="custom_theme_effects">tikeffect</string>
-        
+
         <string name="custom_theme_title">Toetsenbord maken</string>
         <string name="custom_theme_title_background">Achtergrond kiezen</string>
         <string name="custom_theme_title_button_shape">Knopvorm kiezen</string>
@@ -152,7 +134,6 @@ Bevat gesponsorde inhoud.</string>
         <string name="custom_theme_title_font">Lettertype kiezen</string>
         <string name="custom_theme_title_font_color">Tekstkleur kiezen</string>
         <string name="custom_theme_title_sound">Klikgeluid kiezen</string>
-        <string name="custom_theme_title_effect">Tikeffect kiezen</string>
         <string name="custom_theme_sound_tip">Schakel stille modus uit of schakel Geluid bij toetsgebruik in via de installingen om het klikgeluidseffect te gebruiken.</string>
         
         <!--IAP Tip Info -->
@@ -171,16 +152,12 @@ Bevat gesponsorde inhoud.</string>
         <string name="apk_update_alert_title">De nieuwste versie downloaden</string>
         <string name="apk_update_alert_negative_btn">Later</string>
         <string name="apk_update_alert_positive_btn">Bijwerken</string>
-        <string name="apk_update_downloading">Update wordt gedownload</string>
-        <string name="apk_update_downloading_notification_title">Downloaden...</string>
-        
-        
-        <string name="sd_card_unavailable_tip">SD-kaart is niet beschikbaar!</string>
+
+
+    <string name="sd_card_unavailable_tip">SD-kaart is niet beschikbaar!</string>
         
         <string name="theme_create_custom_theme_failed">Schakel Slim opladen in om overlading doeltreffend te voorkomen. Bevat betaalde inhoud.</string>
-        
-        <string name="home_create_keyboard">mijn eigen thema\'s maken</string>
-        
+
         <string name="charging_alert_title">Slim opladen</string>
         <string name="charging_alert_message">Schakel Slim opladen in om overlading doeltreffend te voorkomen. Bevat betaalde inhoud.</string>
         
@@ -188,7 +165,6 @@ Bevat gesponsorde inhoud.</string>
         
         <!--Accessibility-->
         <string name="tv_enable_keyboard_tip">Activeer het %1$s en geniet van MEER thema\'s!</string>
-        <string name="accessibility_service_label">%1$s</string>
         <string name="tv_set_up_manually">HANDMATIG INSTELLEN</string>
         <string name="tv_1_tap_to_set_up_keyboard">%1$s inschakelen.</string>
         <string name="alter_enable_access_title">%1$s inschakelen.</string>
@@ -223,14 +199,12 @@ Bevat gesponsorde inhoud.</string>
         
         <string name="interstitial_ad_title_after_try_keyboard">Toepassen is gelukt</string>
         <string name="interstitial_ad_subtitle_after_try_keyboard">---------------Misschien vind je dit leuk---------------</string>
-        
-        <string name="interstitial_ad_subtitle_home_gift_button">---------------Misschien vind je dit leuk---------------</string>
+
         <string name="store_nav_download">Mijn downloads</string>
         <string name="tab_theme_my">Mijn thema\'s</string>
         <string name="tab_sticker">STICKER</string>
         <string name="tab_sticker_my">MIJN STICKER</string>
         <string name="tab_font_my">MIJN LETTERTYPE</string>
-        <string name="item_sticker_more_coming">Meer stickers volgen binnenkort</string>
         <string name="item_font_more_coming">Meer lettertypes volgen binnenkort</string>
         
         <!--alert message-->
@@ -254,7 +228,6 @@ Bevat gesponsorde inhoud.</string>
 
         <!-- wallpaper preview -->
         <string name="key_theme_set_btn">TOETSTHEMA INSTELLEN</string>
-        <string name="wallpaper_apply_fail">Toepassen is mislukt</string>
         <string name="home_screen">Beginscherm</string>
         <string name="locker_screen">Vergrendelscherm</string>
         <string name="home_and_locker_screen">Begin- en vergrendelschermen</string>
@@ -263,8 +236,7 @@ Bevat gesponsorde inhoud.</string>
     <string name="label_try_now">PROBEER HET NU</string>
     <string name="label_create_funny_facemoji">Maak coole emoji\'s met je eigen gezicht!</string>
 
-    <string name="keyboard_make_facemoji_tip">Maak je eigen emoji\'s!</string>
-    <string name="sticker_title_create_my_facemojis">Mijn facemoji maken</string>
+        <string name="sticker_title_create_my_facemojis">Mijn facemoji maken</string>
     <string name="sticker_title_my_facemojis">Mijn Facemoji\'s</string>
     <string name="sticker_title_funny_stickers">Grappige stickers</string>
     <string name="label_share">Delen</string>

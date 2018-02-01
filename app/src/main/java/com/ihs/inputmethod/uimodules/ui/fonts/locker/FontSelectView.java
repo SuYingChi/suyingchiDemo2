@@ -36,6 +36,7 @@ public class FontSelectView extends ListView {
         mItemSelectedBackground = new ColorDrawable(getResources().getColor(R.color.font_select_listview_item_selected_bg));
         setDivider(new ColorDrawable(fontItemDividerColor));
         setDividerHeight(1);
+        keyboardViewAttr.recycle();
     }
 
     @Override
@@ -63,8 +64,10 @@ public class FontSelectView extends ListView {
       return mItemSelectedBackground;
     }
 
-    public void onDismiss() {
-        ((FontSelectViewAdapter) this.getAdapter()).cancelAnimation();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void onDismiss() {
+//        ((FontSelectViewAdapter) this.getAdapter()).cancelAnimation();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }
 

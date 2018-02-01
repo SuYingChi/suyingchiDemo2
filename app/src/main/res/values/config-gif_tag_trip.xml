@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="gif_tag_strip_tag_bkg_radius">3dp</dimen>
-    <dimen name="gif_tag_strip_tag_margin_vertical">4dp</dimen>
-    <dimen name="gif_tag_strip_tag_margin_horizontal">3.5dp</dimen>
-    <dimen name="gif_tag_strip_tag_padding_horizontal">10dp</dimen>
-    <dimen name="gif_tag_strip_tag_text_size">13sp</dimen>
-
-    <color name="gif_tag_strip_tag_text">#ffffff</color>
-
 </resources>

@@ -17,7 +17,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.FacemojiManager;
-import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FaceItem;
 
 public final class FacePalettesView extends LinearLayout implements ViewPager.OnPageChangeListener, FacePageGridView.OnFaceClickListener, FacePageGridViewAdapter.OnFaceSwitchListener {
 
@@ -61,7 +60,7 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
         }
 
         // view pager
-        mViewPager = (ViewPager) findViewById(R.id.face_viewpager);
+        mViewPager = findViewById(R.id.face_viewpager);
         mFaceLayoutParams = new FaceLayoutParams(HSApplication.getContext().getResources());
         mViewPager.setAdapter(new FacePalettesViewAdapter(mFaceLayoutParams,this));//设置监听为this，因为外部传入该类的onFaceSwitchListener时机比该方法慢
         mViewPager.addOnPageChangeListener(this);
@@ -69,16 +68,16 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
         mFaceLayoutParams.setPagerProperties(mViewPager);
 
         // page id view
-        mFacePageIndicatorView = (FacePageIndicatorView) findViewById(R.id.face_switch_page_id_view);
+        mFacePageIndicatorView = findViewById(R.id.face_switch_page_id_view);
         mFacePageIndicatorView.setColors(0xff1ea0cd, 0x00000000);
 
-        TextView title = (TextView) findViewById(R.id.face_switch_title);
+        TextView title = findViewById(R.id.face_switch_title);
         title.setTextColor(elementColor);
 
-        TextView manageText = (TextView) findViewById(R.id.face_switch_edit_btn);
+        TextView manageText = findViewById(R.id.face_switch_edit_btn);
         manageText.setTextColor(elementColor);
 
-        ImageView backImage = (ImageView) findViewById(R.id.face_switch_back_btn);
+        ImageView backImage = findViewById(R.id.face_switch_back_btn);
         VectorDrawableCompat closeDrawable = VectorCompat.createVectorDrawable(HSApplication.getContext(),R.drawable.ic_close_black_24dp);
         DrawableCompat.setTint(closeDrawable,elementColor);
         backImage.setImageDrawable(closeDrawable);
@@ -97,15 +96,13 @@ public final class FacePalettesView extends LinearLayout implements ViewPager.On
         mFacePageIndicatorView.setPageId(FacemojiManager.getFacePageCount(), position, positionOffset);
     }
 
-    @Override
-    public void onFaceClick(FaceItem faceItem) {
 
-    }
-
-    public void prepare() {
-        mViewPager.getAdapter().notifyDataSetChanged();
-        mViewPager.setCurrentItem(0);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void prepare() {
+//        mViewPager.getAdapter().notifyDataSetChanged();
+//        mViewPager.setCurrentItem(0);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public void onFaceSwitch() {

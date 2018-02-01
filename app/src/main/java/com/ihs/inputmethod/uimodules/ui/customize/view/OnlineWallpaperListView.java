@@ -25,17 +25,17 @@ import java.util.List;
 
 public class OnlineWallpaperListView extends FrameLayout {
 
-    private static final String PREF_KEY_HOT_3D_WALLPAPER_START_INDEX = "hot_3d_wallpaper_start_index";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String PREF_KEY_HOT_3D_WALLPAPER_START_INDEX = "hot_3d_wallpaper_start_index";
 
-    private static final int HOT_3D_WALLPAPER_COUNT = 4;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int HOT_3D_WALLPAPER_COUNT = 4;
 
     public ProgressBar progressBar;
     private LinearLayout retryLayout;
     public RecyclerView recyclerView;
     public OnlineWallpaperGalleryAdapter adapter;
     public int mCategoryIndex;
-    private FrameLayout mPackageContainer;
-    private Animator mPackageAnimator;
+    // --Commented out by Inspection (18/1/11 下午2:41):private FrameLayout mPackageContainer;
+    // --Commented out by Inspection (18/1/11 下午2:41):private Animator mPackageAnimator;
 
 
     public OnlineWallpaperListView(Context context) {
@@ -74,15 +74,15 @@ public class OnlineWallpaperListView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        this.recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        this.retryLayout = (LinearLayout) findViewById(R.id.retry_downloading_layout);
+        this.recyclerView = findViewById(R.id.recycler_view);
+        this.retryLayout = findViewById(R.id.retry_downloading_layout);
         retryLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startLoading();
             }
         });
-        this.progressBar = (ProgressBar) findViewById(R.id.wallpaper_loading_progress_bar);
+        this.progressBar = findViewById(R.id.wallpaper_loading_progress_bar);
 
         adapter = new OnlineWallpaperGalleryAdapter(getContext());
         recyclerView.setHasFixedSize(true);

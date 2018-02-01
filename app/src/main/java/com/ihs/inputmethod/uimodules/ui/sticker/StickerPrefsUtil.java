@@ -95,16 +95,18 @@ public class StickerPrefsUtil {
 //        }
     }
 
-    private static <K, V extends Comparable<? super V>> List<Map.Entry<K, V>> sortByValueDesc(Map<K, V> map) {
-        List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
-            @Override
-            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        return list;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private static <K, V extends Comparable<? super V>> List<Map.Entry<K, V>> sortByValueDesc(Map<K, V> map) {
+//        List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
+//        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
+//            @Override
+//            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
+//                return (o2.getValue()).compareTo(o1.getValue());
+//            }
+//        });
+//
+//        return list;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 }

@@ -64,7 +64,7 @@ public final class BaseFunctionBar extends LinearLayout implements View.OnClickL
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        functionLayout = (LinearLayout) findViewById(R.id.function_layout);
+        functionLayout = findViewById(R.id.function_layout);
         initFunctionBar();
     }
 

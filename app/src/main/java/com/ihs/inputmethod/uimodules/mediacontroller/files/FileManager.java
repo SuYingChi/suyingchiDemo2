@@ -39,24 +39,32 @@ public class FileManager implements IManager {
         GifFiles.withDownload(filePath).deleteFile();
     }
 
-    public File getDownloadGif(String filePath, String url){
-        return GifFiles.withDownload(filePath).getGif(url);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public File getDownloadGif(String filePath, String url){
+//        return GifFiles.withDownload(filePath).getGif(url);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public Uri getDownloadGifUri(String filePath, String url){
-        return GifFiles.withDownload(filePath).getGifUri(url);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public Uri getDownloadGifUri(String filePath, String url){
+//        return GifFiles.withDownload(filePath).getGifUri(url);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public File getDownloadGif(String filePath){
         return GifFiles.withDownload(filePath).getFile();
     }
 
-    public File getDownloadMP4(String filePath){
-        return MP4Files.withDownload(filePath).getFile();
-    }
-    public File getDownloadMP4(String filePath, String url){
-        return MP4Files.withDownload(filePath).getMP4(url);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public File getDownloadMP4(String filePath){
+//        return MP4Files.withDownload(filePath).getFile();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public File getDownloadMP4(String filePath, String url){
+//        return MP4Files.withDownload(filePath).getMP4(url);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
 }

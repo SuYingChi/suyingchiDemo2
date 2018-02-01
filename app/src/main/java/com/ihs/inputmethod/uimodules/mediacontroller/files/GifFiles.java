@@ -63,12 +63,14 @@ public class GifFiles {
             return new File(MediaController.getConfig().getGifDownloadPath(), fileName + extendedName);
         }
 
-        public File getOriginGif(String url){
-            // get gif cache directory
-            final int index = url.lastIndexOf('.');
-            final String extendedName = url.substring(index);
-            return new File(MediaController.getConfig().getOriginGifDownloadPath(), fileName + extendedName);
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public File getOriginGif(String url){
+//            // get gif cache directory
+//            final int index = url.lastIndexOf('.');
+//            final String extendedName = url.substring(index);
+//            return new File(MediaController.getConfig().getOriginGifDownloadPath(), fileName + extendedName);
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         public Uri getGifUri(String url){
             return Uri.fromFile(new File(MediaController.getConfig().getGifDownloadPath(), getGif(url).getName()));

@@ -87,20 +87,22 @@ public class UriUtils {
         return null;
     }
 
-    /**
-     * @param uri The Uri string to parse
-     * @param withDot True with dot, false without dot
-     * @return Nullable file extension
-     */
-    public static String getUriExtension(final String uri, final boolean withDot) {
-        final int index = uri.lastIndexOf('.');
-
-        if (index == -1) {
-            return null;
-        }
-
-        return withDot ? uri.substring(index) : uri.substring(index + 1);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * @param uri The Uri string to parse
+//     * @param withDot True with dot, false without dot
+//     * @return Nullable file extension
+//     */
+//    public static String getUriExtension(final String uri, final boolean withDot) {
+//        final int index = uri.lastIndexOf('.');
+//
+//        if (index == -1) {
+//            return null;
+//        }
+//
+//        return withDot ? uri.substring(index) : uri.substring(index + 1);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * @param uri The Uri to check.
@@ -134,12 +136,14 @@ public class UriUtils {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
-    /**
-     * get uri from resource
-     * @param resId
-     * @return
-     */
-    public static Uri getUri(int resId){
-        return Uri.parse("res://" + HSApplication.getContext().getPackageName() + "/" + resId);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * get uri from resource
+//     * @param resId
+//     * @return
+//     */
+//    public static Uri getUri(int resId){
+//        return Uri.parse("res://" + HSApplication.getContext().getPackageName() + "/" + resId);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

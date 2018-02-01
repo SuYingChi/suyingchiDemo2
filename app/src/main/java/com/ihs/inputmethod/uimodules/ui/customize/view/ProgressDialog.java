@@ -30,16 +30,18 @@ public class ProgressDialog extends Dialog {
         super(context, R.style.WallpaperLoadingDialogTheme);
     }
 
-    public ProgressDialog(Context context) {
-        super(context, R.style.WallpaperLoadingDialogTheme);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public ProgressDialog(Context context) {
+//        super(context, R.style.WallpaperLoadingDialogTheme);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static ProgressDialog createDialog(Context context, String text, DialogInterface.OnDismissListener animationListener) {
         sCustomProgressDialog = new ProgressDialog(context, R.style.WallpaperLoadingDialogTheme);
         sCustomProgressDialog.setContentView(R.layout.progress_layout);
         sCustomProgressDialog.setCancelable(true);
         sCustomProgressDialog.setOnDismissListener(animationListener);
-        TextView textView = (TextView) sCustomProgressDialog.findViewById(R.id.dialog_loading_text_view);
+        TextView textView = sCustomProgressDialog.findViewById(R.id.dialog_loading_text_view);
         textView.setText(text);
         sCustomProgressDialog.getWindow().getAttributes().gravity = Gravity.CENTER;
         return sCustomProgressDialog;
@@ -52,8 +54,8 @@ public class ProgressDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mProgressFrameLayout = (ProgressFrameLayout) findViewById(R.id.progress_dialog);
-        mTextView = (TextView) findViewById(R.id.dialog_loading_text_view);
+        mProgressFrameLayout = findViewById(R.id.progress_dialog);
+        mTextView = findViewById(R.id.dialog_loading_text_view);
     }
 
     @Override
@@ -70,9 +72,11 @@ public class ProgressDialog extends Dialog {
         super.show();
     }
 
-    public void setMessage(CharSequence message) {
-        mTextView.setText(message);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setMessage(CharSequence message) {
+//        mTextView.setText(message);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * @param isInstant if true, the dialog will dismiss instantly
@@ -131,7 +135,7 @@ public class ProgressDialog extends Dialog {
 
     private ProgressFrameLayout getProgressFrameLayout() {
         if (mProgressFrameLayout == null) {
-            mProgressFrameLayout = (ProgressFrameLayout) findViewById(R.id.progress_dialog);
+            mProgressFrameLayout = findViewById(R.id.progress_dialog);
         }
         return mProgressFrameLayout;
     }

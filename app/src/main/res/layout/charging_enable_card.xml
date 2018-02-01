@@ -1,56 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="180dp"
+    android:background="#2d90ff"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="#2d90ff"
-        android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="115dp"
+        android:layout_height="150dp"
+        android:layout_gravity="bottom"
+        android:scaleType="centerCrop"
+        android:src="@drawable/charging_enable_icon" />
 
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="115dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:layout_gravity="bottom"
-            android:src="@drawable/charging_enable_icon"
-            />
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1">
+        <TextView
+            android:id="@+id/tv_enable_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="22dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/enable"
+            android:textColor="#fff000"
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tv_enable_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/enable"
-                android:textColor="#fff000"
-                android:textSize="16sp"
-                android:layout_marginBottom="22dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="18dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"/>
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_enable_button"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="0dp"
+            android:ellipsize="end"
+            android:text="@string/charging_alert_message"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:text="@string/charging_alert_message"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:layout_marginTop="0dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="14dp"
-                android:layout_above="@id/tv_enable_button"/>
-        </RelativeLayout>
-
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

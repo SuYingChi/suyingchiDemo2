@@ -73,7 +73,7 @@ public class FaceGridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        StickerViewHolder holder = null;
+        StickerViewHolder holder;
 
         final FaceItem face = (FaceItem) getItem(position);
 
@@ -89,9 +89,9 @@ public class FaceGridAdapter extends BaseAdapter {
         convertView = mInflater.inflate(R.layout.face_item_view, null);
         final View containerLayout = convertView.findViewById(R.id.face_item_layout);
         containerLayout.setLayoutParams(new GridView.LayoutParams(stickerDimension, stickerDimension));
-        final ImageView face_img = (ImageView) containerLayout.findViewById(R.id.face_item_img);
-        final ImageView picker = (ImageView) containerLayout.findViewById(R.id.face_item_picker_icon);
-        final ImageView faceNowUsed = (ImageView) containerLayout.findViewById(R.id.face_now_used);
+        final ImageView face_img = containerLayout.findViewById(R.id.face_item_img);
+        final ImageView picker = containerLayout.findViewById(R.id.face_item_picker_icon);
+        final ImageView faceNowUsed = containerLayout.findViewById(R.id.face_now_used);
         refreshPickerView(picker, face);
         setItemClickListener(face, convertView, picker);
         holder = new StickerViewHolder();

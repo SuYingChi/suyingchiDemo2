@@ -36,10 +36,12 @@ public class AdGooglePlayDialog extends Dialog {
         init();
     }
 
-    public AdGooglePlayDialog(@NonNull Context context, @StyleRes int themeResId) {
-        super(context, themeResId);
-        init();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public AdGooglePlayDialog(@NonNull Context context, @StyleRes int themeResId) {
+//        super(context, themeResId);
+//        init();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private void init() {
         setCanceledOnTouchOutside(false);
@@ -58,8 +60,8 @@ public class AdGooglePlayDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google_play_dialog_ad);
-        progressBarContainer = (FrameLayout) findViewById(R.id.google_play_ad_progress_bar_container);
-        frameLayoutAdContainer = (RoundedCornerLayout) findViewById(R.id.google_play_ad_container);
+        progressBarContainer = findViewById(R.id.google_play_ad_progress_bar_container);
+        frameLayoutAdContainer = findViewById(R.id.google_play_ad_container);
     }
 
     /**

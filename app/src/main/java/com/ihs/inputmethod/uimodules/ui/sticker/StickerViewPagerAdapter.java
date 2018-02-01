@@ -1,7 +1,6 @@
 package com.ihs.inputmethod.uimodules.ui.sticker;
 
-import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
+import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ClickUtils;
 import com.ihs.commons.utils.HSPreferenceHelper;
@@ -23,7 +17,12 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.model.StickerHomeModel;
 import com.ihs.inputmethod.uimodules.ui.theme.utils.LockedCardActionUtils;
 import com.ihs.inputmethod.utils.DownloadUtils;
-import com.kc.utils.KCAnalytics;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +40,12 @@ public class StickerViewPagerAdapter extends PagerAdapter {
     private int lastDownloadPosition = -1;
     private List<StickerGroup> needDownloadStickerGroupList = new ArrayList<>();
     private LayoutInflater inflater;
+    private DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
+            .cacheInMemory(true)
+            .showImageOnFail(null)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .cacheOnDisk(true).build();
+
     public StickerViewPagerAdapter(View firstView) {
         inflater = LayoutInflater.from(HSApplication.getContext());
         this.firstView = firstView;
@@ -108,24 +113,32 @@ public class StickerViewPagerAdapter extends PagerAdapter {
             StickerDownloadView stickerDownloadView = (StickerDownloadView) inflater.inflate(R.layout.common_sticker_panel_need_download_page, null);
             final StickerGroup stickerGroup = needDownloadStickerGroupList.get(position - 1);
             stickerDownloadView.setStickerGroup(stickerGroup);
-            final ImageView sticker_download_preview = (ImageView) stickerDownloadView.findViewById(R.id.sticker_download_preview_image);
-            final TextView stickerDownloadShowName = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_show_name);
+            final ImageView sticker_download_preview = stickerDownloadView.findViewById(R.id.sticker_download_preview_image);
+            final TextView stickerDownloadShowName = stickerDownloadView.findViewById(R.id.sticker_download_show_name);
             stickerDownloadShowName.setText(stickerGroup.getDownloadDisplayName());
-            int padding = HSDisplayUtils.dip2px(40);
-            sticker_download_preview.setPadding(padding, padding, padding, padding);
-            Glide.with(HSApplication.getContext()).load(stickerGroup.getStickerGroupDownloadPreviewImageUri()).listener(new RequestListener<Drawable>() {
+            ImageLoader.getInstance().displayImage(stickerGroup.getStickerGroupDownloadPreviewImageUri(), new ImageViewAware(sticker_download_preview), displayImageOptions, new ImageLoadingListener() {
                 @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                    return false;
+                public void onLoadingStarted(String imageUri, View view) {
+                    int padding = HSDisplayUtils.dip2px(40);
+                    view.setPadding(padding, padding, padding, padding);
                 }
 
                 @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    sticker_download_preview.setPadding(0, 0, 0, 0);
-                    return false;
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
                 }
-            }).into(sticker_download_preview);
-            TextView downloadButton = (TextView) stickerDownloadView.findViewById(R.id.sticker_download_button);
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    view.setPadding(0, 0, 0, 0);
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            });
+            TextView downloadButton = stickerDownloadView.findViewById(R.id.sticker_download_button);
             StickerHomeModel  stickerHomeModel = new StickerHomeModel();
             stickerHomeModel.stickerGroup = stickerGroup;
             if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
@@ -138,7 +151,6 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                 if (LockedCardActionUtils.shouldLock(stickerHomeModel)) {
                     LockedCardActionUtils.handleLockAction(v.getContext(),LockedCardActionUtils.LOCKED_CARD_FROM_KEYBOARD_STICKER, stickerHomeModel, null);
                 } else {
-                    KCAnalytics.logEvent("sticker_download_clicked", "stickerGroupName", stickerGroup.getStickerGroupName(), "form", CLICK_FROM);
                     final String stickerGroupName = stickerGroup.getStickerGroupName();
                     final String stickerGroupDownloadedFilePath = StickerUtils.getStickerFolderPath(stickerGroupName) + STICKER_DOWNLOAD_ZIP_SUFFIX;
                     DownloadUtils.getInstance().startForegroundDownloading(HSApplication.getContext(), stickerGroupName,
@@ -147,7 +159,6 @@ public class StickerViewPagerAdapter extends PagerAdapter {
                                 HSPreferenceHelper.getDefault().putBoolean(KeyboardPanelManager.SHOW_EMOJI_PANEL, true);
                                 if (success) {
                                     lastDownloadPosition = position;
-                                    KCAnalytics.logEvent("sticker_download_succeed", "stickerGroupName", stickerGroupName, "from", CLICK_FROM);
                                     StickerDownloadManager.getInstance().unzipStickerGroup(stickerGroupDownloadedFilePath, stickerGroup);
                                 }
                             }, false);

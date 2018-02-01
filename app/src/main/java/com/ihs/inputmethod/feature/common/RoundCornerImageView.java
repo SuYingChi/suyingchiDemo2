@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 
-public class RoundCornerImageView extends ImageView {
+public class RoundCornerImageView extends android.support.v7.widget.AppCompatImageView {
 
     public static final String TAG = "RoundCornerImageView";
 
@@ -219,63 +219,77 @@ public class RoundCornerImageView extends ImageView {
         }
     }
 
-    public float getCornerRadius() {
-        return mLeftTopCornerRadius;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public float getCornerRadius() {
+//        return mLeftTopCornerRadius;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Set radii for each corner.
-     * 
-     * @param leftTop The desired radius for left-top corner in dip.
-     * @param rightTop The desired desired radius for right-top corner in dip.
-     * @param leftBottom The desired radius for left-bottom corner in dip.
-     * @param rightBottom The desired radius for right-bottom corner in dip.
-     * 
-     */
-    public void setCornerRadiiDP(float leftTop, float rightTop, float leftBottom, float rightBottom) {
-        final float density = getResources().getDisplayMetrics().density;
-        
-        final float lt = leftTop * density;
-        final float rt = rightTop * density;
-        final float lb = leftBottom * density;
-        final float rb = rightBottom * density;
-        
-        mRadii = new float[] { lt, lt, rt, rt, rb, rb, lb, lb };
-        updateDrawable();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Set radii for each corner.
+//     *
+//     * @param leftTop The desired radius for left-top corner in dip.
+//     * @param rightTop The desired desired radius for right-top corner in dip.
+//     * @param leftBottom The desired radius for left-bottom corner in dip.
+//     * @param rightBottom The desired radius for right-bottom corner in dip.
+//     *
+//     */
+//    public void setCornerRadiiDP(float leftTop, float rightTop, float leftBottom, float rightBottom) {
+//        final float density = getResources().getDisplayMetrics().density;
+//
+//        final float lt = leftTop * density;
+//        final float rt = rightTop * density;
+//        final float lb = leftBottom * density;
+//        final float rb = rightBottom * density;
+//
+//        mRadii = new float[] { lt, lt, rt, rt, rb, rb, lb, lb };
+//        updateDrawable();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public float getBorderWidth() {
-        return mBorderWidth;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public float getBorderWidth() {
+//        return mBorderWidth;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Set border width.
-     * 
-     * @param width
-     *            The desired width in dip.
-     */
-    public void setBorderWidthDP(float width) {
-        float scaledWidth = getResources().getDisplayMetrics().density * width; 
-        if (mBorderWidth == scaledWidth) {
-            return;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Set border width.
+//     *
+//     * @param width
+//     *            The desired width in dip.
+//     */
+//    public void setBorderWidthDP(float width) {
+//        float scaledWidth = getResources().getDisplayMetrics().density * width;
+//        if (mBorderWidth == scaledWidth) {
+//            return;
+//        }
+//
+//        mBorderWidth = scaledWidth;
+//        updateDrawable();
+//        invalidate();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        mBorderWidth = scaledWidth;
-        updateDrawable();
-        invalidate();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getBorderColor() {
+//        return mBorderColor.getDefaultColor();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public int getBorderColor() {
-        return mBorderColor.getDefaultColor();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setBorderColor(int color) {
+//        setBorderColor(ColorStateList.valueOf(color));
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void setBorderColor(int color) {
-        setBorderColor(ColorStateList.valueOf(color));
-    }
-
-    public ColorStateList getBorderColors() {
-        return mBorderColor;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public ColorStateList getBorderColors() {
+//        return mBorderColor;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setBorderColor(ColorStateList colors) {
         if (mBorderColor.equals(colors)) {
@@ -290,15 +304,19 @@ public class RoundCornerImageView extends ImageView {
         }
     }
 
-    public boolean isOval() {
-        return isOval;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean isOval() {
+//        return isOval;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void setOval(boolean oval) {
-        isOval = oval;
-        updateDrawable();
-        invalidate();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setOval(boolean oval) {
+//        isOval = oval;
+//        updateDrawable();
+//        invalidate();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     static class SelectableRoundedCornerDrawable extends Drawable {
 
@@ -612,26 +630,34 @@ public class RoundCornerImageView extends ImageView {
             return mBitmapHeight;
         }
 
-        public float getBorderWidth() {
-            return mBorderWidth;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public float getBorderWidth() {
+//            return mBorderWidth;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         public void setBorderWidth(float width) {
             mBorderWidth = width;
             mBorderPaint.setStrokeWidth(width);
         }
 
-        public int getBorderColor() {
-            return mBorderColor.getDefaultColor();
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public int getBorderColor() {
+//            return mBorderColor.getDefaultColor();
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        public void setBorderColor(int color) {
-            setBorderColor(ColorStateList.valueOf(color));
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public void setBorderColor(int color) {
+//            setBorderColor(ColorStateList.valueOf(color));
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        public ColorStateList getBorderColors() {
-            return mBorderColor;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public ColorStateList getBorderColors() {
+//            return mBorderColor;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         /**
          * Controls border color of this ImageView.
@@ -653,17 +679,21 @@ public class RoundCornerImageView extends ImageView {
             }
         }
 
-        public boolean isOval() {
-            return mOval;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public boolean isOval() {
+//            return mOval;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         public void setOval(boolean oval) {
             mOval = oval;
         }
 
-        public ScaleType getScaleType() {
-            return mScaleType;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        public ScaleType getScaleType() {
+//            return mScaleType;
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         public void setScaleType(ScaleType scaleType) {
             if (scaleType == null) {

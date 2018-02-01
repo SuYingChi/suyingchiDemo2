@@ -51,27 +51,31 @@ public class LayoutWrapper {
         mVisible = true;
     }
 
-    public ViewGroup getLayout() {
-        return mLayout;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public ViewGroup getLayout() {
+//        return mLayout;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    void restoreRecyclerView(RecyclerView recyclerView, int firstPosition) {
-        if (DEBUG) {
-            HSLog.i(TAG, "mHasRecover  " + mHasRecover + "   " + firstPosition);
-        }
-        if (!mHasRecover) {
-            recyclerView.clearAnimation();
-            recyclerView.animate().setInterpolator(mInterpolator)
-                    .setDuration(0)
-                    .translationY(0);
-            mHasRecover = true;
-        }
-        LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
-        int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-        if (firstVisibleItemPosition < firstPosition) {
-            recyclerView.smoothScrollToPosition(0);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    void restoreRecyclerView(RecyclerView recyclerView, int firstPosition) {
+//        if (DEBUG) {
+//            HSLog.i(TAG, "mHasRecover  " + mHasRecover + "   " + firstPosition);
+//        }
+//        if (!mHasRecover) {
+//            recyclerView.clearAnimation();
+//            recyclerView.animate().setInterpolator(mInterpolator)
+//                    .setDuration(0)
+//                    .translationY(0);
+//            mHasRecover = true;
+//        }
+//        LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
+//        int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+//        if (firstVisibleItemPosition < firstPosition) {
+//            recyclerView.smoothScrollToPosition(0);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private void restore(ViewGroup viewGroup) {
         if (DEBUG) {

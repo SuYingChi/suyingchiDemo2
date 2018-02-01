@@ -75,7 +75,7 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
     @Override
     protected void onBindViewHolder(@NonNull final BaseItemHolder holder, @NonNull final Object item) {
         setItemTouchListener(holder, (I) item);
-        setItemDrawable(holder, (KCBaseElement) item);
+        setItemDrawable(holder, item);
         setNewState(holder, (KCBaseElement) item);
         updateItemSelection((V) holder, (KCBaseElement) item);
         setItemBackground(holder, (KCBaseElement) item);
@@ -611,13 +611,13 @@ public abstract class BaseThemeItemProvider<I extends Object, V extends BaseThem
             super(itemView);
             this.itemView = itemView;
 
-            mGifView = (HSGifImageView) itemView.findViewById(R.id.custom_theme_item_gif_content);
-            mContentImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_content);
-            mCheckImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_check_bg);
-            mBackgroundImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_bg);
-            mNewMarkImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_new_mark);
-            mGiftIconImageView = (ImageView) itemView.findViewById(R.id.custom_theme_item_gift_icon);
-            mPlaceholderView = (ImageView) itemView.findViewById(R.id.custom_theme_item_placeholder);
+            mGifView = itemView.findViewById(R.id.custom_theme_item_gif_content);
+            mContentImageView = itemView.findViewById(R.id.custom_theme_item_content);
+            mCheckImageView = itemView.findViewById(R.id.custom_theme_item_check_bg);
+            mBackgroundImageView = itemView.findViewById(R.id.custom_theme_item_bg);
+            mNewMarkImageView = itemView.findViewById(R.id.custom_theme_item_new_mark);
+            mGiftIconImageView = itemView.findViewById(R.id.custom_theme_item_gift_icon);
+            mPlaceholderView = itemView.findViewById(R.id.custom_theme_item_placeholder);
 
         }
 

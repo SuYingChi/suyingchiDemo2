@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.kc.utils.KCAnalytics;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
@@ -122,10 +122,10 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
                 if (facemoijTabAdapter != null) {
                     facemojiCategoryList = FacemojiManager.getInstance().getCategories();
                     List<String> facemojiCategoryNameList = new ArrayList<>();
-                    for(FacemojiCategory facemojiCategory : facemojiCategoryList){
+                    for (FacemojiCategory facemojiCategory : facemojiCategoryList) {
                         facemojiCategoryNameList.add(facemojiCategory.getName());
                     }
-                    facemoijTabAdapter.setData(facemojiCategoryList,facemojiCategoryNameList);
+                    facemoijTabAdapter.setData(facemojiCategoryList, facemojiCategoryNameList);
                     facemoijTabAdapter.notifyDataSetChanged();
                 }
             }
@@ -160,34 +160,34 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
             removeAllViews();
             LinearLayout panelView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.facemoji_palette_layout, null);
 
-            facemojiTabRecyclerView = (RecyclerView) panelView.findViewById(R.id.facemoji_category_tab_host);
+            facemojiTabRecyclerView = panelView.findViewById(R.id.facemoji_category_tab_host);
 
             facemojiCategoryList = FacemojiManager.getInstance().getCategories();
             List<String> facemojiCategoryNameList = new ArrayList<>();
-            for(FacemojiCategory facemojiCategory : facemojiCategoryList){
+            for (FacemojiCategory facemojiCategory : facemojiCategoryList) {
                 facemojiCategoryNameList.add(facemojiCategory.getName());
             }
-            facemoijTabAdapter = new FacemoijTabAdapter(facemojiCategoryList,facemojiCategoryNameList,this);
+            facemoijTabAdapter = new FacemoijTabAdapter(facemojiCategoryList, facemojiCategoryNameList, this);
             facemojiTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             facemojiTabRecyclerView.setAdapter(facemoijTabAdapter);
 
-            currentFaceImage = (ImageView) panelView.findViewById(R.id.current_face_image);
+            currentFaceImage = panelView.findViewById(R.id.current_face_image);
             currentFaceImage.setImageURI(FacemojiManager.getCurrentFacePicUri());
 
             mStickerPalettesAdapter = new FacemojiPalettesAdapter(this, mStickerLayoutParams);
-            mViewPager = (FacemojiViewPager) (panelView.findViewById(R.id.facemoji_keyboard_pager));
+            mViewPager = panelView.findViewById(R.id.facemoji_keyboard_pager);
             mViewPager.setAdapter(mStickerPalettesAdapter);
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setOffscreenPageLimit(0);
             mViewPager.setPersistentDrawingCache(PERSISTENT_NO_CACHE);
             mStickerLayoutParams.setPagerProperties(mViewPager);
 
-            pageIndicatorView = (FacemojiIndicatorView) panelView.findViewById(R.id.page_indicator);
+            pageIndicatorView = panelView.findViewById(R.id.page_indicator);
 
             panelView.findViewById(R.id.switch_face).setOnClickListener(this);
 
             // Find share progress view
-            mShareProgressView = (KeyboardProgressView) panelView.findViewById(R.id.share_progress_view);
+            mShareProgressView = panelView.findViewById(R.id.share_progress_view);
             mShareProgressView.setOnClickListener(null); // Intercept touch event
 
             addView(panelView);
@@ -207,15 +207,15 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         LayoutParams param = new LayoutParams(panelWidth, panelHeight);
         createFacemojiView.setLayoutParams(param);
         createFacemojiView.setGravity(Gravity.CENTER);
-        Button facemojiEntrance = (Button) createFacemojiView.findViewById(R.id.facemoji_button_keyboard);
+        Button facemojiEntrance = createFacemojiView.findViewById(R.id.facemoji_button_keyboard);
 
-        ImageView image = (ImageView) createFacemojiView.findViewById(R.id.face_arrow);
+        ImageView image = createFacemojiView.findViewById(R.id.face_arrow);
         RelativeLayout.LayoutParams imageParam = (RelativeLayout.LayoutParams) image.getLayoutParams();
         imageParam.width = (int) (panelWidth * 0.5);
         imageParam.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
         image.setLayoutParams(imageParam);
 
-        LinearLayout rightArea = (LinearLayout) createFacemojiView.findViewById(R.id.right_area_layout);
+        LinearLayout rightArea = createFacemojiView.findViewById(R.id.right_area_layout);
         RelativeLayout.LayoutParams rightAreaLayoutParams = (RelativeLayout.LayoutParams) rightArea.getLayoutParams();
         rightAreaLayoutParams.width = (int) (panelWidth * 0.5);
         image.setLayoutParams(imageParam);
@@ -223,8 +223,8 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
         int textColor = isCurrentThemeDarkBg ? Color.WHITE : HSApplication.getContext().getResources().getColor(R.color.emoji_panel_tab_selected_color);
 
-        ((TextView)createFacemojiView.findViewById(R.id.facemoji_title)).setTextColor(textColor);
-        ((TextView)createFacemojiView.findViewById(R.id.facemoji_text)).setTextColor(textColor);
+        ((TextView) createFacemojiView.findViewById(R.id.facemoji_title)).setTextColor(textColor);
+        ((TextView) createFacemojiView.findViewById(R.id.facemoji_text)).setTextColor(textColor);
 
         facemojiEntrance.setOnClickListener(new OnClickListener() {
             @Override
@@ -245,7 +245,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
 
     @Override
     public void onPageSelected(int position) {
-        final Pair<Integer, Integer> newPos = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(position,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);
+        final Pair<Integer, Integer> newPos = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(position, FacemojiManager.ShowLocation.Keyboard, getContext().getResources().getConfiguration().orientation);
         setCurrentCategoryId(newPos.first /* categoryId */, false /* force */);
         FacemojiManager.setCurrentCategoryPageId(newPos.second /* categoryPageId */);
     }
@@ -265,7 +265,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
     }
 
     private void onClickFacemojiCreateButton() {
-        KCAnalytics.logEvent("keyboard_facemoji_create_clicked");
+        HSAnalytics.logEvent("keyboard_facemoji_create_clicked");
         HSInputMethod.hideWindow();
         startCameraActivity();
     }
@@ -274,17 +274,17 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
     private void startCameraActivity() {
         Intent i = new Intent(HSApplication.getContext(), SplashActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra(SplashActivity.JUMP_TAG,SplashActivity.JUMP_TO_FACEMOJI_CAMERA);
+        i.putExtra(SplashActivity.JUMP_TAG, SplashActivity.JUMP_TO_FACEMOJI_CAMERA);
         HSApplication.getContext().startActivity(i);
     }
 
     private void setCurrentCategoryId(int categoryId, boolean force) {
-        Pair<Integer, Integer> categoryIdAndPageIdFromPagePosition = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(mViewPager.getCurrentItem(),FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);
-        int totalPageOfCurrentCategory = FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);
+        Pair<Integer, Integer> categoryIdAndPageIdFromPagePosition = FacemojiManager.getInstance().getCategoryIdAndPageIdFromPagePosition(mViewPager.getCurrentItem(), FacemojiManager.ShowLocation.Keyboard, getContext().getResources().getConfiguration().orientation);
+        int totalPageOfCurrentCategory = FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first, FacemojiManager.ShowLocation.Keyboard, getContext().getResources().getConfiguration().orientation);
         if (totalPageOfCurrentCategory > 1) {
             pageIndicatorView.setVisibility(VISIBLE);
-            pageIndicatorView.updateIndicator(categoryIdAndPageIdFromPagePosition.second, FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation));
-        }else {
+            pageIndicatorView.updateIndicator(categoryIdAndPageIdFromPagePosition.second, FacemojiManager.getInstance().getCategoryPageSize(categoryIdAndPageIdFromPagePosition.first, FacemojiManager.ShowLocation.Keyboard, getContext().getResources().getConfiguration().orientation));
+        } else {
             pageIndicatorView.setVisibility(INVISIBLE);
         }
 
@@ -295,7 +295,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         mCurrentCategoryId = categoryId;
 
         int newTabId = categoryId;
-        final int newCategoryPageId = FacemojiManager.getInstance().getPageIdFromCategoryId(categoryId,FacemojiManager.ShowLocation.Keyboard,getContext().getResources().getConfiguration().orientation);
+        final int newCategoryPageId = FacemojiManager.getInstance().getPageIdFromCategoryId(categoryId, FacemojiManager.ShowLocation.Keyboard, getContext().getResources().getConfiguration().orientation);
 
 
         if (force || categoryIdAndPageIdFromPagePosition.first != categoryId) {
@@ -305,16 +305,16 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         facemoijTabAdapter.setTabSelected(newTabId);
 
         if (!FacemojiDownloadManager.isFacemojiCategoryDownloadedSuccess(facemojiCategoryList.get(categoryId).getName())) {
-            FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(facemojiCategoryList.get(categoryId),null);
+            FacemojiDownloadManager.getInstance().startDownloadFacemojiResource(facemojiCategoryList.get(categoryId), null);
         }
     }
 
     @Override
     public void onFacemojiClicked(FacemojiSticker sticker) {
-        if (sticker.getName() == null){
+        if (sticker.getName() == null) {
             return;
         }
-        KCAnalytics.logEvent("keyboard_facemoji_sent","categoryAndName",sticker.getCategoryName()+"-"+sticker.getName());
+        HSAnalytics.logEvent("keyboard_facemoji_sent", "categoryAndName", sticker.getCategoryName() + "-" + sticker.getName());
         MediaController.getShareManager().shareFacemojiFromKeyboard(sticker, Constants.MEDIA_FORMAT_GIF,
                 ShareChannel.CURRENT,
                 mProgressListener);
@@ -328,7 +328,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.switch_face:
-                if (onItemClickListener != null){
+                if (onItemClickListener != null) {
                     onItemClickListener.onSwitchFaceClick();
                 }
                 break;
@@ -340,7 +340,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
     }
 
-    public void restartAnim(){
+    public void restartAnim() {
         if (mStickerPalettesAdapter != null) {
             mStickerPalettesAdapter.startAnimation(mCurrentPagerPosition);
         }
@@ -352,7 +352,7 @@ public class FacemojiPalettesView extends LinearLayout implements ViewPager.OnPa
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onSwitchFaceClick();
     }
 }

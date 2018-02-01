@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 public class NotificationBroadcastReceiver extends BroadcastReceiver {
-    public static final String INTENT_NOTIFICATION = "com.ihs.intent.notification";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String INTENT_NOTIFICATION = "com.ihs.intent.notification";
 
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -22,7 +22,6 @@
         android:paddingTop="5dp">
         <ImageView
             android:layout_gravity="center_horizontal"
-            android:id="@+id/iv_strip"
             android:layout_width="40dp"
             android:layout_height="4dp"
             android:background="@drawable/customize_bar_strip" />

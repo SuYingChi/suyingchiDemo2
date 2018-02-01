@@ -409,24 +409,26 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
             }
         }
 
-        private void setItemVisibilitya(View itemView, boolean isVisible) {
-            RecyclerView.LayoutParams param = (RecyclerView.LayoutParams) itemView.getLayoutParams();
-            if (param == null) {
-                param = new RecyclerView.LayoutParams(0, 0);
-            }
-            if (isVisible) {
-                param.height = itemDimension;
-                param.width = itemDimension;
-                itemView.setVisibility(View.VISIBLE);
-            } else {
-                itemView.setVisibility(View.GONE);
-                param.height = 0;
-                param.width = 0;
-                itemView.setMinimumHeight(0);
-                itemView.setMinimumWidth(0);
-            }
-            itemView.setLayoutParams(param);
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//        private void setItemVisibilitya(View itemView, boolean isVisible) {
+//            RecyclerView.LayoutParams param = (RecyclerView.LayoutParams) itemView.getLayoutParams();
+//            if (param == null) {
+//                param = new RecyclerView.LayoutParams(0, 0);
+//            }
+//            if (isVisible) {
+//                param.height = itemDimension;
+//                param.width = itemDimension;
+//                itemView.setVisibility(View.VISIBLE);
+//            } else {
+//                itemView.setVisibility(View.GONE);
+//                param.height = 0;
+//                param.width = 0;
+//                itemView.setMinimumHeight(0);
+//                itemView.setMinimumWidth(0);
+//            }
+//            itemView.setLayoutParams(param);
+//        }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
         private void addNativeAdViewToHolder(final Holder holder, final NativeAdInfo nativeAdInfo) {
             holder.itemView.setClickable(false);
@@ -507,9 +509,9 @@ public final class ThemeBackgroundAdapterDelegate extends AdapterDelegate<List<T
 
             public Holder(View itemView) {
                 super(itemView);
-                backgroundContent = (ImageView) itemView.findViewById(R.id.background_content);
-                backgroundNewMark = (ImageView) itemView.findViewById(R.id.background_new_mark);
-                backgroundGiftIcon = (ImageView) itemView.findViewById(R.id.background_gift_icon);
+                backgroundContent = itemView.findViewById(R.id.background_content);
+                backgroundNewMark = itemView.findViewById(R.id.background_new_mark);
+                backgroundGiftIcon = itemView.findViewById(R.id.background_gift_icon);
                 CompatUtils.setCardViewMaxElevation((CardView) itemView);
             }
         }

@@ -17,10 +17,12 @@ public class PreferenceUtils {
         return sp.getBoolean(key, false);
     }
 
-    public static boolean getDefaultSharedPreferencesBoolean(String key, boolean defaultValue) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
-        return sp.getBoolean(key, defaultValue);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean getDefaultSharedPreferencesBoolean(String key, boolean defaultValue) {
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
+//        return sp.getBoolean(key, defaultValue);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static void setBoolean(String key, boolean value) {
         SharedPreferences sp = HSApplication.getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);

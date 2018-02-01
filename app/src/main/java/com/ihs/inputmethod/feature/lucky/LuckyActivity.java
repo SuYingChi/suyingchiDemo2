@@ -14,7 +14,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
@@ -28,14 +27,13 @@ import com.ihs.inputmethod.feature.lucky.view.GameScene;
 import com.ihs.inputmethod.feature.lucky.view.GoButton;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.ToastUtils;
+import com.kc.utils.KCAnalytics;
 
 import net.appcloudbox.ads.base.AcbAd;
 import net.appcloudbox.ads.base.AcbNativeAd;
 import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
 
 import java.util.Locale;
-
-import static com.ihs.inputmethod.feature.common.CommonUtils.setupTransparentSystemBarsForLmp;
 
 
 /**
@@ -208,6 +206,10 @@ public class LuckyActivity extends HSAppCompatActivity
         setupTransparentSystemBarsForLmp(this);
         ActivityUtils.setNavigationBarColor(this, ContextCompat.getColor(this, android.R.color.black));
         ActivityUtils.hideStatusBar(this);
+    }
+
+    private void setupTransparentSystemBarsForLmp(LuckyActivity luckyActivity) {
+
     }
 
 

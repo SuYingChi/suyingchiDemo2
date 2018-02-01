@@ -99,9 +99,11 @@ public final class DownloadManager {
 		}
 	}
 
-	private File getGifDownloadFolder() {
-		return DirectoryUtils.getGifDownloadFolder();
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	private File getGifDownloadFolder() {
+//		return DirectoryUtils.getGifDownloadFolder();
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	private File getMp4DownloadDir() {
 		return DirectoryUtils.getMp4CacheDir();

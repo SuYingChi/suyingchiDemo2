@@ -2,12 +2,12 @@ package com.ihs.inputmethod.uimodules.ui.settings.activities;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
 import com.ihs.inputmethod.api.language.HSImeSubtypeListItem;
-import com.ihs.inputmethod.base.utils.ApplicationUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.settings.AdditionalSubtypeUtil;
 import com.ihs.inputmethod.uimodules.R;
@@ -44,8 +43,8 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
         setContentView(R.layout.more_language_layout2);
 
-        mAvailableLanguagesListLayout = (LinearLayout)findViewById(R.id.ll_available_languages);
-        mCurrentLanguagesListLayout = (LinearLayout)findViewById(R.id.ll_current_languages_list);
+        mAvailableLanguagesListLayout = findViewById(R.id.ll_available_languages);
+        mCurrentLanguagesListLayout = findViewById(R.id.ll_current_languages_list);
 
         init();
 
@@ -173,22 +172,17 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
     }
 
     private void init() {
-        initCurrentLanguages();
+//        initCurrentLanguages();
         initAvailableLanguages();
     }
 
     private void initCurrentLanguages() {
         mCurrentLanguagesListLayout.removeAllViews();
+        final InputMethodInfo imi = null ;//new InputMethodInfo();
         CharSequence displayName;
         InputMethodSubtype subtype;
         TextView tv;
         SwipeLayout languageItem;
-
-        String packageName = getPackageName();
-        ApplicationInfo applicationInfo = ApplicationUtils.getApplicationInfo();
-        if (applicationInfo == null) {
-            return;
-        }
 
         final List<HSImeSubtypeListItem> enabledSubs = HSImeSubtypeManager.getSortedInputMethodSubtypeList(true);
         final int count =enabledSubs.size();
@@ -198,8 +192,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
             if(subtype==null){
                 continue;
             }
-
-            displayName = subtype.getDisplayName(this, packageName, applicationInfo);
+            displayName = subtype.getDisplayName(this, imi.getPackageName(), imi.getServiceInfo().applicationInfo);
             languageItem = new SwipeLayout(this);
             languageItem.setTitle(displayName);
             languageItem.setListener(this);
@@ -228,20 +221,15 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
     private void initAvailableLanguages() {
         mAvailableLanguagesListLayout.removeAllViews();
 
+        final InputMethodInfo imi = null;
+
         // add english us language
         String displayName;
 
         String locale;
         InputMethodSubtype subtype;
-        TextView tv = null;
-        LanguageLoadingPreference preference = null;
-
-        String packageName = getPackageName();
-        ApplicationInfo applicationInfo = ApplicationUtils.getApplicationInfo();
-        if (applicationInfo == null) {
-            return;
-        }
-
+        TextView tv;
+        LanguageLoadingPreference preference;
         final List<HSImeSubtypeListItem> unEnabledSubs = HSImeSubtypeManager.getSortedInputMethodSubtypeList(false);
         final int count = unEnabledSubs.size();
         final boolean isApiBelow19= Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
@@ -254,7 +242,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
             if(subtype==null){
                 continue;
             }
-            displayName = subtype.getDisplayName(this, packageName, applicationInfo).toString();
+            displayName = subtype.getDisplayName(this, imi.getPackageName(), imi.getServiceInfo().applicationInfo).toString();
 
             preference = new LanguageLoadingPreference(this);
             preference.setTitle(displayName);
@@ -268,6 +256,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
             tv.setLayoutParams(lp);
             tv.setBackgroundColor(this.getResources().getColor(R.color.settings_divder_line_color));
             mAvailableLanguagesListLayout.addView(tv);
+
             preference.setSegmentView(tv);
         }
     }
@@ -298,11 +287,11 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
         View view = dialog.findViewById(R.id.layout);
 
-        TextView title = (TextView) (view.findViewById(R.id.title));
+        TextView title = view.findViewById(R.id.title);
         title.setTextColor(getResources().getColor(R.color.alert_message));
         title.setText(language.getTitle());
 
-        TextView cancel = (TextView) (view.findViewById(R.id.negative_button));
+        TextView cancel = view.findViewById(R.id.negative_button);
         cancel.setText(getString(R.string.cancel).toUpperCase());
         cancel.setTextColor(getResources().getColor(R.color.alert_positive_button_text));
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -312,7 +301,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
             }
         });
 
-        TextView delete = (TextView) (view.findViewById(R.id.positive_button));
+        TextView delete = view.findViewById(R.id.positive_button);
         delete.setText(getString(R.string.delete).toUpperCase());
         delete.setOnClickListener(new View.OnClickListener() {
             @Override

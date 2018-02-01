@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="feedback_email">feedback.emoji@hotmail.com</string>
     <string name="fb_app_id">1474873346171463</string>
 
     <string name="app_name">Emoji Keyboard</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_idle">Emoji Keyboard</string>
-    <string name="alert_attention_title">Attention !</string>
     <string name="alert_attention_messenger">%1$s treats users\' privacy seriously. We will NEVER collect any data like passwords or credit card numbers. </string>
     <string name="toast_enable_keyboard">Enable %1$s</string>
     <string name="toast_select_keyboard">Select %1$s</string>
-    <string name="main_activity_edittext_hint">Try typing here now...</string>
-    <string name="keyboard_theme_dark" translatable="false">Dark</string>
-    <string name="keyboard_theme_grey" translatable="false">Grey</string>
 
     <!--<string name="panel_keyboard" translatable="false">keyboard</string>-->
     <!--<string name="panel_fonts" translatable="false">fonts</string>-->
@@ -21,35 +14,19 @@
     <!--<string name="panel_theme" translatable="false">theme</string>-->
     <!--<string name="panel_gifs" translatable="false">gif</string>-->
 
-    <string name="panel_fonts_class" translatable="false">com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontSelectPanel</string>
-    <string name="panel_settings_class" translatable="false">com.mobipioneer.inputmethod.panels.settings.HSSettingsPanel</string>
-    <string name="panel_emoticon_class" translatable="false">com.mobipioneer.inputmethod.panels.emoticon.EmoticonPanel</string>
-
-    <string name="settings_button_sound">Sounds</string>
-    <string name="settings_button_auto_correction">Auto-correction</string>
-    <string name="settings_button_auto_capitalization">Auto-capitalization</string>
-    <string name="settings_button_word_prediction">Word Prediction</string>
-    <string name="settings_button_swipe">Swipe</string>
-    <string name="settings_button_more_settings">More Settings</string>
-    <string name="settings_button_add_language">Add Language</string>
     <string name="emoji_search_hint">Search GIFs by text or emoji </string>
 
+    <!-- Config for difference activity name -->
+    <string name="setting_activity_name">com.mobipioneer.inputmethod.panels.settings.EmojiSettingsActivity2</string>
+
     <!-- theme text override -->
-    <string name="share_keyboard_name">Emoji Keyboard</string>
-
-    <string name="tip_usage_access">Find %s. Switch it on to enable Apps with usage access.</string>
-
-    <string name="taskAffinity_interstitial_ads">com.interstitial.ads</string>
-    <string name="keyboard_theme_white" translatable="false">White</string>
 
 
     <string name="dialog_title_select_keyboard_apply_rain">Activate %1$s</string>
     <string name="dialog_msg_select_keyboard_apply_rain">You need to activate %1$s to use this theme.</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">Activate Now</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain">Activate %1$s</string>
     <string name="dialog_msg_enable_keyboard_home_rain">%1$s provides you with personalized keyboard themes and cute emojis.</string>
-    <string name="dialog_confirm_enable_keyboard_home_rain">Activate Now</string>
 
     <!--deep link-->
     <string name="deeplink_key_word">EmojiKey - Color your keyboard with personalized themes, Gifs and fonts.</string>
@@ -64,5 +41,4 @@ With accessibility authorization, you'll get the best typing experience on diffe
 Note: You may receive a system reminder about authorizing, Emoji Keyboard will NEVER collect ANY of your information."</string>
     <string name="theme_share_text_content">My personalized keyboard made with #%1$s \n https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
     <string name="theme_share_text_content_for_custom_theme">Customize your own keyboard with your favorite pictures! Download #%1$s For Free:\n https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
-    <string name="settings_button_tell_a_friend_content">Hey, you have to try the app %1$s keyboard. You can c͙u͙s͙t͙o͙m͙i͙z͙e͙ your keyboard with your own pictures! And the ⒻⓄⓃⓉⓈ and emojis are awesome. Download #%2$s For Free:\n https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
 </resources>

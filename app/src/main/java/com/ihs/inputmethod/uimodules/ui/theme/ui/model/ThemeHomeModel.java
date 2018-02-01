@@ -69,12 +69,9 @@ public final class ThemeHomeModel implements ICondition {
 	 * @return true for ThemeAd
      */
 	public boolean isThemeAd() {
-		if (isAd && !TextUtils.isEmpty(adPlacement) && adPlacement.equals(HSApplication.getContext().getString(R.string.theme_ad_placement_theme_ad))) {
-			return true;
-		}
+        return isAd && !TextUtils.isEmpty(adPlacement) && adPlacement.equals(HSApplication.getContext().getString(R.string.theme_ad_placement_theme_ad));
 
-		return false;
-	}
+    }
 
 	@Override
 	public boolean isDownloadLockerToUnlock() {

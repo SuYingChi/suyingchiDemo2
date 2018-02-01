@@ -18,7 +18,7 @@ public final class ThemeTitleViewHolder extends RecyclerView.ViewHolder {
 
 	public ThemeTitleViewHolder(View itemView) {
 		super(itemView);
-		title= (TextView) itemView.findViewById(R.id.title_left);
-		btn= (TextView) itemView.findViewById(R.id.title_btn_right);
+		title= itemView.findViewById(R.id.title_left);
+		btn= itemView.findViewById(R.id.title_btn_right);
 	}
 }

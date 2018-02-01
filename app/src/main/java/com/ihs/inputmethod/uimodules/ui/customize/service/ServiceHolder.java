@@ -6,5 +6,5 @@ package com.ihs.inputmethod.uimodules.ui.customize.service;
  */
 public interface ServiceHolder {
 
-    ICustomizeService getService();
+    // --Commented out by Inspection (18/1/11 下午2:41):ICustomizeService getService();
 }

@@ -7,7 +7,6 @@
 
 
     <FrameLayout
-        android:id="@+id/frg_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

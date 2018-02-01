@@ -32,7 +32,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
     public static final String CopperImagePath = "CopperImagePath";
     public static final String KeyboardWidth = "KeyboardWidth";
     public static final String KeyboardHeight = "KeyboardHeight";
-    public static final String CopperImageBitmap = "CopperImageBitmap";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String CopperImageBitmap = "CopperImageBitmap";
     public static final String OldCropperImagePath = "OldCropperImagePath";
 
     FrameLayout cropperContentFrameLayout;
@@ -61,7 +61,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
         cropperImageMaskView = findViewById(R.id.custom_theme_background_cropper_content_mask_view);
         ((LinearLayout.LayoutParams) cropperImageMaskView.getLayoutParams()).height = keyboardHeight;
 
-        cropperContentFrameLayout = (FrameLayout) findViewById(R.id.custom_theme_background_cropper_content_layout);
+        cropperContentFrameLayout = findViewById(R.id.custom_theme_background_cropper_content_layout);
         ViewTreeObserver vto = cropperContentFrameLayout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -79,7 +79,7 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
             }
         });
 
-        cropperImageView = (HSMatrixImageView) findViewById(R.id.custom_theme_background_cropper_content_image_view);
+        cropperImageView = findViewById(R.id.custom_theme_background_cropper_content_image_view);
         cropperImageView.setImageBitmap(cropperImage);
 
         findViewById(R.id.custom_theme_background_cropper_title_cancel).setOnClickListener(new OnClickListener() {
@@ -166,14 +166,14 @@ public class CustomThemeBackgroundCropperActivity extends HSActivity {
         return activityShotRet;
     }
 
-    private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
 
     public static Bitmap extractThumbNail(final String path, final int keyboardWidth, final int keyboardHeight) {
         if (path == null || path.equals("") || keyboardWidth <= 0) {
             return null;
         }
 
-        ExifInterface ei = null;
+        ExifInterface ei;
         try {
             ei = new ExifInterface(path);
             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);

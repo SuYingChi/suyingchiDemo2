@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.ihs.inputmethod.uimodules.ui.stickerdeprecated.StickerPageGridView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sticker_page_gridview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:stretchMode="columnWidth"
-    android:background="@android:color/transparent"
-    android:gravity="center"/>

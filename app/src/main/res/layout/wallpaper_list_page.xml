@@ -73,7 +73,6 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/wallpaper_package_container"
         android:layout_width="61dp"
         android:layout_height="73dp"
         android:layout_gravity="left|start|bottom"
@@ -87,7 +86,6 @@
             android:layout_gravity="center_horizontal" />
 
         <ImageView
-            android:id="@+id/package_avatar"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_gravity="center_horizontal"
@@ -95,7 +93,6 @@
             android:layout_marginTop="11.333dp"/>
 
         <ImageView
-            android:id="@+id/package_tip"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginLeft="43dp"

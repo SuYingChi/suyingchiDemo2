@@ -29,7 +29,7 @@ public class FontFragment extends BaseThemeFragment {
 
     @Override
     protected ThemePageItem initiateThemePageItem() {
-        return new ThemePageItem(Arrays.<CategoryItem<?>>asList(
+        return new ThemePageItem(Arrays.asList(
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font), AdsItem.class, new AdsProvider(), getAdsItems(1, 0.75f, false)),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font), KCFontElement.class, new FontProvider(this), KCCustomThemeManager.getInstance().getFontElements()),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_font_color), KCTextColorElement.class, new FontColorProvider(this), KCCustomThemeManager.getInstance().getTextColorElements())

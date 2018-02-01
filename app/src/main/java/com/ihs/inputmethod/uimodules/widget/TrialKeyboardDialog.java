@@ -31,8 +31,8 @@ import com.ihs.keyboardutils.nativeads.KCNativeAdView;
 
 public final class TrialKeyboardDialog extends Dialog {
 
-    public final static String BUNDLE_ACTIVATION_CODE = "bundle_activation_code";
-    public final static String BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY = "bundle_key_show_trial_keyboard_activity";
+    // --Commented out by Inspection (18/1/11 下午2:41):public final static String BUNDLE_ACTIVATION_CODE = "bundle_activation_code";
+    // --Commented out by Inspection (18/1/11 下午2:41):public final static String BUNDLE_KEY_SHOW_TRIAL_KEYBOARD_ACTIVITY = "bundle_key_show_trial_keyboard_activity";
     private boolean isSoftKeyboardOpened;
     private ViewGroup rootView;
     private EditText inputTextView;
@@ -49,8 +49,8 @@ public final class TrialKeyboardDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trial_keyboard_dialog);
-        inputTextView = (EditText) findViewById(R.id.edit_text_input);
-        rootView = (ViewGroup) findViewById(R.id.root_view);
+        inputTextView = findViewById(R.id.edit_text_input);
+        rootView = findViewById(R.id.root_view);
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +82,7 @@ public final class TrialKeyboardDialog extends Dialog {
     private KCNativeAdView addNativeAdView() {
         String placementName = HSApplication.getContext().getString(R.string.ad_placement_themetryad);
 
-        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
+        final LinearLayout linearLayout = findViewById(R.id.ad_container);
 
         int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
         View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);

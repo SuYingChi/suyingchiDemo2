@@ -70,8 +70,8 @@ public class BackgroundFragment extends BaseThemeFragment implements LockerAppGu
 
     @Override
     protected ThemePageItem initiateThemePageItem() {
-        return new ThemePageItem(Arrays.<CategoryItem<? extends Object>>asList(
-                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), Integer.class, new CameraAlbumProvider(this), Arrays.asList(new Integer[]{R.drawable.custom_theme_background_camera_fg, R.drawable.custom_theme_background_album_fg})),
+        return new ThemePageItem(Arrays.asList(
+                new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), Integer.class, new CameraAlbumProvider(this), Arrays.asList(R.drawable.custom_theme_background_camera_fg, R.drawable.custom_theme_background_album_fg)),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), AdsItem.class, new AdsProvider(), getAdsItems(false)),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_background), KCBackgroundElement.class, new BackgroundProvider(this), KCCustomThemeManager.getInstance().getBackgroundElements())
         ));
@@ -187,7 +187,7 @@ public class BackgroundFragment extends BaseThemeFragment implements LockerAppGu
     }
 
     public enum EntryMode {
-        Default,
+        // --Commented out by Inspection (18/1/11 下午2:41):Default,
         Camera,
         Gallery
     }

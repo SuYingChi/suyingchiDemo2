@@ -104,8 +104,8 @@ android {
 
         color {
             applicationId = "com.keyboard.colorkeyboard"
-            versionName "2.4.2"
-            versionCode 57
+            versionName "2.4.3"
+            versionCode 58
             manifestPlaceholders = [APPLY_SCHEME: "rainbowKeyboard"]
             buildConfigField "boolean", "ENABLE_FACEMOJI", "false"
             buildConfigField "boolean", "MAIN_ACTIVITY_SHOW_VIDEO_WHEN_START", "true" //MainActivity开启时显示video，只有color特殊
@@ -136,7 +136,7 @@ android {
             buildConfigField "int", "LOCKER_CHARGING_NO_ADS_START_VERSION", "6"
             signingConfig signingConfigs.grinReleaseConfig
         }
-
+        
         ecstasy {
             applicationId = "ecstasy.applicationId"
             versionCode 8

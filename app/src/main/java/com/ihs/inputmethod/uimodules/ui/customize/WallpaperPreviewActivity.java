@@ -1,6 +1,5 @@
 package com.ihs.inputmethod.uimodules.ui.customize;
 
-import android.animation.ValueAnimator;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,7 +16,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.SparseBooleanArray;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -41,12 +39,10 @@ import com.bumptech.glide.request.transition.Transition;
 import com.kc.utils.KCAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
-import com.ihs.inputmethod.feature.common.CommonUtils;
 import com.ihs.inputmethod.feature.common.Thunk;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.inputmethod.uimodules.ui.customize.item.WallpaperPackageInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperUtils;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.view.PreviewViewPage;
@@ -54,9 +50,6 @@ import com.ihs.inputmethod.uimodules.ui.customize.view.ProgressDialog;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeBackgroundCropperActivity;
 import com.ihs.keyboardutils.utils.ToastUtils;
 import com.kc.commons.utils.KCCommonUtils;
-
-import net.appcloudbox.ads.base.AcbNativeAd;
-import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -78,32 +71,34 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private static final String TAG = WallpaperPreviewActivity.class.getSimpleName();
     private static final boolean DEBUG = true && BuildConfig.DEBUG;
 
-    public static final String INTENT_KEY_SCENARIO = "scenario";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String INTENT_KEY_SCENARIO = "scenario";
     public static final String INTENT_KEY_CATEGORY = "category";
     public static final String INTENT_KEY_WALLPAPERS = "wallpapers";
     public static final String INTENT_KEY_INDEX = "index";
-    public static final String INTENT_KEY_WALLPAPER_DATA = "wallpaperData";
-    public static final String INTENT_KEY_RANDOM_WALLPAPERS_DATA = "randomWallpapers";
-    public static final String INTENT_KEY_WALLPAPER_PACKAGE_INFO = "wallpaperPackageInfo";
-    @SuppressWarnings("PointlessBooleanExpression")
-    private static final String PREF_KEY_PREVIEW_GUIDE_SHOWN = "wallpaper_preview_guide_shown";
-    private static final String PREF_KEY_PREVIEW_WALLPAPER_SHOWN_MODE = "pref_key_preview_wallpaper_shown_mode";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String INTENT_KEY_WALLPAPER_DATA = "wallpaperData";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String INTENT_KEY_RANDOM_WALLPAPERS_DATA = "randomWallpapers";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String INTENT_KEY_WALLPAPER_PACKAGE_INFO = "wallpaperPackageInfo";
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @SuppressWarnings("PointlessBooleanExpression")
+//    private static final String PREF_KEY_PREVIEW_GUIDE_SHOWN = "wallpaper_preview_guide_shown";
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String PREF_KEY_PREVIEW_WALLPAPER_SHOWN_MODE = "pref_key_preview_wallpaper_shown_mode";
 
-    private final static String FULL_SCREEN = "FULL_SCREEN";
-    private final static String FULL_IMAGE = "FULL_IMAGE";
+    // --Commented out by Inspection (18/1/11 下午2:41):private final static String FULL_SCREEN = "FULL_SCREEN";
+    // --Commented out by Inspection (18/1/11 下午2:41):private final static String FULL_IMAGE = "FULL_IMAGE";
 
-    private static final int MODE_GALLERY_WALLPAPER = 0;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int MODE_GALLERY_WALLPAPER = 0;
     private static final int MODE_LOCAL_WALLPAPER = 1;
 
-    private final static int TOP_MARGIN = CommonUtils.pxFromDp(15);
+    // --Commented out by Inspection (18/1/11 下午2:41):private final static int TOP_MARGIN = CommonUtils.pxFromDp(15);
 
     private boolean mInitialized;
-    private boolean mIsGuide;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mIsGuide;
     private boolean mIsOnLineWallpaper;
-    private boolean mIsFromHub;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mIsFromHub;
     private int mPaperIndex;
-    private int mWallpaperMode = MODE_LOCAL_WALLPAPER;
-    float sumPositionAndPositionOffset;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mWallpaperMode = MODE_LOCAL_WALLPAPER;
+    // --Commented out by Inspection (18/1/11 下午2:41):float sumPositionAndPositionOffset;
 
     @Thunk
     ViewPager mViewPager;
@@ -112,7 +107,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private TextView mSetWallpaperButton;
     private TextView mSetKeyThemeButton;
     private ProgressDialog mDialog;
-    private View mEdit;
+    // --Commented out by Inspection (18/1/11 下午2:41):private View mEdit;
     private View mReturnArrow;
     private boolean mIsSettingKeyTheme = false;
     private LinearLayout setWallpaperDialog;
@@ -122,27 +117,31 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     private PreviewViewPagerAdapter mAdapter;
     private SparseBooleanArray mLoadMap = new SparseBooleanArray();
 
-    //selectZoomBtn true zoom_out 缩小 mIsCenterCrop state true
-    //selectZoomBtn false zoom_in 放大 mIsCenterCrop state false
-    private ImageView mZoomBtn;
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    //selectZoomBtn true zoom_out 缩小 mIsCenterCrop state true
+//    //selectZoomBtn false zoom_in 放大 mIsCenterCrop state false
+//    private ImageView mZoomBtn;
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private CategoryInfo mCategoryInfo;
-    private WallpaperPackageInfo mWallpaperPackageInfo;
+    // --Commented out by Inspection (18/1/11 下午2:41):private WallpaperPackageInfo mWallpaperPackageInfo;
 
-    //ad related
-    private static final int MAX_CONCURRENT_AD_REQUEST_COUNT = 3;
-    private ArrayList<AcbNativeAd> mCandidateAds = new ArrayList<>();
-    private boolean mShouldShowAds = false;
-    private int mAdStep = 5;
-    private int mCurrentRequestCount;
-    private int mStartIndex = 0;
-    private int mLastAdIndex = -1;
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    //ad related
+//    private static final int MAX_CONCURRENT_AD_REQUEST_COUNT = 3;
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
+    // --Commented out by Inspection (18/1/11 下午2:41):private ArrayList<AcbNativeAd> mCandidateAds = new ArrayList<>();
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mShouldShowAds = false;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mAdStep = 5;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mCurrentRequestCount;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mStartIndex = 0;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mLastAdIndex = -1;
     private int mMaxVisiblePosition;
-    private boolean mDestroying = false;
-    private AcbNativeAdLoader mAdLoader;
-    private ValueAnimator mPackageGuideLeftAnimator;
-    private ValueAnimator mPackageGuideRightAnimator;
-    private boolean mIsGuideInterrupted = false;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mDestroying = false;
+    // --Commented out by Inspection (18/1/11 下午2:41):private AcbNativeAdLoader mAdLoader;
+    // --Commented out by Inspection (18/1/11 下午2:41):private ValueAnimator mPackageGuideLeftAnimator;
+    // --Commented out by Inspection (18/1/11 下午2:41):private ValueAnimator mPackageGuideRightAnimator;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mIsGuideInterrupted = false;
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
@@ -202,10 +201,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDestroying = true;
-
-        if (mPackageGuideLeftAnimator != null) mPackageGuideLeftAnimator.cancel();
-        if (mPackageGuideRightAnimator != null) mPackageGuideRightAnimator.cancel();
     }
 
     @Override
@@ -219,17 +214,17 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mReturnArrow = findViewById(R.id.wallpaper_view_return);
         mReturnArrow.setOnClickListener(this);
 //        mReturnArrow.setBackgroundResource(R.drawable.moment_round_material_compat_dark);
-        mSetWallpaperButton = (TextView) findViewById(R.id.set_wallpaper_button);
+        mSetWallpaperButton = findViewById(R.id.set_wallpaper_button);
         mSetWallpaperButton.setOnClickListener(this);
 
-        mSetKeyThemeButton = (TextView) findViewById(R.id.set_key_theme_button);
+        mSetKeyThemeButton = findViewById(R.id.set_key_theme_button);
         mSetKeyThemeButton.setOnClickListener(this);
 
-        setWallpaperDialog = (LinearLayout) findViewById(R.id.select_dialog_wallpaper);
+        setWallpaperDialog = findViewById(R.id.select_dialog_wallpaper);
         setWallpaperDialog.setOnClickListener(this);
         setWallpaperDialog.setVisibility(View.INVISIBLE);
 
-        mViewPager = (ViewPager) findViewById(R.id.preview_view_pager);
+        mViewPager = findViewById(R.id.preview_view_pager);
         mAdapter = new PreviewViewPagerAdapter();
         mViewPager.setAdapter(mAdapter);
         mViewPager.setFocusable(true);
@@ -238,15 +233,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         mViewPager.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(this);
         mViewPager.setCurrentItem(mPaperIndex, false);
-        mViewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN && mPackageGuideLeftAnimator != null) {
-                    mIsGuideInterrupted = true;
-                }
-                return false;
-            }
-        });
     }
 
     private void showSetWallpaperSelectDialog() {
@@ -283,21 +269,23 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     private void showSetWallpaperDialog() {
         showSetWallpaperSelectDialog();
-        setHomeScreen = (LinearLayout) findViewById(R.id.set_home_screen);
+        setHomeScreen = findViewById(R.id.set_home_screen);
         setHomeScreen.setOnClickListener(this);
-        setLockerScreen = (LinearLayout) findViewById(R.id.set_locker_screen);
+        setLockerScreen = findViewById(R.id.set_locker_screen);
         setLockerScreen.setOnClickListener(this);
-        setHomeAndLockerScreen = (LinearLayout) findViewById(R.id.set_home_and_locker_screen);
+        setHomeAndLockerScreen = findViewById(R.id.set_home_and_locker_screen);
         setHomeAndLockerScreen.setOnClickListener(this);
     }
 
-    private void hideViews() {
-        mSetWallpaperButton.setVisibility(View.GONE);
-        View draw = ViewUtils.findViewById(this, R.id.preview_guide_draw_view);
-        if (draw != null) {
-            draw.setVisibility(View.GONE);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private void hideViews() {
+//        mSetWallpaperButton.setVisibility(View.GONE);
+//        View draw = ViewUtils.findViewById(this, R.id.preview_guide_draw_view);
+//        if (draw != null) {
+//            draw.setVisibility(View.GONE);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private void resetViewVisibility() {
         mSetWallpaperButton.setVisibility(View.VISIBLE);
@@ -393,9 +381,11 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
 
     }
 
-    protected boolean isSettingKeyTheme() {
-        return mIsSettingKeyTheme;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    protected boolean isSettingKeyTheme() {
+//        return mIsSettingKeyTheme;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private void setHomeScreenWallpaper() {
         mSetWallpaperButton.setTextColor(0x80ffffff);
@@ -419,7 +409,6 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
         displayPage(index, page);
     }
 
-    @Override
     protected void refreshButtonState() {
 
     }
@@ -694,7 +683,7 @@ public class WallpaperPreviewActivity extends WallpaperBaseActivity
             WallpaperInfo info = (WallpaperInfo) getWallpaperInfoByIndex((int) (page.getTag()));
 //            info.setTextLight(WallpaperUtils.textColorLightForWallPaper(bitmap));
 
-            ((ImageView) view).setImageMatrix(WallpaperUtils.centerCrop(page.width, page.height, (ImageView) view));
+            view.setImageMatrix(WallpaperUtils.centerCrop(page.width, page.height, view));
 
             mLoadMap.put((int) (page.getTag()), true);
             refreshButtonState();

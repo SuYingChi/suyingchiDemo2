@@ -16,24 +16,26 @@ public final class MediaDownload extends BaseDownload {
     private SoftReference<DownloadStatusListener> callback;
     private File downloadFile;
 
-    /**
-     * @param url
-     * @param downloadedFile
-     * @param callback
-     */
-    public MediaDownload(String url, File downloadedFile, final DownloadStatusListener callback) {
-        super(url);
-        this.downloadFile = MediaController.getFileManager().getDownloadGif(downloadedFile.getAbsolutePath());
-        this.filePath=this.downloadFile.getAbsolutePath();
-        this.callback = new SoftReference<>(callback) ;
-        onDataReceivedListener = new OnDataReceivedListener() {
-            @Override
-            public void onDataReceived(long received, long size) {
-                final float percent = (float) received / size;
-                callback.onDownloadProgress(new File(filePath), percent);
-            }
-        };
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * @param url
+//     * @param downloadedFile
+//     * @param callback
+//     */
+//    public MediaDownload(String url, File downloadedFile, final DownloadStatusListener callback) {
+//        super(url);
+//        this.downloadFile = MediaController.getFileManager().getDownloadGif(downloadedFile.getAbsolutePath());
+//        this.filePath=this.downloadFile.getAbsolutePath();
+//        this.callback = new SoftReference<>(callback) ;
+//        onDataReceivedListener = new OnDataReceivedListener() {
+//            @Override
+//            public void onDataReceived(long received, long size) {
+//                final float percent = (float) received / size;
+//                callback.onDownloadProgress(new File(filePath), percent);
+//            }
+//        };
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public MediaDownload(String url, String downloadedFilePath, final DownloadStatusListener callback) {
         super(url);

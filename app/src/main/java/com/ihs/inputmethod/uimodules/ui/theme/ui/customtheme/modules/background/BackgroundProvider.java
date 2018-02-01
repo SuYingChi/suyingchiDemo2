@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
@@ -25,7 +26,7 @@ import java.io.File;
 public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElement, BaseThemeItemProvider.BaseItemHolder, BackgroundFragment> {
     private Drawable choosingDrawable;
     private Drawable newMarkDrawable;
-    private boolean hasDefaultItemSelectStateSet = false;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean hasDefaultItemSelectStateSet = false;
 
     public BackgroundProvider(BackgroundFragment fragment) {
         super(fragment);
@@ -76,7 +77,7 @@ public class BackgroundProvider extends BaseThemeItemProvider<KCBackgroundElemen
 
         int margin = holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin);
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / fragment.SPAN_COUNT - margin * 2;
+        int width = Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels) / BaseThemeFragment.SPAN_COUNT - margin * 2;
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width,width);
         holder.itemView.setLayoutParams(layoutParams);
         return holder;

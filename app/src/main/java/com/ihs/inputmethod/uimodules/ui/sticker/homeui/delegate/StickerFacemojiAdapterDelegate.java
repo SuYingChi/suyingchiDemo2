@@ -73,7 +73,7 @@ public class StickerFacemojiAdapterDelegate extends AdapterDelegate<List<Sticker
 
         public StickerFacemojiViewHolder(View itemView) {
             super(itemView);
-            facemojiAnimationView = (FacemojiAnimationView) itemView.findViewById(R.id.sticker_player_view);
+            facemojiAnimationView = itemView.findViewById(R.id.sticker_player_view);
         }
     }
 

@@ -85,9 +85,9 @@ public class StickerBigCreateFacemojiAdapterDelegate extends AdapterDelegate<Lis
 
         public StickerBigCreateFacemojiViewHolder(View itemView) {
             super(itemView);
-            tipText = (TextView) itemView.findViewById(R.id.facemoji_text);
-            createBtn = (TextView) itemView.findViewById(R.id.facemoji_create);
-            faceImage = (ImageView) itemView.findViewById(R.id.face_arrow);
+            tipText = itemView.findViewById(R.id.facemoji_text);
+            createBtn = itemView.findViewById(R.id.facemoji_create);
+            faceImage = itemView.findViewById(R.id.face_arrow);
         }
     }
 }

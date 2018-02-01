@@ -22,7 +22,6 @@ public abstract class LoadFootView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public abstract void onLoadFailed();
 
     public abstract void reset();
 }

@@ -13,11 +13,10 @@ public class Trie {
         Map<Character, TrieNode> children= new HashMap<>();
         int frequency;//该字串的重复数目,频数
         int prefix_num;//以该子串为前缀的单词数
-        char val;//可以没有，数组下标可以知道val值
+        // --Commented out by Inspection (18/1/11 下午2:41):char val;//可以没有，数组下标可以知道val值
         boolean isLeaf;
 
         public TrieNode(char val) {
-            this.val = val;
             isLeaf = false;
         }
     }
@@ -43,18 +42,20 @@ public class Trie {
         cur.frequency++;
     }
 
-    //寻找是否存在某个单词
-    public boolean search(String word) {
-        TrieNode cur = root;
-        char[] data = word.toLowerCase().toCharArray();
-        for (char aData : data) {
-            if (cur.children.get(aData) == null) {
-                return false;
-            }
-            cur = cur.children.get(aData);
-        }
-        return cur.isLeaf;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    //寻找是否存在某个单词
+//    public boolean search(String word) {
+//        TrieNode cur = root;
+//        char[] data = word.toLowerCase().toCharArray();
+//        for (char aData : data) {
+//            if (cur.children.get(aData) == null) {
+//                return false;
+//            }
+//            cur = cur.children.get(aData);
+//        }
+//        return cur.isLeaf;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     //查找是否有以某个字符串为开头的单词
     public boolean startsWith(String prefix) {
@@ -69,12 +70,14 @@ public class Trie {
         return true;
     }
 
-    /*
-    * 得到所有单词及出现次数
-    * */
-    public HashMap<String, Integer> getAllwords() {
-        return helper(root, "");
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /*
+//    * 得到所有单词及出现次数
+//    * */
+//    public HashMap<String, Integer> getAllwords() {
+//        return helper(root, "");
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private HashMap<String, Integer> helper(TrieNode cur, String s) {
         HashMap<String, Integer> hashMap = new HashMap<>();
@@ -92,12 +95,14 @@ public class Trie {
         return hashMap;
     }
 
-    /*
-    * 得到以某字串为前缀的字串集，包括字串本身！
-    * */
-    public HashMap<String, Integer> getWordsForPrefix(String prefix) {
-        return getWordsForPrefix(root, prefix);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /*
+//    * 得到以某字串为前缀的字串集，包括字串本身！
+//    * */
+//    public HashMap<String, Integer> getWordsForPrefix(String prefix) {
+//        return getWordsForPrefix(root, prefix);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private HashMap<String, Integer> getWordsForPrefix(TrieNode cur, String prefix) {
         HashMap<String, Integer> hashMap = new HashMap<>();

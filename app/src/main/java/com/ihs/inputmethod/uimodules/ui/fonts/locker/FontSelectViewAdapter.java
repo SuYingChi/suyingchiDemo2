@@ -76,14 +76,14 @@ public class FontSelectViewAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
 
-            holder.fontClickRegionLeft = (RelativeLayout) convertView.findViewById(R.id.rl_font_left);
-            holder.fontClickRegionRight = (RelativeLayout) convertView.findViewById(R.id.rl_font_right);
-            holder.fontNameLeft = (TextView) convertView.findViewById(R.id.tv_font_left);
-            holder.fontNameRight = (TextView) convertView.findViewById(R.id.tv_font_right);
-            holder.fontPickIconLeft = (ImageView) convertView.findViewById(R.id.iv_font_pick_left);
+            holder.fontClickRegionLeft = convertView.findViewById(R.id.rl_font_left);
+            holder.fontClickRegionRight = convertView.findViewById(R.id.rl_font_right);
+            holder.fontNameLeft = convertView.findViewById(R.id.tv_font_left);
+            holder.fontNameRight = convertView.findViewById(R.id.tv_font_right);
+            holder.fontPickIconLeft = convertView.findViewById(R.id.iv_font_pick_left);
             holder.fontPickIconLeft.setImageDrawable(HSKeyboardThemeManager.getStyledDrawable(convertView.getResources().getDrawable(R.drawable.keyboard_font_selected_tick),
                     FONT_SELECTED_TICK));
-            holder.fontPickIconRight = (ImageView) convertView.findViewById(R.id.iv_font_pick_right);
+            holder.fontPickIconRight = convertView.findViewById(R.id.iv_font_pick_right);
             holder.fontPickIconRight.setImageDrawable(HSKeyboardThemeManager.getStyledDrawable(convertView.getResources().getDrawable(R.drawable.keyboard_font_selected_tick),
                     FONT_SELECTED_TICK));
             holder.fontNameLeft.setTextColor(mParentView.getItemTextColor());

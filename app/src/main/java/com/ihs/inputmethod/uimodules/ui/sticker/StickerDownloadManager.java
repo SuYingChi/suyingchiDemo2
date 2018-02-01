@@ -34,8 +34,8 @@ import java.util.zip.ZipException;
  */
 
 public class StickerDownloadManager {
-    private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
-    private static final String STICKER_DOWNLOAD_JSON_SUFFIX = ".json";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String STICKER_DOWNLOAD_JSON_SUFFIX = ".json";
     private static final String DOWNLOADED_STICKER_NAME_JOIN = "download_sticker_name_join";
 
 
