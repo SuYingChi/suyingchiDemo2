@@ -15,7 +15,10 @@ import com.ihs.inputmethod.uimodules.ui.common.adapter.AdapterDelegate;
 import java.util.List;
 
 public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
-    public HomeBackgroundBannerAdapterDelegate() {
+    private HomeBackgroundBannerAdapter.OnBackgroundBannerClickListener onBackgroundBannerClickListener;
+
+    public HomeBackgroundBannerAdapterDelegate(HomeBackgroundBannerAdapter.OnBackgroundBannerClickListener onBackgroundBannerClickListener) {
+        this.onBackgroundBannerClickListener = onBackgroundBannerClickListener;
     }
 
     @Override
@@ -38,7 +41,7 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
         layoutParams.width = width;
         layoutParams.bottomMargin = HSDisplayUtils.dip2px(parent.getContext(), 20);
 
-        HomeBackgroundBannerAdapter homeBannerAdapter = new HomeBackgroundBannerAdapter();
+        HomeBackgroundBannerAdapter homeBannerAdapter = new HomeBackgroundBannerAdapter(onBackgroundBannerClickListener);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

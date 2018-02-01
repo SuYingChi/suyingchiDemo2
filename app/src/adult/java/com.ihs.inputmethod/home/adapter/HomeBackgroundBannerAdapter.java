@@ -1,7 +1,5 @@
 package com.ihs.inputmethod.home.adapter;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -20,7 +18,6 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.home.HomeActivity;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.ThemeHomeFragment;
-import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.widget.HomeBackgroundBannerView;
 import com.keyboard.core.mediacontroller.listeners.DownloadStatusListener;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
@@ -38,6 +35,8 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
 
     private ViewPager viewPager;
     private List<KCBackgroundElement> backgroundList = new ArrayList<>();
+    private OnBackgroundBannerClickListener onBackgroundBannerClickListener;
+
     private boolean isStartLoop = false;
     private boolean isLoop = true;
     private boolean isInfinite = true;
@@ -114,7 +113,9 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
         }
     }
 
-    public HomeBackgroundBannerAdapter() {
+    public HomeBackgroundBannerAdapter(OnBackgroundBannerClickListener onBackgroundBannerClickListener) {
+        this.onBackgroundBannerClickListener = onBackgroundBannerClickListener;
+
         AUTO_SCROLL_DELAY = HSConfig.optInteger(AUTO_SCROLL_DELAY_DEFAULT, "Application", "KeyboardTheme", "ThemeContents", "themeConfig", "bannerAutoScrollDelay");
         HSGlobalNotificationCenter.addObserver(HomeActivity.NOTIFICATION_HOME_DESTROY, notificationObserver);
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
@@ -186,15 +187,9 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    String customEntry = "store_bg";
-                    String backgroundItemName = kcBackgroundElement.getName();
-                    bundle.putString(CustomThemeActivity.BUNDLE_KEY_BACKGROUND_NAME, backgroundItemName);
-                    bundle.putString(CustomThemeActivity.BUNDLE_KEY_CUSTOMIZE_ENTRY, customEntry);
-                    Intent intent = new Intent(HSApplication.getContext(), CustomThemeActivity.class);
-                    intent.putExtras(bundle);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    HSApplication.getContext().startActivity(intent);
+                    if (onBackgroundBannerClickListener != null) {
+                        onBackgroundBannerClickListener.onBackgroundBannerClick(kcBackgroundElement.getName());
+                    }
                 }
             });
         }
@@ -255,5 +250,9 @@ public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPag
         viewPager.removeAllViews();
 
         HSGlobalNotificationCenter.removeObserver(notificationObserver);
+    }
+
+    public interface OnBackgroundBannerClickListener {
+        void onBackgroundBannerClick(String backgroundName);
     }
 }
