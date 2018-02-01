@@ -12,7 +12,7 @@ import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
-import com.ihs.inputmethod.common.ListActivity;
+import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.fonts.adapter.FontAdapter;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
@@ -30,7 +30,7 @@ import static com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManage
  * Created by jixiang on 18/1/20.
  */
 
-public class FontListActivity extends ListActivity implements FontAdapter.OnFontCardClickListener {
+public class FontListActivity extends BaseListActivity implements FontAdapter.OnFontCardClickListener {
     private List<FontModel> fontModelList;
     private FontAdapter fontAdapter;
     private INotificationObserver observer = new INotificationObserver() {

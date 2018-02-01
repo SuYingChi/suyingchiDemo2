@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
-import com.ihs.inputmethod.common.adapter.CommonAdapter;
+import com.ihs.inputmethod.base.adapter.BaseListAdapter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
 
@@ -19,7 +19,7 @@ import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
  * Created by jixiang on 18/1/23.
  */
 
-public class FontAdapter extends CommonAdapter<FontModel> {
+public class FontAdapter extends BaseListAdapter<FontModel> {
     public static final String FROM_HOME = "fromHome";
     public static final String FROM_MY_DOWNLOAD = "fromMyDownload";
 

@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.widget;
+package com.ihs.inputmethod.widget.slidingtab;
 
 import android.content.Context;
 import android.content.res.TypedArray;

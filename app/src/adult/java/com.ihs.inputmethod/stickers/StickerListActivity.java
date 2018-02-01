@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.GridLayoutManager;
 
-import com.ihs.inputmethod.common.ListActivity;
+import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.stickers.adapter.StickerAdapter;
 import com.ihs.inputmethod.stickers.model.StickerModel;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
@@ -26,7 +26,7 @@ import static com.ihs.inputmethod.uimodules.ui.sticker.StickerUtils.STICKER_DOWN
  * Created by jixiang on 18/1/20.
  */
 
-public class StickerListActivity extends ListActivity implements StickerAdapter.OnStickerClickListener {
+public class StickerListActivity extends BaseListActivity implements StickerAdapter.OnStickerClickListener {
     private StickerAdapter stickerAdapter;
     private List<StickerModel> stickerModelList;
 

@@ -11,7 +11,7 @@ import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.theme.HSThemeNewTipController;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.common.adapter.CommonAdapter;
+import com.ihs.inputmethod.base.adapter.BaseListAdapter;
 import com.ihs.inputmethod.home.adapter.HomeTitleAdapterDelegate;
 import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.theme.ThemeLockerBgUtil;
@@ -25,7 +25,7 @@ import java.util.List;
  * Created by jixiang on 18/1/18.
  */
 
-public class ThemeAdapter<T> extends CommonAdapter<HomeModel> {
+public class ThemeAdapter<T> extends BaseListAdapter<HomeModel> {
     private Activity activity;
     protected AdapterDelegatesManager<List<HomeModel>> delegatesManager;
     private HSKeyboardTheme keyboardThemeOnKeyboardActivation;

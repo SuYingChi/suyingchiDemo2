@@ -19,7 +19,7 @@ import com.ihs.inputmethod.feature.common.LauncherConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryItem;
 import com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperListView;
-import com.ihs.inputmethod.widget.SlidingTabLayout;
+import com.ihs.inputmethod.widget.slidingtab.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;

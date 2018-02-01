@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.common;
+package com.ihs.inputmethod.base;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +14,7 @@ import com.ihs.inputmethod.uimodules.R;
  * Created by jixiang on 18/1/20.
  */
 
-public abstract class ListActivity extends HSAppCompatActivity {
+public abstract class BaseListActivity extends HSAppCompatActivity {
     protected RecyclerView recyclerView;
 
     @Override
@@ -33,7 +33,7 @@ public abstract class ListActivity extends HSAppCompatActivity {
         findViewById(R.id.download_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyDownloadsActivity.startThisActivity(ListActivity.this);
+                MyDownloadsActivity.startThisActivity(BaseListActivity.this);
             }
         });
 

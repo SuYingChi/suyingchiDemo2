@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.widget;
+package com.ihs.inputmethod.widget.slidingtab;
 
 public interface OnTabSelectListener {
     void onTabSelect(int position);

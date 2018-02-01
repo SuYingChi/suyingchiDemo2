@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.ihs.inputmethod.common.adapter.CommonAdapter;
+import com.ihs.inputmethod.base.adapter.BaseListAdapter;
 import com.ihs.inputmethod.stickers.model.StickerModel;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -18,7 +18,7 @@ import pl.droidsonroids.gif.GifImageView;
  * Created by jixiang on 18/1/23.
  */
 
-public class StickerAdapter extends CommonAdapter<StickerModel> {
+public class StickerAdapter extends BaseListAdapter<StickerModel> {
     OnStickerClickListener onStickerClickListener;
 
     public StickerAdapter(Activity activity, OnStickerClickListener onStickerClickListener) {

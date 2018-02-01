@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.common.adapter;
+package com.ihs.inputmethod.base.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import java.util.List;
  * Created by jixiang on 18/1/18.
  */
 
-public abstract class CommonAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class BaseListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected List<T> dataList;
     protected Activity activity;
 
@@ -17,7 +17,7 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<RecyclerView
         this.dataList = dataList;
     }
 
-    public CommonAdapter(Activity activity) {
+    public BaseListAdapter(Activity activity) {
         this.activity = activity;
     }
 

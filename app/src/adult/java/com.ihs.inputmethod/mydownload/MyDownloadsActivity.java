@@ -23,7 +23,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
-import com.ihs.inputmethod.widget.SlidingTabLayout;
+import com.ihs.inputmethod.widget.slidingtab.SlidingTabLayout;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.kc.commons.utils.KCCommonUtils;
 import com.kc.utils.KCAnalytics;

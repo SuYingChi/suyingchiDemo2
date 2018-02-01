@@ -6,7 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.common.ListActivity;
+import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.themes.adapter.ThemeAdapter;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by jixiang on 18/1/20.
  */
 
-public class ThemeListActivity extends ListActivity {
+public class ThemeListActivity extends BaseListActivity {
     private ThemeAdapter themeAdapter;
 
     public static void startThisActivity(Activity activity) {

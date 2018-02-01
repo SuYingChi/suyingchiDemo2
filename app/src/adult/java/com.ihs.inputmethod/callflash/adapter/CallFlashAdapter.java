@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ihs.feature.common.ViewUtils;
-import com.ihs.inputmethod.common.adapter.CommonAdapter;
+import com.ihs.inputmethod.base.adapter.BaseListAdapter;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.InCallThemePreviewActivity;
 
@@ -24,7 +24,7 @@ import static com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.wi
  * Created by jixiang on 18/1/23.
  */
 
-public class CallFlashAdapter extends CommonAdapter<Type> implements View.OnClickListener {
+public class CallFlashAdapter extends BaseListAdapter<Type> implements View.OnClickListener {
     public CallFlashAdapter(Activity activity) {
         super(activity);
     }

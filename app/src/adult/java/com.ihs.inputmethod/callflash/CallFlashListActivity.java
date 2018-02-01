@@ -11,7 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 
 import com.acb.call.themes.Type;
 import com.ihs.inputmethod.callflash.adapter.CallFlashAdapter;
-import com.ihs.inputmethod.common.ListActivity;
+import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.service.CustomizeService;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  * Created by jixiang on 18/1/20.
  */
 
-public class CallFlashListActivity extends ListActivity implements ServiceConnection {
+public class CallFlashListActivity extends BaseListActivity implements ServiceConnection {
     private CallFlashAdapter callFlashAdapter;
 
     public static void startThisActivity(Activity activity) {
