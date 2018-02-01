@@ -8,7 +8,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
     <!-- 是否显示charging设置选项，默认不显示-->
-    <bool name="config_boost_charge_setting_enable">true</bool>
     <!-- charging设置对应到SwitchPreference的preferenceKey,必须和启动页的开关选项用到的preferenceKey一致 -->
     <string name="config_charge_switchpreference_key">pref_switch_charge</string>
     <string name="config_charge_alert_switchpreference_key">pref_switch_charge_alert</string>

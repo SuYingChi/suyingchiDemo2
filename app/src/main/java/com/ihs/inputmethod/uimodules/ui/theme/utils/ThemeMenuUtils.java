@@ -26,7 +26,7 @@ import java.io.File;
  */
 public class ThemeMenuUtils {
 
-    public static final int keyboardActivationFromAdapter = 10;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final int keyboardActivationFromAdapter = 10;
 
     public static PopupMenu createPopMenu(final View v, final HSKeyboardTheme keyboardTheme) {
 

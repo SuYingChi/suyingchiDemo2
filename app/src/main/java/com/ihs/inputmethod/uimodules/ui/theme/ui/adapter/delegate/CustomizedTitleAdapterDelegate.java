@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.theme.ui.adapter.delegate;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihs.inputmethod.uimodules.R;

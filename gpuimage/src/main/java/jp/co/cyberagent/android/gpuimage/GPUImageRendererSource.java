@@ -1,7 +1,5 @@
 package jp.co.cyberagent.android.gpuimage;
 
-import android.content.Context;
-
 /**
  * Supply render source for GPUImageRenderer
  * Created by guanche on 21/09/2017.

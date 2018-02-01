@@ -40,8 +40,8 @@ public class StickerDownloadView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        TextView textViewShowName = (TextView) findViewById(R.id.sticker_download_show_name);
-        TextView textViewDescription = (TextView) findViewById(R.id.sticker_download_description);
+        TextView textViewShowName = findViewById(R.id.sticker_download_show_name);
+        TextView textViewDescription = findViewById(R.id.sticker_download_description);
         if (!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()) {
             textViewShowName.setTextColor(Color.parseColor("#37474f"));
             textViewDescription.setTextColor(Color.parseColor("#37474f"));
@@ -55,7 +55,9 @@ public class StickerDownloadView extends LinearLayout {
         this.stickerGroup = stickerGroup;
     }
 
-    public StickerGroup getStickerGroup() {
-        return stickerGroup;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public StickerGroup getStickerGroup() {
+//        return stickerGroup;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

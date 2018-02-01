@@ -2,8 +2,6 @@ package com.ihs.inputmethod.uimodules.ui.settings.activities;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.pm.ApplicationInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
@@ -14,8 +12,6 @@ import android.widget.TextView;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.api.dialogs.HSAlertDialog;
-import com.ihs.inputmethod.api.language.HSImeSubtypeListItem;
-import com.ihs.inputmethod.base.utils.ApplicationUtils;
 import com.ihs.inputmethod.language.api.HSImeSubtypeManager;
 import com.ihs.inputmethod.settings.AdditionalSubtypeUtil;
 import com.ihs.inputmethod.uimodules.R;
@@ -44,8 +40,8 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
         setContentView(R.layout.more_language_layout2);
 
-        mAvailableLanguagesListLayout = (LinearLayout)findViewById(R.id.ll_available_languages);
-        mCurrentLanguagesListLayout = (LinearLayout)findViewById(R.id.ll_current_languages_list);
+        mAvailableLanguagesListLayout = findViewById(R.id.ll_available_languages);
+        mCurrentLanguagesListLayout = findViewById(R.id.ll_current_languages_list);
 
         init();
 
@@ -173,104 +169,94 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
     }
 
     private void init() {
-        initCurrentLanguages();
-        initAvailableLanguages();
+//        initCurrentLanguages();
+//        initAvailableLanguages();
     }
 
-    private void initCurrentLanguages() {
-        mCurrentLanguagesListLayout.removeAllViews();
-        CharSequence displayName;
-        InputMethodSubtype subtype;
-        TextView tv;
-        SwipeLayout languageItem;
-
-        String packageName = getPackageName();
-        ApplicationInfo applicationInfo = ApplicationUtils.getApplicationInfo();
-        if (applicationInfo == null) {
-            return;
-        }
-
-        final List<HSImeSubtypeListItem> enabledSubs = HSImeSubtypeManager.getSortedInputMethodSubtypeList(true);
-        final int count =enabledSubs.size();
-        for (int i = 0; i < count; ++i) {
-            String locale = enabledSubs.get(i).getInputMethodSubtype().getLocale();
-            subtype = HSImeSubtypeManager.getImeSubtypeByLocale(locale);
-            if(subtype==null){
-                continue;
-            }
-
-            displayName = subtype.getDisplayName(this, packageName, applicationInfo);
-            languageItem = new SwipeLayout(this);
-            languageItem.setTitle(displayName);
-            languageItem.setListener(this);
-            languageItem.setImeSubtypeListItem(enabledSubs.get(i));
-            final String kbdLayout=HSImeSubtypeManager.getCurrentKeyboardLayout(locale);
-            languageItem.setKBDLayout(kbdLayout);
-
-            // set current
-            if (HSImeSubtypeManager.isCurrentSubtype(subtype)) {
-                this.mCurrentLanguage = languageItem;
-                this.mCurrentLanguage.setTick(true);
-            }
-
-            mCurrentLanguagesListLayout.addView(languageItem);
-            mCurrentLanguageCache.add(languageItem);
-
-            tv = new TextView(this);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
-            tv.setLayoutParams(lp);
-            tv.setBackgroundColor(this.getResources().getColor(R.color.settings_divder_line_color));
-            mCurrentLanguagesListLayout.addView(tv);
-            languageItem.setSegmentView(tv);
-        }
-    }
-
-    private void initAvailableLanguages() {
-        mAvailableLanguagesListLayout.removeAllViews();
-
-        // add english us language
-        String displayName;
-
-        String locale;
-        InputMethodSubtype subtype;
-        TextView tv = null;
-        LanguageLoadingPreference preference = null;
-
-        String packageName = getPackageName();
-        ApplicationInfo applicationInfo = ApplicationUtils.getApplicationInfo();
-        if (applicationInfo == null) {
-            return;
-        }
-
-        final List<HSImeSubtypeListItem> unEnabledSubs = HSImeSubtypeManager.getSortedInputMethodSubtypeList(false);
-        final int count = unEnabledSubs.size();
-        final boolean isApiBelow19= Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
-        for (int i = 0; i < count; ++i) {
-            locale =unEnabledSubs.get(i).getInputMethodSubtype().getLocale();
-            if(isApiBelow19&&HSImeSubtypeManager.removedBelowApi19(locale)){
-                continue;
-            }
-            subtype = HSImeSubtypeManager.getImeSubtypeByLocale(locale);
-            if(subtype==null){
-                continue;
-            }
-            displayName = subtype.getDisplayName(this, packageName, applicationInfo).toString();
-
-            preference = new LanguageLoadingPreference(this);
-            preference.setTitle(displayName);
-            preference.setId(i);
-            preference.setListener(this);
-            preference.setImeSubtypeListItem(unEnabledSubs.get(i));
-            mAvailableLanguagesListLayout.addView(preference);
-            mAvailableLanguageCache.add(preference);
-            tv = new TextView(this);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
-            tv.setLayoutParams(lp);
-            tv.setBackgroundColor(this.getResources().getColor(R.color.settings_divder_line_color));
-            mAvailableLanguagesListLayout.addView(tv);
-            preference.setSegmentView(tv);
-        }
-    }
+//    private void initCurrentLanguages() {
+//        mCurrentLanguagesListLayout.removeAllViews();
+//        final InputMethodInfo imi = HSInputMethod.getInputMethodInfoOfThisIme();
+//        CharSequence displayName;
+//        InputMethodSubtype subtype;
+//        TextView tv;
+//        SwipeLayout languageItem;
+//
+//        final List<HSImeSubtypeListItem> enabledSubs = HSImeSubtypeManager.getSortedInputMethodSubtypeList(true);
+//        final int count =enabledSubs.size();
+//        for (int i = 0; i < count; ++i) {
+//            String locale = enabledSubs.get(i).getInputMethodSubtype().getLocale();
+//            subtype = HSImeSubtypeManager.getImeSubtypeByLocale(locale);
+//            if(subtype==null){
+//                continue;
+//            }
+//            displayName = subtype.getDisplayName(this, imi.getPackageName(), imi.getServiceInfo().applicationInfo);
+//            languageItem = new SwipeLayout(this);
+//            languageItem.setTitle(displayName);
+//            languageItem.setListener(this);
+//            languageItem.setImeSubtypeListItem(enabledSubs.get(i));
+//            final String kbdLayout=HSImeSubtypeManager.getCurrentKeyboardLayout(locale);
+//            languageItem.setKBDLayout(kbdLayout);
+//
+//            // set current
+//            if (HSImeSubtypeManager.isCurrentSubtype(subtype)) {
+//                this.mCurrentLanguage = languageItem;
+//                this.mCurrentLanguage.setTick(true);
+//            }
+//
+//            mCurrentLanguagesListLayout.addView(languageItem);
+//            mCurrentLanguageCache.add(languageItem);
+//
+//            tv = new TextView(this);
+//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
+//            tv.setLayoutParams(lp);
+//            tv.setBackgroundColor(this.getResources().getColor(R.color.settings_divder_line_color));
+//            mCurrentLanguagesListLayout.addView(tv);
+//            languageItem.setSegmentView(tv);
+//        }
+//    }
+//
+//    private void initAvailableLanguages() {
+//        mAvailableLanguagesListLayout.removeAllViews();
+//
+//        final InputMethodInfo imi = HSInputMethod.getInputMethodInfoOfThisIme();
+//
+//        // add english us language
+//        String displayName;
+//
+//        String locale;
+//        InputMethodSubtype subtype;
+//        TextView tv;
+//        LanguageLoadingPreference preference;
+//        final List<HSImeSubtypeListItem> unEnabledSubs = HSImeSubtypeManager.getSortedInputMethodSubtypeList(false);
+//        final int count = unEnabledSubs.size();
+//        final boolean isApiBelow19= Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
+//        for (int i = 0; i < count; ++i) {
+//            locale =unEnabledSubs.get(i).getInputMethodSubtype().getLocale();
+//            if(isApiBelow19&&HSImeSubtypeManager.removedBelowApi19(locale)){
+//                continue;
+//            }
+//            subtype = HSImeSubtypeManager.getImeSubtypeByLocale(locale);
+//            if(subtype==null){
+//                continue;
+//            }
+//            displayName = subtype.getDisplayName(this, imi.getPackageName(), imi.getServiceInfo().applicationInfo).toString();
+//
+//            preference = new LanguageLoadingPreference(this);
+//            preference.setTitle(displayName);
+//            preference.setId(i);
+//            preference.setListener(this);
+//            preference.setImeSubtypeListItem(unEnabledSubs.get(i));
+//            mAvailableLanguagesListLayout.addView(preference);
+//            mAvailableLanguageCache.add(preference);
+//            tv = new TextView(this);
+//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
+//            tv.setLayoutParams(lp);
+//            tv.setBackgroundColor(this.getResources().getColor(R.color.settings_divder_line_color));
+//            mAvailableLanguagesListLayout.addView(tv);
+//
+//            preference.setSegmentView(tv);
+//        }
+//    }
 
     @Override
     public void onLanguageDownloaded(LanguageLoadingPreference preference) {
@@ -298,11 +284,11 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
         View view = dialog.findViewById(R.id.layout);
 
-        TextView title = (TextView) (view.findViewById(R.id.title));
+        TextView title = view.findViewById(R.id.title);
         title.setTextColor(getResources().getColor(R.color.alert_message));
         title.setText(language.getTitle());
 
-        TextView cancel = (TextView) (view.findViewById(R.id.negative_button));
+        TextView cancel = view.findViewById(R.id.negative_button);
         cancel.setText(getString(R.string.cancel).toUpperCase());
         cancel.setTextColor(getResources().getColor(R.color.alert_positive_button_text));
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -312,7 +298,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
             }
         });
 
-        TextView delete = (TextView) (view.findViewById(R.id.positive_button));
+        TextView delete = view.findViewById(R.id.positive_button);
         delete.setText(getString(R.string.delete).toUpperCase());
         delete.setOnClickListener(new View.OnClickListener() {
             @Override

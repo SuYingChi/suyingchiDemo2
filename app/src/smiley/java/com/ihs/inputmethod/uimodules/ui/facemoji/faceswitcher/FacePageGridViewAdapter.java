@@ -60,7 +60,7 @@ public class FacePageGridViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        StickerViewHolder holder = null;
+        StickerViewHolder holder;
 
         final FaceItem face = (FaceItem) getItem(position);
 
@@ -74,8 +74,8 @@ public class FacePageGridViewAdapter extends BaseAdapter {
         convertView = mInflater.inflate(R.layout.face_item_view, null);
         final View containerLayout = convertView.findViewById(R.id.face_item_layout);
         containerLayout.setLayoutParams(new GridView.LayoutParams(size, size));
-        final ImageView face_img = (ImageView) containerLayout.findViewById(R.id.face_item_img);
-        final ImageView faceNowUsed = (ImageView) containerLayout.findViewById(R.id.face_now_used);
+        final ImageView face_img = containerLayout.findViewById(R.id.face_item_img);
+        final ImageView faceNowUsed = containerLayout.findViewById(R.id.face_now_used);
         setItemClickListener(face, convertView);
 
         holder = new StickerViewHolder();

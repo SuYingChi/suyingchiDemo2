@@ -8,6 +8,7 @@
 		android:id="@+id/customized_title"
 		style="@style/UiModuleThemeTitleTextView"
 		android:layout_gravity="center_vertical"
-		android:layout_weight="1"/>
+		android:layout_weight="1"
+        android:layout_width="0dp" />
 
 </LinearLayout>

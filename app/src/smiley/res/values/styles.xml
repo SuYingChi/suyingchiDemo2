@@ -24,12 +24,4 @@
     </style>
 
 
-    <style name="NativeInterstitialActivity" parent="@android:style/Theme.NoTitleBar.Fullscreen">
-        <item name="android:windowDisablePreview">true</item>
-    </style>
-
-    <style name="MD_ProgressBar" parent="Widget.MaterialProgressBar.ProgressBar">
-        <item name="android:progressDrawable">@color/white_text_color</item>
-    </style>
-
 </resources>

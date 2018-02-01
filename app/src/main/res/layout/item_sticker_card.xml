@@ -5,7 +5,6 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/sticker_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/theme_card_recycler_view_card_margin"
@@ -89,7 +88,6 @@
     </android.support.v7.widget.CardView>
 
     <ImageView
-        android:id="@+id/sticker_delete_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

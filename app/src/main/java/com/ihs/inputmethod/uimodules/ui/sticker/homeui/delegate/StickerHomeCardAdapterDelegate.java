@@ -114,7 +114,7 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
     }
 
     public class StickerCardHomeViewHolder extends RecyclerView.ViewHolder {
-        View stickerCardView;
+        // --Commented out by Inspection (18/1/11 下午2:41):View stickerCardView;
         ImageView downloadBtn;
 
         TextView stickerGroupName;
@@ -126,12 +126,11 @@ public final class StickerHomeCardAdapterDelegate extends AdapterDelegate<List<S
         public StickerCardHomeViewHolder(View itemView) {
             super(itemView);
 
-            stickerCardView = itemView.findViewById(R.id.sticker_card_view);
-            stickerGroupName = (TextView) itemView.findViewById(R.id.sticker_name);
-            stickerRealImage = (ImageView) itemView.findViewById(R.id.sticker_image_real_view);
-            stickerNewImage = (GifImageView) itemView.findViewById(R.id.sticker_new_view);
-            stickerAnimatedView = (ImageView) itemView.findViewById(R.id.sticker_animated_view);
-            downloadBtn = (ImageView) itemView.findViewById(R.id.download_icon);
+            stickerGroupName = itemView.findViewById(R.id.sticker_name);
+            stickerRealImage = itemView.findViewById(R.id.sticker_image_real_view);
+            stickerNewImage = itemView.findViewById(R.id.sticker_new_view);
+            stickerAnimatedView = itemView.findViewById(R.id.sticker_animated_view);
+            downloadBtn = itemView.findViewById(R.id.download_icon);
         }
     }
 }

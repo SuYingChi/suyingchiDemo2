@@ -37,9 +37,11 @@ public class AnimationLayout extends RelativeLayout {
         a.recycle();
     }
 
-    public void setEnableClickScaleAnim(boolean enable){
-        mEnableClickScaleAnim = enable;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setEnableClickScaleAnim(boolean enable){
+//        mEnableClickScaleAnim = enable;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {

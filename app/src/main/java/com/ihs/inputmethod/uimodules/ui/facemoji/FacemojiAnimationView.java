@@ -202,9 +202,11 @@ public class FacemojiAnimationView extends AppCompatImageView {
 
 
 
-    public boolean isRuning() {
-        return mIsRunning;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean isRuning() {
+//        return mIsRunning;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     protected void onAttachedToWindow() {

@@ -38,7 +38,7 @@ public class WallpaperDownloadEngine {
     private static final HSPreferenceHelper sPrefs = HSPreferenceHelper.create(HSApplication.getContext(),
             CUSTOMIZE_PREFS);
 
-    private static final String PREF_WALLPAPER_HOT_NEXT_PAGE = "pref_wallpaper_hot_next_page";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String PREF_WALLPAPER_HOT_NEXT_PAGE = "pref_wallpaper_hot_next_page";
     private static final String PREF_WALLPAPER_CATEGORY_NEXT_PAGE = "pref_wallpaper_category_next_page_";
 
     private static final String TAG = "WallpaperDownloadEngine";

@@ -11,7 +11,7 @@ import android.os.RemoteException;
 public interface ICustomizeService extends IInterface
 {
     /** Local-side IPC implementation stub class. */
-    public static abstract class Stub extends Binder implements ICustomizeService
+    abstract class Stub extends Binder implements ICustomizeService
     {
         private static final java.lang.String DESCRIPTOR = "ICustomizeService";
         /** Construct the stub at attach it to the interface. */
@@ -180,10 +180,12 @@ public interface ICustomizeService extends IInterface
             {
                 return mRemote;
             }
-            public java.lang.String getInterfaceDescriptor()
-            {
-                return DESCRIPTOR;
-            }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//            public java.lang.String getInterfaceDescriptor()
+//            {
+//                return DESCRIPTOR;
+//            }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
             @Override public java.lang.String getCurrentTheme() throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
@@ -320,7 +322,7 @@ public interface ICustomizeService extends IInterface
                     _data.writeInterfaceToken(DESCRIPTOR);
                     mRemote.transact(Stub.TRANSACTION_getOnlineWallpaperConfig, _data, _reply, 0);
                     _reply.readException();
-                    java.lang.ClassLoader cl = (java.lang.ClassLoader)this.getClass().getClassLoader();
+                    java.lang.ClassLoader cl = this.getClass().getClassLoader();
                     _result = _reply.readArrayList(cl);
                 }
                 finally {
@@ -338,7 +340,7 @@ public interface ICustomizeService extends IInterface
                     _data.writeInterfaceToken(DESCRIPTOR);
                     mRemote.transact(Stub.TRANSACTION_getOnlineThemeConfig, _data, _reply, 0);
                     _reply.readException();
-                    java.lang.ClassLoader cl = (java.lang.ClassLoader)this.getClass().getClassLoader();
+                    java.lang.ClassLoader cl = this.getClass().getClassLoader();
                     _result = _reply.readHashMap(cl);
                 }
                 finally {
@@ -421,18 +423,18 @@ public interface ICustomizeService extends IInterface
         static final int TRANSACTION_notifyWallpaperOrThemeExit = (IBinder.FIRST_CALL_TRANSACTION + 12);
         static final int TRANSACTION_notifyWallpaperPackageClicked = (IBinder.FIRST_CALL_TRANSACTION + 13);
     }
-    public java.lang.String getCurrentTheme() throws RemoteException;
-    public void setCurrentTheme(java.lang.String theme) throws RemoteException;
-    public long browseMarketApp(java.lang.String packageName) throws RemoteException;
-    public java.lang.String getDefaultSharedPreferenceString(java.lang.String key, java.lang.String defaultValue) throws RemoteException;
-    public void preChangeWallpaperFromLauncher() throws RemoteException;
-    public void putDefaultSharedPreferenceString(java.lang.String key, java.lang.String value) throws RemoteException;
-    public void notifyWallpaperFeatureUsed() throws RemoteException;
-    public void notifyWallpaperSetEvent() throws RemoteException;
-    public java.util.List getOnlineWallpaperConfig() throws RemoteException;
-    public java.util.Map getOnlineThemeConfig() throws RemoteException;
-    public void logWallpaperEvent(java.lang.String action, java.lang.String label) throws RemoteException;
-    public void killWallpaperProcess() throws RemoteException;
-    public void notifyWallpaperOrThemeExit() throws RemoteException;
-    public void notifyWallpaperPackageClicked() throws RemoteException;
+    java.lang.String getCurrentTheme() throws RemoteException;
+    void setCurrentTheme(java.lang.String theme) throws RemoteException;
+    long browseMarketApp(java.lang.String packageName) throws RemoteException;
+    java.lang.String getDefaultSharedPreferenceString(java.lang.String key, java.lang.String defaultValue) throws RemoteException;
+    void preChangeWallpaperFromLauncher() throws RemoteException;
+    void putDefaultSharedPreferenceString(java.lang.String key, java.lang.String value) throws RemoteException;
+    void notifyWallpaperFeatureUsed() throws RemoteException;
+    void notifyWallpaperSetEvent() throws RemoteException;
+    java.util.List getOnlineWallpaperConfig() throws RemoteException;
+    java.util.Map getOnlineThemeConfig() throws RemoteException;
+    void logWallpaperEvent(java.lang.String action, java.lang.String label) throws RemoteException;
+    void killWallpaperProcess() throws RemoteException;
+    void notifyWallpaperOrThemeExit() throws RemoteException;
+    void notifyWallpaperPackageClicked() throws RemoteException;
 }

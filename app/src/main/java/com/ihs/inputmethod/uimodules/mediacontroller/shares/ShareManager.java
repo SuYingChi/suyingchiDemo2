@@ -3,11 +3,12 @@ package com.ihs.inputmethod.uimodules.mediacontroller.shares;
 import android.net.Uri;
 import android.util.Pair;
 
+import com.ihs.inputmethod.api.utils.HSFileUtils;
+import com.ihs.inputmethod.api.utils.HSPictureUtils;
 import com.ihs.inputmethod.uimodules.mediacontroller.Constants;
 import com.ihs.inputmethod.uimodules.mediacontroller.ISequenceFramesImageItem;
 import com.ihs.inputmethod.uimodules.mediacontroller.listeners.ProgressListener;
-import com.ihs.inputmethod.api.utils.HSFileUtils;
-import com.ihs.inputmethod.api.utils.HSPictureUtils;
+import com.keyboard.core.mediacontroller.shares.LinkShare;
 
 /**
  * Created by ihandysoft on 16/6/1.

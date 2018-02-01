@@ -69,10 +69,10 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wrap_home_fragment, container, false);
-        tabLayout = (TabLayout) view.findViewById(R.id.store_tab);
-        viewPager = (ViewPager) view.findViewById(R.id.fragment_view_pager);
+        tabLayout = view.findViewById(R.id.store_tab);
+        viewPager = view.findViewById(R.id.fragment_view_pager);
 
-        createThemeLayout = (FloatingActionButton) view.findViewById(R.id.home_create_theme_layout);
+        createThemeLayout = view.findViewById(R.id.home_create_theme_layout);
         createThemeLayout.setOnClickListener(this);
 
         downloadSwitchButton = view.findViewById(R.id.download_button_container);
@@ -89,7 +89,7 @@ public class KeyboardFragment extends Fragment implements View.OnClickListener {
 
         tabFragmentPagerAdapter = new TabFragmentPagerAdapter(getActivity().getFragmentManager(), fragments);
         tabFragmentPagerAdapter.setTabTitles(homeTabTitles);
-        viewPager.setOffscreenPageLimit(fragments.size());
+        viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(tabFragmentPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);

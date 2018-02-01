@@ -42,12 +42,14 @@ public enum ShareChannel {
         return iconId;
     }
 
-    public static ShareChannel getChannel(String packageName){
-        for(ShareChannel channel : values()){
-            if(channel.getPackageName().equals(packageName)){
-                return channel;
-            }
-        }
-        return CURRENT;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static ShareChannel getChannel(String packageName){
+//        for(ShareChannel channel : values()){
+//            if(channel.getPackageName().equals(packageName)){
+//                return channel;
+//            }
+//        }
+//        return CURRENT;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

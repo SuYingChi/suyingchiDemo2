@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.gif.riffsy.dao.gif;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.ui.gif.riffsy.model.GifItem;
 
 import java.util.ArrayList;

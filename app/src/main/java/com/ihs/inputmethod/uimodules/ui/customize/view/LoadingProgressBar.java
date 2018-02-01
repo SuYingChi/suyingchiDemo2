@@ -90,27 +90,31 @@ public class LoadingProgressBar extends View {
         return 0;
     }
 
-    public void prepare() {
-        mState = AnimationState.PREPARE;
-        try {
-            requestLayout();
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Exception in prepare()");
-        }
-        if (mAnimDelegate != null) {
-            mAnimDelegate.stop();
-        }
-        if (mAnimDelegate == null || !(mAnimDelegate instanceof PrepareAnimationDelegate)) {
-            mAnimDelegate = new PrepareAnimationDelegate(getWidth() / 2, mPrepareHeight / 2, this, mBigCircleRadius, mBigCircleDist);
-        }
-        mAnimDelegate.postProgress(0f);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void prepare() {
+//        mState = AnimationState.PREPARE;
+//        try {
+//            requestLayout();
+//        } catch (IllegalArgumentException e) {
+//            throw new RuntimeException("Exception in prepare()");
+//        }
+//        if (mAnimDelegate != null) {
+//            mAnimDelegate.stop();
+//        }
+//        if (mAnimDelegate == null || !(mAnimDelegate instanceof PrepareAnimationDelegate)) {
+//            mAnimDelegate = new PrepareAnimationDelegate(getWidth() / 2, mPrepareHeight / 2, this, mBigCircleRadius, mBigCircleDist);
+//        }
+//        mAnimDelegate.postProgress(0f);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void postPrepareAnimationProgress(float progress) {
-        if (mAnimDelegate instanceof PrepareAnimationDelegate) {
-            mAnimDelegate.postProgress(progress);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void postPrepareAnimationProgress(float progress) {
+//        if (mAnimDelegate instanceof PrepareAnimationDelegate) {
+//            mAnimDelegate.postProgress(progress);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * Start the animation for ongoing loading process.

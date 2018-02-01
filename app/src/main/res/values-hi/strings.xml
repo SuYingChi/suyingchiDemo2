@@ -5,7 +5,6 @@
     <string name="enabled">सक्षम है</string>
     <string name="disabled">अक्षम है</string>
     <string name="language">भाषा</string>
-    <string name="languages">भाषाएं</string>
     <string name="next">अगला</string>
     <string name="back">वापस</string>
     <string name="cancel">रद्द करें</string>
@@ -25,8 +24,6 @@
 
     <string name="unknown">अज्ञात</string>
 
-    <string name="alert_find_keyboard_and_switch_on">%1$s को चालू करें</string>
-
     <!--main-->
     <string name="alert_attention_messenger">%1$s कीबोर्ड प्रयोक्ता की निजता को गंभीरता से मानता है। हम किसी प्रकार के डाटा जैसे पासवर्ड या क्रेडिट कार्ड नंबर एकत्रित नहीं करेंगे। </string>
     <string name="toast_enable_keyboard">%1$s को सक्षम करें</string>
@@ -40,7 +37,6 @@
     <string name="dialog_msg_select_keyboard_apply_rain">इस थीम का प्रयोग करने के लिए आपको %1$s कीबोर्ड को सक्रिय करने की जरूरत है।</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">सक्रिय करें</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain"> %1$s काे सक्रिय करें</string>
     <string name="dialog_msg_enable_keyboard_home_rain">%1$s आपको व्‍यक्तिगत कीबोर्ड के साथ थीम और आकर्षक इमोजी उपलब्‍ध करवाता है।</string>
 
     <!--language-->
@@ -81,22 +77,17 @@
     <string name="setting_item_fonts">फोंट्स</string>
 
     <string name="setting_item_sounds">ध्‍वनियां</string>
-    <string name="setting_item_swipe">स्‍वाइप करें</string>
     <string name="setting_item_add_languages">भाषा जोड़ें</string>
     <string name="setting_item_more_settings">अधिक सेटिंग्‍स</string>
 
     <!--settings panel-->
-    <string name="settings_button_tell_a_friend">एक दोस्‍त को बताएं</string>
-    <string name="settings_button_tell_a_friend_tip">अपने संदेश को अभी सांझा करें</string>
 
 
     <!-- gif panel -->
     <string name="result_no">कोई जीआईएफ या स्‍टीकर नहीं मिला</string>
     <string name="result_no_recent">हाल ही में नहीं।</string>
-    <string name="result_no_suggestion">सूचित जीआईएफ या स्‍टीकर्स नहीं।</string>
     <string name="result_no_favorites">कोई पसंदीदा नहीं।</string>
     <string name="result_no_data_on_fail">कृपया अपने नेटवर्क की जांच करें और दुबारा प्रयास करें।</string>
-    <string name="result_no_data_on_complete">कोई जीआईएफ या स्‍टीकर नहीं मिला</string>
 
     <!--gif strip-->
     <string name="emoji_search_title">ढूंढने के लिए इमोजी चुनें</string>
@@ -122,9 +113,7 @@
     <string name="dialog_app_usage_title">प्रयोग अनुमति के साथ ऐप्‍स को अनुमति दें</string>
 
     <!--theme home nav-->
-    <string name="theme_nav_my_themes">मेरी थीम</string>
     <string name="theme_nav_languages">भाषाएं</string>
-    <string name="theme_nav_settings">सेटिंग्स</string>
     <string name="theme_nav_update">अपडेट करें</string>
     <string name="theme_nav_no_ads">विज्ञापनों को हटाएं</string>
 
@@ -139,15 +128,7 @@
     <string name="theme_card_menu_delete">हटाएं</string>
 
     <!--custom theme-->
-    <string name="custom_theme_background">पृष्‍ठभूमि</string>
     <string name="custom_theme_font">फोंट</string>
-    <string name="custom_theme_sound">ध्‍वनि पर क्लिक करें</string>
-    <string name="custom_theme_effect">प्रभाव पर टैप करें</string>
-
-    <string name="custom_theme_backgrounds">पृष्‍ठभूमियां</string>
-    <string name="custom_theme_fonts">फोंट्स</string>
-    <string name="custom_theme_sounds">ध्‍वनियों पर क्लिक करें</string>
-    <string name="custom_theme_effects">प्रभावों पर टैप करें</string>
 
     <string name="custom_theme_title">कीबोर्ड बनाएं</string>
     <string name="custom_theme_title_background">पृष्‍ठभूमि चुनें</string>
@@ -156,19 +137,10 @@
     <string name="custom_theme_title_font">फोंट चुनें</string>
     <string name="custom_theme_title_font_color">फोंट का रंग चुनें</string>
     <string name="custom_theme_title_sound">क्लिक ध्वनि चुनें</string>
-    <string name="custom_theme_title_effect">टैप प्रभाव चुनें</string>
     <string name="custom_theme_sound_tip">क्लिक ध्वनि प्रभाव को प्रयोग करने के लिए, कृपया सेटिंग्स वर्ग में शांत अवस्था को बंद करें या कीप्रेस पर ध्वनि को सक्षम करें।</string>
 
     <!--IAP Tip Info -->
-    <string name="current_theme_price" formatted="true">%1$s के लिए अनलॉक करें</string>
     <string name="purchase_success">आपकी खरीद सफल थी।</string>
-    <string name="purchase_error">त्रुटि:</string>
-    <string name="purchase_error_message">आपकी खरीद अब उपलब्‍ध है। बाद में दुबारा प्रयास करें।</string>
-    <string name="purchase_error_bill">बिलिंग उपलब्‍ध नहीं है</string>
-    <string name="purchase_error_item">आइटम उपलब्‍ध नहीं है</string>
-    <string name="purchase_error_item_owned">आइटम पहले से खरीद लिए हैं</string>
-    <string name="purchase_google_play_unavailable">गूगल प्‍ले आपके उपकरण पर उपलब्‍ध नहीं है।</string>
-    <string name="purchase_unavailable">खरीद उपलब्‍ध नहीं है।</string>
 
     <!-- Theme new tip -->
     <string name="new_background_tip">नई पृष्‍ठभूमि</string>
@@ -182,15 +154,11 @@
     <string name="apk_update_alert_title">नवीनतम संस्‍करण डाउनलोड करें</string>
     <string name="apk_update_alert_negative_btn">बाद में</string>
     <string name="apk_update_alert_positive_btn">अपडेट करें</string>
-    <string name="apk_update_downloading">डाउनलोडिंग अपडेट करें</string>
-    <string name="apk_update_downloading_notification_title">डाउनलोड हो रहा है</string>
 
 
     <string name="sd_card_unavailable_tip">एसडी कार्ड उपलब्‍ध नहीं है!</string>
 
     <string name="theme_create_custom_theme_failed">थीम बनाने में असफल, कृपया सुनिश्चित कर लें कि आपके उपकरण में पर्याप्त डिस्क स्पेस है और दुबारा प्रयास करें।</string>
-
-    <string name="home_create_keyboard">मेरी खुद की थीम बनाएं</string>
 
     <string name="charging_alert_title">स्‍मार्ट चार्जिंग</string>
     <string name="charging_alert_message">ओवरचार्जिंग कुशलता को बचाने के लिए स्माfर्ट चार्जिंग को सक्षम करें। प्रायोजित सामग्री शामिल हैं।</string>
@@ -199,7 +167,6 @@
 
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">%1$s को सक्रिय करें, अधिक थीम का आनंद लें!</string>
-    <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">हाथ से सेट करें</string>
     <string name="tv_1_tap_to_set_up_keyboard">%1$s को सक्षम करें</string>
     <string name="alter_enable_access_title">%1$s को सक्षम करें</string>
@@ -235,13 +202,11 @@
     <string name="interstitial_ad_title_after_try_keyboard">--------------- आपको पसंद आएगी ---------------</string>
     <string name="interstitial_ad_subtitle_after_try_keyboard">आपको पसंद आएगी</string>
 
-    <string name="interstitial_ad_subtitle_home_gift_button">--------------- आपको पसंद आएगी ---------------</string>
     <string name="store_nav_download">मेरे डाउनलोड</string>
     <string name="tab_theme_my">मेरी थीम</string>
     <string name="tab_sticker">स्‍टीकर्स</string>
     <string name="tab_sticker_my">मेरे स्‍टीकर</string>
     <string name="tab_font_my">मेरा फोंट</string>
-    <string name="item_sticker_more_coming">मेरे स्‍टीकर्स आ रहे हैं</string>
     <string name="item_font_more_coming">अधिक फोंट शीघ्र आ रहे हैं</string>
 
     <string name="locker_alert_title">स्‍क्रीन लॉकर</string>
@@ -265,7 +230,6 @@
 
     <!-- wallpaper preview -->
     <string name="key_theme_set_btn">की थीम सेट करें</string>
-    <string name="wallpaper_apply_fail">लागू करना असफल हुआ</string>
     <string name="home_screen">होम स्‍क्रीन</string>
     <string name="locker_screen">लॉक स्‍क्रीन</string>
     <string name="home_and_locker_screen">होम और लॉक स्‍क्रीन</string>
@@ -274,7 +238,6 @@
     <string name="label_try_now">अभी आजमाएं</string>
     <string name="label_create_funny_facemoji">आपके खुद के फेस के साथ शानदार इमोजी बनााए!</string>
 
-    <string name="keyboard_make_facemoji_tip">डीआईएफ आपकी खुद की इमोजी!</string>
     <string name="sticker_title_create_my_facemojis">मेरी फेसमोजी बनाएं</string>
     <string name="sticker_title_my_facemojis">मेरी फेसमोजिज</string>
     <string name="sticker_title_funny_stickers">मजेदार स्‍टीकर्स</string>

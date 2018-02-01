@@ -15,7 +15,7 @@ public class AccGALogger {
     public static final String app_accessibility_guide_gotit_clicked = "app_accessibility_guide_gotit_clicked"; //教程got it按钮点击
     public static final String app_permission_accessibility_allowed = "app_permission_accessibility_allowed"; //accessibility权限通过
     public static final String app_alert_auto_setkey_showed = "app_alert_manual_setkey_showed"; //自动设置键盘提示展示
-    public static final String app_alert_auto_setkey_enable_clicked = "app_alert_auto_setkey_enable_clicked"; //自动设置键盘Enable点击
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String app_alert_auto_setkey_enable_clicked = "app_alert_auto_setkey_enable_clicked"; //自动设置键盘Enable点击
     public static final String app_setting_up_page_viewed = "app_setting_up_page_viewed"; //自动设置页展示
     public static final String app_accessibility_setkey_success_page_viewed = "app_accessibility_setkey_success_page_viewed"; //自动添加键盘成功
 

@@ -18,7 +18,6 @@ import android.view.WindowManager.LayoutParams;
 import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.DisplayUtils;
-import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 
@@ -264,7 +263,7 @@ public class HSFloatWindowManager {
 
         if (Build.VERSION.SDK_INT >= 17) {
             display.getRealSize(size);
-        } else if (Build.VERSION.SDK_INT >= 14) {
+        } else {
             try {
                 size.x = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
                 size.y = (Integer) Display.class.getMethod("getRawHeight").invoke(display);

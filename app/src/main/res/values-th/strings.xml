@@ -5,7 +5,6 @@
     <string name="enabled">เปิดใช้</string>
     <string name="disabled">ปิดใช้</string>
     <string name="language">ภาษา</string>
-    <string name="languages">ภาษา</string>
     <string name="next">ถัดไป</string>
     <string name="back">กลับ</string>
     <string name="cancel">ยกเลิก</string>
@@ -25,8 +24,6 @@
 
     <string name="unknown">ไม่ทราบ</string>
 
-    <string name="alert_find_keyboard_and_switch_on">เปิด %1$s</string>
-
     <!--main-->
     <string name="alert_attention_messenger">คีย์บอร์ด %1$s ใส่ใจความเป็นส่วนตัวของผู้ใช้อย่างมาก เราจะไม่เก็บข้อมูลอย่างรหัสผ่านหรือหมายเลขบัตรเครดิตเป็นอันขาด </string>
     <string name="toast_enable_keyboard">เปิดใช้ %1$s</string>
@@ -40,7 +37,6 @@
     <string name="dialog_msg_select_keyboard_apply_rain">คุณต้องเปิดใช้คีย์บอร์ด %1$s เพื่อใช้ธีมนี้</string>
     <string name="dialog_confirm_select_keyboard_apply_rain">เปิดใช้งาน</string>
 
-    <string name="dialog_title_enable_keyboard_home_rain"> เปิดใช้ %1$s</string>
     <string name="dialog_msg_enable_keyboard_home_rain">%1$s มีธีมคีย์บอร์ดกำหนดเองและอีโมจิน่ารักมากมายให้คุณ</string>
 
     <!--language-->
@@ -81,22 +77,17 @@
     <string name="setting_item_fonts">ฟอนต์</string>
 
     <string name="setting_item_sounds">เสียง</string>
-    <string name="setting_item_swipe">ปัด</string>
     <string name="setting_item_add_languages">เพิ่มภาษา</string>
     <string name="setting_item_more_settings">การตั้งค่าเพิ่มเติม</string>
 
     <!--settings panel-->
-    <string name="settings_button_tell_a_friend">บอกเพื่อน</string>
-    <string name="settings_button_tell_a_friend_tip">แชร์ข้อความของคุณเลย</string>
 
 
     <!-- gif panel -->
     <string name="result_no">ไม่พบ GIF หรือสติกเกอร์</string>
     <string name="result_no_recent">ไม่มีก่อนหน้า</string>
-    <string name="result_no_suggestion">ไม่มี GIF หรีือสติกเกอร์ที่แนะนำ</string>
     <string name="result_no_favorites">ไม่มีรายการโปรด</string>
     <string name="result_no_data_on_fail">กรุณาตรวจสอบเครือข่ายของคุณแล้วลองอีกครั้ง</string>
-    <string name="result_no_data_on_complete">ไม่พบ GIF หรือสติกเกอร์</string>
 
     <!--gif strip-->
     <string name="emoji_search_title">เลือกอีโมจิเพื่อค้นหา</string>
@@ -122,9 +113,7 @@
     <string name="dialog_app_usage_title">อนุญาตให้แอปเข้าถึงการใช้งาน</string>
 
     <!--theme home nav-->
-    <string name="theme_nav_my_themes">ธีมของฉัน</string>
     <string name="theme_nav_languages">ภาษา</string>
-    <string name="theme_nav_settings">ตั้งค่า</string>
     <string name="theme_nav_update">อัปเดต</string>
     <string name="theme_nav_no_ads">ปิดโฆษณา</string>
 
@@ -139,15 +128,7 @@
     <string name="theme_card_menu_delete">ลบ</string>
 
     <!--custom theme-->
-    <string name="custom_theme_background">พื้นหลัง</string>
     <string name="custom_theme_font">ฟอนต์</string>
-    <string name="custom_theme_sound">เสียงคลิก</string>
-    <string name="custom_theme_effect">เอฟเฟกต์การแตะ</string>
-
-    <string name="custom_theme_backgrounds">พื้นหลัง</string>
-    <string name="custom_theme_fonts">ฟอนต์</string>
-    <string name="custom_theme_sounds">เสียงคลิก</string>
-    <string name="custom_theme_effects">เอฟเฟกต์การแตะ</string>
 
     <string name="custom_theme_title">สร้างคีย์บอร์ด</string>
     <string name="custom_theme_title_background">เลือกพื้นหลัง</string>
@@ -156,19 +137,10 @@
     <string name="custom_theme_title_font">เลือกฟอนต์</string>
     <string name="custom_theme_title_font_color">เลือกสีฟอนต์</string>
     <string name="custom_theme_title_sound">เลือกเสียงคลิก</string>
-    <string name="custom_theme_title_effect">เลือกเอฟเฟกต์การแตะ</string>
     <string name="custom_theme_sound_tip">ในการใช้เอฟเฟกต์เสียงคลิก กรุณาปิดโหมดเงียบหรือเปิดเสียงปุ่มกดในการตั้งค่า</string>
 
     <!--IAP Tip Info -->
-    <string name="current_theme_price" formatted="true">ปลดล็อกให้ %1$s</string>
     <string name="purchase_success">การซื้อของคุณสำเร็จแล้ว</string>
-    <string name="purchase_error">ข้อผิดพลาด:</string>
-    <string name="purchase_error_message">การซื้อของคุณไม่พร้อมใช้งานในขณะนี้ กรุณาลองใหม่ภายหลัง</string>
-    <string name="purchase_error_bill">การเรียกเก็บเงินไม่พร้อมใช้งาน</string>
-    <string name="purchase_error_item">รายการนี้ไม่พร้อมใช้งาน</string>
-    <string name="purchase_error_item_owned">มีรายการนี้อยู่แล้ว</string>
-    <string name="purchase_google_play_unavailable">Google Play ไม่พร้อมใช้งานบนอุปกรณ์ของคุณ</string>
-    <string name="purchase_unavailable">การซื้อไม่พร้อมใช้งาน</string>
 
     <!-- Theme new tip -->
     <string name="new_background_tip">พื้นหลังใหม่</string>
@@ -182,15 +154,11 @@
     <string name="apk_update_alert_title">ดาวน์โหลดเวอร์ชันล่าสุด</string>
     <string name="apk_update_alert_negative_btn">ภายหลัง</string>
     <string name="apk_update_alert_positive_btn">อัปเดต</string>
-    <string name="apk_update_downloading">กำลังดาวน์โหลดอัปเดต</string>
-    <string name="apk_update_downloading_notification_title">กำลังดาวน์โหลด</string>
 
 
     <string name="sd_card_unavailable_tip">SD การ์ดใช้งานไม่ได้!</string>
 
     <string name="theme_create_custom_theme_failed">สร้างธีมไม่สำเร็จ กรุณาดูให้แน่ใจว่ามีพื้นที่เหลือมากพอในเครื่องแล้วลองอีกครั้ง</string>
-
-    <string name="home_create_keyboard">สร้างธีมของฉันเอง</string>
 
     <string name="charging_alert_title">การชาร์จอัจฉริยะ</string>
     <string name="charging_alert_message">เปิดใช้งานการชาร์จอัจฉริยะเพื่อป้องกันการชาร์จเกิน มีเนื้อหาโฆษณา</string>
@@ -199,7 +167,6 @@
 
     <!--Accessibility-->
     <string name="tv_enable_keyboard_tip">เปิดใช้ %1$s สนุกกับธีมเพิ่มเติม!</string>
-    <string name="accessibility_service_label">%1$s</string>
     <string name="tv_set_up_manually">ตั้งค่าเอง</string>
     <string name="tv_1_tap_to_set_up_keyboard">เปิดใช้ %1$s</string>
     <string name="alter_enable_access_title">เปิดใช้ %1$s</string>
@@ -235,13 +202,11 @@
     <string name="interstitial_ad_title_after_try_keyboard">นำไปใช้สำเร็จแล้ว</string>
     <string name="interstitial_ad_subtitle_after_try_keyboard">--------------- คุณอาจชอบ ---------------</string>
 
-    <string name="interstitial_ad_subtitle_home_gift_button">--------------- คุณอาจชอบ ---------------</string>
     <string name="store_nav_download">ดาวน์โหลดของฉัน</string>
     <string name="tab_theme_my">ธีมของฉัน</string>
     <string name="tab_sticker">สติกเกอร์</string>
     <string name="tab_sticker_my">สติกเกอร์ของฉัน</string>
     <string name="tab_font_my">ฟอนต์ของฉัน</string>
-    <string name="item_sticker_more_coming">สติกเกอร์เพิ่มเติมจะมาเร็วๆ นี้</string>
     <string name="item_font_more_coming">จะมีฟอนต์เพิ่มเร็วๆ นี้</string>
 
     <string name="locker_alert_title">Screen Locker</string>
@@ -265,7 +230,6 @@
 
     <!-- wallpaper preview -->
     <string name="key_theme_set_btn">กำหนดธีมหลัก</string>
-    <string name="wallpaper_apply_fail">ยืนยันไม่สำเร็จ</string>
     <string name="home_screen">หน้าจอหลัก</string>
     <string name="locker_screen">หน้าจอล็อก</string>
     <string name="home_and_locker_screen">หน้าจอหลักและหน้าจอล็อก</string>
@@ -274,7 +238,6 @@
     <string name="label_try_now">ลองเลย</string>
     <string name="label_create_funny_facemoji">สร้างอีโมจิเจ๋งๆ ด้วยใบหน้าคุณเอง!</string>
 
-    <string name="keyboard_make_facemoji_tip">อีโมจิ DIY ของคุณเอง!</string>
     <string name="sticker_title_create_my_facemojis">สร้าง Facemoji ของฉัน</string>
     <string name="sticker_title_my_facemojis">Facemoji ของฉัน</string>
     <string name="sticker_title_funny_stickers">สติกเกอร์สนุกๆ</string>

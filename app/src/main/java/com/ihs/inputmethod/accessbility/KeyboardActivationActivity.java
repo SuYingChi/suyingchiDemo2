@@ -208,7 +208,7 @@ public class KeyboardActivationActivity extends HSActivity {
     }
 
     private void initPrivacy() {
-        protocolText = (TextView) findViewById(R.id.privacy_policy_text);
+        protocolText = findViewById(R.id.privacy_policy_text);
         String serviceKeyText = getString(R.string.text_terms_of_service);
         String policyKeyText = getString(R.string.text_privacy_policy);
         String policyText = getResources().getString(R.string.keyboard_guide_privacy_policy, serviceKeyText, policyKeyText);
@@ -246,7 +246,7 @@ public class KeyboardActivationActivity extends HSActivity {
             ((TextView)dialogView.findViewById(R.id.alertTitle)).setText(getString(R.string.alter_enable_access_title, getString(R.string.app_name)));
             ((TextView)dialogView.findViewById(R.id.message)).setText(getString(R.string.alter_enable_access_content, getString(R.string.app_name)));
 
-            videoView = (GivenSizeVideoView) dialogView.findViewById(R.id.videoview_guide);
+            videoView = dialogView.findViewById(R.id.videoview_guide);
             Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.accesibility_guide);
             videoView.setVideoURI(uri);
 

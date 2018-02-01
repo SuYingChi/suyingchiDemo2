@@ -9,7 +9,7 @@ public final class StickerHomeModel implements ICondition {
 
 	public StickerGroup stickerGroup;
 	public FacemojiSticker facemojiSticker;
-	public int span;
+	// --Commented out by Inspection (18/1/11 下午2:41):public int span;
 
 	public boolean isTitle;
 	public boolean isFacemoji;
@@ -22,7 +22,7 @@ public final class StickerHomeModel implements ICondition {
 	public String title;
 	public String rightButton;
 
-	public View.OnClickListener customizedTitleClickListener;
+	// --Commented out by Inspection (18/1/11 下午2:41):public View.OnClickListener customizedTitleClickListener;
 
 	public StickerHomeModel() {
 		stickerGroup=null;
@@ -34,8 +34,6 @@ public final class StickerHomeModel implements ICondition {
 		titleClickListener=null;
 		title=null;
 		rightButton=null;
-		customizedTitleClickListener=null;
-		span=1;
 	}
 
     @Override

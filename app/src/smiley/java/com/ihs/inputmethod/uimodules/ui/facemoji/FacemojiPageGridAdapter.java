@@ -9,7 +9,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.facemoji.bean.FacemojiSticker;
@@ -29,7 +28,7 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
     private int stickerWidth;
     private int stickerHeight;
     private LayoutInflater mInflater;
-    boolean isCurrentThemeDarkBg;
+    // --Commented out by Inspection (18/1/11 下午2:41):boolean isCurrentThemeDarkBg;
     private boolean allowPlayAnim;
 
     public FacemojiPageGridAdapter(final List<FacemojiSticker> data,
@@ -41,7 +40,6 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
         this.mInflater = LayoutInflater.from(context);
         this.stickerWidth = stickerWidth;
         this.stickerHeight = stickerHeight;
-        isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
     }
 
     @Override
@@ -74,7 +72,7 @@ public class FacemojiPageGridAdapter extends BaseAdapter implements Recoverable 
             convertView = mInflater.inflate(R.layout.facemoji_custom_view, null);
             final View containerLayout = convertView.findViewById(R.id.facemoji_layout);
             containerLayout.setLayoutParams(new GridView.LayoutParams(stickerWidth, stickerHeight));
-            final FacemojiAnimationView facemojiAnimationView = (FacemojiAnimationView) containerLayout.findViewById(R.id.sticker_player_view);
+            final FacemojiAnimationView facemojiAnimationView = containerLayout.findViewById(R.id.sticker_player_view);
             final AnimationLayout facemojiLayout =  containerLayout.findViewById(R.id.facemoji_layout);
             facemojiAnimationView.setSticker(sticker);
             facemojiAnimationView.setTag(sticker);

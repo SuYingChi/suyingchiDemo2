@@ -97,7 +97,7 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     private KeyboardFullScreenAd openFullScreenAd;
     private KeyboardFullScreenAd closeFullScreenAd;
     private KeyboardGooglePlayAdManager keyboardGooglePlayAdManager;
-    private String currentWord = "";
+    // --Commented out by Inspection (18/1/11 下午2:41):private String currentWord = "";
     private AdCaffeHelper adCaffeHelper;
     private INotificationObserver keyboardNotificationObserver = (eventName, notification) -> {
         switch (eventName) {
@@ -469,7 +469,6 @@ public abstract class HSUIInputMethodService extends HSInputMethodService implem
     @Override
     public void onStartInput(EditorInfo editorInfo, boolean restarting) {
         super.onStartInput(editorInfo, restarting);
-        currentWord = "";
         if (restarting) {
             getKeyboardPanelMananger().resetKeyboardBarState();
         }

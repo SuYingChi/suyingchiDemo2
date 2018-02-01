@@ -30,9 +30,11 @@ public class StickerPanelItem {
         return viewType == ITEM_TYPE_DIVIDER;
     }
 
-    public boolean isPlaceHolder() {
-        return viewType == ITEM_TYPE_PLACE_HOLDER;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean isPlaceHolder() {
+//        return viewType == ITEM_TYPE_PLACE_HOLDER;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public boolean isSticker() {
         return viewType == ITEM_TYPE_STICKER;
@@ -42,8 +44,10 @@ public class StickerPanelItem {
         return sticker;
     }
 
-    public void setSticker(Sticker sticker) {
-        this.sticker = sticker;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setSticker(Sticker sticker) {
+//        this.sticker = sticker;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 }

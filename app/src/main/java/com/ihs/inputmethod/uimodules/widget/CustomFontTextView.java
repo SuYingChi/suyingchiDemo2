@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.uimodules.R;
 
-public final class CustomFontTextView extends TextView{
+public final class CustomFontTextView extends android.support.v7.widget.AppCompatTextView{
     private static final String FONT_FuturaStd_Heavy_="fonts/FuturaStd-Heavy.otf";
     private static final String FONT_PhosphateSolid_="fonts/PhosphateSolid.ttf";
     private static final String FONT_Roboto_Medium_="fonts/Roboto-Medium.ttf";
@@ -66,7 +66,9 @@ public final class CustomFontTextView extends TextView{
        }
     }
     
-    public void changeFacyFont(String font){
-        changeFont(getContext(), font);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void changeFacyFont(String font){
+//        changeFont(getContext(), font);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

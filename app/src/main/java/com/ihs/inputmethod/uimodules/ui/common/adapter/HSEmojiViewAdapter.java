@@ -2,10 +2,8 @@ package com.ihs.inputmethod.uimodules.ui.common.adapter;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -15,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.annimon.stream.function.FunctionalInterface;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
 import com.ihs.inputmethod.uimodules.R;
@@ -135,7 +132,7 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	public void onClick(View v) {
 		final Object tag=v.getTag();
 		if(tag instanceof Emoji && listener!=null){
-			View textView = (TextView) v.findViewById(R.id.emoji_tv);
+			View textView = v.findViewById(R.id.emoji_tv);
 			listener.onEmojiClick((Emoji) tag);
 //			String unicode = ((Emoji) tag).getUnicodeStr();
 //			Log.d("emoji",  ((Emoji) tag).getLabel() + " ---->unicode:"+unicode);
@@ -148,7 +145,7 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	public  boolean onLongClick(View v) {
 		final Object tag= v.getTag();
 		if(tag instanceof Emoji && longPressListener!=null){
-			View textView = (TextView) v.findViewById(R.id.emoji_tv);
+			View textView = v.findViewById(R.id.emoji_tv);
 			longPressListener.onEmojiLongPress((Emoji) tag,textView,this.childViewHeight);
 
 			Animation set=createClickAnimation(1.4f,80,80);
@@ -162,9 +159,11 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 	}
 
 
-	public OnEmojiLongPressListener getLongPressListener() {
-		return longPressListener;
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public OnEmojiLongPressListener getLongPressListener() {
+//		return longPressListener;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	public void setLongPressListener(OnEmojiLongPressListener longPressListener) {
 		this.longPressListener = longPressListener;
@@ -199,8 +198,8 @@ public final class HSEmojiViewAdapter extends RecyclerView.Adapter<HSEmojiViewAd
 		ImageView iv;
 		public ViewHolder(View itemView) {
 			super(itemView);
-			tv = (TextView) itemView.findViewById(R.id.emoji_tv);
-			iv = (ImageView) itemView.findViewById(R.id.emoji_iv);
+			tv = itemView.findViewById(R.id.emoji_tv);
+			iv = itemView.findViewById(R.id.emoji_iv);
 		}
 	}
 

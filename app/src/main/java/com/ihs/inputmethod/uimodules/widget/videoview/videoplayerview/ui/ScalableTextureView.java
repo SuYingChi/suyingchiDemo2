@@ -231,56 +231,68 @@ public abstract class ScalableTextureView extends TextureView{
         return mPivotPointY;
     }
 
-    public float getContentAspectRatio() {
-        return mContentWidth != null && mContentHeight != null
-                ? (float) mContentWidth / (float) mContentHeight
-                : 0;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public float getContentAspectRatio() {
+//        return mContentWidth != null && mContentHeight != null
+//                ? (float) mContentWidth / (float) mContentHeight
+//                : 0;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Use it to animate TextureView content x position
-     * @param x
-     */
-    public final void setContentX(float x) {
-        mContentX = (int) x - (getMeasuredWidth() - getScaledContentWidth()) / 2;
-        updateMatrixTranslate();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Use it to animate TextureView content x position
+//     * @param x
+//     */
+//    public final void setContentX(float x) {
+//        mContentX = (int) x - (getMeasuredWidth() - getScaledContentWidth()) / 2;
+//        updateMatrixTranslate();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Use it to animate TextureView content x position
-     * @param y
-     */
-    public final void setContentY(float y) {
-        mContentY = (int) y - (getMeasuredHeight() - getScaledContentHeight()) / 2;
-        updateMatrixTranslate();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Use it to animate TextureView content x position
+//     * @param y
+//     */
+//    public final void setContentY(float y) {
+//        mContentY = (int) y - (getMeasuredHeight() - getScaledContentHeight()) / 2;
+//        updateMatrixTranslate();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    protected final float getContentX() {
-        return mContentX;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    protected final float getContentX() {
+//        return mContentX;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    protected final float getContentY() {
-        return mContentY;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    protected final float getContentY() {
+//        return mContentY;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Use it to set content of a TextureView in the center of TextureView
-     */
-    public void centralizeContent() {
-        int measuredWidth = getMeasuredWidth();
-        int measuredHeight = getMeasuredHeight();
-        int scaledContentWidth = getScaledContentWidth();
-        int scaledContentHeight = getScaledContentHeight();
-
-        if (SHOW_LOGS) Logger.d(TAG, "centralizeContent, measuredWidth " + measuredWidth + ", measuredHeight " + measuredHeight + ", scaledContentWidth " + scaledContentWidth + ", scaledContentHeight " + scaledContentHeight);
-
-        mContentX = 0;
-        mContentY = 0;
-
-        if (SHOW_LOGS) Logger.d(TAG, "centerVideo, mContentX " + mContentX + ", mContentY " + mContentY);
-
-        updateMatrixScaleRotate();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Use it to set content of a TextureView in the center of TextureView
+//     */
+//    public void centralizeContent() {
+//        int measuredWidth = getMeasuredWidth();
+//        int measuredHeight = getMeasuredHeight();
+//        int scaledContentWidth = getScaledContentWidth();
+//        int scaledContentHeight = getScaledContentHeight();
+//
+//        if (SHOW_LOGS) Logger.d(TAG, "centralizeContent, measuredWidth " + measuredWidth + ", measuredHeight " + measuredHeight + ", scaledContentWidth " + scaledContentWidth + ", scaledContentHeight " + scaledContentHeight);
+//
+//        mContentX = 0;
+//        mContentY = 0;
+//
+//        if (SHOW_LOGS) Logger.d(TAG, "centerVideo, mContentX " + mContentX + ", mContentY " + mContentY);
+//
+//        updateMatrixScaleRotate();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public Integer getScaledContentWidth() {
         return (int) (mContentScaleX * mContentScaleMultiplier * getMeasuredWidth());
@@ -290,16 +302,20 @@ public abstract class ScalableTextureView extends TextureView{
         return (int) (mContentScaleY * mContentScaleMultiplier * getMeasuredHeight());
     }
 
-    public float getContentScale() {
-        return mContentScaleMultiplier;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public float getContentScale() {
+//        return mContentScaleMultiplier;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void setContentScale(float contentScale) {
-        if (SHOW_LOGS) Logger.d(TAG, "setContentScale, contentScale " + contentScale);
-
-        mContentScaleMultiplier = contentScale;
-        updateMatrixScaleRotate();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setContentScale(float contentScale) {
+//        if (SHOW_LOGS) Logger.d(TAG, "setContentScale, contentScale " + contentScale);
+//
+//        mContentScaleMultiplier = contentScale;
+//        updateMatrixScaleRotate();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     protected final void setContentHeight(int height) {
         mContentHeight = height;

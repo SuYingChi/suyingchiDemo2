@@ -20,12 +20,7 @@
 <resources>
 
     <!-- For keyboard color scheme option dialog. -->
-    <string-array name="keyboard_theme_names" translatable="false">
-        <item>@string/keyboard_theme_white</item>
-    </string-array>
-    <color name="emoji_search_tip_text_color">#A33c3c3c</color>
     <color name="gif_panel_result_text_color">#A33c3c3c</color>
     <color name="gif_panel_hint_text_color">#A33c3c3c</color>
-    <color name="gif_background_color">#ccd1d4</color>
     <!--<bool name="emoji_update_with_6_0_1">true</bool>-->
 </resources>

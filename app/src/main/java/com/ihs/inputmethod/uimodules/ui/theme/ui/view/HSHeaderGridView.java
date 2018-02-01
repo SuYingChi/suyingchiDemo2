@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * See {@link HSHeaderGridView#addHeaderView(View, Object, boolean)}
  */
 public class HSHeaderGridView extends GridView {
-    private static final String TAG = "HeaderGridView";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String TAG = "HeaderGridView";
     /**
      * A class that represents a fixed view in a list, for example a header at the top
      * or a footer at the bottom.
@@ -96,41 +96,47 @@ public class HSHeaderGridView extends GridView {
             ((HeaderViewGridAdapter) adapter).notifyDataSetChanged();
         }
     }
-    /**
-     * Add a fixed view to appear at the top of the grid. If addHeaderView is
-     * called more than once, the views will appear in the order they were
-     * added. Views added using this call can take focus if they want.
-     * <p>
-     * NOTE: Call this before calling setAdapter. This is so HeaderGridView can wrap
-     * the supplied cursor with one that will also account for header views.
-     *
-     * @param v The view to add.
-     */
-    public void addHeaderView(View v) {
-        addHeaderView(v, null, true);
-    }
-    public int getHeaderViewCount() {
-        return mHeaderViewInfos.size();
-    }
-    /**
-     * Removes a previously-added header view.
-     *
-     * @param v The view to remove
-     * @return true if the view was removed, false if the view was not a header
-     *         view
-     */
-    public boolean removeHeaderView(View v) {
-        if (mHeaderViewInfos.size() > 0) {
-            boolean result = false;
-            ListAdapter adapter = getAdapter();
-            if (adapter != null && ((HeaderViewGridAdapter) adapter).removeHeader(v)) {
-                result = true;
-            }
-            removeFixedViewInfo(v, mHeaderViewInfos);
-            return result;
-        }
-        return false;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Add a fixed view to appear at the top of the grid. If addHeaderView is
+//     * called more than once, the views will appear in the order they were
+//     * added. Views added using this call can take focus if they want.
+//     * <p>
+//     * NOTE: Call this before calling setAdapter. This is so HeaderGridView can wrap
+//     * the supplied cursor with one that will also account for header views.
+//     *
+//     * @param v The view to add.
+//     */
+//    public void addHeaderView(View v) {
+//        addHeaderView(v, null, true);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getHeaderViewCount() {
+//        return mHeaderViewInfos.size();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Removes a previously-added header view.
+//     *
+//     * @param v The view to remove
+//     * @return true if the view was removed, false if the view was not a header
+//     *         view
+//     */
+//    public boolean removeHeaderView(View v) {
+//        if (mHeaderViewInfos.size() > 0) {
+//            boolean result = false;
+//            ListAdapter adapter = getAdapter();
+//            if (adapter != null && ((HeaderViewGridAdapter) adapter).removeHeader(v)) {
+//                result = true;
+//            }
+//            removeFixedViewInfo(v, mHeaderViewInfos);
+//            return result;
+//        }
+//        return false;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
     private void removeFixedViewInfo(View v, ArrayList<FixedViewInfo> where) {
         int len = where.size();
         for (int i = 0; i < len; ++i) {
@@ -258,7 +264,7 @@ public class HSHeaderGridView extends GridView {
             }
             // Adapter
             final int adjPosition = position - numHeadersAndPlaceholders;
-            int adapterCount = 0;
+            int adapterCount;
             if (mAdapter != null) {
                 adapterCount = mAdapter.getCount();
                 if (adjPosition < adapterCount) {
@@ -279,7 +285,7 @@ public class HSHeaderGridView extends GridView {
             }
             // Adapter
             final int adjPosition = position - numHeadersAndPlaceholders;
-            int adapterCount = 0;
+            int adapterCount;
             if (mAdapter != null) {
                 adapterCount = mAdapter.getCount();
                 if (adjPosition < adapterCount) {
@@ -329,7 +335,7 @@ public class HSHeaderGridView extends GridView {
             }
             // Adapter
             final int adjPosition = position - numHeadersAndPlaceholders;
-            int adapterCount = 0;
+            int adapterCount;
             if (mAdapter != null) {
                 adapterCount = mAdapter.getCount();
                 if (adjPosition < adapterCount) {

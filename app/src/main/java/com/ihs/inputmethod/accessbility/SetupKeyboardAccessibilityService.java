@@ -50,7 +50,7 @@ public class SetupKeyboardAccessibilityService {
 
     private static final int IME_STATE_NOT_ENABLE = -1;
     private static final int IME_STATE_ENABLED = 0;
-    private static final int IME_STATE_SELECTED = 1;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int IME_STATE_SELECTED = 1;
 
     private ImeSettingsContentObserver settingsContentObserver = new ImeSettingsContentObserver();
     private boolean isScrolled;
@@ -170,9 +170,11 @@ public class SetupKeyboardAccessibilityService {
     }
 
 
-    public void onInterrupt() {
-        HSLog.e("onInterrupt");
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void onInterrupt() {
+//        HSLog.e("onInterrupt");
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
     public void onServiceConnected() {

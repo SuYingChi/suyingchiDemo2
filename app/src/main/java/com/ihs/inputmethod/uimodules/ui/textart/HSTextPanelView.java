@@ -68,7 +68,7 @@ public class HSTextPanelView extends LinearLayout implements BaseTabViewAdapter.
 			List<String> tabs=new ArrayList<>();
 			tabs.addAll(emojiCategory.getTabs());
 			tabAdapter=new HSEmojiTabAdapter(tabs,this);
-			RecyclerView mTabHost = (RecyclerView) findViewById(R.id.image_category_tabhost);
+			RecyclerView mTabHost = findViewById(R.id.image_category_tabhost);
 			mTabHost.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
 			mTabHost.setAdapter(tabAdapter);
 		}
@@ -83,7 +83,7 @@ public class HSTextPanelView extends LinearLayout implements BaseTabViewAdapter.
 		final int emojiHeight=height/emojiRow;
 		final int emojiWidth= (int) (width/(emojiCol+0.5f));
 
-		emojiView = (RecyclerView) findViewById(R.id.emoji_keyboard_pager);
+		emojiView = findViewById(R.id.emoji_keyboard_pager);
 		emojiAdapter =new HSEmojiViewAdapter(emojiHeight,emojiWidth,0.4f,this);
 		emojiAdapter.setHasStableIds(true);
 		emojiView.setLayoutManager(new StaggeredGridLayoutManager(emojiRow,StaggeredGridLayoutManager.HORIZONTAL));

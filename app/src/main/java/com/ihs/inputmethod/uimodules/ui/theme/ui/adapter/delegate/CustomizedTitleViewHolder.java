@@ -16,6 +16,6 @@ public final class CustomizedTitleViewHolder extends RecyclerView.ViewHolder {
 
 	public CustomizedTitleViewHolder(View itemView) {
 		super(itemView);
-		title= (TextView) itemView.findViewById(R.id.customized_title);
+		title= itemView.findViewById(R.id.customized_title);
 	}
 }

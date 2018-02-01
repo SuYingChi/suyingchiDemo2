@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -27,7 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.kc.utils.KCAnalytics;
+import com.ihs.app.analytics.HSAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -38,7 +39,6 @@ import com.ihs.inputmethod.api.framework.HSInputMethod;
 import com.ihs.inputmethod.api.framework.HSInputMethodSettings;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardThemePreview;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.api.theme.HSThemeBitmapUtils;
 import com.ihs.inputmethod.api.utils.HSColorUtils;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
@@ -58,8 +58,12 @@ import com.keyboard.common.SplashActivity;
 import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 import com.keyboard.core.themes.custom.elements.KCBackgroundElement;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,8 +150,14 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         super.onCreate(savedInstanceState);
+//        if (!ThemeDirManager.moveCustomAssetsToFileIfNecessary()) {
+//            Toast.makeText(this, getString(R.string.theme_create_custom_theme_failed), Toast.LENGTH_SHORT).show();
+//            finish();
+//            return;
+//        }
+
+        getWindow().setBackgroundDrawable(new ColorDrawable(0x00ffffff));
         setContentView(R.layout.activity_custom_theme);
         customThemeData = KCCustomThemeManager.getInstance().newCustomThemeData();
 
@@ -198,11 +208,20 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ImageLoader.getInstance().clearMemoryCache();
         AudioAndHapticFeedbackManager.getInstance().releaseSoundResource();
         HSGlobalNotificationCenter.removeObserver(this);
     }
 
     private boolean initThemeResource() {
+        /**
+         * Prepare custom theme resource
+         */
+//        if (!HSKeyboardThemeManager.initCustomThemeResource()) {
+//            return false;
+//        }
+//        KCCustomThemeManager.getInstance();
+
         /**
          * Init custom theme preview
          */
@@ -210,12 +229,17 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
         if (!HSKeyboardThemeManager.resetPreviewTheme()) {
             return false;
         }
+
+
+//        HSKeyboardThemeManager.resetCustomThemeData();//设置默认选项
+//        HSKeyboardThemeManager.clearCustomThemePath();//去掉上次可能存在的缓存
         defaultBackgroundElement = customThemeData.getBackgroundElement();
         Intent intent = getIntent();
         String backgroundName = intent.getStringExtra(BUNDLE_KEY_BACKGROUND_NAME);
         if (backgroundName != null) {
             KCBackgroundElement background = new KCBackgroundElement(backgroundName);
             customThemeData.setElement(background);
+//            HSKeyboardThemeManager.getCustomThemeData().setBackground(background);
         }
 
         shouldUseCamera = intent.getBooleanExtra(BUNDLE_KEY_BACKGROUND_USE_CAMERA, false);
@@ -223,17 +247,17 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
         String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
         if ("keyboard_create".equals(customEntry)) {
-            KCAnalytics.logEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, "bundle_key", customEntry);
+            HSAnalytics.logEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, "bundle_key", customEntry);
         } else {
-            KCAnalytics.logEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, "bundle_key", customEntry);
+            HSAnalytics.logEvent(BUNDLE_KEY_CUSTOMIZE_ENTRY, "bundle_key", customEntry);
         }
 
         return true;
     }
 
     private void initView() {
-        rootView = (ViewGroup) findViewById(R.id.root_view);
-        headerView = (HSCommonHeaderView) findViewById(R.id.custom_theme_head_common);
+        rootView = findViewById(R.id.root_view);
+        headerView = findViewById(R.id.custom_theme_head_common);
     }
 
     private HSKeyboardThemePreview getKeyboardView() {
@@ -256,15 +280,9 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                     mp4HSBackgroundView.setHSBackground(new String[]{backgroundElement.getKeyboardImageContentPath()});
                 }
             } else {
-                try {
-                    Resources res = HSApplication.getContext().getResources();
-                    Bitmap bitmap = HSThemeBitmapUtils.decodeImage(customThemeData.getCustomizedBackgroundImagePath(), HSResourceUtils.getDefaultKeyboardWidth(res),
-                            HSResourceUtils.getDefaultKeyboardHeight(res));
-                    if (bitmap != null) {
-                        mp4HSBackgroundView.setHSBackground(new BitmapDrawable(bitmap));
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                Bitmap bitmap = ImageLoader.getInstance().loadImageSync(BaseImageDownloader.Scheme.FILE.wrap(customThemeData.getCustomizedBackgroundImagePath()));
+                if (bitmap != null) {
+                    mp4HSBackgroundView.setHSBackground(new BitmapDrawable(bitmap));
                 }
             }
         }
@@ -282,6 +300,19 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
         new ShowKeyboardTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
+
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private Drawable getPromptPurchaseViewBackground(KCBaseElement item) {
+//        if (item instanceof KCButtonStyleElement) {
+//            return KCElementResourseHelper.getButtonStyleBackgroundDrawable(customThemeData.getBackgroundMainColor());
+//        } else if (item instanceof KCSoundElement) {
+//            return KCElementResourseHelper.getSoundBackgroundDrawable(((KCSoundElement) item).getBackgroundColor());
+//        } else if (item instanceof KCFontElement) {
+//            return KCElementResourseHelper.getFontBackgroundDrawable();
+//        }
+//        return null;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private boolean isLastPage() {
         return currentPageIndex == fragmentClasses.size() - 1;
@@ -350,7 +381,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                     //首页返回
                     Intent intent = getIntent();
                     String customEntry = intent.getStringExtra(BUNDLE_KEY_CUSTOMIZE_ENTRY);
-                    KCAnalytics.logEvent("app_customize_background_cancel_clicked", "bundle_key", customEntry);
+                    HSAnalytics.logEvent("app_customize_background_cancel_clicked", "bundle_key", customEntry);
                     finish();
                 } else {
                     //回上一页
@@ -376,6 +407,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     private void logGAEventForNextAction(int currentPage) {
         String action = "";
         String label = "";
+//        HSCustomThemeData customThemeData = HSKeyboardThemeManager.getCustomThemeData();
         switch (currentPage) {
             case 0:
                 //background
@@ -410,7 +442,7 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
                 label = customThemeData.getSoundElement().getName();
                 break;
         }
-        KCAnalytics.logEvent(action, "currentPage", label);
+        HSAnalytics.logEvent(action, "currentPage", label);
     }
 
     private void updateTipViewVisibility() {
@@ -457,8 +489,18 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             KCCommonUtils.showDialog(savingDialog);
 
             try {
-                new SaveThemeChangesTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                KCAnalytics.logEvent("app_customize_save", "save_state", "Save_Success");
+                Resources res = getContext().getResources();
+                Bitmap bitmap = Bitmap.createBitmap(HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+
+                Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
+                        HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
+                Drawable drawable = new BitmapDrawable(res, bmp);
+                drawable.setBounds(0, 0, HSResourceUtils.getDefaultKeyboardWidth(res), HSResourceUtils.getDefaultKeyboardHeight(res));
+                drawable.draw(canvas);
+                getKeyboardView().draw(canvas);
+                new SaveThemeChangesTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bitmap);
+                HSAnalytics.logEvent("app_customize_save", "save_state", "Save_Success");
             } catch (Exception e) {
                 exitWhenSaveFailed();
                 return;
@@ -562,28 +604,24 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
             keyboardFrameLayout = (RelativeLayout) View.inflate(getContext(), R.layout.layout_theme_preview, null);
             keyboardFrameLayout.setLayoutParams(params);
-            mp4HSBackgroundView = (HSMediaView) keyboardFrameLayout.findViewById(R.id.keyboard_bg);
+            mp4HSBackgroundView = keyboardFrameLayout.findViewById(R.id.keyboard_bg);
             mp4HSBackgroundView.init();
 
-            keyboardView = (HSKeyboardThemePreview) keyboardFrameLayout.findViewById(R.id.keyboard_view);
+            keyboardView = keyboardFrameLayout.findViewById(R.id.keyboard_view);
             keyboardView.setCustomThemeData(customThemeData);
         }
 
         @Override
         protected Drawable doInBackground(Void... params) {
             try {
-                // 拷贝customThemeCommon到本地
-                if (KCCustomThemeManager.getInstance().saveDefaultBackgroundToLocalReady() && KCCustomThemeManager.getInstance().saveCustomThemeCommonToLocalReady()) {
-                    keyboardView.loadKeyboard();
-                    Resources res = HSApplication.getContext().getResources();
-                    Bitmap bitmap = HSThemeBitmapUtils.decodeImage(defaultBackgroundElement.getKeyboardImageContentPath(), HSResourceUtils.getDefaultKeyboardWidth(res),
-                            HSResourceUtils.getDefaultKeyboardHeight(res));
-                    return new BitmapDrawable(res, bitmap);
-                }
+                Resources res = HSApplication.getContext().getResources();
+                Bitmap bmp = ImageLoader.getInstance().loadImageSync(ImageDownloader.Scheme.FILE.wrap(defaultBackgroundElement.getKeyboardImageContentPath()), new ImageSize(HSResourceUtils.getDefaultKeyboardWidth(res),
+                        HSResourceUtils.getDefaultKeyboardHeight(res)), new DisplayImageOptions.Builder().cacheInMemory(true).build());
+                Drawable backgroundDrawable = new BitmapDrawable(res, bmp);
+                keyboardView.loadKeyboard();
+                return backgroundDrawable;
             } catch (Exception e) {
                 e.printStackTrace();
-            } catch (OutOfMemoryError outOfMemoryError) {
-
             }
             return null;
         }
@@ -600,28 +638,29 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
             ObjectAnimator animator = ObjectAnimator.ofFloat(keyboardFrameLayout, "translationY", height, 0);
             animator.setDuration(500);
             animator.start();
-            if (currentFragment != null) {
-                currentFragment.refreshHeaderNextButtonState();
-            }
+            refreshKeyboardView();
         }
     }
 
-    protected class SaveThemeChangesTask extends AsyncTask<Void, Void, String> {
+    protected class SaveThemeChangesTask extends AsyncTask<Bitmap, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected String doInBackground(Void... params) {
-            try {
-                return KCCustomThemeManager.getInstance().generateCustomTheme(customThemeData);
-            }catch (Exception e){
-                e.printStackTrace();
-            }catch (OutOfMemoryError e1){
-                e1.printStackTrace();
+        protected String doInBackground(Bitmap... params) {
+            String themeName = null;
+            if (params != null && params.length > 0) {
+                try {
+                    themeName = KCCustomThemeManager.getInstance().generateCustomTheme(customThemeData);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } catch (OutOfMemoryError e1) {
+                    e1.printStackTrace();
+                }
             }
-            return null;
+            return themeName;
         }
 
         @Override

@@ -17,7 +17,7 @@ public class ImageLoaderURIUtils {
         File("file://"), Assets("assets://"), Drawable("drawable://"), Content("content://");
         private String str;
 
-        private Type(String str) {
+        Type(String str) {
             this.str = str;
         }
 

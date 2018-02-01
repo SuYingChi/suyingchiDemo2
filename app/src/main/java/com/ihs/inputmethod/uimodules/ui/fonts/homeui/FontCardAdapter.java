@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.artw.lockscreen.lockerappguide.LockerAppGuideManager;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacterManager;
 import com.ihs.inputmethod.uimodules.R;
@@ -114,13 +113,17 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
         });
     }
 
-    public int getcurrentSelectPosition() {
-        return currentSelectPosition;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getcurrentSelectPosition() {
+//        return currentSelectPosition;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void setCurrentSelectPosition(int position) {
-        currentSelectPosition = position;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setCurrentSelectPosition(int position) {
+//        currentSelectPosition = position;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public int getItemCount() {
@@ -155,7 +158,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
             super(itemView);
 
             fontCardView = itemView.findViewById(R.id.font_card_view);
-            fontCardContent = (TextView) itemView.findViewById(R.id.font_content);
+            fontCardContent = itemView.findViewById(R.id.font_content);
         }
     }
 
@@ -165,7 +168,7 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
         public MyFontViewHolder(View itemView) {
             super(itemView);
-            radioButton = (AppCompatRadioButton) itemView.findViewById(R.id.font_radio_button);
+            radioButton = itemView.findViewById(R.id.font_radio_button);
         }
     }
 
@@ -175,8 +178,8 @@ public class FontCardAdapter extends RecyclerView.Adapter<FontCardAdapter.FontCa
 
         public FontHomeViewHolder(View itemView) {
             super(itemView);
-            downloadIcon = (ImageView) itemView.findViewById(R.id.download_icon);
-            moreFontHint = (TextView) itemView.findViewById(R.id.more_font_coming);
+            downloadIcon = itemView.findViewById(R.id.download_icon);
+            moreFontHint = itemView.findViewById(R.id.more_font_coming);
         }
     }
 

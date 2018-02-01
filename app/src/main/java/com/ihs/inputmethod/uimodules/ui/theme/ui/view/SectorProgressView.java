@@ -28,7 +28,7 @@ public class SectorProgressView extends View {
     private RectF oval;
     private float gapWithOfRadiusPercent = .15f;
 
-    private PaintFlagsDrawFilter paintFlagsDrawFilter;
+    // --Commented out by Inspection (18/1/11 下午2:41):private PaintFlagsDrawFilter paintFlagsDrawFilter;
     private RectF rect;
 
     private float startAngle = -90;
@@ -183,8 +183,10 @@ public class SectorProgressView extends View {
         return (int) (dp * m);
     }
 
-    public void setDrawCircle(boolean drawCircle){
-        this.drawCircle=drawCircle;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setDrawCircle(boolean drawCircle){
+//        this.drawCircle=drawCircle;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }
 

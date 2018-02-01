@@ -1,6 +1,5 @@
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/view_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_activity_bg"
@@ -138,7 +137,6 @@
         app:layout_widthPercent="75%">
 
         <ImageView
-            android:id="@+id/accessibility_view_choose_one"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
@@ -149,7 +147,6 @@
             android:visibility="invisible" />
 
         <ImageView
-            android:id="@+id/accessibility_view_enter_one"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"

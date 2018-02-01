@@ -137,11 +137,10 @@ public class LockerGuideAlert extends AlertDialog implements View.OnClickListene
 
     private class ItemAdapter extends RecyclerView.Adapter<VHolder> {
         List<String> data;
-        int type;
+        // --Commented out by Inspection (18/1/11 下午2:41):int type;
 
         public ItemAdapter(List<String> data, int type) {
             this.data = data;
-            this.type = type;
         }
 
         @Override

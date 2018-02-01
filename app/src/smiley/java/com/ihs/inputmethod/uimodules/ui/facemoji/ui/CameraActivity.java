@@ -71,7 +71,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 
 public class CameraActivity extends HSAppCompatActivity {
-    private static final int SAMPLE_SIZE = 8;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int SAMPLE_SIZE = 8;
     private static final int SELECT_PIC = 5566;
     private static final int FACE_LIST_COUNT = 5;
     private static final String TEMP_FACE_FILE_NAME = "face.png";
@@ -84,7 +84,7 @@ public class CameraActivity extends HSAppCompatActivity {
     private final int[] faceMaskBlackResIdList = new int[]{R.drawable.facemask1_black,
             R.drawable.facemask2_black, R.drawable.facemask3_black, R.drawable.facemask4_black, R.drawable.facemask5_black};
     private int previewWidth;
-    private int previewHeight;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int previewHeight;
     private Bitmap srcBitmap;
     private Bitmap beautyBitmap;
     private boolean useBeautyNow = true;
@@ -124,7 +124,7 @@ public class CameraActivity extends HSAppCompatActivity {
      * @param face
      */
     private static void saveToSDCardTempFile(Bitmap face, File pngFile) {
-        FileOutputStream outputStream = null; // 文件输出流
+        FileOutputStream outputStream; // 文件输出流
         try {
             outputStream = new FileOutputStream(pngFile);
             face.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
@@ -152,7 +152,7 @@ public class CameraActivity extends HSAppCompatActivity {
             mCreatingDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mCreatingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
             if (mCreatingView == null) {
-                mCreatingView = (GifImageView) mCreatingDialog.findViewById(R.id.creating_view);
+                mCreatingView = mCreatingDialog.findViewById(R.id.creating_view);
                 WindowManager manager = getWindowManager();
                 DisplayMetrics outMetrics = new DisplayMetrics();
                 manager.getDefaultDisplay().getMetrics(outMetrics);
@@ -196,14 +196,14 @@ public class CameraActivity extends HSAppCompatActivity {
 
     private void initView() {
         // 照相预览界面
-        surfaceView = (SurfaceView) findViewById(R.id.preview);
+        surfaceView = findViewById(R.id.preview);
         surfaceView.getHolder().setKeepScreenOn(true);// 屏幕常亮
         surfaceView.getHolder().addCallback(new SurfaceCallback());//为SurfaceView的句柄添加一个回调函数
 
-        photoView = (ImageView) findViewById(R.id.photo_view);
+        photoView = findViewById(R.id.photo_view);
         photoView.setVisibility(View.INVISIBLE);
 
-        previewContainer = (FrameLayout) findViewById(R.id.preview_container);
+        previewContainer = findViewById(R.id.preview_container);
 
         //relayout
         View faceTitleBar = findViewById(R.id.face_title_bar);
@@ -235,7 +235,7 @@ public class CameraActivity extends HSAppCompatActivity {
             }
         });
 
-        ImageView maskView = (ImageView) findViewById(R.id.mask_view);
+        ImageView maskView = findViewById(R.id.mask_view);
 
         boolean isTablet = getResources().getBoolean(R.bool.isTablet);
 
@@ -251,10 +251,10 @@ public class CameraActivity extends HSAppCompatActivity {
         int statusBarHeight = DisplayUtils.getStatusBarHeight(getWindow());
         int screenHeight = DisplayUtils.getScreenHeightForContent();
 
-        HorizontalScrollView scrollView = (HorizontalScrollView) findViewById(R.id.face_list);
+        HorizontalScrollView scrollView = findViewById(R.id.face_list);
         RelativeLayout.LayoutParams scrollViewPara = (RelativeLayout.LayoutParams) scrollView.getLayoutParams();
 
-        TextView textView = (TextView) findViewById(R.id.fill_text);
+        TextView textView = findViewById(R.id.fill_text);
         RelativeLayout.LayoutParams textPara = (RelativeLayout.LayoutParams) textView.getLayoutParams();
 
         int captureBtnHeight = (int) (0.65f * (screenHeight - statusBarHeight - faceTitlePara.height - lp.height - scrollViewPara.height - textPara.height));
@@ -407,7 +407,7 @@ public class CameraActivity extends HSAppCompatActivity {
 
     private void initFaceListView() {
 
-        final LinearLayout faceListView = (LinearLayout) findViewById(R.id.face_list_view);
+        final LinearLayout faceListView = findViewById(R.id.face_list_view);
         faceListView.setBackgroundColor(Color.BLACK);
         faceListView.setAlpha(0.85f);
         int faceWidth = 0;
@@ -419,11 +419,11 @@ public class CameraActivity extends HSAppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    final LinearLayout faceListView = (LinearLayout) findViewById(R.id.face_list_view);
+                    final LinearLayout faceListView = findViewById(R.id.face_list_view);
                     int index = faceListView.indexOfChild(v);
                     v.setBackgroundResource(faceChoosenResIdList[index]);
 
-                    ImageView maskView = (ImageView) findViewById(R.id.mask_view);
+                    ImageView maskView = findViewById(R.id.mask_view);
                     RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) maskView.getLayoutParams();
                     int resId = faceMaskResIdList[index];
                     boolean isTablet = getResources().getBoolean(R.bool.isTablet);
@@ -448,7 +448,7 @@ public class CameraActivity extends HSAppCompatActivity {
                 }
             });
 
-            HorizontalScrollView scrollView = (HorizontalScrollView) findViewById(R.id.face_list);
+            HorizontalScrollView scrollView = findViewById(R.id.face_list);
             RelativeLayout.LayoutParams scrollViewPara = (RelativeLayout.LayoutParams) scrollView.getLayoutParams();
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(20, 20);
@@ -472,7 +472,7 @@ public class CameraActivity extends HSAppCompatActivity {
             faceListView.setGravity(Gravity.CENTER_HORIZONTAL);
         }
 
-        ImageView maskView = (ImageView) findViewById(R.id.mask_view);
+        ImageView maskView = findViewById(R.id.mask_view);
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) maskView.getLayoutParams();
         int resId = faceMaskResIdList[target / 2];
         boolean isTablet = getResources().getBoolean(R.bool.isTablet);
@@ -520,7 +520,6 @@ public class CameraActivity extends HSAppCompatActivity {
 
         setPreviewContainerLayoutParam(previewContainerLayoutParams, parameters);
         previewWidth = previewContainerLayoutParams.width;
-        previewHeight = previewContainerLayoutParams.height;
 
         Camera.Size pictureSize = getOptimalCameraSize(parameters.getSupportedPictureSizes(), previewContainerLayoutParams.width, previewContainerLayoutParams.height);
         parameters.setPictureSize(pictureSize.width, pictureSize.height);
@@ -645,7 +644,7 @@ public class CameraActivity extends HSAppCompatActivity {
     }
 
     private String getHairStyle() {
-        final ImageView maskView = (ImageView) findViewById(R.id.mask_view);
+        final ImageView maskView = findViewById(R.id.mask_view);
         int index = Integer.parseInt(maskView.getTag().toString());
         String result;
         switch (index) {
@@ -769,7 +768,7 @@ public class CameraActivity extends HSAppCompatActivity {
     private void synthesisingPhoto(Bitmap bitmap) {
         isSynthesisingImage = true;
 
-        ImageView beautyBtn = (ImageView) findViewById(R.id.beauty_button);
+        ImageView beautyBtn = findViewById(R.id.beauty_button);
         VectorDrawableCompat beautyDrawable = VectorCompat.createVectorDrawable(HSApplication.getContext(), R.drawable.ic_beauty_black_24dp);
         DrawableCompat.setTintList(beautyDrawable, new ColorStateList(
                 new int[][]
@@ -837,7 +836,7 @@ public class CameraActivity extends HSAppCompatActivity {
         View titleBar = findViewById(R.id.face_title_bar);
         RelativeLayout.LayoutParams titleBarPara = (RelativeLayout.LayoutParams) titleBar.getLayoutParams();
 
-        ImageView maskView = (ImageView) findViewById(R.id.mask_view);
+        ImageView maskView = findViewById(R.id.mask_view);
         boolean isTablet = getResources().getBoolean(R.bool.isTablet);
 
         int cropWidth = maskView.getWidth();

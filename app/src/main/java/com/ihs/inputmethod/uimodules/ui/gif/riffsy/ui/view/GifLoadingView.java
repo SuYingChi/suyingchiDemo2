@@ -36,7 +36,7 @@ public final class GifLoadingView extends LinearLayout {
         super.onFinishInflate();
 
         mGifLoadingCircle = findViewById(R.id.gif_loading_circle);
-        mGifLoadingResult = (TextView) findViewById(R.id.gif_loading_result);
+        mGifLoadingResult = findViewById(R.id.gif_loading_result);
         if(!HSKeyboardThemeManager.getCurrentTheme().isDarkBg()){
             mGifLoadingResult.setTextColor(Color.BLACK);
         }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feedback_email">feedback.emoji@hotmail.com</string>
     <string name="fb_app_id">1474873346171463</string>
     <string name="my_facemoji_send_facemoji_tip">पहले से ही आरओएफएल? सीधे Emoji Keyboard पर भेजें!</string>
     <string name="camera_activity_title">एक सेल्‍फी लें</string>
@@ -18,5 +17,4 @@
     नोट: अधिकृत के बारे में आपको प्रणाली अनुस्मारक मिलेगा, %1$s आपकी कोई भी जानकारी नहीं लेगा।</string>
 <string name="theme_share_text_content">मेरा व्यक्तिगत कीबोर्ड #%1$s के साथ बना है\nhttps://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
 <string name="theme_share_text_content_for_custom_theme">अपनी प्रिय फोटो के साथ कीबोर्ड को अनुकूलित करें! #%1$s को निशुल्क में डाउनलोड करें:\n https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
-<string name="settings_button_tell_a_friend_content">अरे, आपने %1$s कीबोर्ड ऐप आजमाई है। आप अपने कीबोर्ड को अपनी फोटो के साथ अनुकूलित कर सकते हो! और ⒻⓄⓃⓉⓈ और इमोजी अद्भुत है। निशुल्क में #%2$s डाउनलोड करें:\n https://play.google.com/store/apps/details?id=com.smartkeyboard.emoji</string>
 </resources>

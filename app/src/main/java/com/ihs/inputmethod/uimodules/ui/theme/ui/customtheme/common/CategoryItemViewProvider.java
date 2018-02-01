@@ -54,7 +54,7 @@ public class CategoryItemViewProvider
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.tv_category);
+            title = itemView.findViewById(R.id.tv_category);
         }
     }
 }

@@ -61,10 +61,12 @@ public class StickerSuggestionAdapter extends RecyclerView.Adapter<StickerSugges
         return stickerList.size();
     }
 
-    public void refreshData(List<Sticker> data) {
-        this.stickerList = data;
-        notifyDataSetChanged();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void refreshData(List<Sticker> data) {
+//        this.stickerList = data;
+//        notifyDataSetChanged();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {

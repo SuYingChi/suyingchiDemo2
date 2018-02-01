@@ -3,7 +3,6 @@ package com.ihs.inputmethod.uimodules.ui.emoji;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Build;
-import android.util.Log;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.uimodules.R;
@@ -15,7 +14,6 @@ import com.kc.commons.configfile.KCMap;
 import com.kc.commons.configfile.KCParser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -165,7 +163,7 @@ final class EmojiLoader {
 
 
 	private KCMap getEmojiSkinConfigMap() {
-		KCMap kcMap = null;
+		KCMap kcMap;
 		try {
 			   //KEY: emoji unicode string
 			   // VALUE: Emoji string as the value.
@@ -182,7 +180,7 @@ final class EmojiLoader {
 		if (kcMap != null) {
 			emojiSkinMapping = new HashMap<>();
 			Set<String> allKey = kcMap.keySet();
-			KCList emojiArray = null;
+			KCList emojiArray;
 			for (String key: allKey ) {
 				emojiArray =  kcMap.getList(key);
 				ArrayList<Emoji> skinItems = new ArrayList<>();

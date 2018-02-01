@@ -31,9 +31,11 @@ public final class AdapterDelegatesManager<T> {
 	}
 
 
-	public AdapterDelegatesManager<T> addDelegate(int viewType,@NonNull AdapterDelegate<T> delegate) {
-		return addDelegate(viewType, false, delegate);
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public AdapterDelegatesManager<T> addDelegate(int viewType,@NonNull AdapterDelegate<T> delegate) {
+//		return addDelegate(viewType, false, delegate);
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
 	public AdapterDelegatesManager<T> addDelegate(int viewType, boolean allowReplacingDelegate,
@@ -59,20 +61,24 @@ public final class AdapterDelegatesManager<T> {
 	}
 
 
-	public AdapterDelegatesManager<T> removeDelegate(@NonNull AdapterDelegate<T> delegate) {
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public AdapterDelegatesManager<T> removeDelegate(@NonNull AdapterDelegate<T> delegate) {
+//
+//		int indexToRemove = delegates.indexOfValue(delegate);
+//
+//		if (indexToRemove >= 0) {
+//			delegates.removeAt(indexToRemove);
+//		}
+//		return this;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-		int indexToRemove = delegates.indexOfValue(delegate);
-
-		if (indexToRemove >= 0) {
-			delegates.removeAt(indexToRemove);
-		}
-		return this;
-	}
-
-	public AdapterDelegatesManager<T> removeDelegate(int viewType) {
-		delegates.remove(viewType);
-		return this;
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public AdapterDelegatesManager<T> removeDelegate(int viewType) {
+//		delegates.remove(viewType);
+//		return this;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
 	public int getItemViewType(@NonNull T items, int position) {
@@ -169,20 +175,24 @@ public final class AdapterDelegatesManager<T> {
 		delegate.onViewDetachedFromWindow(viewHolder);
 	}
 
-	public AdapterDelegatesManager<T> setFallbackDelegate(
-			@Nullable AdapterDelegate<T> fallbackDelegate) {
-		this.fallbackDelegate = fallbackDelegate;
-		return this;
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public AdapterDelegatesManager<T> setFallbackDelegate(
+//			@Nullable AdapterDelegate<T> fallbackDelegate) {
+//		this.fallbackDelegate = fallbackDelegate;
+//		return this;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-	public int getViewType(@NonNull AdapterDelegate<T> delegate) {
-
-		int index = delegates.indexOfValue(delegate);
-		if (index == -1) {
-			return -1;
-		}
-		return delegates.keyAt(index);
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public int getViewType(@NonNull AdapterDelegate<T> delegate) {
+//
+//		int index = delegates.indexOfValue(delegate);
+//		if (index == -1) {
+//			return -1;
+//		}
+//		return delegates.keyAt(index);
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	@Nullable
 	public AdapterDelegate<T> getDelegateForViewType(int viewType) {
@@ -198,10 +208,12 @@ public final class AdapterDelegatesManager<T> {
 		return delegate;
 	}
 
-	@Nullable
-	public AdapterDelegate<T> getFallbackDelegate() {
-		return fallbackDelegate;
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	@Nullable
+//	public AdapterDelegate<T> getFallbackDelegate() {
+//		return fallbackDelegate;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	public int getSpanSize(T items,int position) {
 

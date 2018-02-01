@@ -107,11 +107,11 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
             stickerNameList = new ArrayList<>();
             stickerNameList.addAll(stickerPanelManager.getSortedStickerGroupNameInKeyboardList());
             stickerTabAdapter = new StickerTabAdapter(stickerNameList, this);
-            stickerTabRecyclerView = (RecyclerView) findViewById(R.id.sticker_category_tab_host);
+            stickerTabRecyclerView = findViewById(R.id.sticker_category_tab_host);
             stickerTabRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             stickerTabRecyclerView.setAdapter(stickerTabAdapter);
 
-            plusButton = (PlusButton) findViewById(R.id.plus_container);
+            plusButton = findViewById(R.id.plus_container);
             if (StickerDataManager.getInstance().shouldShowNewMask()) {
                 plusButton.showNewTip();
             } else {
@@ -148,7 +148,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
         View sticker_panel_first_page = inflater.inflate(R.layout.common_sticker_panel_first_page, null);
         stickerViewPagerAdapter = new StickerViewPagerAdapter(sticker_panel_first_page);
         stickerViewPagerAdapter.setNeedDownloadStickerGroupList(stickerPanelManager.getNeedDownloadStickerGroupInKeyboardList());
-        stickerPanelViewPager = (ViewPager) findViewById(R.id.sticker_panel_view_pager);
+        stickerPanelViewPager = findViewById(R.id.sticker_panel_view_pager);
         stickerPanelViewPager.setAdapter(stickerViewPagerAdapter);
         stickerPanelViewPager.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         stickerPanelViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -180,7 +180,7 @@ public class StickerPanelView extends LinearLayout implements BaseTabViewAdapter
 
         stickerMainRecyclerViewAdapter = new StickerPageAdapter(stickerHeight, stickerWidth, this);
         stickerMainRecyclerViewAdapter.setHasStableIds(true);
-        stickerMainPagerRecyclerView = (RecyclerView) sticker_panel_first_page.findViewById(R.id.sticker_horizontal_scroll_view);
+        stickerMainPagerRecyclerView = sticker_panel_first_page.findViewById(R.id.sticker_horizontal_scroll_view);
         stickerMainPagerRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(stickerRow, StaggeredGridLayoutManager.HORIZONTAL));
         stickerMainPagerRecyclerView.setAdapter(stickerMainRecyclerViewAdapter);
         stickerMainPagerRecyclerView.addOnScrollListener(new OnStickerScrollListener());

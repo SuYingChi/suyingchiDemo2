@@ -62,20 +62,22 @@ public class WallpaperInfo implements Parcelable {
     private long mEditTime = -1;
 
     private boolean mIsApplied;
-    private boolean mIsBoutique;
-    private boolean mIsSpecialDay;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mIsBoutique;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mIsSpecialDay;
     private Boolean mIsTextLight;
 
     private WallpaperInfo() {
     }
 
-    public static WallpaperInfo newWallpaper(int type, String path, String source) {
-        WallpaperInfo info = new WallpaperInfo();
-        info.mType = type;
-        info.mPath = path;
-        info.mSource = source;
-        return info;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static WallpaperInfo newWallpaper(int type, String path, String source) {
+//        WallpaperInfo info = new WallpaperInfo();
+//        info.mType = type;
+//        info.mPath = path;
+//        info.mSource = source;
+//        return info;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static WallpaperInfo newBuiltInWallpaper(@DrawableRes int builtInWallpaperResId) {
         WallpaperInfo info = new WallpaperInfo();
@@ -99,28 +101,34 @@ public class WallpaperInfo implements Parcelable {
         return info;
     }
 
-    public static WallpaperInfo newGalleryWallpaper(String path) {
-        WallpaperInfo info = new WallpaperInfo();
-        info.mType = WALLPAPER_TYPE_GALLERY;
-        info.mPath = path;
-        return info;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static WallpaperInfo newGalleryWallpaper(String path) {
+//        WallpaperInfo info = new WallpaperInfo();
+//        info.mType = WALLPAPER_TYPE_GALLERY;
+//        info.mPath = path;
+//        return info;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static WallpaperInfo newLuckyWallpaper(String url, String thumb, String path) {
-        WallpaperInfo info = new WallpaperInfo();
-        info.mType = WALLPAPER_TYPE_LUCKY;
-        info.mSource = url;
-        info.mThumbnailUrl = thumb;
-        info.mPath = path;
-        return info;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static WallpaperInfo newLuckyWallpaper(String url, String thumb, String path) {
+//        WallpaperInfo info = new WallpaperInfo();
+//        info.mType = WALLPAPER_TYPE_LUCKY;
+//        info.mSource = url;
+//        info.mThumbnailUrl = thumb;
+//        info.mPath = path;
+//        return info;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static WallpaperInfo new3DWallpaper(String name) {
-        WallpaperInfo info = new WallpaperInfo();
-        info.mType = WALLPAPER_TYPE_3D;
-        info.mSource = name;
-        return info;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static WallpaperInfo new3DWallpaper(String name) {
+//        WallpaperInfo info = new WallpaperInfo();
+//        info.mType = WALLPAPER_TYPE_3D;
+//        info.mSource = name;
+//        return info;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private WallpaperInfo(Parcel in) {
         mType = in.readInt();
@@ -152,123 +160,133 @@ public class WallpaperInfo implements Parcelable {
 //        return newOnlineWallpaper(wallpaperProto.url, wallpaperProto.thumbnailUrl);
 //    }
 
-    /**
-     * Local wallpapers were serialized in JSON format in v1.2.8 (33) and earlier versions.
-     */
-    public static
-    @Nullable
-    WallpaperInfo valueOf(JSONObject jsonData) {
-        if (jsonData == null) {
-            return null;
-        }
-        WallpaperInfo info = null;
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Local wallpapers were serialized in JSON format in v1.2.8 (33) and earlier versions.
+//     */
+//    public static
+//    @Nullable
+//    WallpaperInfo valueOf(JSONObject jsonData) {
+//        if (jsonData == null) {
+//            return null;
+//        }
+//        WallpaperInfo info = null;
+//
+//        boolean isBuiltIn = jsonData.optBoolean(JSON_KEY_IS_BUILT_IN, false);
+//        String url = jsonData.optString(JSON_KEY_URL);
+//        String thumbnailUrl = jsonData.optString(JSON_KEY_THUMB);
+//        String buildInDrawableName = jsonData.optString(JSON_KEY_BUILT_IN_DRAWABLE_NAME);
+//
+//        // Maintain compatibility
+//        if (!isBuiltIn && url.isEmpty() && thumbnailUrl.isEmpty()) {
+//            isBuiltIn = true;
+//            buildInDrawableName = LEGACY_BUILT_IN_DRAWABLE_NAME;
+//        }
+//
+//        if (isBuiltIn) {
+//            Context context = HSApplication.getContext();
+//            Resources res = context.getResources();
+//            @DrawableRes int drawableResId = res.getIdentifier(buildInDrawableName, "drawable", context.getPackageName());
+//            if (drawableResId > 0) {
+//                info = WallpaperInfo.newBuiltInWallpaper(drawableResId);
+//            }
+//        } else {
+//            info = WallpaperInfo.newOnlineWallpaper(url, thumbnailUrl);
+//        }
+//        return info;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        boolean isBuiltIn = jsonData.optBoolean(JSON_KEY_IS_BUILT_IN, false);
-        String url = jsonData.optString(JSON_KEY_URL);
-        String thumbnailUrl = jsonData.optString(JSON_KEY_THUMB);
-        String buildInDrawableName = jsonData.optString(JSON_KEY_BUILT_IN_DRAWABLE_NAME);
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    void onAdd() {
+//        mCreateTime = System.currentTimeMillis();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        // Maintain compatibility
-        if (!isBuiltIn && url.isEmpty() && thumbnailUrl.isEmpty()) {
-            isBuiltIn = true;
-            buildInDrawableName = LEGACY_BUILT_IN_DRAWABLE_NAME;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void onEdit() {
+//        mEditTime = System.currentTimeMillis();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        if (isBuiltIn) {
-            Context context = HSApplication.getContext();
-            Resources res = context.getResources();
-            @DrawableRes int drawableResId = res.getIdentifier(buildInDrawableName, "drawable", context.getPackageName());
-            if (drawableResId > 0) {
-                info = WallpaperInfo.newBuiltInWallpaper(drawableResId);
-            }
-        } else {
-            info = WallpaperInfo.newOnlineWallpaper(url, thumbnailUrl);
-        }
-        return info;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public WallpaperInfo(@NonNull Cursor cursor) {
+//        int typeIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_TYPE);
+//        int drawableNameIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_DRAWABLE_NAME);
+//        int thumbnailUrlIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_THUMBNAIL_URL);
+//        int hdUrlIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_HD_URL);
+//        int pathIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_PATH);
+//        int editIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_EDIT);
+//        int createTimeIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_CREATE_TIME);
+//        int editTimeIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_EDIT_TIME);
+//        int isCurrentIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_IS_APPLIED);
+//        if (typeIndex != -1) {
+//            mType = cursor.getInt(typeIndex);
+//        }
+//        if (drawableNameIndex != -1) {
+//            Context context = HSApplication.getContext();
+//            Resources res = context.getResources();
+//            String drawableName = cursor.getString(drawableNameIndex);
+//            mBuiltInDrawableId = res.getIdentifier(drawableName, "drawable", context.getPackageName());
+//        }
+//        if (thumbnailUrlIndex != -1) {
+//            mThumbnailUrl = cursor.getString(thumbnailUrlIndex);
+//        }
+//        if (hdUrlIndex != -1) {
+//            mSource = cursor.getString(hdUrlIndex);
+//        }
+//        if (pathIndex != -1) {
+//            mPath = cursor.getString(pathIndex);
+//        }
+//        if (editIndex != -1) {
+//            mEdit = cursor.getString(editIndex);
+//        }
+//        if (createTimeIndex != -1) {
+//            mCreateTime = cursor.getLong(createTimeIndex);
+//        }
+//        if (editTimeIndex != -1) {
+//            mEditTime = cursor.getLong(editTimeIndex);
+//        }
+//        if (isCurrentIndex != -1) {
+//            mIsApplied = cursor.getInt(isCurrentIndex) > 0;
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    void onAdd() {
-        mCreateTime = System.currentTimeMillis();
-    }
-
-    public void onEdit() {
-        mEditTime = System.currentTimeMillis();
-    }
-
-    public WallpaperInfo(@NonNull Cursor cursor) {
-        int typeIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_TYPE);
-        int drawableNameIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_DRAWABLE_NAME);
-        int thumbnailUrlIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_THUMBNAIL_URL);
-        int hdUrlIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_HD_URL);
-        int pathIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_PATH);
-        int editIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_EDIT);
-        int createTimeIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_CREATE_TIME);
-        int editTimeIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_EDIT_TIME);
-        int isCurrentIndex = cursor.getColumnIndex(WallpaperProvider.COLUMN_IS_APPLIED);
-        if (typeIndex != -1) {
-            mType = cursor.getInt(typeIndex);
-        }
-        if (drawableNameIndex != -1) {
-            Context context = HSApplication.getContext();
-            Resources res = context.getResources();
-            String drawableName = cursor.getString(drawableNameIndex);
-            mBuiltInDrawableId = res.getIdentifier(drawableName, "drawable", context.getPackageName());
-        }
-        if (thumbnailUrlIndex != -1) {
-            mThumbnailUrl = cursor.getString(thumbnailUrlIndex);
-        }
-        if (hdUrlIndex != -1) {
-            mSource = cursor.getString(hdUrlIndex);
-        }
-        if (pathIndex != -1) {
-            mPath = cursor.getString(pathIndex);
-        }
-        if (editIndex != -1) {
-            mEdit = cursor.getString(editIndex);
-        }
-        if (createTimeIndex != -1) {
-            mCreateTime = cursor.getLong(createTimeIndex);
-        }
-        if (editTimeIndex != -1) {
-            mEditTime = cursor.getLong(editTimeIndex);
-        }
-        if (isCurrentIndex != -1) {
-            mIsApplied = cursor.getInt(isCurrentIndex) > 0;
-        }
-    }
-
-    void onAddToDatabase(ContentValues values) {
-        if (mType != WALLPAPER_TYPE_NONE) {
-            values.put(WallpaperProvider.COLUMN_TYPE, mType);
-        }
-        if (mBuiltInDrawableId != 0) {
-            String drawableName = "wallpaper_2";
-            if (!TextUtils.isEmpty(drawableName)) {
-                values.put(WallpaperProvider.COLUMN_DRAWABLE_NAME, drawableName);
-            }
-        }
-        if (!TextUtils.isEmpty(mThumbnailUrl)) {
-            values.put(WallpaperProvider.COLUMN_THUMBNAIL_URL, mThumbnailUrl);
-        }
-        if (!TextUtils.isEmpty(mSource)) {
-            values.put(WallpaperProvider.COLUMN_HD_URL, mSource);
-        }
-        if (!TextUtils.isEmpty(mPath)) {
-            values.put(WallpaperProvider.COLUMN_PATH, mPath);
-        }
-        if (!TextUtils.isEmpty(mEdit)) {
-            values.put(WallpaperProvider.COLUMN_EDIT, mEdit);
-        }
-        if (mCreateTime != -1) {
-            values.put(WallpaperProvider.COLUMN_CREATE_TIME, mCreateTime);
-        }
-        if (mEditTime != -1) {
-            values.put(WallpaperProvider.COLUMN_EDIT_TIME, mEditTime);
-        }
-        if (mIsApplied) {
-            values.put(WallpaperProvider.COLUMN_IS_APPLIED, mIsApplied);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    void onAddToDatabase(ContentValues values) {
+//        if (mType != WALLPAPER_TYPE_NONE) {
+//            values.put(WallpaperProvider.COLUMN_TYPE, mType);
+//        }
+//        if (mBuiltInDrawableId != 0) {
+//            String drawableName = "wallpaper_2";
+//            if (!TextUtils.isEmpty(drawableName)) {
+//                values.put(WallpaperProvider.COLUMN_DRAWABLE_NAME, drawableName);
+//            }
+//        }
+//        if (!TextUtils.isEmpty(mThumbnailUrl)) {
+//            values.put(WallpaperProvider.COLUMN_THUMBNAIL_URL, mThumbnailUrl);
+//        }
+//        if (!TextUtils.isEmpty(mSource)) {
+//            values.put(WallpaperProvider.COLUMN_HD_URL, mSource);
+//        }
+//        if (!TextUtils.isEmpty(mPath)) {
+//            values.put(WallpaperProvider.COLUMN_PATH, mPath);
+//        }
+//        if (!TextUtils.isEmpty(mEdit)) {
+//            values.put(WallpaperProvider.COLUMN_EDIT, mEdit);
+//        }
+//        if (mCreateTime != -1) {
+//            values.put(WallpaperProvider.COLUMN_CREATE_TIME, mCreateTime);
+//        }
+//        if (mEditTime != -1) {
+//            values.put(WallpaperProvider.COLUMN_EDIT_TIME, mEditTime);
+//        }
+//        if (mIsApplied) {
+//            values.put(WallpaperProvider.COLUMN_IS_APPLIED, mIsApplied);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * Used to serialize online wallpaper shuffled lists with Protocol Buffers.
@@ -292,29 +310,39 @@ public class WallpaperInfo implements Parcelable {
         return mThumbnailUrl;
     }
 
-    public int getPopularity() {
-        return mPopularity;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getPopularity() {
+//        return mPopularity;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public boolean isApplied() {
-        return mIsApplied;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean isApplied() {
+//        return mIsApplied;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public boolean isSpecialDay() {
-        return mIsSpecialDay;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean isSpecialDay() {
+//        return mIsSpecialDay;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public boolean isBoutique() {
-        return mIsBoutique;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean isBoutique() {
+//        return mIsBoutique;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setApplied(boolean isApplied) {
         mIsApplied = isApplied;
     }
 
-    public String getEdit() {
-        return mEdit;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public String getEdit() {
+//        return mEdit;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setEdit(@NonNull String edit) {
         if (WallpaperInfo.WALLPAPER_TYPE_GALLERY == mType) {
@@ -388,25 +416,27 @@ public class WallpaperInfo implements Parcelable {
         return false;
     }
 
-    String createDbSelectionQuery() {
-        // Built in
-        return "(" + WallpaperProvider.COLUMN_TYPE + " = " + WALLPAPER_TYPE_BUILT_IN + " AND " +
-                WallpaperProvider.COLUMN_DRAWABLE_NAME + " = " + wrapString("wallpaper_2") + ")" +
-
-                // Online
-                " OR (" + WallpaperProvider.COLUMN_TYPE + " = " + WALLPAPER_TYPE_ONLINE + " AND " +
-                WallpaperProvider.COLUMN_THUMBNAIL_URL + " = " + wrapString(mThumbnailUrl) +
-                " AND " + WallpaperProvider.COLUMN_HD_URL + " = " + wrapString(mSource) + ")" +
-
-                // Lucky
-                " OR (" + WallpaperProvider.COLUMN_TYPE + " = " + WALLPAPER_TYPE_LUCKY + " AND " +
-                WallpaperProvider.COLUMN_THUMBNAIL_URL + " = " + wrapString(mThumbnailUrl) +
-                " AND " + WallpaperProvider.COLUMN_HD_URL + " = " + wrapString(mSource) + ")" +
-
-                // Local
-                " OR (" + WallpaperProvider.COLUMN_TYPE + " = " + WALLPAPER_TYPE_GALLERY + " AND " +
-                WallpaperProvider.COLUMN_PATH + " = " + wrapString(mPath) + ")";
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    String createDbSelectionQuery() {
+//        // Built in
+//        return "(" + WallpaperProvider.COLUMN_TYPE + " = " + WALLPAPER_TYPE_BUILT_IN + " AND " +
+//                WallpaperProvider.COLUMN_DRAWABLE_NAME + " = " + wrapString("wallpaper_2") + ")" +
+//
+//                // Online
+//                " OR (" + WallpaperProvider.COLUMN_TYPE + " = " + WALLPAPER_TYPE_ONLINE + " AND " +
+//                WallpaperProvider.COLUMN_THUMBNAIL_URL + " = " + wrapString(mThumbnailUrl) +
+//                " AND " + WallpaperProvider.COLUMN_HD_URL + " = " + wrapString(mSource) + ")" +
+//
+//                // Lucky
+//                " OR (" + WallpaperProvider.COLUMN_TYPE + " = " + WALLPAPER_TYPE_LUCKY + " AND " +
+//                WallpaperProvider.COLUMN_THUMBNAIL_URL + " = " + wrapString(mThumbnailUrl) +
+//                " AND " + WallpaperProvider.COLUMN_HD_URL + " = " + wrapString(mSource) + ")" +
+//
+//                // Local
+//                " OR (" + WallpaperProvider.COLUMN_TYPE + " = " + WALLPAPER_TYPE_GALLERY + " AND " +
+//                WallpaperProvider.COLUMN_PATH + " = " + wrapString(mPath) + ")";
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static String wrapString(String str) {
         if (str == null) {
@@ -444,11 +474,15 @@ public class WallpaperInfo implements Parcelable {
         return mIsTextLight == null ? false : mIsTextLight;
     }
 
-    public void setTextLight(boolean light) {
-        mIsTextLight = light;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setTextLight(boolean light) {
+//        mIsTextLight = light;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public boolean textLightUnkown() {
-        return mIsTextLight == null;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public boolean textLightUnkown() {
+//        return mIsTextLight == null;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }
