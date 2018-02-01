@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.kc.utils.KCAnalytics;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.feature.common.CompatUtils;
 import com.ihs.inputmethod.feature.common.CommonUtils;
@@ -26,6 +25,7 @@ import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperPreviewActivity;
 import com.ihs.inputmethod.uimodules.ui.customize.util.WallpaperDownloadEngine;
 import com.ihs.inputmethod.uimodules.ui.customize.view.LoadingProgressBar;
+import com.kc.utils.KCAnalytics;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
@@ -131,7 +131,11 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
             case WALLPAPER_IMAGE_VIEW:
                 View wallpaperImageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.online_wallpaper_image_item, parent, false);
                 wallpaperImageView.setOnClickListener(this);
-                return new ImageViewHolder(wallpaperImageView);
+                ImageViewHolder imageViewHolder = new ImageViewHolder(wallpaperImageView);
+                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) imageViewHolder.itemView.getLayoutParams();
+                layoutParams.width = (parent.getMeasuredWidth() - parent.getPaddingLeft() - parent.getPaddingRight() - layoutParams.leftMargin * 2 - layoutParams.rightMargin * 2) / 2;
+                layoutParams.height = (int) (layoutParams.width / 1.125);
+                return imageViewHolder;
             case WALLPAPER_FOOTER_VIEW_LOAD_MORE:
                 mFooterViewHolder = new FooterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.load_more_auto, parent, false));
                 return mFooterViewHolder;
