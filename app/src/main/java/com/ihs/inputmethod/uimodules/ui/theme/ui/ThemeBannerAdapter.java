@@ -15,8 +15,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.ihs.app.analytics.HSAnalytics;
-import com.kc.utils.KCAnalytics;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
@@ -31,6 +29,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.analytics.ThemeAnalyticsReporter;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
+import com.kc.utils.KCAnalytics;
 import com.keyboard.core.themes.custom.KCCustomThemeManager;
 
 import java.util.ArrayList;
@@ -239,73 +238,73 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             }
         }
 
-        if(unDownloadBannerThemes.size() == 5) {
-            result.addAll(unDownloadBannerThemes);
-        }
-        else if(unDownloadBannerThemes.size() < 5) {
-            result.addAll(unDownloadBannerThemes);
-            result.addAll(downloadBannerThemes.subList(0, 5 - result.size()));
-        }
-        else {
-            List<String> indexShowCount = new ArrayList<>();
-            int count = unDownloadBannerThemes.size();
-            for (int i = 0; i < count; i++) {
-                int showCount = HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0);
-                indexShowCount.add((showCount > 5 ? 5 : showCount) + "_" + i);
-            }
-
-            for (int i = 0; i < indexShowCount.size(); i++) {
-                if (!indexShowCount.get(i).startsWith("5") && !indexShowCount.get(i).startsWith("0") && result.size() < 5) {
-                    result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
-                }
-                if (result.size() == 5) {
-                    break;
-                }
-            }
-
-            if (result.size() < 5) {
-                for (int i = 0; i < indexShowCount.size(); i++) {
-                    if (indexShowCount.get(i).startsWith("0") && result.size() < 5) {
-                        result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
-                    }
-                    if (result.size() == 5) {
-                        break;
-                    }
-                }
-            }
-
-            if (result.size() < 5) {
-                for (int i = 0; i < indexShowCount.size(); i++) {
-                    if (indexShowCount.get(i).startsWith("5") && result.size() < 5) {
-                        result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
-                    }
-                    if (result.size() == 5) {
-                        break;
-                    }
-                }
-            }
-        }
-        boolean allUnDownloadBannerThemeHasShowed = true;
-
-        for(int i = 0; i < unDownloadBannerThemes.size(); i++) {
-            if(HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0) < 5) {
-                allUnDownloadBannerThemeHasShowed = false;
-                break;
-            }
-        }
-
-        if(allUnDownloadBannerThemeHasShowed) {
-            for (int i = 0; i < unDownloadBannerThemes.size(); i++) {
-                HSKeyboardTheme theme = unDownloadBannerThemes.get(i);
-                HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
-            }
-        }
-
-
-        for(int i = 0; i < downloadBannerThemes.size(); i++) {
-            HSKeyboardTheme theme = downloadBannerThemes.get(i);
-            HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
-        }
+//        if(unDownloadBannerThemes.size() == 5) {
+//            result.addAll(unDownloadBannerThemes);
+//        }
+//        else if(unDownloadBannerThemes.size() < 5) {
+//            result.addAll(unDownloadBannerThemes);
+//            result.addAll(downloadBannerThemes.subList(0, 5 - result.size()));
+//        }
+//        else {
+//            List<String> indexShowCount = new ArrayList<>();
+//            int count = unDownloadBannerThemes.size();
+//            for (int i = 0; i < count; i++) {
+//                int showCount = HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0);
+//                indexShowCount.add((showCount > 5 ? 5 : showCount) + "_" + i);
+//            }
+//
+//            for (int i = 0; i < indexShowCount.size(); i++) {
+//                if (!indexShowCount.get(i).startsWith("5") && !indexShowCount.get(i).startsWith("0") && result.size() < 5) {
+//                    result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
+//                }
+//                if (result.size() == 5) {
+//                    break;
+//                }
+//            }
+//
+//            if (result.size() < 5) {
+//                for (int i = 0; i < indexShowCount.size(); i++) {
+//                    if (indexShowCount.get(i).startsWith("0") && result.size() < 5) {
+//                        result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
+//                    }
+//                    if (result.size() == 5) {
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            if (result.size() < 5) {
+//                for (int i = 0; i < indexShowCount.size(); i++) {
+//                    if (indexShowCount.get(i).startsWith("5") && result.size() < 5) {
+//                        result.add(unDownloadBannerThemes.get(Integer.valueOf(indexShowCount.get(i).split("_")[1])));
+//                    }
+//                    if (result.size() == 5) {
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        boolean allUnDownloadBannerThemeHasShowed = true;
+//
+//        for(int i = 0; i < unDownloadBannerThemes.size(); i++) {
+//            if(HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0) < 5) {
+//                allUnDownloadBannerThemeHasShowed = false;
+//                break;
+//            }
+//        }
+//
+//        if(allUnDownloadBannerThemeHasShowed) {
+//            for (int i = 0; i < unDownloadBannerThemes.size(); i++) {
+//                HSKeyboardTheme theme = unDownloadBannerThemes.get(i);
+//                HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
+//            }
+//        }
+//
+//
+//        for(int i = 0; i < downloadBannerThemes.size(); i++) {
+//            HSKeyboardTheme theme = downloadBannerThemes.get(i);
+//            HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
+//        }
 
         setData(result);
     }

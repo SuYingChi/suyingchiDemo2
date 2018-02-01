@@ -132,10 +132,6 @@ public class HSConfig {
         return 0;
     }
 
-    public static HashMap getMap(String[] path) {
-        return new HashMap<>();
-    }
-
     public static boolean exists(String nativeAds, String adPoolName) {
         return false;
     }
@@ -145,5 +141,43 @@ public class HSConfig {
     }
     public static List<?> getList(String... path) {
         return new ArrayList<>();
+    }
+    public static boolean optBoolean(boolean defaultValue, String... path) {
+        return defaultValue;
+    }
+
+    public static String getRestrictedUserDescription() {
+        return "";
+    }
+
+    public static Map<String, ?> getConfigMap() {
+        return new HashMap<>();
+    }
+
+    public static void setSegmentToken(int token) {
+
+    }
+
+    public static boolean exists(String... path) {
+        return false;
+    }
+
+    public static Map<String, ?> getMap(String... path) {
+        return new HashMap<>();
+    }
+
+
+    public static float optFloat(float defaultValue, String... path) {
+        return defaultValue;
+    }
+
+
+
+    public static Date optDate(Date defaultValue, String... path) {
+        return defaultValue;
+    }
+
+    public static void fetchRemote() {
+
     }
 }

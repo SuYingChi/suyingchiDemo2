@@ -7,5 +7,5 @@ import com.ihs.commons.utils.HSBundle;
  */
 
 public interface INotificationObserver {
-    public void onReceive(String eventName, HSBundle hsBundle);
+    void onReceive(String var1, HSBundle var2);
 }
