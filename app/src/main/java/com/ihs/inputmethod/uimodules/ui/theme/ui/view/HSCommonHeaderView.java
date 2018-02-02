@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.utils.HSBitmapUtils;
 import com.ihs.inputmethod.uimodules.R;
-import com.ihs.keyboardutils.utils.RippleDrawableUtils;
+import com.ihs.inputmethod.uimodules.utils.RippleDrawableUtils;
 
 /**
  * Created by dsapphire on 16/5/19.

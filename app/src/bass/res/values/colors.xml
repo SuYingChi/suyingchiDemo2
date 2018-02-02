@@ -48,7 +48,7 @@
     <color name="main_activity_step_two_button_background">#ff00d0c9</color>
 
 
-
+    <color name="base_function_bg_color">#30000000</color>
 
     <!-- ad -->
     <color name="ad_engine_ad_subtitle">#99666666</color>
