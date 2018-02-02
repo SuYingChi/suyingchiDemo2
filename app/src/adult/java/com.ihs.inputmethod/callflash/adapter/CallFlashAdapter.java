@@ -25,12 +25,18 @@ import static com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.wi
  */
 
 public class CallFlashAdapter extends BaseListAdapter<Type> implements View.OnClickListener {
+    private RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.locker_theme_thumbnail_loading)
+            .error(R.drawable.locker_theme_thumbnail_failed).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+
     public CallFlashAdapter(Activity activity) {
         super(activity);
     }
 
-    private RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.locker_theme_thumbnail_loading)
-            .error(R.drawable.locker_theme_thumbnail_failed).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+    @Override
+    public int getItemCount() {
+        return dataList != null ? dataList.size() - 1 : 0;
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -86,6 +92,7 @@ public class CallFlashAdapter extends BaseListAdapter<Type> implements View.OnCl
         ImageView callFlashImage;
         InCallActionView inCallActionView;
         ThemePreviewWindow themePreviewWindow;
+
         public CallFlashViewHolder(View itemView) {
             super(itemView);
             callFlashImage = ViewUtils.findViewById(itemView, R.id.call_flash_image);
