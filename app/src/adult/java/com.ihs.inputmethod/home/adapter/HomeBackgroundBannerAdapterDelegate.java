@@ -16,6 +16,7 @@ import java.util.List;
 
 public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
     private HomeBackgroundBannerAdapter.OnBackgroundBannerClickListener onBackgroundBannerClickListener;
+    private HomeBackgroundBannerAdapter homeBannerAdapter;
 
     public HomeBackgroundBannerAdapterDelegate(HomeBackgroundBannerAdapter.OnBackgroundBannerClickListener onBackgroundBannerClickListener) {
         this.onBackgroundBannerClickListener = onBackgroundBannerClickListener;
@@ -41,7 +42,7 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
         layoutParams.width = width;
         layoutParams.bottomMargin = HSDisplayUtils.dip2px(parent.getContext(), 20);
 
-        HomeBackgroundBannerAdapter homeBannerAdapter = new HomeBackgroundBannerAdapter(onBackgroundBannerClickListener);
+        homeBannerAdapter = new HomeBackgroundBannerAdapter(onBackgroundBannerClickListener);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -75,15 +76,17 @@ public final class HomeBackgroundBannerAdapterDelegate extends AdapterDelegate<L
     @Override
     protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        HomeBackgroundBannerViewHolder viewHolder = (HomeBackgroundBannerViewHolder) holder;
-        ((HomeBackgroundBannerAdapter) viewHolder.viewPager.getAdapter()).stopAutoScroll();
+        if (homeBannerAdapter != null) {
+            homeBannerAdapter.stopAutoScroll();
+        }
     }
 
     @Override
     protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        HomeBackgroundBannerViewHolder viewHolder = (HomeBackgroundBannerViewHolder) holder;
-        ((HomeBackgroundBannerAdapter) viewHolder.viewPager.getAdapter()).startAutoScroll();
+        if (homeBannerAdapter != null) {
+            homeBannerAdapter.startAutoScroll();
+        }
     }
 
     @Override

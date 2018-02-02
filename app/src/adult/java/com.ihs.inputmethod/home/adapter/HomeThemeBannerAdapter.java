@@ -48,7 +48,7 @@ import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_
  * Created by jixiang on 16/8/22.
  */
 public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
-    private final static int AUTO_SCROLL_DELAY_DEFAULT = 6000;
+    private final static int AUTO_SCROLL_DELAY_DEFAULT = 5000;
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
     private static int AUTO_SCROLL_DELAY;
@@ -184,26 +184,26 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
         LinkedList<HSKeyboardTheme> unDownloadBannerThemes = new LinkedList<>();
 
         Iterator<HSKeyboardTheme> iterator = keyboardThemeArrayList.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             HSKeyboardTheme theme = iterator.next();
-            if(!HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
+            if (!HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
                 unDownloadBannerThemes.add(theme);
             }
         }
 
         int count = keyboardThemeList.size();
-        if(unDownloadBannerThemes.size() > 0) {
-            for(HSKeyboardTheme keyboardTheme : unDownloadBannerThemes) {
-                if(!keyboardThemeList.contains(keyboardTheme)) {
+        if (unDownloadBannerThemes.size() > 0) {
+            for (HSKeyboardTheme keyboardTheme : unDownloadBannerThemes) {
+                if (!keyboardThemeList.contains(keyboardTheme)) {
                     keyboardThemeList.add(keyboardTheme);
                     break;
                 }
             }
 
             Iterator<HSKeyboardTheme> iterator1 = keyboardThemeList.iterator();
-            while(iterator1.hasNext() && keyboardThemeList.size() > count) {
+            while (iterator1.hasNext() && keyboardThemeList.size() > count) {
                 HSKeyboardTheme theme = iterator1.next();
-                if(HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
+                if (HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
                     iterator1.remove();
                 }
             }
@@ -235,24 +235,21 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
         LinkedList<HSKeyboardTheme> downloadBannerThemes = new LinkedList<>();
 
         Iterator<HSKeyboardTheme> iterator = keyboardThemeArrayList.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             HSKeyboardTheme theme = iterator.next();
-            if(!HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
+            if (!HSKeyboardThemeManager.getDownloadedThemeList().contains(theme)) {
                 unDownloadBannerThemes.add(theme);
-            }
-            else {
+            } else {
                 downloadBannerThemes.add(theme);
             }
         }
 
-        if(unDownloadBannerThemes.size() == 5) {
+        if (unDownloadBannerThemes.size() == 5) {
             result.addAll(unDownloadBannerThemes);
-        }
-        else if(unDownloadBannerThemes.size() < 5) {
+        } else if (unDownloadBannerThemes.size() < 5) {
             result.addAll(unDownloadBannerThemes);
             result.addAll(downloadBannerThemes.subList(0, 5 - result.size()));
-        }
-        else {
+        } else {
             List<String> indexShowCount = new ArrayList<>();
             int count = unDownloadBannerThemes.size();
             for (int i = 0; i < count; i++) {
@@ -293,14 +290,14 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
         }
         boolean allUnDownloadBannerThemeHasShowed = true;
 
-        for(int i = 0; i < unDownloadBannerThemes.size(); i++) {
-            if(HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0) < 5) {
+        for (int i = 0; i < unDownloadBannerThemes.size(); i++) {
+            if (HSPreferenceHelper.getDefault().getInt(unDownloadBannerThemes.get(i).mThemeName + "_show_count", 0) < 5) {
                 allUnDownloadBannerThemeHasShowed = false;
                 break;
             }
         }
 
-        if(allUnDownloadBannerThemeHasShowed) {
+        if (allUnDownloadBannerThemeHasShowed) {
             for (int i = 0; i < unDownloadBannerThemes.size(); i++) {
                 HSKeyboardTheme theme = unDownloadBannerThemes.get(i);
                 HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
@@ -308,7 +305,7 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
         }
 
 
-        for(int i = 0; i < downloadBannerThemes.size(); i++) {
+        for (int i = 0; i < downloadBannerThemes.size(); i++) {
             HSKeyboardTheme theme = downloadBannerThemes.get(i);
             HSPreferenceHelper.getDefault().putInt(theme.mThemeName + "_show_count", 0);
         }
@@ -421,11 +418,11 @@ public class HomeThemeBannerAdapter extends PagerAdapter implements ViewPager.On
     }
 
 
-    public void startAutoScroll() {
+    public void startAutoScroll(long delay) {
         if (!isStartLoop && getRealCount() > 1 && isLoop) {
             isStartLoop = true;
             handler.removeMessages(MSG_WHAT_START);
-            handler.sendEmptyMessage(MSG_WHAT_START);
+            handler.sendEmptyMessageDelayed(MSG_WHAT_START, delay);
             if (!hasInit) {
                 hasInit = true;
                 int initItem = getInitItem();

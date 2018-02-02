@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeBackgroundBannerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
-    private final static int AUTO_SCROLL_DELAY_DEFAULT = 6000;
+    private final static int AUTO_SCROLL_DELAY_DEFAULT = 5000;
     private final static int MSG_WHAT_START = 1;
     private final static int MSG_WHAT_LOOP = 2;
     private static int AUTO_SCROLL_DELAY;

@@ -18,6 +18,7 @@ import java.util.List;
 public final class HomeThemeBannerAdapterDelegate extends AdapterDelegate<List<HomeModel>> {
     private Activity activity;
     private boolean isThemeAnalyticsEnabled;
+    private HomeThemeBannerAdapter adapter;
 
     public HomeThemeBannerAdapterDelegate(Activity activity, boolean isThemeAnalyticsEnabled) {
         this.activity = activity;
@@ -56,17 +57,30 @@ public final class HomeThemeBannerAdapterDelegate extends AdapterDelegate<List<H
         viewPager.setLayoutParams(layoutParams);
         viewPager.setPageMargin(pageMargin);
 
-        HomeThemeBannerAdapter adapter = new HomeThemeBannerAdapter(activity);
+        adapter = new HomeThemeBannerAdapter(activity);
         adapter.setThemeAnalyticsEnabled(isThemeAnalyticsEnabled);
         adapter.setViewPager(viewPager);
         adapter.initData();
-        adapter.startAutoScroll();
         viewPager.setAdapter(adapter);
         return viewHolder;
     }
 
+
+    protected void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        if (adapter != null) {
+            adapter.startAutoScroll(2000);
+        }
+    }
+
+    protected void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if (adapter != null) {
+            adapter.stopAutoScroll();
+        }
+    }
+
     @Override
     protected void onBindViewHolder(@NonNull List<HomeModel> items, int position, @NonNull RecyclerView.ViewHolder holder) {
-
     }
 }
