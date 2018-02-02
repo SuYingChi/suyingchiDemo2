@@ -24,7 +24,7 @@
             <FrameLayout
                 android:id="@+id/keyboard_theme_screenshot_container"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/theme_activity_horizontal_margin"
                 android:layout_marginRight="@dimen/theme_activity_horizontal_margin">
 
