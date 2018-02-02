@@ -50,9 +50,9 @@ public class FontAdapter extends BaseListAdapter<FontModel> {
     public FontAdapter.FontCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == FontAdapter.ITEM_TYPE.ITEM_TYPE_MY.ordinal()) {
             currentSelectPosition = HSSpecialCharacterManager.getCurrentSpecialCharacterIndex();
-            return new FontAdapter.MyFontViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_font_card, parent, false));
+            return new FontAdapter.MyFontViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_font, parent, false));
         } else {
-            return new FontAdapter.FontHomeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_font_card, parent, false));
+            return new FontAdapter.FontHomeViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_font, parent, false));
         }
     }
 
@@ -82,7 +82,7 @@ public class FontAdapter extends BaseListAdapter<FontModel> {
             return;
         }
 
-        FontAdapter.FontCardViewHolder holder = (FontCardViewHolder) viewHolder;
+        FontCardViewHolder holder = (FontCardViewHolder) viewHolder;
 
         if (getItemViewType(position) == FontAdapter.ITEM_TYPE.ITEM_TYPE_MORE.ordinal()) {
             holder.fontCardView.setVisibility(View.GONE);
@@ -94,8 +94,11 @@ public class FontAdapter extends BaseListAdapter<FontModel> {
         holder.fontCardContent.setText(hsSpecialCharacter.example);
 
         if (getItemViewType(position) == FontAdapter.ITEM_TYPE.ITEM_TYPE_HOME.ordinal()) {
-            ((FontAdapter.FontHomeViewHolder) holder).downloadIcon.setImageResource(R.drawable.ic_download_icon);
+            holder.downloadImageView.setImageResource(R.drawable.ic_download_icon);
+            holder.downloadImageView.setVisibility(View.VISIBLE);
         } else if (getItemViewType(position) == FontAdapter.ITEM_TYPE.ITEM_TYPE_MY.ordinal()) {
+            holder.downloadImageView.setVisibility(View.GONE);
+
             AppCompatRadioButton appCompatRadioButton = ((FontAdapter.MyFontViewHolder) holder).radioButton;
             appCompatRadioButton.setVisibility(View.VISIBLE);
             appCompatRadioButton.setChecked(position == currentSelectPosition);
@@ -151,12 +154,14 @@ public class FontAdapter extends BaseListAdapter<FontModel> {
     public class FontCardViewHolder extends RecyclerView.ViewHolder {
         View fontCardView;
         TextView fontCardContent;
+        ImageView downloadImageView;
 
         public FontCardViewHolder(View itemView) {
             super(itemView);
 
             fontCardView = itemView.findViewById(R.id.font_card_view);
             fontCardContent = itemView.findViewById(R.id.font_content);
+            downloadImageView = itemView.findViewById(R.id.download_icon);
         }
     }
 

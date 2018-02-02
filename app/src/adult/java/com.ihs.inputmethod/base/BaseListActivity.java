@@ -20,7 +20,7 @@ public abstract class BaseListActivity extends HSAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_base_list);
 
         ActionbarUtils.setCustomTitleWithBackIcon(this, findViewById(R.id.toolbar), getTitleTextResId());
 
