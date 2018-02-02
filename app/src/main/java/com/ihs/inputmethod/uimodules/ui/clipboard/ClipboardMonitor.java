@@ -7,6 +7,8 @@ import android.text.TextUtils;
 
 import com.ihs.app.framework.HSApplication;
 
+import java.util.List;
+
 
 /**
  * Created by Arthur on 17/12/8.
@@ -37,8 +39,8 @@ public class ClipboardMonitor {
                     CharSequence text = clipboard.getText();
                     if (!TextUtils.isEmpty(text)) {
                         String data = text.toString();
-                        clipboardPresenter.recentDataOperate(data);
-                        ClipboardPresenter.getInstance().saveArrayToSp(recentClipSpEditor);
+                        clipboardPresenter.clipDataOperate(data,ClipboardPresenter.RECENT_SIZE,ClipboardPresenter.ADD_RECENT);
+                        clipboardPresenter.refreshClipboard();
                     }
                 }
             });

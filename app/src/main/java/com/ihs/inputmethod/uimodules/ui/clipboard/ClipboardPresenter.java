@@ -1,11 +1,16 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ihs.app.framework.HSApplication;
-import com.ihs.inputmethod.uimodules.ui.common.adapter.ClipboardPinsViewAdapter;
-import com.ihs.inputmethod.uimodules.ui.common.adapter.ClipboardRecentViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,127 +19,267 @@ import java.util.List;
  * Created by yingchi.su on 2018/1/25.
  */
 
-public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecentItemToPins, ClipboardPinsViewAdapter.DeleteFromPinsToRecenet {
-
-    static ClipboardPresenter clipboardPresenter;
+public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecentItemToPinsListener, ClipboardPinsViewAdapter.DeleteFromPinsToRecentListener {
+    static final int ADD_RECENT = 1;
+    private static final int SAVE_TO_PINS = 2;
+    private static final int DELETE_PINS = 3;
+    private static final int RECENT_SP_DATA = 4;
+    private static final int PINS_SP_DATA = 5;
+    static final int RECENT = 6;
+    static final int PINS = 7;
+    static final int RECENT_SIZE = 10;
+    private static final int PINS_SIZE = 30;
+    private static ClipboardPresenter clipboardPresenter;
     private final SharedPreferences recentSp;
     private final SharedPreferences pinsSp;
-    private final String recentClip= "recentClip";
-    private final String pinsClip = "pinsClip";
     private ClipboardRecentViewAdapter clipboardRecentViewAdapter;
-    List<String> recentClipData = new ArrayList<String>();
-    RecyclerView clipboardPanelPinsView;
+    private List<ClipboardRecentViewAdapter.ClipboardRecentMessage> clipRecentData = new ArrayList<ClipboardRecentViewAdapter.ClipboardRecentMessage>();
     private ClipboardPinsViewAdapter clipboardPinsViewAdapter;
-    private List<String> pinsData= new ArrayList<String>();
-    RecyclerView clipboardPanelRecentView;
-    ClipDataResult clipDataResult;
-    public static ClipboardPresenter getInstance(){
-        synchronized (ClipboardPresenter.class){
-         if(clipboardPresenter == null){
-           clipboardPresenter = new ClipboardPresenter();
-         }
+    private List<String> clipPinsData = new ArrayList<String>();
+    private boolean isClipRecentDataChange = false;
+    private boolean isClipPinsDataChange = false;
+    private OnMainViewCreatedListener onMainViewCreatedListener;
+
+
+    public static ClipboardPresenter getInstance() {
+        if (clipboardPresenter == null) {
+            synchronized (ClipboardPresenter.class) {
+                if (clipboardPresenter == null) {
+                    clipboardPresenter = new ClipboardPresenter();
+                }
+            }
         }
         return clipboardPresenter;
     }
 
-   private  ClipboardPresenter(){
-       recentSp = HSApplication.getContext().getSharedPreferences("recentClip", Context.MODE_PRIVATE);
-       pinsSp = HSApplication.getContext().getSharedPreferences("pinsClip", Context.MODE_PRIVATE);
-       loadArray(recentClipData,recentSp,recentClip);
-       loadArray(pinsData,pinsSp,pinsClip);
-        pinsData = getPinsClipData();
-       clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(recentClipData,this);
-       clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(pinsData,this);
-   }
-    void init(){
-
-   }
-    private List<String> getPinsClipData() {
-
-        return null;
+    private ClipboardPresenter() {
+        final String CLIP_RECENT_SP = "CLIP_RECENT_SP_NAME";
+        final String CLIP_PINS_SP = "CLIP_PINS_SP_NAME";
+        recentSp = HSApplication.getContext().getSharedPreferences(CLIP_RECENT_SP, Context.MODE_PRIVATE);
+        pinsSp = HSApplication.getContext().getSharedPreferences(CLIP_PINS_SP, Context.MODE_PRIVATE);
+        //一开始 没本地数据则不创建适配器，有则创建
+        initClipboardAdapters();
     }
 
-
-    public void deleteAndFresh(String pinsContentItem) {
-         clipboardRecentViewAdapter.deleteAndFresh(pinsContentItem);
-    }
-
-    public   void recentDataOperate(String data) {
-        if(recentClipData.size()<10&!recentClipData.contains(data)) {
-            recentClipData.add(0, data);
-        }else if(recentClipData.size() == 10&!recentClipData.contains(data)){
-            recentClipData.remove(recentClipData.size()-1);
-            recentClipData.add(0,data);
-            deleteAndFresh(data);
-        }else if(recentClipData.contains(data)){
-            recentClipData.remove(data);
-            recentClipData.add(0,data);
+    private void initClipboardAdapters() {
+        loadClipDataFromSp(clipRecentData, recentSp, RECENT_SP_DATA);
+        loadClipDataFromSp(clipPinsData, pinsSp, PINS_SP_DATA);
+        if (!clipRecentData.isEmpty()) {
+            clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData, this);
+        }
+        if (!clipPinsData.isEmpty()) {
+            clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData, this);
         }
     }
-    public void addDataAndFresh(String itemPinsContent) {
-        clipboardPinsViewAdapter.addDataAndFresh(itemPinsContent);
-    }
 
-    public void setClipboardPanelPinsView(RecyclerView clipboardPanelPinsView) {
-        this.clipboardPanelPinsView = clipboardPanelPinsView;
+    //新增复制内容时,点击收藏，删除收藏内容时的处理数据的接口，并标明是否有数据变化，有变化保存数据到SP里，
+    void clipDataOperate(String data, int dataSize, int operateType) {
+        List<Boolean> clipRecentDataIsPined = new ArrayList<Boolean>();
+        List<String> clipPInsData = new ArrayList<String>();
+        List<String> clipRecentContent = new ArrayList<String>();
+        List<ClipboardRecentViewAdapter.ClipboardRecentMessage> clipRecent = new ArrayList<ClipboardRecentViewAdapter.ClipboardRecentMessage>();
+        // 实时监听用户复制数据操作
+        for (ClipboardRecentViewAdapter.ClipboardRecentMessage recentMessage : clipRecentData) {
+            clipRecentContent.add(recentMessage.getRecentClipItemContent());
+            clipRecentDataIsPined.add(recentMessage.getPined());
+        }
+        clipPInsData.addAll(clipPinsData);
+        //实时监听用户点击Recent页面的收藏按钮时的数据操作
+        //recent里点击收藏,收藏内容已经有30条，recent页面点击收藏时，收藏里还没有，提示不能再添加
+        if (operateType == SAVE_TO_PINS & clipPInsData.size() == dataSize & !clipPInsData.contains(data)) {
+            Toast.makeText(HSApplication.getContext(), "You can add at most 30 message", Toast.LENGTH_LONG).show();
+            isClipPinsDataChange = false;
+            isClipRecentDataChange = false;
+            return;
+        }//recent里点击收藏，收藏里已经有了，则在recent里去除本条，收藏里置顶该条
+        else if (operateType == SAVE_TO_PINS & clipPInsData.contains(data)) {
+            clipPInsData.remove(clipPInsData.size() - 1);
+            clipPInsData.add(0, data);
+            int index = clipRecentContent.indexOf(data);
+            clipRecentContent.remove(data);
+            clipRecentDataIsPined.remove(index);
+        }//recent 里点击收藏，收藏里还没有，并且收藏内容小于30条，则添加内容到收藏，并在recent里删除该条。
+        else if (operateType == SAVE_TO_PINS & clipPInsData.size() < dataSize & !clipPInsData.contains(data)) {
+            clipPInsData.add(0, data);
+            int index = clipRecentContent.indexOf(data);
+            clipRecentContent.remove(data);
+            clipRecentDataIsPined.remove(index);
+        }
+        //用户新增recent数据，小于最大条数并且内容未与recent重复增加新内容,标明收藏是否存有，并置顶
+        else if (operateType == ADD_RECENT & clipRecentContent.size() < dataSize & !clipRecentContent.contains(data)) {
+            clipRecentContent.add(0, data);
+            if (clipPInsData.contains(data)) {
+                clipRecentDataIsPined.add(0, true);
+            } else if (!clipPInsData.contains(data)) {
+                clipRecentDataIsPined.add(0, false);
+            }
+        }//用户新增recent数据，recent已经是最大条数，并且未与recent重复,则删除最后一条，标明收藏是否存有，将新内容置顶
+        else if (operateType == ADD_RECENT & clipRecentContent.size() == dataSize & !clipRecentContent.contains(data)) {
+            clipRecentContent.remove(clipRecentContent.size() - 1);
+            clipRecentDataIsPined.remove(clipRecentContent.size() - 1);
+            clipRecentContent.add(0, data);
+            if (clipPInsData.contains(data)) {
+                clipRecentDataIsPined.add(0, true);
+            } else if (!clipPInsData.contains(data)) {
+                clipRecentDataIsPined.add(0, false);
+            }
+        }
+        //用户新增recent数据，与recent已有内容重复，则置顶重复内容
+        else if (operateType == ADD_RECENT & clipRecentContent.contains(data)) {
+            int index = clipRecentContent.indexOf(data);
+            clipRecentContent.remove(data);
+            clipRecentContent.add(0, data);
+            boolean isPined = clipRecentDataIsPined.get(index);
+            clipRecentDataIsPined.remove(index);
+            clipRecentDataIsPined.add(0, isPined);
 
-    }
-
-    public void setClipboardPanelRecentView(RecyclerView clipboardPanelRecentView) {
-        this.clipboardPanelRecentView = clipboardPanelRecentView;
-    }
-
-    @Override
-    public void saveToPins(String itemPinsContent) {
-            addDataAndFresh(itemPinsContent);
-    }
-    @Override
-    public void deletePinsItem(String pinsContentItem) {
-        deleteAndFresh(pinsContentItem);
-    }
-
-
-    public  boolean saveArrayToSp(SharedPreferences.Editor editor) {
-        editor.putInt("clipSize", recentClipData.size());
-
-        for (int i = 0; i < recentClipData.size(); i++) {
-            editor.putString("clipValue" + i, recentClipData.get(i));
+        }//用户删除PINS数据，recent里没有
+        else if (operateType == DELETE_PINS & !clipRecentContent.contains(data)) {
+            clipPInsData.remove(data);
+        }//用户删除PINS数据，recent里有,标明recent里该项内容已不被收藏
+        else if (operateType == DELETE_PINS & clipRecentContent.contains(data)) {
+            clipPInsData.remove(data);
+            int index = clipRecentContent.indexOf(data);
+            clipRecentDataIsPined.remove(index);
+            clipRecentDataIsPined.add(index, false);
         }
 
-        return editor.commit();
+        //数据处理完，更新到成员变量和SP里
+        for (int i = 0; i < clipRecentContent.size(); i++) {
+            String recentContent = clipRecentContent.get(i);
+            boolean isPined = clipRecentDataIsPined.get(i);
+            clipRecent.add(i, new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentContent, isPined));
+        }
+        if (operateType == ADD_RECENT) {
+            if (!clipRecentData.equals(clipRecent)) {
+                clipRecentData.clear();
+                clipRecentData.addAll(clipRecent);
+                saveClipDataToSp(recentSp.edit(), clipRecentData, RECENT);
+                isClipRecentDataChange = true;
+            } else {
+                isClipRecentDataChange = false;
+            }
+        } else if (operateType == SAVE_TO_PINS | operateType == DELETE_PINS) {
+            if (!clipRecentData.equals(clipRecent)) {
+                clipRecentData.clear();
+                clipRecentData.addAll(clipRecent);
+                saveClipDataToSp(recentSp.edit(), clipRecentData, RECENT);
+                isClipRecentDataChange = true;
+            } else {
+                isClipRecentDataChange = false;
+            }
+            if (!clipPinsData.equals(clipPInsData)) {
+                clipPinsData.clear();
+                clipPinsData.addAll(clipPInsData);
+                saveClipDataToSp(pinsSp.edit(), clipPinsData, PINS);
+                isClipPinsDataChange = true;
+            } else {
+                isClipPinsDataChange = false;
+            }
+        }
+        //如果数据不为空了，并且适配器还没创建，则创建适配器,并通知对应的recyclerView
+        if (!clipRecentData.isEmpty() && clipboardRecentViewAdapter == null) {
+            clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData, this);
+            onMainViewCreatedListener.adapterCreated(clipboardRecentViewAdapter, ADD_RECENT);
+        }
+        if (!clipPinsData.isEmpty() && clipboardPinsViewAdapter == null) {
+            clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData, this);
+            onMainViewCreatedListener.adapterCreated(clipboardPinsViewAdapter, SAVE_TO_PINS);
+        }
     }
 
-    public  void loadArray(List<String> recentClipData,SharedPreferences sp,String spName) {
+    //点击recent的条目的pins按钮时执行的回调
+    @Override
+    public void saveToPins(String itemPinsContent, ImageView recentItemImageView, int position) {
+        clipDataOperate(itemPinsContent, PINS_SIZE, SAVE_TO_PINS);
+        refreshClipboard();
 
-        recentClipData.clear();
+    }
+
+    //点击pins的条目的删除按钮时的回调
+    @Override
+    public void deletePinsItem(String pinsContentItem, int position) {
+        clipDataOperate(pinsContentItem, DELETE_PINS);
+        refreshClipboard();
+
+    }
+
+    private void clipDataOperate(String pinsContentItem, int deletePins) {
+        clipDataOperate(pinsContentItem, 0, deletePins);
+    }
+
+
+    private void saveClipDataToSp(SharedPreferences.Editor editor, List clipData, int ViewType) {
+        editor.clear();
+        editor.putInt("clipSize", clipData.size());
+        for (int i = 0; i < clipData.size(); i++) {
+            if (ViewType == RECENT) {
+                ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage = (ClipboardRecentViewAdapter.ClipboardRecentMessage) clipData.get(i);
+                String recentClipItemContent = clipboardRecentMessage.getRecentClipItemContent();
+                boolean pined = clipboardRecentMessage.getPined();
+                editor.putString("clipValue" + i, recentClipItemContent);
+                editor.putBoolean("clipValuePined" + i, pined);
+            } else if (ViewType == PINS) {
+                editor.putString("clipValue" + i, (String) clipData.get(i));
+            }
+        }
+
+        editor.commit();
+    }
+
+    private void loadClipDataFromSp(List clipData, SharedPreferences sp, int ViewType) {
+
+        clipData.clear();
         int size = sp.getInt("clipSize", 0);
 
-        for(int i=0;i<size;i++) {
-            recentClipData.add(sp.getString("clipValue" + i, null));
+        for (int i = 0; i < size; i++) {
+            if (ViewType == RECENT) {
+                ClipboardRecentViewAdapter.ClipboardRecentMessage clipboardRecentMessage = new ClipboardRecentViewAdapter.ClipboardRecentMessage();
+                clipboardRecentMessage.setRecentClipItemContent(sp.getString("clipValue" + i, null));
+                clipboardRecentMessage.setPined(sp.getBoolean("clipValuePined" + i, false));
+                clipData.add(clipboardRecentMessage);
+            } else if (ViewType == PINS) {
+                clipData.add(sp.getString("clipValue" + i, null));
+            }
         }
-        if(recentClipData.isEmpty()){
-            clipDataResult.noData(spName);
+    }
+    void refreshClipboard() {
+        if (isClipRecentDataChange && onMainViewCreatedListener != null && clipboardRecentViewAdapter != null) {
+            clipboardRecentViewAdapter.dataChangeAndRefresh(clipRecentData);
+            isClipRecentDataChange = false;
+        }
+        if (isClipPinsDataChange && onMainViewCreatedListener != null && clipboardPinsViewAdapter != null) {
+            clipboardPinsViewAdapter.dataChangeAndRefresh(clipPinsData);
+            isClipPinsDataChange = false;
         }
     }
 
-
-    public RecyclerView getClipboardPanelPinsView(){
-       return clipboardPanelPinsView;
-    }
-    public RecyclerView getClipboardPanelRecentView(){
-        return clipboardPanelRecentView;
+    //adapter在程序一开启就创建，MainView创建后presenter获得该接口实例，将adapter创建完成后回传给MainView，mainView再将adapter贴上去
+    public interface OnMainViewCreatedListener {
+        void adapterCreated(RecyclerView.Adapter adapter, int adapterType);
     }
 
-    interface ClipDataResult{
-        void noData(String spName);
+    void setOnMainViewCreatedListener(OnMainViewCreatedListener onMainViewCreatedListener) {
+        this.onMainViewCreatedListener = onMainViewCreatedListener;
     }
-    public void setClipDataResult(ClipDataResult clipDataResult){
-        this.clipDataResult = clipDataResult;
+
+    StateListDrawable getClipActionBarBtnViewBackgroundDrawable() {
+        StateListDrawable background = new StateListDrawable();
+        Drawable bg = new ColorDrawable(Color.TRANSPARENT);
+        Drawable pressedBg = new ColorDrawable(Color.parseColor("#1AFFFFFF"));
+
+        background.addState(new int[]{android.R.attr.state_focused}, pressedBg);
+        background.addState(new int[]{android.R.attr.state_pressed}, pressedBg);
+        background.addState(new int[]{android.R.attr.state_selected}, pressedBg);
+        background.addState(new int[]{}, bg);
+        return background;
     }
-    public ClipboardRecentViewAdapter getClipboardRecentViewAdapter(){
-        return clipboardRecentViewAdapter;
+
+    public Drawable pinedBackground() {
+        return new ColorDrawable(Color.parseColor("#1AFFFFFF"));
     }
-    public ClipboardPinsViewAdapter getClipboardPinsViewAdapter(){
-        return clipboardPinsViewAdapter;
+
+    public Drawable noPinedBackground() {
+        return new ColorDrawable(Color.TRANSPARENT);
     }
 }

@@ -1,4 +1,4 @@
-package com.ihs.inputmethod.uimodules.ui.common.adapter;
+package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,12 +21,13 @@ import java.util.List;
 public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPinsViewAdapter.ViewHolder> {
 
 
-    private final DeleteFromPinsToRecenet deleteRecenet;
-    private List<String> pinsDatalist = new ArrayList<String>();
+    private DeleteFromPinsToRecentListener deleteFromPinsToRecentListener;
+    private List<String> pinsDataList = new ArrayList<String>();
+    private int EMPTY_DATA = -1;
 
-    public ClipboardPinsViewAdapter(List<String> list, DeleteFromPinsToRecenet deleteRecenet){
-        this.deleteRecenet = deleteRecenet;
-        this.pinsDatalist = list;
+    public ClipboardPinsViewAdapter(List<String> list, DeleteFromPinsToRecentListener deleteFromPinsToRecentListener){
+        this.deleteFromPinsToRecentListener = deleteFromPinsToRecentListener;
+        this.pinsDataList.addAll(list);
 
     }
 
@@ -38,10 +39,10 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         holder.img.setImageDrawable(HSApplication.getContext().getResources().getDrawable(R.drawable.acb_phone_sms_close));
-        String pinsContent = pinsDatalist.get(position);
+        String pinsContent = pinsDataList.get(position);
         holder.tv.setText(pinsContent);
-        deleteRecenet.deletePinsItem(pinsContent);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,8 +52,8 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteRecenet.deletePinsItem(pinsContent);
-                pinsDatalist.remove(pinsContent);
+                deleteFromPinsToRecentListener.deletePinsItem(pinsContent,position);
+                pinsDataList.remove(pinsContent);
                 notifyDataSetChanged();
             }
         });
@@ -64,8 +65,9 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         return 0;
     }
 
-    public void addDataAndFresh(String itemPinsContent) {
-        pinsDatalist.add(0,itemPinsContent);
+    public void dataChangeAndRefresh(List<String> clipPinsData) {
+        pinsDataList.clear();
+        pinsDataList.addAll(clipPinsData);
         notifyDataSetChanged();
     }
 
@@ -80,7 +82,8 @@ public class ClipboardPinsViewAdapter extends RecyclerView.Adapter<ClipboardPins
         }
     }
 
-    public interface DeleteFromPinsToRecenet {
-        void deletePinsItem(String pinsContentItem);
+
+    public interface DeleteFromPinsToRecentListener {
+        void deletePinsItem(String pinsContentItem,int position);
     }
 }

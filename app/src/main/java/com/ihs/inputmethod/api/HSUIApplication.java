@@ -264,6 +264,8 @@ public class HSUIApplication extends HSInputMethodApplication {
             }
         }, 30000);
         LockerAppGuideManager.getInstance().init(HSApplication.getContext().getResources().getString(R.string.smart_locker_app_package_name), BuildConfig.LOCKER_APP_GUIDE);
+        //先创建ClipboardPresenter实例，获取数据，创建RecyclerView的Adapter,监听复制剪切操作，并更新到数据源里
+        //启动app的时候，先从sp里取得现有的数据初始化适配器,如果有数据则创建适配器，没有则等有数据了创建,现在考虑没有数据到有数据这一过程怎么显示
         ClipboardMonitor.getInstance().registerClipboardMonitor(ClipboardPresenter.getInstance());
     }
 

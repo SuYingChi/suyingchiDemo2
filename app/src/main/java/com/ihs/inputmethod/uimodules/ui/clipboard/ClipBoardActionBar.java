@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static com.ihs.keyboardutils.iap.RemoveAdsManager.NOTIFICATION_REMOVEADS_PURCHASED;
 
@@ -45,24 +44,11 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
 
     public final static String PANEL_RECENT = "Recent";
     public final static String PANEL_PIN = "Pins";
-
-    //private BasePanel.OnPanelActionListener containerListener;
-
-    //private Map<Class, View> btnMap = new HashMap<>();
-    private Map<RecyclerView,View> btnMap = new HashMap<>();
+    private RecyclerView recentRecyclerView = null;
+    private RecyclerView pinsRecyclerView = null;
+    private Map<RecyclerView, View> btnMap = new HashMap<>();
     private Map<String, RecyclerView> clipboardViews = new HashMap<>();
-   // private Map<String, Class> panels = new HashMap<>();
     boolean isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
-    private INotificationObserver notificationObserver = new INotificationObserver() {
-
-        @Override
-        public void onReceive(String s, HSBundle hsBundle) {
-            if (NOTIFICATION_REMOVEADS_PURCHASED.equals(s)) {
-                View adContainer = findViewWithTag("NativeAd");
-                removeView(adContainer);
-            }
-        }
-    };
     private ClipboardTabChangeListener clipboardTabChangeListener;
 
     public ClipBoardActionBar(Context context) {
@@ -75,53 +61,15 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
 
     public ClipBoardActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         isCurrentThemeDarkBg = HSKeyboardThemeManager.getCurrentTheme().isDarkBg();
-        HSGlobalNotificationCenter.addObserver(NOTIFICATION_REMOVEADS_PURCHASED, notificationObserver);
     }
-
-    public void release() {
-        HSGlobalNotificationCenter.removeObserver(notificationObserver);
-       // containerListener = null;
-    }
-
-//    public static void saveLastPanelName(String panelName) {
-//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
-//        sp.edit().putString("emoticon_last_show_panel_name", panelName).apply();
-//    }
-//
-//    public static String getLastPanelName() {
-//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(HSApplication.getContext());
-//        return sp.getString("emoticon_last_show_panel_name", PANEL_RECENT);
-//    }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        List<ActionbarTab> actionbarTabs = new ArrayList<>();
-       /* actionbarTabs.add(new ActionbarTab(PANEL_RECENT, RecentClipPanel.class, R.drawable.ic_emoji_panel_tab));
-        actionbarTabs.add(new ActionbarTab(PANEL_PIN, PinClipPanel.class, R.drawable.ic_text_panel_tab));
-
-        final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
-        final int actionBarAmount = actionbarTabs.size();
-        for (int i = 0; i < actionBarAmount; i++) {
-            final String panelName = actionbarTabs.get(i).panelName;
-            final Class<?> clazz = actionbarTabs.get(i).panelClass;
-            final LayoutParams params = new LayoutParams(0, height, 1.0f);
-
-            RelativeLayout wrapView = (RelativeLayout) inflate(getContext(), R.layout.clipboard_bar_button,null);
-            setBtnImage(wrapView.findViewById(R.id.iv_icon),actionbarTabs.get(i).iconResId);
-            ((TextView)wrapView.findViewById(R.id.tv_title)).setText(panelName);
-            wrapView.setTag(panelName);
-            wrapView.setOnClickListener(this);
-            wrapView.setBackgroundDrawable(getBackgroundDrawable());
-
-            addView(wrapView, params);
-            panels.put(panelName, clazz);
-            btnMap.put(clazz, wrapView);
-        }*/
-        actionbarTabs.add(new ActionbarTab(PANEL_RECENT, ClipboardPresenter.getInstance().getClipboardPanelRecentView(), R.drawable.ic_emoji_panel_tab));
-        actionbarTabs.add(new ActionbarTab(PANEL_PIN, ClipboardPresenter.getInstance().getClipboardPanelPinsView(), R.drawable.ic_text_panel_tab));
+        List<ClipboardActionbarTab> actionbarTabs = new ArrayList<>();
+        actionbarTabs.add(new ClipboardActionbarTab(PANEL_RECENT, recentRecyclerView, R.drawable.ic_emoji_panel_tab));
+        actionbarTabs.add(new ClipboardActionbarTab(PANEL_PIN, pinsRecyclerView, R.drawable.ic_text_panel_tab));
         final int height = getResources().getDimensionPixelSize(R.dimen.emoticon_panel_actionbar_height);
         final int actionBarAmount = actionbarTabs.size();
         for (int i = 0; i < actionBarAmount; i++) {
@@ -129,25 +77,25 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
             final RecyclerView recyclerView = actionbarTabs.get(i).view;
             final LayoutParams params = new LayoutParams(0, height, 1.0f);
 
-            RelativeLayout wrapView = (RelativeLayout) inflate(getContext(), R.layout.clipboard_bar_button,null);
-            setBtnImage(wrapView.findViewById(R.id.iv_icon),actionbarTabs.get(i).iconResId);
-            ((TextView)wrapView.findViewById(R.id.tv_title)).setText(viewName);
-            wrapView.setTag(viewName);
-            wrapView.setOnClickListener(this);
-            wrapView.setBackgroundDrawable(getBackgroundDrawable());
+            RelativeLayout clipActionBarBtnView = (RelativeLayout) inflate(getContext(), R.layout.clipboard_bar_button, null);
+            setBtnImage(clipActionBarBtnView.findViewById(R.id.iv_icon), actionbarTabs.get(i).iconResId);
+            ((TextView) clipActionBarBtnView.findViewById(R.id.tv_title)).setText(viewName);
+            clipActionBarBtnView.setTag(viewName);
+            clipActionBarBtnView.setOnClickListener(this);
+            clipActionBarBtnView.setBackgroundDrawable(ClipboardPresenter.getInstance().getClipActionBarBtnViewBackgroundDrawable());
 
-            addView(wrapView, params);
+            addView(clipActionBarBtnView, params);
             clipboardViews.put(viewName, recyclerView);
-            btnMap.put(recyclerView, wrapView);
+            btnMap.put(recyclerView, clipActionBarBtnView);
         }
     }
 
 
-    private void setBtnImage(ImageView btn, int iconResId) {
-        Drawable tabbarBtnDrawable = getTabDrawable(iconResId);
-        btn.setScaleType(ImageView.ScaleType.CENTER);
-        btn.setImageDrawable(tabbarBtnDrawable);
-        btn.setSoundEffectsEnabled(false);
+    private void setBtnImage(ImageView btnImageView, int iconResId) {
+        Drawable tabBarBtnDrawable = getTabDrawable(iconResId);
+        btnImageView.setScaleType(ImageView.ScaleType.CENTER);
+        btnImageView.setImageDrawable(tabBarBtnDrawable);
+        btnImageView.setSoundEffectsEnabled(false);
     }
 
     @NonNull
@@ -156,8 +104,8 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
         int pressColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_selected_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_selected_color);
         int normalColor = isCurrentThemeDarkBg ? resources.getColor(R.color.emoji_panel_tab_normal_color_when_theme_dark_bg) : resources.getColor(R.color.emoji_panel_tab_normal_color);
 
-        Drawable tabbarBtnDrawable = VectorDrawableCompat.create(resources, resId, null);
-        DrawableCompat.setTintList(tabbarBtnDrawable, new ColorStateList(
+        Drawable tabBarBtnDrawable = VectorDrawableCompat.create(resources, resId, null);
+        DrawableCompat.setTintList(tabBarBtnDrawable, new ColorStateList(
                 new int[][]
                         {
                                 new int[]{android.R.attr.state_focused},
@@ -173,32 +121,18 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
                                 normalColor,
                         }
         ));
-        return tabbarBtnDrawable;
+        return tabBarBtnDrawable;
     }
 
-    @NonNull
-    private StateListDrawable getBackgroundDrawable() {
-        StateListDrawable background = new StateListDrawable();
-        Drawable bg = new ColorDrawable(Color.TRANSPARENT);
-        Drawable pressedBg = new ColorDrawable(Color.parseColor("#1AFFFFFF"));
-
-        background.addState(new int[]{android.R.attr.state_focused}, pressedBg);
-        background.addState(new int[]{android.R.attr.state_pressed}, pressedBg);
-        background.addState(new int[]{android.R.attr.state_selected}, pressedBg);
-        background.addState(new int[]{}, bg);
-        return background;
-    }
-
-   /* void setPanelActionListener(BasePanel.OnPanelActionListener onStateChangedListener) {
-        this.containerListener = onStateChangedListener;
-    }*/
-    void setClipboardTabChangeListener(ClipboardTabChangeListener clipboardTabChangeListener){
+    void setClipboardTabChangeListener(ClipboardTabChangeListener clipboardTabChangeListener) {
         this.clipboardTabChangeListener = clipboardTabChangeListener;
     }
-    interface  ClipboardTabChangeListener{
+
+    interface ClipboardTabChangeListener {
 
         void showView(RecyclerView selectedView);
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -212,10 +146,10 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
     public void onClick(View v) {
         final Object tag = v.getTag();
         if (tag != null && tag instanceof String) {
-             //Class panel = panels.get(tag);
+            //Class panel = panels.get(tag);
             RecyclerView view = clipboardViews.get(tag);
 
-            if (/*containerListener != null && panel != null*/view!=null) {
+            if (/*containerListener != null && panel != null*/view != null) {
                 //containerListener.showPanel(panel);
                 clipboardTabChangeListener.showView(view);
                 HSAnalytics.logEvent("keyboard_emoji_tab_switch", "tagContent", tag.toString());
@@ -227,38 +161,38 @@ public final class ClipBoardActionBar extends LinearLayout implements View.OnCli
         }
     }
 
-  /*  void selectPanelBtn(Class clazz) {
-        for (Class claz : panels.values()) {
-            View view = btnMap.get(claz);
+    void selectedViewBtn(RecyclerView recyclerView) {
+        for (RecyclerView recyclerViewValue : clipboardViews.values()) {
+            View view = btnMap.get(recyclerViewValue);
             if (view != null) {
                 view.setSelected(false);
             }
         }
 
-        View view = btnMap.get(clazz);
+        View view = btnMap.get(recyclerView);
         if (view != null) {
             view.setSelected(true);
         }
-    }*/
-  void selectedViewBtn(RecyclerView recyclerView) {
-      for (RecyclerView recyclerViewValue : clipboardViews.values()) {
-          View view = btnMap.get(recyclerViewValue);
-          if (view != null) {
-              view.setSelected(false);
-          }
-      }
 
-      View view = btnMap.get(recyclerView);
-      if (view != null) {
-          view.setSelected(true);
-      }
+    }
 
-   /* Class<?> getPanelClass(final String panel) {
-        return panels.get(panel);
-    }*/
+    public void setClipboardRecentRecyclerView(RecyclerView recentRecyclerView) {
+        this.recentRecyclerView = recentRecyclerView;
+    }
 
-  }
-    RecyclerView getPanelView(final String viewName) {
-        return clipboardViews.get(viewName);
+    public void setClipboardPinsRecyclerView(RecyclerView pinsRecyclerView) {
+        this.pinsRecyclerView = pinsRecyclerView;
+    }
+
+    private class ClipboardActionbarTab {
+        public int iconResId;
+        public String viewName;
+        public RecyclerView view;
+
+        public ClipboardActionbarTab(String viewName, RecyclerView view, int iconResId) {
+            this.viewName = viewName;
+            this.iconResId = iconResId;
+            this.view = view;
+        }
     }
 }

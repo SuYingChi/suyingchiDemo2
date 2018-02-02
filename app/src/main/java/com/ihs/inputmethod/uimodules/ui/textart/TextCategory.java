@@ -53,7 +53,7 @@ final class TextCategory {
 		this.maxRecentCount = res.getInteger(R.integer.config_text_art_recent_max_count);
 		this.rowCount = res.getInteger(R.integer.config_text_art_row_count);
 
-//		recent=new EmojiGroup(RECENT,false);
+//		recent=new EmojiGroup(DELETE_PINS,false);
 		TextArtLoader loader=new TextArtLoader();
 		loader.loadTextArt();
 
