@@ -18,6 +18,12 @@
     <string name="home_menu_call_flash">Call\nFlash</string>
 
     <string name="activity_sexy_wallpaper_title">Sexy Wallpaper</string>
+    <string name="activity_adult_stickers_title">Adult Stickers</string>
+    <string name="activity_keyboard_themes_title">Keyboard Themes</string>
+    <string name="activity_thematic_details_title">Thematic Details</string>
+    <string name="activity_call_flash_title">Call Flash</string>
+    <string name="activity_font_title">Font</string>
+    <string name="activity_my_downloads_title">My Downloads</string>
 
     <string name="my_download_tab_theme">THEME</string>
     <string name="my_download_tab_sticker">STICKER</string>

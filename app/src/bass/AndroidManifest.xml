@@ -125,7 +125,8 @@
 
         <activity
             android:name="com.ihs.inputmethod.themes.ThemeDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
         <!-- required by libAppFramework -->

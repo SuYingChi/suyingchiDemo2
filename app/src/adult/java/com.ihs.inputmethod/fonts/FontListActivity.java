@@ -14,6 +14,7 @@ import com.ihs.commons.utils.HSBundle;
 import com.ihs.inputmethod.api.specialcharacter.HSSpecialCharacter;
 import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.fonts.adapter.FontAdapter;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.fonts.common.HSFontDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.fonts.homeui.FontModel;
 import com.ihs.inputmethod.utils.DownloadUtils;
@@ -80,6 +81,11 @@ public class FontListActivity extends BaseListActivity implements FontAdapter.On
         });
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(fontAdapter);
+    }
+
+    @Override
+    protected int getTitleTextResId() {
+        return R.string.activity_font_title;
     }
 
     private void initFontList() {

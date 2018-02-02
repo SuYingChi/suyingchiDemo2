@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +49,7 @@ import com.ihs.inputmethod.uimodules.ui.theme.utils.ThemeZipDownloadUtils;
 import com.ihs.inputmethod.uimodules.utils.ViewConvertor;
 import com.ihs.inputmethod.uimodules.widget.MdProgressBar;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.inputmethod.utils.ActionbarUtils;
 import com.ihs.keyboardutils.adbuffer.AdLoadingView;
 import com.ihs.keyboardutils.iap.RemoveAdsManager;
 import com.ihs.keyboardutils.nativeads.KCNativeAdView;
@@ -212,13 +212,9 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         KeyboardFullScreenAd.showSessionOneTimeAd("themeDetail");
 
         setContentView(R.layout.activity_theme_detail);
+        ActionbarUtils.setCustomTitleWithBackIcon(this, findViewById(R.id.toolbar), R.string.activity_thematic_details_title);
         initView();
         onNewIntent(getIntent());
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setElevation(0);
 
         HSGlobalNotificationCenter.addObserver(HSKeyboardThemeManager.HS_NOTIFICATION_THEME_LIST_CHANGED, notificationObserver);
         LockerAppGuideManager.getInstance().addLockerInstallStatusChangeListener(this);

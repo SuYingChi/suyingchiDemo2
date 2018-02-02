@@ -10,8 +10,9 @@ import android.os.IBinder;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.acb.call.themes.Type;
-import com.ihs.inputmethod.callflash.adapter.CallFlashAdapter;
 import com.ihs.inputmethod.base.BaseListActivity;
+import com.ihs.inputmethod.callflash.adapter.CallFlashAdapter;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.service.CustomizeService;
 
 import java.util.List;
@@ -64,6 +65,10 @@ public class CallFlashListActivity extends BaseListActivity implements ServiceCo
     }
 
 
+    @Override
+    protected int getTitleTextResId() {
+        return R.string.activity_call_flash_title;
+    }
 
     @Override
     protected void onDestroy() {

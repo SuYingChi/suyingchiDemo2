@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Browser;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,6 +15,7 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.inputmethod.api.HSUIInputMethod;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.settings.activities.MoreLanguageActivity2;
+import com.ihs.inputmethod.utils.ActionbarUtils;
 
 public final class SettingActivity extends HSAppCompatActivity implements View.OnClickListener {
 
@@ -29,12 +29,7 @@ public final class SettingActivity extends HSAppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_settings);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.settings);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionbarUtils.setCustomTitleWithBackIcon(this, findViewById(R.id.toolbar), R.string.settings);
 
         findViewById(R.id.setting_language).setOnClickListener(this);
         findViewById(R.id.setting_keyboard_settings).setOnClickListener(this);

@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +17,7 @@ import com.ihs.inputmethod.feature.common.LauncherConfig;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryItem;
 import com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperListView;
+import com.ihs.inputmethod.utils.ActionbarUtils;
 import com.ihs.inputmethod.widget.slidingtab.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -44,13 +43,7 @@ public class SexyWallpaperActivity extends HSAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sexy_wallpaper);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.activity_sexy_wallpaper_title);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
+        ActionbarUtils.setCustomTitleWithBackIcon(this, findViewById(R.id.toolbar), R.string.activity_sexy_wallpaper_title);
         setup(0);
     }
 

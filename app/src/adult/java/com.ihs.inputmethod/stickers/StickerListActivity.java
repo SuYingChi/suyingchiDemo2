@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.stickers.adapter.StickerAdapter;
 import com.ihs.inputmethod.stickers.model.StickerModel;
+import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDataManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerDownloadManager;
 import com.ihs.inputmethod.uimodules.ui.sticker.StickerGroup;
@@ -36,6 +37,8 @@ public class StickerListActivity extends BaseListActivity implements StickerAdap
 
     @Override
     protected void initView() {
+        showDownloadIcon(true);
+
         stickerAdapter = new StickerAdapter(this, this);
         stickerModelList = getData();
         stickerAdapter.setDataList(stickerModelList);
@@ -43,6 +46,11 @@ public class StickerListActivity extends BaseListActivity implements StickerAdap
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(stickerAdapter);
+    }
+
+    @Override
+    protected int getTitleTextResId() {
+        return R.string.activity_adult_stickers_title;
     }
 
     private List<StickerModel> getData() {

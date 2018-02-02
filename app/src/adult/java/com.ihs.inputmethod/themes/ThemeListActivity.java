@@ -9,6 +9,7 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.base.BaseListActivity;
 import com.ihs.inputmethod.home.model.HomeModel;
 import com.ihs.inputmethod.themes.adapter.ThemeAdapter;
+import com.ihs.inputmethod.uimodules.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,20 @@ public class ThemeListActivity extends BaseListActivity {
 
     @Override
     protected void initView() {
+        showDownloadIcon(true);
+
         themeAdapter = new ThemeAdapter(this);
         themeAdapter.setDataList(getDataList());
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(themeAdapter);
+    }
+
+
+    @Override
+    protected int getTitleTextResId() {
+        return R.string.activity_keyboard_themes_title;
     }
 
     private List getDataList() {

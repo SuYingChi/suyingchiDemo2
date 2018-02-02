@@ -6,11 +6,7 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:popupTheme="@style/AppBaseTheme.PopupOverlay" />
+    <include layout="@layout/custom_title_toolbar" />
 
     <com.ihs.inputmethod.widget.slidingtab.SlidingTabLayout
         android:id="@+id/tab_layout"

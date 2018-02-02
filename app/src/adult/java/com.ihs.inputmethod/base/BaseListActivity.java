@@ -2,13 +2,13 @@ package com.ihs.inputmethod.base;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.inputmethod.mydownload.MyDownloadsActivity;
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.utils.ActionbarUtils;
 
 /**
  * Created by jixiang on 18/1/20.
@@ -22,10 +22,7 @@ public abstract class BaseListActivity extends HSAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionbarUtils.setCustomTitleWithBackIcon(this, findViewById(R.id.toolbar), getTitleTextResId());
 
         recyclerView = findViewById(R.id.recycler_view);
 
@@ -41,6 +38,11 @@ public abstract class BaseListActivity extends HSAppCompatActivity {
 
     protected abstract void initView();
 
+    protected abstract int getTitleTextResId();
+
+    protected void showDownloadIcon(boolean show) {
+        findViewById(R.id.download_btn).setVisibility(show ? View.VISIBLE : View.GONE);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

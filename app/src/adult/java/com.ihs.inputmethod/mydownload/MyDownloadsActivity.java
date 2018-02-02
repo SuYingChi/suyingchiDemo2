@@ -23,6 +23,7 @@ import com.ihs.inputmethod.uimodules.R;
 import com.ihs.inputmethod.uimodules.ui.common.adapter.TabFragmentPagerAdapter;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.CustomThemeActivity;
 import com.ihs.inputmethod.uimodules.widget.TrialKeyboardDialog;
+import com.ihs.inputmethod.utils.ActionbarUtils;
 import com.ihs.inputmethod.widget.slidingtab.SlidingTabLayout;
 import com.ihs.keyboardutils.permission.PermissionUtils;
 import com.kc.commons.utils.KCCommonUtils;
@@ -61,9 +62,7 @@ public class MyDownloadsActivity extends HSAppCompatActivity implements View.OnC
         setContentView(R.layout.activity_my_downloads);
 
         toolbar = findViewById(R.id.toolbar);
-        String downloadTitle = getResources().getString(R.string.store_nav_download);
-        toolbar.setTitle(downloadTitle);
-        setSupportActionBar(toolbar);
+        ActionbarUtils.setCustomTitleWithBackIcon(this, toolbar, R.string.store_nav_download);
 
         fragments = new ArrayList<>();
         fragments.add(MyThemeFragment.class);
