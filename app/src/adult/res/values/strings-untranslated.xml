@@ -28,4 +28,7 @@
     <string name="my_download_tab_theme">THEME</string>
     <string name="my_download_tab_sticker">STICKER</string>
     <string name="my_download_tab_font">FONT</string>
+
+    <string name="setting_category_general">General</string>
+    <string name="setting_category_more">More</string>
 </resources>
