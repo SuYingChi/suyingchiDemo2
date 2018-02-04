@@ -14,6 +14,8 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 
+import org.jcodec.containers.mps.psi.PATSection;
+
 import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.PINS;
 import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECENT;
 
@@ -57,7 +59,10 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
 
         panelViewGroup = new FrameLayout(this.getContext());
         panelViewGroup.setId(R.id.clipboard_panelViewGroup);
-
+        panelViewGroup.addView(clipboardPanelRecentView,new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        panelViewGroup.addView(clipboardPanelPinsView,new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        clipboardPanelRecentView.setVisibility(VISIBLE);
+        clipboardPanelPinsView.setVisibility(INVISIBLE);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KEYBOARD_HEIGHT));
         adjustViewPosition();
         //默认显示recent页面

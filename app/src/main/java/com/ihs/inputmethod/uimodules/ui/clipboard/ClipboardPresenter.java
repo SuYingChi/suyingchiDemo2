@@ -178,11 +178,11 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
             }
         }
         //如果数据不为空了，并且适配器还没创建，则创建适配器,并通知对应的recyclerView
-        if (!clipRecentData.isEmpty() && clipboardRecentViewAdapter == null) {
+        if (!clipRecentData.isEmpty() && clipboardRecentViewAdapter == null&&onMainViewCreatedListener !=null) {
             clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData, this);
             onMainViewCreatedListener.adapterCreated(clipboardRecentViewAdapter, ADD_RECENT);
         }
-        if (!clipPinsData.isEmpty() && clipboardPinsViewAdapter == null) {
+        if (!clipPinsData.isEmpty() && clipboardPinsViewAdapter == null&&onMainViewCreatedListener !=null) {
             clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData, this);
             onMainViewCreatedListener.adapterCreated(clipboardPinsViewAdapter, SAVE_TO_PINS);
         }
