@@ -75,7 +75,7 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
     //新增复制内容时,点击收藏，删除收藏内容时的处理数据的接口，并标明是否有数据变化，有变化保存数据到SP里，
     void clipDataOperate(String data, int dataSize, int operateType) {
         List<Boolean> clipRecentDataIsPined = new ArrayList<Boolean>();
-        List<String> clipPInsData = new ArrayList<String>();
+        List<String> clipPinsDatatemp = new ArrayList<String>();
         List<String> clipRecentContent = new ArrayList<String>();
         List<ClipboardRecentViewAdapter.ClipboardRecentMessage> clipRecent = new ArrayList<ClipboardRecentViewAdapter.ClipboardRecentMessage>();
         // 实时监听用户复制数据操作
@@ -83,74 +83,88 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
             clipRecentContent.add(recentMessage.getRecentClipItemContent());
             clipRecentDataIsPined.add(recentMessage.getPined());
         }
-        clipPInsData.addAll(clipPinsData);
+        clipPinsDatatemp.addAll(clipPinsData);
         //实时监听用户点击Recent页面的收藏按钮时的数据操作
         //recent里点击收藏,收藏内容已经有30条，recent页面点击收藏时，收藏里还没有，提示不能再添加
-        if (operateType == SAVE_TO_PINS & clipPInsData.size() == dataSize & !clipPInsData.contains(data)) {
-            Toast.makeText(HSApplication.getContext(), "You can add at most 30 message", Toast.LENGTH_LONG).show();
-            isClipPinsDataChange = false;
-            isClipRecentDataChange = false;
-            return;
-        }//recent里点击收藏，收藏里已经有了，则在recent里去除本条，收藏里置顶该条
-        else if (operateType == SAVE_TO_PINS & clipPInsData.contains(data)) {
-            clipPInsData.remove(clipPInsData.size() - 1);
-            clipPInsData.add(0, data);
-            int index = clipRecentContent.indexOf(data);
-            clipRecentContent.remove(data);
-            clipRecentDataIsPined.remove(index);
-        }//recent 里点击收藏，收藏里还没有，并且收藏内容小于30条，则添加内容到收藏，并在recent里删除该条。
-        else if (operateType == SAVE_TO_PINS & clipPInsData.size() < dataSize & !clipPInsData.contains(data)) {
-            clipPInsData.add(0, data);
-            int index = clipRecentContent.indexOf(data);
-            clipRecentContent.remove(data);
-            clipRecentDataIsPined.remove(index);
+        if (operateType == SAVE_TO_PINS) {
+            if (clipPinsDatatemp.size() == dataSize & !clipPinsDatatemp.contains(data)) {
+                Toast.makeText(HSApplication.getContext(), "You can add at most 30 message", Toast.LENGTH_LONG).show();
+                isClipPinsDataChange = false;
+                isClipRecentDataChange = false;
+                return;
+            }//recent里点击收藏，收藏里已经有了，则在recent里去除本条，收藏里置顶该条
+            else if (clipPinsDatatemp.contains(data)) {
+                clipPinsDatatemp.remove(clipPinsDatatemp.size() - 1);
+                clipPinsDatatemp.add(0, data);
+                int index = clipRecentContent.indexOf(data);
+                clipRecentContent.remove(data);
+                clipRecentDataIsPined.remove(index);
+            }//recent 里点击收藏，收藏里还没有，并且收藏内容小于30条，则添加内容到收藏，并在recent里删除该条。
+            else if (clipPinsDatatemp.size() < dataSize & !clipPinsDatatemp.contains(data)) {
+                clipPinsDatatemp.add(0, data);
+                int index = clipRecentContent.indexOf(data);
+                clipRecentContent.remove(data);
+                clipRecentDataIsPined.remove(index);
+            }
+            //数据处理完，更新到成员变量和SP里
+            for (int i = 0; i < clipRecentContent.size(); i++) {
+                String recentContent = clipRecentContent.get(i);
+                boolean isPined = clipRecentDataIsPined.get(i);
+                clipRecent.add(i, new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentContent, isPined));
+            }
+            if (!clipRecentData.equals(clipRecent)) {
+                clipRecentData.clear();
+                clipRecentData.addAll(clipRecent);
+                saveClipDataToSp(recentSp.edit(), clipRecentData, RECENT);
+                isClipRecentDataChange = true;
+            } else {
+                isClipRecentDataChange = false;
+            }
+            if (clipPinsData.equals((clipPinsDatatemp))) {
+                clipPinsDatatemp.clear();
+                clipPinsData.addAll(clipPinsDatatemp);
+                saveClipDataToSp(pinsSp.edit(), clipPinsData, PINS);
+                isClipPinsDataChange = true;
+            } else {
+                isClipPinsDataChange = false;
+            }
         }
         //用户新增recent数据，小于最大条数并且内容未与recent重复增加新内容,标明收藏是否存有，并置顶
-        else if (operateType == ADD_RECENT & clipRecentContent.size() < dataSize & !clipRecentContent.contains(data)) {
-            clipRecentContent.add(0, data);
-            if (clipPInsData.contains(data)) {
-                clipRecentDataIsPined.add(0, true);
-            } else if (!clipPInsData.contains(data)) {
-                clipRecentDataIsPined.add(0, false);
+        else if (operateType == ADD_RECENT) {
+            if (clipRecentContent.size() < dataSize & !clipRecentContent.contains(data)) {
+                clipRecentContent.add(0, data);
+                if (clipPinsDatatemp.contains(data)) {
+                    clipRecentDataIsPined.add(0, true);
+                } else if (!clipPinsDatatemp.contains(data)) {
+                    clipRecentDataIsPined.add(0, false);
+                }
+            }//用户新增recent数据，recent已经是最大条数，并且未与recent重复,则删除最后一条，标明收藏是否存有，将新内容置顶
+            else if (clipRecentContent.size() == dataSize & !clipRecentContent.contains(data)) {
+                clipRecentContent.remove(clipRecentContent.size() - 1);
+                clipRecentDataIsPined.remove(clipRecentContent.size() - 1);
+                clipRecentContent.add(0, data);
+                if (clipPinsDatatemp.contains(data)) {
+                    clipRecentDataIsPined.add(0, true);
+                } else if (!clipPinsDatatemp.contains(data)) {
+                    clipRecentDataIsPined.add(0, false);
+                }
             }
-        }//用户新增recent数据，recent已经是最大条数，并且未与recent重复,则删除最后一条，标明收藏是否存有，将新内容置顶
-        else if (operateType == ADD_RECENT & clipRecentContent.size() == dataSize & !clipRecentContent.contains(data)) {
-            clipRecentContent.remove(clipRecentContent.size() - 1);
-            clipRecentDataIsPined.remove(clipRecentContent.size() - 1);
-            clipRecentContent.add(0, data);
-            if (clipPInsData.contains(data)) {
-                clipRecentDataIsPined.add(0, true);
-            } else if (!clipPInsData.contains(data)) {
-                clipRecentDataIsPined.add(0, false);
+            //用户新增recent数据，与recent已有内容重复，则置顶重复内容
+            else if (clipRecentContent.contains(data)) {
+                int index = clipRecentContent.indexOf(data);
+                clipRecentContent.remove(data);
+                clipRecentContent.add(0, data);
+                boolean isPined = clipRecentDataIsPined.get(index);
+                clipRecentDataIsPined.remove(index);
+                clipRecentDataIsPined.add(0, isPined);
+
             }
-        }
-        //用户新增recent数据，与recent已有内容重复，则置顶重复内容
-        else if (operateType == ADD_RECENT & clipRecentContent.contains(data)) {
-            int index = clipRecentContent.indexOf(data);
-            clipRecentContent.remove(data);
-            clipRecentContent.add(0, data);
-            boolean isPined = clipRecentDataIsPined.get(index);
-            clipRecentDataIsPined.remove(index);
-            clipRecentDataIsPined.add(0, isPined);
-
-        }//用户删除PINS数据，recent里没有
-        else if (operateType == DELETE_PINS & !clipRecentContent.contains(data)) {
-            clipPInsData.remove(data);
-        }//用户删除PINS数据，recent里有,标明recent里该项内容已不被收藏
-        else if (operateType == DELETE_PINS & clipRecentContent.contains(data)) {
-            clipPInsData.remove(data);
-            int index = clipRecentContent.indexOf(data);
-            clipRecentDataIsPined.remove(index);
-            clipRecentDataIsPined.add(index, false);
-        }
-
-        //数据处理完，更新到成员变量和SP里
-        for (int i = 0; i < clipRecentContent.size(); i++) {
-            String recentContent = clipRecentContent.get(i);
-            boolean isPined = clipRecentDataIsPined.get(i);
-            clipRecent.add(i, new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentContent, isPined));
-        }
-        if (operateType == ADD_RECENT) {
+            //数据处理完，更新到成员变量和SP里
+            for (int i = 0; i < clipRecentContent.size(); i++) {
+                String recentContent = clipRecentContent.get(i);
+                boolean isPined = clipRecentDataIsPined.get(i);
+                clipRecent.add(i, new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentContent, isPined));
+            }
             if (!clipRecentData.equals(clipRecent)) {
                 clipRecentData.clear();
                 clipRecentData.addAll(clipRecent);
@@ -159,7 +173,24 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
             } else {
                 isClipRecentDataChange = false;
             }
-        } else if (operateType == SAVE_TO_PINS | operateType == DELETE_PINS) {
+
+        } else if (operateType == DELETE_PINS) {
+            //用户删除PINS数据，recent里没有
+            if (!clipRecentContent.contains(data)) {
+                clipPinsDatatemp.remove(data);
+            }//用户删除PINS数据，recent里有,标明recent里该项内容已不被收藏
+            else if (clipRecentContent.contains(data)) {
+                clipPinsDatatemp.remove(data);
+                int index = clipRecentContent.indexOf(data);
+                clipRecentDataIsPined.remove(index);
+                clipRecentDataIsPined.add(index, false);
+            }
+            //数据处理完，更新到成员变量和SP里
+            for (int i = 0; i < clipRecentContent.size(); i++) {
+                String recentContent = clipRecentContent.get(i);
+                boolean isPined = clipRecentDataIsPined.get(i);
+                clipRecent.add(i, new ClipboardRecentViewAdapter.ClipboardRecentMessage(recentContent, isPined));
+            }
             if (!clipRecentData.equals(clipRecent)) {
                 clipRecentData.clear();
                 clipRecentData.addAll(clipRecent);
@@ -168,9 +199,9 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
             } else {
                 isClipRecentDataChange = false;
             }
-            if (!clipPinsData.equals(clipPInsData)) {
+            if (!clipPinsData.equals(clipPinsDatatemp)) {
                 clipPinsData.clear();
-                clipPinsData.addAll(clipPInsData);
+                clipPinsData.addAll(clipPinsDatatemp);
                 saveClipDataToSp(pinsSp.edit(), clipPinsData, PINS);
                 isClipPinsDataChange = true;
             } else {
@@ -187,7 +218,6 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
             onMainViewCreatedListener.adapterCreated(clipboardPinsViewAdapter, SAVE_TO_PINS);
         }
     }
-
     //点击recent的条目的pins按钮时执行的回调
     @Override
     public void saveToPins(String itemPinsContent, ImageView recentItemImageView, int position) {
