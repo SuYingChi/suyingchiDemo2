@@ -28,13 +28,10 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
     private RecyclerView clipboardPanelRecentView;
     private ClipboardPresenter clipboardPresenter;
     private FrameLayout panelViewGroup;
-    //
     private RecyclerView currentView = null;
-    private String currentViewName = null;
     private RelativeLayout groupContainer = null;
     private int heightMode = ViewGroup.LayoutParams.MATCH_PARENT;
 
-    //
     public ClipboardMainView() {
         super(HSApplication.getContext());
         setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
@@ -45,8 +42,7 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
         clipboardPanelPinsView = new RecyclerView(getContext());
         clipboardPanelRecentView.setLayoutManager(layoutManager);
         clipboardPanelPinsView.setLayoutManager(layoutManager);
-        clipboardPresenter = ClipboardPresenter.getInstance();
-        clipboardPresenter.setOnAdapterCreatedListener(this);
+
 
         actionBar = (ClipBoardActionBar) View.inflate(HSApplication.getContext(), R.layout.clipboard_action_bar, null);
         actionBar.setId(R.id.clipboard_barsViewGroup);
@@ -64,6 +60,9 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
         actionBar.selectedViewBtn(clipboardPanelRecentView);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KEYBOARD_HEIGHT));
         adjustViewPosition();
+
+        clipboardPresenter = ClipboardPresenter.getInstance();
+        clipboardPresenter.setOnAdapterCreatedListener(this);
 
     }
 
