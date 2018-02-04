@@ -66,7 +66,6 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
 
     }
 
-    //view有回调会实时根据用户操作更新，
     @Override
     public void showView(RecyclerView selectedView) {
         addNewView(selectedView);
