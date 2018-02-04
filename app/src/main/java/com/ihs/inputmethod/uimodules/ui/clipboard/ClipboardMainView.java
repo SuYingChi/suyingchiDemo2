@@ -63,7 +63,7 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
 
         clipboardPresenter = ClipboardPresenter.getInstance();
         clipboardPresenter.setOnMainViewCreatedListener(this);
-
+        clipboardPresenter.initRecentViewAndPinsView();
     }
 
     @Override

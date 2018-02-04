@@ -83,15 +83,9 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
           dataOperatedAndSaveToSp(clipRecentContent,clipRecentDataIsPined,clipRecent,clipPinsDataTemp);
       }
         //如果MainView创建了，适配器还没创建，则创建适配器,回传给MainView
-        if (clipboardRecentViewAdapter == null&& onMainViewCreatedListener !=null) {
-            clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData, this);
-            onMainViewCreatedListener.adapterCreated(clipboardRecentViewAdapter, ADD_RECENT);
-        }
-        if (clipboardPinsViewAdapter == null&& onMainViewCreatedListener !=null) {
-            clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData, this);
-            onMainViewCreatedListener.adapterCreated(clipboardPinsViewAdapter, SAVE_TO_PINS);
-        }
+        initRecentViewAndPinsView();
     }
+
    private void clipDataOperateSaveToPins(List<String> clipPinsDataTemp,List<String> clipRecentContent,List<Boolean> clipRecentDataIsPined,List<ClipboardRecentViewAdapter.ClipboardRecentMessage> clipRecent,int dataSize,String data){
         //实时监听用户点击Recent页面的收藏按钮时的数据操作
         //recent里点击收藏,收藏内容已经有30条，recent页面点击收藏时，收藏里还没有，提示不能再添加
@@ -264,6 +258,17 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
         if (isClipPinsDataChange && onMainViewCreatedListener != null && clipboardPinsViewAdapter != null) {
             clipboardPinsViewAdapter.dataChangeAndRefresh(clipPinsData);
             isClipPinsDataChange = false;
+        }
+    }
+
+    public void initRecentViewAndPinsView() {
+        if (clipboardRecentViewAdapter == null&& onMainViewCreatedListener !=null) {
+            clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData, this);
+            onMainViewCreatedListener.adapterCreated(clipboardRecentViewAdapter, ADD_RECENT);
+        }
+        if (clipboardPinsViewAdapter == null&& onMainViewCreatedListener !=null) {
+            clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData, this);
+            onMainViewCreatedListener.adapterCreated(clipboardPinsViewAdapter, SAVE_TO_PINS);
         }
     }
 
