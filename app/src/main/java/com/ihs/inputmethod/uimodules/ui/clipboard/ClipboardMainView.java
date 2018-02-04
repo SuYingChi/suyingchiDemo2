@@ -18,7 +18,7 @@ import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.PINS
 import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECENT;
 
 
-public final class ClipboardMainView extends RelativeLayout implements ClipBoardActionBar.ClipboardTabChangeListener, ClipboardPresenter.OnAdapterCreatedListener {
+public final class ClipboardMainView extends RelativeLayout implements ClipBoardActionBar.ClipboardTabChangeListener, ClipboardPresenter.OnMainViewCreatedListener {
 
     private ClipBoardActionBar actionBar;
     private Resources res = getContext().getResources();
@@ -62,7 +62,7 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
         adjustViewPosition();
 
         clipboardPresenter = ClipboardPresenter.getInstance();
-        clipboardPresenter.setOnAdapterCreatedListener(this);
+        clipboardPresenter.setOnMainViewCreatedListener(this);
 
     }
 

@@ -40,7 +40,7 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
     private List<String> clipPinsData = new ArrayList<String>();
     private boolean isClipRecentDataChange = false;
     private boolean isClipPinsDataChange = false;
-    private OnAdapterCreatedListener onAdapterCreatedListener;
+    private OnMainViewCreatedListener onMainViewCreatedListener;
 
 
     public static ClipboardPresenter getInstance() {
@@ -82,14 +82,14 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
           clipDataOperateDeletePins(clipPinsDataTemp,clipRecentContent,clipRecentDataIsPined,clipRecent,data);
           dataOperatedAndSaveToSp(clipRecentContent,clipRecentDataIsPined,clipRecent,clipPinsDataTemp);
       }
-        //如果数据不为空了，并且适配器还没创建，则创建适配器,回传给MainView
-        if (!clipRecentData.isEmpty() && clipboardRecentViewAdapter == null&& onAdapterCreatedListener !=null) {
+        //如果MainView创建了，适配器还没创建，则创建适配器,回传给MainView
+        if (clipboardRecentViewAdapter == null&& onMainViewCreatedListener !=null) {
             clipboardRecentViewAdapter = new ClipboardRecentViewAdapter(clipRecentData, this);
-            onAdapterCreatedListener.adapterCreated(clipboardRecentViewAdapter, ADD_RECENT);
+            onMainViewCreatedListener.adapterCreated(clipboardRecentViewAdapter, ADD_RECENT);
         }
-        if (!clipPinsData.isEmpty() && clipboardPinsViewAdapter == null&& onAdapterCreatedListener !=null) {
+        if (clipboardPinsViewAdapter == null&& onMainViewCreatedListener !=null) {
             clipboardPinsViewAdapter = new ClipboardPinsViewAdapter(clipPinsData, this);
-            onAdapterCreatedListener.adapterCreated(clipboardPinsViewAdapter, SAVE_TO_PINS);
+            onMainViewCreatedListener.adapterCreated(clipboardPinsViewAdapter, SAVE_TO_PINS);
         }
     }
    private void clipDataOperateSaveToPins(List<String> clipPinsDataTemp,List<String> clipRecentContent,List<Boolean> clipRecentDataIsPined,List<ClipboardRecentViewAdapter.ClipboardRecentMessage> clipRecent,int dataSize,String data){
@@ -257,23 +257,23 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
         }
     }
     void refreshClipboard() {
-        if (isClipRecentDataChange && onAdapterCreatedListener != null && clipboardRecentViewAdapter != null) {
+        if (isClipRecentDataChange && onMainViewCreatedListener != null && clipboardRecentViewAdapter != null) {
             clipboardRecentViewAdapter.dataChangeAndRefresh(clipRecentData);
             isClipRecentDataChange = false;
         }
-        if (isClipPinsDataChange && onAdapterCreatedListener != null && clipboardPinsViewAdapter != null) {
+        if (isClipPinsDataChange && onMainViewCreatedListener != null && clipboardPinsViewAdapter != null) {
             clipboardPinsViewAdapter.dataChangeAndRefresh(clipPinsData);
             isClipPinsDataChange = false;
         }
     }
 
     //MainView创建后presenter获得该接口实例，将adapter创建完成后回传给MainView，mainView再将adapter贴上去
-    public interface OnAdapterCreatedListener {
+    public interface OnMainViewCreatedListener {
         void adapterCreated(RecyclerView.Adapter adapter, int adapterType);
     }
 
-    void setOnAdapterCreatedListener(OnAdapterCreatedListener onAdapterCreatedListener) {
-        this.onAdapterCreatedListener = onAdapterCreatedListener;
+    void setOnMainViewCreatedListener(OnMainViewCreatedListener onMainViewCreatedListener) {
+        this.onMainViewCreatedListener = onMainViewCreatedListener;
     }
 
     StateListDrawable getClipActionBarBtnViewBackgroundDrawable() {
