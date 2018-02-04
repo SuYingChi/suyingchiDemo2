@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.uimodules.ui.clipboard;
 
 import android.content.res.Resources;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -42,7 +43,8 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
         clipboardPanelPinsView = new RecyclerView(getContext());
         clipboardPanelRecentView.setLayoutManager(layoutManager);
         clipboardPanelPinsView.setLayoutManager(layoutManager);
-
+        clipboardPanelRecentView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        clipboardPanelPinsView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 
         actionBar = (ClipBoardActionBar) View.inflate(HSApplication.getContext(), R.layout.clipboard_action_bar, null);
         actionBar.setId(R.id.clipboard_barsViewGroup);
