@@ -14,13 +14,11 @@ import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSResourceUtils;
 import com.ihs.inputmethod.uimodules.R;
 
-import org.jcodec.containers.mps.psi.PATSection;
-
 import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.PINS;
 import static com.ihs.inputmethod.uimodules.ui.clipboard.ClipboardPresenter.RECENT;
 
 
-public final class ClipboardMainView extends RelativeLayout implements ClipBoardActionBar.ClipboardTabChangeListener, ClipboardPresenter.OnMainViewCreatedListener {
+public final class ClipboardMainView extends RelativeLayout implements ClipBoardActionBar.ClipboardTabChangeListener, ClipboardPresenter.OnAdapterCreatedListener {
 
     private ClipBoardActionBar actionBar;
     private Resources res = getContext().getResources();
@@ -48,7 +46,7 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
         clipboardPanelRecentView.setLayoutManager(layoutManager);
         clipboardPanelPinsView.setLayoutManager(layoutManager);
         clipboardPresenter = ClipboardPresenter.getInstance();
-        clipboardPresenter.setOnMainViewCreatedListener(this);
+        clipboardPresenter.setOnAdapterCreatedListener(this);
 
         actionBar = (ClipBoardActionBar) View.inflate(HSApplication.getContext(), R.layout.clipboard_action_bar, null);
         actionBar.setId(R.id.clipboard_barsViewGroup);
@@ -63,10 +61,10 @@ public final class ClipboardMainView extends RelativeLayout implements ClipBoard
         panelViewGroup.addView(clipboardPanelPinsView,new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         clipboardPanelRecentView.setVisibility(VISIBLE);
         clipboardPanelPinsView.setVisibility(INVISIBLE);
+        actionBar.selectedViewBtn(clipboardPanelRecentView);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, KEYBOARD_HEIGHT));
         adjustViewPosition();
-        //默认显示recent页面
-        showView(clipboardPanelRecentView);
+
     }
 
     //view有回调会实时根据用户操作更新，
