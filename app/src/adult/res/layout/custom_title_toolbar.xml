@@ -19,6 +19,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="right"
+        android:padding="13dp"
         android:background="?selectableItemBackgroundBorderless"
         android:scaleType="centerInside"
         android:visibility="gone"
