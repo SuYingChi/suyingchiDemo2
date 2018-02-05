@@ -23,8 +23,6 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
     static final int ADD_RECENT = 1;
     private static final int SAVE_TO_PINS = 2;
     private static final int DELETE_PINS = 3;
-    private static final int RECENT_SP_DATA = 4;
-    private static final int PINS_SP_DATA = 5;
     static final int RECENT = 6;
     static final int PINS = 7;
     static final int RECENT_SIZE = 10;
@@ -56,8 +54,8 @@ public class ClipboardPresenter implements ClipboardRecentViewAdapter.SaveRecent
 
     private ClipboardPresenter() {
         //一开始 没本地数据则不创建适配器，有则创建
-        loadClipDataFromSp(clipRecentData, recentSp, RECENT_SP_DATA);
-        loadClipDataFromSp(clipPinsData, pinsSp, PINS_SP_DATA);
+        loadClipDataFromSp(clipRecentData, recentSp, RECENT);
+        loadClipDataFromSp(clipPinsData, pinsSp, PINS);
     }
 
     //新增复制内容时,点击收藏，删除收藏内容时的处理数据的接口，并标明是否有数据变化，有变化保存数据到SP里，
