@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.feature.lucky;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -14,7 +15,6 @@ import android.view.animation.LinearInterpolator;
 import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

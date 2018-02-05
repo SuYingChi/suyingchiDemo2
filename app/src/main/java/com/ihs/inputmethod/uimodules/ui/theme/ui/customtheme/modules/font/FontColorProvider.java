@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.ihs.inputmethod.uimodules.R;
+import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeFragment;
 import com.ihs.inputmethod.uimodules.ui.theme.ui.customtheme.base.BaseThemeItemProvider;
 import com.keyboard.core.themes.custom.KCElementResourseHelper;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
@@ -36,7 +37,7 @@ public class FontColorProvider extends BaseThemeItemProvider<KCTextColorElement,
     protected BaseItemHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         BaseItemHolder holder = super.onCreateViewHolder(inflater, parent);
         DisplayMetrics displayMetrics = holder.itemView.getResources().getDisplayMetrics();
-        int width = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / fragment.SPAN_COUNT  - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) *2;
+        int width = Math.min(displayMetrics.widthPixels,displayMetrics.heightPixels) / BaseThemeFragment.SPAN_COUNT - holder.itemView.getResources().getDimensionPixelSize(R.dimen.custom_theme_item_margin) *2;
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width, width);
         layoutParams.gravity = Gravity.CENTER;
         holder.itemView.setLayoutParams(layoutParams);

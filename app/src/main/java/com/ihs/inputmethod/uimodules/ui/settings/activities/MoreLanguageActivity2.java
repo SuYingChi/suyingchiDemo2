@@ -44,8 +44,8 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
         setContentView(R.layout.more_language_layout2);
 
-        mAvailableLanguagesListLayout = (LinearLayout)findViewById(R.id.ll_available_languages);
-        mCurrentLanguagesListLayout = (LinearLayout)findViewById(R.id.ll_current_languages_list);
+        mAvailableLanguagesListLayout = findViewById(R.id.ll_available_languages);
+        mCurrentLanguagesListLayout = findViewById(R.id.ll_current_languages_list);
 
         init();
 
@@ -233,8 +233,8 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
         String locale;
         InputMethodSubtype subtype;
-        TextView tv = null;
-        LanguageLoadingPreference preference = null;
+        TextView tv;
+        LanguageLoadingPreference preference;
 
         String packageName = getPackageName();
         ApplicationInfo applicationInfo = ApplicationUtils.getApplicationInfo();
@@ -298,11 +298,11 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
 
         View view = dialog.findViewById(R.id.layout);
 
-        TextView title = (TextView) (view.findViewById(R.id.title));
+        TextView title = view.findViewById(R.id.title);
         title.setTextColor(getResources().getColor(R.color.alert_message));
         title.setText(language.getTitle());
 
-        TextView cancel = (TextView) (view.findViewById(R.id.negative_button));
+        TextView cancel = view.findViewById(R.id.negative_button);
         cancel.setText(getString(R.string.cancel).toUpperCase());
         cancel.setTextColor(getResources().getColor(R.color.alert_positive_button_text));
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -312,7 +312,7 @@ public final class MoreLanguageActivity2 extends HSAppCompatActivity implements 
             }
         });
 
-        TextView delete = (TextView) (view.findViewById(R.id.positive_button));
+        TextView delete = view.findViewById(R.id.positive_button);
         delete.setText(getString(R.string.delete).toUpperCase());
         delete.setOnClickListener(new View.OnClickListener() {
             @Override

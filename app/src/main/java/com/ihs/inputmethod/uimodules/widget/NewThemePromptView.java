@@ -45,7 +45,7 @@ public class NewThemePromptView extends LinearLayout{
     private void initView(Context context) {
         rootView = View.inflate(context, R.layout.theme_prompt_view, this);
         triangleView = rootView.findViewById(R.id.triangle_view);
-        promptTextView = (TextView) rootView.findViewById(R.id.prompt_text_view);
+        promptTextView = rootView.findViewById(R.id.prompt_text_view);
     }
 
     public void setPromptText(String text){

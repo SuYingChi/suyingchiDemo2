@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.feature.lucky.view;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
@@ -100,7 +101,7 @@ public class BoxView extends RelativeLayout implements View.OnClickListener {
     private AnimatorSet getFadeInAnimation() {
         ObjectAnimator fadeIn = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 1.0f);
         fadeIn.setDuration(BACKGROUND_FADE_IN_DURATION);
-        fadeIn.addListener(new com.ihs.inputmethod.feature.common.AnimatorListenerAdapter() {
+        fadeIn.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
                 setAlpha(0.0f);

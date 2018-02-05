@@ -428,7 +428,7 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         if (stickerList.size() > 0) {
             StickerSuggestionAdapter stickerSuggestionAdapter;
             View stickerSuggestionView = View.inflate(HSApplication.getContext(), R.layout.view_sticker_suggestion, null);
-            RecyclerView recyclerView = (RecyclerView) stickerSuggestionView.findViewById(R.id.rv_sticker);
+            RecyclerView recyclerView = stickerSuggestionView.findViewById(R.id.rv_sticker);
             LinearLayoutManager linearLayoutManager
                     = new LinearLayoutManager(HSApplication.getContext(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView.setLayoutManager(linearLayoutManager);
@@ -447,8 +447,5 @@ public class KeyboardPanelManager extends KeyboardPanelSwitcher implements BaseF
         } else {
             HSFloatWindowManager.getInstance().removeFloatingWindow();
         }
-    }
-    public KeyboardPanelSwitchContainer getKeyboardPanelSwitchContainer() {
-        return keyboardPanelSwitchContainer;
     }
 }

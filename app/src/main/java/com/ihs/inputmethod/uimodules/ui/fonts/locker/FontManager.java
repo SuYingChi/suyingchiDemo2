@@ -82,7 +82,7 @@ public class FontManager {
 			}
 		});
 
-		final FontSelectView fontSelectView= (FontSelectView) mFontView.findViewById(R.id.font_select_listview);
+		final FontSelectView fontSelectView= mFontView.findViewById(R.id.font_select_listview);
 		mAdapter = new FontSelectViewAdapter(HSApplication.getContext(), fontSelectView, null);
 		fontSelectView.setAdapter(mAdapter);
 
@@ -97,31 +97,39 @@ public class FontManager {
 		});
 	}
 
-	public void onFinishInputView() {
-		hideFontView();
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void onFinishInputView() {
+//		hideFontView();
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-	public void onConfigurationChanged() {
-		hideFontView();
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void onConfigurationChanged() {
+//		hideFontView();
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-	public void onDestroyPanelView() {
-		HSGlobalNotificationCenter.removeObserver(loadDataObserver);
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void onDestroyPanelView() {
+//		HSGlobalNotificationCenter.removeObserver(loadDataObserver);
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-	public void showFontView() {
-		if (mShowing) {
-			return;
-		}
-		mInstance.addObservers();
-		mAdapter.notifyDataSetChanged();
-
-		final FrameLayout inputArea = HSInputMethod.getInputArea();
-		if (inputArea != null) {
-			final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-			params.gravity = Gravity.BOTTOM;
-			inputArea.addView(mFontView, params);
-			mShowing = true;
-		}
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void showFontView() {
+//		if (mShowing) {
+//			return;
+//		}
+//		mInstance.addObservers();
+//		mAdapter.notifyDataSetChanged();
+//
+//		final FrameLayout inputArea = HSInputMethod.getInputArea();
+//		if (inputArea != null) {
+//			final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+//			params.gravity = Gravity.BOTTOM;
+//			inputArea.addView(mFontView, params);
+//			mShowing = true;
+//		}
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

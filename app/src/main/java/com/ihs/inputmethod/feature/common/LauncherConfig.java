@@ -12,25 +12,27 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class LauncherConfig {
 
-    /**
-     * Wraps {@link com.ihs.commons.config.HSConfig#getString(String...)} and added multilingual support.
-     *
-     * @param path Config path
-     */
-    public static String getMultilingualString(String... path) {
-        String configString;
-        try {
-            configString = HSConfig.getString(path);
-            if (configString.isEmpty()) {
-                Map<String, String> stringMap = (Map<String, String>) HSConfig.getMap(path);
-                configString = getStringForCurrentLanguage(stringMap);
-            }
-        } catch (Exception expected) {
-            Map<String, String> stringMap = (Map<String, String>) HSConfig.getMap(path);
-            configString = getStringForCurrentLanguage(stringMap);
-        }
-        return configString;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Wraps {@link com.ihs.commons.config.HSConfig#getString(String...)} and added multilingual support.
+//     *
+//     * @param path Config path
+//     */
+//    public static String getMultilingualString(String... path) {
+//        String configString;
+//        try {
+//            configString = HSConfig.getString(path);
+//            if (configString.isEmpty()) {
+//                Map<String, String> stringMap = (Map<String, String>) HSConfig.getMap(path);
+//                configString = getStringForCurrentLanguage(stringMap);
+//            }
+//        } catch (Exception expected) {
+//            Map<String, String> stringMap = (Map<String, String>) HSConfig.getMap(path);
+//            configString = getStringForCurrentLanguage(stringMap);
+//        }
+//        return configString;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static String getMultilingualString(Map<String, ?> map, String key) {
         String configString;
@@ -52,37 +54,43 @@ public class LauncherConfig {
         return localeString;
     }
 
-    public static boolean getVariantBoolean(String... path) {
-        boolean configBool;
-        try {
-            configBool = HSConfig.getBoolean(path);
-        } catch (Exception expected) {
-            Map<String, Boolean> boolMap = (Map<String, Boolean>) HSConfig.getMap(path);
-            configBool = Boolean.TRUE.equals(boolMap.get(BuildConfig.FLAVOR));
-        }
-        return configBool;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean getVariantBoolean(String... path) {
+//        boolean configBool;
+//        try {
+//            configBool = HSConfig.getBoolean(path);
+//        } catch (Exception expected) {
+//            Map<String, Boolean> boolMap = (Map<String, Boolean>) HSConfig.getMap(path);
+//            configBool = Boolean.TRUE.equals(boolMap.get(BuildConfig.FLAVOR));
+//        }
+//        return configBool;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static int getVariantInt(String... path) {
-        int configInt;
-        try {
-            configInt = HSConfig.getInteger(path);
-        } catch (Exception expected) {
-            Map<String, Integer> intMap = (Map<String, Integer>) HSConfig.getMap(path);
-            configInt = intMap.get(BuildConfig.FLAVOR);
-        }
-        return configInt;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static int getVariantInt(String... path) {
+//        int configInt;
+//        try {
+//            configInt = HSConfig.getInteger(path);
+//        } catch (Exception expected) {
+//            Map<String, Integer> intMap = (Map<String, Integer>) HSConfig.getMap(path);
+//            configInt = intMap.get(BuildConfig.FLAVOR);
+//        }
+//        return configInt;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static float getVariantFloat(String... path) {
-        float configFloat;
-        try {
-            configFloat = HSConfig.getFloat(path);
-        } catch (Exception expected) {
-            //noinspection unchecked
-            Map<String, Integer> intMap = (Map<String, Integer>) HSConfig.getMap(path);
-            configFloat = intMap.get(BuildConfig.FLAVOR);
-        }
-        return configFloat;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static float getVariantFloat(String... path) {
+//        float configFloat;
+//        try {
+//            configFloat = HSConfig.getFloat(path);
+//        } catch (Exception expected) {
+//            //noinspection unchecked
+//            Map<String, Integer> intMap = (Map<String, Integer>) HSConfig.getMap(path);
+//            configFloat = intMap.get(BuildConfig.FLAVOR);
+//        }
+//        return configFloat;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

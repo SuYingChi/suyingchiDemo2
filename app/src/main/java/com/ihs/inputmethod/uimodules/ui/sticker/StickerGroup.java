@@ -41,7 +41,7 @@ public class StickerGroup {
     private static final String STICKER_TAB_IMAGE_SUFFIX = "-tab.png";
     private static final String STICKER_DOWNLOAD_IMAGE_SUFFIX = "-preview.png";
     private static final String STICKER_DOWNLOAD_ZIP_SUFFIX = ".zip";
-    private static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String STICKER_IMAGE_PNG_SUFFIX = ".png";
     private static final String STICKER_CONFIG_FILE_SUFFIX = "/contents.json";
 
     public StickerGroup(final String stickerGroupName) {
@@ -79,7 +79,7 @@ public class StickerGroup {
                 final Map<String, Object> contentMap = (Map<String, Object>) contents.get(i);
                 final String imageName = (String) contentMap.get("imageName");
                 String stickerImageUri = "";
-                StringBuilder stickerImageFilePath = null;
+                StringBuilder stickerImageFilePath;
                 String filePath = "";
                 if (isInternalStickerGroup) {
                     stickerImageFilePath = new StringBuilder(ASSETS_STICKER_FILE_NAME)
@@ -177,25 +177,35 @@ public class StickerGroup {
         stickerList.add(sticker);
     }
 
-    public void addStickerToFirst(final Sticker sticker) {
-        stickerList.add(0, sticker);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void addStickerToFirst(final Sticker sticker) {
+//        stickerList.add(0, sticker);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void removeLastSticker() {
-        stickerList.remove(stickerList.size() - 1);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void removeLastSticker() {
+//        stickerList.remove(stickerList.size() - 1);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void removeSticker(final Sticker sticker) {
-        stickerList.remove(sticker);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void removeSticker(final Sticker sticker) {
+//        stickerList.remove(sticker);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public int size() {
-        return stickerList.size();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int size() {
+//        return stickerList.size();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public void clearSticker() {
-        stickerList.clear();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void clearSticker() {
+//        stickerList.clear();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public String getDownloadDisplayName() {
         return downloadDisplayName;

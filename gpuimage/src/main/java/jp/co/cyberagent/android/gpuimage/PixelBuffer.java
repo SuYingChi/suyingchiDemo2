@@ -198,9 +198,7 @@ public class PixelBuffer {
         // Convert upside down mirror-reversed image to right-side up normal
         // image.
         for (int i = 0; i < mHeight; i++) {
-            for (int j = 0; j < mWidth; j++) {
-                iat[(mHeight - i - 1) * mWidth + j] = ia[i * mWidth + j];
-            }
+            System.arraycopy(ia, i * mWidth + 0, iat, (mHeight - i - 1) * mWidth + 0, mWidth);
         }
         
 

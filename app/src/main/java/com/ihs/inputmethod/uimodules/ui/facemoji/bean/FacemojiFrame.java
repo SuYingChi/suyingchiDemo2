@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class FacemojiFrame implements ISequenceFramesImageItem.IFrame{
 
-    public static final String FACE_PIC = "face_pic";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String FACE_PIC = "face_pic";
     private final int interval;
     private final FacePictureParam facePictureParam;// 帧参数
     private final List<FacemojiLayer> facemojiLayers; // layer : 帧路径

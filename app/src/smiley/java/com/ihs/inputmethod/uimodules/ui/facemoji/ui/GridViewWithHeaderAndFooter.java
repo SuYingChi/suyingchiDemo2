@@ -70,7 +70,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         public boolean isSelectable;
     }
 
-    private int mNumColumns = AUTO_FIT;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mNumColumns = AUTO_FIT;
     private View mViewForMeasureRowHeight = null;
     private int mRowHeight = -1;
     //log tag can be at most 23 characters
@@ -114,14 +114,16 @@ public class GridViewWithHeaderAndFooter extends GridView {
         // Ignore, since the header rows depend on not being clipped
     }
 
-    /**
-     * Do not call this method unless you know how it works.
-     *
-     * @param clipChildren
-     */
-    public void setClipChildrenSupper(boolean clipChildren) {
-        super.setClipChildren(false);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Do not call this method unless you know how it works.
+//     *
+//     * @param clipChildren
+//     */
+//    public void setClipChildrenSupper(boolean clipChildren) {
+//        super.setClipChildren(false);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * Add a fixed view to appear at the top of the grid. If addHeaderView is
@@ -214,49 +216,55 @@ public class GridViewWithHeaderAndFooter extends GridView {
         return mHeaderViewInfos.size();
     }
 
-    public int getFooterViewCount() {
-        return mFooterViewInfos.size();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getFooterViewCount() {
+//        return mFooterViewInfos.size();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Removes a previously-added header view.
-     *
-     * @param v The view to remove
-     * @return true if the view was removed, false if the view was not a header
-     * view
-     */
-    public boolean removeHeaderView(View v) {
-        if (mHeaderViewInfos.size() > 0) {
-            boolean result = false;
-            ListAdapter adapter = getAdapter();
-            if (adapter != null && ((HeaderViewGridAdapter) adapter).removeHeader(v)) {
-                result = true;
-            }
-            removeFixedViewInfo(v, mHeaderViewInfos);
-            return result;
-        }
-        return false;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Removes a previously-added header view.
+//     *
+//     * @param v The view to remove
+//     * @return true if the view was removed, false if the view was not a header
+//     * view
+//     */
+//    public boolean removeHeaderView(View v) {
+//        if (mHeaderViewInfos.size() > 0) {
+//            boolean result = false;
+//            ListAdapter adapter = getAdapter();
+//            if (adapter != null && ((HeaderViewGridAdapter) adapter).removeHeader(v)) {
+//                result = true;
+//            }
+//            removeFixedViewInfo(v, mHeaderViewInfos);
+//            return result;
+//        }
+//        return false;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Removes a previously-added footer view.
-     *
-     * @param v The view to remove
-     * @return true if the view was removed, false if the view was not a header
-     * view
-     */
-    public boolean removeFooterView(View v) {
-        if (mFooterViewInfos.size() > 0) {
-            boolean result = false;
-            ListAdapter adapter = getAdapter();
-            if (adapter != null && ((HeaderViewGridAdapter) adapter).removeFooter(v)) {
-                result = true;
-            }
-            removeFixedViewInfo(v, mFooterViewInfos);
-            return result;
-        }
-        return false;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Removes a previously-added footer view.
+//     *
+//     * @param v The view to remove
+//     * @return true if the view was removed, false if the view was not a header
+//     * view
+//     */
+//    public boolean removeFooterView(View v) {
+//        if (mFooterViewInfos.size() > 0) {
+//            boolean result = false;
+//            ListAdapter adapter = getAdapter();
+//            if (adapter != null && ((HeaderViewGridAdapter) adapter).removeFooter(v)) {
+//                result = true;
+//            }
+//            removeFixedViewInfo(v, mFooterViewInfos);
+//            return result;
+//        }
+//        return false;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private void removeFixedViewInfo(View v, ArrayList<FixedViewInfo> where) {
         int len = where.size();
@@ -271,20 +279,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
 
     @TargetApi(11)
     private int getNumColumnsCompatible() {
-        if (Build.VERSION.SDK_INT >= 11) {
-            return super.getNumColumns();
-        } else {
-            try {
-                Field numColumns = GridView.class.getDeclaredField("mNumColumns");
-                numColumns.setAccessible(true);
-                return numColumns.getInt(this);
-            } catch (Exception e) {
-                if (mNumColumns != -1) {
-                    return mNumColumns;
-                }
-                throw new RuntimeException("Can not determine the mNumColumns for this API platform, please call setNumColumns to set it.");
-            }
-        }
+        return super.getNumColumns();
     }
 
     @TargetApi(16)
@@ -310,17 +305,21 @@ public class GridViewWithHeaderAndFooter extends GridView {
         mViewForMeasureRowHeight = null;
     }
 
-    public void invalidateRowHeight() {
-        mRowHeight = -1;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void invalidateRowHeight() {
+//        mRowHeight = -1;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public int getHeaderHeight(int row) {
-        if (row >= 0) {
-            return mHeaderViewInfos.get(row).view.getMeasuredHeight();
-        }
-
-        return 0;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getHeaderHeight(int row) {
+//        if (row >= 0) {
+//            return mHeaderViewInfos.get(row).view.getMeasuredHeight();
+//        }
+//
+//        return 0;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public int getVerticalSpacing() {
@@ -390,25 +389,21 @@ public class GridViewWithHeaderAndFooter extends GridView {
         return mRowHeight;
     }
 
-    @TargetApi(11)
-    public void tryToScrollToBottomSmoothly() {
-        int lastPos = getAdapter().getCount() - 1;
-        if (Build.VERSION.SDK_INT >= 11) {
-            smoothScrollToPositionFromTop(lastPos, 0);
-        } else {
-            setSelection(lastPos);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @TargetApi(11)
+//    public void tryToScrollToBottomSmoothly() {
+//        int lastPos = getAdapter().getCount() - 1;
+//        smoothScrollToPositionFromTop(lastPos, 0);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    @TargetApi(11)
-    public void tryToScrollToBottomSmoothly(int duration) {
-        int lastPos = getAdapter().getCount() - 1;
-        if (Build.VERSION.SDK_INT >= 11) {
-            smoothScrollToPositionFromTop(lastPos, 0, duration);
-        } else {
-            setSelection(lastPos);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @TargetApi(11)
+//    public void tryToScrollToBottomSmoothly(int duration) {
+//        int lastPos = getAdapter().getCount() - 1;
+//        smoothScrollToPositionFromTop(lastPos, 0, duration);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public void setAdapter(ListAdapter adapter) {
@@ -468,7 +463,6 @@ public class GridViewWithHeaderAndFooter extends GridView {
     @Override
     public void setNumColumns(int numColumns) {
         super.setNumColumns(numColumns);
-        mNumColumns = numColumns;
         ListAdapter adapter = getAdapter();
         if (adapter != null && adapter instanceof HeaderViewGridAdapter) {
             ((HeaderViewGridAdapter) adapter).setNumColumns(numColumns);

@@ -109,7 +109,7 @@ public abstract class DownloadTask implements Runnable{
 	private byte[] getByte(InputStream inputStream) throws IOException {
 		byte[] b = new byte[1024];
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		int len = -1;
+		int len;
 		while ((len = inputStream.read(b)) != -1) {
 			downLoadFileSize+=len;
 			byteArrayOutputStream.write(b, 0, len);

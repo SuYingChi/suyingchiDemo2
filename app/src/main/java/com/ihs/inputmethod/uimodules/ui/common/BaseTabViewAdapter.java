@@ -188,7 +188,7 @@ public abstract class BaseTabViewAdapter extends RecyclerView.Adapter<BaseTabVie
 
         TagViewHolder(View view) {
             super(view);
-            iv_tab_icon = (ImageView) view.findViewById(R.id.tab_icon_iv);
+            iv_tab_icon = view.findViewById(R.id.tab_icon_iv);
         }
     }
 

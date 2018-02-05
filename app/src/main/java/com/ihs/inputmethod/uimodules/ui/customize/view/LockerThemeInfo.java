@@ -14,29 +14,31 @@ import java.util.Map;
 
 public class LockerThemeInfo {
 
-    public String name;
-    public boolean installed;
+    // --Commented out by Inspection (18/1/11 下午2:41):public String name;
+    // --Commented out by Inspection (18/1/11 下午2:41):public boolean installed;
 
-    public static @Nullable
-    LockerThemeInfo ofConfig(Map<String, ?> config) {
-        LockerThemeInfo info = new LockerThemeInfo();
-
-        try {
-            String name = (String) config.get("name");
-//            if (TextUtils.isEmpty(packageName)) {
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static @Nullable
+//    LockerThemeInfo ofConfig(Map<String, ?> config) {
+//        LockerThemeInfo info = new LockerThemeInfo();
+//
+//        try {
+//            String name = (String) config.get("name");
+////            if (TextUtils.isEmpty(packageName)) {
+////                return null;
+////            }
+//            info.name = name;
+//
+//            if (TextUtils.isEmpty(name)) {
 //                return null;
 //            }
-            info.name = name;
-
-            if (TextUtils.isEmpty(name)) {
-                return null;
-            }
-        } catch (Exception e) {
-            HSLog.w("Theme.Locker", "Error loading locker theme config, please check config format");
-            CrashlyticsCore.getInstance().logException(e);
-            return null;
-        }
-
-        return info;
-    }
+//        } catch (Exception e) {
+//            HSLog.w("Theme.Locker", "Error loading locker theme config, please check config format");
+//            CrashlyticsCore.getInstance().logException(e);
+//            return null;
+//        }
+//
+//        return info;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

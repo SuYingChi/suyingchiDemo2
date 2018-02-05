@@ -39,7 +39,7 @@ public class CustomizeBarLayout extends FrameLayout {
     private void init() {
         View inflate = inflate(getContext(), R.layout.customize_bar_bg, null);
         addView(inflate);
-        container = (FrameLayout) findViewById(R.id.fl_container);
+        container = findViewById(R.id.fl_container);
 
         findViewById(R.id.fl_iv_strip).setOnTouchListener(new OnTouchListener() {
             @Override

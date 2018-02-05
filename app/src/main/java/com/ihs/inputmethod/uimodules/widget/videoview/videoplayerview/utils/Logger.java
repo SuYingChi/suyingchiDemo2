@@ -8,9 +8,11 @@ public class Logger {
         return Log.e(TAG, attachThreadId(message));
     }
 
-    public static int err(final String TAG, final String message, Throwable throwable) {
-        return Log.e(TAG, attachThreadId(message), throwable);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static int err(final String TAG, final String message, Throwable throwable) {
+//        return Log.e(TAG, attachThreadId(message), throwable);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static int w(final String TAG, final String message) {
         return Log.w(TAG, attachThreadId(message));

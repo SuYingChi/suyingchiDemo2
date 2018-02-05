@@ -1,13 +1,13 @@
 package com.ihs.inputmethod.feature.lucky.view;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
-import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.feature.common.Utils;
 import com.ihs.inputmethod.uimodules.R;
 
 @SuppressWarnings("unused")

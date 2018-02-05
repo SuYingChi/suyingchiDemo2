@@ -40,7 +40,7 @@ public class ButtonFragment extends BaseThemeFragment {
                 break;
             }
         }
-        return new ThemePageItem(Arrays.<CategoryItem<?>>asList(
+        return new ThemePageItem(Arrays.asList(
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_shape), KCButtonShapeElement.class, new ButtonShapeProvider(this), KCCustomThemeManager.getInstance().getButtonShapeElements()),
                 new CategoryItem<>(HSApplication.getContext().getString(R.string.custom_theme_title_button_style), KCButtonStyleElement.class, new ButtonStyleProvider(this), buttonStyles)
         ));

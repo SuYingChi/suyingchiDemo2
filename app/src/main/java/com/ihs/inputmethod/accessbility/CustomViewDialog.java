@@ -32,16 +32,20 @@ public class CustomViewDialog extends Dialog {
         setCanceledOnTouchOutside(false);
     }
 
-    public CustomViewDialog(@NonNull Context context, @StyleRes int themeResId) {
-        super(context, themeResId);
-        init();
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public CustomViewDialog(@NonNull Context context, @StyleRes int themeResId) {
+//        super(context, themeResId);
+//        init();
+//
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    }
-
-    public CustomViewDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
-        init();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public CustomViewDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+//        super(context, cancelable, cancelListener);
+//        init();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     @Override
     public void show() {

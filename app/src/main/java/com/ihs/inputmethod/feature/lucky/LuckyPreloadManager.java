@@ -10,10 +10,10 @@ import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.common.ConcurrentUtils;
+import com.ihs.feature.common.Utils;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
-import com.ihs.inputmethod.feature.common.ConcurrentUtils;
-import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.lucky.view.ThemeView;
 import com.ihs.inputmethod.uimodules.BuildConfig;
 

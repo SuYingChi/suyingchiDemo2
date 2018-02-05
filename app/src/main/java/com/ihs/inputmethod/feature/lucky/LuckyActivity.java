@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.feature.lucky;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,9 +19,8 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.app.framework.activity.HSAppCompatActivity;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.feature.common.ActivityUtils;
 import com.ihs.inputmethod.constants.AdPlacements;
-import com.ihs.inputmethod.feature.common.ActivityUtils;
-import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
 import com.ihs.inputmethod.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.lucky.view.AwardView;
@@ -36,7 +36,7 @@ import net.appcloudbox.ads.nativeads.AcbNativeAdLoader;
 
 import java.util.Locale;
 
-import static com.ihs.inputmethod.feature.common.CommonUtils.setupTransparentSystemBarsForLmp;
+import static com.ihs.keyboardutils.utils.CommonUtils.setupTransparentSystemBarsForLmp;
 
 
 /**

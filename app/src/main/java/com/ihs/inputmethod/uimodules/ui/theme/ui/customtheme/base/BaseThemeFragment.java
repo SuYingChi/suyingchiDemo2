@@ -27,7 +27,6 @@ import com.keyboard.core.themes.custom.KCCustomThemeData;
 import com.keyboard.core.themes.custom.elements.KCBaseElement;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,18 +135,10 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         chosedItems.put(item.getTypeName(), item);
     }
 
-    public Collection<Object> getChosenItems() {
-        return chosedItems.values();
-    }
-
     protected abstract ThemePageItem initiateThemePageItem();
 
-    public int getItemCount() {
-        return items == null ? 0 : items.size();
-    }
-
     private void initRecyclerView(View rootView) {
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        recyclerView = rootView.findViewById(R.id.recyclerView);
 
         HSLog.d("initRecyclerView");
         items = new Items();
@@ -193,15 +184,6 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         }, 1);
     }
 
-    private void loadItem() {
-        if (index < data.size()) {
-            items.add(data.get(index));
-            adapter.notifyItemInserted(index + 1);
-            index = index + 1;
-            loadItem();
-        }
-    }
-
     @Override
     public void onDestroy() {
         HSGlobalNotificationCenter.removeObserver(NOTIFICATION_REMOVEADS_PURCHASED, this);
@@ -235,12 +217,14 @@ public abstract class BaseThemeFragment extends Fragment implements INotificatio
         notifyAdapterOnMainThread();
     }
 
-    /**
-     * 自定义主题的预览图(背景和字体)下载完收到通知，子类自己重写，
-     */
-    protected void notifyCustomThemePreviewDownloadFinished(KCBaseElement item) {
-        notifyAdapterOnMainThread();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * 自定义主题的预览图(背景和字体)下载完收到通知，子类自己重写，
+//     */
+//    protected void notifyCustomThemePreviewDownloadFinished(KCBaseElement item) {
+//        notifyAdapterOnMainThread();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void notifyAdapterOnMainThread() {
         handler.post(new Runnable() {

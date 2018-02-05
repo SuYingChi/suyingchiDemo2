@@ -1,6 +1,7 @@
 package com.ihs.inputmethod.feature.lucky.view;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -16,7 +17,6 @@ import com.ihs.app.framework.HSApplication;
 import com.ihs.inputmethod.api.keyboard.HSKeyboardTheme;
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.feature.common.AnimatorListenerAdapter;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.lucky.LuckyPreloadManager;
 import com.ihs.inputmethod.uimodules.R;

@@ -10,9 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ihs.inputmethod.api.theme.HSKeyboardThemeManager;
 import com.ihs.inputmethod.api.utils.HSDisplayUtils;
@@ -153,7 +150,7 @@ public final class HSEmojiSkinViewAdapter extends RecyclerView.Adapter<HSEmojiSk
 		Button tv;
 		public ViewHolder(View itemView) {
 			super(itemView);
-			tv = (Button) itemView.findViewById(R.id.emoji_skin_tv);
+			tv = itemView.findViewById(R.id.emoji_skin_tv);
 
 		}
 	}

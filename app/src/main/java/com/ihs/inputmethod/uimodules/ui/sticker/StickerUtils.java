@@ -47,7 +47,7 @@ public class StickerUtils {
     private static Map<String, String> map = new HashMap<>();
     private static final float STICKER_BACKGROUND_ASPECT_RATIO = 1.7f;
     private static final float STICKER_ZOOM_RATIO = 0.7f;
-    private static final String ERROR_COLOR = "error_color";
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String ERROR_COLOR = "error_color";
 
     public static String getStickerRootFolderPath() {
         return HSApplication.getContext().getFilesDir() + File.separator + ASSETS_STICKER_FILE_PATH;
@@ -97,21 +97,23 @@ public class StickerUtils {
 
     private static Map<String, List<String>> cachedDirectoryContents = new HashMap<>();
 
-    private static boolean isFileInAssets(String directory, String file) {
-        List<String> contents = new ArrayList<>();
-        if (cachedDirectoryContents.containsKey(directory)) {
-            contents = cachedDirectoryContents.get(directory);
-        } else {
-            try {
-                contents = Arrays.asList(HSApplication.getContext().getAssets().list(directory));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            cachedDirectoryContents.put(directory, contents);
-        }
-
-        return contents.contains(file);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private static boolean isFileInAssets(String directory, String file) {
+//        List<String> contents = new ArrayList<>();
+//        if (cachedDirectoryContents.containsKey(directory)) {
+//            contents = cachedDirectoryContents.get(directory);
+//        } else {
+//            try {
+//                contents = Arrays.asList(HSApplication.getContext().getAssets().list(directory));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            cachedDirectoryContents.put(directory, contents);
+//        }
+//
+//        return contents.contains(file);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     private static Map<String, StickerGroup> cachedStickerGroupContents = new HashMap<>();
 
@@ -130,10 +132,12 @@ public class StickerUtils {
         return stickerGroupTemp;
     }
 
-    public static boolean isEditTextSupportSticker(String packageName) {
-        return DirectoryUtils.isSDCardEnabled() && StickerPrefsUtil.getInstance().isAppSupportSticker(packageName);
-
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isEditTextSupportSticker(String packageName) {
+//        return DirectoryUtils.isSDCardEnabled() && StickerPrefsUtil.getInstance().isAppSupportSticker(packageName);
+//
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static void sendStickerToPackage(final Sticker sticker, final String packageName) {
         if (!DirectoryUtils.isSDCardEnabled() || !StickerPrefsUtil.getInstance().isAppSupportSticker(packageName)) {
@@ -188,7 +192,7 @@ public class StickerUtils {
         // 获取PNG图片的宽高信息
         if (sticker.isAssetUri()) {
             String stickerAssetPath = getStickerAssetsPath(sticker);
-            InputStream inputStream = null;
+            InputStream inputStream;
             try {
                 inputStream = HSApplication.getContext().getAssets().open(stickerAssetPath);
                 BitmapFactory.decodeStream(inputStream, null, option);

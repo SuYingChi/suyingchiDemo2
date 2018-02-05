@@ -1,17 +1,12 @@
 <resources>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="theme_item_view_height">160dp</dimen>
-    <dimen name="theme_item_imageview_height">140dp</dimen>
-    <dimen name="theme_item_imageview_picked_height">150dp</dimen>
 
     <!-- main activity dimensions -->
     <dimen name="main_logo_margin_top">60dp</dimen>
     <dimen name="main_logo_title_textsize">41sp</dimen>
     <dimen name="main_logo_subtitle_textsize">28sp</dimen>
     <dimen name="main_logo_subtitle_paddingleft">31dp</dimen>
-    <dimen name="main_logo_img_marginbottom">1dp</dimen>
-    <dimen name="main_logo_img_margintop">7dp</dimen>
     <dimen name="button_settings_textsize">24sp</dimen>
     <dimen name="button_guide_textsize">22sp</dimen>
 

@@ -107,24 +107,6 @@ public class BitmapUtils {
         return scaledBm;
     }
 
-    public static Bitmap compressBitmap(byte[] imageData, int width, int height) {
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeByteArray(imageData, 0, imageData.length, options);
-
-        final int heightRatio = Math.round((float) options.outHeight / (float) height);
-        final int widthRatio = Math.round((float) options.outWidth / (float) width);
-
-        int inSampleSize = heightRatio > widthRatio ? heightRatio : widthRatio;
-        if (inSampleSize < 1) {
-            inSampleSize = 1;
-        }
-
-        options.inSampleSize = inSampleSize;
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeByteArray(imageData, 0, imageData.length, options);
-    }
 
 
     public static Bitmap addBorder(Bitmap crop, int color) {
@@ -187,69 +169,6 @@ public class BitmapUtils {
         return bg;
     }
 
-    public static Bitmap addBorder(Uri uri, int color) {
-        Bitmap picture = null;
-        try {
-            picture = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return addBorder(picture, color);
-    }
-
-    public static Bitmap corpAndAddBorder(Uri uri, int color, int pixelsToCorp) {
-        Bitmap picture = null;
-        try {
-            picture = MediaStore.Images.Media.getBitmap(HSApplication.getContext().getContentResolver(), uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Bitmap dstBmp = Bitmap.createBitmap(
-                picture,
-                pixelsToCorp,
-                pixelsToCorp,
-                picture.getHeight() - 2 * pixelsToCorp,
-                picture.getHeight() - 2 * pixelsToCorp
-        );
-        picture.recycle();
-
-        return addBorder(dstBmp, color);
-    }
-
-    public static File ifNeedCompressPhoto(String filePath, int width, int height) {
-        File file = new File(filePath);
-        String fileType = HSFileUtils.FileTypeDetector.getInstance().getFileType(file);
-        if ((fileType.equals("jpeg") || fileType.equals("png")) && file.length() > 5 * 1024 * 1024) {
-            Bitmap bitmap = compressBitmap(filePath, width, height);
-            File mFile = HSFileUtils.createTempFile(fileType);
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(mFile);
-                if (fileType.equals("jpeg")) {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                } else {
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                mFile.deleteOnExit();
-            } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (mFile.exists()) {
-                    return mFile;
-                }
-            }
-        }
-
-        return file;
-    }
 
 
     public static Bitmap decodeImage(String path, int uriType) throws IOException {

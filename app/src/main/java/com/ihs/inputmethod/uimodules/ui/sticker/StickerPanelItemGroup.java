@@ -34,9 +34,11 @@ public class StickerPanelItemGroup {
         stickerPanelItems.remove(stickerPanelItems.size() - 1);
     }
 
-    public void removeStickerPanelItem(final StickerPanelItem stickerPanelItem) {
-        stickerPanelItems.remove(stickerPanelItem);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void removeStickerPanelItem(final StickerPanelItem stickerPanelItem) {
+//        stickerPanelItems.remove(stickerPanelItem);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public int size() {
         return stickerPanelItems.size();

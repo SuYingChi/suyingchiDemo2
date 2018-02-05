@@ -52,11 +52,11 @@ public final class EmojiSearchView extends LinearLayout implements HSEmojiViewAd
 		final int defaultKeyboardWidth  = HSResourceUtils.getDefaultKeyboardWidth(res);
 
 		final int colNumber=res.getInteger(R.integer.config_emoji_col_count);
-		final int rowNumber=res.getInteger(R.integer.config_emoji_row_count)+1;;
-		final int width= (int) (defaultKeyboardWidth/(colNumber+0.5));
+		final int rowNumber=res.getInteger(R.integer.config_emoji_row_count)+1;
+        final int width= (int) (defaultKeyboardWidth/(colNumber+0.5));
 		final int height=defaultKeyboardHeight/rowNumber;
 
-		final RecyclerView emojiView = (RecyclerView) findViewById(R.id.emoji_viewpager);
+		final RecyclerView emojiView = findViewById(R.id.emoji_viewpager);
 		ViewGroup.LayoutParams lp=emojiView.getLayoutParams();
 		if(lp==null){
 			lp=new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,defaultKeyboardHeight);

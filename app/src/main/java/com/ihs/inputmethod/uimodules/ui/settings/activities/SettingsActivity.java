@@ -102,14 +102,16 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
         }
     }
 
-    public void setupActionBar(String title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(title);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void setupActionBar(String title) {
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            // Show the Up button in the action bar.
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setTitle(title);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * {@inheritDoc}
@@ -437,7 +439,7 @@ public final class SettingsActivity extends HSAppCompatPreferenceActivity {
 
             //set divider color
             View rootView = getView();
-            ListView list = (ListView) rootView.findViewById(android.R.id.list);
+            ListView list = rootView.findViewById(android.R.id.list);
             list.setDivider(new ColorDrawable(0xef000000));
             list.setDividerHeight(1);
         }

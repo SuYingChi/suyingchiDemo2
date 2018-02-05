@@ -18,8 +18,8 @@ import java.util.List;
 
 public class CustomUIRateAlertUtils {
     private static final String TAG = CustomUIRateAlertUtils.class.getSimpleName();
-    public static String title;
-    public static String message;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static String title;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static String message;
     private static List<String> actionTextList;
     private static List<DialogInterface.OnClickListener> actionListenerList;
     final private static String RATE_ALERT_TYPE_DEFAULT = "0";
@@ -42,23 +42,27 @@ public class CustomUIRateAlertUtils {
         });
     }
 
-    private static String getPositiveButtonText() {
-        if (actionTextList != null && !actionTextList.isEmpty()) {
-            HSLog.d(TAG, actionTextList.toString());
-            return actionTextList.get(0);
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private static String getPositiveButtonText() {
+//        if (actionTextList != null && !actionTextList.isEmpty()) {
+//            HSLog.d(TAG, actionTextList.toString());
+//            return actionTextList.get(0);
+//        }
+//
+//        return "";
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        return "";
-    }
-
-    private static String getNegativeButtonText() {
-        if (actionTextList != null && !actionTextList.isEmpty() && actionTextList.size() > 1) {
-            HSLog.d(TAG, actionTextList.toString());
-            return actionTextList.get(1);
-        }
-
-        return "";
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private static String getNegativeButtonText() {
+//        if (actionTextList != null && !actionTextList.isEmpty() && actionTextList.size() > 1) {
+//            HSLog.d(TAG, actionTextList.toString());
+//            return actionTextList.get(1);
+//        }
+//
+//        return "";
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * Rate
@@ -193,8 +197,6 @@ public class CustomUIRateAlertUtils {
     }
 
     private static void updateRateAlertInfo(String s1, String s2, List<String> list1, List<DialogInterface.OnClickListener> list2) {
-        title = s1;
-        message = s2;
         actionTextList = list1;
         actionListenerList = list2;
     }

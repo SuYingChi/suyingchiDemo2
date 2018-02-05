@@ -194,9 +194,11 @@ public class StickerDataManager {
 
     }
 
-    boolean isStickersReady() {
-        return isReady;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    boolean isStickersReady() {
+//        return isReady;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     void updateStickerGroupList(StickerGroup stickerGroup) {
         if (!isReady) {

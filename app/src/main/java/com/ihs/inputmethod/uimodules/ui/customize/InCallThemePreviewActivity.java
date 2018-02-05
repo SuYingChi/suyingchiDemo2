@@ -33,24 +33,18 @@ import com.ihs.inputmethod.ads.fullscreen.KeyboardFullScreenAd;
 import com.ihs.inputmethod.uimodules.R;
 import com.ihs.keyboardutils.utils.ToastUtils;
 
-import java.util.ArrayList;
-
 import static com.ihs.inputmethod.uimodules.ui.settings.activities.SettingsActivity.CALL_ASSISTANT_HAS_SWITCHED_ON;
 
 public class InCallThemePreviewActivity extends HSAppCompatActivity {
 
-    public static final String TAG = InCallThemePreviewActivity.class.getSimpleName();
 
     private static final int OVERLAY_REQUEST_CODE = 999;
-    private ArrayList<Type> mThemeArray;
 
     private ThemePreviewWindow mPreviewView;
     private InCallActionView mCallView;
     private Toolbar mToolbar;
     private TextView mSetCallThemeButton;
     private MediaDownloadManager mGifDownloader = new MediaDownloadManager();
-    private int mThemeCurrentSelectedId = Type.NONE;
-    private int mThemePreviousSelectedId = Type.NONE;
     private boolean mIsDestroyed;
 
     @Override
@@ -58,9 +52,8 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.phone_activity_theme_preview);
 
-        mThemeArray = Type.values();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         TextView titleView = new TextView(this);
         titleView.setText(R.string.acb_screen_flash_name);
@@ -87,12 +80,12 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(showToolBarBack);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        mPreviewView = (ThemePreviewWindow) findViewById(R.id.flash_view);
+        mPreviewView = findViewById(R.id.flash_view);
         mPreviewView.setPreviewType(ThemePreviewWindow.PreviewType.PREVIEW);
 
-        mCallView = (InCallActionView) findViewById(R.id.in_call_view);
+        mCallView = findViewById(R.id.in_call_view);
         mCallView.enableFullScreen(false);
-        mSetCallThemeButton = (TextView) findViewById(R.id.set_incoming_call_theme);
+        mSetCallThemeButton = findViewById(R.id.set_incoming_call_theme);
         initThemesView();
         requestPermissionsIfNeeded();
     }
@@ -137,7 +130,6 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     private void initThemesView() {
         final Type themeType = (Type) getIntent().getSerializableExtra("CallThemeType");
 
-        mThemeCurrentSelectedId = themeType.getValue();
 
         initThemeAnimation(themeType);
 
@@ -203,8 +195,8 @@ public class InCallThemePreviewActivity extends HSAppCompatActivity {
     }
 
     private void downloadMedia(final Type type) {
-        final ProgressBar horPro = (ProgressBar) findViewById(R.id.theme_progress_bar);
-        final LinearLayout proHolder = (LinearLayout) findViewById(R.id.theme_progress_txt_holder);
+        final ProgressBar horPro = findViewById(R.id.theme_progress_bar);
+        final LinearLayout proHolder = findViewById(R.id.theme_progress_txt_holder);
 
         horPro.setVisibility(View.VISIBLE);
         proHolder.setVisibility(View.VISIBLE);

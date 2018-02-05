@@ -17,7 +17,7 @@ public class GlideURIUtils {
         File("file://"), Assets("file:///android_asset/"), Drawable("drawable://"), Content("content://");
         private String str;
 
-        private Type(String str) {
+        Type(String str) {
             this.str = str;
         }
 

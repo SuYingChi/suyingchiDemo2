@@ -24,14 +24,13 @@ import java.util.List;
 public class CategoryViewAdapter extends BaseAdapter {
 
     final private List<CategoryItem> mData = new ArrayList<>();
-    private Context mContext;
+    // --Commented out by Inspection (18/1/11 下午2:41):private Context mContext;
     private LayoutInflater mInflater;
     private DisplayMetrics mMetrics;
 
     private boolean mIsTextAnimationEnabled = false;
 
     public CategoryViewAdapter(Context context, List<CategoryItem> data) {
-        mContext = context;
         mInflater = LayoutInflater.from(context);
         mMetrics = context.getResources().getDisplayMetrics();
         setCategoryItemData(data);
@@ -59,7 +58,7 @@ public class CategoryViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.online_wallpaper_category_item, parent, false);
             holder = new ViewHolder();
-            holder.titleView = (TextView) convertView.findViewById(R.id.category_text_title);
+            holder.titleView = convertView.findViewById(R.id.category_text_title);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

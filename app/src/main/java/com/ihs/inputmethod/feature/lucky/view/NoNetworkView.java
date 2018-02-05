@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.feature.common.Utils;
 import com.ihs.inputmethod.feature.common.ViewUtils;
 import com.ihs.inputmethod.feature.lucky.LuckyActivity;
 import com.ihs.inputmethod.uimodules.R;

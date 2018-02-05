@@ -46,26 +46,16 @@ public class DownloadManager implements IManager {
         return downloadManager;
     }
 
-    /**
-     * start download
-     */
-    public void startDownloadInThreadPool(ExecutorService executorService) {
-        if (this.executorService == null) {
-            this.executorService = executorService;
-            this.downloadQueue = DownloadQueue.getInstance();
-            this.downloadExecutor = new DownloadExecutor(this.executorService, downloadQueue);
-            startSchedule();
-            this.executorService.execute(this.downloadExecutor);
-        }
-    }
 
-    /**
-     * stop download
-     */
-    public void shutdownDownloadThreadPool() {
-        this.stopSchedule();
-        this.executorService.shutdownNow();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * stop download
+//     */
+//    public void shutdownDownloadThreadPool() {
+//        this.stopSchedule();
+//        this.executorService.shutdownNow();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
     /**

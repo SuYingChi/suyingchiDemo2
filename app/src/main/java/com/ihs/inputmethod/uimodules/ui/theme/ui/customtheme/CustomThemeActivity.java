@@ -233,8 +233,8 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
     }
 
     private void initView() {
-        rootView = (ViewGroup) findViewById(R.id.root_view);
-        headerView = (HSCommonHeaderView) findViewById(R.id.custom_theme_head_common);
+        rootView = findViewById(R.id.root_view);
+        headerView = findViewById(R.id.custom_theme_head_common);
     }
 
     private HSKeyboardThemePreview getKeyboardView() {
@@ -563,10 +563,10 @@ public class CustomThemeActivity extends HSAppCompatActivity implements INotific
 
             keyboardFrameLayout = (RelativeLayout) View.inflate(getContext(), R.layout.layout_theme_preview, null);
             keyboardFrameLayout.setLayoutParams(params);
-            mp4HSBackgroundView = (HSMediaView) keyboardFrameLayout.findViewById(R.id.keyboard_bg);
+            mp4HSBackgroundView = keyboardFrameLayout.findViewById(R.id.keyboard_bg);
             mp4HSBackgroundView.init();
 
-            keyboardView = (HSKeyboardThemePreview) keyboardFrameLayout.findViewById(R.id.keyboard_view);
+            keyboardView = keyboardFrameLayout.findViewById(R.id.keyboard_view);
             keyboardView.setCustomThemeData(customThemeData);
         }
 

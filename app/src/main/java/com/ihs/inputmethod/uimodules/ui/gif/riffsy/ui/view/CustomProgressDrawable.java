@@ -64,45 +64,53 @@ public final class CustomProgressDrawable extends Drawable {
     private int mColor = 0x800080FF;
     private int mPadding = 10;
     private int mBarWidth = 20;
-    private int mLevel = 0;
-    private boolean mHideWhenZero = false;
+    // --Commented out by Inspection (18/1/11 下午2:41):private int mLevel = 0;
+    // --Commented out by Inspection (18/1/11 下午2:41):private boolean mHideWhenZero = false;
 
-    /**
-     * Sets the progress bar color.
-     */
-    public void setColor(int color) {
-        if (mColor != color) {
-            mColor = color;
-            invalidateSelf();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Sets the progress bar color.
+//     */
+//    public void setColor(int color) {
+//        if (mColor != color) {
+//            mColor = color;
+//            invalidateSelf();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Gets the progress bar color.
-     */
-    public int getColor() {
-        return mColor;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Gets the progress bar color.
+//     */
+//    public int getColor() {
+//        return mColor;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Sets the progress bar background color.
-     */
-    public void setBackgroundColor(int backgroundColor) {
-        if (mBackgroundColor != backgroundColor) {
-            mBackgroundColor = backgroundColor;
-            invalidateSelf();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Sets the progress bar background color.
+//     */
+//    public void setBackgroundColor(int backgroundColor) {
+//        if (mBackgroundColor != backgroundColor) {
+//            mBackgroundColor = backgroundColor;
+//            invalidateSelf();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * Sets the progress bar padding.
-     */
-    public void setPadding(int padding) {
-        if (mPadding != padding) {
-            mPadding = padding;
-            invalidateSelf();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Sets the progress bar padding.
+//     */
+//    public void setPadding(int padding) {
+//        if (mPadding != padding) {
+//            mPadding = padding;
+//            invalidateSelf();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * Gets the progress bar padding.
@@ -113,20 +121,21 @@ public final class CustomProgressDrawable extends Drawable {
         return mPadding != 0;
     }
 
-    /**
-     * Sets the progress bar width.
-     */
-    public void setBarWidth(int barWidth) {
-        if (mBarWidth != barWidth) {
-            mBarWidth = barWidth;
-            invalidateSelf();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Sets the progress bar width.
+//     */
+//    public void setBarWidth(int barWidth) {
+//        if (mBarWidth != barWidth) {
+//            mBarWidth = barWidth;
+//            invalidateSelf();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
     @Override
     protected boolean onLevelChange(int level) {
-        mLevel = level;
         invalidateSelf();
         return true;
     }

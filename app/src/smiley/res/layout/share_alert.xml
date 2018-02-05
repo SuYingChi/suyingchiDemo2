@@ -19,7 +19,6 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/share_alert_close_btn"
             android:layout_margin="10dp"
             android:layout_width="15dp"
             android:layout_height="15dp"

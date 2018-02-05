@@ -89,7 +89,7 @@ public class MainActivity extends HSAppCompatActivity {
 
     public final static String PREF_SHOULD_SKIP_MAINACTIVITY = "pref_theme_home_showed";
 
-    public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String ACTION_MAIN_ACTIVITY = HSApplication.getContext().getPackageName() + ".keyboard.main";
     private final static String INSTRUCTION_SCREEN_VIEWED = "Instruction_screen_viewed";
     private final static String APP_STEP_ONE_HINT_CLICKED = "app_step_one_hint_clicked";
     private final static String APP_STEP_ONE_HINT = "app_step_one_hint";
@@ -249,20 +249,20 @@ public class MainActivity extends HSAppCompatActivity {
         setContentView(R.layout.activity_main);
         onNewIntent(getIntent());
 
-        ivProgress = (ImageView) findViewById(R.id.progress_bar);
-        tvProgress = (TextView) findViewById(R.id.progress_text);
+        ivProgress = findViewById(R.id.progress_bar);
+        tvProgress = findViewById(R.id.progress_text);
         CustomProgressDrawable drawable = new CustomProgressDrawable(1);
         ivProgress.setImageDrawable(drawable);
 
-        progressLayout = (LinearLayout) findViewById(R.id.loading_layout);
+        progressLayout = findViewById(R.id.loading_layout);
 
-        img_enter_one = (ImageView) this.findViewById(R.id.view_enter_one);
-        img_enter_two = (ImageView) this.findViewById(R.id.view_enter_two);
-        img_choose_one = (ImageView) this.findViewById(R.id.view_choose_one);
-        img_choose_two = (ImageView) this.findViewById(R.id.view_choose_two);
+        img_enter_one = this.findViewById(R.id.view_enter_one);
+        img_enter_two = this.findViewById(R.id.view_enter_two);
+        img_choose_one = this.findViewById(R.id.view_choose_one);
+        img_choose_two = this.findViewById(R.id.view_choose_two);
 
-        textOne = (TextView) findViewById(R.id.text_one);
-        textTwo = (TextView) findViewById(R.id.text_two);
+        textOne = findViewById(R.id.text_one);
+        textTwo = findViewById(R.id.text_two);
         textOne.setText(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
         textTwo.setText(getString(R.string.toast_select_keyboard, getString(R.string.app_name)));
         ((TextView) (findViewById(R.id.accessibility_button_container).findViewById(R.id.accessibility_text_one))).setText(getString(R.string.toast_enable_keyboard, getString(R.string.app_name)));
@@ -373,7 +373,7 @@ public class MainActivity extends HSAppCompatActivity {
 
         }
 
-        protocolText = (TextView) findViewById(R.id.privacy_policy_text);
+        protocolText = findViewById(R.id.privacy_policy_text);
         String serviceKeyText = getString(R.string.text_terms_of_service);
         String policyKeyText = getString(R.string.text_privacy_policy);
         String policyText = getResources().getString(R.string.keyboard_guide_privacy_policy, serviceKeyText, policyKeyText);
@@ -397,7 +397,7 @@ public class MainActivity extends HSAppCompatActivity {
 
         bt_step_one = this.findViewById(R.id.bt_step_one);
         bt_step_two = this.findViewById(R.id.bt_step_two);
-        accessibilityButtonContainer = (RelativeLayout) findViewById(R.id.accessibility_button_container);
+        accessibilityButtonContainer = findViewById(R.id.accessibility_button_container);
         bt_step_one.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
                 getResources().getDimension(R.dimen.guide_bg_radius)));
         bt_step_two.setBackgroundDrawable(RippleDrawableUtils.getContainDisableStatusCompatRippleDrawable(getResources().getColor(R.color.guide_bg_normal_color), getResources().getColor(R.color.guide_bg_disable_color),
@@ -525,7 +525,7 @@ public class MainActivity extends HSAppCompatActivity {
 
         if (dialogView == null) {
             dialogView = (LinearLayout) View.inflate(getApplicationContext(), R.layout.dialog_enable_accessbility_guide, null);
-            videoView = (VideoView) dialogView.findViewById(R.id.videoview_guide);
+            videoView = dialogView.findViewById(R.id.videoview_guide);
             ((TextView) dialogView.findViewById(R.id.alertTitle)).setText(getString(R.string.alter_enable_access_title, getString(R.string.app_name)));
             ((TextView) dialogView.findViewById(R.id.message)).setText(getString(R.string.alter_enable_access_content, getString(R.string.app_name)));
             Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.accesibility_guide);

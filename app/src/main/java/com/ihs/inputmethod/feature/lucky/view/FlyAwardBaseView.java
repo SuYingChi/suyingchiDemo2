@@ -9,7 +9,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.ihs.inputmethod.feature.common.Utils;
+import com.ihs.feature.common.Utils;
 import com.ihs.inputmethod.uimodules.R;
 
 import net.appcloudbox.ads.base.ContainerView.AcbNativeAdIconView;

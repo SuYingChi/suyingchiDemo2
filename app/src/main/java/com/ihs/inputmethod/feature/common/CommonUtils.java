@@ -38,32 +38,32 @@ public class CommonUtils {
     public static final String INTENT_KEY_SNAP_TO_PAGE = "snap.to.page";
     public static final String INTENT_KEY_SHOW_ALL_APPS = "show.all.apps";
     public static final String INTENT_KEY_SHOW_SEARCH_LAYOUT = "show.search.layout";
-    public static final String INTENT_KEY_SHOW_SET_DEFAULT_SOURCE = "show.set.default.source";
-    public static final String INTENT_KEY_WALLPAPER_SELECTED = "INTENT_KEY_WALLPAPER_SELECTED";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String INTENT_KEY_SHOW_SET_DEFAULT_SOURCE = "show.set.default.source";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String INTENT_KEY_WALLPAPER_SELECTED = "INTENT_KEY_WALLPAPER_SELECTED";
     public static final String INTENT_KEY_RESET_LAUNCHER_VIEW = "reset.launcher.view";
 
-    public static final String INTENT_KEY_APPLY_THEME_OR_WALLPAPER = "apply_theme_or_wallpaper";
-    public static final int INTENT_VALUE_APPLY_THEME = 1;
-    public static final int INTENT_VALUE_APPLY_WALLPAPER = 2;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final String INTENT_KEY_APPLY_THEME_OR_WALLPAPER = "apply_theme_or_wallpaper";
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final int INTENT_VALUE_APPLY_THEME = 1;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final int INTENT_VALUE_APPLY_WALLPAPER = 2;
 
     public static final int DEFAULT_DEVICE_SCREEN_HEIGHT = 1920;
     public static final int DEFAULT_DEVICE_SCREEN_WIDTH = 1080;
 
-    public static final boolean UNDER_JB_MAR2 = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final boolean UNDER_JB_MAR2 = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2;
 
     public static final boolean ATLEAST_JB_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
 
-    public static final boolean ATLEAST_JB_MR2 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final boolean ATLEAST_JB_MR2 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
 
     public static final boolean ATLEAST_KITKAT = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
     public static final boolean ATLEAST_LOLLIPOP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
 
-    public static final boolean ATLEAST_LOLLIPOP_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final boolean ATLEAST_LOLLIPOP_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
 
-    public static final boolean ATLEAST_MARSHMALLOW = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final boolean ATLEAST_MARSHMALLOW = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
 
-    public static final boolean ATLEAST_N = Build.VERSION.SDK_INT >= 24;
+    // --Commented out by Inspection (18/1/11 下午2:41):public static final boolean ATLEAST_N = Build.VERSION.SDK_INT >= 24;
 
     private static float sDensityRatio;
 
@@ -72,18 +72,20 @@ public class CommonUtils {
     }
 
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setupTransparentSystemBarsForLmp(Activity activityContext) {
-        if (CommonUtils.ATLEAST_LOLLIPOP) {
-            Window window = activityContext.getWindow();
-            window.getAttributes().systemUiVisibility |= (View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
-                    .SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    public static void setupTransparentSystemBarsForLmp(Activity activityContext) {
+//        if (CommonUtils.ATLEAST_LOLLIPOP) {
+//            Window window = activityContext.getWindow();
+//            window.getAttributes().systemUiVisibility |= (View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
+//                    .SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//            window.setNavigationBarColor(Color.TRANSPARENT);
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static float getDensityRatio() {
         if (sDensityRatio > 0f) {
@@ -170,34 +172,40 @@ public class CommonUtils {
         return locale;
     }
 
-    public static boolean isMainProcess(Context context) {
-        return TextUtils.equals(context.getPackageName(), HSApplication.getProcessName());
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static boolean isMainProcess(Context context) {
+//        return TextUtils.equals(context.getPackageName(), HSApplication.getProcessName());
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    private static List<ActivityManager.RunningAppProcessInfo> getRunningProcesses(ActivityManager am) {
-        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
-        if (runningAppProcesses == null) {
-            runningAppProcesses = new ArrayList<>(0);
-        }
-        return runningAppProcesses;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    private static List<ActivityManager.RunningAppProcessInfo> getRunningProcesses(ActivityManager am) {
+//        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
+//        if (runningAppProcesses == null) {
+//            runningAppProcesses = new ArrayList<>(0);
+//        }
+//        return runningAppProcesses;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    /**
-     * @return Whether application with given package name is installed.
-     * Defaults to {@code false} if error occurs when querying package manager.
-     */
-    public static boolean isPackageInstalled(String pkgName) {
-        if (TextUtils.isEmpty(pkgName)) {
-            return false;
-        }
-        PackageInfo packageInfo;
-        try {
-            packageInfo = HSApplication.getContext().getPackageManager().getPackageInfo(pkgName, 0);
-        } catch (Exception e) {
-            packageInfo = null;
-        }
-        return (packageInfo != null);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * @return Whether application with given package name is installed.
+//     * Defaults to {@code false} if error occurs when querying package manager.
+//     */
+//    public static boolean isPackageInstalled(String pkgName) {
+//        if (TextUtils.isEmpty(pkgName)) {
+//            return false;
+//        }
+//        PackageInfo packageInfo;
+//        try {
+//            packageInfo = HSApplication.getContext().getPackageManager().getPackageInfo(pkgName, 0);
+//        } catch (Exception e) {
+//            packageInfo = null;
+//        }
+//        return (packageInfo != null);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 
     public static int getNavigationBarHeight(Context context) {
@@ -268,66 +276,76 @@ public class CommonUtils {
         return false;
     }
 
-    public static void startLauncher(Context context) {
-        try {
-            context.startActivity(getLauncherIntent());
-        } catch (Exception e) {
-            CrashlyticsCore.getInstance().logException(e);
-            if (e instanceof ActivityNotFoundException) {
-                Intent intent = new Intent();
-                if (!(context instanceof Activity)) {
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                }
-                intent.setComponent(
-                        new ComponentName("com.honeycomb.launcher", "com.honeycomb.launcher.desktop.LauncherExtension"));
-                try {
-                    context.startActivity(intent);
-                } catch (Exception ignored) {
-                }
-            }
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void startLauncher(Context context) {
+//        try {
+//            context.startActivity(getLauncherIntent());
+//        } catch (Exception e) {
+//            CrashlyticsCore.getInstance().logException(e);
+//            if (e instanceof ActivityNotFoundException) {
+//                Intent intent = new Intent();
+//                if (!(context instanceof Activity)) {
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                }
+//                intent.setComponent(
+//                        new ComponentName("com.honeycomb.launcher", "com.honeycomb.launcher.desktop.LauncherExtension"));
+//                try {
+//                    context.startActivity(intent);
+//                } catch (Exception ignored) {
+//                }
+//            }
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void startLauncherWithExtra(Context context, String name, int value) {
-        try {
-            Intent intent = getLauncherIntent();
-            intent.putExtra(name, value);
-            context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            CrashlyticsCore.getInstance().logException(e);
-            Intent intent = new Intent();
-            if (!(context instanceof Activity)) {
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
-            intent.setComponent(
-                    new ComponentName("com.honeycomb.launcher", "com.honeycomb.launcher.desktop.LauncherExtension"));
-            intent.putExtra(name, value);
-            try {
-                context.startActivity(intent);
-            } catch (ActivityNotFoundException ignored) {
-            }
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void startLauncherWithExtra(Context context, String name, int value) {
+//        try {
+//            Intent intent = getLauncherIntent();
+//            intent.putExtra(name, value);
+//            context.startActivity(intent);
+//        } catch (ActivityNotFoundException e) {
+//            CrashlyticsCore.getInstance().logException(e);
+//            Intent intent = new Intent();
+//            if (!(context instanceof Activity)) {
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            }
+//            intent.setComponent(
+//                    new ComponentName("com.honeycomb.launcher", "com.honeycomb.launcher.desktop.LauncherExtension"));
+//            intent.putExtra(name, value);
+//            try {
+//                context.startActivity(intent);
+//            } catch (ActivityNotFoundException ignored) {
+//            }
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void startLauncherAndShowAllApps(Context context) {
-        Intent launcherIntent = getLauncherIntent();
-        launcherIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        launcherIntent.putExtra(INTENT_KEY_SHOW_ALL_APPS, true);
-        startActivitySafely(context, launcherIntent);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void startLauncherAndShowAllApps(Context context) {
+//        Intent launcherIntent = getLauncherIntent();
+//        launcherIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//        launcherIntent.putExtra(INTENT_KEY_SHOW_ALL_APPS, true);
+//        startActivitySafely(context, launcherIntent);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void startLauncherAndShowSearchLayout(Context context) {
-        Intent launcherIntent = getLauncherIntent();
-        launcherIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        launcherIntent.putExtra(INTENT_KEY_SHOW_SEARCH_LAYOUT, true);
-        startActivitySafely(context, launcherIntent);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void startLauncherAndShowSearchLayout(Context context) {
+//        Intent launcherIntent = getLauncherIntent();
+//        launcherIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//        launcherIntent.putExtra(INTENT_KEY_SHOW_SEARCH_LAYOUT, true);
+//        startActivitySafely(context, launcherIntent);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-    public static void startLauncherToPage(Context context, int page) {
-        Intent launcherIntent = getLauncherIntent();
-        launcherIntent.putExtra(INTENT_KEY_SNAP_TO_PAGE, page);
-        startActivitySafely(context, launcherIntent);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void startLauncherToPage(Context context, int page) {
+//        Intent launcherIntent = getLauncherIntent();
+//        launcherIntent.putExtra(INTENT_KEY_SNAP_TO_PAGE, page);
+//        startActivitySafely(context, launcherIntent);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static Intent getLauncherIntent() {
         Intent launcherIntent = new Intent();
@@ -349,12 +367,14 @@ public class CommonUtils {
         }
     }
 
-    public static void unregisterReceiver(Context context, BroadcastReceiver receiver) {
-        try {
-            context.unregisterReceiver(receiver);
-        } catch (Exception e) {
-            HSLog.e(TAG, "Error unregistering broadcast receiver: " + receiver + " at ");
-            e.printStackTrace();
-        }
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void unregisterReceiver(Context context, BroadcastReceiver receiver) {
+//        try {
+//            context.unregisterReceiver(receiver);
+//        } catch (Exception e) {
+//            HSLog.e(TAG, "Error unregistering broadcast receiver: " + receiver + " at ");
+//            e.printStackTrace();
+//        }
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

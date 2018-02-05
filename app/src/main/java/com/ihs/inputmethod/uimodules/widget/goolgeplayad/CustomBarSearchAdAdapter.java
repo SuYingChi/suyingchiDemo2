@@ -35,10 +35,12 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
     private AdCaffeOnClickListener adCaffeOnClickListerner;
     private static final int TYPE_AD = 1;
 
-    public void addAd(AdCaffeNativeAd ad) {
-        this.adList.add(ad);
-        notifyItemInserted(adList.indexOf(ad));
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void addAd(AdCaffeNativeAd ad) {
+//        this.adList.add(ad);
+//        notifyItemInserted(adList.indexOf(ad));
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setAdList(List<AdCaffeNativeAd> adList) {
         this.adList.clear();
@@ -46,10 +48,12 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
         notifyDataSetChanged();
     }
 
-    public void clearAdList() {
-        adList.clear();
-        notifyDataSetChanged();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public void clearAdList() {
+//        adList.clear();
+//        notifyDataSetChanged();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void setAdCaffeOnClickListener(AdCaffeOnClickListener adCaffeOnClickListerner) {
         this.adCaffeOnClickListerner = adCaffeOnClickListerner;
@@ -116,9 +120,9 @@ public class CustomBarSearchAdAdapter extends RecyclerView.Adapter<CustomBarSear
         SearchAdViewHolder(View view) {
             super(view);
 
-            adIcon = (RoundedImageView) view.findViewById(R.id.ad_icon);
-            adTitle = (TextView) view.findViewById(R.id.ad_title);
-            adRating = (TextView) view.findViewById(R.id.ad_rating_score);
+            adIcon = view.findViewById(R.id.ad_icon);
+            adTitle = view.findViewById(R.id.ad_title);
+            adRating = view.findViewById(R.id.ad_rating_score);
         }
     }
 

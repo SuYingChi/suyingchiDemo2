@@ -25,6 +25,7 @@ public class FontView extends LinearLayout {
 		final TypedArray keyboardViewAttr = context.obtainStyledAttributes(attrs, com.ihs.inputmethod.R.styleable.FontSelectPannel, defStyleAttr, com.ihs.inputmethod.R.style.KeyboardView);
 		setBackgroundColor(HSKeyboardThemeManager.getCurrentTheme().getDominantColor());
 		setDividerDrawable(new ColorDrawable(keyboardViewAttr.getColor(com.ihs.inputmethod.R.styleable.FontSelectPannel_fontTextColor, 0)));
+		keyboardViewAttr.recycle();
 	}
 //	@Override
 //	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {

@@ -2,7 +2,6 @@
 
     <!--facemoji-->
     <dimen name="facemoji_category_bar_height">50dp</dimen>
-    <dimen name="facemoji_main_page_button_margin">40dp</dimen>
     <dimen name="facemoji_face_list_picker_size">40dp</dimen>
     <dimen name="facemoji_face_list_picker_margin">30dp</dimen>
     <dimen name="facemoji_face_list_scroll_view_height">80dp</dimen>

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -17,10 +16,6 @@ import android.text.TextUtils;
 import com.ihs.app.framework.HSApplication;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
-import com.ihs.inputmethod.api.utils.HSToastUtils;
-import com.ihs.inputmethod.uimodules.R;
-
-import java.io.File;
 
 public class ApkDownloadManager {
 
@@ -53,90 +48,94 @@ public class ApkDownloadManager {
         return INSTANCE;
     }
 
-    /**
-     * Entrance.
-     */
-    synchronized long checkDownload(UpdateConfig config) {
-        if (config == null || TextUtils.isEmpty(config.getDownLoadUrl())){
-            return STATUS_INVALID_URL;
-        }
-        // Find apk in local storage
-        boolean isFileReady = false;
-        File localFile = null;
-        try {
-            File file = HSApplication.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-            localFile = new File(file, config.getLocalFileName());
-            if (config.isUpdateMode()) {
-                // Is latest Apk file.
-                isFileReady = ApkUtils.isLocalApkReady(localFile.getPath(), HSApplication.getContext());
-            } else {
-                // Is Apk file.
-                isFileReady = ApkUtils.getApkInfo(HSApplication.getContext(), localFile.getPath()) != null;
-            }
-        }  catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (isFileReady) {
-            ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(localFile));
-            return STATUS_TO_INSTALL;
-        }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Entrance.
+//     */
+//    synchronized long checkDownload(UpdateConfig config) {
+//        if (config == null || TextUtils.isEmpty(config.getDownLoadUrl())){
+//            return STATUS_INVALID_URL;
+//        }
+//        // Find apk in local storage
+//        boolean isFileReady = false;
+//        File localFile = null;
+//        try {
+//            File file = HSApplication.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+//            localFile = new File(file, config.getLocalFileName());
+//            if (config.isUpdateMode()) {
+//                // Is latest Apk file.
+//                isFileReady = ApkUtils.isLocalApkReady(localFile.getPath(), HSApplication.getContext());
+//            } else {
+//                // Is Apk file.
+//                isFileReady = ApkUtils.getApkInfo(HSApplication.getContext(), localFile.getPath()) != null;
+//            }
+//        }  catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        if (isFileReady) {
+//            ApkUtils.startInstall(HSApplication.getContext(), Uri.fromFile(localFile));
+//            return STATUS_TO_INSTALL;
+//        }
+//
+//        // Check download id
+//        final long lastDownLoadId = obtainDownloadId(config);
+//        if (lastDownLoadId > 0) {
+//            int downloadStatus = ApkUtils.getDownloadStatus(mDownloadManager, lastDownLoadId);
+//            if (downloadStatus == DownloadManager.STATUS_RUNNING || downloadStatus == DownloadManager.STATUS_PAUSED) {
+//               // Is downloading
+//                if (Thread.currentThread() != Looper.getMainLooper().getThread()) {
+//                    mHandler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            HSToastUtils.toastCenterLong(HSApplication.getContext().getString(R.string.apk_update_downloading));
+//                        }
+//                    });
+//                } else {
+//                    HSToastUtils.toastCenterLong(HSApplication.getContext().getString(R.string.apk_update_downloading));
+//                }
+//                return STATUS_DOWNLOADING;
+//            } else if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL) {
+//                Uri uri = mDownloadManager.getUriForDownloadedFile(lastDownLoadId);
+//                // Local apk file is latest.
+//                // User may delete the file, uri may be null
+//                if (uri != null && ApkUtils.isLocalApkReady(uri.getPath(), HSApplication.getContext())) {
+//                    ApkUtils.startInstall(HSApplication.getContext(), uri);
+//                    return STATUS_TO_INSTALL;
+//                }
+//            }
+//
+//            // Delete old apk file
+//            // When download error and Failed, start over again.
+//            removeDownloadFile(lastDownLoadId);
+//        }
+//
+//        if (!ApkUtils.isDownloadManagerReady(HSApplication.getContext())) {
+//            showSettingForDownloadManager();
+//            return STATUS_INVALID_SETTINGS;
+//        }
+//
+//        preDownloadApk();
+//
+//        long downLoadId = startDownloadApk(config);
+//        saveId(config, downLoadId);
+//        return downLoadId;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-        // Check download id
-        final long lastDownLoadId = obtainDownloadId(config);
-        if (lastDownLoadId > 0) {
-            int downloadStatus = ApkUtils.getDownloadStatus(mDownloadManager, lastDownLoadId);
-            if (downloadStatus == DownloadManager.STATUS_RUNNING || downloadStatus == DownloadManager.STATUS_PAUSED) {
-               // Is downloading
-                if (Thread.currentThread() != Looper.getMainLooper().getThread()) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            HSToastUtils.toastCenterLong(HSApplication.getContext().getString(R.string.apk_update_downloading));
-                        }
-                    });
-                } else {
-                    HSToastUtils.toastCenterLong(HSApplication.getContext().getString(R.string.apk_update_downloading));
-                }
-                return STATUS_DOWNLOADING;
-            } else if (downloadStatus == DownloadManager.STATUS_SUCCESSFUL) {
-                Uri uri = mDownloadManager.getUriForDownloadedFile(lastDownLoadId);
-                // Local apk file is latest.
-                // User may delete the file, uri may be null
-                if (uri != null && ApkUtils.isLocalApkReady(uri.getPath(), HSApplication.getContext())) {
-                    ApkUtils.startInstall(HSApplication.getContext(), uri);
-                    return STATUS_TO_INSTALL;
-                }
-            }
-
-            // Delete old apk file
-            // When download error and Failed, start over again.
-            removeDownloadFile(lastDownLoadId);
-        }
-
-        if (!ApkUtils.isDownloadManagerReady(HSApplication.getContext())) {
-            showSettingForDownloadManager();
-            return STATUS_INVALID_SETTINGS;
-        }
-
-        preDownloadApk();
-
-        long downLoadId = startDownloadApk(config);
-        saveId(config, downLoadId);
-        return downLoadId;
-    }
-
-    /**
-     * Calc elapsed time after last file start download
-     * @return 0 if no download file , otherwise the real time.
-     */
-    public long getTimeMillsAfterDownload() {
-        if (obtainDownloadId(UpdateConfig.getDefault()) > 0) {
-            final long now = SystemClock.elapsedRealtime();
-            final long last = HSPreferenceHelper.getDefault().getLong(PREF_KEY_APK_TIME, now);
-            return now - last;
-        }
-        return 0;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Calc elapsed time after last file start download
+//     * @return 0 if no download file , otherwise the real time.
+//     */
+//    public long getTimeMillsAfterDownload() {
+//        if (obtainDownloadId(UpdateConfig.getDefault()) > 0) {
+//            final long now = SystemClock.elapsedRealtime();
+//            final long last = HSPreferenceHelper.getDefault().getLong(PREF_KEY_APK_TIME, now);
+//            return now - last;
+//        }
+//        return 0;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     /**
      * Remove last download file.
@@ -227,21 +226,23 @@ public class ApkDownloadManager {
         return request;
     }
 
-    /**
-     * Get download file path by id.
-     */
-    public String getDownloadFilePath(long id) {
-        DownloadManager.Query query = new DownloadManager.Query().setFilterById(id);
-        Cursor cursor = mDownloadManager.query(query);
-        if (cursor != null) {
-            try {
-                if (cursor.moveToFirst()) {
-                    return cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        return null;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Get download file path by id.
+//     */
+//    public String getDownloadFilePath(long id) {
+//        DownloadManager.Query query = new DownloadManager.Query().setFilterById(id);
+//        Cursor cursor = mDownloadManager.query(query);
+//        if (cursor != null) {
+//            try {
+//                if (cursor.moveToFirst()) {
+//                    return cursor.getString(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI));
+//                }
+//            } finally {
+//                cursor.close();
+//            }
+//        }
+//        return null;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

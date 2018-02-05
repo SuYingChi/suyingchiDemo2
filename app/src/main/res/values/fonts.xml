@@ -5,5 +5,4 @@
     <string name="roboto_regular" translatable="false">sans-serif</string>
     <string name="roboto_condensed" translatable="false">sans-serif-condensed</string>
     <string name="roboto_thin" translatable="false">sans-serif-thin</string>
-    <string name="proxima_nova_regular_condensed" translatable="false">ProximaNova-Regular-Condensed.otf</string>
 </resources>

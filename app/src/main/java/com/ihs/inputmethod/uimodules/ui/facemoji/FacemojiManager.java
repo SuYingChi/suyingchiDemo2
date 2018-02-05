@@ -42,7 +42,7 @@ import java.util.Map;
 public class FacemojiManager {
 
     public enum ShowLocation {
-        Keyboard,App
+        Keyboard,// --Commented out by Inspection (18/1/11 下午2:41):App
     }
 
     public final static String FACEMOJI_DATA_CHANGED = "FACEMOJI_DATA_CHANGED";
@@ -383,9 +383,11 @@ public class FacemojiManager {
         return currentPageSize;
     }
 
-    public static int getCurrentCategoryPageId() {
-        return mCurrentCategoryPageId;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static int getCurrentCategoryPageId() {
+//        return mCurrentCategoryPageId;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public static void setCurrentCategoryPageId(final int id) {
         mCurrentCategoryPageId = id;
@@ -439,9 +441,11 @@ public class FacemojiManager {
         return file;
     }
 
-    public List<FacemojiSticker> getStickerList(int postion) {
-        return getCategories().get(postion).getStickerList();
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public List<FacemojiSticker> getStickerList(int postion) {
+//        return getCategories().get(postion).getStickerList();
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public String getCategoryName(int id) {
         return getCategories().get(id).getName();

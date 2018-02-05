@@ -37,17 +37,12 @@ public class NewsLoadFootView extends LoadFootView {
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         mProgressBar = ViewUtils.findViewById(this, R.id.progress_bar);
         mLoadHint = ViewUtils.findViewById(this, R.id.loading_hint);
-        mRetryHint = ViewUtils.findViewById(this,R.id.retry_hint);
+        mRetryHint = ViewUtils.findViewById(this, R.id.retry_hint);
     }
 
-    @Override
-    public void onLoadFailed() {
-        mProgressBar.setVisibility(GONE);
-        mLoadHint.setVisibility(GONE);
-        mRetryHint.setVisibility(VISIBLE);
-    }
 
     @Override
     public void reset() {

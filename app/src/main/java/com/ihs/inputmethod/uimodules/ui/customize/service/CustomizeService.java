@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class CustomizeService extends Service {
 
-    private static final String TAG = CustomizeService.class.getSimpleName();
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final String TAG = CustomizeService.class.getSimpleName();
     private Handler mMainHandler= new Handler(Looper.getMainLooper());
 
     private final ICustomizeService.Stub mBinder = new ICustomizeService.Stub() {

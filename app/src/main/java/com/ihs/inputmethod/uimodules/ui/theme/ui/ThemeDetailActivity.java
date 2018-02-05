@@ -209,16 +209,16 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
     }
 
     private void initView() {
-        rootView = (NestedScrollView) findViewById(R.id.root_view);
+        rootView = findViewById(R.id.root_view);
         screenshotContainer = findViewById(R.id.keyboard_theme_screenshot_container);
-        keyboardThemeScreenShotImageView = (ImageView) findViewById(R.id.keyboard_theme_screenshot);
-        screenshotLoading = (MdProgressBar) findViewById(R.id.screenshot_loading);
-        leftBtn = (TextView) findViewById(R.id.theme_detail_left_btn);
-        rightBtn = (TextView) findViewById(R.id.theme_detail_right_btn);
+        keyboardThemeScreenShotImageView = findViewById(R.id.keyboard_theme_screenshot);
+        screenshotLoading = findViewById(R.id.screenshot_loading);
+        leftBtn = findViewById(R.id.theme_detail_left_btn);
+        rightBtn = findViewById(R.id.theme_detail_right_btn);
         leftBtn.setOnClickListener(this);
         rightBtn.setOnClickListener(this);
 
-        recommendRecyclerView = (RecyclerView) findViewById(R.id.theme_detail_recommend_recycler_view);
+        recommendRecyclerView = findViewById(R.id.theme_detail_recommend_recycler_view);
         recommendRecyclerView.setNestedScrollingEnabled(false);
         recommendRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         themeCardAdapter = new CommonThemeCardAdapter(this, this, false);
@@ -231,7 +231,7 @@ public class ThemeDetailActivity extends HSAppCompatActivity implements View.OnC
         if (!RemoveAdsManager.getInstance().isRemoveAdsPurchased()) {
             // 添加广告
             if (nativeAdView == null) {
-                final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ad_container);
+                final LinearLayout linearLayout = findViewById(R.id.ad_container);
                 int width = HSDisplayUtils.getScreenWidthForContent() - HSDisplayUtils.dip2px(16);
                 View view = LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_style_2, null);
                 LinearLayout loadingView = (LinearLayout) LayoutInflater.from(HSApplication.getContext()).inflate(R.layout.ad_loading_3, null);

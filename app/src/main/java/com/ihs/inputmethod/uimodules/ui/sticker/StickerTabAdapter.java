@@ -37,7 +37,7 @@ public class StickerTabAdapter extends BaseTabViewAdapter {
         final String tabName = tabNameList.get(position);
         Drawable tabDrawable = getTabView(tabName);
         if (tabDrawable == null) {
-            ImageView stickerTabImageView = (ImageView) holder.itemView.findViewById(R.id.tab_icon_iv);
+            ImageView stickerTabImageView = holder.itemView.findViewById(R.id.tab_icon_iv);
             StickerGroup stickerGroup = StickerUtils.getStickerGroupByName(tabName);
             String stickerPreviewImageUriStr;
             if (stickerGroup != null) {

@@ -5,7 +5,6 @@
         <string name="enabled">Abilitata</string>
         <string name="disabled">Cancella</string>
         <string name="language">ELEMENTO NON DISPONIBILE</string>
-        <string name="languages">Lingue</string>
         <string name="next">Prossimo</string>
         <string name="back">Richiama</string>
         <string name="cancel">Cancella</string>
@@ -18,7 +17,6 @@
         <string name="filter">Filtro</string>
         <string name="use">Utilizza</string>
         <string name="customize_keyboard_title">Tastiere</string>
-        <string name="alert_find_keyboard_and_switch_on">Accendi %1$s</string>
         <string name="may_contains_ads">Potrebbe contenere annunci pubblicitari</string>
         <string name="online_wallpaper_set_btn">IMPOSTA COME SFONDO</string>
         <string name="online_wallpaper_loading">Caricamento degli sfondi HD. Attendere.</string>
@@ -35,8 +33,7 @@
         <string name="dialog_title_select_keyboard_apply_rain">Attivare %1$s</string>
         <string name="dialog_msg_select_keyboard_apply_rain">Per poter utilizzare il tema selezionato è necessario attivare %1$s.</string>
         <string name="dialog_confirm_select_keyboard_apply_rain">ATTIVARE</string>
-        
-        <string name="dialog_title_enable_keyboard_home_rain">Attivare %1$s</string>
+
         <string name="dialog_msg_enable_keyboard_home_rain">%1$s ti fornisce temi per tastiera personalizzati e simpatiche emoji.</string>
         
         <!--language-->
@@ -78,23 +75,18 @@ Include contenuti sponsorizzati.</string>
         <string name="setting_item_fonts">Carattere</string>
         
         <string name="setting_item_sounds">Suono del Clic</string>
-        <string name="setting_item_swipe">Scorri l\'elemento</string>
-        <string name="setting_item_add_languages">Aggiungi lingua</string>
+    <string name="setting_item_add_languages">Aggiungi lingua</string>
         <string name="setting_item_more_settings">Più impostazioni</string>
         
         <!--settings panel-->
-        <string name="settings_button_tell_a_friend">Dillo ad un amico</string>
-        <string name="settings_button_tell_a_friend_tip">Condividi il tuo messaggio ora</string>
-        
-        
+
+
         <!-- gif panel -->
         <string name="result_no">Nessun GIF o sticker trovato.</string>
         <string name="result_no_recent">Nessun elemento recente.</string>
-        <string name="result_no_suggestion">Nessun GIF o sticker suggerito.</string>
         <string name="result_no_favorites">Nessun preferito.</string>
         <string name="result_no_data_on_fail">Si prega di controllare la connessione e riprovare.</string>
-        <string name="result_no_data_on_complete">Nessun GIF o sticker trovato.</string>
-        
+
         <!--gif strip-->
         <string name="emoji_search_title">Seleziona emoji da cercare</string>
         <string name="emoji_search_hint">Cerca GIF per testo o emoji </string>
@@ -119,9 +111,7 @@ Include contenuti sponsorizzati.</string>
         <string name="dialog_app_usage_title">Autorizza app con accesso d\'uso</string>
         
         <!--theme home nav-->
-        <string name="theme_nav_my_themes">I miei temi</string>
         <string name="theme_nav_languages">Lingue</string>
-        <string name="theme_nav_settings">Impostazioni</string>
         <string name="theme_nav_update">Aggiorna</string>
         <string name="theme_nav_no_ads">Rimuovere gli annunci</string>
         
@@ -136,16 +126,8 @@ Include contenuti sponsorizzati.</string>
         <string name="theme_card_menu_delete">Cancella</string>
         
         <!--custom theme-->
-        <string name="custom_theme_background">Sfondo</string>
         <string name="custom_theme_font">Carattere</string>
-        <string name="custom_theme_sound">Scegli effetto tocco</string>
-        <string name="custom_theme_effect">Effetto tocco</string>
-        
-        <string name="custom_theme_backgrounds">sfondi</string>
-        <string name="custom_theme_fonts">carattere</string>
-        <string name="custom_theme_sounds">Scegli effetto tocco</string>
-        <string name="custom_theme_effects">effetti di tocco</string>
-        
+
         <string name="custom_theme_title">Crea tastiera</string>
         <string name="custom_theme_title_background">Scegli lo sfondo</string>
         <string name="custom_theme_title_button_shape">Scegli la forma del tasto</string>
@@ -153,7 +135,6 @@ Include contenuti sponsorizzati.</string>
         <string name="custom_theme_title_font">Scegli il carattere</string>
         <string name="custom_theme_title_font_color">Scegli il colore del carattere</string>
         <string name="custom_theme_title_sound">Scegli il suono del clic</string>
-        <string name="custom_theme_title_effect">Scegli effetto tocco</string>
         <string name="custom_theme_sound_tip">Per usare l\'effetto audio del click, disattiva la modalità silenziona o attiva l\'audio su pressione nella sezione delle impostazioni.</string>
         
         <!--IAP Tip Info -->
@@ -172,16 +153,12 @@ Include contenuti sponsorizzati.</string>
         <string name="apk_update_alert_title">Scarica la versione più recente</string>
         <string name="apk_update_alert_negative_btn">Più tardi</string>
         <string name="apk_update_alert_positive_btn">Aggiorna</string>
-        <string name="apk_update_downloading">Download aggiornamento in corso</string>
-        <string name="apk_update_downloading_notification_title">Download</string>
-        
-        
-        <string name="sd_card_unavailable_tip">La scheda SD non è disponibile!</string>
+
+
+    <string name="sd_card_unavailable_tip">La scheda SD non è disponibile!</string>
         
         <string name="theme_create_custom_theme_failed">Creazione di tema non riuscita. Assicurati di avere abbastanza spazio sul disco del dispositivo e riprova.</string>
-        
-        <string name="home_create_keyboard">Crea i tuoi temi</string>
-        
+
         <string name="charging_alert_title">Ricarica intelligente</string>
         <string name="charging_alert_message">Attiva la Ricarica intelligente per evitare il sovraccarico. Include contenuti sponsorizzati.</string>
         
@@ -189,7 +166,6 @@ Include contenuti sponsorizzati.</string>
         
         <!--Accessibility-->
         <string name="tv_enable_keyboard_tip">Attiva %1$s, goditi ALTRI temi!</string>
-        <string name="accessibility_service_label">%1$s</string>
         <string name="tv_set_up_manually">IMPOSTA MANUALMENTE</string>
         <string name="tv_1_tap_to_set_up_keyboard">Attiva %1$s</string>
         <string name="alter_enable_access_title">Attiva %1$s</string>
@@ -224,14 +200,12 @@ Include contenuti sponsorizzati.</string>
         
         <string name="interstitial_ad_title_after_try_keyboard">Applicato</string>
         <string name="interstitial_ad_subtitle_after_try_keyboard">---------------Consigliati per te---------------</string>
-        
-        <string name="interstitial_ad_subtitle_home_gift_button">---------------Consigliati per te---------------</string>
+
         <string name="store_nav_download">I miei download</string>
         <string name="tab_theme_my">Il mio tema</string>
         <string name="tab_sticker">ADESIVO</string>
         <string name="tab_sticker_my">I MIEI ADESIVO</string>
         <string name="tab_font_my">IL MIO CARATTERE</string>
-        <string name="item_sticker_more_coming">Altri sticker in arrivo prossimamente</string>
         <string name="item_font_more_coming">Altre fonti in arrivo prossimamente</string>
         
         <!--alert message-->
@@ -255,7 +229,6 @@ Include contenuti sponsorizzati.</string>
 
         <!-- wallpaper preview -->
         <string name="key_theme_set_btn">IMPOSTA TEMA PRINCIPALE</string>
-        <string name="wallpaper_apply_fail">Non applicato</string>
         <string name="home_screen">Schermata iniziale</string>
         <string name="locker_screen">Schermata di blocco</string>
         <string name="home_and_locker_screen">Schermata iniziale e di blocco</string>

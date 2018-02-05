@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperPage
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperPage xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +14,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/wallpaper_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </FrameLayout>
 
     <com.ihs.feature.common.TypefacedTextView
@@ -24,7 +23,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="14sp"
-        app:typeface="@string/proxima_nova_semibold"/>
+        app:typeface="@string/proxima_nova_semibold" />
 
     <GridView
         android:id="@+id/categories_grid_view"
@@ -44,7 +43,7 @@
         android:paddingTop="24dp"
         android:scrollbars="none"
         android:verticalSpacing="8dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/tab_layout_container"
@@ -55,42 +54,36 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="0dp"
+        <com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperTabLayout
+            android:id="@+id/wallpaper_tabs"
+            style="@style/MyCustomTabLayout"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_gravity="center_horizontal"
+            android:fadingEdgeLength="6dp"
+            android:layoutDirection="ltr"
+            android:paddingLeft="12dp"
+            android:requiresFadingEdge="horizontal"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabMinWidth="6dp"
+            app:tabMode="scrollable"
+            app:tabPaddingEnd="@dimen/tab_padding_start"
+            app:tabPaddingStart="@dimen/tab_padding_start"
+            tools:ignore="PrivateResource,UnusedAttribute" />
 
-            <com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperTabLayout
-                android:id="@+id/wallpaper_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:fadingEdgeLength="6dp"
-                android:layoutDirection="ltr"
-                android:paddingLeft="12dp"
-                android:requiresFadingEdge="horizontal"
-                app:tabGravity="fill"
-                app:tabMaxWidth="0dp"
-                app:tabMinWidth="6dp"
-                app:tabMode="scrollable"
-                app:tabPaddingEnd="@dimen/tab_padding_start"
-                app:tabPaddingStart="@dimen/tab_padding_start"
-                style="@style/MyCustomTabLayout"
-                tools:ignore="PrivateResource,UnusedAttribute"/>
-
-            <com.ihs.feature.common.TypefacedTextView
-                android:id="@+id/categories_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/overview_panel_wallpaper_theme_horizontal_padding"
-                android:layout_marginStart="@dimen/overview_panel_wallpaper_theme_horizontal_padding"
-                android:text="@string/online_wallpaper_tab_title_categories"
-                android:textColor="#333333"
-                android:textSize="14sp"
-                android:translationY="@dimen/online_category_title_view_translationY"
-                android:visibility="gone"
-                app:typeface="@string/proxima_nova_semibold"/>
-        </FrameLayout>
+        <com.ihs.feature.common.TypefacedTextView
+            android:id="@+id/categories_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/overview_panel_wallpaper_theme_horizontal_padding"
+            android:layout_marginStart="@dimen/overview_panel_wallpaper_theme_horizontal_padding"
+            android:text="@string/online_wallpaper_tab_title_categories"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:translationY="@dimen/online_category_title_view_translationY"
+            android:visibility="gone"
+            app:typeface="@string/proxima_nova_semibold" />
     </LinearLayout>
 </com.ihs.inputmethod.uimodules.ui.customize.view.OnlineWallpaperPage>

@@ -84,13 +84,17 @@ public final class Emoji {
 		return superEmoji;
 	}
 
-	public void setSuperEmoji(Emoji superEmoji) {
-		this.superEmoji = superEmoji;
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public void setSuperEmoji(Emoji superEmoji) {
+//		this.superEmoji = superEmoji;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
-	public int getSkinSelectedIndex() {
-		return skinSelectedIndex;
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public int getSkinSelectedIndex() {
+//		return skinSelectedIndex;
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
 	public void setSkinSelectedIndex(int skinSelectedIndex) {
 		this.skinSelectedIndex = skinSelectedIndex;

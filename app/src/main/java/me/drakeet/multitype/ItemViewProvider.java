@@ -38,16 +38,18 @@ public abstract class ItemViewProvider<T, V extends ViewHolder> {
     /* @formatter:on */
 
 
-    /**
-     * Get the adapter position of current item,
-     * the internal position equals to RecyclerView.ViewHolder#getAdapterPosition().
-     *
-     * @return the adapter position
-     * @since v2.3.0
-     */
-    protected final int getPosition() {
-        return position;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    /**
+//     * Get the adapter position of current item,
+//     * the internal position equals to RecyclerView.ViewHolder#getAdapterPosition().
+//     *
+//     * @return the adapter position
+//     * @since v2.3.0
+//     */
+//    protected final int getPosition() {
+//        return position;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public void onViewAttachedToWindow(ViewHolder holder, @NonNull T item) {
     }

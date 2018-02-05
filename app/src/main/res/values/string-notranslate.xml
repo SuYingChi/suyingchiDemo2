@@ -9,22 +9,28 @@
 
     <!--Copy-->
     <string name="setting_item_correction" translatable="false">@string/setting_auto_correction</string>
-    <string name="setting_item_capitalization" translatable="false">@string/setting_auto_capitalization</string>
-    <string name="setting_item_word_prediction" translatable="false">@string/setting_word_prediction</string>
-    <string name="settings_button_auto_correction" translatable="false">@string/setting_auto_correction</string>
-    <string name="settings_button_auto_capitalization" translatable="false">@string/setting_auto_capitalization</string>
-    <string name="settings_button_word_prediction" translatable="false">@string/setting_word_prediction</string>
-    <string name="settings_button_swipe" translatable="false">@string/setting_item_swipe</string>
-    <string name="settings_button_add_language" translatable="false">@string/setting_item_add_languages</string>
-    <string name="settings_button_more_settings" translatable="false">@string/setting_item_more_settings</string>
-    <string name="settings_button_fonts" translatable="false">@string/setting_item_fonts</string>
-    <string name="settings_button_sound" translatable="false">@string/setting_item_sounds</string>
     <string name="dialog_agree" translatable="false">@string/allow</string>
     <string name="dialog_disagree" translatable="false">@string/cancel</string>
 
     <string name="setting_key_sms_assistant" translatable="false">setting_key_sms_assistant</string>
     <string name="smart_locker_app_package_name" translatable="false">com.wallpaper.theme.privacy.smart.lock.screen</string>
     <string name="pref_key_app_suggestion_enabled">pref_key_app_suggestion_enabled</string>
+
+    <!--built in theme-->
+    <string name="keyboard_theme_custom" translatable="false">Custom</string>
+    <string name="keyboard_theme_custom2" translatable="false">Custom2</string>
+    <string name="keyboard_theme_dark" translatable="false">Dark</string>
+    <string name="keyboard_theme_grey" translatable="false">Grey</string>
+    <string name="keyboard_theme_classic" translatable="false">Classic</string>
+    <string name="keyboard_theme_freshair" translatable="false">Freshair</string>
+    <string name="keyboard_theme_pop" translatable="false">Pop</string>
+    <string name="keyboard_theme_electric" translatable="false">electric</string>
+    <string name="keyboard_theme_wood" translatable="false">wood</string>
+    <string name="keyboard_theme_font" translatable="false">font</string>
+    <string name="keyboard_theme_doddle" translatable="false">doddle</string>
+    <string name="keyboard_theme_bit" translatable="false">bit</string>
+    <!--built in theme-->
+
 
     <!--No need-->
     <string name="unlock_theme_element_via_watch_video">Watch Video to Unlock</string>

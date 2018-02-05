@@ -32,7 +32,6 @@ import static com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.wi
 public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeGalleryAdapter.ViewHolder>
         implements View.OnClickListener, ServiceListener {
 
-    private static final int ITEM_TYPE_BANNER = 0;
     private static final int ITEM_TYPE_THEME_VIEW = 1;
 
     private Context mContext;
@@ -81,8 +80,6 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
         Glide.with(mContext).asBitmap().apply(requestOptions)
                 .load(themeType.getPreviewImage()).transition(withCrossFade(500))
                 .into(themeHolder.themeThumbnail);
-
-//        ImageLoader.getInstance().displayImage(themeType.getPreviewImage(), themeHolder.themeThumbnail, displayImageOptions);
     }
 
     @Override
@@ -123,11 +120,9 @@ public class LockerThemeGalleryAdapter extends RecyclerView.Adapter<LockerThemeG
     }
 
     public static class GridSpanSizer extends GridLayoutManager.SpanSizeLookup {
-        LockerThemeGalleryAdapter mAdapter;
 
         public GridSpanSizer(LockerThemeGalleryAdapter adapter) {
             super();
-            mAdapter = adapter;
             setSpanIndexCacheEnabled(true);
         }
 

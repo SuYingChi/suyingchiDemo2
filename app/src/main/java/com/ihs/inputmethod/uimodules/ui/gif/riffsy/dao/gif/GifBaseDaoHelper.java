@@ -120,8 +120,10 @@ public class GifBaseDaoHelper extends SQLiteOpenHelper{
 		return dao.getAll(getTableName(tableName));
 	}
 
-	public final void delete(final String tableName,final GifItem data) {
-		final String table=getTableName(tableName);
-		dao.delete(table,data);
-	}
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//	public final void delete(final String tableName,final GifItem data) {
+//		final String table=getTableName(tableName);
+//		dao.delete(table,data);
+//	}
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

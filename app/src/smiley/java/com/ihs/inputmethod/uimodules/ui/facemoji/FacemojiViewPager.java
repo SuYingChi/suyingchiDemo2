@@ -6,10 +6,10 @@ import android.util.AttributeSet;
 
 public class FacemojiViewPager extends ViewPager {
 
-    private float mLastDownX;
-    private float mLastDownY;
+    // --Commented out by Inspection (18/1/11 下午2:41):private float mLastDownX;
+    // --Commented out by Inspection (18/1/11 下午2:41):private float mLastDownY;
 
-    private static final int MOVE_ACTION_LIMIT_DISTANCE = 10;
+    // --Commented out by Inspection (18/1/11 下午2:41):private static final int MOVE_ACTION_LIMIT_DISTANCE = 10;
 
     public FacemojiViewPager(Context context) {
         super(context);

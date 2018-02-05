@@ -227,13 +227,9 @@ public class GPUImageFilter implements GPUImageBaseFilter {
             };
         }
 
-        for (int i = 0; i < cube.length; i++) {
-            cube[i] = cubeTemp[i];
-        }
+        System.arraycopy(cubeTemp, 0, cube, 0, cube.length);
 
-        for (int i = 0; i < textureCordsTemp.length; i++) {
-            textureCords[i] = textureCordsTemp[i];
-        }
+        System.arraycopy(textureCordsTemp, 0, textureCords, 0, textureCordsTemp.length);
     }
 
     protected void onDrawArraysPre() {

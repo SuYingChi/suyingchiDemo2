@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 
 import com.ihs.app.framework.HSApplication;
 import com.ihs.chargingscreen.utils.ChargingManagerUtil;
-import com.ihs.commons.config.HSConfig;
 import com.ihs.commons.notificationcenter.HSGlobalNotificationCenter;
 import com.ihs.commons.notificationcenter.INotificationObserver;
 import com.ihs.commons.utils.HSBundle;
@@ -46,13 +45,12 @@ public class ThemeAdAdapterDelegate extends AdapterDelegate<List<ThemeHomeModel>
 			}
 		}
 	};
-	protected List<Map<String, Object>> themeAdInfos;
+	// --Commented out by Inspection (18/1/11 下午2:41):protected List<Map<String, Object>> themeAdInfos;
 	protected int width;
 	private ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener;
 	private boolean shouldShowChargingEnableCard;
 
 	public ThemeAdAdapterDelegate(ThemeHomeAdapter.OnThemeAdItemClickListener themeAdOnClickListener) {
-		themeAdInfos = (List<Map<String, Object>>) HSConfig.getList("Application", "NativeAds", "NativeAdPosition", "ThemeAd");
 		nativeAdViewCached = new HashMap<>();
 		this.themeAdOnClickListener = themeAdOnClickListener;
 		HSGlobalNotificationCenter.addObserver(ThemeHomeFragment.NOTIFICATION_THEME_HOME_DESTROY, notificationObserver);

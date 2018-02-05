@@ -29,7 +29,7 @@ import java.io.File;
 public class DownloadUtils {
     private static DownloadUtils instance;
     private String filePath;
-    private String objectName;
+    // --Commented out by Inspection (18/1/11 下午2:41):private String objectName;
 
     public static DownloadUtils getInstance() {
         if (instance == null) {
@@ -88,7 +88,6 @@ public class DownloadUtils {
     public void startForegroundDownloading(Context context, final String objectName, final String filePath, final String downloadUrl,
                                            final Drawable thumbnailDrawable, final AdLoadingView.OnAdBufferingListener onAdBufferingListener, boolean showInDialog) {
         HSHttpConnection connection;
-        this.objectName = objectName;
         this.filePath = filePath;
         connection = new HSHttpConnection(downloadUrl);
 

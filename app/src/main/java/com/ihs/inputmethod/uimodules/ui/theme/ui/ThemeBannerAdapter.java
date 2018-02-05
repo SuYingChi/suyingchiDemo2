@@ -331,7 +331,7 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
             } else {
                 view.shutDownOnScrollChangedListener();
             }
-            final ImageView imageView = (ImageView) view.findViewById(R.id.theme_banner_image);
+            final ImageView imageView = view.findViewById(R.id.theme_banner_image);
             if (keyboardTheme.getThemeBannerImgUrl() != null) {
                 imageView.setImageResource(R.drawable.image_placeholder);
                 Glide.with(HSApplication.getContext()).asBitmap().apply(requestOptions).load(keyboardTheme.getThemeBannerImgUrl()).into(imageView);
@@ -401,13 +401,6 @@ public class ThemeBannerAdapter extends PagerAdapter implements ViewPager.OnPage
 
     @Override
     public void onPageScrollStateChanged(int state) {
-    }
-
-    /**
-     * @return the is Loop
-     */
-    public boolean isLoop() {
-        return isLoop;
     }
 
     /**

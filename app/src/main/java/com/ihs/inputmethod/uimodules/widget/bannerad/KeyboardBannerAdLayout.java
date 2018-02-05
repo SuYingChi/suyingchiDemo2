@@ -81,10 +81,10 @@ public class KeyboardBannerAdLayout extends FrameLayout {
                     acbNativeAdContainerView.hideAdCorner();
                     containerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
                     acbNativeAdContainerView.addContentView(containerView);
-                    AcbNativeAdIconView adIconView = (AcbNativeAdIconView) containerView.findViewById(R.id.ad_icon);
-                    acbNativeAdContainerView.setAdTitleView((TextView) containerView.findViewById(R.id.ad_title));
-                    acbNativeAdContainerView.setAdSubTitleView((TextView) containerView.findViewById(R.id.ad_subtitle));
-                    acbNativeAdContainerView.setAdChoiceView((ViewGroup) containerView.findViewById(R.id.ad_choice));
+                    AcbNativeAdIconView adIconView = containerView.findViewById(R.id.ad_icon);
+                    acbNativeAdContainerView.setAdTitleView(containerView.findViewById(R.id.ad_title));
+                    acbNativeAdContainerView.setAdSubTitleView(containerView.findViewById(R.id.ad_subtitle));
+                    acbNativeAdContainerView.setAdChoiceView(containerView.findViewById(R.id.ad_choice));
                     acbNativeAdContainerView.setAdIconView(adIconView);
                     acbNativeAdContainerView.setAdActionView(containerView.findViewById(R.id.ad_call_to_action));
                     acbNativeAdContainerView.fillNativeAd(nativeAd);

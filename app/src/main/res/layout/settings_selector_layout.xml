@@ -112,7 +112,6 @@
     </android.support.percent.PercentRelativeLayout>
 
     <android.support.percent.PercentRelativeLayout
-        android:id="@+id/selector_select_all_or_cut_container"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/selector_right_container"

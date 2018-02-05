@@ -33,9 +33,11 @@ public class FacemojiSticker implements ISequenceFramesImageItem {
         return name;
     }
 
-    public int getVersion() {
-        return version;
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public int getVersion() {
+//        return version;
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 
     public int getWidth() {
         return width;

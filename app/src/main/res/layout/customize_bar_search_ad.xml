@@ -10,7 +10,6 @@
     android:orientation="horizontal">
 
     <FrameLayout
-        android:id="@+id/ad_icon_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -59,7 +58,6 @@
                 android:fontFamily="ArialMT"/>
 
             <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/ad_rating_star"
                 android:layout_marginLeft="3dp"
                 android:layout_width="13dp"
                 android:layout_height="13dp"

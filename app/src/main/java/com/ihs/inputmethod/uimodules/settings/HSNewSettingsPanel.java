@@ -59,7 +59,7 @@ public class HSNewSettingsPanel extends BasePanel {
     public View onCreatePanelView() {
         if (settingPanelView == null) {
             View view = View.inflate(getContext(), R.layout.panel_settings, null);
-            settingsViewPager = (SettingsViewPager) view.findViewById(R.id.settingsViewPager);
+            settingsViewPager = view.findViewById(R.id.settingsViewPager);
             settingsViewPager.setItems(prepareItems());
 
             ViewPagerIndicator dotsRadioGroup = view.findViewById(R.id.dots_indicator);

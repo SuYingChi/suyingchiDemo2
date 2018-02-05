@@ -37,7 +37,9 @@ public class BottomNavigationViewHelper {
         }
     }
 
-    public static void setTypeface(BottomNavigationView navigationView, Typeface typeface) {
-        Utils.setTypefaceRecursive(navigationView, typeface);
-    }
+// --Commented out by Inspection START (18/1/11 下午2:41):
+//    public static void setTypeface(BottomNavigationView navigationView, Typeface typeface) {
+//        Utils.setTypefaceRecursive(navigationView, typeface);
+//    }
+// --Commented out by Inspection STOP (18/1/11 下午2:41)
 }

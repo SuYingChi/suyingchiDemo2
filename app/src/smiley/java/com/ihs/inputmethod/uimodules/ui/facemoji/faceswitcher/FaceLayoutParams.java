@@ -13,7 +13,7 @@ class FaceLayoutParams {
 
 	public static int GRID_ROW_NUMBER      = 2;
 	public static int GRID_COL_NUMBER      = 4;
-	public static int GRID_ROW_NUMBER_LAND = 2;
+	// --Commented out by Inspection (18/1/11 下午2:41):public static int GRID_ROW_NUMBER_LAND = 2;
 
 	private int mEmojiKeyboardHeight;
 	private int mEmojiPageIdViewHeight;

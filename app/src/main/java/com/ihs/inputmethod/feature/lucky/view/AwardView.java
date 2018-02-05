@@ -391,7 +391,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
         }
 
         mChancesAnimator.setStartDelay(OTHER_VIEW_DELAY_DURATION);
-        mChancesAnimator.addListener(new com.ihs.inputmethod.feature.common.AnimatorListenerAdapter() {
+        mChancesAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
                 getChancesView().setVisibility(VISIBLE);
@@ -413,7 +413,7 @@ public class AwardView extends FrameLayout implements View.OnClickListener {
 
         AnimatorSet theme = getThemeView().getThemeAnimation();
         theme.setStartDelay(THEME_DELAY_DURATION);
-        theme.addListener(new com.ihs.inputmethod.feature.common.AnimatorListenerAdapter() {
+        theme.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
             }

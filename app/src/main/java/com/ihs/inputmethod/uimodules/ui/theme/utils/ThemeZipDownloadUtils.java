@@ -67,7 +67,7 @@ public class ThemeZipDownloadUtils {
                     }
                 }, 2000, false);
 
-        ImageView thumbnailImageView = (ImageView) adLoadingView.findViewById(R.id.iv_icon);
+        ImageView thumbnailImageView = adLoadingView.findViewById(R.id.iv_icon);
 
         Glide.with(context).asBitmap().apply(new RequestOptions().override(DisplayUtils.dip2px(HSApplication.getContext(),100),DisplayUtils.dip2px(HSApplication.getContext(),100))).load(thumbnailUrl).into(thumbnailImageView);
         adLoadingView.showInDialog();
