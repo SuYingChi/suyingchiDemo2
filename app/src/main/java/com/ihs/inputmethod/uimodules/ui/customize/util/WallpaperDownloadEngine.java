@@ -10,8 +10,10 @@ import com.ihs.commons.connection.httplib.HttpRequest;
 import com.ihs.commons.utils.HSError;
 import com.ihs.commons.utils.HSLog;
 import com.ihs.commons.utils.HSPreferenceHelper;
+import com.ihs.inputmethod.api.utils.HSYamlUtils;
 import com.ihs.inputmethod.uimodules.ui.customize.WallpaperInfo;
 import com.ihs.inputmethod.uimodules.ui.customize.view.CategoryInfo;
+import com.ihs.inputmethod.uimodules.ui.gif.common.control.UIController;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +32,7 @@ public class WallpaperDownloadEngine {
 
 
     public interface OnLoadWallpaperListener {
-        void onLoadFinished(List<WallpaperInfo> wallpaperInfoList);
+        void onLoadFinished(List<WallpaperInfo> wallpaperInfoList, int totalSize);
 
         void onLoadFailed();
     }
@@ -48,7 +50,55 @@ public class WallpaperDownloadEngine {
     private static final String SUFFIX_CATEGORY = "categories/";
     private static List<Map<String, ?>> sConfig = (List<Map<String, ?>>) HSConfig.getList("Application", "Wallpapers");
 
-    public static void getNextCategoryWallpaperList(final int categoryIndex, final OnLoadWallpaperListener listener) {
+    public static void getNextCategoryWallpaperList(int categoryIndex, OnLoadWallpaperListener listener) {
+        if (HSYamlUtils.convertObjectToBool(sConfig.get(categoryIndex).get("FromConfig"))) {
+            getNextCategoryWallpaperListFromConfig(categoryIndex, listener);
+        } else {
+            getNextCategoryWallpaperListFromNetwork(categoryIndex, listener);
+        }
+    }
+
+    private static void getNextCategoryWallpaperListFromConfig(int categoryIndex, OnLoadWallpaperListener listener) {
+        try {
+
+            int nextPage = sPrefs.getInt(PREF_WALLPAPER_CATEGORY_NEXT_PAGE + categoryIndex, 1);
+            final int startIndex = (nextPage - 1) * DEFAULT_PAGE_SIZE;
+            final int endIndex = startIndex + DEFAULT_PAGE_SIZE;
+
+            List<WallpaperInfo> wallpaperInfoList = new ArrayList<>();
+            List<Map<String, String>> wallpaperList = (List<Map<String, String>>) sConfig.get(categoryIndex).get("WallpaperList");
+            int configTotalSize = wallpaperList.size();
+            int lastIndex = configTotalSize <= endIndex ? configTotalSize : endIndex;
+            for (int i = startIndex; i < lastIndex; i++) {
+                Map<String, String> map = wallpaperList.get(i);
+                WallpaperInfo wallpaperInfo = WallpaperInfo.newConfigWallpaper(map.get("HDUrl"), map.get("ThumbUrl"));
+                CategoryInfo category = CategoryInfo.ofConfig(sConfig.get(categoryIndex));
+                if (category != null) {
+                    wallpaperInfo.setCategory(category);
+                }
+                wallpaperInfoList.add(wallpaperInfo);
+            }
+
+            nextPage = lastIndex >= configTotalSize ? 1 : (nextPage + 1);
+            sPrefs.putInt(PREF_WALLPAPER_CATEGORY_NEXT_PAGE + categoryIndex, nextPage);
+
+            // 延迟500s 模拟下载
+            UIController.getInstance().getUIHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (listener != null) {
+                        listener.onLoadFinished(wallpaperInfoList,configTotalSize);
+                    }
+                }
+            },500);
+        } catch (Exception e) {
+            if (listener != null) {
+                listener.onLoadFailed();
+            }
+        }
+    }
+
+    private static void getNextCategoryWallpaperListFromNetwork(final int categoryIndex, final OnLoadWallpaperListener listener) {
         final List<WallpaperInfo> wallpaperInfoList = new ArrayList<>();
         final int nextPage = sPrefs.getInt(PREF_WALLPAPER_CATEGORY_NEXT_PAGE + categoryIndex, 1);
         String url = WALLPAPER_URL + SUFFIX_CATEGORY + Uri.encode(sConfig.get(categoryIndex).get("Identifier").toString());
@@ -60,7 +110,6 @@ public class WallpaperDownloadEngine {
             e.printStackTrace();
         }
         HSLog.d(TAG, url);
-//        final HSHttpConnection connection = new HSHttpConnection(url);
         final HSServerAPIConnection connection = new HSServerAPIConnection(url, HttpRequest.Method.GET, jsonObject);
 
         connection.setConnectTimeout(30 * 1000);
@@ -73,20 +122,12 @@ public class WallpaperDownloadEngine {
                     JSONObject bodyJSON = hsHttpConnection.getBodyJSON();
                     JSONArray wallpaperArray = bodyJSON.getJSONObject("data").getJSONArray("medias");
 
-//                    CategoryInfo categoryInfo = null;
-//                    List<CategoryInfo> categoryInfoList = new ArrayList<>(16);
-//                    if (categoryInfoList != null && categoryInfoList.size() > categoryIndex) {
-//                        categoryInfo = categoryInfoList.get(categoryIndex);
-//                    }
                     for (int i = 0; i < wallpaperArray.length(); i++) {
                         JSONObject wallpaper = wallpaperArray.getJSONObject(i);
                         WallpaperInfo wallpaperInfo = WallpaperInfo.newOnlineWallpaper(
                                 wallpaper.getJSONObject("images").getString("hdurl"),
                                 wallpaper.getJSONObject("images").getString("thumburl"), "",
                                 wallpaper.getInt("downloads") + wallpaper.getInt("views"));
-//                        if (categoryInfo != null) {
-//                            wallpaperInfo.setCategory(categoryInfo);
-//                        }
                         CategoryInfo category = CategoryInfo.ofConfig(sConfig.get(categoryIndex));
                         if (category != null) {
                             wallpaperInfo.setCategory(category);
@@ -97,13 +138,14 @@ public class WallpaperDownloadEngine {
 
                     int nextPage = bodyJSON.getJSONObject("data").getJSONObject("page").getInt("page") + 1;
                     int totalPage = bodyJSON.getJSONObject("data").getJSONObject("page").getInt("page_count");
+                    int totalSize = bodyJSON.getJSONObject("data").getJSONObject("page").getInt("total");
                     if (totalPage < nextPage) {
                         nextPage = 1;
                     }
                     sPrefs.putInt(PREF_WALLPAPER_CATEGORY_NEXT_PAGE + categoryIndex, nextPage);
 
                     if (listener != null) {
-                        listener.onLoadFinished(wallpaperInfoList);
+                        listener.onLoadFinished(wallpaperInfoList, totalSize);
                     }
                 } catch (JSONException | NullPointerException e) {
                     e.printStackTrace();

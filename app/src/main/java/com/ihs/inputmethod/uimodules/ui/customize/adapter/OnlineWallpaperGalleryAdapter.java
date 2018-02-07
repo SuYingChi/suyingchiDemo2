@@ -57,6 +57,7 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
     private FooterViewHolder mFooterViewHolder;
 
     private int mScreenWidth;
+    private int mTotalSize;
 
     private DisplayImageOptions defaulltOptions = new DisplayImageOptions.Builder()
             .showImageOnLoading(R.drawable.wallpaper_loading).showImageOnFail(R.drawable.wallpaper_load_failed)
@@ -65,9 +66,10 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
 
     private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
         @Override
-        public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList) {
+        public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList, int totalSize) {
 //            int lastSize = mDataSet.size();
             mDataSet.addAll(wallpaperInfoList);
+            mTotalSize = totalSize;
             notifyDataSetChanged();
 //            notifyItemRangeInserted(lastSize, wallpaperInfoList.size());
         }
@@ -176,12 +178,15 @@ public class OnlineWallpaperGalleryAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemCount() {
+        if (mTotalSize > 0 && mDataSet.size() == mTotalSize) {
+            return mTotalSize;
+        }
         return mDataSet.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mDataSet.size()) {
+        if (position == mDataSet.size() && (mTotalSize == 0 || position != mTotalSize)) {
             return WALLPAPER_FOOTER_VIEW_LOAD_MORE;
         }
         return WALLPAPER_IMAGE_VIEW;

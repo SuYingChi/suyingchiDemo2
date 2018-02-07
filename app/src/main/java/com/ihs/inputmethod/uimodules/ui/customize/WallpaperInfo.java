@@ -28,6 +28,7 @@ public class WallpaperInfo implements Parcelable {
     public static final int WALLPAPER_TYPE_GALLERY = 2;
     public static final int WALLPAPER_TYPE_LUCKY = 3;
     public static final int WALLPAPER_TYPE_3D = 4;
+    public static final int WALLPAPER_TYPE_CONFIG = 5;
 
     private static final String JSON_KEY_IS_BUILT_IN = "isBuiltIn"; // Added in 24 (v1.2.0)
     private static final String JSON_KEY_URL = "wallpaperUrl";
@@ -96,6 +97,14 @@ public class WallpaperInfo implements Parcelable {
         WallpaperInfo info = newOnlineWallpaper(url, thumb);
         info.mPath = path;
         info.mPopularity = popularity;
+        return info;
+    }
+
+    public static WallpaperInfo newConfigWallpaper(String url, String thumb) {
+        WallpaperInfo info = new WallpaperInfo();
+        info.mType = WALLPAPER_TYPE_CONFIG;
+        info.mSource = url;
+        info.mThumbnailUrl = thumb;
         return info;
     }
 
@@ -375,6 +384,11 @@ public class WallpaperInfo implements Parcelable {
                 return true;
             }
             if (mType == WALLPAPER_TYPE_3D && other.mType == WALLPAPER_TYPE_3D
+                    && TextUtils.equals(mSource, other.mSource)) {
+                return true;
+            }
+            if (mType == WALLPAPER_TYPE_CONFIG && other.mType == WALLPAPER_TYPE_CONFIG
+                    && TextUtils.equals(mThumbnailUrl, other.mThumbnailUrl)
                     && TextUtils.equals(mSource, other.mSource)) {
                 return true;
             }

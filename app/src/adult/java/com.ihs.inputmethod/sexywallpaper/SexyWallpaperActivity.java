@@ -106,7 +106,7 @@ public class SexyWallpaperActivity extends HSAppCompatActivity {
                 createSingleCategoryTabContent(i);
             }
             OnlineWallpaperListView list = mCategoryTabContents.get(categoryIndex);
-            list.startLoading();
+//            list.startLoading();
             initView = list;
             container.addView(initView);
             return initView;

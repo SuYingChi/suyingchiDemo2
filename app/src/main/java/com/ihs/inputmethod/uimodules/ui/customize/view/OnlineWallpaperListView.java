@@ -52,11 +52,11 @@ public class OnlineWallpaperListView extends FrameLayout {
 
     private WallpaperDownloadEngine.OnLoadWallpaperListener mListener = new WallpaperDownloadEngine.OnLoadWallpaperListener() {
         @Override
-        public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList) {
+        public void onLoadFinished(List<WallpaperInfo> wallpaperInfoList, int totalSize) {
             progressBar.setVisibility(View.INVISIBLE);
             retryLayout.setVisibility(View.INVISIBLE);
             if (adapter != null) {
-                adapter.getLoadWallpaperListener().onLoadFinished(wallpaperInfoList);
+                adapter.getLoadWallpaperListener().onLoadFinished(wallpaperInfoList, totalSize);
             }
         }
 
