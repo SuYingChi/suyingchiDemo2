@@ -170,7 +170,7 @@ final LIB_DEVICE_VERSION = '.gm:4.4.3.gm'
 
 dependencies {
     // App Framework
-    compile "com.ihandy.appframework:libAppframework.gm:4.5.4.gm"
+    compile "com.ihandy.appframework:libAppframework.gm:4.5.5.gm"
 
     //Golden eye
     smileyImplementation "net.appcloudbox.goldeneye:2:2018.01.22.002"
